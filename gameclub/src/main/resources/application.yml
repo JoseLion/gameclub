@@ -1,0 +1,49 @@
+spring:
+  thymeleaf:
+    cache: false
+  jpa:
+    generate-ddl: true
+    show-sql: false
+
+server:
+  session:
+    timeout: 7200
+  compression:
+    enabled: true
+    mime-types:
+      - application/json
+      - application/xml
+      - text/html
+      - text/xml
+      - text/plain
+
+levelap:
+  securityEnabled: true
+  allowedOrigins: http://localhost,
+                  http://localhost:8080,
+                  http://gameclub.levelaptesting.com,
+                  http://gameclub-admin.levelaptesting.com,
+                  https://gameclub.levelaptesting.com,
+                  https://gameclub-admin.levelaptesting.com
+  compressRequest: true
+  file:
+    environment: GAMECLUB_HOME
+
+flyway:
+  enabled: true
+  schemas:
+    - m2c2
+    - commons
+  locations:
+    - classpath:db/gameclub
+    - classpath:db/commons
+  baseline-on-migrate: true
+  encoding: UTF-8
+  out-of-order: true
+  
+kushki-configuration:
+  show-log: true
+  private-merchant-id: xxxxxxxxxx
+  end-point:
+    path: https://api-uat.kushkipagos.com/v1
+

@@ -1,0 +1,42 @@
+<div id="home">
+    <section class="row shortcut-links">
+        <div class="col-md-4">
+            <img src="img/gameclub-logo.png" height="70px"/>
+        </div>
+        <div class="col-md-8 text-right links">
+            <nav>
+                <span class="spacing"><a href>share&nbsp;&amp;&nbsp;play</a></span>
+                <span class="upper-case"><a href>Preguntas</a></span>
+                <span class="upper-case"><a href>Blog</a></span>
+                <span class="upper-case"><a href>Inicia sesi&oacute;n</a></span>
+            </nav>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+    <section class="banner">
+        <div class="row">
+            <hr class="title-up"/>
+            <span class="upper-case title">Si prestas, juegas</span>
+            <hr class="title-down"/>
+            <span class="description">Comparte y juega millones de juegos para todas las consolas</span>
+        </div>
+        <div class="row search">
+            <div class="search-params">
+                <div class="col-md-4 no-padding-right no-padding-left filter">
+                    <input placeholder="T&iacute;tulo..."/>
+                </div>
+                <div class="col-md-4 no-padding-right no-padding-left filter">
+                    <ui-select ng-model="type.selected" theme="bootstrap" class="selector">
+        				<ui-select-match allow-clear placeholder="Categor&iacute;a...">{{$select.selected.name}}</ui-select-match>
+        				<ui-select-choices repeat="type in ['Action','Adventure','Shooter','Mass Multiplayer','Simulation','RPG','Strategy','Sports'] | filter: $select.search">
+                            <div ng-bind-html="type | highlight: $select.search"></div>
+        				</ui-select-choices>
+        			</ui-select>
+                </div>
+                <div class="col-md-4 no-padding-right no-padding-left filter">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </section>
+</div>

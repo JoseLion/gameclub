@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="GameClub">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="{{$state.current.data.description}}">
+	<meta name="keywords" content="{{$state.current.data.keywords}}">
+    <title>Game Club</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<link href="css/customStyles.less" rel="stylesheet/less">
+	<link href="css/select.min.css" rel="stylesheet">
+</head>
+
+<body ng-controller="MainCtrl as main">
+    <div ui-view></div>
+
+    <!-- MAIN DEPENDENCES -->
+    <script src="js/core/jquery-2.1.1.min.js"></script>
+    <script src="js/core/less.min.js"></script>
+    <script src="js/core/angular.min.js"></script>
+    <script src="js/core/angular-sanitize.min.js"></script>
+    <script src="js/core/angular-ui-router.min.js"></script>
+    <script src="js/core/ocLazyLoad.min.js"></script>
+	<script src="js/core/select.min.js"></script>
+
+    <!-- Anglar App Script -->
+    <script src="js/app.js"></script>
+    <script src="js/const.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/mainCtrl.js"></script>
+
+    <script src="js/modules/home/home.module.js"></script>
+    <script src="js/modules/home/config/home.route.js"></script>
+
+</body>
+</html>

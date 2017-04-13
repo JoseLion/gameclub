@@ -27,13 +27,19 @@
                 </div>
                 <div class="col-md-4 no-padding-right no-padding-left filter">
                     <ui-select ng-model="type.selected" theme="bootstrap" class="selector">
-        				<ui-select-match allow-clear placeholder="Categor&iacute;a...">{{$select.selected.name}}</ui-select-match>
+        				<ui-select-match allow-clear placeholder="Categor&iacute;a...">{{$select.selected}}</ui-select-match>
         				<ui-select-choices repeat="type in ['Action','Adventure','Shooter','Mass Multiplayer','Simulation','RPG','Strategy','Sports'] | filter: $select.search">
                             <div ng-bind-html="type | highlight: $select.search"></div>
         				</ui-select-choices>
         			</ui-select>
                 </div>
                 <div class="col-md-4 no-padding-right no-padding-left filter">
+                    <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector text-center">
+        				<ui-select-match allow-clear placeholder="Consola...">{{$select.selected}}</ui-select-match>
+        				<ui-select-choices repeat="gameConsole in ['PS4','XBOX ONE','NINTENDO SWITCH'] | filter: $select.search" >
+                            <div ng-bind-html="gameConsole | highlight: $select.search"></div>
+        				</ui-select-choices>
+        			</ui-select>
                 </div>
                 <div class="clearfix"></div>
             </div>

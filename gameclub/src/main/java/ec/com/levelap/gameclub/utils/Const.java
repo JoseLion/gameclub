@@ -19,5 +19,8 @@ public interface Const {
 	public final static int ENCODER_STRENGTH = 12;
 
 	public final static Integer TABLE_SIZE = 20;
-
+	
+	public final static String ADMIN_USER = "adminUser";
+	
+	public final static String PUBLIC_USER = "publicUser";
 }

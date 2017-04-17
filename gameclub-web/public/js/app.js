@@ -3,6 +3,7 @@ angular.module('GameClub', [
 	'oc.lazyLoad',
 	'ui.select',
 	'ngSanitize',
+	'Core',
 	'Home'
 ])
 // .config(["$locationProvider" ,"$httpProvider", function($locationProvider, $httpProvider, $http) {

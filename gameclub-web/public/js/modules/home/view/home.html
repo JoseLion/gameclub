@@ -16,7 +16,7 @@
     <section class="banner">
         <div class="row">
             <hr class="title-up"/>
-            <span class="upper-case title">Si prestas, juegas</span>
+            <h2 class="upper-case title">Si prestas, juegas</h2>
             <hr class="title-down"/>
             <span class="description">Comparte y juega millones de juegos para todas las consolas</span>
         </div>
@@ -27,16 +27,145 @@
                 </div>
                 <div class="col-md-4 no-padding-right no-padding-left filter">
                     <ui-select ng-model="type.selected" theme="bootstrap" class="selector">
-        				<ui-select-match allow-clear placeholder="Categor&iacute;a...">{{$select.selected.name}}</ui-select-match>
+        				<ui-select-match allow-clear placeholder="Categor&iacute;a...">{{$select.selected}}</ui-select-match>
         				<ui-select-choices repeat="type in ['Action','Adventure','Shooter','Mass Multiplayer','Simulation','RPG','Strategy','Sports'] | filter: $select.search">
                             <div ng-bind-html="type | highlight: $select.search"></div>
         				</ui-select-choices>
         			</ui-select>
                 </div>
                 <div class="col-md-4 no-padding-right no-padding-left filter">
+                    <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector text-center">
+        				<ui-select-match allow-clear placeholder="Consola...">{{$select.selected}}</ui-select-match>
+        				<ui-select-choices repeat="gameConsole in ['PS4','XBOX ONE','NINTENDO SWITCH'] | filter: $select.search" class="text-center">
+                            <div ng-bind-html="gameConsole | highlight: $select.search"></div>
+        				</ui-select-choices>
+        			</ui-select>
                 </div>
                 <div class="clearfix"></div>
             </div>
+        </div>
+    </section>
+    <section class="row most-played">
+        <div class="separator"></div>
+        <div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="col-md-1"></div>
+                <h2 class="col-md-10 title">Los m&aacute;s <span class="game-font-blue">jugados</span></h2>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="games">
+            <div class="col-md-1 left"><div class="btn-most-played"></div></div>
+            <div class="col-md-10 list">
+                <div class="col-md-3">
+                    <game-score src="'img/game-prueba-1.png'" score="4"></game-score>
+                </div>
+                <div class="col-md-3">
+                    <game-score src="'img/game-prueba-2.png'" score="5"></game-score>
+                </div>
+                <div class="col-md-3">
+                    <game-score src="'img/game-prueba-3.png'" score="4"></game-score>
+                </div>
+                <div class="col-md-3">
+                    <game-score src="'img/game-prueba-4.png'" score="3"></game-score>
+                </div>
+            </div>
+            <div class="col-md-1 right"><div class="btn-most-played"></div></div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    <section class="how-works">
+        <div class="separator"></div>
+        <div class="row">
+            <div class="col-md-6 path-right path-3h"></div>
+            <div class="col-md-6 path-left path-3h"><div class="box-square"></div></div>
+            <div class="clearfix"></div>
+
+            <h2 class="col-md-12 title">&iquest; C&oacute;mo <span class="game-font-white">funciona</span> ?</h2>
+
+            <div class="col-md-6 path-right path-2h complete-2px-br"></div>
+            <div class="col-md-2 path-left path-bottom path-2h complete-1px-br"></div>
+            <div class="col-md-4"></div>
+            <div class="clearfix"></div>
+
+            <div class="col-md-4"></div>
+            <div class="col-md-2"><div class="box-square"></div></div>
+            <div class="col-md-2 path-right path-top path-2h"></div>
+            <div class="col-md-4 path-left path-2h complete-1px-bl"></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="step first-step">
+            <div class="col-md-6"></div>
+            <div class="col-md-6 right-blue-box text-left">
+                <h2 class="title">
+                    <div class="number-container"><div class="number"></div></div>
+                    Consigue <span class="game-font-white">coins</span>
+                </h2>
+                <ul>
+                    <li>Registra tus juegos para prestarlos. Gana COINS.</li>
+                    <li>Presta tus juegos. Gana COINS.</li>
+                    <li>Refiere a tus amigos para que se unan. Gana COINS.</li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 path-right path-bottom path-2h complete-1px-bl complete-1px-br"></div>
+            <div class="col-md-4 path-left path-2h complete-1px-bl"></div>
+            <div class="clearfix"></div>
+            <div class="col-md-4 path-right path-4h complete-1px-br"></div>
+            <div class="col-md-4 path-left path-top path-4h complete-1px-tr"></div>
+            <div class="col-md-4"></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="step second-step">
+            <div class="col-md-6 left-blue-box text-left">
+                <h2 class="title">
+                    <div class="number-container"><div class="number second"></div></div>
+                    Juega <span class="game-font-white">nuevos</span> juegos
+                </h2>
+                <ul>
+                    <li>Registra tus juegos para prestarlos. Gana COINS.</li>
+                    <li>Presta tus juegos. Gana COINS.</li>
+                    <li>Refiere a tus amigos para que se unan. Gana COINS.</li>
+                </ul>
+            </div>
+            <div class="col-md-6"><div class="box-square"></div></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 path-right path-3h complete-1px-br"></div>
+            <div class="col-md-2 path-left path-bottom path-3h complete-1px-br"></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4"></div>
+            <div class="clearfix"></div>
+            <div class="col-md-4 path-right"></div>
+            <div class="col-md-2 path-right path-top path-2h"></div>
+            <div class="col-md-2 path-left path-2h complete-1px-bl"></div>
+            <div class="col-md-4"></div>
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+                <div class="mini-separator"></div>
+            </div>
+        </div>
+        <div class="step third-step row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h2 class="title">
+                    <div class="number third"></div>
+                    <span class="game-font-light-red">Relax</span>
+                </h2>
+                <div class="col-md-12">Nosotros nos encargamos de que los juegos lleguen a su destino.</div>
+                <div class="col-md-12">Hacemos seguimiento con courrier inteligente.</div>
+                <div class="col-md-12">Los prestamos pueden ser desde una semana hasta un mes.</div>
+                <div class="col-md-12">Tu juegos están 100% asegurados desde que entran a la plataforma.</div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="clearfix"></div>
         </div>
     </section>
 </div>

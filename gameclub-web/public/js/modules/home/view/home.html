@@ -5,10 +5,10 @@
         </div>
         <div class="col-md-8 text-right links">
             <nav>
-                <span class="spacing"><a href>share&nbsp;&amp;&nbsp;play</a></span>
-                <span class="upper-case"><a href>Preguntas</a></span>
-                <span class="upper-case"><a href>Blog</a></span>
-                <span class="upper-case"><a href>Inicia sesi&oacute;n</a></span>
+                <li><button class="btn btn-primary"><span class="spacing">share&nbsp;&amp;&nbsp;play</span></button></li>
+                <li><button class="btn btn-primary"><span class="upper-case">Preguntas</span></button></li>
+                <li><button class="btn btn-primary"><span class="upper-case">Blog</span></button></li>
+                <li><button class="btn btn-primary"><span class="upper-case">Inicia sesi&oacute;n</span></button></li>
             </nav>
         </div>
         <div class="clearfix"></div>
@@ -20,29 +20,35 @@
             <hr class="title-down"/>
             <span class="description">Comparte y juega millones de juegos para todas las consolas</span>
         </div>
-        <div class="row search">
-            <div class="search-params">
-                <div class="col-md-4 no-padding-right no-padding-left filter">
-                    <input placeholder="T&iacute;tulo..."/>
+        <div class="row search white-search">
+            <div class="col-md-1"></div>
+            <form class="col-md-11">
+                <div class="col-md-10 search-params">
+                    <div class="col-md-4 no-padding-right no-padding-left filter">
+                        <input placeholder="T&iacute;tulo..."/>
+                    </div>
+                    <div class="col-md-4 no-padding-right no-padding-left filter">
+                        <ui-select ng-model="type.selected" theme="bootstrap" class="selector">
+                            <ui-select-match allow-clear placeholder="Categor&iacute;a...">{{$select.selected}}</ui-select-match>
+                            <ui-select-choices repeat="type in ['Action','Adventure','Shooter','Mass Multiplayer','Simulation','RPG','Strategy','Sports'] | filter: $select.search">
+                                <div ng-bind-html="type | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-4 no-padding-right no-padding-left filter">
+                        <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector text-center">
+                            <ui-select-match allow-clear placeholder="Consola...">{{$select.selected}}</ui-select-match>
+                            <ui-select-choices repeat="gameConsole in ['PS4','XBOX ONE','NINTENDO SWITCH'] | filter: $select.search" class="text-center">
+                                <div ng-bind-html="gameConsole | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="col-md-4 no-padding-right no-padding-left filter">
-                    <ui-select ng-model="type.selected" theme="bootstrap" class="selector">
-        				<ui-select-match allow-clear placeholder="Categor&iacute;a...">{{$select.selected}}</ui-select-match>
-        				<ui-select-choices repeat="type in ['Action','Adventure','Shooter','Mass Multiplayer','Simulation','RPG','Strategy','Sports'] | filter: $select.search">
-                            <div ng-bind-html="type | highlight: $select.search"></div>
-        				</ui-select-choices>
-        			</ui-select>
+                <div class="col-md-2 text-left">
+                    <button class="btn btn-tertiary"><i class="fa fa-power-off "></i></button>
                 </div>
-                <div class="col-md-4 no-padding-right no-padding-left filter">
-                    <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector text-center">
-        				<ui-select-match allow-clear placeholder="Consola...">{{$select.selected}}</ui-select-match>
-        				<ui-select-choices repeat="gameConsole in ['PS4','XBOX ONE','NINTENDO SWITCH'] | filter: $select.search" class="text-center">
-                            <div ng-bind-html="gameConsole | highlight: $select.search"></div>
-        				</ui-select-choices>
-        			</ui-select>
-                </div>
-                <div class="clearfix"></div>
-            </div>
+            </form>
         </div>
     </section>
     <section class="row most-played">
@@ -80,14 +86,16 @@
     <section class="how-works">
         <div class="separator"></div>
         <div class="row">
-            <div class="col-md-6 path-right path-3h"></div>
-            <div class="col-md-6 path-left path-3h"><div class="box-square"></div></div>
+            <div class="col-md-6 path-right path-4h"></div>
+            <div class="col-md-6 path-left path-4h">
+                <div class="box-square"></div>
+            </div>
             <div class="clearfix"></div>
 
             <h2 class="col-md-12 title">&iquest; C&oacute;mo <span class="game-font-white">funciona</span> ?</h2>
 
-            <div class="col-md-6 path-right path-2h complete-2px-br"></div>
-            <div class="col-md-2 path-left path-bottom path-2h complete-1px-br"></div>
+            <div class="col-md-6 path-right path-3h complete-2px-br"></div>
+            <div class="col-md-2 path-left path-bottom path-3h complete-1px-br"></div>
             <div class="col-md-4"></div>
             <div class="clearfix"></div>
 
@@ -98,7 +106,9 @@
             <div class="clearfix"></div>
         </div>
         <div class="step first-step">
-            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <div class="image"></div>
+            </div>
             <div class="col-md-6 right-blue-box text-left">
                 <h2 class="title">
                     <div class="number-container"><div class="number"></div></div>
@@ -152,19 +162,59 @@
                 <div class="mini-separator"></div>
             </div>
         </div>
-        <div class="step third-step row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <h2 class="title">
-                    <div class="number third"></div>
-                    <span class="game-font-light-red">Relax</span>
-                </h2>
-                <div class="col-md-12">Nosotros nos encargamos de que los juegos lleguen a su destino.</div>
-                <div class="col-md-12">Hacemos seguimiento con courrier inteligente.</div>
-                <div class="col-md-12">Los prestamos pueden ser desde una semana hasta un mes.</div>
-                <div class="col-md-12">Tu juegos están 100% asegurados desde que entran a la plataforma.</div>
+        <div class="step third-step">
+            <div class="row">
+                <div class="col-md-2"><div class="box-square"></div></div>
+                <div class="col-md-8">
+                    <h2 class="title">
+                        <div class="number third"></div>
+                        <span class="game-font-light-red">Relax</span>
+                    </h2>
+
+                    <div class="col-md-12 description white">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">Nosotros nos encargamos de que los juegos lleguen a su destino.</div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="col-md-12"><img src="img/send.png" width="30px"/></div>
+                    <div class="col-md-12 description">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">Hacemos seguimiento con courrier inteligente.</div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="col-md-12"><img src="img/smart-courier.png" width="25px"/></div>
+                    <div class="col-md-12 description">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 no-padding-left no-padding-right">Los prestamos pueden ser desde una semana hasta un mes.</div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="col-md-12"><img src="img/limit.png" width="32px"/></div>
+                    <div class="col-md-12 description">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">Tu juegos están 100% asegurados desde que entran a la plataforma.</div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
             </div>
-            <div class="col-md-2"></div>
+            <div class="col-md-12 white-search">
+                <button class="btn btn-primary">Inicia sesión</button>
+            </div>
             <div class="clearfix"></div>
         </div>
     </section>

@@ -13,6 +13,18 @@ angular.module("Gameclub").controller('MainCtrl', function($scope, $rootScope, $
 		});
 	}
 
+	$rootScope.$watch("currentUser", function(newValue, oldValue) {
+		if (newValue != null) {
+			rest("navigation/findAll", true).get(function(data) {
+				setTimeout(function() {
+					$scope.$apply(function() {
+						$scope.navigationArray = data;
+					});
+				}, 0);
+			});
+		}
+	});
+
 	$scope.logout = function() {
 		let request = {
 			method: 'POST',
@@ -36,6 +48,22 @@ angular.module("Gameclub").controller('MainCtrl', function($scope, $rootScope, $
 
 	$scope.changePassword = function() {
 		changePass();
+	}
+
+	$scope.setLevelClass = function(level) {
+		switch(level) {
+			case 0:
+				return 'nav-second-level';
+
+			case 1:
+				return 'nav-third-level';
+
+			case 2:
+				return 'nav-fourth-level';
+
+			default:
+				return '';
+		}
 	}
 
 	function changePass() {

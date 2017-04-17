@@ -15,12 +15,20 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 		.state('admin.dashboard', {
 			url: "/dashboard",
 			templateUrl: "views/dashboard.html",
+			data: {displayName: 'Dashboard'},
 			resolve: {
 				loadPlugin: function ($ocLazyLoad) {
 					return $ocLazyLoad.load([{}]);
 				}
 			}
-		});
+		})
+
+	.state('user', {
+		abstract: true,
+		url: "/user",
+		templateUrl: "views/common/content.html",
+		data: {displayName: "Usuarios"}
+	});
 }).run(function($rootScope, $state, Const, rest, $location, $anchorScroll, authenticate) {
 	$rootScope.$state = $state;
 	$rootScope.Const = Const;

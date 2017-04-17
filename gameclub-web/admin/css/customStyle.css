@@ -1,0 +1,34 @@
+.navbar-default .nav > li > a:hover {
+	color: #2cb4bf !important;
+}
+
+.navbar-default .nav > li > a:focus {
+	color: #e32a3d !important;
+}
+
+.nav > li.active > a {
+	color: #e32a3d !important;
+}
+
+.navbar-default .nav > li.active > a:hover {
+	color: #e32a3d !important;
+}
+
+label.control-label:after {
+	content: ":";
+}
+
+.form-group.to-validate.label-required label.control-label:before,
+.form-group .to-validate.label-required label.control-label:before,
+.form-group .to-validate .label-required label.control-label:before {
+	content: "*";
+}
+
+table thead tr th {
+	text-align: center !important;
+	vertical-align: middle !important;
+}
+
+table tbody tr td {
+	vertical-align: middle !important;
+}

@@ -18,11 +18,18 @@
 		<!-- Main Inspinia CSS files -->
 		<link href="css/animate.css" rel="stylesheet">
 		<link id="loadBefore" href="css/style.css" rel="stylesheet">
+		<link id="loadBefore" href="css/customStyle.css" rel="stylesheet">
+		<link id="loadBefore" href="css/tooltip.css" rel="stylesheet">
+		<link href="css/plugins/angular-notify/angular-notify.min.css" rel="stylesheet">
+		<link href="css/plugins/ui-select/select.min.css" rel="stylesheet">
+		<link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
 	</head>
 
 	<!-- ControllerAs syntax -->
 	<!-- Main controller with serveral data used in Inspinia theme on diferent view -->
-	<body class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top">
+	<body ng-controller="MainCtrl as main" class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top">
 		<!-- Main view  -->
 		<div ui-view></div>
 
@@ -66,6 +73,7 @@
 		<!-- Anglar App Script -->
 		<script src="js/app.js"></script>
 		<script src="js/config.js"></script>
+		<script src="js/const.js"></script>
 		<script src="js/directives.js"></script>
 		<script src="js/mainCtrl.js"></script>
 
@@ -78,18 +86,18 @@
 		<script src="js/modules/core/directives/checkbox.js"></script>
 		<script src="js/modules/core/directives/onSubmit.js"></script>
 		<script src="js/modules/core/directives/radioButton.js"></script>
-		<script src="js/modules/core/directives/tooltip.js"></script>
 		<script src="js/modules/core/directives/validation.js"></script>
+		<script src="js/modules/core/directives/tooltip.js"></script>
 
 		<!-- Services -->
-		<script type="js/modules/core/services/authenticate.js"></script>
-		<script type="js/modules/core/services/forEach.js"></script>
-		<script type="js/modules/core/services/friendlyUrl.js"></script>
-		<script type="js/modules/core/services/getDTOptions.js"></script>
-		<script type="js/modules/core/services/getIndexOfArray.js"></script>
-		<script type="js/modules/core/services/notif.js"></script>
-		<script type="js/modules/core/services/rest.js"></script>
-		<script type="js/modules/core/services/saveAs.js"></script>
-		<script type="js/modules/core/services/sweet.js"></script>
+		<script src="js/modules/core/services/authenticate.js"></script>
+		<script src="js/modules/core/services/forEach.js"></script>
+		<script src="js/modules/core/services/friendlyUrl.js"></script>
+		<script src="js/modules/core/services/getDTOptions.js"></script>
+		<script src="js/modules/core/services/getIndexOfArray.js"></script>
+		<script src="js/modules/core/services/notif.js"></script>
+		<script src="js/modules/core/services/rest.js"></script>
+		<script src="js/modules/core/services/saveAs.js"></script>
+		<script src="js/modules/core/services/sweet.js"></script>
 	</body>
 </html>

@@ -6,6 +6,7 @@ angular.module("Core").directive('tooltip', function(){
 			let helper = angular.element('<span></span>');
 			container.insertBefore(element);
 			container.append(element);
+			console.log("text: ", attrs);
 			helper.text(attrs.tooltip);
 
 			if (attrs.tooltipPosition == "left") {

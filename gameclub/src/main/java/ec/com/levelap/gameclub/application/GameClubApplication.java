@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import ec.com.levelap.base.LevelapBase;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.security.LevelapSecurity;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -55,6 +58,12 @@ public class GameClubApplication extends GameClubConfiguration {
 	@Bean
 	public LevelapBase levelapBase() {
 		return new LevelapBase(new GameClubBaseJpa());
+	}
+	
+	@Bean
+	@Order(Ordered.HIGHEST_PRECEDENCE)
+	public LevelapSecurity levelapSecurity() {
+		return new LevelapSecurity(new GameClubSecurity());
 	}
 
 	@Bean

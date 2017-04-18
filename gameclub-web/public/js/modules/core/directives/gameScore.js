@@ -4,7 +4,8 @@ angular.module("Core").directive('gameScore', function() {
 		templateUrl: "js/modules/core/directives/gameScore.html",
 		scope: {
 			src: '=',
-			score: '='
+			score: '=',
+			bgColor: '@',
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {

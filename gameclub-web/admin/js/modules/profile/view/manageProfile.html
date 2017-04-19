@@ -1,0 +1,76 @@
+<form class="form-horizontal" role="form" on-submit="save()" novalidate>
+	<div class="ibox">
+		<div class="ibox-content">
+			<div class="form-group to-validate">
+				<label class="control-label col-md-3">Nombre</label>
+				<div class="col-md-7">
+					<input validation type="text" class="form-control" ng-model="profile.name" required>
+				</div>
+			</div>
+
+			<div class="form-group to-validate">
+				<label class="control-label col-md-3">Descripción</label>
+				<div class="col-md-7">
+					<textarea validation type="text" class="form-control" ng-model="profile.description" style="resize: vertical;"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-2"></div>
+
+				<div class="col-md-8">
+					<ul class="todo-list">
+						<li ng-repeat="child in navigation" expandable template="profileExpandable.html" click-handler="handler_{{child.id}}" isCollapsed="child.isCollapsed" root-tag="ul">
+							<div class="col-md-1">
+								<button id="handler_{{child.id}}" type="button" class="btn btn-xs btn-default" ng-disabled="child.children.length == 0">
+									<i class="fa" ng-class="child.isCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'"></i>
+								</button>
+							</div>
+
+							<div class="col-md-9">
+								<span class="m-l-xs">{{child.name}}</span>
+							</div>
+
+							<div class="col-md-2" style="text-align: right;">
+								<checkbox ng-model="child.selected" ng-change="selectedChanged(child)"></checkbox>
+							</div>
+
+							<div class="clearfix"></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-12" style="text-align: right;">
+					<button type="submit" class="btn btn-w-m btn-primary">Guardar</button>
+					<button type="button" class="btn btn-w-m btn-default" ng-click="cancel()">Cancelar</button>
+				</div>
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</form>
+
+<script type="text/ng-template" id="profileExpandable.html">
+	<ul class="todo-list">
+		<li ng-repeat="child in $parent.$parent.child.children" expandable template="profileExpandable.html" click-handler="handler_{{child.id}}" isCollapsed="child.isCollapsed" root-tag="ul">
+			<div class="col-md-1">
+				<button id="handler_{{child.id}}" type="button" class="btn btn-xs btn-default" ng-disabled="child.children.length == 0">
+					<i class="fa" ng-class="child.isCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'"></i>
+				</button>
+			</div>
+
+			<div class="col-md-9">
+				<span class="m-l-xs">{{child.name}}</span>
+			</div>
+
+			<div class="col-md-2" style="text-align: right;">
+				<checkbox ng-model="child.selected" ng-change="$parent.$parent.$parent.selectedChanged(child)"></checkbox>
+			</div>
+
+			<div class="clearfix"></div>
+		</li>
+	</ul>
+</script>

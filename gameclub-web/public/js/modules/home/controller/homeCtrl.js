@@ -7,22 +7,22 @@ angular.module("Home").controller('HomeCtrl', function($scope) {
     $scope.mostPlayed = [
         {
             id: 1,
-            url: 'img/game-prueba-1.png',
+            url: 'img/test/game-1.png',
             score: 4
         },
         {
             id: 2,
-            url: 'img/game-prueba-2.png',
+            url: 'img/test/game-2.png',
             score: 5
         },
         {
             id: 3,
-            url: 'img/game-prueba-3.png',
+            url: 'img/test/game-3.png',
             score: 4
         },
         {
             id: 4,
-            url: 'img/game-prueba-4.png',
+            url: 'img/test/game-4.png',
             score: 3
         }
     ];
@@ -92,7 +92,7 @@ angular.module("Home").controller('HomeCtrl', function($scope) {
             blogId: 1,
             subtitle: 'Artículo',
             desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            imgSrc: 'img/blog-preview-01.png',
+            imgSrc: 'img/test/blog-preview-01.png',
             date: new Date('11-09-2016'),
             url: '#'
         },
@@ -100,7 +100,7 @@ angular.module("Home").controller('HomeCtrl', function($scope) {
             blogId: 2,
             subtitle: 'Artículo',
             desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            imgSrc: 'img/blog-preview-02.png',
+            imgSrc: 'img/test/blog-preview-02.png',
             date: new Date('11-09-2016'),
             url: '#'
         },
@@ -108,7 +108,7 @@ angular.module("Home").controller('HomeCtrl', function($scope) {
             blogId: 3,
             subtitle: 'Artículo',
             desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            imgSrc: 'img/blog-preview-03.png',
+            imgSrc: 'img/test/blog-preview-03.png',
             date: new Date('11-09-2016'),
             url: '#'
         },
@@ -116,7 +116,7 @@ angular.module("Home").controller('HomeCtrl', function($scope) {
             blogId: 4,
             subtitle: 'Artículo',
             desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            imgSrc: 'img/blog-preview-04.png',
+            imgSrc: 'img/test/blog-preview-04.png',
             date: new Date('11-09-2016'),
             url: '#'
         }

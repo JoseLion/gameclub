@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md-4 no-padding-right no-padding-left filter">
                         <ui-select ng-model="type.selected" theme="bootstrap" class="selector">
-                            <ui-select-match allow-clear placeholder="Categor&iacute;a...">{{$select.selected}}</ui-select-match>
+                            <ui-select-match allow-clear placeholder="Categoría...">{{$select.selected}}</ui-select-match>
                             <ui-select-choices repeat="type in ['Action','Adventure','Shooter','Mass Multiplayer','Simulation','RPG','Strategy','Sports'] | filter: $select.search">
                                 <div ng-bind-html="type | highlight: $select.search"></div>
                             </ui-select-choices>
@@ -54,29 +54,20 @@
     <section class="row most-played">
         <div class="separator"></div>
         <div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <div class="col-md-1"></div>
-                <h2 class="col-md-10 title">Los m&aacute;s <span class="game-font-blue">jugados</span></h2>
-                <div class="col-md-1"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="col-md-2"></div>
+                <h2 class="col-md-8 title">Los m&aacute;s <span class="game-font-blue">jugados</span></h2>
+                <div class="col-md-2"></div>
             </div>
-            <div class="col-md-4"></div>
+            <div class="col-md-3"></div>
             <div class="clearfix"></div>
         </div>
         <div class="games">
             <div class="col-md-1 left"><div class="btn-most-played"></div></div>
             <div class="col-md-10 list">
-                <div class="col-md-3">
-                    <game-score src="'img/game-prueba-1.png'" score="4"></game-score>
-                </div>
-                <div class="col-md-3">
-                    <game-score src="'img/game-prueba-2.png'" score="5"></game-score>
-                </div>
-                <div class="col-md-3">
-                    <game-score src="'img/game-prueba-3.png'" score="4"></game-score>
-                </div>
-                <div class="col-md-3">
-                    <game-score src="'img/game-prueba-4.png'" score="3"></game-score>
+                <div class="col-md-3" ng-repeat="game in mostPlayed">
+                    <game-score src="game.url" score="game.score" ng-click="viewGameDetail(game)"></game-score>
                 </div>
             </div>
             <div class="col-md-1 right"><div class="btn-most-played"></div></div>
@@ -88,7 +79,7 @@
         <div class="row">
             <div class="col-md-6 path-right path-4h"></div>
             <div class="col-md-6 path-left path-4h">
-                <div class="box-square"></div>
+                <div class="square-box first"></div>
             </div>
             <div class="clearfix"></div>
 
@@ -100,7 +91,7 @@
             <div class="clearfix"></div>
 
             <div class="col-md-4"></div>
-            <div class="col-md-2"><div class="box-square"></div></div>
+            <div class="col-md-2"><div class="square-box second"></div></div>
             <div class="col-md-2 path-right path-top path-2h"></div>
             <div class="col-md-4 path-left path-2h complete-1px-bl"></div>
             <div class="clearfix"></div>
@@ -111,7 +102,7 @@
             </div>
             <div class="col-md-6 right-blue-box text-left">
                 <h2 class="title">
-                    <div class="number-container"><div class="number"></div></div>
+                    <div class="number-container"><img src="img/step-first.png" /></div>
                     Consigue <span class="game-font-white">coins</span>
                 </h2>
                 <ul>
@@ -135,7 +126,7 @@
         <div class="step second-step">
             <div class="col-md-6 left-blue-box text-left">
                 <h2 class="title">
-                    <div class="number-container"><div class="number second"></div></div>
+                    <div class="number-container"><img src="img/step-second.png" /></div>
                     Juega <span class="game-font-white">nuevos</span> juegos
                 </h2>
                 <ul>
@@ -144,7 +135,7 @@
                     <li>Refiere a tus amigos para que se unan. Gana COINS.</li>
                 </ul>
             </div>
-            <div class="col-md-6"><div class="box-square"></div></div>
+            <div class="col-md-6"><div class="rectangle-box third"></div></div>
             <div class="clearfix"></div>
         </div>
         <div class="row">
@@ -164,10 +155,10 @@
         </div>
         <div class="step third-step">
             <div class="row">
-                <div class="col-md-2"><div class="box-square"></div></div>
+                <div class="col-md-2"><div class="rectangle-box fourth"></div></div>
                 <div class="col-md-8">
                     <h2 class="title">
-                        <div class="number third"></div>
+                        <div class="number-container ib"><img src="img/step-third.png" /></div>
                         <span class="game-font-light-red">Relax</span>
                     </h2>
 
@@ -191,23 +182,19 @@
                     <div class="col-md-12"><img src="img/smart-courier.png" width="25px"/></div>
                     <div class="col-md-12 description">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-10 no-padding-left no-padding-right">Los prestamos pueden ser desde una semana hasta un mes.</div>
-                            <div class="col-md-1"></div>
+                        <div class="col-md-10 text-center">
+                            Los prestamos pueden ser desde una semana hasta un mes.
                         </div>
                         <div class="col-md-1"></div>
                     </div>
 
                     <div class="col-md-12"><img src="img/limit.png" width="32px"/></div>
                     <div class="col-md-12 description">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-10">Tu juegos están 100% asegurados desde que entran a la plataforma.</div>
-                            <div class="col-md-1"></div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 no-padding-left no-padding-right">
+                            Tu juegos están 100% asegurados desde que entran a la plataforma.
                         </div>
-                        <div class="col-md-1"></div>
+                        <div class="col-md-2"></div>
                     </div>
                 </div>
                 <div class="col-md-2"></div>
@@ -219,61 +206,37 @@
         </div>
     </section>
     <section class="row choose-by-cat">
-        <div class="col-md-7 no-padding-right">
+        <div class="col-md-8 no-padding-left no-padding-right">
             <div class="col-md-12 text-center no-padding-left">
                 <h2 class="title">
                     <span class="vertical"></span>
                     Elije por <span class="game-font-dark-blue">categor&iacute;a</span>
                 </h2>
             </div>
-            <div class="col-md-12 categories">
-                <div class="category text-center">
-                    <img src="img/search-icon-sports-blue.png" /><br/>
-                    <span>Sports</span>
-                </div>
-                <div class="category text-center">
-                    <img src="img/search-icon-sports-blue.png" /><br/>
-                    <span>Sports</span>
-                </div>
-                <div class="category text-center">
-                    <img src="img/search-icon-sports-blue.png" /><br/>
-                    <span>Sports</span>
-                </div>
-                <div class="category text-center">
-                    <img src="img/search-icon-sports-blue.png" /><br/>
-                    <span>Sports</span>
-                </div>
-                <div class="category text-center">
-                    <img src="img/search-icon-sports-blue.png" /><br/>
-                    <span>Sports</span>
-                </div>
-                <div class="category text-center">
-                    <img src="img/search-icon-sports-blue.png" /><br/>
-                    <span>Sports</span>
-                </div>
-                <div class="category text-center">
-                    <img src="img/search-icon-sports-blue.png" /><br/>
-                    <span>Sports</span>
-                </div>
-                <div class="category text-center">
-                    <img src="img/search-icon-sports-blue.png" /><br/>
-                    <span>Sports</span>
-                </div>
-                <div class="category text-center">
-                    <img src="img/search-icon-sports-blue.png" /><br/>
-                    <span>Sports</span>
+            <div class="col-md-12 categories no-padding-left">
+                <div class="category text-center" ng-repeat="category in categories" ng-class="category.active ? 'active' : ''">
+                    <img ng-src="{{category.logo}}" ng-click="categoryChoosen(category, $index)"/><br/>
+                    <span>{{category.name}}</span>
                 </div>
             </div>
         </div>
         <div class="games">
             <div class="game">
                 <div class="previous"></div>
-                <game-score src="'img/game-prueba-1.png'" score="4" bg-color="light-red" class="info"></game-score>
+                <game-score src="'img/game-prueba-1.png'" score="4" bg-color="light-red" class="info" />
                 <div class="next"></div>
             </div>
         </div>
         <div class="clearfix"></div>
     </section>
     <section class="row blog">
+        <h2 class="title game-font-light-blue">Blog</h2>
+        <hr/>
+        <div class="article-row">
+            <div class="col-md-6" ng-repeat="blog in blogs">
+                <blog-preview blog-id="blog.blogId" subtitle="blog.subtitle" desc="blog.desc" img-src="blog.imgSrc" date="blog.date" url="blog.url" />
+            </div>
+        </div>
+        <blog-paging pages="5" current="currentBlogPage" class="paging"/>
     </section>
 </div>

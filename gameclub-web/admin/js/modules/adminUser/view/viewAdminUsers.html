@@ -105,8 +105,12 @@
 								<i class="fa fa-pencil"></i>
 							</button>
 
-							<button type="button" class="btn btn-xs" ng-class="profile.status ? 'btn-danger' : 'btn-primary'" ng-click="changeStatus(user)" tooltip="Cambiar Estado">
+							<button type="button" class="btn btn-xs" ng-class="user.status ? 'btn-danger' : 'btn-success'" ng-click="changeStatus(user)" tooltip="Cambiar Estado">
 								<i class="fa fa-power-off"></i>
+							</button>
+
+							<button type="button" class="btn btn-xs btn-info" ng-click="resetPassword(user.id)" tooltip="Reestablecer Contraseña">
+								<i class="fa fa-refresh"></i>
 							</button>
 						</td>
 					</tr>

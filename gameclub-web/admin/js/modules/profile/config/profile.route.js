@@ -49,7 +49,7 @@ angular.module("Profile").config(function($stateProvider) {
 	})
 
 	.state(prefix + 'editProfile', {
-		url: "/edit-profile/:name",
+		url: "/edit-profile/:id/:name",
 		params: {name: null, id: null},
 		templateUrl: "js/modules/profile/view/manageProfile.html",
 		data: {displayName: 'Agregar Perfil'},

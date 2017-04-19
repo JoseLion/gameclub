@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ec.com.levelap.base.entity.ErrorControl;
+import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.user.entity.AdminUser;
 import ec.com.levelap.gameclub.module.user.repository.AdminUserRepo;
@@ -25,7 +26,11 @@ import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.mail.MailParameters;
 
 @Service
-public class AdminUserService {
+public class AdminUserService extends BaseService<AdminUser> {
+	public AdminUserService() {
+		super(AdminUser.class);
+	}
+
 	@Autowired
 	private AdminUserRepo adminUserRepo;
 	
@@ -72,7 +77,6 @@ public class AdminUserService {
 				return new ResponseEntity<ErrorControl>(new ErrorControl("El correo electrónico ingresado ya existe", true), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			
-			// Set and send temp password
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
 			SecureRandom random = new SecureRandom();
 			
@@ -95,12 +99,41 @@ public class AdminUserService {
 			} catch (MessagingException e) {
 				e.printStackTrace();
 				adminUserRepo.save(adminUser);
-				return new ResponseEntity<ErrorControl>(new ErrorControl("El usuario fue guardado pero el correo con la contraseña no pude ser enviado. Inténtalo más tarde desde el botón \"Cambiar Contraseña\"", true), HttpStatus.NOT_IMPLEMENTED);
+				return new ResponseEntity<ErrorControl>(new ErrorControl("El usuario fue guardado pero el correo con la contraseña no pude ser enviado. Inténtalo más tarde desde el botón \"Reestablecer Contraseña\"", true), HttpStatus.NOT_IMPLEMENTED);
 			}
 		}
 		
 		adminUserRepo.save(adminUser);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@Transactional
+	public void resetPassword(Long id) throws ServletException {
+		AdminUser adminUser = adminUserRepo.findOne(id);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
+		SecureRandom random = new SecureRandom();
+		
+		String randomPassword = "";
+		for (int i = 0; i < 8; i++) {
+			randomPassword += Const.PASSWORD_SYMBOLS.charAt(random.nextInt(Const.PASSWORD_SYMBOLS.length()));
+		}
+		
+		String encodedPassword = encoder.encode(randomPassword);
+		adminUser.setPassword(encodedPassword);
+		adminUser.setHasTempPassword(true);
+		
+		MailParameters mailParameters = new MailParameters();
+		mailParameters.setRecipentTO(Arrays.asList(adminUser.getUsername()));
+		Map<String, String> params = new HashMap<>();
+		params.put("password", randomPassword);
+		
+		try {
+			mail.sendMailWihTemplate(mailParameters, "TMPWRD", params);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		
+		adminUserRepo.save(adminUser);
 	}
 
 	public AdminUserRepo getAdminUserRepo() {

@@ -3,6 +3,7 @@ package ec.com.levelap.gameclub.module.profile.controller;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,7 @@ public class ProfileController {
 		return new ResponseEntity<Profile>(profile, HttpStatus.OK);
 	}
 	
+	@Transactional
 	@RequestMapping(value="changeStatus/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Boolean> changeStatus(@PathVariable Long id) throws ServletException {
 		Profile profile = profileService.getProfileRepo().findOne(id);

@@ -52,5 +52,33 @@ angular.module("AdminUser").config(function($stateProvider) {
 				return null;
 			}
 		}
+	})
+
+	.state(prefix + 'editAdminUser', {
+		url: "/edit-admin-user/:id/:fullName",
+		params: {fullName: null, id: null},
+		templateUrl: "js/modules/adminUser/view/manageAdminUser.html",
+		data: {displayName: 'Agregar Usuario del Administrador'},
+		controller: "ManageAdminUserCtrl",
+		resolve: {
+			loadPlugin: function($ocLazyLoad) {
+				return $ocLazyLoad.load([{
+					name: 'AdminUser',
+					files: ['js/modules/adminUser/controller/manageAdminUserCtrl.js']
+				}]);
+			},
+
+			profiles: function(rest) {
+				return rest("profile/findProfiles", true).post(function(data) {
+					return data;
+				});
+			},
+
+			adminUser: function(rest, $stateParams) {
+				return rest("adminUser/findOne/:id").get({id: $stateParams.id}, function(data) {
+					return data;
+				});
+			}
+		}
 	});
 });

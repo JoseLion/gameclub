@@ -69,7 +69,7 @@ public class AdminUserController {
 		return new ResponseEntity<Boolean>(adminUser.getStatus(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="resetPassword", method=RequestMethod.GET)
+	@RequestMapping(value="resetPassword/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> resetPassword(@PathVariable Long id) throws ServletException {
 		adminUserService.resetPassword(id);
 		return new ResponseEntity<>(HttpStatus.OK);

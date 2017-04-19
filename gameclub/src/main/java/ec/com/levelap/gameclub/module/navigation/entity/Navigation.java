@@ -11,18 +11,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ec.com.levelap.base.entity.BaseEntity;
 
 @Entity
 @Table(schema="gameclub", name="navigation", uniqueConstraints=@UniqueConstraint(columnNames="route", name="route_uk"))
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Navigation extends BaseEntity {
 	@Column(columnDefinition="VARCHAR")
 	private String name;
@@ -39,14 +39,17 @@ public class Navigation extends BaseEntity {
 	@Column(columnDefinition="INTEGER DEFAULT 0")
 	private Integer level = 0;
 	
-	//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+	@JsonBackReference("Recursive")
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="parent", foreignKey=@ForeignKey(name="navigation_parent_fk"))
 	private Navigation parent;
 	
-	//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+	@JsonManagedReference("Recursive")
 	@OneToMany(mappedBy="parent", fetch=FetchType.LAZY)
 	private List<Navigation> children = new ArrayList<>();
+	
+	@Transient
+	private Long parentId;
 
 	public String getName() {
 		return name;
@@ -97,18 +100,22 @@ public class Navigation extends BaseEntity {
 	}
 
 	public List<Navigation> getChildren() {
-		/*if (children != null) {
-			for (Navigation child : children) {
-				if (child.parent != null) {
-					child.parent.setChildren(new ArrayList<>());
-				}
-			}
-		}*/
-		
 		return children;
 	}
 
 	public void setChildren(List<Navigation> children) {
 		this.children = children;
+	}
+
+	public Long getParentId() {
+		if (parent != null) {
+			parentId = parent.getId();
+		}
+		
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}
 }

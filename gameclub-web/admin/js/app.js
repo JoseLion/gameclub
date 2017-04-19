@@ -14,7 +14,8 @@ angular.module("Gameclub", [
 	'datatables.buttons',
 	'Core',
 	'Login',
-	'Profile'
+	'Profile',
+	'AdminUser'
 ]).config(["$locationProvider" ,"$httpProvider", function($locationProvider, $httpProvider, $http) {
 	$httpProvider.defaults.withCredentials = true;
 

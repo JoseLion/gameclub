@@ -69,7 +69,10 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 				}
 			}, function(error) {
 				if ((error.status == 401 || error.status < 0) && toState.name != Const.loginState) {
-					$rootScope.redirect = toState.name;
+					if (toState.name != Const.loginState) {
+						$rootScope.redirect = toState.name;
+					}
+					
 					goToLogin(event, toState);
 				}
 			});
@@ -77,7 +80,10 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 	});
 
 	$rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams, options) {
-		$rootScope.redirect = toState.name;
+		if (toState.name != Const.loginState) {
+			$rootScope.redirect = toState.name;
+		}
+		
 		$location.hash();
 		$anchorScroll();
 	});

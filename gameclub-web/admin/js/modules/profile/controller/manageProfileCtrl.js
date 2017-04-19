@@ -1,10 +1,21 @@
-angular.module("Profile").controller('AddProfileCtrl', function($scope, navigation, forEach, getIndexOfArray, sweet, rest) {
+angular.module("Profile").controller('ManageProfile', function($scope, navigation, profile, forEach, getIndexOfArray, sweet, rest, $state) {
 	$scope.profile = {
 		crossNavigation: []
 	};
 
 	navigation.$promise.then(function(data) {
 		$scope.navigation = data;
+
+		if (profile != null) {
+			profile.$promise.then(function(profileData) {
+				$scope.profile = profileData;
+
+				forEach($scope.profile.crossNavigation, function(cross) {
+					let nav = findInTree($scope.navigation, cross.navigation.id);
+					nav.selected = true;
+				});
+			});
+		}
 	});
 
 	$scope.selectedChanged = function(child) {
@@ -21,7 +32,7 @@ angular.module("Profile").controller('AddProfileCtrl', function($scope, navigati
 			});
 		}
 
-		let parent = findInTree($scope.navigation, child.parent);
+		let parent = findInTree($scope.navigation, child.parentId);
 
 		if (parent != null) {
 			let oneSelected = false;
@@ -45,20 +56,19 @@ angular.module("Profile").controller('AddProfileCtrl', function($scope, navigati
 	}
 
 	$scope.save = function() {
-		forEach($scope.profile.crossNavigation, function(cross) {
-			delete cross.parent;
-		});
-
-		console.log("profile: ", $scope.profile);
-
 		sweet.save(function() {
 			rest("profile/save").post($scope.profile, function() {
 				sweet.success();
 				sweet.close();
+				$scope.cancel();
 			}, function(error) {
-				sweet.close();
+				sweet.error(error.data.message);
 			});
 		});
+	}
+
+	$scope.cancel = function() {
+		$state.go("^.viewProfiles");
 	}
 
 	function addRemoveNavigation(child) {

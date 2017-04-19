@@ -11,4 +11,6 @@ import ec.com.levelap.gameclub.module.profile.entity.ProfileLite;
 @Repository
 public interface ProfileRepo extends JpaRepository<Profile, Long> {
 	public List<ProfileLite> findByNameContainingOrderByName(String name);
+	
+	public Profile findByName(String name);
 }

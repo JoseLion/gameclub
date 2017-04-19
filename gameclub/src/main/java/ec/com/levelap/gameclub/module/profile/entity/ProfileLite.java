@@ -6,4 +6,8 @@ public interface ProfileLite {
 	public String getName();
 	
 	public String getDescription();
+	
+	public Boolean getStatus();
+	
+	public Boolean getWildcard();
 }

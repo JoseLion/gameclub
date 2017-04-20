@@ -25,13 +25,14 @@ body{background-color:transparent;}
 /********** HEADER **********/
 header{background:@color-dark-blue;font-weight:700;}
 header .social-media{text-align:left;padding-top:5px;}
-header .social-media img{margin:0px 0.3em;cursor:pointer;height:1em;}
+header .social-media a{margin:0px 0.2em;font-size:1.2em;color:@color-light-red;}
+header .social-media a:hover{color:@color-white;}
 header .contacts{text-align:right;font-size:0.9em;}
-header .contacts div{padding:5px 15px;border-left:1px solid @color-semilight-blue;}
-header .contacts div:first-child{border-left:0px;}
-header .contacts a{color:@color-light-red;text-decoration:none;font-size:0.9em;}
-header .contacts a:hover{color:@color-white;}
-header .contacts img{margin-right:0.65em;}
+header .contacts a{position:relative;display:inline-block;color:@color-light-red;text-decoration:none;padding:10px 0 5px 40px;border-left:1px solid @color-semilight-blue;margin-left:10px;}
+header .contacts a:first-child{border-left:0px;}
+header .contacts a i,header .contacts a img{font-size:1.7em;position:absolute;left:10%;top:0.37em;}
+header .contacts a:hover span{color:@color-white;}
+header .contacts a i:hover{color:@color-light-red;}
 header .shortcut-links{position:absolute;font-size:18px;padding-top:5px;font-weight:700;left:0;right:0;z-index:1;
 background:@color-dark-blue-transparent;background:linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);background:-webkit-linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);background:-o-linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);background:-moz-linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);}
 header .shortcut-links img{cursor:pointer;}
@@ -46,16 +47,26 @@ header .shortcut-links .links nav button.btn-primary.active{border-color:@color-
 /****************************/
 
 /********** FOOTER **********/
-footer{background:@color-dark-blue;font-weight:700;font-size:0.9em;}
+footer{background:@color-dark-blue;font-weight:700;font-size:1em;}
 footer .logo{text-align:center;}
 footer .logo img{cursor:pointer;}
 footer .logo,footer .links-text{padding:15px;}
 footer .links-text{margin-top:3em;}
 footer .links a{color:@color-white;text-decoration:none;}
-footer .contacts-shares a{color:@color-light-red;text-decoration:none;margin-left:10px;}
-footer .contacts-shares a:hover{color:@color-white;}
-footer .contacts-shares span{padding-left:0px;}
+footer .contacts-shares .contacts{font-size:0.9em;}
+footer .contacts-shares .contacts a{position:relative;display:inline-block;color:@color-light-red;text-decoration:none;padding-left:15%;}
+footer .contacts-shares .contacts a i,footer .contacts-shares .contacts a img{font-size:1.7em;position:absolute;left:3%;top:0;}
+footer .contacts-shares .contacts a:hover span{color:@color-white;}
+footer .contacts-shares .contacts a i:hover{color:@color-light-red;}
+
+// footer .contacts-shares a:hover{color:@color-white;}
+// footer .contacts-shares span{padding-left:0px;}
+
+
 footer .contacts-shares .social-media img{margin-left:0px;margin-right:0.25em;cursor:pointer;height:1em;}
+footer .contacts-shares .social-media{text-align:left;padding-top:5px;}
+footer .contacts-shares .social-media a{margin:0px 0.2em;font-size:1.2em;color:@color-light-red;}
+footer .contacts-shares .social-media a:hover{color:@color-white;}
 footer .copyright{color:@color-light-red;margin-top:1em;}
 footer .copyright span.title{text-transform:uppercase;}
 footer .spacing{letter-spacing:2.5px;}

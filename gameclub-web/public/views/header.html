@@ -1,16 +1,32 @@
-<header class="row">
-    <section class="social-media col-md-6">
-        <img src="img/fb-icon.png"/>
-        <img src="img/instagram-icon.png"/>
-        <img src="img/youtube-icon.png"/></a>
-        <img src="img/twitter-icon.png"/></a>
-    </section>
-    <section class="contacts col-md-6 no-padding-left no-padding-right">
-        <div class="col-md-7">
-            <a href="mailto:info@gameclub.com.ec"><img src="img/mail-to.png"/>info@gameclub.com.ec</a>
+<header>
+    <div class="row">
+        <section class="social-media col-md-6">
+            <img ng-init="srcFb = 'img/social-media-icon-fb.svg'" ng-src="{{srcFb}}" ng-mouseover="srcFb = 'img/social-media-icon-fb-w.svg'" ng-mouseout="srcFb = 'img/social-media-icon-fb.svg'"/>
+            <img ng-init="srcIns = 'img/social-media-icon-ins.svg'" ng-src="{{srcIns}}" ng-mouseover="srcIns = 'img/social-media-icon-ins-w.svg'" ng-mouseout="srcIns = 'img/social-media-icon-ins.svg'"/>
+            <img ng-init="srcYt = 'img/social-media-icon-yt.svg'" ng-src="{{srcYt}}" ng-mouseover="srcYt = 'img/social-media-icon-yt-w.svg'" ng-mouseout="srcYt = 'img/social-media-icon-yt.svg'"/>
+            <img ng-init="srcTw = 'img/social-media-icon-tw.svg'" ng-src="{{srcTw}}" ng-mouseover="srcTw = 'img/social-media-icon-tw-w.svg'" ng-mouseout="srcTw = 'img/social-media-icon-tw.svg'"/>
+        </section>
+        <section class="contacts col-md-6 no-padding-left no-padding-right">
+            <div class="col-md-7">
+                <a href="mailto:info@gameclub.com.ec"><img src="img/mail-to.png"/>info@gameclub.com.ec</a>
+            </div>
+            <div class="col-md-5 text-left">
+                <a href="tel:+593967995408"><img src="img/whatsapp.png"/>(+593) 96 799 5408</a>
+            </div>
+        </section>
+    </div>
+    <section class="row shortcut-links">
+        <div class="col-md-4">
+            <img src="img/gameclub-logo.png" height="70px" ui-sref-active="active" ui-sref="gameclub.home"/>
         </div>
-        <div class="col-md-5 text-left">
-            <a href="tel:+593967995408"><img src="img/whatsapp.png"/>(+593) 96 799 5408</a>
+        <div class="col-md-8 text-right links">
+            <nav>
+                <li><button class="btn btn-primary" ><span class="spacing">{{link.shareAndPlay.name}}</span></button></li>
+                <li><button class="btn btn-primary" ><span class="upper-case">{{link.faq.name}}</span></button></li>
+                <li><button class="btn btn-primary" ui-sref="{{link.blog.route}}" ui-sref-active="active"><span class="upper-case">{{link.blog.name}}</span></button></li>
+                <li><button class="btn btn-primary" ><span class="upper-case">{{link.login.name}}</span></button></li>
+            </nav>
         </div>
+        <div class="clearfix"></div>
     </section>
 </header>

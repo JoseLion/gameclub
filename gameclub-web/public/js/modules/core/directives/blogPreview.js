@@ -1,4 +1,4 @@
-angular.module("Core").directive('blogPreview', function() {
+angular.module("Core").directive('blogPreview', function($state) {
 	return {
 		restrict: 'E',
 		templateUrl: "js/modules/core/directives/blogPreview.html",
@@ -13,7 +13,7 @@ angular.module("Core").directive('blogPreview', function() {
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
 			$scope.completeBlog = function() {
-				console.log('REDIRIGIR A LA PANTALLA DE BLOG COMPLETA Y PASAR EL ID PARA BUSCAR');
+				$state.go('gameclub.blog', {idBlog: $scope.blogId});
 			}
 
 		}

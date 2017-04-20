@@ -1,4 +1,24 @@
-angular.module("GameClub").controller('MainCtrl', function() {
+angular.module("GameClub").controller('MainCtrl', function($rootScope, $state, Const) {
+
+	$rootScope.link = {
+		shareAndPlay : {
+			name: 'Share & Play',
+			route: ''
+		},
+		faq : {
+			name: 'Preguntas',
+			route: ''
+		},
+		blog : {
+			name: 'Blog',
+			route: 'gameclub.blog'
+		},
+		login : {
+			name: 'Inicia sesión',
+			route: ''
+		}
+	};
+
 
 	// $http.get(urlRestPath.url + "/api/token").then(function(response) {
 	// 	if (response != null && response.data != null) {

@@ -4,7 +4,8 @@ angular.module('GameClub', [
 	'ui.select',
 	'ngSanitize',
 	'Core',
-	'Home'
+	'Home',
+	'Blog'
 ])
 // .config(["$locationProvider" ,"$httpProvider", function($locationProvider, $httpProvider, $http) {
 // 	$httpProvider.defaults.withCredentials = true;

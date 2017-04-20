@@ -1,7 +1,7 @@
 <footer class="col-md-12 no-padding-left no-padding-right">
     <section class="row col-md-12">
         <div class="col-md-2 logo">
-            <img src="img/gameclub-logo-footer.png"/>
+            <img src="img/gameclub-logo-footer.png" ui-sref="gameclub.home"/>
         </div>
         <div class="col-md-10 links-text">
             <div class="col-md-4 links no-padding-right top-space">
@@ -10,7 +10,7 @@
                 <a class="col-md-12" href>T&eacute;rminos y condiciones</a>
             </div>
             <div class="col-md-3 links top-space">
-                <a class="col-md-12" href>Blog</a>
+                <a class="col-md-12" ui-sref="gameclub.blog">Blog</a>
                 <a class="col-md-12" href>Cont&aacute;ctanos</a>
             </div>
             <div class="col-md-5 contacts-shares">
@@ -21,10 +21,10 @@
                     <a href="tel:+593967995408"><span class="col-md-1"><img src="img/whatsapp.png"/></span>(+593) 96 799 5408</a>
                 </div>
                 <div class="col-md-12 social-media top-space">
-                    <img src="img/fb-icon.png"/>
-                    <img src="img/instagram-icon.png"/>
-                    <img src="img/youtube-icon.png"/>
-                    <img src="img/twitter-icon.png"/>
+                    <img ng-init="srcFb = 'img/social-media-icon-fb.svg'" ng-src="{{srcFb}}" ng-mouseover="srcFb = 'img/social-media-icon-fb-w.svg'" ng-mouseout="srcFb = 'img/social-media-icon-fb.svg'"/>
+                    <img ng-init="srcIns = 'img/social-media-icon-ins.svg'" ng-src="{{srcIns}}" ng-mouseover="srcIns = 'img/social-media-icon-ins-w.svg'" ng-mouseout="srcIns = 'img/social-media-icon-ins.svg'"/>
+                    <img ng-init="srcYt = 'img/social-media-icon-yt.svg'" ng-src="{{srcYt}}" ng-mouseover="srcYt = 'img/social-media-icon-yt-w.svg'" ng-mouseout="srcYt = 'img/social-media-icon-yt.svg'"/>
+                    <img ng-init="srcTw = 'img/social-media-icon-tw.svg'" ng-src="{{srcTw}}" ng-mouseover="srcTw = 'img/social-media-icon-tw-w.svg'" ng-mouseout="srcTw = 'img/social-media-icon-tw.svg'"/>
                 </div>
             </div>
             <div class="col-md-12 copyright">

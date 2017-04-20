@@ -25,23 +25,37 @@ body{background-color:transparent;}
 /********** HEADER **********/
 header{background:@color-dark-blue;font-weight:700;}
 header .social-media{text-align:left;padding-top:5px;}
-header .social-media img{margin:0px 0.3em;;cursor:pointer;}
+header .social-media img{margin:0px 0.3em;cursor:pointer;height:1em;}
 header .contacts{text-align:right;font-size:0.9em;}
 header .contacts div{padding:5px 15px;border-left:1px solid @color-semilight-blue;}
 header .contacts div:first-child{border-left:0px;}
-header .contacts a{color:@color-light-red;text-decoration:none;}
+header .contacts a{color:@color-light-red;text-decoration:none;font-size:0.9em;}
+header .contacts a:hover{color:@color-white;}
 header .contacts img{margin-right:0.65em;}
+header .shortcut-links{position:absolute;font-size:18px;padding-top:5px;font-weight:700;left:0;right:0;z-index:1;
+background:@color-dark-blue-transparent;background:linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);background:-webkit-linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);background:-o-linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);background:-moz-linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);}
+header .shortcut-links img{cursor:pointer;}
+header .shortcut-links .links{padding:19px 0;}
+header .shortcut-links .spacing{letter-spacing:1.5px;text-transform:lowercase;}
+header .shortcut-links .links nav>li{display:inline;border-left:1px solid @color-light-red;padding:6px 5px 6px 10px;}
+header .shortcut-links .links nav>li:first-child{border-left:none;}
+header .shortcut-links .links nav button.btn{border-radius:8px;text-transform:none;padding:5px 15px 2.5px;font-size:0.7em;}
+header .shortcut-links .links nav button.btn-primary{color:@color-white;border-color:transparent;}
+header .shortcut-links .links nav button.btn-primary:hover{border-color:@color-light-red;}
+header .shortcut-links .links nav button.btn-primary.active{border-color:@color-light-red;}
 /****************************/
 
 /********** FOOTER **********/
 footer{background:@color-dark-blue;font-weight:700;font-size:0.9em;}
 footer .logo{text-align:center;}
+footer .logo img{cursor:pointer;}
 footer .logo,footer .links-text{padding:15px;}
 footer .links-text{margin-top:3em;}
 footer .links a{color:@color-white;text-decoration:none;}
 footer .contacts-shares a{color:@color-light-red;text-decoration:none;margin-left:10px;}
+footer .contacts-shares a:hover{color:@color-white;}
 footer .contacts-shares span{padding-left:0px;}
-footer .contacts-shares .social-media img{margin-left:0px;margin-right:0.25em;}
+footer .contacts-shares .social-media img{margin-left:0px;margin-right:0.25em;cursor:pointer;height:1em;}
 footer .copyright{color:@color-light-red;margin-top:1em;}
 footer .copyright span.title{text-transform:uppercase;}
 footer .spacing{letter-spacing:2.5px;}
@@ -58,10 +72,12 @@ footer .designed span{letter-spacing:1px;}
 .game-font-light-blue{color:@color-light-blue;/*NEW FONT*/}
 .white-search{background:@color-white-transparent;padding-top:10px;padding-bottom:10px;text-transform:uppercase;margin-top:10px;}
 .btn,.btn:hover,.btn:visited,.btn:focus,.btn:active,.btn:active:focus,.btn:active:hover{border-width:2px;border-style:solid;background:transparent;text-transform:uppercase;padding:5px 30px 2.5px;border-radius:12px;font-weight:700;box-shadow:none;}
-.ui-select-toggle .btn,.ui-select-toggle .btn:hover,.ui-select-toggle .btn:visited,.ui-select-toggle .btn:focus,.ui-select-toggle .btn:active,.ui-select-toggle .btn:active:focus,.ui-select-toggle .btn:active:hover{padding:0;}
-.btn-primary,.btn-primary:hover,.btn-primary:visited,.btn-primary:focus,.btn-primary:active,.btn-primary:active:focus,.btn-primary:active:hover{color:@color-dark-blue;border-color:@color-light-red;}
+.btn.active,.btn.active:hover,.btn.active:visited,.btn.active:focus,.btn.active:active,.btn.active:active:focus,.btn.active:active:hover{border-width:2px;border-style:solid;background:transparent;}
+.btn-primary,.btn-primary:hover,.btn-primary:visited,.btn-primary:focus,.btn-primary:active,.btn-primary:active:focus,.btn-primary:active:hover,
+.btn-primary.active,.btn-primary.active:hover,.btn-primary.active:visited,.btn-primary.active:focus,.btn-primary.active:active,.btn-primary.active:active:focus,.btn-primary.active:active:hover{color:@color-dark-blue;border-color:@color-light-red;}
 .btn-secundary,.btn-secundary:hover,.btn-secundary:visited,.btn-secundary:focus,.btn-secundary:active,.btn-secundary:active:focus,.btn-secundary:active:hover{color:@color-white;border-color:@color-dark-blue;}
 .btn-tertiary,.btn-tertiary:hover,.btn-tertiary:visited,.btn-tertiary:focus,.btn-tertiary:active,.btn-tertiary:active:focus,.btn-tertiary:active:hover{color:@color-light-blue;border-color:@color-white;}
+.ui-select-toggle .btn,.ui-select-toggle .btn:hover,.ui-select-toggle .btn:visited,.ui-select-toggle .btn:focus,.ui-select-toggle .btn:active,.ui-select-toggle .btn:active:focus,.ui-select-toggle .btn:active:hover{padding:0;}
 /*****************************/
 
 /********* GAME-SCORE **********/
@@ -99,19 +115,9 @@ background:linear-gradient(45deg,@color-light-red,@color-light-red,@color-light-
 
 /********** HOME-PAGE **********/
 #home{color:@color-white;display:block;position:relative;}
-#home::before{content:"";background:url("../img/dust-home-bg.png") repeat-y center top;background-size:100%;position:absolute;top:0;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;}
+#home::before{content:"";background:url("../img/dust-home-bg.png") repeat-y center top;background-size:100%;position:absolute;top:-5%;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;}
 
-#home .shortcut-links{font-size:18px;padding-top:5px;font-weight:700;
-background:@color-dark-blue-transparent;background:linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);background:-webkit-linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);background:-o-linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);background:-moz-linear-gradient(@color-dark-blue 5%,@color-dark-blue-transparent 10%,transparent);}
-#home .shortcut-links .links{padding:19px 0;}
-#home .shortcut-links .spacing{letter-spacing:1.5px;}
-#home .shortcut-links .links nav>li{display:inline;border-left:1px solid @color-light-red;padding:6px 5px 6px 10px;}
-#home .shortcut-links .links nav>li:first-child{border-left:none;}
-#home .shortcut-links .links nav button.btn{border-radius:8px;text-transform:none;padding:5px 15px 2.5px;font-size:0.7em;}
-#home .shortcut-links .links nav button.btn-primary{color:@color-white;border-color:transparent;}
-#home .shortcut-links .links nav button.btn-primary:hover{border-color:@color-light-red;}
-
-#home .banner{margin-top:5%;padding-top:4%;padding-bottom:20%;text-align:center;display:block;position:relative;}
+#home .banner{margin-top:10%;padding-top:4%;padding-bottom:20%;text-align:center;display:block;position:relative;}
 #home .banner::before{content:"";background:url("../img/banner-pad-bg.png") no-repeat center top;background-size:40%;position:absolute;top:0;right:0;bottom:0;left:0;z-index:-5;opacity:0.7;}
 #home .banner hr{border-top:2px solid @color-white;margin-bottom:5px;margin-top:0px;}
 #home .banner .title-up{margin-left:12%;margin-right:54%;}
@@ -250,6 +256,10 @@ background:-moz-linear-gradient(-60deg,@color-light-red,@color-light-red,@color-
 #home .contact-us form.contact-form textarea[name="message"]{background-image:url("../img/contact-message.png");background-size:15px auto;background-position-x:97%;background-position-y:2%;background-repeat:no-repeat;}
 #home .contact-us form.contact-form .send-button{margin-top:5%;margin-bottom: 6%;}
 #home .contact-us form.contact-form .send-button button{border-radius:5px;}
+/*******************************/
+
+/********** BLOG-PAGE **********/
+#blog{height:1500px;padding-top:5%;color:@color-white;}
 /*******************************/
 
 /*

@@ -58,6 +58,7 @@ footer .designed span{letter-spacing:1px;}
 .game-font-light-blue{color:@color-light-blue;/*NEW FONT*/}
 .white-search{background:@color-white-transparent;padding-top:10px;padding-bottom:10px;text-transform:uppercase;margin-top:10px;}
 .btn,.btn:hover,.btn:visited,.btn:focus,.btn:active,.btn:active:focus,.btn:active:hover{border-width:2px;border-style:solid;background:transparent;text-transform:uppercase;padding:5px 30px 2.5px;border-radius:12px;font-weight:700;box-shadow:none;}
+.ui-select-toggle .btn,.ui-select-toggle .btn:hover,.ui-select-toggle .btn:visited,.ui-select-toggle .btn:focus,.ui-select-toggle .btn:active,.ui-select-toggle .btn:active:focus,.ui-select-toggle .btn:active:hover{padding:0;}
 .btn-primary,.btn-primary:hover,.btn-primary:visited,.btn-primary:focus,.btn-primary:active,.btn-primary:active:focus,.btn-primary:active:hover{color:@color-dark-blue;border-color:@color-light-red;}
 .btn-secundary,.btn-secundary:hover,.btn-secundary:visited,.btn-secundary:focus,.btn-secundary:active,.btn-secundary:active:focus,.btn-secundary:active:hover{color:@color-white;border-color:@color-dark-blue;}
 .btn-tertiary,.btn-tertiary:hover,.btn-tertiary:visited,.btn-tertiary:focus,.btn-tertiary:active,.btn-tertiary:active:focus,.btn-tertiary:active:hover{color:@color-light-blue;border-color:@color-white;}
@@ -122,9 +123,9 @@ background:@color-dark-blue-transparent;background:linear-gradient(@color-dark-b
 #home .banner .search .search-params .filter:first-child{border-left:0px;}
 #home .banner .search .search-params input{text-transform:uppercase;}
 #home .banner .search .search-params input:focus{outline:none;}
-#home .banner .search .search-params input::-webkit-input-placeholder{color:@color-white;}
-#home .banner .search .search-params input::-moz-placeholder{color:@color-white;}
-#home .banner .search .search-params input::-ms-input-placeholder{color:@color-white;}
+#home .banner .search .search-params input::-webkit-input-placeholder{color:@color-white;text-transform:none;}
+#home .banner .search .search-params input::-moz-placeholder{color:@color-white;text-transform:none;}
+#home .banner .search .search-params input::-ms-input-placeholder{color:@color-white;text-transform:none;}
 #home .banner .search .search-params input,
 #home .banner .search .search-params .selector{width:100%;padding:5px 10px;color:inherit;background:transparent;color:@color-white;border:none;}
 #home .banner .search .search-params .selector span{font-size:1em;}
@@ -132,8 +133,9 @@ background:@color-dark-blue-transparent;background:linear-gradient(@color-dark-b
 #home .banner .search .search-params .selector .ui-select-match>span .caret.pull-right{top:40% !important;right:0px !important;}
 #home .banner .search .search-params .selector .ui-select-match.btn-default-focus{color:@color-white;background-color:transparent;border:none;outline:none;box-shadow:none;}
 #home .banner .search .search-params .selector .ui-select-search{font-size:1em;padding:0px;height:21px;border:none;}
-#home .banner .search .search-params .selector .glyphicon-remove::before{content:"X";color:@color-white;font-weight:700;}
+#home .banner .search .search-params .selector .glyphicon-remove{color:@color-white;}
 #home .banner .search .search-params .selector .ui-select-match>span,#home .banner .search .search-params .ui-select-match>span>span,#home .banner .search .search-params .ui-select-match .ui-select-placeholder,#home .banner .search .search-params input{background:transparent;color:@color-white;border:none;box-shadow:none;}
+#home .banner .search .search-params .ui-select-match .ui-select-placeholder{text-transform:none;}
 #home .banner .search .search-params .selector .ui-select-choices{background:@color-dark-blue;color:@color-white;border:1px solid @color-dark-blue;border-radius:10px;border-top-left-radius:0px;border-top-right-radius:0px;}
 #home .banner .search .search-params .selector.direction-up .ui-select-choices{border-bottom-left-radius:0px;border-bottom-right-radius:0px}
 #home .banner .search .search-params .selector .ui-select-choices .ui-select-choices-row{text-transform:uppercase;padding-left:15px;padding-right:15px;font-size:1em;padding-top:5px;}
@@ -223,9 +225,8 @@ background:-moz-linear-gradient(-60deg,@color-light-red,@color-light-red,@color-
 #home .choose-by-cat .games .previous::after,#home .choose-by-cat .games .next::after{bottom:0;width:5px;bottom:1.5px;}
 #home .choose-by-cat .games .game .info{width:50%;position:absolute;left:25%;right:25%;top:30%;}
 #home .choose-by-cat .categories::-webkit-scrollbar{background:transparent;height:23px;}
-#home .choose-by-cat .categories::-webkit-scrollbar-track{background:transparent;border:2px solid @color-white;border-radius:10px;margin-left:35%;margin-right:35%;background-clip:content-box;}
-#home .choose-by-cat .categories::-webkit-scrollbar-track-piece{background:@color-dark-blue;border-radius:20px;border:6px solid transparent; margin:0 4px;background-clip:content-box;}
-#home .choose-by-cat .categories::-webkit-scrollbar-thumb{background:url("../img/scroll-thumb.png") no-repeat center center;border:4px solid transparent;background-clip:content-box;}
+#home .choose-by-cat .categories::-webkit-scrollbar-track{background:url("../img/scroll-track.svg") no-repeat center center;background-size:auto 14px;border:2px solid @color-white;border-radius:10px;margin-left:35%;margin-right:35%;}
+#home .choose-by-cat .categories::-webkit-scrollbar-thumb{background:url("../img/scroll-thumb.svg") no-repeat center center;background-size:15px;}
 
 #home .blog{background:@color-light-gray;padding-top:1%;box-shadow: 5px 10px 25px 5px @color-dark-blue-transparent-30;}
 #home .blog .title{text-transform:uppercase;font-size:2.5em;font-weight:700;}

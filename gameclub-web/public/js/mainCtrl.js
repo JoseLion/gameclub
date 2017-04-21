@@ -3,7 +3,7 @@ angular.module("GameClub").controller('MainCtrl', function($rootScope, $state, C
 	$rootScope.link = {
 		shareAndPlay : {
 			name: 'Share & Play',
-			route: ''
+			route: 'gameclub.home({anchor:"how-it-works"})'
 		},
 		faq : {
 			name: 'Preguntas',
@@ -18,7 +18,6 @@ angular.module("GameClub").controller('MainCtrl', function($rootScope, $state, C
 			route: ''
 		}
 	};
-
 
 	// $http.get(urlRestPath.url + "/api/token").then(function(response) {
 	// 	if (response != null && response.data != null) {

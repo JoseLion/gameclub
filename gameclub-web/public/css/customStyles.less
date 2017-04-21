@@ -104,16 +104,17 @@ footer .designed span{letter-spacing:1px;}
 /**********************************/
 
 /********** HOW WORKS **********/
-.how-works .step.second-step{position:relative;}
-.how-works .step.third-step{padding-bottom:4.5%;position:relative;}
-.how-works .step.third-step .description{margin-bottom:2%;color:@color-primary;font-size:1.2em;line-height:1em;}
-.how-works .step.third-step .description.white{color:@color-tertiary;margin-bottom:3%;}
-.how-works .step.third-step .description:last-child{margin-bottom:1%;}
-.how-works .step.third-step img{margin-bottom:1%;}
-.how-works .step ul{color:@color-primary-alt;padding-left:20px;margin-top:2%;}
-.how-works .step .title .number-container{position:absolute;width:20px;height:20px;top:0;left:0;border-radius:50%;}
-.how-works .step .title .number-container img{position:relative;width:100%;}
-.how-works .step ul>li{margin:2% 0 1%;}
+.how-it-works .step.second-step{position:relative;}
+.how-it-works .step.third-step{padding-bottom:4.5%;position:relative;}
+.how-it-works .step.third-step .description{margin-bottom:2%;color:@color-primary;font-size:1.2em;line-height:1em;}
+.how-it-works .step.third-step .description.white{color:@color-tertiary;margin-bottom:3%;}
+.how-it-works .step.third-step .description:last-child{margin-bottom:1%;}
+.how-it-works .step.third-step img{margin-bottom:1%;}
+.how-it-works .step ul{color:@color-primary-alt;padding-left:20px;margin-top:2%;}
+.how-it-works .step .title .number-container{position:absolute;width:20px;height:20px;top:0;left:0;border-radius:50%;}
+.how-it-works .step .title .number-container img{position:relative;width:100%;}
+.how-it-works .step .title .number-container.ib{display:inline-block;position:relative;margin-left:-7%;margin-right:2%}
+.how-it-works .step ul>li{margin:2% 0 1%;}
 /*******************************/
 
 /********* GAME-SCORE **********/
@@ -189,51 +190,51 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-primar
 #home .most-played .title{padding-top:10px;text-transform:uppercase;font-size:1.5em;font-weight:700;border-left:2px solid @color-primary-alt;border-right:2px solid @color-primary-alt;}
 #home .most-played .games .list>div{padding-top:7%;padding-bottom:7%;position:relative;}
 #home .most-played .games .left,#home .most-played .games .right{position:relative;padding-top:6%}
-#home .most-played .games .left::before,#home .most-played .games .right::before{content:"";display:block;padding-top:75%;}
-#home .most-played .games .btn-most-played{width:45px;height:45px;margin:auto;position:relative;transform:rotate(-45deg);cursor:pointer;}
-#home .most-played .games .btn-most-played::before,#home .most-played .games .btn-most-played::after{content:"";position:absolute;bottom:0;right:0;border-bottom-right-radius:25%;background:@color-tertiary;
-background:linear-gradient(135deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 80%);background:-webkit-linear-gradient(-45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 80%);background:-o-linear-gradient(-45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 80%);background:-moz-linear-gradient(-45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 80%);}
-#home .most-played .games .btn-most-played::before{left:0;height:7px;right:1.5px;}
-#home .most-played .games .btn-most-played::after{top:0;width:7px;bottom:1.5px;}
+#home .most-played .games .left .btn-most-played i{
+background:@color-primary;background:linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+font-size:72px;-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+#home .most-played .games .right .btn-most-played i{
+background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+font-size: 72px;-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-#home .how-works{text-align:center;position:relative;background:@color-primary;display:block;z-index:-5;}
-#home .how-works{z-index:0;}
-#home .how-works::before{content:"";background:transparent;position:absolute;left:0;right:0;top:0;bottom:0;width:100%;height:100%;z-index:-4;
+#home .how-it-works{text-align:center;position:relative;background:@color-primary;display:block;z-index:-5;}
+#home .how-it-works{z-index:0;}
+#home .how-it-works::before{content:"";background:transparent;position:absolute;left:0;right:0;top:0;bottom:0;width:100%;height:100%;z-index:-4;
 background:linear-gradient(150deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 65%,@color-how-work 80%);
 background:-webkit-linear-gradient(-60deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 65%,@color-how-work 80%);
 background:-o-linear-gradient(-60deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 65%,@color-how-work 80%);
 background:-moz-linear-gradient(-60deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 65%,@color-how-work 80%);}
-#home .how-works .separator{width:2em;height:2em;position:absolute;top:-2em;left:0;right:0;margin:auto;background:@color-tertiary;border-radius:50%;}
-#home .how-works .title{padding:1% 0;text-transform:uppercase;font-size:1.7em;font-weight:700;margin-top:1%;margin-bottom:0;}
-#home .how-works .right-blue-box{background:@color-primary;padding:2% 20% 2.5% 1.5%;box-shadow:-15px 10px 60px -5px @color-primary;}
-#home .how-works .left-blue-box{background:@color-primary;padding:2% 1.5% 2.5% 20%;box-shadow:-15px 10px 60px -5px @color-primary;}
-#home .how-works .right-blue-box::before{content:"";position:absolute;border-left:8px solid @color-primary;height:100%;top:0;left:-4px;}
-#home .how-works .left-blue-box::before{content:"";position:absolute;border-right:8px solid @color-primary;height:100%;top:0;right:-4px;}
-#home .how-works .square-box{position:absolute;width:4em;height:4em;background:url("../img/square-box.png") no-repeat center center;background-size:100%;}
-#home .how-works .rectangle-box{position:absolute;width:6em;height:4em;background:url("../img/rectangle-box.png") no-repeat center center;background-size:100%;}
-#home .how-works .square-box.first{right:25%;top:75%;}
-#home .how-works .square-box.second{right:25%;margin-top:15%;z-index:1;}
-#home .how-works .rectangle-box.third{left:15%;margin-top:15%;z-index:1;}
-#home .how-works .rectangle-box.fourth{right:-55%;margin-top:40%;z-index:1;}
-#home .how-works .step .title{font-size:1.5em;color:@color-secundary;position:relative;padding-left:35px;padding-right:35px;}
-#home .how-works .step.first-step{margin-top:-4%;padding-top:4%;position:relative;}
-#home .how-works .step.first-step::before{content:"";background:url("../img/how-works-ps4-console.png") no-repeat;background-size:100%;display:block;position:absolute;width:50%;padding-top:25%;top:0;left:0;opacity:0.8;}
-#home .how-works .step.second-step::before{content:"";background:url("../img/how-works-pad-1.png") no-repeat;background-size:100%;display:block;position:absolute;width:30%;padding-top:25%;top:0;right:12%;opacity:0.8;}
-#home .how-works .step.third-step::before{content:"";background:url("../img/how-works-pad-2.png") no-repeat left bottom;background-size:50%;display:block;position:absolute;width:100%;padding-top:30%;bottom:0;left:0;opacity:0.8;}
-#home .how-works .path-left,#home .how-works .path-right,#home .how-works .path-bottom,#home .how-works .path-top{position:relative;border-style:solid;border-color:@color-tertiary;border-width:0px;}
-#home .how-works .path-left{border-left-width:1px;}
-#home .how-works .path-right{border-right-width:1px;}
-#home .how-works .path-bottom{border-bottom-width:1px;}
-#home .how-works .path-top{border-top-width:1px;}
-#home .how-works .path-left.path--2t,#home .how-works .path-right.path--2t{margin-top:-2px;}
-#home .how-works .path-left.path-4h,#home .how-works .path-right.path-4h{padding-top:4%;}
-#home .how-works .path-left.path-3h,#home .how-works .path-right.path-3h{padding-top:3%;}
-#home .how-works .path-left.path-2h,#home .how-works .path-right.path-2h{padding-top:2%;}
-#home .how-works .complete-1px-br::before{content:"";position:absolute;right:-1px;height:1px;border-right:1px solid @color-tertiary;}
-#home .how-works .complete-2px-br::before{content:"";position:absolute;right:-1px;height:2px;border-right:1px solid @color-tertiary;}
-#home .how-works .complete-1px-bl::before{content:"";position:absolute;left:-1px;height:1px;border-left:1px solid @color-tertiary;}
-#home .how-works .complete-1px-tr::before{content:"";position:absolute;right:-1px;height:1px;border-right:1px solid @color-tertiary;top:-1px;}
-#home .how-works .mini-separator{width:8px;height:8px;background:@color-tertiary;border-radius:50%;margin:auto;}
+#home .how-it-works .separator{width:2em;height:2em;position:absolute;top:-2em;left:0;right:0;margin:auto;background:@color-tertiary;border-radius:50%;}
+#home .how-it-works .title{padding:1% 0;text-transform:uppercase;font-size:1.7em;font-weight:700;margin-top:1%;margin-bottom:0;}
+#home .how-it-works .right-blue-box{background:@color-primary;padding:2% 20% 2.5% 1.5%;box-shadow:-15px 10px 60px -5px @color-primary;}
+#home .how-it-works .left-blue-box{background:@color-primary;padding:2% 1.5% 2.5% 20%;box-shadow:-15px 10px 60px -5px @color-primary;}
+#home .how-it-works .right-blue-box::before{content:"";position:absolute;border-left:8px solid @color-primary;height:100%;top:0;left:-4px;}
+#home .how-it-works .left-blue-box::before{content:"";position:absolute;border-right:8px solid @color-primary;height:100%;top:0;right:-4px;}
+#home .how-it-works .square-box{position:absolute;width:4em;height:4em;background:url("../img/square-box.png") no-repeat center center;background-size:100%;}
+#home .how-it-works .rectangle-box{position:absolute;width:6em;height:4em;background:url("../img/rectangle-box.png") no-repeat center center;background-size:100%;}
+#home .how-it-works .square-box.first{right:25%;top:75%;}
+#home .how-it-works .square-box.second{right:25%;margin-top:15%;z-index:1;}
+#home .how-it-works .rectangle-box.third{left:15%;margin-top:15%;z-index:1;}
+#home .how-it-works .rectangle-box.fourth{right:-55%;margin-top:40%;z-index:1;}
+#home .how-it-works .step .title{font-size:1.5em;color:@color-secundary;position:relative;padding-left:35px;padding-right:35px;}
+#home .how-it-works .step.first-step{margin-top:-4%;padding-top:4%;position:relative;}
+#home .how-it-works .step.first-step::before{content:"";background:url("../img/how-it-works-ps4-console.png") no-repeat;background-size:100%;display:block;position:absolute;width:50%;padding-top:25%;top:0;left:0;opacity:0.8;}
+#home .how-it-works .step.second-step::before{content:"";background:url("../img/how-it-works-pad-1.png") no-repeat;background-size:100%;display:block;position:absolute;width:30%;padding-top:25%;top:0;right:12%;opacity:0.8;}
+#home .how-it-works .step.third-step::before{content:"";background:url("../img/how-it-works-pad-2.png") no-repeat left bottom;background-size:50%;display:block;position:absolute;width:100%;padding-top:30%;bottom:0;left:0;opacity:0.8;}
+#home .how-it-works .path-left,#home .how-it-works .path-right,#home .how-it-works .path-bottom,#home .how-it-works .path-top{position:relative;border-style:solid;border-color:@color-tertiary;border-width:0px;}
+#home .how-it-works .path-left{border-left-width:1px;}
+#home .how-it-works .path-right{border-right-width:1px;}
+#home .how-it-works .path-bottom{border-bottom-width:1px;}
+#home .how-it-works .path-top{border-top-width:1px;}
+#home .how-it-works .path-left.path--2t,#home .how-it-works .path-right.path--2t{margin-top:-2px;}
+#home .how-it-works .path-left.path-4h,#home .how-it-works .path-right.path-4h{padding-top:4%;}
+#home .how-it-works .path-left.path-3h,#home .how-it-works .path-right.path-3h{padding-top:3%;}
+#home .how-it-works .path-left.path-2h,#home .how-it-works .path-right.path-2h{padding-top:2%;}
+#home .how-it-works .complete-1px-br::before{content:"";position:absolute;right:-1px;height:1px;border-right:1px solid @color-tertiary;}
+#home .how-it-works .complete-2px-br::before{content:"";position:absolute;right:-1px;height:2px;border-right:1px solid @color-tertiary;}
+#home .how-it-works .complete-1px-bl::before{content:"";position:absolute;left:-1px;height:1px;border-left:1px solid @color-tertiary;}
+#home .how-it-works .complete-1px-tr::before{content:"";position:absolute;right:-1px;height:1px;border-right:1px solid @color-tertiary;top:-1px;}
+#home .how-it-works .mini-separator{width:8px;height:8px;background:@color-tertiary;border-radius:50%;margin:auto;}
 
 #home .choose-by-cat{background:@color-secundary;text-transform:uppercase;position:relative;}
 #home .choose-by-cat h2.title{font-size:1.5em;padding-top:3%;padding-bottom:5%;font-weight:700;}
@@ -337,10 +338,10 @@ background:-moz-linear-gradient(-60deg,@color-secundary,@color-secundary,@color-
 #blog .categories .subtitle{font-size:2em;color:@color-primary;margin-bottom:4%;}
 #blog .categories .tag{display:inline-block;width:30%;border-radius:7px;margin:1% 2% 3%;padding:2.5%;text-align:center;background:@color-secundary;font-size:0.9em;color:@color-tertiary;}
 
-#blog .blog-panel .row-right.how-works{margin-left:0;margin-right:0;padding-right:0;}
-#blog .how-works{position:relative; background:@color-primary;padding:2% 20% 2.5% 3.5%;box-shadow:-15px 10px 60px -5px @color-primary;color:@color-secundary;}
-#blog .how-works .step.first-step{position:relative;}
-#blog .how-works .step.first-step .title{font-size:1.5em;color:@color-secundary;position:relative;padding-left:35px;padding-right:35px;}
+#blog .blog-panel .row-right.how-it-works{margin-left:0;margin-right:0;padding-right:0;}
+#blog .how-it-works{position:relative; background:@color-primary;padding:2% 20% 2.5% 3.5%;box-shadow:-15px 10px 60px -5px @color-primary;color:@color-secundary;}
+#blog .how-it-works .step.first-step{position:relative;}
+#blog .how-it-works .step.first-step .title{font-size:1.5em;color:@color-secundary;position:relative;padding-left:35px;padding-right:35px;}
 /*******************************/
 
 /*

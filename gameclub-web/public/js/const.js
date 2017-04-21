@@ -35,6 +35,14 @@ angular.module("GameClub").constant('Const', {
 
 	tooltips: {
 		password: 'La contraseña debe tener únicamente letras y números, mínimo 6 caracteres, con al menos una mayúscula y un número'
+	},
+
+	shortcurLinks: {
+		home: 0,
+		sharePlay: 1,
+		faq: 2,
+		blog: 3,
+		login: 4,
 	}
 
 });

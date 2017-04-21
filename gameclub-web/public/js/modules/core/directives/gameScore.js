@@ -5,13 +5,18 @@ angular.module("Core").directive('gameScore', function() {
 		scope: {
 			src: '=',
 			score: '=',
-			bgColor: '@',
+			bgColor: '@'
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
-			if($scope.score != null && !isNaN($scope.score)) {
-				for(let i=0 ; i<=$scope.score ; i++) {
-					angular.element('.score-'+i).attr('src', 'img/star-score.png')
+			if(attrs.noScore == "" || attrs.noScore) {
+				$scope.hideScore = true;
+			} else {
+				$scope.hideScore = false;
+				if($scope.score != null && !isNaN($scope.score)) {
+					for(let i=0 ; i<=$scope.score ; i++) {
+						angular.element('.score-'+i).attr('src', 'img/star-score.png')
+					}
 				}
 			}
 		}

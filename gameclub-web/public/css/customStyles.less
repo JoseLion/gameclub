@@ -15,6 +15,8 @@
 @color-white: #FFF;
 @color-white-transparent: RGBA(255,255,255,0.5);
 @color-light-gray: #d6d6d6;
+@color-light-gray-transparent: RGBA(214,214,214,0.85);
+
 /*******************************/
 
 /********** PRINCIPAL **********/
@@ -112,7 +114,7 @@ background:linear-gradient(45deg,@color-light-red,@color-light-red,@color-light-
 #blog-preview .info a::before{content:"";width:30%;height:1px;display:inline-block;background:@color-dark-blue;position:absolute;top:40%;left:110%;}
 #blog-preview .info a::after{content:"";width:5px;height:5px;display:inline-block;background:@color-dark-blue;position:absolute;top:4px;left:135%;border-radius:50%;}
 #blog-preview .picture{background:@color-white;position:absolute;left:58%;right:0;top:0;bottom:5%;padding:0;border-radius:5%;}
-#blog-preview .picture .date{background:@color-light-red;width:5em;height:5em;text-align:center;padding:7%;margin-left:-1.5em;margin-top:-1.5em;border-radius:50%;font-size:0.8em;font-weight:700;position:absolute;text-transform:uppercase;}
+#blog-preview .picture .date{color:@color-white;background:@color-light-red;width:5em;height:5em;text-align:center;padding:7%;margin-left:-1.5em;margin-top:-1.5em;border-radius:50%;font-size:0.8em;font-weight:700;position:absolute;text-transform:uppercase;}
 #blog-preview .picture img{width:100%;height:100%;border-radius:5%;}
 /**********************************/
 
@@ -193,21 +195,20 @@ background:-moz-linear-gradient(-60deg,@color-light-red,@color-light-red,@color-
 #home .how-works .rectangle-box.third{left:15%;margin-top:15%;z-index:1;}
 #home .how-works .rectangle-box.fourth{right:-55%;margin-top:40%;z-index:1;}
 #home .how-works .step .title{font-size:1.5em;color:@color-light-red;position:relative;padding-left:35px;padding-right:35px;}
-#home .how-works .step .title .number-container{position:absolute;width:20px;height:20px;top:0;left:0;border-radius:50%;}
-#home .how-works .step .title .number-container.ib{display:inline-block;position:relative;margin-left:-7%;margin-right:2%}
-#home .how-works .step .title .number-container img{position:relative;width:100%;}
-#home .how-works .step ul>li{margin:2% 0 1%;}
+.how-works .step .title .number-container{position:absolute;width:20px;height:20px;top:0;left:0;border-radius:50%;}
+.how-works .step .title .number-container img{position:relative;width:100%;}
+.how-works .step ul>li{margin:2% 0 1%;}
 #home .how-works .step.first-step{margin-top:-4%;padding-top:4%;position:relative;}
 #home .how-works .step.first-step::before{content:"";background:url("../img/how-works-ps4-console.png") no-repeat;background-size:100%;display:block;position:absolute;width:50%;padding-top:25%;top:0;left:0;opacity:0.8;}
-#home .how-works .step.second-step{position:relative;}
+.how-works .step.second-step{position:relative;}
 #home .how-works .step.second-step::before{content:"";background:url("../img/how-works-pad-1.png") no-repeat;background-size:100%;display:block;position:absolute;width:30%;padding-top:25%;top:0;right:12%;opacity:0.8;}
-#home .how-works .step.third-step{padding-bottom:4.5%;position:relative;}
+.how-works .step.third-step{padding-bottom:4.5%;position:relative;}
 #home .how-works .step.third-step::before{content:"";background:url("../img/how-works-pad-2.png") no-repeat left bottom;background-size:50%;display:block;position:absolute;width:100%;padding-top:30%;bottom:0;left:0;opacity:0.8;}
-#home .how-works .step.third-step .description{margin-bottom:2%;color:@color-dark-blue;font-size:1.2em;line-height:1em;}
-#home .how-works .step.third-step .description.white{color:@color-white;margin-bottom:3%;}
-#home .how-works .step.third-step .description:last-child{margin-bottom:1%;}
-#home .how-works .step.third-step img{margin-bottom:1%;}
-#home .how-works .step ul{color:@color-light-blue;padding-left:20px;margin-top:2%;}
+.how-works .step.third-step .description{margin-bottom:2%;color:@color-dark-blue;font-size:1.2em;line-height:1em;}
+.how-works .step.third-step .description.white{color:@color-white;margin-bottom:3%;}
+.how-works .step.third-step .description:last-child{margin-bottom:1%;}
+.how-works .step.third-step img{margin-bottom:1%;}
+.how-works .step ul{color:@color-light-blue;padding-left:20px;margin-top:2%;}
 #home .how-works .path-left,#home .how-works .path-right,#home .how-works .path-bottom,#home .how-works .path-top{position:relative;border-style:solid;border-color:@color-white;border-width:0px;}
 #home .how-works .path-left{border-left-width:1px;}
 #home .how-works .path-right{border-right-width:1px;}
@@ -245,13 +246,6 @@ background:-moz-linear-gradient(-60deg,@color-light-red,@color-light-red,@color-
 #home .choose-by-cat .categories::-webkit-scrollbar-track{background:url("../img/scroll-track.svg") no-repeat center center;background-size:auto 14px;border:2px solid @color-white;border-radius:10px;margin-left:35%;margin-right:35%;}
 #home .choose-by-cat .categories::-webkit-scrollbar-thumb{background:url("../img/scroll-thumb.svg") no-repeat center center;background-size:15px;}
 
-#home .blog{background:@color-light-gray;padding-top:1%;box-shadow: 5px 10px 25px 5px @color-dark-blue-transparent-30;}
-#home .blog .title{text-transform:uppercase;font-size:2.5em;font-weight:700;}
-#home .blog hr{width:10%;margin-left:0;margin-bottom:0;margin-top:15px;border-width:3px;border-color:@color-light-blue;}
-#home .blog .article-row{margin-left:-15px;margin-right:-15px;display:inline-block;}
-#home .blog .article-row>div{margin-bottom:5%;}
-#home .blog .article-row .paging{margin-top:-2%;}
-
 #home .contact-us{position:relative;}
 #home .contact-us::before{content:"";position:absolute;top:-20%;right:0;bottom:0;left:0;z-index:-3;background:@color-light-blue;background-image:url("../img/contact-us.png");background-position:center top;background-size:105% 90%;}
 #home .contact-us::after{content:"";position:absolute;top:70%;right:0;bottom:0;left:0;z-index:-2;background:@color-dark-blue;}
@@ -269,8 +263,82 @@ background:-moz-linear-gradient(-60deg,@color-light-red,@color-light-red,@color-
 #home .contact-us form.contact-form .send-button button{border-radius:5px;}
 /*******************************/
 
+/********** BLOG-PREVIEW **********/
+.preview-blog{background:@color-light-gray;padding-top:1%;box-shadow: 5px 10px 25px 5px @color-dark-blue-transparent-30;}
+.preview-blog .title{text-transform:uppercase;font-size:2.5em;font-weight:700;}
+.preview-blog hr{width:10%;margin-left:0;margin-bottom:0;margin-top:15px;border-width:3px;border-color:@color-light-blue;}
+.preview-blog .article-row{margin-left:-15px;margin-right:-15px;display:inline-block;}
+.preview-blog .article-row>div{margin-bottom:5%;}
+.preview-blog .article-row .paging{margin-top:-2%;}
+/**********************************/
+
 /********** BLOG-PAGE **********/
-#blog{height:1500px;padding-top:5%;color:@color-white;}
+#blog{color:@color-dark-blue;display:block;position:relative;}
+#blog::before{content:"";background:url("../img/blog/blog-bg.png") repeat-y center top;background-size:100%;position:absolute;top:0;right:0;bottom:0;left:0;z-index:-10;}
+#blog .row-left{padding-right:5%;position:relative;}
+#blog .row-right{padding-left:5%;position:relative;}
+
+#blog .banner{padding-top:10%;padding-bottom:10%;text-align:center;display:block;position:relative;}
+#blog .banner hr{border-top:2px solid @color-white;margin-bottom:5px;margin-top:0px;}
+#blog .banner .title-up{position:relative;margin-left:12%;margin-right:53%;}
+#blog .banner .title-up::before{content:"";border-bottom:2px solid @color-white;position:absolute;left:10%;right:15%;margin-top:5%;}
+#blog .banner h2.title{font-size:2.4em;letter-spacing:6px;margin-top:15px;text-transform:uppercase;margin-bottom:0;}
+#blog .banner .title-down{position:relative;margin-left:53%;margin-right:12%;}
+#blog .banner .title-down::before{content:"";border-top:2px solid @color-white;position:absolute;left:15%;right:10%;margin-top:-5%;}
+
+#blog .blog-panel{position:relative;float:left;padding-left:15px;padding-right:15px;}
+#blog .blog-panel.left{padding-left:0;width:55%;}
+#blog .blog-panel.right{padding-right:0;width:45%;}
+#blog .blog-panel .row-left{margin-left:0;margin-right:0;padding-left:40%;}
+#blog .blog-panel .row-right{margin-left:0;margin-right:0;padding-right:45%;}
+
+#blog article{background:@color-light-gray-transparent;padding-top:5%;padding-bottom:7%;margin-bottom:5%;}
+#blog .search{background:@color-light-gray-transparent;margin-bottom:5%;}
+#blog .blog-panel.left article img{width:96%;margin-top:5%;border-radius:7px;}
+#blog .blog-panel.left article .post-date{position:absolute;top:6%;right:4%;width:4em;height:4em;background:@color-light-red;padding:2% 15px;text-align:center;font-size:1.3em;font-weight:700;border-radius:50%;color:@color-white;line-height:1;}
+#blog .blog-panel.left article .title{font-size:1.2em;font-weight:700;color:@color-light-blue;margin-top:3%;text-transform:uppercase;}
+#blog .blog-panel.left article .tags{margin-bottom:1%;}
+#blog .blog-panel.left article .tags span{font-weight:700;font-size:0.8em;border-right:1px solid @color-dark-blue;padding-right:1%;margin-right:2%;}
+#blog .blog-panel.left article .tags .tag{display:inline-block;font-size:0.6em;background:@color-light-red;color:@color-white;padding-top:4px;width:8.5em;text-align:center;margin-right:1%;}
+#blog .blog-panel.left article .description{font-size:0.9em;text-align:justify;margin-bottom:2%;}
+#blog .blog-panel.left article .read-more{color:@color-dark-blue-transparent-30;border-radius:7px;padding-left:5%;padding-right:5%;font-size:0.6em;}
+#blog .blog-panel.left article .social-media{position:absolute;margin-top:-2%;right:5%;font-weight:700;text-transform:uppercase;}
+#blog .blog-panel.left article .social-media a{margin:0px 0.2em;font-size:1.2em;color:@color-light-red;}
+#blog .blog-panel.left article .social-media a:hover{color:@color-white;}
+#blog .blog-panel.left .navegation{margin-top:-2%;padding-right:3%;text-transform:uppercase;color:@color-white;font-weight:700;}
+#blog .blog-panel.left .navegation a{color:@color-white;text-decoration:none;}
+#blog .blog-panel.left .navegation a:hover{color:@color-light-red;}
+#blog .blog-panel.left .navegation a i{position:absolute;font-size:2em;}
+#blog .blog-panel.left .navegation a i.previous{left:-10%;top:-20%;}
+#blog .blog-panel.left .navegation a i.next{right:-10%;top:-20%;}
+
+#blog .search input{text-transform:uppercase;width:100%;padding:5px 30px 0 10px;color:@color-light-red;background:transparent;border:none;font-size:2em;background-image:"\f002";}
+#blog .search input:focus{box-shadow:none;outline:none;}
+#blog .search input::-webkit-input-placeholder{color:@color-light-red;text-transform:none;}
+#blog .search input::-moz-placeholder{color:@color-light-red;text-transform:none;}
+#blog .search input::-ms-input-placeholder{color:@color-light-red;text-transform:none;}
+#blog .search span.search-icon{position:absolute;right:44%;font-size:2.6em;top:0.2em;color:@color-light-blue;cursor:pointer;}
+
+#blog .blog-panel.right .important{padding-bottom:3%;}
+#blog .blog-panel.right .important .title{color:@color-light-blue;font-size:0.8em;text-transform:uppercase;font-weight:700;}
+#blog .blog-panel.right .important h2{margin:0;padding:0;margin-bottom:15%;}
+#blog .blog-panel.right .important h2 span.title-01{font-size:2.2em;border-bottom:2px solid @color-light-blue;padding-bottom:1%;}
+#blog .blog-panel.right .important h2 span.title-02{font-size:2em;}
+#blog .blog-panel.right .important .article{position:relative;margin-bottom:10%;}
+#blog .blog-panel.right .important .article .image{padding-top:5%;}
+#blog .blog-panel.right .important .article .info{font-size:1em;}
+#blog .blog-panel.right .important .article .info .description{font-size:0.9em;text-align:justify;}
+
+#blog .blog-panel.right .categories{padding-right:5%;text-transform:uppercase;}
+#blog .categories .title{font-size:3em;color:@color-light-blue;margin:0;position:relative;padding-bottom:1%;margin-bottom:3%;}
+#blog .categories .title::before{content:"";border-bottom:3px solid @color-light-blue;position:absolute;left:0;bottom:0;width:3em;}
+#blog .categories .subtitle{font-size:2em;color:@color-dark-blue;margin-bottom:4%;}
+#blog .categories .tag{display:inline-block;width:30%;border-radius:7px;margin:1% 2% 3%;padding:2.5%;text-align:center;background:@color-light-red;font-size:0.9em;color:@color-white;}
+
+#blog .blog-panel .row-right.how-works{margin-left:0;margin-right:0;padding-right:0;}
+#blog .how-works{position:relative; background:@color-dark-blue;padding:2% 20% 2.5% 3.5%;box-shadow:-15px 10px 60px -5px @color-dark-blue;color:@color-light-red;}
+#blog .how-works .step.first-step{position:relative;}
+#blog .how-works .step.first-step .title{font-size:1.5em;color:@color-light-red;position:relative;padding-left:35px;padding-right:35px;}
 /*******************************/
 
 /*

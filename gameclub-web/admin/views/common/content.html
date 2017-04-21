@@ -12,7 +12,22 @@
         <div ng-include="'views/common/topnavbar.html'"></div>
 
         <!-- Main view  -->
-        <div ui-view></div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-md-10">
+                <h2>{{$state.current.data.displayName}}</h2>
+
+                <ol class="breadcrumb">
+                    <li ng-repeat="path in $state.$current.path" ng-class="path == $state.$current.path.last() ? 'active' : ''" ng-if="path.data != null">
+                        <a href="" ng-click="$state.go(Const.mainState)" ng-if="path != $state.$current.path.last()">{{path.data.displayName}}</a>
+                        <strong ng-if="path == $state.$current.path.last()">{{path.data.displayName}}</strong>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row wrapper wrapper-content">
+            <div ui-view></div>
+        </div>
 
         <!-- Footer -->
         <div ng-include="'views/common/footer.html'"></div>
@@ -21,7 +36,7 @@
     <!-- End page wrapper-->
 
     <!-- Right Sidebar -->
-    <div ng-include="'views/common/right_sidebar.html'"></div>
+    <!-- <div ng-include="'views/common/right_sidebar.html'"></div> -->
 
 </div>
 <!-- End wrapper-->

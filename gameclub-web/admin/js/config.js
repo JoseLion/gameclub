@@ -15,12 +15,20 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 		.state('admin.dashboard', {
 			url: "/dashboard",
 			templateUrl: "views/dashboard.html",
+			data: {displayName: 'Dashboard'},
 			resolve: {
 				loadPlugin: function ($ocLazyLoad) {
 					return $ocLazyLoad.load([{}]);
 				}
 			}
-		});
+		})
+
+	.state('user', {
+		abstract: true,
+		url: "/user",
+		templateUrl: "views/common/content.html",
+		data: {displayName: "Usuarios"}
+	});
 }).run(function($rootScope, $state, Const, rest, $location, $anchorScroll, authenticate) {
 	$rootScope.$state = $state;
 	$rootScope.Const = Const;
@@ -61,7 +69,10 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 				}
 			}, function(error) {
 				if ((error.status == 401 || error.status < 0) && toState.name != Const.loginState) {
-					$rootScope.redirect = toState.name;
+					if (toState.name != Const.loginState) {
+						$rootScope.redirect = toState.name;
+					}
+					
 					goToLogin(event, toState);
 				}
 			});
@@ -69,7 +80,10 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 	});
 
 	$rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams, options) {
-		$rootScope.redirect = toState.name;
+		if (toState.name != Const.loginState) {
+			$rootScope.redirect = toState.name;
+		}
+		
 		$location.hash();
 		$anchorScroll();
 	});

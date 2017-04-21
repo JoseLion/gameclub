@@ -1,13 +1,20 @@
 package ec.com.levelap.gameclub.module.user.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
+import ec.com.levelap.gameclub.module.profile.entity.Profile;
 
 @Entity
 @Table(schema="gameclub", name="admin_user", uniqueConstraints=@UniqueConstraint(columnNames="username", name="admin_username_uk"))
@@ -27,6 +34,13 @@ public class AdminUser extends BaseEntity {
 	
 	@Column(name="cell_phone", columnDefinition="VARCHAR")
 	private String cellPhone;
+	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="profile", foreignKey=@ForeignKey(name="profile_fk"))
+	private Profile profile;
+	
+	@Transient
+	private String profileName;
 
 	public String getUsername() {
 		return username;
@@ -66,5 +80,25 @@ public class AdminUser extends BaseEntity {
 
 	public void setCellPhone(String cellPhone) {
 		this.cellPhone = cellPhone;
+	}
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
+	public String getProfileName() {
+		if (profile != null) {
+			profileName = profile.getName();
+		}
+		
+		return profileName;
+	}
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
 	}
 }

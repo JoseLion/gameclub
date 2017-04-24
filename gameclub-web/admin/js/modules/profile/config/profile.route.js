@@ -1,5 +1,5 @@
 angular.module("Profile").config(function($stateProvider) {
-	let prefix = 'user.'
+	let prefix = 'admin.'
 
 	$stateProvider
 	.state(prefix + 'viewProfiles', {

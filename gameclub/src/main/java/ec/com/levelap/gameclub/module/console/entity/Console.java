@@ -1,5 +1,6 @@
 package ec.com.levelap.gameclub.module.console.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +22,7 @@ public class Console extends BaseEntity {
 	@Column(columnDefinition="VARCHAR", nullable=false)
 	private String name;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="logo", foreignKey=@ForeignKey(name="logo_archive_fk"))
 	private Archive logo;
 

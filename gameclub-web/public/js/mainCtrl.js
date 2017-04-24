@@ -15,7 +15,7 @@ angular.module("GameClub").controller('MainCtrl', function($rootScope, $state, C
 		},
 		login : {
 			name: 'Inicia sesión',
-			route: ''
+			route: 'gameclub.login'
 		}
 	};
 

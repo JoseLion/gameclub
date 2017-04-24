@@ -15,6 +15,8 @@ angular.module("Gameclub").controller('MainCtrl', function($scope, $rootScope, $
 
 	$rootScope.$watch("currentUser", function(newValue, oldValue) {
 		if (newValue != null) {
+			$scope.navigationArray = null;
+			
 			if (newValue.profile.wildcard) {
 				rest("navigation/findAll", true).get(function(data) {
 					setTimeout(function() {

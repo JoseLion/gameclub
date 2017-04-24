@@ -61,8 +61,8 @@ public class AdminUserService extends BaseService<AdminUser> {
 		if (encoder.matches(passwordMap.get("temp"), user.getPassword())) {
 			user.setPassword(encoder.encode(passwordMap.get("password")));
 			user.setHasTempPassword(false);
-			adminUserRepo.save(user);
-			return new ResponseEntity<>(HttpStatus.OK);
+			user = adminUserRepo.save(user);
+			return new ResponseEntity<AdminUser>(user, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<ErrorControl>(new ErrorControl("La contraseña temporal es incorrecta. Intente nuevamente", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}

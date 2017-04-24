@@ -10,10 +10,10 @@ angular.module("Login").controller('ChangePasswordCtrl', function($scope, $uibMo
 	$scope.ok = function() {
 		if ($scope.passwordObj.password === $scope.passwordObj.repeat) {
 			sweet.default("Se cambiará su contraseña", function() {
-				rest("adminUser/changePassword").post($scope.passwordObj, function() {
+				rest("adminUser/changePassword").post($scope.passwordObj, function(data) {
 					notif.success("La contraseña se cambió con éxito");
 					swal.close();
-					$uibModalInstance.close();
+					$uibModalInstance.close(data);
 				}, function(error) {
 					sweet.error(error.data.message);
 				})

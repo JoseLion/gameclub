@@ -15,7 +15,7 @@ angular.module("Core").directive('gameScore', function() {
 				$scope.hideScore = false;
 				if($scope.score != null && !isNaN($scope.score)) {
 					for(let i=0 ; i<=$scope.score ; i++) {
-						angular.element('.score-'+i).attr('src', 'img/star-score.png')
+						angular.element('.score-'+i).attr('src', 'img/star-score.svg')
 					}
 				}
 			}

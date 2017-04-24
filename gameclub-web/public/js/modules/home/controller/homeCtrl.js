@@ -1,4 +1,9 @@
-angular.module("Home").controller('HomeCtrl', function($scope) {
+angular.module("Home").controller('HomeCtrl', function($scope, $location, anchor) {
+
+    if (anchor != null) {
+		$location.hash(anchor);
+		//$anchorScroll.yOffset = angular.element("#fixedbar")[0].offsetHeight;
+	}
 
     $scope.type = {};
     $scope.gameConsole = {};
@@ -26,8 +31,13 @@ angular.module("Home").controller('HomeCtrl', function($scope) {
             score: 3
         }
     ];
-    $scope.viewGameDetail = function(game) {
-        console.log('SE DEBE HACER LA VISUALIZACIÓN DEL JUEGO');
+    $scope.getPreviousGame = function() {
+        let temp = $scope.mostPlayed.splice(0, 1);
+        $scope.mostPlayed[3] = temp[0];
+    };
+    $scope.getNextGame = function() {
+        let temp = $scope.mostPlayed.splice(-1, 1);
+        $scope.mostPlayed.unshift(temp[0]);
     };
 
     $scope.categoryActive = 0;
@@ -35,49 +45,49 @@ angular.module("Home").controller('HomeCtrl', function($scope) {
         {
             id: 1,
             name: 'Action',
-            logo: 'img/svg/sports.svg',
+            logo: 'img/test/svg/sports.svg',
             active: true
         },
         {
             id: 2,
             name: 'Adventure',
-            logo: 'img/svg/sports.svg',
+            logo: 'img/test/svg/sports.svg',
             active: false
         },
         {
             id: 3,
             name: 'Shooter',
-            logo: 'img/svg/sports.svg',
+            logo: 'img/test/svg/sports.svg',
             active: false
         },
         {
             id: 4,
             name: 'Mass Multiplayer',
-            logo: 'img/svg/sports.svg',
+            logo: 'img/test/svg/sports.svg',
             active: false
         },
         {
             id: 5,
             name: 'Simulation',
-            logo: 'img/svg/sports.svg',
+            logo: 'img/test/svg/sports.svg',
             active: false
         },
         {
             id: 6,
             name: 'RPG',
-            logo: 'img/svg/sports.svg',
+            logo: 'img/test/svg/sports.svg',
             active: false
         },
         {
             id: 7,
             name: 'Strategy',
-            logo: 'img/svg/sports.svg',
+            logo: 'img/test/svg/sports.svg',
             active: false
         },
         {
             id: 8,
             name: 'Sports',
-            logo: 'img/svg/sports.svg',
+            logo: 'img/test/svg/sports.svg',
             active: false
         }
     ];
@@ -85,6 +95,24 @@ angular.module("Home").controller('HomeCtrl', function($scope) {
         $scope.categories[$scope.categoryActive].active = false;
         $scope.categoryActive = idx
         category.active = true;
+    };
+
+    // REMPLAZAR POR FUNCIONALIDAD CON SERVICIO WEB
+    let counter = 2;
+    $scope.gameByCat = $scope.mostPlayed[counter];
+    $scope.previousGameByCat = function() {
+        if(counter-- == 0) { counter += 4;}
+        $scope.gameByCat = $scope.mostPlayed[counter];
+        setTimeout(function() {
+            $scope.$apply();
+        }, 0);
+    };
+    $scope.nextGameByCat = function() {
+        if(counter++ == 3) { counter -= 4; }
+        $scope.gameByCat = $scope.mostPlayed[counter];
+        setTimeout(function() {
+            $scope.$apply();
+        }, 0);
     };
 
     $scope.blogs = [

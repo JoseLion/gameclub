@@ -7,20 +7,20 @@
             <a href><i class="fa fa-twitter"></i></a>
         </section>
         <section class="contacts col-md-6 no-padding-left no-padding-right">
-            <a href="mailto:info@gameclub.com.ec"><img src="img/mail-to.png"/><span>info@gameclub.com.ec</span></a>
+            <a href="mailto:info@gameclub.com.ec"><img src="img/mail-to.svg"/><span>info@gameclub.com.ec</span></a>
             <a href="tel:+593967995408"><i class="fa fa-whatsapp"></i><span>(+593) 96 799 5408</span></a>
         </section>
     </div>
     <section class="row shortcut-links">
         <div class="col-md-4">
-            <img src="img/gameclub-logo.png" height="70px" ui-sref-active="active" ui-sref="gameclub.home"/>
+            <img src="img/gameclub-logo.svg" height="70px" ui-sref-active="active" ui-sref="gameclub.home"/>
         </div>
         <div class="col-md-8 text-right links">
             <nav>
-                <li><button class="btn btn-primary" ><span class="spacing">{{link.shareAndPlay.name}}</span></button></li>
+                <li><button class="btn btn-primary" ui-sref="{{link.shareAndPlay.route}}"><span class="spacing">{{link.shareAndPlay.name}}</span></button></li>
                 <li><button class="btn btn-primary" ><span class="upper-case">{{link.faq.name}}</span></button></li>
                 <li><button class="btn btn-primary" ui-sref="{{link.blog.route}}" ui-sref-active="active"><span class="upper-case">{{link.blog.name}}</span></button></li>
-                <li><button class="btn btn-primary" ><span class="upper-case">{{link.login.name}}</span></button></li>
+                <li><button class="btn btn-primary" ui-sref="{{link.login.route}}" ><span class="upper-case">{{link.login.name}}</span></button></li>
             </nav>
         </div>
         <div class="clearfix"></div>

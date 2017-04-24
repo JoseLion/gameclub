@@ -5,6 +5,9 @@ angular.module('Home').config(function($stateProvider) {
 	$stateProvider
 	.state(prefix + 'home', {
 		url: '/home',
+		params: {
+			anchor: null
+		},
 		templateUrl: 'js/modules/home/view/home.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'HomeCtrl',
@@ -14,6 +17,10 @@ angular.module('Home').config(function($stateProvider) {
 					name: 'Home',
 					files: ['js/modules/home/controller/homeCtrl.js']
 				}]);
+			},
+
+			anchor: function($stateParams) {
+				return $stateParams.anchor;
 			}
 		}
 	});

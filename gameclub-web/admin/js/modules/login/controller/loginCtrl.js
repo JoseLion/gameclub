@@ -27,7 +27,15 @@ angular.module("Login").controller('LoginCtrl', function($scope, $rootScope, $co
 							}
 						});
 
-						modal.result.then(function() {}, function() {
+						modal.result.then(function(userData) {
+							$rootScope.currentUser = null;
+
+							setTimeout(function() {
+								$scope.$apply(function() {
+									$rootScope.currentUser = userData;
+								});
+							}, 100);
+						}, function() {
 							$rootScope.$broadcast("logout");
 						});
 					}

@@ -18,7 +18,7 @@
 						<label class="col-md-3 control-label">Perfil</label>
 						<div class="col-md-9">
 							<ui-select ng-model="search.profile" theme="bootstrap">
-								<ui-select-match placeholder="Seleccione...">{{$select.selected.name}}</ui-select-match>
+								<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected.name}}</ui-select-match>
 								<ui-select-choices repeat="profile in profiles | filter: $select.search">
 									<div ng-bind-html="profile.name | highlight: $select.search"></div>
 								</ui-select-choices>
@@ -32,7 +32,7 @@
 						<label class="col-md-3 control-label">Estado</label>
 						<div class="col-md-9">
 							<ui-select ng-model="search.status" theme="bootstrap">
-								<ui-select-match placeholder="Seleccione...">{{$select.selected ? 'Activo' : 'Inactivo'}}</ui-select-match>
+								<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected ? 'Activo' : 'Inactivo'}}</ui-select-match>
 								<ui-select-choices repeat="status in [true, false] | filter: $select.search">
 									<div ng-bind-html="status ? 'Activo' : 'Inactivo' | highlight: $select.search"></div>
 								</ui-select-choices>
@@ -105,7 +105,7 @@
 								<i class="fa fa-pencil"></i>
 							</button>
 
-							<button type="button" class="btn btn-xs" ng-class="user.status ? 'btn-danger' : 'btn-success'" ng-click="changeStatus(user)" tooltip="Cambiar Estado">
+							<button type="button" class="btn btn-xs" ng-class="user.status ? 'btn-success' : 'btn-primary'" ng-click="changeStatus(user)" tooltip="Cambiar Estado">
 								<i class="fa fa-power-off"></i>
 							</button>
 

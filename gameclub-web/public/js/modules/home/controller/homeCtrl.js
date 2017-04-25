@@ -1,9 +1,22 @@
 angular.module("Home").controller('HomeCtrl', function($scope, $location, anchor) {
 
     if (anchor != null) {
-		$location.hash(anchor);
-		//$anchorScroll.yOffset = angular.element("#fixedbar")[0].offsetHeight;
-	}
+        $location.hash(anchor);
+        //$anchorScroll.yOffset = angular.element("#fixedbar")[0].offsetHeight;
+    }
+
+    $scope.gameConsoles =[
+        {
+            name: 'PlayStation 4',
+            img: 'img/test/svg/ps4.svg'
+        }, {
+            name: 'XBOX ONE',
+            img: 'img/test/svg/xbox-one.svg'
+        }, {
+            name: 'Nintendo Switch',
+            img: 'img/test/svg/nintendo-switch.svg'
+        }
+    ]
 
     $scope.type = {};
     $scope.gameConsole = {};

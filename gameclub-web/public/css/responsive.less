@@ -1,0 +1,23 @@
+@import url("variables.less");
+
+@media only screen and (max-width: 732px) {
+
+.row{margin:0;padding:0;}
+.row-left{margin:0;padding-left:0;}
+.row-right{margin:0;padding-right:0;}
+
+header .contacts{text-align:left;padding-left:0;}
+header .shortcut-links{text-align:center;}
+header .shortcut-links .links{display:none;}
+
+#most-played .games .left,#most-played .games .right{padding-top:1%}
+#most-played .games .list>div{padding-left:35%;padding-right:35%;}
+
+#home .banner::before{background-size:65%;}
+#home .banner .search form>div{text-align:center;}
+#home .banner .search .search-params{border:2.5px solid @color-primary;border-radius:8px;font-size:1.1em;background-color:@color-secundary-65;font-weight:700;}
+#home .banner .search .search-params .filter{border:none;background-color:transparent;}
+
+.square-box{display:none;}
+
+}

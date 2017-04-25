@@ -27,7 +27,8 @@ angular.module("Core").directive('imageUpload', function(getImageBase64, rest) {
 					reader.onload = function() {
 						setTimeout(function() {
 							$scope.$apply(function() {
-								$scope.imageBase64 = getImageBase64(reader.result);
+								console.log("newValue: ", newValue);
+								$scope.imageBase64 = getImageBase64(reader.result, newValue.type);
 								$scope.isLoading = false;
 							});
 						}, 0);
@@ -39,7 +40,7 @@ angular.module("Core").directive('imageUpload', function(getImageBase64, rest) {
 				if (newValue != null) {
 					$scope.isLoading = true;
 
-					rest("archive/downloadFile").download(newValue.path, function(data) {
+					rest("archive/downloadFile").download({name: newValue.name, module: newValue.module}, function(data) {
 						$scope.ngModel = new File([data], newValue.name, {type: newValue.type});
 						$scope.isLoading = false;
 					}, function(error) {

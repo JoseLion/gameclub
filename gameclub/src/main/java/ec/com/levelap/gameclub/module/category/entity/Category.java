@@ -12,8 +12,8 @@ import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ec.com.levelap.archive.Archive;
 import ec.com.levelap.base.entity.BaseEntity;
+import ec.com.levelap.commons.archive.Archive;
 
 @Entity
 @Table(schema="gameclub", name="category", uniqueConstraints=@UniqueConstraint(columnNames="name", name="name_uk"))

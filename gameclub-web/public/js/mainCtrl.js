@@ -16,8 +16,14 @@ angular.module("GameClub").controller('MainCtrl', function($rootScope, $state, C
 		login : {
 			name: 'Inicia sesión',
 			route: 'gameclub.login'
+		},
+		account : {
+			name: 'Pablo Ponce',
+			route: 'gameclub.account'
 		}
 	};
+
+	$rootScope.isLogged = true;
 
 	// $http.get(urlRestPath.url + "/api/token").then(function(response) {
 	// 	if (response != null && response.data != null) {

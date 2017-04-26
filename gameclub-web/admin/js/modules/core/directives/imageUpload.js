@@ -27,7 +27,6 @@ angular.module("Core").directive('imageUpload', function(getImageBase64, rest) {
 					reader.onload = function() {
 						setTimeout(function() {
 							$scope.$apply(function() {
-								console.log("newValue: ", newValue);
 								$scope.imageBase64 = getImageBase64(reader.result, newValue.type);
 								$scope.isLoading = false;
 							});

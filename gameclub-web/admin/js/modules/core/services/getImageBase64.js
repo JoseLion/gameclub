@@ -7,6 +7,6 @@ angular.module("Core").service('getImageBase64', function() {
 			binary += String.fromCharCode(bytes[i]);
 		}
 
-		return "data:" + (type != null ? type : 'image/jpeg') + ";base64," + btoa(binary);
+		return "data:" + (type != null ? type : 'image/png') + ";base64," + btoa(binary);
 	}
 });

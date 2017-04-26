@@ -1,9 +1,8 @@
 <div>
 	<div style="text-align: center;">
 		<div class="col-md-12 image-upload" ng-style="!isNgModelFile() ? {'border': 'dashed #ccc', 'padding': '7%', 'border-radius': '5%'} : null">
-			<img ng-src="{{imageBase64}}" style="max-width: 100%; max-height: 100%;" ng-style="isDisabled ? {'cursor': 'not-allowed'} : {'cursor': 'pointer'}" ng-click="addImage()" ng-if="isNgModelFile()">
-			<img ng-src="{{placeholder}}" style="max-width: 100%; max-height: 100%;" ng-style="isDisabled ? {'cursor': 'not-allowed'} : {'cursor': 'pointer'}" ng-click="addImage()" ng-if="!isNgModelFile()">
-			<pre>{{imageBase64}}</pre>
+			<img ng-src="{{imageBase64}}" class="img-upload" ng-style="isDisabled ? {'cursor': 'not-allowed'} : {'cursor': 'pointer'}" ng-click="addImage()" ng-if="isNgModelFile()">
+			<img ng-src="{{placeholder}}" class="img-placeholder" ng-style="isDisabled ? {'cursor': 'not-allowed'} : {'cursor': 'pointer'}" ng-click="addImage()" ng-if="!isNgModelFile()">
 		</div>
 
 		<div class="row">
@@ -37,4 +36,18 @@
 
 		<div class="clearfix"></div>
 	</div>
+
+	<style type="text/css">
+		.img-upload {
+			max-width: 100%;
+			max-height: 100%;
+			background: linear-gradient(rgba(227,42,61, 0.6), #03070d 113%);
+			padding: 5%;
+		}
+
+		.img-placeholder {
+			max-width: 100%;
+			max-height: 100%;
+		}
+	</style>
 </div>

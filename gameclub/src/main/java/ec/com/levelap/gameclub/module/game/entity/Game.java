@@ -70,4 +70,108 @@ public class Game extends BaseEntity {
 	
 	@Column(name="gameplay_url", columnDefinition="VARCHAR")
 	private String gameplayUrl;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public Catalog getContentRating() {
+		return contentRating;
+	}
+
+	public void setContentRating(Catalog contentRating) {
+		this.contentRating = contentRating;
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	public List<GameMagazine> getMagazineRatings() {
+		return magazineRatings;
+	}
+
+	public void setMagazineRatings(List<GameMagazine> magazineRatings) {
+		this.magazineRatings = magazineRatings;
+	}
+
+	public List<GameConsole> getConsoles() {
+		return consoles;
+	}
+
+	public void setConsoles(List<GameConsole> consoles) {
+		this.consoles = consoles;
+	}
+
+	public List<GameCategory> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<GameCategory> categories) {
+		this.categories = categories;
+	}
+
+	public Integer getAverageWeekCost() {
+		return averageWeekCost;
+	}
+
+	public void setAverageWeekCost(Integer averageWeekCost) {
+		this.averageWeekCost = averageWeekCost;
+	}
+
+	public Integer getUploadPayment() {
+		return uploadPayment;
+	}
+
+	public void setUploadPayment(Integer uploadPayment) {
+		this.uploadPayment = uploadPayment;
+	}
+
+	public Archive getCover() {
+		return cover;
+	}
+
+	public void setCover(Archive cover) {
+		this.cover = cover;
+	}
+
+	public Archive getBanner() {
+		return banner;
+	}
+
+	public void setBanner(Archive banner) {
+		this.banner = banner;
+	}
+
+	public String getGameplayUrl() {
+		return gameplayUrl;
+	}
+
+	public void setGameplayUrl(String gameplayUrl) {
+		this.gameplayUrl = gameplayUrl;
+	}
 }

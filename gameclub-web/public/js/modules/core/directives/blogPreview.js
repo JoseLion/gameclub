@@ -1,7 +1,7 @@
-angular.module("Core").directive('blogPreview', function($state) {
+angular.module('Core').directive('blogPreview', function($state) {
 	return {
 		restrict: 'E',
-		templateUrl: "js/modules/core/directives/blogPreview.html",
+		templateUrl: 'js/modules/core/directives/blogPreview.html',
 		scope: {
             blogId: '=',
             subtitle: '=',

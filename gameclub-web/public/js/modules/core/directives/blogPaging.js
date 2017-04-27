@@ -1,7 +1,7 @@
-angular.module("Core").directive('blogPaging', function() {
+angular.module('Core').directive('blogPaging', function() {
 	return {
 		restrict: 'E',
-		templateUrl: "js/modules/core/directives/blogPaging.html",
+		templateUrl: 'js/modules/core/directives/blogPaging.html',
 		scope: {
 			pages: '=',
 			current: '='

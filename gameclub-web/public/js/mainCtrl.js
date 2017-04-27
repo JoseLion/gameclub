@@ -1,4 +1,4 @@
-angular.module("GameClub").controller('MainCtrl', function($rootScope, $state, Const) {
+angular.module('GameClub').controller('MainCtrl', function($rootScope, $state, Const) {
 
 	$rootScope.link = {
 		shareAndPlay : {
@@ -22,12 +22,34 @@ angular.module("GameClub").controller('MainCtrl', function($rootScope, $state, C
 			route: 'gameclub.account'
 		}
 	};
+	$rootScope.accountlinks = {
+		profile : {
+			name: 'Tu perfil',
+			route: 'gameclub.account.profile'
+		},
+		settings : {
+			name: 'Tu cuenta',
+			route: 'gameclub.account.settings'
+		},
+		games : {
+			name: 'Tus juegos',
+			route: ''
+		},
+		messages : {
+			name: 'Mensajes',
+			route: ''
+		},
+		getCoins : {
+			name: 'Obtén coins',
+			route: ''
+		}
+	};
 
 	$rootScope.isLogged = true;
 
-	// $http.get(urlRestPath.url + "/api/token").then(function(response) {
+	// $http.get(urlRestPath.url + '/api/token').then(function(response) {
 	// 	if (response != null && response.data != null) {
-	// 		rest("publicUser/getCurrentUser").get(function(data) {
+	// 		rest('publicUser/getCurrentUser').get(function(data) {
 	// 			if (!data.status) {
 	// 				$scope.logout();
 	// 			} else {
@@ -60,13 +82,13 @@ angular.module("GameClub").controller('MainCtrl', function($rootScope, $state, C
 	// 	};
 	//
 	// 	$http(request).finally(function() {
-	// 		$cookies.remove(Const.cookieToken, {path: "/"});
+	// 		$cookies.remove(Const.cookieToken, {path: '/'});
 	// 		delete $rootScope.currentUser;
 	// 		$state.go(Const.mainState);
 	// 	});
 	//
 	// 	FB.getLoginStatus(function(response) {
-	// 		if (response.status === "connected") {
+	// 		if (response.status === 'connected') {
 	// 			FB.logout(function(response) {
 	//
 	// 			}, response.authResponse.accessToken);
@@ -83,7 +105,7 @@ angular.module("GameClub").controller('MainCtrl', function($rootScope, $state, C
 	// }
 
 	// $scope.subscribe = function() {
-	// 	return openRest("publicUser/subscribe").post({username:$scope.formSusbcribe.email}, function() {
+	// 	return openRest('publicUser/subscribe').post({username:$scope.formSusbcribe.email}, function() {
 	// 		toaster.success({body: Const.messages.successSent});
 	// 		$scope.formSusbcribe = {};
 	// 	}, function(error) {

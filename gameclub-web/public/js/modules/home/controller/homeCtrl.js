@@ -1,8 +1,8 @@
-angular.module("Home").controller('HomeCtrl', function($scope, $location, anchor) {
+angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor) {
 
     if (anchor != null) {
         $location.hash(anchor);
-        //$anchorScroll.yOffset = angular.element("#fixedbar")[0].offsetHeight;
+        //$anchorScroll.yOffset = angular.element('#fixedbar')[0].offsetHeight;
     }
 
     $scope.gameConsoles =[

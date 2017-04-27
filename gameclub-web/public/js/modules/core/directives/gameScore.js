@@ -1,7 +1,7 @@
-angular.module("Core").directive('gameScore', function() {
+angular.module('Core').directive('gameScore', function() {
 	return {
 		restrict: 'E',
-		templateUrl: "js/modules/core/directives/gameScore.html",
+		templateUrl: 'js/modules/core/directives/gameScore.html',
 		scope: {
 			src: '=',
 			score: '=',
@@ -9,7 +9,7 @@ angular.module("Core").directive('gameScore', function() {
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
-			if(attrs.noScore == "" || attrs.noScore) {
+			if(attrs.noScore == '' || attrs.noScore) {
 				$scope.hideScore = true;
 			} else {
 				$scope.hideScore = false;

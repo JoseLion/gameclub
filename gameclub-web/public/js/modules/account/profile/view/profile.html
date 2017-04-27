@@ -48,23 +48,7 @@
             </div>
             <div class="col-md-12">
                 <label>Fecha de nacimiento</label>
-                <div id="date-selector">
-                    <div class="selector">
-                        <input class="date-number" placeholder="01" size="3" maxlength="2" />
-                        <i class="fa fa-caret-down"></i>
-                    </div>
-                    <div class="selector">
-                        <input class="date-number" placeholder="01" size="3" maxlength="2" />
-                        <i class="fa fa-caret-down"></i>
-                    </div>
-                    <div class="selector">
-                        <input class="date-number" placeholder="99" size="3" maxlength="2" />
-                        <i class="fa fa-caret-down"></i>
-                    </div>
-                    <div class="calendar-icon">
-                        <i class="fa fa-calendar"></i>
-                    </div>
-                </div>
+                <date-selector ng-model="contactInfo.birthDate" ng-disabled="!isEditContact"/>
             </div>
             <div class="col-md-12">
                 <label>Ocupaci&oacute;n</label>
@@ -109,32 +93,10 @@
             <div class="col-md-12">
                 <label class="col-xs-12 col-md-4 separator">Horas de preferencia, <small>para entrega y retiro de juegos 2</small></label>
                 <div class="col-xs-12 col-md-4">
-                    <div id="time-selector">
-                        <span class="placeholder">Mañana</span>
-                        <div class="selector">
-                            <input placeholder="00H00" size="6" maxlength="5" />
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                        <span class="separator"><i class="fa fa-minus"></i></span>
-                        <div class="selector">
-                            <input placeholder="00H00" size="6" maxlength="5" />
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                    </div>
+                    <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Mañana"/>
                 </div>
                 <div class="col-xs-12 col-md-4">
-                    <div id="time-selector">
-                        <span class="placeholder">Tarde</span>
-                        <div class="selector">
-                            <input placeholder="00H00" size="6" maxlength="5" />
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                        <span class="separator"><i class="fa fa-minus"></i></span>
-                        <div class="selector">
-                            <input placeholder="00H00" size="6" maxlength="5" />
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                    </div>
+                    <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Tarde"/>
                 </div>
             </div>
             <div class="col-md-12">
@@ -152,32 +114,10 @@
             <div class="col-md-12">
                 <label class="col-xs-12 col-md-4 separator">Horas de preferencia, <small>para entrega y retiro de juegos 2</small></label>
                 <div class="col-xs-12 col-md-4">
-                    <div id="time-selector">
-                        <span class="placeholder">Mañana</span>
-                        <div class="selector">
-                            <input placeholder="00H00" size="6" maxlength="5" />
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                        <span class="separator"><i class="fa fa-minus"></i></span>
-                        <div class="selector">
-                            <input placeholder="00H00" size="6" maxlength="5" />
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                    </div>
+                    <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Mañana"/>
                 </div>
                 <div class="col-xs-12 col-md-4">
-                    <div id="time-selector">
-                        <span class="placeholder">Tarde</span>
-                        <div class="selector">
-                            <input placeholder="00H00" size="6" maxlength="5" />
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                        <span class="separator"><i class="fa fa-minus"></i></span>
-                        <div class="selector">
-                            <input placeholder="00H00" size="6" maxlength="5" />
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                    </div>
+                    <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Tarde"/>
                 </div>
             </div>
         </form>
@@ -220,7 +160,7 @@
                 <form class="col-xs-12 col-md-12">
                     <input placeholder="XXXX@MAIL.COM" />
                     <button class="btn btn-primary full small">Verificar</button>
-                    <span>Se te enviar&aacute; un mail<br>con un link de verificaci&oacute;n.
+                    <span>Se te enviar&aacute; un mail<br>con un link de verificaci&oacute;n.</span>
                 </form>
             </div>
             <div class="col-xs-12 col-md-4">

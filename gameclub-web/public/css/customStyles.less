@@ -185,9 +185,12 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-primar
 /********** DATE-SELECTOR **********/
 #date-selector{display:inline-block;}
 #date-selector div.selector{border-right:1px solid @color-tertiary;cursor:pointer;display:inline;padding-right:3px;padding-top:5%!important;}
+#date-selector div.selector.disabled{cursor:not-allowed;}
 #date-selector div.selector>input{text-align:right;cursor:pointer;}
+#date-selector div.selector.disabled>input{cursor:not-allowed;}
 #date-selector div.calendar-icon{display:inline;}
 #date-selector div.calendar-icon>i{font-size:1.7em;position:relative;cursor:pointer;}
+#date-selector div.selector.disabled>i{cursor:not-allowed;}
 #date-selector div.calendar-icon>i::before{position:absolute;top:-0.7em;left:0.5em;}
 /***********************************/
 
@@ -195,8 +198,11 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-primar
 #time-selector{text-align:center;font-weight:700;}
 #time-selector span.placeholder{display:block;text-transform:uppercase;}
 #time-selector div.selector{position:relative;display:inline;cursor:pointer;}
+#time-selector div.selector.disabled{cursor:not-allowed;}
 #time-selector div.selector>input{width:43%;text-align:center;cursor:pointer;}
+#time-selector div.selector.disabled>input{cursor:not-allowed;}
 #time-selector div.selector>i{position:absolute;right:5px;top:0;bottom:0;}
+#time-selector div.selector.disabled>i{cursor:not-allowed;}
 /***********************************/
 
 /********** HOME-PAGE **********/

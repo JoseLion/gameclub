@@ -15,7 +15,7 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 				controller: [
 					'$state', function($state) {
 						if($state.current.name == 'gameclub.account') {
-							$state.go('gameclub.account.settings')
+							$state.go('gameclub.account.profile')
 						}
 					}
 				]

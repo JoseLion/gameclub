@@ -5,6 +5,8 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public interface Const {
+	
+	public static final String SCHEMA = "gameclub";
 
 	public static final String PACKAGE_NAMING = "ec.com.levelap";
 

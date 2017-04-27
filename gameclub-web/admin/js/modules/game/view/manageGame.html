@@ -1,45 +1,93 @@
 <form class="form-horizontal" role="from" on-submit="save()" novalidate>
-	<div class="tabs-container">
-		<uib-tabset>
-			<uib-tab heading="{{tabs[0].name}}" active="tabs[0].active">
-				<div class="panel-body">
-					<div class="form-group to-validate">
-						<label class="col-md-3 control-label">Nombre</label>
-						<div class="col-md-9">
-							<input validation type="text" class="form-control" ng-model="game.name" required>
-						</div>
-					</div>
+	<div class="col-md-12">
+		<div class="tabs-container">
+			<uib-tabset>
+				<uib-tab heading="{{tabs[0].name}}" active="tabs[0].active">
+					<div class="panel-body">
+						<div class="col-md-12">
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Nombre</label>
+								<div class="col-md-9">
+									<input validation type="text" class="form-control" ng-model="game.name" required>
+								</div>
+							</div>
 
-					<div class="form-group to-validate">
-						<label class="col-md-3 control-label">Descripción</label>
-						<div class="col-md-9">
-							<textarea validation type="text" class="form-control" ng-model="game.description" required style="resize: vertical;"></textarea>
-						</div>
-					</div>
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Descripción</label>
+								<div class="col-md-9">
+									<textarea validation type="text" class="form-control" ng-model="game.description" required style="resize: vertical;"></textarea>
+								</div>
+							</div>
 
-					<div class="form-group to-validate">
-						<label class="col-md-3 control-label">Fecha de Lanzamiento</label>
-						<div class="col-md-3">
-							<input validation type="datetime" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="game.releaseDate" is-open="openDate" ng-click="openDate = true" data-mask="99-99-9999">
-						</div>
-					</div>
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Fecha de Lanzamiento</label>
+								<div class="col-md-3">
+									<input validation type="datetime" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="game.releaseDate" is-open="openDate" ng-click="openDate = true" data-mask="99-99-9999">
+								</div>
+							</div>
 
-					<div class="form-group to-validate">
-						<label class="col-md-3 control-label">Restricción de Contenido</label>
-						<div class="col-md-3">
-							<ui-select id="image-select" ng-model="game.contentRating" theme="bootstrap">
-								<ui-select-match allow-clear placeholder="Seleccione...">
-									<img ng-src="{{$select.selected.other}}" style="max-width: 50%;">
-								</ui-select-match>
-								<ui-select-choices repeat="content in contentRatings">
-									<img ng-src="{{content.other}}" style="max-width: 50%;">
-								</ui-select-choices>
-							</ui-select>
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Restricción de Contenido</label>
+								<div class="col-md-3">
+									<ui-select id="image-select" ng-model="game.contentRating" theme="bootstrap">
+										<ui-select-match allow-clear placeholder="Seleccione...">
+											<img ng-src="{{$select.selected.other}}" style="max-width: 50%;">
+										</ui-select-match>
+										<ui-select-choices repeat="content in contentRatings">
+											<img ng-src="{{content.other}}" style="max-width: 50%;">
+										</ui-select-choices>
+									</ui-select>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Rating</label>
+								<div class="col-md-3">
+									<ui-select ng-model="game.rating" theme="bootstrap">
+										<ui-select-match allow-clear placeholder="0">{{$select.selected}}</ui-select-match>
+										<ui-select-choices repeat="rate in [1, 2, 3, 4, 5]">
+											<div ng-bind-html="rate"></div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+							</div>
+
+							<div class="form-group" ng-repeat="gameMagazine in game.magazineRatings">
+								<div class="to-validate">
+									<label class="col-md-3 control-label">Rating {{gameMagazine.magazine.name}}</label>
+									<div class="col-md-3">
+										<ui-select validation ng-model="gameMagazine.rating" theme="bootstrap" required>
+											<ui-select-match allow-clear placeholder="0">{{$select.selected}}</ui-select-match>
+											<ui-select-choices repeat="rate in [1, 2, 3, 4, 5]">
+												<div ng-bind-html="rate"></div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<img ng-src="{{gameMagazine.magazine.other}}" style="max-width: 100%;">
+								</div>
+
+								<div class="to-validate">
+									<label class="col-md-1 control-label">URL</label>
+									<div class="col-md-3">
+										<input validation type="url" class="form-control" ng-model="gameMagazine.url" required>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Consolas</label>
+								<div class="col-md-3">
+									
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</uib-tab>
-		</uib-tabset>
+				</uib-tab>
+			</uib-tabset>
+		</div>
 	</div>
 </form>
 

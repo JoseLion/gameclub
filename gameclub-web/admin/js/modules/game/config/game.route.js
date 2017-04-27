@@ -44,6 +44,12 @@ angular.module("Game").config(function($stateProvider) {
 				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.contentRatings}, function(data) {
 					return data;
 				});
+			},
+
+			magazines: function(rest, Const) {
+				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.magazines}, function(data) {
+					return data;
+				});
 			}
 		}
 	})
@@ -70,6 +76,12 @@ angular.module("Game").config(function($stateProvider) {
 
 			contentRatings: function(rest, Const) {
 				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.contentRatings}, function(data) {
+					return data;
+				});
+			},
+
+			magazines: function(rest, Const) {
+				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.magazines}, function(data) {
 					return data;
 				});
 			}

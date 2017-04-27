@@ -21,9 +21,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
-@Table(schema="gameclub", name="game", uniqueConstraints=@UniqueConstraint(columnNames="name", name="name_uk"))
+@Table(schema=Const.SCHEMA, name="game", uniqueConstraints=@UniqueConstraint(columnNames="name", name="name_uk"))
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Game extends BaseEntity {
 	@Column(columnDefinition="VARCHAR", nullable=false)

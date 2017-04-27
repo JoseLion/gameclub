@@ -15,9 +15,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.gameclub.module.profile.entity.Profile;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
-@Table(schema="gameclub", name="admin_user", uniqueConstraints=@UniqueConstraint(columnNames="username", name="admin_username_uk"))
+@Table(schema=Const.SCHEMA, name="admin_user", uniqueConstraints=@UniqueConstraint(columnNames="username", name="admin_username_uk"))
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AdminUser extends BaseEntity {
 	@Column(columnDefinition="VARCHAR", nullable=false)

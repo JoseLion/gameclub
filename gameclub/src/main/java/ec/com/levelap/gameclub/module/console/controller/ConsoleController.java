@@ -32,6 +32,12 @@ public class ConsoleController {
 		return new ResponseEntity<List<Console>>(consoles, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="findOne/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Console> findOne(@PathVariable Long id) throws ServletException {
+		Console console = consoleService.getConsoleRepo().findOne(id);
+		return new ResponseEntity<Console>(console, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="save", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> save(@RequestPart Console console, @RequestPart(required=false) MultipartFile logo) throws ServletException, IOException {
 		return consoleService.save(console, logo);

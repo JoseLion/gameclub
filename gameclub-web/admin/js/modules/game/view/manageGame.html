@@ -1,0 +1,70 @@
+<form class="form-horizontal" role="from" on-submit="save()" novalidate>
+	<div class="tabs-container">
+		<uib-tabset>
+			<uib-tab heading="{{tabs[0].name}}" active="tabs[0].active">
+				<div class="panel-body">
+					<div class="form-group to-validate">
+						<label class="col-md-3 control-label">Nombre</label>
+						<div class="col-md-9">
+							<input validation type="text" class="form-control" ng-model="game.name" required>
+						</div>
+					</div>
+
+					<div class="form-group to-validate">
+						<label class="col-md-3 control-label">Descripción</label>
+						<div class="col-md-9">
+							<textarea validation type="text" class="form-control" ng-model="game.description" required style="resize: vertical;"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group to-validate">
+						<label class="col-md-3 control-label">Fecha de Lanzamiento</label>
+						<div class="col-md-3">
+							<input validation type="datetime" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="game.releaseDate" is-open="openDate" ng-click="openDate = true" data-mask="99-99-9999">
+						</div>
+					</div>
+
+					<div class="form-group to-validate">
+						<label class="col-md-3 control-label">Restricción de Contenido</label>
+						<div class="col-md-3">
+							<ui-select id="image-select" ng-model="game.contentRating" theme="bootstrap">
+								<ui-select-match allow-clear placeholder="Seleccione...">
+									<img ng-src="{{$select.selected.other}}" style="max-width: 50%;">
+								</ui-select-match>
+								<ui-select-choices repeat="content in contentRatings">
+									<img ng-src="{{content.other}}" style="max-width: 50%;">
+								</ui-select-choices>
+							</ui-select>
+						</div>
+					</div>
+				</div>
+			</uib-tab>
+		</uib-tabset>
+	</div>
+</form>
+
+<style type="text/css">
+	#image-select .ui-select-choices-row-inner {
+		text-align: center;
+	}
+
+	#image-select .ui-select-match-text {
+		text-align: center;
+	}
+
+	#image-select .form-control {
+		height: auto !important;
+		display: inline-block;
+	}
+
+	#image-select .ui-select-toggle > i {
+		top: 15px;
+	}
+
+	#image-select .ui-select-toggle > a {
+		position: absolute;
+		top: 5%;
+		right: 10px;
+		margin-top: -2px;
+	}
+</style>

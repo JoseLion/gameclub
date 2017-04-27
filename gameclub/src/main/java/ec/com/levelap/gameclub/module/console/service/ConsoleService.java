@@ -11,11 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import ec.com.levelap.archive.Archive;
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.base.service.BaseService;
-import ec.com.levelap.base.service.DocumentService;
+import ec.com.levelap.commons.archive.Archive;
+import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.console.repository.ConsoleRepo;
 
@@ -53,13 +53,13 @@ public class ConsoleService extends BaseService<Console> {
 			
 			if (console.getId() != null) {
 				Console original = consoleRepo.findOne(console.getId());
-				documentService.deleteFile(Console.class.getSimpleName(), original.getLogo().getName());
+				documentService.deleteFile(original.getLogo().getName(), Console.class.getSimpleName());
 				archive = original.getLogo();
 			}
 			
 			FileData fileData = documentService.saveFile(logo, Console.class.getSimpleName());
 			
-			archive.setPath(fileData.getPath());
+			archive.setModule(Console.class.getSimpleName());
 			archive.setName(fileData.getName());
 			archive.setType(logo.getContentType());
 			console.setLogo(archive);

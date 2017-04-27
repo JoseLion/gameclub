@@ -1,0 +1,188 @@
+<div id="profile">
+    <section class="row header">
+        <div class="col-md-4"></div>
+        <div class="col-md-8 no-padding-left no-padding-right">
+            <div class="col-md-10 name">
+                <div class="col-md-3 no-padding-left no-padding-right">
+                    <img src="img/test/profile-pic.png" />
+                </div>
+                <div class="col-md-9">
+                    <h2 class="title">Pablo Ponce</h2>
+                    <div class="col-md-12 no-padding-left no-padding-right">
+                        <div class="connection">&uacute;ltima vez conectado: <span>01-04-2017</span></div>
+                    </div>
+                    <button class="btn btn-tertiary full small">Cambiar avatar</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12 completed">
+                Usuario completado: <span>0%</span>
+            </div>
+            <p class="col-md-12 description">
+                Completa los 3 niveles de registro para poder navegar en toda la plataforma, pedir prestado cualquier juego y ganar 100 coins mensuales.
+            </p>
+            <div class="col-md-12 check-list">
+                <li><div class="box" ng-class="true ? 'checked' : ''"></div><span>Completa tu informaci&oacute;n de contacto</span></li>
+                <li><div class="box" ng-class="false ? 'checked' : ''"></div><span>Completa tu verificaci&oacute;n de identidad</span></li>
+                <li><div class="box" ng-class="false ? 'checked' : ''"></div><span>Mant&eacute;n m&iacute;nimo un juego cargado en la WEB</span></li>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+    <section class="row contact-information">
+        <div class="completed">
+            <span class="col-md-12 percent">0%</span>
+            <span class="col-md-12">Informaci&oacute;n de contacto</span>
+            <div class="col-md-12">
+                <button class="btn btn-tertiary full small" ng-if="isEditContact">Guardar perfil</button>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-tertiary small" ng-click="editContact()">{{isEditContact ? 'Volver' : 'Editar perfil'}}</button>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+        <form class="col-md-8">
+            <div class="col-md-12">
+                <label>N&uacute;mero de c&eacute;dula</label>
+                <input placeholder="171143229805" ng-disabled="!isEditContact" ng-model="contactInfo.document"/>
+            </div>
+            <div class="col-md-12">
+                <label>Fecha de nacimiento</label>
+                <date-selector ng-model="contactInfo.birthDate" ng-disabled="!isEditContact"/>
+            </div>
+            <div class="col-md-12">
+                <label>Ocupaci&oacute;n</label>
+                <input placeholder="Estudiante - Programador" ng-disabled="!isEditContact" ng-model="contactInfo.profession"/>
+            </div>
+            <div class="col-md-6">
+                <label class="col-xs-12 col-md-4">Ciudad</label>
+                <div class="col-xs-12 col-md-8">
+                    <ui-select ng-model="contactInfo.city" theme="bootstrap" class="selector" ng-disabled="!isEditContact">
+                        <ui-select-match allow-clear>{{$select.selected | limitTo:10}}{{$select.selected.length > 10 ? '...' : ''}}</ui-select-match>
+                        <ui-select-choices repeat="city in ['Quito','Guayaquil','Cuenca'] | filter: $select.search">
+                            <div ng-bind-html="city | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-6">
+                <label class="col-xs-12 col-md-4">Provincia</label>
+                <div class="col-xs-12 col-md-8">
+                    <ui-select ng-model="contactInfo.state" theme="bootstrap" class="selector" ng-disabled="!isEditContact">
+                        <ui-select-match allow-clear>{{$select.selected | limitTo:10}}{{$select.selected.length > 10 ? '...' : ''}}</ui-select-match>
+                        <ui-select-choices repeat="state in ['Pichincha','Guayas','Azuay'] | filter: $select.search">
+                            <div ng-bind-html="state | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+                <label class="col-xs-12 col-md-2">Direcci&oacute;n</label>
+                <div class="col-xs-12 col-md-10">
+                    <input type="address" placeholder="Para poder entregar/recoger juegos" ng-disabled="!isEditContact" ng-model="contactInfo.addressFirst"/>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="col-xs-12 col-md-4">Persona de recepci&oacute;n 1</label>
+                <div class="col-xs-12 col-md-8">
+                    <input type="person" placeholder="Persona quién recojerá/entregará los juegos en dirección 1" ng-disabled="!isEditContact" ng-model="contactInfo.personFirst"/>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="col-xs-12 col-md-4 separator">Horas de preferencia, <small>para entrega y retiro de juegos 2</small></label>
+                <div class="col-xs-12 col-md-4">
+                    <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Mañana"/>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Tarde"/>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="col-xs-12 col-md-2">Direcci&oacute;n 2</label>
+                <div class="col-xs-12 col-md-10">
+                    <input type="address" placeholder="En caso de no poder entregar/recojer de la direccíon 1" ng-disabled="!isEditContact" ng-model="contactInfo.addressSecond"/>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="col-xs-12 col-md-4">Persona de recepci&oacute;n 2</label>
+                <div class="col-xs-12 col-md-8">
+                    <input type="person" placeholder="Persona quién recojerá/entregará los juegos en dirección 2" ng-disabled="!isEditContact" ng-model="contactInfo.personSecond"/>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="col-xs-12 col-md-4 separator">Horas de preferencia, <small>para entrega y retiro de juegos 2</small></label>
+                <div class="col-xs-12 col-md-4">
+                    <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Mañana"/>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Tarde"/>
+                </div>
+            </div>
+        </form>
+        <div class="clearfix"></div>
+    </section>
+    <section class="contact-means">
+        <div class="row completed">
+            <div class="col-md-3 text-right"><span class="percent">0%</span></div>
+            <div class="col-md-9">
+                <span class="subtitle">
+                    <img src="img/lock-icon.svg" /><span>Verificaci&oacute;n de identidad</span>
+                </span>
+                <button class="btn btn-tertiary full small" ng-if="isEditContactMean">Guardar info</button>
+                <button class="btn btn-primary small" ng-click="editContactMean()">{{isEditContactMean ? 'Volver' : 'Actualizar info'}}</button>
+                <span class="description">Verificar estos tres campos para poder ser un usuario 100% confiable.<br>Si lo haces recibes 10 coins.</span>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row icons">
+            <div class="col-xs-12 col-md-4">
+                <img src="img/phone-icon.svg"/>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <i class="fa fa-envelope-o"></i>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <i class="fa fa-facebook"></i>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row form">
+            <div class="col-xs-12 col-md-4">
+                <form class="col-xs-12 col-md-12">
+                    <input placeholder="09985361013" />
+                    <button class="btn btn-primary full small">Verificar</button>
+                    <span>Se te enviar&aacute; un SMS<br>con un c&oacute;digo.</span>
+                </form>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <form class="col-xs-12 col-md-12">
+                    <input placeholder="XXXX@MAIL.COM" />
+                    <button class="btn btn-primary full small">Verificar</button>
+                    <span>Se te enviar&aacute; un mail<br>con un link de verificaci&oacute;n.</span>
+                </form>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <form class="col-xs-12 col-md-12">
+                    <input placeholder="PABLO PONCE" ng-model="contactMean.fb" />
+                    <button class="btn btn-primary full small" ng-if="contactMean.fb == null">Verificar</button>
+                    <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="contactMean.fb != null"/>
+                    <span>Ingresa tu cuenta de Facebook<br>para verificar tu ID.</span>
+                </form>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    <section class="row games">
+        <div class="col-xs-12 col-md-4">
+            <img src="img/books-icon.svg" />
+            <button class="btn btn-tertiary small">Cargar juego a tu biblioteca</button>
+        </div>
+        <div class="col-xs-12 col-md-8">
+            <span>Juegos cargados: <span class="quantity" ng-class="games.length > 0 ? 'more' : ''">{{games.length}}</span></span>
+            <p>Para poder pedir prestado cualquier juego, tu tienes que cargar un juego para que pueda ser pedido / prestado. Si prestas, juegas.</p>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+</div>

@@ -1,36 +1,40 @@
-angular.module("GameClub").constant('Const', {
+angular.module('GameClub').constant('Const', {
 
-	mainState: "gameclub.home",
+	statePrefix: {
+		gameclub: 'gameclub.',
+		account: 'gameclub.account.'
+	},
+	mainState: 'gameclub.home',
 
-	kushkiPublicMerchantId: "YYYYYYYYYY",
+	kushkiPublicMerchantId: 'YYYYYYYYYY',
 
 	errorMessages: {
-		required: "El dato es requerido.",
-		number: "El dato debe ser numérico.",
-		email: "Correo eletrónico inválido.",
-		pattern: "Formato inválido.",
-		ciRequired: "Número de cédula inválido.",
-		rucRequired: "Número de RUC inválido.",
-		date: "Formato de fecha inválido.",
-		min: "Valor por debajo del minímo establecido.",
-		max: "Valor por encima del máximo establecido.",
-		url: "Formato de URL inválido.",
-		maxlength: "El texto sobrepasa la cantidad máxima de caracteres",
-		minlength: "El texto no cumple con la cantidad mínima de caracteres",
-		tableRequired: "La tabla debe contener al menos un elemento."
+		required: 'El dato es requerido.',
+		number: 'El dato debe ser numérico.',
+		email: 'Correo eletrónico inválido.',
+		pattern: 'Formato inválido.',
+		ciRequired: 'Número de cédula inválido.',
+		rucRequired: 'Número de RUC inválido.',
+		date: 'Formato de fecha inválido.',
+		min: 'Valor por debajo del minímo establecido.',
+		max: 'Valor por encima del máximo establecido.',
+		url: 'Formato de URL inválido.',
+		maxlength: 'El texto sobrepasa la cantidad máxima de caracteres',
+		minlength: 'El texto no cumple con la cantidad mínima de caracteres',
+		tableRequired: 'La tabla debe contener al menos un elemento.'
 	},
 
 	messages: {
-		sure: "¿Está seguro?",
-		confirmation: "Se guardará la información.",
-		success: "Información guardada exitosamente.",
-		successSent: "Información enviada exitosamente.",
-		statusChanged: "El estado se cambió con éxito.",
-		expired: "La sesión ha expirado.",
-		unauthorized: "No autorizado.",
-		unableToConnect: "No se pudo conectar al servidor.",
-		error: "Oops, algo salió mal. Por favor intente más tarde.",
-		kushkiError: "Su tarjeta no superó la validación satisfactoriamente."
+		sure: '¿Está seguro?',
+		confirmation: 'Se guardará la información.',
+		success: 'Información guardada exitosamente.',
+		successSent: 'Información enviada exitosamente.',
+		statusChanged: 'El estado se cambió con éxito.',
+		expired: 'La sesión ha expirado.',
+		unauthorized: 'No autorizado.',
+		unableToConnect: 'No se pudo conectar al servidor.',
+		error: 'Oops, algo salió mal. Por favor intente más tarde.',
+		kushkiError: 'Su tarjeta no superó la validación satisfactoriamente.'
 	},
 
 	tooltips: {

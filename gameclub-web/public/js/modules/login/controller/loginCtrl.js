@@ -1,3 +1,3 @@
-angular.module("Login").controller('LoginCtrl', function($scope) {
+angular.module('Login').controller('LoginCtrl', function($scope) {
 
 });

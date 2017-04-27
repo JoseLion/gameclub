@@ -6,6 +6,52 @@ body{background-color:transparent;}
 input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 /*******************************/
 
+/********** GENERAL **********/
+.game-font{font-family:@font-family-jaapokki!important;}
+.game-font-blue{color:@color-primary-alt;/*NEW FONT*/}
+.game-font-white{color:@color-tertiary;/*NEW FONT*/}
+.game-font-light-red{color:@color-secundary;/*NEW FONT*/}
+.game-font-dark-blue{color:@color-primary;/*NEW FONT*/}
+.game-font-light-blue{color:@color-primary-alt;/*NEW FONT*/}
+.white-search{background:@color-tertiary-50;padding-top:10px;padding-bottom:10px;text-transform:uppercase;margin-top:10px;}
+.btn,.btn:hover,.btn:visited,.btn:focus,.btn:active,.btn:active:focus,.btn:active:hover{border-width:2px;border-style:solid;background:transparent;text-transform:uppercase;padding:5px 30px 2.5px;border-radius:12px;font-weight:700;box-shadow:none;}
+.btn.active,.btn.active:hover,.btn.active:visited,.btn.active:focus,.btn.active:active,.btn.active:active:focus,.btn.active:active:hover{border-width:2px;border-style:solid;background:transparent;box-shadow:none;}
+.btn-primary,.btn-primary:hover,.btn-primary:visited,.btn-primary:focus,.btn-primary:active,.btn-primary:active:focus,.btn-primary:active:hover,
+.btn-primary.active,.btn-primary.active:hover,.btn-primary.active:visited,.btn-primary.active:focus,.btn-primary.active:active,.btn-primary.active:active:focus,.btn-primary.active:active:hover{color:@color-primary;border-color:@color-secundary;}
+.btn-primary.full,.btn-primary.full:hover,.btn-primary.full:visited,.btn-primary.full:focus,.btn-primary.full:active,.btn-primary.full:active:focus,.btn-primary.full:active:hover,
+.btn-primary.full.active,.btn-primary.full.active:hover,.btn-primary.full.active:visited,.btn-primary.full.active:focus,.btn-primary.full.active:active,.btn-primary.full.active:active:focus,.btn-primary.full.active:active:hover{color:@color-primary;background:@color-secundary;}
+.btn-primary-alt,.btn-primary-alt:hover,.btn-primary-alt:visited,.btn-primary-alt:focus,.btn-primary-alt:active,.btn-primary-alt:active:focus,.btn-primary-alt:active:hover,
+.btn-primary-alt.active,.btn-primary-alt.active:hover,.btn-primary-alt.active:visited,.btn-primary-alt.active:focus,.btn-primary-alt.active:active,.btn-primary-alt.active:active:focus,.btn-primary-alt.active:active:hover{color:@color-primary;border-color:@color-primary-alt;}
+.btn-secundary,.btn-secundary:hover,.btn-secundary:visited,.btn-secundary:focus,.btn-secundary:active,.btn-secundary:active:focus,.btn-secundary:active:hover{color:@color-tertiary;border-color:@color-primary;}
+.btn-secundary.full,.btn-secundary.full:hover,.btn-secundary.full:visited,.btn-secundary.full:focus,.btn-secundary.full:active,.btn-secundary.full:active:focus,.btn-secundary.full:active:hover{color:@color-tertiary;background:@color-primary;}
+.btn-tertiary,.btn-tertiary:hover,.btn-tertiary:visited,.btn-tertiary:focus,.btn-tertiary:active,.btn-tertiary:active:focus,.btn-tertiary:active:hover{color:@color-primary;border-color:@color-tertiary;}
+.btn-tertiary.full,.btn-tertiary.full:hover,.btn-tertiary.full:visited,.btn-tertiary.full:focus,.btn-tertiary.full:active,.btn-tertiary.full:active:focus,.btn-tertiary.full:active:hover{color:@color-primary;background:@color-tertiary;}
+.ui-select-toggle .btn,.ui-select-toggle .btn:hover,.ui-select-toggle .btn:visited,.ui-select-toggle .btn:focus,.ui-select-toggle .btn:active,.ui-select-toggle .btn:active:focus,.ui-select-toggle .btn:active:hover{padding:0;}
+.row-left{margin-left:0;margin-right:0;padding-left:20%;}
+.row-right{margin-left:0;margin-right:0;padding-right:20%;}
+.title{font-size:2em;text-transform:uppercase;font-weight:700;}
+form label::after{content:":";}
+form input,form textarea{background:transparent;border:none;outline:none;box-shadow:none;}
+form .selector{width:100%;padding:5px 0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
+form .selector span{font-size:1em;}
+form .selector .ui-select-match>span{padding:0px!important;border:none!important;}
+form .selector .ui-select-match>span .caret.pull-right{top:40%!important;right:0px!important;}
+form .selector .ui-select-match.btn-default-focus{color:@color-tertiary;background-color:transparent;border:none;outline:none;box-shadow:none;}
+form .selector .ui-select-search{font-size:1em;padding:0px;height:21px;border:none;box-shadow:none;}
+form .selector .glyphicon-remove{color:@color-tertiary;}
+form .selector .ui-select-match>span,form .selector .ui-select-match>span>span,form .selector .ui-select-match .ui-select-placeholder,form .selector input{background:transparent;color:@color-tertiary;border:none;box-shadow:none;}
+form .selector .ui-select-match .ui-select-match-text img.gameConsole{height:100%;position:absolute;}
+form .ui-select-match .ui-select-placeholder{text-transform:none;}
+form .selector .ui-select-choices{background:@color-primary;color:@color-tertiary;border:1px solid @color-primary;border-radius:10px;border-top-left-radius:0px;border-top-right-radius:0px;width:120%;margin-left:-10%;}
+form .selector.direction-up .ui-select-choices{border-bottom-left-radius:0px;border-bottom-right-radius:0px}
+form .selector .ui-select-choices .ui-select-choices-row{text-transform:uppercase;padding-left:15px;padding-right:15px;font-size:1em;padding-top:5px;position:relative;}
+form .selector .ui-select-choices .ui-select-choices-row img.category{height:1em;position:absolute;top:5px;right:10px;}
+form .selector .ui-select-choices .ui-select-choices-row img.gameConsole{width:75%;margin-bottom:5px;}
+form .selector .ui-select-choices .ui-select-choices-row:hover{background:@color-secundary;margin-left:5px;margin-right:5px;padding-left:10px;padding-right:10px;}
+form .selector .ui-select-choices .ui-select-choices-row:hover img.category{right:5px;}
+form .selector .ui-select-choices::-webkit-scrollbar{width:0px;}
+/*****************************/
+
 /********** HEADER **********/
 header{background:@color-primary;font-weight:700;}
 header .social-media{text-align:left;padding-top:5px;}
@@ -26,10 +72,16 @@ header .shortcut-links .links{padding:19px 0;}
 header .shortcut-links .spacing{letter-spacing:1.5px;text-transform:lowercase;}
 header .shortcut-links .links nav>li{display:inline;border-left:1px solid @color-secundary;padding:6px 5px 6px 10px;}
 header .shortcut-links .links nav>li:first-child{border-left:none;}
+header .shortcut-links .links nav>li.account img.avatar{height:3em;}
+header .shortcut-links .links nav>li.account img.avatar{height:3em;}
 header .shortcut-links .links nav button.btn{border-radius:7px;text-transform:none;padding:1% 2% 0.5%;font-size:0.6em;}
 header .shortcut-links .links nav button.btn-primary{color:@color-tertiary;border-color:transparent;}
 header .shortcut-links .links nav button.btn-primary:hover{border-color:@color-secundary;}
 header .shortcut-links .links nav button.btn-primary.active{border-color:@color-secundary;}
+header .shortcut-links .coins{margin-top:-2%;font-size:0.8em;color:@color-tertiary;padding-right:1.5em;}
+header .shortcut-links .coins .text{position:absolute;right:3.5em;padding-top:0.25em;}
+header .shortcut-links .coins .fa.fa-usd{position:relative;width:1.5em;height:1.5em;border:1px solid @color-tertiary;border-radius:50%;font-size:1em;}
+header .shortcut-links .coins .fa.fa-usd::before{position:absolute;top:0.25em;left:0;right:0;text-align:center;}
 /****************************/
 
 /********** FOOTER **********/
@@ -58,26 +110,7 @@ footer .designed{background-color:@color-secundary;color:@color-tertiary;text-al
 footer .designed span{letter-spacing:1px;}
 /****************************/
 
-/********** GENERAL **********/
-.game-font{font-family:@font-family-jaapokki !important;}
-.game-font-blue{color:@color-primary-alt;/*NEW FONT*/}
-.game-font-white{color:@color-tertiary;/*NEW FONT*/}
-.game-font-light-red{color:@color-secundary;/*NEW FONT*/}
-.game-font-dark-blue{color:@color-primary;/*NEW FONT*/}
-.game-font-light-blue{color:@color-primary-alt;/*NEW FONT*/}
-.white-search{background:@color-tertiary-50;padding-top:10px;padding-bottom:10px;text-transform:uppercase;margin-top:10px;}
-.btn,.btn:hover,.btn:visited,.btn:focus,.btn:active,.btn:active:focus,.btn:active:hover{border-width:2px;border-style:solid;background:transparent;text-transform:uppercase;padding:5px 30px 2.5px;border-radius:12px;font-weight:700;box-shadow:none;}
-.btn.active,.btn.active:hover,.btn.active:visited,.btn.active:focus,.btn.active:active,.btn.active:active:focus,.btn.active:active:hover{border-width:2px;border-style:solid;background:transparent;}
-.btn-primary,.btn-primary:hover,.btn-primary:visited,.btn-primary:focus,.btn-primary:active,.btn-primary:active:focus,.btn-primary:active:hover,
-.btn-primary.active,.btn-primary.active:hover,.btn-primary.active:visited,.btn-primary.active:focus,.btn-primary.active:active,.btn-primary.active:active:focus,.btn-primary.active:active:hover{color:@color-primary;border-color:@color-secundary;}
-.btn-primary-alt,.btn-primary-alt:hover,.btn-primary-alt:visited,.btn-primary-alt:focus,.btn-primary-alt:active,.btn-primary-alt:active:focus,.btn-primary-alt:active:hover,
-.btn-primary-alt.active,.btn-primary-alt.active:hover,.btn-primary-alt.active:visited,.btn-primary-alt.active:focus,.btn-primary-alt.active:active,.btn-primary-alt.active:active:focus,.btn-primary-alt.active:active:hover{color:@color-primary;border-color:@color-primary-alt;}
-.btn-secundary,.btn-secundary:hover,.btn-secundary:visited,.btn-secundary:focus,.btn-secundary:active,.btn-secundary:active:focus,.btn-secundary:active:hover{color:@color-tertiary;border-color:@color-primary;}
-.btn-tertiary,.btn-tertiary:hover,.btn-tertiary:visited,.btn-tertiary:focus,.btn-tertiary:active,.btn-tertiary:active:focus,.btn-tertiary:active:hover{color:@color-primary-alt;border-color:@color-secundary;}
-.ui-select-toggle .btn,.ui-select-toggle .btn:hover,.ui-select-toggle .btn:visited,.ui-select-toggle .btn:focus,.ui-select-toggle .btn:active,.ui-select-toggle .btn:active:focus,.ui-select-toggle .btn:active:hover{padding:0;}
-.row-left{margin-left:0;margin-right:0;padding-left:20%;}
-.row-right{margin-left:0;margin-right:0;padding-right:20%;}
-/*****************************/
+
 
 /********** BLOG-PREVIEW **********/
 .preview-blog{background:@color-tertiary-alt;padding-top:1%;box-shadow: 5px 10px 25px 5px @color-primary-30;}
@@ -149,6 +182,29 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-primar
 #blog-paging .page-button.page-active{background:@color-secundary;border-color:transparent;}
 /*********************************/
 
+/********** DATE-SELECTOR **********/
+#date-selector{display:inline-block;}
+#date-selector div.selector{border-right:1px solid @color-tertiary;cursor:pointer;display:inline;padding-right:3px;padding-top:5%!important;}
+#date-selector div.selector.disabled{cursor:not-allowed;}
+#date-selector div.selector>input{text-align:right;cursor:pointer;}
+#date-selector div.selector.disabled>input{cursor:not-allowed;}
+#date-selector div.calendar-icon{display:inline;}
+#date-selector div.calendar-icon>i{font-size:1.7em;position:relative;cursor:pointer;}
+#date-selector div.selector.disabled>i{cursor:not-allowed;}
+#date-selector div.calendar-icon>i::before{position:absolute;top:-0.7em;left:0.5em;}
+/***********************************/
+
+/********** TIME-SELECTOR **********/
+#time-selector{text-align:center;font-weight:700;}
+#time-selector span.placeholder{display:block;text-transform:uppercase;}
+#time-selector div.selector{position:relative;display:inline;cursor:pointer;}
+#time-selector div.selector.disabled{cursor:not-allowed;}
+#time-selector div.selector>input{width:43%;text-align:center;cursor:pointer;}
+#time-selector div.selector.disabled>input{cursor:not-allowed;}
+#time-selector div.selector>i{position:absolute;right:5px;top:0;bottom:0;}
+#time-selector div.selector.disabled>i{cursor:not-allowed;}
+/***********************************/
+
 /********** HOME-PAGE **********/
 #home{color:@color-tertiary;display:block;position:relative;}
 #home::before{content:"";background:url("../img/home/banner-bg.png") repeat-y center top;background-size:100%;position:absolute;top:-5%;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;}
@@ -157,9 +213,9 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-primar
 #home .banner::before{content:"";background:url("../img/home/banner-pad-bg.png") no-repeat center top;background-size:40%;position:absolute;top:0;right:0;bottom:0;left:0;z-index:-5;opacity:0.7;}
 #home .banner hr{border-top:2px solid @color-tertiary;margin-bottom:5px;margin-top:0px;}
 #home .banner .title-up{margin-left:12%;margin-right:54%;}
-#home .banner .title{font-family:@font-family-jaapokki !important;font-size:2.4em;letter-spacing:6px;margin-top:15px;}
+#home .banner .title{font-family:@font-family-jaapokki!important;font-size:2.4em;letter-spacing:6px;margin-top:15px;}
 #home .banner .title-down{margin-right:12%;margin-left:53%;}
-#home .banner .description{font-size:1.5em;font-family:@font-family-jaapokki !important;}
+#home .banner .description{font-size:1.5em;font-family:@font-family-jaapokki!important;}
 #home .banner .search .search-params{font-size:1.1em;font-weight:700;padding:0;}
 #home .banner .search .search-params .filter{padding-top:7px;padding-bottom:5px;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;}
 #home .banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
@@ -169,27 +225,10 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-primar
 #home .banner .search .search-params input::-webkit-input-placeholder{color:@color-tertiary;text-transform:none;}
 #home .banner .search .search-params input::-moz-placeholder{color:@color-tertiary;text-transform:none;}
 #home .banner .search .search-params input::-ms-input-placeholder{color:@color-tertiary;text-transform:none;}
-#home .banner .search .search-params input,
-#home .banner .search .search-params .selector{width:100%;padding:5px 0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
-#home .banner .search .search-params .selector span{font-size:1em;}
-#home .banner .search .search-params .selector .ui-select-match>span{padding:0px;height:21px;border:none;}
-#home .banner .search .search-params .selector .ui-select-match>span .caret.pull-right{top:40% !important;right:0px !important;}
-#home .banner .search .search-params .selector .ui-select-match.btn-default-focus{color:@color-tertiary;background-color:transparent;border:none;outline:none;box-shadow:none;}
-#home .banner .search .search-params .selector .ui-select-search{font-size:1em;padding:0px;height:21px;border:none;}
-#home .banner .search .search-params .selector .glyphicon-remove{color:@color-tertiary;}
-#home .banner .search .search-params .selector .ui-select-match>span,#home .banner .search .search-params .ui-select-match>span>span,#home .banner .search .search-params .ui-select-match .ui-select-placeholder,#home .banner .search .search-params input{background:transparent;color:@color-tertiary;border:none;box-shadow:none;}
-#home .banner .search .search-params .selector .ui-select-match .ui-select-match-text img.gameConsole{height:100%;position:absolute;}
-#home .banner .search .search-params .ui-select-match .ui-select-placeholder{text-transform:none;}
-#home .banner .search .search-params .selector .ui-select-choices{background:@color-primary;color:@color-tertiary;border:1px solid @color-primary;border-radius:10px;border-top-left-radius:0px;border-top-right-radius:0px;width:120%;margin-left:-10%;}
-#home .banner .search .search-params .selector.direction-up .ui-select-choices{border-bottom-left-radius:0px;border-bottom-right-radius:0px}
-#home .banner .search .search-params .selector .ui-select-choices .ui-select-choices-row{text-transform:uppercase;padding-left:15px;padding-right:15px;font-size:1em;padding-top:5px;position:relative;}
-#home .banner .search .search-params .selector .ui-select-choices .ui-select-choices-row img.category{height:1em;position:absolute;top:5px;right:10px;}
-#home .banner .search .search-params .selector .ui-select-choices .ui-select-choices-row img.gameConsole{width:75%;margin-bottom:5px;}
-#home .banner .search .search-params .selector .ui-select-choices .ui-select-choices-row:hover{background:@color-secundary;margin-left:5px;margin-right:5px;padding-left:10px;padding-right:10px;}
-#home .banner .search .search-params .selector .ui-select-choices .ui-select-choices-row:hover img.category{right:5px;}
-#home .banner .search .search-params .selector .ui-select-choices::-webkit-scrollbar{width:0px;}
+#home .banner .search .search-params input,#home .banner .search .search-params .selector{width:100%;padding:5px 0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
+#home .banner .search .search-params .selector .ui-select-match>span{height:21px;}
 #home .banner .search button{border-color:@color-tertiary;}
-#home .banner .search.white-search .btn-tertiary{background-color:@color-secundary-65;width:3em;height:3em;border-radius:50%;padding:5px;position:relative;text-align:center;vertical-align:middle;}
+#home .banner .search.white-search .btn-tertiary{background-color:@color-secundary-65;width:3em;height:3em;border-radius:50%;padding:5px;position:relative;text-align:center;vertical-align:middle;color:@color-primary-alt;}
 #home .banner .search.white-search .btn-tertiary i{font-size: 1.8em;left:0;right:0;top:25%;bottom:0;position:absolute;}
 
 #home .how-it-works{text-align:center;position:relative;background:@color-primary;display:block;z-index:-5;}
@@ -332,7 +371,7 @@ background:-moz-linear-gradient(-60deg,@color-secundary,@color-secundary,@color-
 #blog .categories .tag{display:inline-block;width:30%;border-radius:7px;margin:1% 2% 3%;padding:2.5%;text-align:center;background:@color-secundary;font-size:0.9em;color:@color-tertiary;}
 
 #blog .blog-panel .row-right.how-it-works{margin-left:0;margin-right:0;padding-right:0;}
-#blog .how-it-works{position:relative; background:@color-primary;padding:2% 20% 2.5% 3.5%;box-shadow:-15px 10px 60px -5px @color-primary;color:@color-secundary;}
+#blog .how-it-works{position:relative;background:@color-primary;padding:2% 20% 2.5% 3.5%;box-shadow:-15px 10px 60px -5px @color-primary;color:@color-secundary;}
 #blog .how-it-works .step.first-step{position:relative;}
 #blog .how-it-works .step.first-step .title{font-size:1.5em;color:@color-secundary;position:relative;padding-left:35px;padding-right:35px;}
 /*******************************/
@@ -352,6 +391,7 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #login section.signup .legal{font-size:0.8em;}
 #login section.signup .legal a{color:@color-tertiary;text-decoration:underline;}
 #login section.login{right:0;}
+#login section.login button{border-color:@color-secundary;}
 #login section.login button.login{color:@color-primary;margin-top:7%;margin-bottom:7%;}
 #login section.login a{margin-top:10%;}
 #login section form input{width:100%;margin:1%;border:2px solid @color-primary;border-radius:5px;padding:1% 7% 1% 3%;background:transparent;}
@@ -364,6 +404,98 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #login section form .image{padding:2% 0;text-align:left;}
 #login section form .image img{width:1.3em;}
 /********************************/
+
+/********** ACCOUNT-PAGE **********/
+#account{background:@color-secundary;color:@color-tertiary;}
+/**********************************/
+
+/********** ACCOUNT-LINKS **********/
+#accountLinks{background:@color-primary-alt;padding-top:9em;font-size:1em;font-weight:700;text-transform:uppercase;box-shadow:5px 5px 50px 2px @color-primary;position:absolute;left:20%;}
+#accountLinks nav li{position:relative;display:block;padding:10% 10% 5%;margin-left:5%;margin-right:5%;border-bottom:1px solid @color-primary;}
+#accountLinks nav li:last-child{border-bottom:none;}
+#accountLinks nav li .btn-account-links{color:@color-tertiary;width:100%;padding:0;text-align:left;}
+#accountLinks nav li .btn-account-links:hover::after,#accountLinks nav li .btn-account-links:visited::after,#accountLinks nav li .btn-account-links:focus::after,#accountLinks nav li .btn-account-links:active::after,#accountLinks nav li .btn-account-links:active:focus::after,#accountLinks nav li .btn-account-links:active:hover::after,
+#accountLinks nav li .btn-account-links.active::after,#accountLinks nav li .btn-account-links.active:hover::after,#accountLinks nav li .btn-account-links.active:visited::after,#accountLinks nav li .btn-account-links.active:focus::after,#accountLinks nav li .btn-account-links.active:active::after,#accountLinks nav li .btn-account-links.active:active:focus::after,#accountLinks nav li .btn-account-links.active:active:hover::after
+{content:"";position:absolute;width:17%;top:0;bottom:40%;right:-5%;border-bottom:4px solid @color-tertiary;box-shadow:none;}
+/***********************************/
+
+/********** PROFILE-PAGE **********/
+#account #profile{padding-top:9em;}
+#account #profile button.small{border-radius:5px;padding:2% 6% 0;font-size:0.7em;margin-top:1%;}
+
+#account #profile section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
+#account #profile section.header .name h2.title{font-size:1.8em;margin-bottom:0;}
+#account #profile section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
+#account #profile section.header .name .connection span{color:@color-primary-alt;}
+#account #profile section.header .completed{position:relative;font-size:1.2em;margin-top:5%;margin-bottom:3%;text-transform:uppercase;font-weight:700;}
+#account #profile section.header .completed span{color:@color-primary-40;}
+#account #profile section.header .completed::after{content:"";position:absolute;bottom:-10%;left:15px;width:15%;border-bottom:2px solid @color-tertiary;}
+#account #profile section.header .description{font-size:0.9em;font-weight:700;line-height:1.2;}
+#account #profile section.header .check-list li{width:100%;display:inline-block;font-size:1em;font-weight:700;margin-bottom:3%;position:relative;text-transform:uppercase;}
+#account #profile section.header .check-list li .box{position:relative;width:1.4em;height:1.4em;display:inline-block;border:2px solid @color-tertiary;margin-right:2%;color:@color-primary;}
+#account #profile section.header .check-list li .box.checked::after{content:"";background:url("../img/check.svg") no-repeat center center;position:absolute;left:1px;bottom:-2px;background-size:100%;width:1.5em;height:1.5em;}
+#account #profile section.header .check-list li span{position:absolute;top:10%;}
+
+#account #profile section.contact-information{position:relative;}
+#account #profile section.contact-information .completed{position:absolute;top:40%;left:20%;right:60%;bottom:0;text-align:center;font-size:1.2em;text-transform:uppercase;font-weight:700;}
+#account #profile section.contact-information .completed span.percent{color:@color-primary-40;}
+#account #profile section.contact-information .completed button{padding-top:1%;font-size:0.65em;width:50%;}
+#account #profile section.contact-information form{margin-top:3%;margin-left:-1%;font-size:0.8em;position:relative;padding-left:3%;}
+#account #profile section.contact-information form::before{content:"";position:absolute;top:1.5em;bottom:1em;left:0;border-left:5px solid @color-tertiary;}
+#account #profile section.contact-information form>div{border-bottom:2px solid @color-tertiary;padding-bottom:1%;margin-top:1%;margin-bottom:2%;padding-left:0;padding-right:0;}
+#account #profile section.contact-information form>div.clearfix{border:none;margin:0;padding:0;}
+#account #profile section.contact-information form>div>label,#account #profile section.contact-information form>div>div{padding-left:0;padding-right:0;}
+#account #profile section.contact-information form label{text-transform:uppercase;}
+#account #profile section.contact-information form label.separator{line-height:1;}
+#account #profile section.contact-information form label small{text-transform:none;display:inline-block;}
+#account #profile section.contact-information form input{color:@color-primary;}
+#account #profile section.contact-information form input[disabled]{color:@color-primary-40;}
+#account #profile section.contact-information form input[disabled]::-webkit-input-placeholder{color:@color-primary-40;}
+#account #profile section.contact-information form input[disabled]::-moz-placeholder{color:@color-primary-40;}
+#account #profile section.contact-information form input[disabled]::-ms-input-placeholder{color:@color-primary-40;}
+#account #profile section.contact-information form input::-webkit-input-placeholder{color:@color-primary-40;}
+#account #profile section.contact-information form input::-moz-placeholder{color:@color-primary-40;}
+#account #profile section.contact-information form input::-ms-input-placeholder{color:@color-primary-40;}
+#account #profile section.contact-information form .selector{width:100%;padding-top:0;padding-bottom:0;}
+#account #profile section.contact-information form .selector *{outline:none;}
+#account #profile section.contact-information form .selector .ui-select-match .ui-select-match-text{color:@color-primary;font-weight:400;}
+#account #profile section.contact-information form .selector .ui-select-match>span.ui-select-toggle,#account #profile section.contact-information form .selector>input.ui-select-search{height:2em;}
+#account #profile section.contact-information form .selector .ui-select-match span[disabled]{background:transparent;border:none;}
+#account #profile section.contact-information form input[type="address"]{width:100%;padding-right:25px;background:url("../img/map-marker.svg") no-repeat center;background-size:1em;background-position-x:99%;}
+#account #profile section.contact-information form input[type="person"]{width:100%;}
+
+#account #profile section.contact-means{background:@color-tertiary-alt;padding-bottom:3%;}
+#account #profile section.contact-means>div{text-align:center;}
+#account #profile section.contact-means>div.completed{text-align:left;font-size:1.2em;color:@color-secundary;text-transform:uppercase;font-weight:700;padding-top:2%;padding-bottom:1%;}
+#account #profile section.contact-means>div.completed span.percent{color:@color-primary-40;}
+#account #profile section.contact-means>div.completed .subtitle{margin-right:1em;}
+#account #profile section.contact-means>div.completed .subtitle img{height:1.2em;margin-top:-2%;margin-right:2%;}
+#account #profile section.contact-means>div.completed button{font-size:0.65em;padding:0.5% 3% 0;margin-top:-2%;}
+#account #profile section.contact-means>div.completed span.description{font-size:0.8em;text-transform:none;display:block;font-weight:400;}
+#account #profile section.contact-means>div.icons{background:@color-primary;padding-top:1em;padding-bottom:1em;}
+#account #profile section.contact-means>div.icons img{height:4em;}
+#account #profile section.contact-means>div.icons i{font-size:2em;padding:0.5em 0;color:#1C3664;}
+#account #profile section.contact-means>div.icons i.fa-facebook{color:@color-secundary;}
+#account #profile section.contact-means>div.form input{width:100%;text-align:center;}
+#account #profile section.contact-means>div.form form input{margin:10% auto 5%;border-bottom:2px solid @color-secundary;font-size:1.5em;color:@color-primary;text-transform:uppercase;}
+#account #profile section.contact-means>div.form form button{margin:5% auto;}
+#account #profile section.contact-means>div.form form img.verification-ok{height:2em;margin:5% auto;}
+#account #profile section.contact-means>div.form form span{display:block;color:@color-primary;font-size:0.8em;font-weight:700;}
+
+#account #profile section.games{padding-top:2%;padding-bottom:3%;color:@color-tertiary;font-weight:700;}
+#account #profile section.games img{height:2em;display:block;margin:auto;margin-bottom:3%;}
+#account #profile section.games button{display:block;margin:auto;}
+#account #profile section.games span{font-size:1.2em;text-transform:uppercase;}
+#account #profile section.games span.quantity{color:@color-primary-40;}
+#account #profile section.games span.quantity.more{color:@color-primary;}
+#account #profile section.games p{margin:2% auto;font-size:0.8em;}
+/**********************************/
+
+/********** SETTINGS-PAGE **********/
+#account #settings{height:500px;}
+/***********************************/
+
+
 
 /*
 background:@color-primary;

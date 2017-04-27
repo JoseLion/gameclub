@@ -16,7 +16,60 @@ angular.module("Game").config(function($stateProvider) {
 			},
 
 			games: function(rest) {
-				return rest("game/findGames").get(function(data) {
+				return rest("game/findGames").post(function(data) {
+					return data;
+				});
+			}
+		}
+	})
+
+	.state(prefix + 'addGame', {
+		url: "/add-game",
+		templateUrl: "js/modules/game/view/manageGame.html",
+		data: {displayName: 'Agregar Juegos'},
+		controller: "ManageGameCtrl",
+		resolve: {
+			loadPlugin: function($ocLazyLoad) {
+				return $ocLazyLoad.load([{
+					name: 'Game',
+					files: ['js/modules/game/controller/manageGameCtrl.js']
+				}]);
+			},
+
+			game: function() {
+				return null;
+			},
+
+			contentRatings: function(rest, Const) {
+				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.contentRatings}, function(data) {
+					return data;
+				});
+			}
+		}
+	})
+
+	.state(prefix + 'editGame', {
+		url: "/edit-game/:id/:name",
+		params: {id: null, name: null},
+		templateUrl: "js/modules/game/view/manageGame.html",
+		data: {displayName: 'Agregar Juegos'},
+		controller: "ManageGameCtrl",
+		resolve: {
+			loadPlugin: function($ocLazyLoad) {
+				return $ocLazyLoad.load([{
+					name: 'Game',
+					files: ['js/modules/game/controller/manageGameCtrl.js']
+				}]);
+			},
+
+			game: function(rest, $stateParams) {
+				return rest("game/findOne/:id").get({id: $stateParams.id}, function(data) {
+					return data;
+				});
+			},
+
+			contentRatings: function(rest, Const) {
+				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.contentRatings}, function(data) {
 					return data;
 				});
 			}

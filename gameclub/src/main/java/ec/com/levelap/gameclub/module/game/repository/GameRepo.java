@@ -16,19 +16,25 @@ import ec.com.levelap.gameclub.module.game.entity.GameLite;
 
 @Repository
 public interface GameRepo extends JpaRepository<Game, Long> {
-	@Query(	"SELECT g.id AS id, " +
+	@Query(	"SELECT DISTINCT " +
+				"g.id AS id, " +
 				"g.name AS name, " +
 				"g.releaseDate AS releaseDate, " +
 				"g.cover AS cover, " +
 				"g.status AS status, " +
-				"g.consoles AS consoles, " +
-				"g.categories AS categories " +
-			"FROM Game g WHERE " +
+				"'' AS consoles, " +
+				"'' AS categories " +
+			"FROM Game g " +
+				"LEFT JOIN g.consoles cn " +
+				"LEFT JOIN g.categories ct " +
+			"WHERE " +
 				"UPPER(g.name) LIKE UPPER('%' || :name || '%') AND " +
 				"(g.releaseDate BETWEEN :releaseStart AND :releaseEnd) AND " +
 				"(:status IS NULL OR g.status=:status) AND " +
-				"(:console IS NULL OR :console IN g.consoles) AND " +
-				"(:category IS NULL OR :category IN g.categories) " +
+				//"(:console IS NULL OR :console IN g.consoles) AND " +
+				//"(:category IS NULL OR :category IN g.categories) " +
+				"(:console IS NULL OR cn=:console) AND " +
+				"(:category IS NULL OR ct=:category) " +
 			"ORDER BY g.name DESC, g.releaseDate DESC")
 	public Page<GameLite> findGames(
 			@Param("name") String name,

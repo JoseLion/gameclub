@@ -41,7 +41,7 @@
 
 				<div class="col-md-6">
 					<div class="form-group">
-						<label class="col-md-3 control-label"></label>
+						<label class="col-md-3 control-label">Estado</label>
 						<div class="col-md-9">
 							<ui-select ng-model="search.status" theme="bootstrap">
 								<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected ? 'Activo' : 'Inactivo'}}</ui-select-match>
@@ -53,7 +53,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-md-3 control-label">Fecha Publicación</label>
+						<label class="col-md-3 control-label">Fecha Lanzamiento</label>
 						<div class="col-md-9">
 							<div class="row">
 								<div class="to-validate col-md-6">
@@ -83,9 +83,9 @@
 	<div class="ibox">
 		<div class="ibox-content">
 			<div class="col-md-12 form-group" style="text-align: right;">
-				<button type="button" class="btn btn-w-m btn-primary" ng-click="addAdminUser()">
+				<button type="button" class="btn btn-w-m btn-primary" ng-click="addGame()">
 					<i class="fa fa-plus" style="margin-right: 5px"></i>
-					<span>Agregar Usuario del Administrador</span>
+					<span>Agregar Juego</span>
 				</button>
 			</div>
 
@@ -105,7 +105,7 @@
 							<th>Nombre</th>
 							<th>Consolas</th>
 							<th>Categorias</th>
-							<th>Fecha Publicación</th>
+							<th>Fecha Lanzamiento</th>
 							<th>Estado</th>
 							<th>Acciones</th>
 						</tr>
@@ -121,8 +121,14 @@
 							<td multi-value list="game.categories" property="category.name"></td>
 							<td style="text-align: center;">{{game.releaseDate | date: 'dd-MM-yyyy'}}</td>
 							<td>{{game.status ? 'Activo' : 'Inactivo'}}</td>
-							<td>
-								
+							<td style="text-align: center;">
+								<button type="button" class="btn btn-xs btn-warning" ng-click="editGame(game)">
+									<i class="fa fa-pencil"></i>
+								</button>
+
+								<button type="button" class="btn btn-xs" ng-class="game.status ? 'btn-success' : 'btn-primary'" ng-click="changeStatus(game)">
+									<i class="fa fa-power-off"></i>
+								</button>
 							</td>
 						</tr>
 					</tbody>

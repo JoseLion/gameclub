@@ -11,8 +11,6 @@ angular.module('Core').directive('timeSelector', function() {
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
 
-            console.log($scope);
-
 			let currentList = "";
 			let itemList = '<li>#number</li>';
 

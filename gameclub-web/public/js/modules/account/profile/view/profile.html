@@ -177,7 +177,7 @@
     <section class="row games">
         <div class="col-xs-12 col-md-4">
             <img src="img/books-icon.svg" />
-            <button class="btn btn-tertiary small">Cargar juego a tu biblioteca</button>
+            <button class="btn btn-tertiary small" ng-click="$state.go('gameclub.account.games')">Cargar juego a tu biblioteca</button>
         </div>
         <div class="col-xs-12 col-md-8">
             <span>Juegos cargados: <span class="quantity" ng-class="games.length > 0 ? 'more' : ''">{{games.length}}</span></span>

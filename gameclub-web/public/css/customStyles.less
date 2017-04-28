@@ -561,10 +561,35 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account #games section.security .subtitle::before{content:"\f111";position:absolute;top:0.4em;left:-2.5em;font-size:0.4em;}
 #account #games section.security .subtitle img{height:1em;margin-top:-1%;margin-left:5px;}
 #account #games section.security button{padding:5px 3% 2px;}
-
-
-
 /********************************/
+
+/********** SEARCH-PAGE **********/
+#search{color:@color-tertiary;display:block;position:relative;padding-top:9em;}
+#search::before{content:"";background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%;position:absolute;top:-5%;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;}
+
+#search section.banner .search .search-params{font-size:0.8em;font-weight:700;padding:0;}
+#search section.banner .search .search-params .filter{padding-top:0;padding-bottom:0;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;}
+#search section.banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
+#search section.banner .search .search-params .filter:last-child{border-right-width:2.5px;border-top-right-radius:8px;border-bottom-right-radius:8px;}
+#search section.banner .search .search-params input{text-transform:uppercase;height:21px;}
+#search section.banner .search .search-params input:focus{outline:none;}
+#search section.banner .search .search-params input::-webkit-input-placeholder{color:@color-tertiary;text-transform:none;}
+#search section.banner .search .search-params input::-moz-placeholder{color:@color-tertiary;text-transform:none;}
+#search section.banner .search .search-params input::-ms-input-placeholder{color:@color-tertiary;text-transform:none;}
+#search section.banner .search .search-params input,#search section.banner .search .search-params .selector{width:100%;padding:0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
+#search section.banner .search .search-params .selector .ui-select-match>span{height:21px;}
+#search section.banner .search button{border-color:@color-tertiary;}
+#search section.banner .search.white-search .btn-tertiary{background-color:@color-secundary-65;width:2em;height:2em;border-radius:50%;padding:5px;position:relative;text-align:center;vertical-align:middle;color:@color-primary-alt;}
+#search section.banner .search.white-search .btn-tertiary i{font-size: 1.3em;left:0;right:0;top:25%;bottom:0;position:absolute;}
+#search section.banner .selector .ui-select-match-text img{height:1.5em;padding-top:0.25em;}
+
+#search section.result{padding-top:3%;}
+#search section.result .rating .types img{border-color:@color-tertiary;}
+#search section.result div.separator{width:100%;height:0.3em;margin-top:-1%;margin-bottom:2%;background:@color-primary;
+background:linear-gradient(45deg,@color-tertiary -10%,transparent);background:-webkit-linear-gradient(45deg,@color-tertiary -10%,transparent);background:-o-linear-gradient(45deg,@color-tertiary -10%,transparent);background:-moz-linear-gradient(45deg,@color-tertiary -10%,transparent);}
+
+#search section.final{height:2em;width:100%;background:@color-primary-alt;}
+/*********************************/
 
 
 /*

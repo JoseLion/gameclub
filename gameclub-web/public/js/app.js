@@ -7,6 +7,7 @@ angular.module('GameClub', [
 	'Home',
 	'Blog',
 	'Login',
+	'Search',
 	'Settings',
 	'Profile',
 	'Games'

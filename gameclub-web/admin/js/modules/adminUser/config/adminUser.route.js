@@ -1,5 +1,5 @@
 angular.module("AdminUser").config(function($stateProvider) {
-	let prefix = 'user.'
+	let prefix = 'admin.'
 
 	$stateProvider
 	.state(prefix + 'viewAdminUsers', {

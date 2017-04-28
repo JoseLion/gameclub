@@ -10,6 +10,7 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 		abstract: true,
 		url: "/admin",
 		templateUrl: "views/common/content.html",
+		data: {displayName: "Administración"}
 	})
 
 		.state('admin.dashboard', {
@@ -23,11 +24,11 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 			}
 		})
 
-	.state('user', {
+	.state('portal', {
 		abstract: true,
-		url: "/user",
+		url: "/portal",
 		templateUrl: "views/common/content.html",
-		data: {displayName: "Usuarios"}
+		data: {displayName: "Portal"}
 	});
 }).run(function($rootScope, $state, Const, rest, $location, $anchorScroll, authenticate) {
 	$rootScope.$state = $state;

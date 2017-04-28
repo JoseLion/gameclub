@@ -15,7 +15,10 @@ angular.module("Gameclub", [
 	'Core',
 	'Login',
 	'Profile',
-	'AdminUser'
+	'AdminUser',
+	'Console',
+	'Category',
+	'Game'
 ]).config(["$locationProvider" ,"$httpProvider", function($locationProvider, $httpProvider, $http) {
 	$httpProvider.defaults.withCredentials = true;
 

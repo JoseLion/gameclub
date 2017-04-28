@@ -54,4 +54,8 @@ angular.module("Gameclub").constant('Const', {
 		unauthorized: "No autorizado.",
 		unableToConnect: "No se pudo conectar al servidor."
 	},
+
+	code: {
+		contentRatings: "CRT"
+	}
 });

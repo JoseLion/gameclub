@@ -1,0 +1,16 @@
+<div ng-if="list.length > 1">
+	<button type="button" class="btn btn-xs btn-default" style="width: 100%; position: relative;" ng-click="toggle()">
+		<!-- <span>{{isOpened ? "Minimizar" : agregation == null ? setValue(list[0]) : agregation}}</span> -->
+		<span>{{isOpened ? "Minimizar" : "Expandir"}}</span>
+	</button>
+	<div id="several_{{$id}}" style="display: none;">
+		<li ng-repeat="value in list">
+			{{setValue(value)}}
+		</li>
+	</div>
+</div>
+<div ng-if="list.length <= 1">
+	<li ng-repeat="value in list">
+		{{setValue(value)}}
+	</li>
+</div>

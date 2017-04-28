@@ -1,4 +1,4 @@
-angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor) {
+angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor, $state) {
 
     if (anchor != null) {
         $location.hash(anchor);

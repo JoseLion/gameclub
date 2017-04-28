@@ -1,0 +1,29 @@
+<div id="game-item">
+    <div class="col-xs-12 col-md-2 cover">
+        <game-score src="src" no-score></game-score>
+    </div>
+    <div class="col-xs-12 col-md-6 information">
+        <span class="description">{{title}}</span>
+        <div class="rating-container">
+            <img class="score-1" src="img/star-no-score.svg"/>
+            <img class="score-2" src="img/star-no-score.svg"/>
+            <img class="score-3" src="img/star-no-score.svg"/>
+            <img class="score-4" src="img/star-no-score.svg"/>
+            <img class="score-5" src="img/star-no-score.svg"/>
+        </div>
+        <span class="price" ng-if="showCoins">Costo prestamo por semana: <span class="light">{{coins}} coins</span></span>
+        <button class="btn btn-primary small" ng-click="ngClick()">Ver juego</button>
+    </div>
+    <div class="col-xs-12 col-md-4 rating">
+        <div class="col-md-8 text-right">
+            <img ng-src="{{platform}}" class="platform"/>
+            <div class="types">
+                <img ng-repeat="type in types" ng-src="{{type.src}}" />
+            </div>
+        </div>
+        <div class="col-md-4 text-center content-rating">
+            <img ng-src="{{contentRating}}" />
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

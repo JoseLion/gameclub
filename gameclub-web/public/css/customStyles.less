@@ -26,6 +26,7 @@ input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill{transit
 .btn-secundary.full,.btn-secundary.full:hover,.btn-secundary.full:visited,.btn-secundary.full:focus,.btn-secundary.full:active,.btn-secundary.full:active:focus,.btn-secundary.full:active:hover{color:@color-tertiary;background:@color-primary;}
 .btn-tertiary,.btn-tertiary:hover,.btn-tertiary:visited,.btn-tertiary:focus,.btn-tertiary:active,.btn-tertiary:active:focus,.btn-tertiary:active:hover{color:@color-primary;border-color:@color-tertiary;}
 .btn-tertiary.full,.btn-tertiary.full:hover,.btn-tertiary.full:visited,.btn-tertiary.full:focus,.btn-tertiary.full:active,.btn-tertiary.full:active:focus,.btn-tertiary.full:active:hover{color:@color-primary;background:@color-tertiary;}
+button.small,button.small:hover,button.small:visited,button.small:focus,button.small:active,button.small:active:focus,button.small:active:hover{border-radius:5px;padding:1% 6% 0;font-size:0.7em;margin-top:1%;}
 .ui-select-toggle .btn,.ui-select-toggle .btn:hover,.ui-select-toggle .btn:visited,.ui-select-toggle .btn:focus,.ui-select-toggle .btn:active,.ui-select-toggle .btn:active:focus,.ui-select-toggle .btn:active:hover{padding:0;}
 .row-left{margin-left:0;margin-right:0;padding-left:20%;}
 .row-right{margin-left:0;margin-right:0;padding-right:20%;}
@@ -103,7 +104,7 @@ footer .contacts-shares .social-media{text-align:left;padding-top:5px;}
 footer .contacts-shares .social-media a{margin:0px 0.2em;font-size:1.2em;color:@color-secundary;}
 footer .contacts-shares .social-media a:hover{color:@color-tertiary;}
 footer .copyright{color:@color-secundary;margin-top:1em;}
-footer .copyright span.title{text-transform:uppercase;}
+footer .copyright span.title{text-transform:uppercase;font-size:1em;}
 footer .spacing{letter-spacing:2.5px;}
 footer .top-space{margin-top:5px;}
 footer .designed{background-color:@color-secundary;color:@color-tertiary;text-align:center;padding-top:8px;font-size:14px;}
@@ -204,6 +205,20 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-primar
 #time-selector div.selector>i{position:absolute;right:5px;top:0;bottom:0;}
 #time-selector div.selector.disabled>i{cursor:not-allowed;}
 /***********************************/
+
+/********** GAME-ITEM **********/
+#game-item{padding:2% 0;}
+#game-item .information{padding-bottom:3%;}
+#game-item .information span.description{font-weight:700;font-size:1.2em;display:block;}
+#game-item .information div.rating-container img{width:1em;}
+#game-item .information span.price{text-transform:uppercase;display:block;font-size:0.8em;font-weight:700;}
+#game-item .information span.price span.light{margin-left:1em;color:@color-secundary;}
+#game-item .information button{background:@color-tertiary;}
+#game-item .rating{padding-top:4%;}
+#game-item .rating img.platform{height:1.5em;margin-bottom:5%;}
+#game-item .rating .types img{height:2.5em;padding:0.5em;border:2px solid @color-primary;border-radius:50%;margin:auto 1%;}
+#game-item .rating .content-rating img{width:100%;}
+/*******************************/
 
 /********** HOME-PAGE **********/
 #home{color:@color-tertiary;display:block;position:relative;}
@@ -421,7 +436,6 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 
 /********** PROFILE-PAGE **********/
 #account #profile{padding-top:9em;}
-#account #profile button.small{border-radius:5px;padding:2% 6% 0;font-size:0.7em;margin-top:1%;}
 
 #account #profile section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
 #account #profile section.header .name h2.title{font-size:1.8em;margin-bottom:0;}
@@ -495,6 +509,108 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #settings{height:500px;}
 /***********************************/
 
+/********** GAMES-PAGE **********/
+#account #games{padding-top:9em;}
+
+#account #games section.header{color:@color-tertiary;padding-bottom:6%;}
+#account #games section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
+#account #games section.header .name h2.title{font-size:1.8em;margin-bottom:0;}
+#account #games section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
+#account #games section.header .name .connection span{color:@color-primary-alt;}
+#account #games section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
+#account #games section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki!important;text-transform:uppercase;position:relative;}
+#account #games section.header .coins::before{content:"\f111";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;}
+#account #games section.header .coins span.dark{font-family:@font-family-josefinsans!important;color:@color-primary;font-weight:700;letter-spacing:2px;}
+#account #games section.header .coins button>span.light{color:@color-tertiary;}
+#account #games section.header .coins button{position:relative;padding-left:10%;padding-right:10%;}
+#account #games section.header .coins button::before{content:"\f155";color:@color-tertiary;position:absolute;left:5px;}
+#account #games section.header .coins button::after{content:"\f155";color:@color-tertiary;position:absolute;right:5px;}
+#account #games section.header .total{margin-top:2%;padding:0;}
+#account #games section.header .total .subtitle{font-size:1.2em;text-transform:uppercase;display:block;font-weight:700;margin-bottom:2%;position:relative;}
+#account #games section.header .total::before{content:"\f111";position:absolute;top:1.2em;left:-2.5em;font-size:0.4em;}
+#account #games section.header .total .description{font-size:1em;text-transform:uppercase;font-weight:700;line-height:1;margin-bottom:1%;}
+#account #games section.header .total .description span.dark{color:@color-primary;font-size:1.5em;margin-left:4%;}
+#account #games section.header .total .description .updated{padding:4px 3% 2px;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
+#account #games section.header .total .description .updated span{color:@color-primary-alt;}
+
+#account #games section.games{background:@color-tertiary-alt;color:@color-primary;}
+#account #games section.games .header{margin-bottom:2%;}
+#account #games section.games .header .text-center{padding-top:2%;}
+#account #games section.games .header span.subtitle{text-transform:uppercase;padding:1% 10%;border-left:1px solid @color-primary;border-right:1px solid @color-primary;font-size:1.2em;font-weight:700;}
+#account #games section.games .header .filters li{display:inline-block;width:2em;height:2em;background:@color-primary;position:relative;text-align:center;}
+#account #games section.games .header .filters li::before{content:"";position:absolute;left:-1px;top:20%;bottom:20%;border-left:2px solid @color-secundary-65;}
+#account #games section.games .header .filters li:first-child::before{border:none;}
+#account #games section.games .header .filters li:last-child::before{border:none;}
+#account #games section.games .header .filters li.active{background:transparent;}
+#account #games section.games .header .filters li>a{position:absolute;left:0;right:0;top:0.25em;}
+#account #games section.games .header .filters li img{height:1em;}
+#account #games section.games .list div.separator{width:100%;height:0.3em;margin-top:-1%;margin-bottom:2%;background:@color-primary;
+background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transparent);background:-webkit-linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transparent);background:-o-linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transparent);background:-moz-linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transparent);}
+#account #games section.games .selector{width:40%;float:right;}
+#account #games section.games .selector .ui-select-choices{background:@color-tertiary-alt;}
+#account #games section.games .selector .ui-select-search,#account #games section.games .selector .ui-select-match>span,#account #games section.games .selector .ui-select-match>span>span,#account #games section.games .selector .ui-select-match .ui-select-placeholder,#account #games section.games .selector input{color:@color-primary;}
+#account #games section.games .selector img{height:1em;}
+
+#account #games section.upload{padding-top:2%;padding-bottom:2%;}
+#account #games section.upload .subtitle{text-transform:uppercase;padding:1%;border-left:1px solid @color-primary;border-right:1px solid @color-primary;font-size:1.2em;font-weight:700;}
+#account #games section.upload p{width:60%;margin:2% auto 1%;font-weight:700;font-family:@font-family-jaapokki!important;}
+#account #games section.upload button{padding:5px 3% 2px;}
+
+#account #games section.banner{padding-top:4%;padding-bottom:10%;text-align:center;display:block;position:relative;background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%}
+#account #games section.banner hr{border-top:2px solid @color-tertiary;margin-bottom:5px;margin-top:0px;}
+#account #games section.banner .title-up{margin-left:12%;margin-right:54%;}
+#account #games section.banner .title{font-family:@font-family-jaapokki!important;font-size:2.4em;letter-spacing:6px;margin-top:15px;}
+#account #games section.banner .title-down{margin-right:12%;margin-left:53%;}
+#account #games section.banner .description{font-size:1.5em;font-family:@font-family-jaapokki!important;}
+#account #games section.banner .search .search-params{font-size:1.1em;font-weight:700;padding:0;}
+#account #games section.banner .search .search-params .filter{padding-top:7px;padding-bottom:5px;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;}
+#account #games section.banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
+#account #games section.banner .search .search-params .filter:last-child{border-right-width:2.5px;border-top-right-radius:8px;border-bottom-right-radius:8px;}
+#account #games section.banner .search .search-params input{text-transform:uppercase;}
+#account #games section.banner .search .search-params input:focus{outline:none;}
+#account #games section.banner .search .search-params input::-webkit-input-placeholder{color:@color-tertiary;text-transform:none;}
+#account #games section.banner .search .search-params input::-moz-placeholder{color:@color-tertiary;text-transform:none;}
+#account #games section.banner .search .search-params input::-ms-input-placeholder{color:@color-tertiary;text-transform:none;}
+#account #games section.banner .search .search-params input,#account #games section.banner .search .search-params .selector{width:100%;padding:5px 0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
+#account #games section.banner .search .search-params .selector .ui-select-match>span{height:21px;}
+#account #games section.banner .search button{border-color:@color-tertiary;}
+#account #games section.banner .search.white-search .btn-tertiary{background-color:@color-secundary-65;width:3em;height:3em;border-radius:50%;padding:5px;position:relative;text-align:center;vertical-align:middle;color:@color-primary-alt;}
+#account #games section.banner .search.white-search .btn-tertiary i{font-size: 1.8em;left:0;right:0;top:25%;bottom:0;position:absolute;}
+
+#account #games section.security{background:@color-primary-alt;padding:2% 0 1%;}
+#account #games section.security .subtitle{text-transform:uppercase;font-size:1.2em;position:relative;}
+#account #games section.security .subtitle::before{content:"\f111";position:absolute;top:0.4em;left:-2.5em;font-size:0.4em;}
+#account #games section.security .subtitle img{height:1em;margin-top:-1%;margin-left:5px;}
+#account #games section.security button{padding:5px 3% 2px;}
+/********************************/
+
+/********** SEARCH-PAGE **********/
+#search{color:@color-tertiary;display:block;position:relative;padding-top:9em;}
+#search::before{content:"";background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%;position:absolute;top:-5%;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;}
+
+#search section.banner .search .search-params{font-size:0.8em;font-weight:700;padding:0;}
+#search section.banner .search .search-params .filter{padding-top:0;padding-bottom:0;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;}
+#search section.banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
+#search section.banner .search .search-params .filter:last-child{border-right-width:2.5px;border-top-right-radius:8px;border-bottom-right-radius:8px;}
+#search section.banner .search .search-params input{text-transform:uppercase;height:21px;}
+#search section.banner .search .search-params input:focus{outline:none;}
+#search section.banner .search .search-params input::-webkit-input-placeholder{color:@color-tertiary;text-transform:none;}
+#search section.banner .search .search-params input::-moz-placeholder{color:@color-tertiary;text-transform:none;}
+#search section.banner .search .search-params input::-ms-input-placeholder{color:@color-tertiary;text-transform:none;}
+#search section.banner .search .search-params input,#search section.banner .search .search-params .selector{width:100%;padding:0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
+#search section.banner .search .search-params .selector .ui-select-match>span{height:21px;}
+#search section.banner .search button{border-color:@color-tertiary;}
+#search section.banner .search.white-search .btn-tertiary{background-color:@color-secundary-65;width:2em;height:2em;border-radius:50%;padding:5px;position:relative;text-align:center;vertical-align:middle;color:@color-primary-alt;}
+#search section.banner .search.white-search .btn-tertiary i{font-size: 1.3em;left:0;right:0;top:25%;bottom:0;position:absolute;}
+#search section.banner .selector .ui-select-match-text img{height:1.5em;padding-top:0.25em;}
+
+#search section.result{padding-top:3%;}
+#search section.result .rating .types img{border-color:@color-tertiary;}
+#search section.result div.separator{width:100%;height:0.3em;margin-top:-1%;margin-bottom:2%;background:@color-primary;
+background:linear-gradient(45deg,@color-tertiary -10%,transparent);background:-webkit-linear-gradient(45deg,@color-tertiary -10%,transparent);background:-o-linear-gradient(45deg,@color-tertiary -10%,transparent);background:-moz-linear-gradient(45deg,@color-tertiary -10%,transparent);}
+
+#search section.final{height:2em;width:100%;background:@color-primary-alt;}
+/*********************************/
 
 
 /*

@@ -8,7 +8,8 @@ angular.module('GameClub', [
 	'Blog',
 	'Login',
 	'Settings',
-	'Profile'
+	'Profile',
+	'Games'
 ])
 // .config(['$locationProvider' ,'$httpProvider', function($locationProvider, $httpProvider, $http) {
 // 	$httpProvider.defaults.withCredentials = true;

@@ -33,7 +33,7 @@ angular.module('GameClub').controller('MainCtrl', function($rootScope, $state, C
 		},
 		games : {
 			name: 'Tus juegos',
-			route: ''
+			route: 'gameclub.account.games'
 		},
 		messages : {
 			name: 'Mensajes',

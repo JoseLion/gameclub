@@ -79,14 +79,119 @@
 
 							<div class="form-group to-validate">
 								<label class="col-md-3 control-label">Consolas</label>
+								<div class="col-md-4">
+									<multi-select validation id="image-multi-select" ng-model="game.consoles" list="consoles" property="console" match-template="consoleMatch.html" choice-template="consoleChoice.html" required></multi-select>
+									<script type="text/ng-template" id="consoleMatch.html">
+										<img ng-src="{{$item.base64}}" style="max-width: 100%; background: url('url/checkered.png');">
+									</script>
+									<script type="text/ng-template" id="consoleChoice.html">
+										<img ng-src="{{item.base64}}" style="max-width: 100%; background: url('url/checkered.png');">
+									</script>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Categorias</label>
+								<div class="col-md-4">
+									<multi-select validation ng-model="game.categories" list="categories" property="category" match-template="categoryMatch.html" choice-template="categoryChoice.html" required></multi-select>
+									<script type="text/ng-template" id="categoryMatch.html">
+										<div class="row">
+											<div class="col-md-2">
+												<img ng-src="{{$item.base64}}" style="max-width: 100%;">
+											</div>
+											<div class="col-md-10">
+												{{$item.name}}
+											</div>
+										</div>
+									</script>
+									<script type="text/ng-template" id="categoryChoice.html">
+										<div class="row">
+											<div class="col-md-2">
+												<img ng-src="{{$item.base64}}" style="max-width: 100%;">
+											</div>
+											<div class="col-md-10">
+												{{item.name}}
+											</div>
+										</div>
+									</script>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Costo Promedio por Semana</label>
 								<div class="col-md-3">
-									
+									<div class="input-group">
+										<input validation type="number" class="form-control" ng-model="game.averageWeekCost" required min="0">
+										<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Coins por Cargar Juego</label>
+								<div class="col-md-3">
+									<div class="input-group">
+										<input validation type="number" class="form-control" ng-model="game.uploadPayment" required min="0">
+										<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</uib-tab>
+
+				<uib-tab heading="{{tabs[1].name}}" active="tabs[1].active">
+					<div class="panel-body">
+						<div class="form-group to-validate">
+							<label class="col-md-3 control-label">Banner</label>
+							<div class="col-md-5">
+								<image-upload ng-model="bannerImage" archive="game.banner" required></image-upload>
+							</div>
+						</div>
+
+						<div class="form-group to-validate">
+							<label class="col-md-3 control-label">Cover</label>
+							<div class="col-md-5">
+								<image-upload ng-model="coverImage" archive="game.cover" required></image-upload>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label">Url del Trailer</label>
+							<div class="col-md-8">
+								<div class="input-group">
+									<input validation type="url" class="form-control" ng-model="game.trailerUrl">
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-w-m btn-default" ng-click="changeVideo()">
+											<i class="fa fa-youtube fa-lg" style="margin-right: 5%"></i>
+											<span>Aplicar</span>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-1"></div>
+
+							<div class="col-md-10" style="text-align: center;">
+								<iframe id="video-frame" width="100%" height="{{getVideoHeight()}}" frameborder="0" allowfullscreen ng-src="{{url}}" ng-if="url != null && url != ''"></iframe>
+							</div>
+						</div>
+					</div>
+				</uib-tab>
 			</uib-tabset>
+		</div>
+
+		<div class="ibox">
+			<div class="ibox-content">
+				<div class="col-md-12" style="text-align: right;">
+					<button type="submit" class="btn btn-w-m btn-primary">Guardar</button>
+					<button type="button" class="btn btn-w-m btn-default" ng-click="cancel()">Cancel</button>
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
 		</div>
 	</div>
 </form>
@@ -114,5 +219,25 @@
 		top: 5%;
 		right: 10px;
 		margin-top: -2px;
+	}
+
+	#image-multi-select .ui-select-match-item {
+		background: linear-gradient(rgba(227, 42, 61, 1), #03070d 113%);
+	}
+
+	#image-multi-select .ui-select-choices-row {
+		background: linear-gradient(rgba(227, 42, 61, 1), #03070d 113%);
+	}
+
+	#image-multi-select .ui-select-choices-row > a:hover {
+		background: linear-gradient(rgba(41, 168, 181, 1), #03070d 113%);
+	}
+
+	#image-multi-select .ui-select-choices-row.active > a {
+		background: rgba(41, 168, 181, 1);
+	}
+
+	#image-multi-select .ui-select-choices-row.active > a:hover {
+		background: linear-gradient(rgba(41, 168, 181, 1), #03070d 113%);
 	}
 </style>

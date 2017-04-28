@@ -1,0 +1,10 @@
+<div>
+	<ui-select multiple ng-model="selected" theme="bootstrap" on-select="itemSelected($item)" on-remove="itemRemoved($item)">
+		<ui-select-match allow-clear placeholder="{{placeholder}}">
+			<div ng-include="matchTemplate" scope="this"></div>
+		</ui-select-match>
+		<ui-select-choices repeat="item in list">
+			<div ng-include="choiceTemplate" scope="this"></div>
+		</ui-select-choices>
+	</ui-select>
+</div>

@@ -69,8 +69,8 @@ public class Game extends BaseEntity {
 	@JoinColumn(name="banner", foreignKey=@ForeignKey(name="banner_archive_fk"))
 	private Archive banner;
 	
-	@Column(name="gameplay_url", columnDefinition="VARCHAR")
-	private String gameplayUrl;
+	@Column(name="trailer_url", columnDefinition="VARCHAR")
+	private String trailerUrl;
 
 	public String getName() {
 		return name;
@@ -168,11 +168,11 @@ public class Game extends BaseEntity {
 		this.banner = banner;
 	}
 
-	public String getGameplayUrl() {
-		return gameplayUrl;
+	public String getTrailerUrl() {
+		return trailerUrl;
 	}
 
-	public void setGameplayUrl(String gameplayUrl) {
-		this.gameplayUrl = gameplayUrl;
+	public void setTrailerUrl(String trailerUrl) {
+		this.trailerUrl = trailerUrl;
 	}
 }

@@ -1,4 +1,4 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope) {
+angular.module('Profile').controller('ProfileCtrl', function($scope, $state) {
 
     $scope.contactInfo = {};
     $scope.contactMean = {fb:'Pablo Ponce'};

@@ -34,6 +34,7 @@
     <section class="row result">
         <div ng-repeat="game in gameList">
             <game-item
+                    ng-model="game"
                     src="game.src"
                     title="game.title"
                     coins="game.coins"
@@ -47,5 +48,5 @@
         <div class="clearfix"></div>
         <blog-paging pages="3" current="currentPage" class="paging"/>
     </section>
-    <section class="final"></div>
+    <section class="final"></section>
 </div>

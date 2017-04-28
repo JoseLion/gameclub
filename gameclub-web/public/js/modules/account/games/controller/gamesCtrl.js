@@ -35,6 +35,7 @@ angular.module('Games').controller('GamesCtrl', function($scope) {
     $scope.currentPage = 0;
     $scope.gameList = [
         {
+            id: 1,
             src: 'img/test/game-3.png',
             title: 'CALL OF DUTY: Black Ops 3',
             coins: 150,
@@ -55,6 +56,7 @@ angular.module('Games').controller('GamesCtrl', function($scope) {
                 src: 'img/test/svg/ps4-b.svg'
             }
         }, {
+            id: 2,
             src: 'img/test/game-3.png',
             title: 'CALL OF DUTY: Black Ops 3 - Deluxe Edition',
             coins: 150,
@@ -75,6 +77,7 @@ angular.module('Games').controller('GamesCtrl', function($scope) {
                 src: 'img/test/svg/ps4-b.svg'
             }
         }, {
+            id: 3,
             src: 'img/test/game-3.png',
             title: 'CALL OF DUTY: MW3',
             coins: 150,
@@ -95,6 +98,7 @@ angular.module('Games').controller('GamesCtrl', function($scope) {
                 src: 'img/test/svg/ps4-b.svg'
             }
         }, {
+            id: 4,
             src: 'img/test/game-3.png',
             title: 'CALL OF DUTY: MW3 - Deluxe Edition',
             coins: 150,
@@ -115,6 +119,7 @@ angular.module('Games').controller('GamesCtrl', function($scope) {
                 src: 'img/test/svg/ps4-b.svg'
             }
         }, {
+            id: 5,
             src: 'img/test/game-3.png',
             title: 'CALL OF DUTY: Infinite Warfare',
             coins: 100,
@@ -135,6 +140,7 @@ angular.module('Games').controller('GamesCtrl', function($scope) {
                 src: 'img/test/svg/ps4-b.svg'
             }
         }, {
+            id: 6,
             src: 'img/test/game-3.png',
             title: 'CALL OF DUTY: HEROES',
             coins: 70,

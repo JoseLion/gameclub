@@ -1,8 +1,10 @@
-angular.module('Core').directive('gameItem', function() {
+angular.module('Core').directive('gameItem', function($state) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/modules/core/directives/gameItem.html',
+		required: 'ngModel',
 		scope: {
+            ngModel: '=',
             src: '=',
             title: '=',
             coins: '=',
@@ -10,16 +12,17 @@ angular.module('Core').directive('gameItem', function() {
             types: '=',
             contentRating: '=',
             showCoins: '=',
-			platform: '=',
-            ngClick: '&'
+			platform: '='
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
-			console.log($scope)
-
             for(let i=0 ; i<=$scope.rating ; i++) {
                 angular.element('.score-'+i).attr('src', 'img/star-score.svg')
             }
+
+			$scope.viewDetails = function() {
+				$state.go('gameclub.game', {idGame: $scope.ngModel.id});
+			}
 		}
 	};
 });

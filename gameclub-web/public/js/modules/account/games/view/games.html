@@ -71,10 +71,50 @@
             <blog-paging pages="3" current="currentPage" class="paging"/>
         </div>
     </section>
-    <section class="row upload text-center">
+    <section class="row upload text-center" ng-if="!isSearching">
         <span class="subtitle">Carga tus juegos</span>
         <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar COINS y poder pedir prestado otros juegos.</p>
-        <button class="btn btn-secundary small">Subir juegos</button>
+        <button class="btn btn-secundary small" ng-click="showSearch()">Subir juegos</button>
+    </section>
+    <section class="banner" ng-if="isSearching">
+        <div class="row">
+            <hr class="title-up"/>
+            <h2 class="upper-case title">Si prestas, juegas</h2>
+            <hr class="title-down"/>
+            <span class="description">Busca el juego que quieras subir</span>
+        </div>
+        <div class="row search white-search">
+            <div class="col-xs-12 col-md-1"></div>
+            <form class="col-xs-12 col-md-11">
+                <div class="col-xs-12 col-md-10 search-params">
+                    <div class="col-xs-12 col-md-4 filter">
+                        <input placeholder="T&iacute;tulo..."/>
+                    </div>
+                    <div class="col-xs-12 col-md-4 filter">
+                        <ui-select ng-model="type.selected" theme="bootstrap" class="selector">
+                            <ui-select-match allow-clear placeholder="Categoría...">{{$select.selected | limitTo:10}}{{$select.selected.length > 10 ? '...' : ''}}</ui-select-match>
+                            <ui-select-choices repeat="type in ['Action','Adventure','Shooter','Mass Multiplayer','Simulation','RPG','Strategy','Sports'] | filter: $select.search">
+                                <div ng-bind-html="type | highlight: $select.search"></div>
+                                <img src="img/test/svg/sports-w.svg" class="category"/>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-xs-12 col-md-4 filter">
+                        <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector text-center">
+                            <ui-select-match allow-clear placeholder="Consola..."><img ng-src="{{$select.selected.img}}" class="gameConsole"/></ui-select-match>
+                            <ui-select-choices repeat="gameConsole in gameConsolesW | filter: $select.search.name" class="text-center">
+                                <div ng-bind-html="'' | highlight: $select.search.name"></div>
+                                <img ng-src="{{gameConsole.img}}" class="gameConsole"/>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-2 text-left">
+                    <button class="btn btn-tertiary" ng-click="$state.go('gameclub.search')"><i class="fa fa-power-off "></i></button>
+                </div>
+            </form>
+            <div class="col-xs-12 col-md-1"></div>
+        </div>
     </section>
     <section class="row security text-center">
         <span class="subtitle">Seguridad <img src="img/lock-icon-w.svg" /></span>

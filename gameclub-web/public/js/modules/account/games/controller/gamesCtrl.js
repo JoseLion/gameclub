@@ -1,5 +1,23 @@
 angular.module('Games').controller('GamesCtrl', function($scope) {
 
+    $scope.isSearching = false;
+    $scope.showSearch = function() {
+        $scope.isSearching = true;
+    };
+
+    $scope.gameConsolesW =[
+        {
+            name: 'PlayStation 4',
+            img: 'img/test/svg/ps4.svg'
+        }, {
+            name: 'XBOX ONE',
+            img: 'img/test/svg/xbox-one.svg'
+        }, {
+            name: 'Nintendo Switch',
+            img: 'img/test/svg/nintendo-switch.svg'
+        }
+    ]
+
     $scope.gameConsole = {};
     $scope.gameConsoles =[
         {

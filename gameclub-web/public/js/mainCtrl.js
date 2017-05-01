@@ -1,4 +1,47 @@
-angular.module('GameClub').controller('MainCtrl', function($rootScope, $state, Const) {
+angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, rest) {
+	$http.get(urlRestPath.url + "/api/token").then(function(response) {
+		if (response != null && response.data != null) {
+			rest("publicUser/getCurrentUser").get(function(data) {
+				if (!data.status) {
+					$scope.logout();
+				} else {
+					if (data != null) {
+						$rootScope.currentUser = data;
+
+						/*if ($rootScope.currentUser.isTempPassword) {
+							changePassword();
+						}*/
+					}
+				}
+			}, function(error) {
+				$scope.logout();
+			});
+		}
+	});
+
+	$scope.logout = function() {
+		let request = {
+			method: 'POST',
+			url: urlRestPath.url + '/logout',
+			headers: {
+				'X-XSRF-TOKEN': $cookies.get(Const.cookieToken)
+			}
+		};
+
+		$http(request).finally(function() {
+			$cookies.remove(Const.cookieToken, {path: "/"});
+			delete $rootScope.currentUser;
+			$state.go(Const.mainState);
+		});
+
+		/*FB.getLoginStatus(function(response) {
+			if (response.status === "connected") {
+				FB.logout(function(response) {
+					
+				}, response.authResponse.accessToken);
+			}
+		});*/
+	}
 
 	$rootScope.link = {
 		shareAndPlay : {
@@ -45,7 +88,7 @@ angular.module('GameClub').controller('MainCtrl', function($rootScope, $state, C
 		}
 	};
 
-	$rootScope.isLogged = true;
+	$rootScope.isLogged = false;
 
 	// $http.get(urlRestPath.url + '/api/token').then(function(response) {
 	// 	if (response != null && response.data != null) {

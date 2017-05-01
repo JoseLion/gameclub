@@ -1,10 +1,24 @@
 angular.module('GameClub').constant('Const', {
+	authHeader: "authorization",
+
+	publicUser: "publicUser",
+
+	extraHeader: "extra",
+
+	authHeaderPrefix: "Basic ",
+
+	authHeaderSeparator: ":",
+
+	mainState: 'gameclub.home',
+
+	cookieToken: "XSRF-TOKEN",
+
+	ok: "OK",
 
 	statePrefix: {
 		gameclub: 'gameclub.',
 		account: 'gameclub.account.'
 	},
-	mainState: 'gameclub.home',
 
 	kushkiPublicMerchantId: 'YYYYYYYYYY',
 

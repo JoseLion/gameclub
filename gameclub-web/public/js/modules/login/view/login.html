@@ -1,7 +1,7 @@
 <div id="login">
     <img class="signup-bg" src="img/login/pad-nintendo-switch.svg" />
     <section class="col-md-6 row-left signup">
-        <form>
+        <form role="form" on-submit="signIn()" novalidate>
             <div class="col-md-12">
                 <h2 class="title game-font">Reg&iacute;strate</h2>
             </div>
@@ -12,50 +12,50 @@
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <input name="name" placeholder="Nombre..." class="input-form"/>
+            <div class="col-md-10 to-validate">
+                <input validation name="name" placeholder="Nombre..." class="input-form" ng-model="user.name" required>
             </div>
             <div class="col-md-1 image"><img src="img/contact-person.svg"/></div>
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <input name="lastName" placeholder="Apellido..." class="input-form"/>
+            <div class="col-md-10 to-validate">
+                <input validation name="lastName" placeholder="Apellido..." class="input-form" ng-model="user.lastName" required>
             </div>
             <div class="col-md-1"></div>
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <input name="email" type="email" placeholder="E-mail..." class="input-form"/>
+            <div class="col-md-10 to-validate">
+                <input validation name="email" type="email" placeholder="E-mail..." class="input-form" ng-model="user.username" required>
             </div>
             <div class="col-md-1 image"><img src="img/contact-email.svg"/></div>
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <input name="password" type="password" placeholder="Contraseña..." class="input-form"/>
+            <div class="col-md-10 to-validate">
+                <input validation name="password" type="password" placeholder="Contraseña..." class="input-form" ng-model="user.password" required ng-minlength="6" ng-pattern="passRegex">
             </div>
             <div class="col-md-1 image"><img src="img/contact-password.svg"/></div>
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <input type="checkbox"/><span class="legal">Acepto los <a href>T&eacute;rminos y Condiciones</a></span>
+                <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a href>T&eacute;rminos y Condiciones</a></span>
             </div>
             <div class="col-md-1"></div>
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <button class="btn btn-primary-alt">Registrarme</button>
+                <button type="submit" class="btn btn-primary-alt">Registrarme</button>
             </div>
             <div class="col-md-1"></div>
             <div class="clearfix"></div>
         </form>
     </section>
     <section class="col-md-6 row-right login">
-        <form>
+        <form role="form" on-submit="login()" novalidate>
             <div class="col-md-12">
                 <h2 class="title game-font">Inicia sesi&oacute;n</h2>
             </div>
@@ -66,22 +66,22 @@
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <input name="email" type="email" placeholder="E-mail..."/>
+            <div class="col-md-10 to-validate">
+                <input validation name="email" type="email" placeholder="E-mail..." ng-model="credentials.username" required>
             </div>
             <div class="col-md-1 image"><img src="img/contact-email.svg"/></div>
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <input name="password" type="password" placeholder="Contraseña..."/>
+            <div class="col-md-10 to-validate">
+                <input validation name="password" type="password" placeholder="Contraseña..." ng-model="credentials.password" required>
             </div>
             <div class="col-md-1 image"><img src="img/contact-password.svg"/></div>
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <button class="btn btn-tertiary login">Iniciar sesi&oacute;n</button>
+                <button type="submit" class="btn btn-tertiary login">Iniciar sesi&oacute;n</button>
             </div>
             <div class="col-md-1"></div>
             <div class="clearfix"></div>

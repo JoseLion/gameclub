@@ -56,6 +56,7 @@ angular.module("Gameclub").constant('Const', {
 	},
 
 	code: {
-		contentRatings: "CRT"
+		contentRatings: "CRT",
+		magazines: "MGZ"
 	}
 });

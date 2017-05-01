@@ -3,7 +3,7 @@
 		<!-- <span>{{isOpened ? "Minimizar" : agregation == null ? setValue(list[0]) : agregation}}</span> -->
 		<span>{{isOpened ? "Minimizar" : "Expandir"}}</span>
 	</button>
-	<div id="several_{{$id}}" style="display: none;">
+	<div id="several_{{$parent.$id}}" style="display: none;">
 		<li ng-repeat="value in list">
 			{{setValue(value)}}
 		</li>

@@ -19,4 +19,8 @@ public interface GameLite {
 	public List<GameConsole> getConsoles();
 	
 	public List<GameCategory> getCategories();
+	
+	public void setConsoles(List<GameConsole> consoles);
+	
+	public void setCategories(List<GameCategory> categories);
 }

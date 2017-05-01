@@ -1,9 +1,11 @@
-angular.module("Game").controller('ManageGameCtrl', function($scope, game, contentRatings, magazines, consoles, categories, sweet, rest, $state, forEach, getImageBase64, notif) {
+angular.module("Game").controller('ManageGameCtrl', function($scope, game, contentRatings, magazines, consoles, categories, sweet, rest, $state, forEach, getImageBase64, notif, $sce) {
 	$scope.tabs = [{name: "General", active: true}, {name: "Multimedia", active: false}];
 	$scope.game = {};
+	$scope.images = {};
 
 	if (game != null) {
 		game.$promise.then(function(data) {
+			console.log("data: ", data);
 			$scope.game = data;
 		});
 	} else {
@@ -60,11 +62,13 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 		sweet.save(function() {
 			let formData = {
 				game: $scope.game,
-				cover: $scope.coverImage,
-				banner: $scope.bannerImage
+				cover: $scope.images.cover,
+				banner: $scope.images.banner
 			};
 
-			rest("game/save").multipart(formData, function(data) {
+			console.log("formData: ", formData);
+
+			rest("game/save").multipart(formData, function() {
 				sweet.success();
 				sweet.close();
 				$scope.cancel();

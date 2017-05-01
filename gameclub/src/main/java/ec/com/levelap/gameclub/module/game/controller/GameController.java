@@ -39,6 +39,13 @@ public class GameController {
 		}
 		
 		Page<GameLite> games = gameService.getGameRepo().findGames(search.name, search.releaseStart, search.releaseEnd, search.status, search.console, search.category, new PageRequest(search.page, Const.TABLE_SIZE));
+		
+		for (GameLite gameLite : games.getContent()) {
+			Game game = gameService.getGameRepo().findOne(gameLite.getId());
+			gameLite.setConsoles(game.getConsoles());
+			gameLite.setCategories(game.getCategories());
+		}
+		
 		return new ResponseEntity<Page<GameLite>>(games, HttpStatus.OK);
 	}
 	

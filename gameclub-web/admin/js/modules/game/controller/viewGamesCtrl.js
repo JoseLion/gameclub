@@ -1,4 +1,4 @@
-angular.module("Game").controller('ViewGamesCtrl', function($scope, games, getDTOptions, $state, sweet, rest) {
+angular.module("Game").controller('ViewGamesCtrl', function($scope, games, consoles, categories, getDTOptions, $state, sweet, rest, Const, friendlyUrl) {
 	$scope.search = {};
 	$scope.totalElements;
 	$scope.beginning;
@@ -8,7 +8,19 @@ angular.module("Game").controller('ViewGamesCtrl', function($scope, games, getDT
 		return getDTOptions.infoCallback($scope.totalElements, $scope.beginning, $scope.end);
 	});
 
-	$scope.dtColumnDefs = getDTOptions.notSortableAll(7);
+	$scope.dtColumnDefs = getDTOptions.notSortableAll(6);
+
+	games.$promise.then(function(data) {
+		setPagedData(data);
+	});
+
+	consoles.$promise.then(function(data) {
+		$scope.consoles = data;
+	});
+
+	categories.$promise.then(function(data) {
+		$scope.categories = data;
+	});
 
 	$scope.find = function() {
 		rest("game/findGames").post($scope.search, function(data) {
@@ -30,8 +42,25 @@ angular.module("Game").controller('ViewGamesCtrl', function($scope, games, getDT
 		$state.go("^.addGame");
 	}
 
+	$scope.editGame = function(game) {
+		$state.go("^.editGame", {id: game.id, name: friendlyUrl(game.name)});
+	}
+ 
+	$scope.changeStatus = function(game) {
+		sweet.changeStatus(function() {
+			rest("game/changeStatus/:id").get({id: game.id}, function(data) {
+				let index = $scope.games.indexOf(game);
+				$scope.games[index].status = data;
+				sweet.statusChanged();
+				sweet.close();
+			}, function(error) {
+				sweet.close();
+			});
+		});
+	}
+
 	function setPagedData(data) {
-		$scope.realEstates = data.content;
+		$scope.games = data.content;
 		$scope.totalElements = data.totalElements;
 		$scope.beginning = (Const.tableSize * data.number) + 1;
 		$scope.end = $scope.beginning + data.numberOfElements - 1;

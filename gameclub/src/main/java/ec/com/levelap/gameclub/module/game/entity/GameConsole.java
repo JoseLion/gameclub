@@ -20,7 +20,7 @@ import ec.com.levelap.gameclub.utils.Const;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class GameConsole extends BaseEntity {
 	@JsonBackReference("gameConsole")
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH, optional=false)
 	@JoinColumn(name="game", foreignKey=@ForeignKey(name="game_fk"))
 	private Game game;
 	

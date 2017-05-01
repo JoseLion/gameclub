@@ -1,4 +1,4 @@
-angular.module("Core").directive('multiSelect', function(forEach) {
+angular.module("Core").directive('multiSelect', function(forEach, getIndexOfArray) {
 	return {
 		restrict: 'E',
 		require: 'ngModel',
@@ -9,10 +9,15 @@ angular.module("Core").directive('multiSelect', function(forEach) {
 			property: "@",
 			matchTemplate: "@",
 			choiceTemplate: "@",
-			onSelect: "&?"
+			onSelect: "&?",
+			uniqueKey: "@?"
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
+			if ($scope.uniqueKey == null) {
+				$scope.uniqueKey = "id";
+			}
+
 			$scope.itemSelected = function($item) {
 				ctrl.$setTouched();
 
@@ -34,7 +39,7 @@ angular.module("Core").directive('multiSelect', function(forEach) {
 				ctrl.$setTouched();
 
 				forEach($scope.ngModel, function(value, i) {
-					if ($item == value[$scope.property]) {
+					if ($item[$scope.uniqueKey] == value[$scope.property][$scope.uniqueKey]) {
 						$scope.ngModel.splice(i, 1);
 						return 'break';
 					}
@@ -45,6 +50,22 @@ angular.module("Core").directive('multiSelect', function(forEach) {
 				if (newValue != null) {
 					if (newValue.length <= 0) {
 						ctrl.$setViewValue(null);
+					} else {
+						$scope.selected = [];
+
+						forEach(newValue, function(value) {
+							let index = -1;
+
+							if ($scope.property != null) {
+								index = getIndexOfArray($scope.list, $scope.uniqueKey, value[$scope.property][$scope.uniqueKey]);
+							} else {
+								index = getIndexOfArray($scope.list, $scope.uniqueKey, value[$scope.uniqueKey]);
+							}
+
+							if (index > -1) {
+								$scope.selected.push($scope.list[index]);
+							}
+						});
 					}
 				}
 			});

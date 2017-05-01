@@ -19,6 +19,18 @@ angular.module("Game").config(function($stateProvider) {
 				return rest("game/findGames").post(function(data) {
 					return data;
 				});
+			},
+
+			consoles: function(rest) {
+				return rest("console/findAll", true).get(function(data) {
+					return data;
+				});
+			},
+
+			categories: function(rest) {
+				return rest("category/findAll", true).get(function(data) {
+					return data;
+				});
 			}
 		}
 	})

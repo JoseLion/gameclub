@@ -1,0 +1,148 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "gameclub";
+  src:url("fonts/gameclub.eot");
+  src:url("fonts/gameclub.eot?#iefix") format("embedded-opentype"),
+    url("fonts/gameclub.woff") format("woff"),
+    url("fonts/gameclub.ttf") format("truetype"),
+    url("fonts/gameclub.svg#gameclub") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "gameclub" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="gc-"]:before,
+[class*=" gc-"]:before {
+  font-family: "gameclub" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.gc-gc-address:before {
+  content: "\61";
+}
+.gc-gc-calendar:before {
+  content: "\62";
+}
+.gc-gc-cd:before {
+  content: "\63";
+}
+.gc-gc-cross:before {
+  content: "\64";
+}
+.gc-gc-facebook:before {
+  content: "\65";
+}
+.gc-gc-facebook-f:before {
+  content: "\66";
+}
+.gc-gc-filter:before {
+  content: "\67";
+}
+.gc-gc-instagram:before {
+  content: "\68";
+}
+.gc-gc-link:before {
+  content: "\69";
+}
+.gc-gc-locker:before {
+  content: "\6a";
+}
+.gc-gc-mail:before {
+  content: "\6b";
+}
+.gc-gc-map-marker:before {
+  content: "\6c";
+}
+.gc-gc-message:before {
+  content: "\6d";
+}
+.gc-gc-pencil:before {
+  content: "\6e";
+}
+.gc-gc-phone:before {
+  content: "\6f";
+}
+.gc-gc-protect:before {
+  content: "\70";
+}
+.gc-gc-rating:before {
+  content: "\71";
+}
+.gc-gc-send:before {
+  content: "\72";
+}
+.gc-gc-send-mail:before {
+  content: "\73";
+}
+.gc-gc-turn-on:before {
+  content: "\74";
+}
+.gc-gc-twitter:before {
+  content: "\75";
+}
+.gc-gc-usd:before {
+  content: "\76";
+}
+.gc-gc-usd-o:before {
+  content: "\77";
+}
+.gc-gc-whatsapp:before {
+  content: "\78";
+}
+.gc-gc-youtube:before {
+  content: "\79";
+}
+.gc-gc-arrow-down:before {
+  content: "\43";
+}
+.gc-gc-arrow-left:before {
+  content: "\44";
+}
+.gc-gc-arrow-right:before {
+  content: "\45";
+}
+.gc-gc-arrow-up:before {
+  content: "\46";
+}
+.gc-gc-person:before {
+  content: "\47";
+}
+.gc-gc-step-one:before {
+  content: "\48";
+}
+.gc-gc-step-three:before {
+  content: "\49";
+}
+.gc-gc-step-two:before {
+  content: "\4a";
+}
+.gc-gc-nintendo-switch:before {
+  content: "\7a";
+}
+.gc-gc-ps4:before {
+  content: "\41";
+}
+.gc-gc-xbox-one:before {
+  content: "\42";
+}

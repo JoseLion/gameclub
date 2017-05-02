@@ -45,7 +45,7 @@
             </div>
             <div class="col-md-4 text-center"><span class="subtitle">Tus juegos</span></div>
             <div class="col-md-4 text-rigth no-padding-right">
-                <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector text-center">
+                <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector">
                     <ui-select-match allow-clear placeholder="Consola..."><img ng-src="{{$select.selected.img}}" class="gameConsole"/></ui-select-match>
                     <ui-select-choices repeat="gameConsole in gameConsoles | filter: $select.search.name" class="text-center">
                         <div ng-bind-html="'' | highlight: $select.search.name"></div>
@@ -66,7 +66,7 @@
                         types="game.types"
                         content-rating="game.contentRating.src"
                         platform="game.platform.src"
-                        ng-click="viewGame(game)" show-coins="false" />
+                        ng-click="viewGame(game)" show-coins="true" />
                 <div class="separator" ng-if="$index+1 < gameList.length"></div>
             </div>
             <blog-paging pages="3" current="currentPage" class="paging"/>

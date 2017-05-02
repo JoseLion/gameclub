@@ -1,7 +1,7 @@
 <header>
     <div class="row">
         <section class="social-media col-md-6">
-            <a href><i class="fa fa-facebook"></i></a>
+            <a href="https://www.facebook.com/gameclub.ec/" target="_blank"><i class="fa fa-facebook"></i></a>
             <a href><i class="fa fa-instagram"></i></a>
             <a href><i class="fa fa-youtube-play"></i></a>
             <a href><i class="fa fa-twitter"></i></a>
@@ -20,21 +20,21 @@
                 <li><button class="btn btn-primary" ui-sref="{{link.shareAndPlay.route}}" ui-sref-active="active"><span class="spacing">{{link.shareAndPlay.name}}</span></button></li>
                 <li><button class="btn btn-primary" ><span class="upper-case">{{link.faq.name}}</span></button></li>
                 <li><button class="btn btn-primary" ui-sref="{{link.blog.route}}" ui-sref-active="active"><span class="upper-case">{{link.blog.name}}</span></button></li>
-                <li ng-if="!isLogged">
+                <li ng-if="!currentUser">
                     <button class="btn btn-primary" ui-sref="{{link.login.route}}" ui-sref-active="active"><span class="upper-case">{{link.login.name}}</span></button>
                 </li>
-                <li ng-if="isLogged" class="account">
+                <li ng-if="currentUser" class="account">
                     <button class="btn btn-primary" ui-sref="{{link.account.route}}" ui-sref-active="active">
                         <span class="upper-case">
-                            {{link.account.name}}
+                            {{currentUser.name}} {{currentUser.lastName}}
                         </span>
                         <img src="img/test/profile-pic.png" class="avatar"/>
                     </button>
                 </li>
             </nav>
         </div>
-        <div ng-if="isLogged" class="col-md-12 text-right coins">
-            <span class="text">805</span>
+        <div ng-if="currentUser" class="col-md-12 text-right coins">
+            <span class="text">{{currentUser.coins}}</span>
             <i class="fa fa-usd"></i>
         </div>
         <div class="clearfix"></div>

@@ -14,19 +14,25 @@
 	<link href="css/customStyles.less" rel="stylesheet/less">
 	<link href="css/responsive.less" rel="stylesheet/less">
 	<link href="css/select.min.css" rel="stylesheet">
+    <link href="js/core/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 </head>
 
 <body ng-controller="MainCtrl as main">
     <div ui-view></div>
 
-    <!-- MAIN DEPENDENCES -->
+    <!-- MAIN DEPENDENCIES -->
     <script src="js/core/jquery-2.1.1.min.js"></script>
     <script src="js/core/less.min.js"></script>
     <script src="js/core/angular.min.js"></script>
     <script src="js/core/angular-sanitize.min.js"></script>
+    <script src="js/core/angular-resource.min.js"></script>
+    <script src="js/core/angular-cookies.min.js"></script>
     <script src="js/core/angular-ui-router.min.js"></script>
     <script src="js/core/ocLazyLoad.min.js"></script>
 	<script src="js/core/select.min.js"></script>
+    <script src="js/core/plugins/pako/pako.min.js"></script>
+    <script src="js/core/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/core/plugins/sweetalert/angular-sweetalert.min.js"></script>
 
     <!-- Anglar App Script -->
     <script src="js/app.js"></script>
@@ -54,6 +60,8 @@
     <script src="js/modules/game/config/game.route.js"></script>
 
     <!-- Directives -->
+    <script src="js/modules/core/directives/onSubmit.js"></script>
+    <script src="js/modules/core/directives/validation.js"></script>
     <script src="js/modules/core/directives/gameScore.js"></script>
     <script src="js/modules/core/directives/blogPreview.js"></script>
     <script src="js/modules/core/directives/blogPaging.js"></script>
@@ -62,5 +70,15 @@
     <script src="js/modules/core/directives/timeSelector.js"></script>
     <script src="js/modules/core/directives/gameItem.js"></script>
 
+    <!-- Services -->
+    <script src="js/modules/core/services/authenticate.js"></script>
+    <script src="js/modules/core/services/forEach.js"></script>
+    <script src="js/modules/core/services/friendlyUrl.js"></script>
+    <script src="js/modules/core/services/getImageBase64.js"></script>
+    <script src="js/modules/core/services/getIndexOfArray.js"></script>
+    <script src="js/modules/core/services/openRest.js"></script>
+    <script src="js/modules/core/services/rest.js"></script>
+    <script src="js/modules/core/services/saveAs.js"></script>
+    <script src="js/modules/core/services/sweet.js"></script>
 </body>
 </html>

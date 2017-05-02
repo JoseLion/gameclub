@@ -1,6 +1,8 @@
 package ec.com.levelap.gameclub.module.user.controller;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,5 +25,11 @@ public class PublicUserController {
 	public ResponseEntity<PublicUser> getCurrentUser() throws ServletException {
 		PublicUser user = publicUserService.getCurrentUser();
 		return new ResponseEntity<PublicUser>(user, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="resendVerification", method=RequestMethod.GET)
+	public ResponseEntity<?> resendVerification(HttpServletRequest request) throws ServletException, MessagingException {
+		publicUserService.resendVerification(request);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

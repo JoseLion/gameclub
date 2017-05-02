@@ -1,6 +1,9 @@
 angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, rest) {
 	$http.get(urlRestPath.url + "/api/token").then(function(response) {
 		if (response != null && response.data != null) {
+			$rootScope.paddingLogged = {
+				padding: '1.4em 0'
+			};
 			rest("publicUser/getCurrentUser").get(function(data) {
 				if (!data.status) {
 					$scope.logout();
@@ -11,6 +14,9 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 						/*if ($rootScope.currentUser.isTempPassword) {
 							changePassword();
 						}*/
+						$rootScope.paddingLogged = {
+							padding: '1em 0'
+						};
 					}
 				}
 			}, function(error) {
@@ -37,7 +43,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 		/*FB.getLoginStatus(function(response) {
 			if (response.status === "connected") {
 				FB.logout(function(response) {
-					
+
 				}, response.authResponse.accessToken);
 			}
 		});*/

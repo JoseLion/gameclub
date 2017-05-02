@@ -1,5 +1,5 @@
 package ec.com.levelap.gameclub.utils;
 
-public interface Acronym {
+public interface Code {
 
 }

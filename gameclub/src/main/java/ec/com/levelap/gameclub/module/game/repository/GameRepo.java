@@ -21,9 +21,7 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 				"g.name AS name, " +
 				"g.releaseDate AS releaseDate, " +
 				"g.cover AS cover, " +
-				"g.status AS status, " +
-				"'' AS consoles, " +
-				"'' AS categories " +
+				"g.status AS status " +
 			"FROM Game g " +
 				"LEFT JOIN g.consoles cn " +
 				"LEFT JOIN g.categories ct " +
@@ -31,10 +29,8 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 				"UPPER(g.name) LIKE UPPER('%' || :name || '%') AND " +
 				"(g.releaseDate BETWEEN :releaseStart AND :releaseEnd) AND " +
 				"(:status IS NULL OR g.status=:status) AND " +
-				//"(:console IS NULL OR :console IN g.consoles) AND " +
-				//"(:category IS NULL OR :category IN g.categories) " +
-				"(:console IS NULL OR cn=:console) AND " +
-				"(:category IS NULL OR ct=:category) " +
+				"(:console IS NULL OR cn.console=:console) AND " +
+				"(:category IS NULL OR ct.category=:category) " +
 			"ORDER BY g.name DESC, g.releaseDate DESC")
 	public Page<GameLite> findGames(
 			@Param("name") String name,

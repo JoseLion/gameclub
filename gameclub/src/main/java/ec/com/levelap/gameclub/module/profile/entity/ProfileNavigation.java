@@ -13,9 +13,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.gameclub.module.navigation.entity.Navigation;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
-@Table(schema="gameclub", name="profile_navigation")
+@Table(schema=Const.SCHEMA, name="profile_navigation")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProfileNavigation extends BaseEntity {
 	@JsonBackReference("Profile")

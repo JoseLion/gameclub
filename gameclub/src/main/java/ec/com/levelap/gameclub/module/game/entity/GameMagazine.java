@@ -14,9 +14,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.catalog.Catalog;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
-@Table(schema="gameclub", name="game_magazine")
+@Table(schema=Const.SCHEMA, name="game_magazine")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class GameMagazine extends BaseEntity {
 	@JsonBackReference("gameMagazine")

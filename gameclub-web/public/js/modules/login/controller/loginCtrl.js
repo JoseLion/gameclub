@@ -14,42 +14,70 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 			sweet.save(function() {
 				signIn($scope.user);
 			});
+		} else {
+			notif.warning(Const.messages.acceptTerms);
 		}
 	}
 
 	$scope.login = function() {
-		logIn($scope,credentials);
+		logIn($scope.credentials);
 	}
 
 	$scope.fbSignIn = function() {
 		$scope.isFbSingIn = true;
 
-		FB.login(function(response) {
-			if (response.authResponse != null) {
-				FB.api('/me', {fields: 'name, email'}, function(me) {
-					if (me.email == null) {
-						FB.logout(function(logoutResponse) {
-							notif.warning("El correo electrónico es necesario para crea una cuenta en Smartbid. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
-							$scope.isFbSingIn = false;
-						}, response.authResponse.accessToken);
-					} else {
-						let user = {
-							username: me.email,
-							name: me.name,
-							lastName: "",
-							password: me.id,
-							isFacebookUser: true
-						};
+		let modal = $uibModal.open({
+			size: "md",
+			backdrop: true,
+			templateUrl: "facebookSignIn.html",
+			controller: function($scope, $uibModalInstance, notif, Const) {
+				$scope.terms = {};
 
-						signIn(user);
+				$scope.ok = function() {
+					if ($scope.terms.status) {
+						$uibModalInstance.close();
+					} else {
+						notif.warning(Const.messages.acceptTerms);
 					}
-				});
-			} else {
-				$scope.isFbSingIn = false;
-			}
-		}, {
-			scope: 'public_profile,email',
-			auth_type: 'rerequest'
+				}
+
+				$scope.cancel = function() {
+					$uibModalInstance.dismiss();
+				}
+			},
+			resolve: {}
+		});
+
+		modal.result.then(function() {
+			FB.login(function(response) {
+				if (response.authResponse != null) {
+					FB.api('/me', {fields: 'name, email'}, function(me) {
+						if (me.email == null) {
+							FB.logout(function(logoutResponse) {
+								notif.warning("El correo electrónico es necesario para crea una cuenta en Smartbid. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
+								$scope.isFbSingIn = false;
+							}, response.authResponse.accessToken);
+						} else {
+							let user = {
+								username: me.email,
+								name: me.name,
+								lastName: "",
+								password: me.id,
+								isFacebookUser: true
+							};
+
+							signIn(user);
+						}
+					});
+				} else {
+					$scope.isFbSingIn = false;
+				}
+			}, {
+				scope: 'public_profile,email',
+				auth_type: 'rerequest'
+			});
+		}, function() {
+			$scope.isFbSingIn = false;
 		});
 	}
 
@@ -79,6 +107,44 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 		}, {
 			scope: 'public_profile,email',
 			auth_type: 'rerequest'
+		});
+	}
+
+	$scope.forgotPassword = function() {
+		$uibModal.open({
+			size: "md",
+			backdrop: true,
+			templateUrl: "forgotPassword.html",
+			controller: function($scope, $uibModalInstance, sweet, Const, urlRestPath, notif, $http) {
+				$scope.forgot = {};
+
+				$scope.ok = function() {
+					sweet.default("Se reestablecerá tu contraseña", function() {
+						let authHeader = {};
+						authHeader[Const.authHeader] = Const.authHeaderPrefix + btoa($scope.forgot.email + Const.authHeaderSeparator + Const.authHeaderSeparator + "true");
+						authHeader[Const.extraHeader] = Const.publicUser;
+
+						let http = $http.get(urlRestPath.url + '/api/user', {headers: authHeader}).then(function(response) {
+							notif.success("Tu contraseña ha sido reestablecida. Por favor dirijete a tu correo electrónico");
+							swal.close();
+							$uibModalInstance.close();
+						}, function(error) {
+							if (error.status > 0) {
+								notif.danger(error.data);
+							} else {
+								notif.danger(Const.messages.unableToConnect);
+							}
+
+							swal.close();
+						});
+					});
+				}
+
+				$scope.cancel = function() {
+					$uibModalInstance.dismiss();
+				}
+			},
+			resolve: {}
 		});
 	}
 

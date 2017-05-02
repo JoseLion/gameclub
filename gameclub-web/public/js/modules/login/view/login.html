@@ -91,13 +91,16 @@
 
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <a href>&iquest;Olvidaste tu contrase&ntilde;a?</a>
+                <a href ng-click="forgotPassword()">&iquest;Olvidaste tu contrase&ntilde;a?</a>
             </div>
             <div class="col-md-1"></div>
             <div class="clearfix"></div>
         </form>
     </section>
 </div>
+
+
+<!-- ********************* MODALS ********************* -->
 
 <script type="text/ng-template" id="accountVerification.html">
     <div class="inmodal">
@@ -114,12 +117,12 @@
 
             <div class="form-group">
                 <div class="col-md-6 text-center">
-                    <button type="button" class="btn btn-primary-alt" ng-click="resendVerification()" ng-if="!isLoading">Reenviar Correo</button>
-                    <span ng-if="isLoading">Loading...</span> <!-- TODO: Reemplazar por spinner -->
+                    <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="isLoading">Aceptar</button>
                 </div>
 
                 <div class="col-md-6 text-center">
-                    <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="isLoading">OK</button>
+                    <button type="button" class="btn btn-primary-alt" ng-click="resendVerification()" ng-if="!isLoading">Reenviar Correo</button>
+                    <span ng-if="isLoading">Loading...</span> <!-- TODO: Reemplazar por spinner -->
                 </div>
             </div>
 
@@ -129,5 +132,75 @@
 </script>
 
 <script type="text/ng-template" id="facebookSignIn.html">
-    
+    <div class="inmodal">
+        <div class="modal-heading text-center">
+            <h2>Registro por Facebook</h2>
+        </div>
+
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <span>Para registrarte con Facebook primero debes aceptar los terminos y condiciones</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12 text-center">
+                    <input type="checkbox" ng-model="terms.status"><span class="legal">Acepto los <a href>T&eacute;rminos y Condiciones</a></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-6 text-center">
+                    <button type="button" class="btn btn-primary" ng-click="ok()">OK</button>
+                </div>
+
+                <div class="col-md-6 text-center">
+                    <button type="button" class="btn btn-primary-alt" ng-click="cancel()">Cancelar</button>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="forgotPassword.html">
+    <div class="inmodal">
+        <div class="modal-heading text-center">
+            <h2>Olvidé mi Contraseña</h2>
+        </div>
+
+        <div class="modal-body">
+            <form role="form" on-submit="ok()" novalidate>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <span>Ingresa el correo eletrónico de tu cuenta y te enviaremos una contraseña temporal</span>
+                    </div>
+                </div>
+
+                <div class="form-group to-validate">
+                    <div class="col-md-12">
+                        <label class="col-md-3 control-label">E-mail</label>
+                        <div class="col-md-9">
+                            <input validation type="email" name="email" class="input-form" ng-model="forgot.email" required style="border: 2px solid black; width: 100%">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6 text-center">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+
+                    <div class="col-md-6 text-center">
+                        <button type="button" class="btn btn-primary-alt" ng-click="cancel()">Cancelar</button>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
 </script>

@@ -187,14 +187,20 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-primar
 
 /********** DATE-SELECTOR **********/
 #date-selector{display:inline-block;}
-#date-selector div.selector{border-right:1px solid @color-tertiary;cursor:pointer;display:inline;padding-right:3px;padding-top:5%!important;}
+#date-selector div.selector{border-right:1px solid @color-tertiary;cursor:pointer;display:inline;padding-right:3px;padding-top:5%!important;position:relative;}
 #date-selector div.selector.disabled{cursor:not-allowed;}
 #date-selector div.selector>input{text-align:right;cursor:pointer;}
 #date-selector div.selector.disabled>input{cursor:not-allowed;}
-#date-selector div.calendar-icon{display:inline;}
+#date-selector div.selector ul.dropdown{padding:0;text-align:right;position:absolute;width:100%;left:0;right:0;background:@color-primary;height:10.9em;overflow-y:scroll;z-index:10;border:5px solid @color-primary;}
+#date-selector div.selector ul.dropdown{border-bottom-left-radius:5px;border-bottom-right-radius:5px;}
+#date-selector div.selector ul.dropdown::-webkit-scrollbar{width:0;}
+#date-selector div.selector ul.dropdown li{display:block;padding:1px 5px 0;}
+#date-selector div.selector ul.dropdown li:hover{background:@color-secundary;}
+#date-selector div.calendar-icon{display:inline;position:relative;}
 #date-selector div.calendar-icon>i{font-size:1.7em;position:relative;cursor:pointer;}
 #date-selector div.calendar-icon.disabled>i{cursor:not-allowed;}
 #date-selector div.calendar-icon>i::before{position:absolute;top:-0.7em;left:0.5em;}
+#date-selector div.calendar-icon table{position:absolute;z-index:10;}
 /***********************************/
 
 /********** TIME-SELECTOR **********/
@@ -235,7 +241,7 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-primar
 #home .banner .title-down{margin-right:12%;margin-left:53%;}
 #home .banner .description{font-size:1.5em;font-family:@font-family-jaapokki!important;}
 #home .banner .search .search-params{font-size:1.1em;font-weight:700;padding:0;}
-#home .banner .search .search-params .filter{padding-top:7px;padding-bottom:5px;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;}
+#home .banner .search .search-params .filter{padding-top:7px;padding-bottom:5px;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;height:3em;}
 #home .banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
 #home .banner .search .search-params .filter:last-child{border-right-width:2.5px;border-top-right-radius:8px;border-bottom-right-radius:8px;}
 #home .banner .search .search-params input:focus{outline:none;}
@@ -630,7 +636,7 @@ background:linear-gradient(45deg,@color-tertiary -10%,transparent 80%);backgroun
 #game section.header .principal .title{text-transform:none;font-size:1.2em;font-weight:700;margin-top:0.5em;margin-bottom:0;padding:0;font-family:@font-family-jaapokki!important;letter-spacing:1px;}
 #game section.header .principal .rating-container{padding:0;}
 #game section.header .principal .rating-container img{height:1.1em;margin:0.25em auto;}
-#game section.header .principal .video{padding:0;font-family:@font-family-jaapokki!important;font-size:1.2em;font-weight:700;}
+#game section.header .principal .video{padding:0;font-family:@font-family-jaapokki!important;font-size:1.2em;}
 #game section.header .principal .video i{font-size:1.6em;-webkit-text-fill-color:transparent;
 background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
 -webkit-background-clip:text;}

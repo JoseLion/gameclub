@@ -48,7 +48,8 @@ angular.module('GameClub').constant('Const', {
 		unauthorized: 'No autorizado.',
 		unableToConnect: 'No se pudo conectar al servidor.',
 		error: 'Oops, algo salió mal. Por favor intente más tarde.',
-		kushkiError: 'Su tarjeta no superó la validación satisfactoriamente.'
+		kushkiError: 'Su tarjeta no superó la validación satisfactoriamente.',
+		acceptTerms: 'Debes aceptar los términos y consiciones para continuar'
 	},
 
 	tooltips: {

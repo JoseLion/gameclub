@@ -34,6 +34,9 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(columnDefinition="INTEGER DEFAULT 0")
 	private Integer coins = 0;
+	
+	@Column(columnDefinition="VARCHAR")
+	private String token;
 
 	public String getUsername() {
 		return username;
@@ -89,5 +92,13 @@ public class PublicUser extends BaseEntity {
 
 	public void setCoins(Integer coins) {
 		this.coins = coins;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 }

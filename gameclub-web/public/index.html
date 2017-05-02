@@ -15,6 +15,7 @@
 	<link href="css/responsive.less" rel="stylesheet/less">
 	<link href="css/select.min.css" rel="stylesheet">
     <link href="js/core/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="js/core/plugins/angular-notify/angular-notify.min.css" rel="stylesheet">
 </head>
 
 <body ng-controller="MainCtrl as main">
@@ -33,6 +34,8 @@
     <script src="js/core/plugins/pako/pako.min.js"></script>
     <script src="js/core/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="js/core/plugins/sweetalert/angular-sweetalert.min.js"></script>
+    <script src="js/core/ui-bootstrap-tpls/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="js/core/plugins/angular-notify/angular-notify.min.js"></script>
 
     <!-- Anglar App Script -->
     <script src="js/app.js"></script>
@@ -80,5 +83,30 @@
     <script src="js/modules/core/services/rest.js"></script>
     <script src="js/modules/core/services/saveAs.js"></script>
     <script src="js/modules/core/services/sweet.js"></script>
+    <script src="js/modules/core/services/notif.js"></script>
+
+    <script type="text/javascript">
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '780048878829489',
+                xfbml: true,
+                version: 'v2.8'
+            });
+
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+
+            if (d.getElementById(id)) {
+                return;
+            }
+
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/es_LA/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        } (document, 'script', 'facebook-jssdk'));
+    </script>
 </body>
 </html>

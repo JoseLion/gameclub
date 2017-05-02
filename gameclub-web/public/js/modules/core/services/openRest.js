@@ -1,4 +1,4 @@
-angular.module('Core').factory('openRest', function($resource, $q, $rootScope, urlRestPath, forEach) {
+angular.module('Core').factory('openRest', function($resource, $q, $rootScope, urlRestPath, forEach, notif) {
 	let baseUrl = urlRestPath.url + "/open/";
 
 	let resourceInterceptor = {
@@ -8,12 +8,7 @@ angular.module('Core').factory('openRest', function($resource, $q, $rootScope, u
 
 		responseError: function(response) {
 			if (response.status == 500 && !response.data.custom) {
-				/*toaster.pop({
-					type: 'warning',
-					title: 'Oops, algo salió mal...',
-					body: 'Por favor vuelve a inténtarlo más tarde',
-					showCloseButton: true
-				});*/
+				notif.danger("Oops, algo salió mal... Por favor vuelve a inténtarlo más tarde");
 			}
 
 			return $q.reject(response);

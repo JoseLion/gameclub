@@ -1,9 +1,9 @@
-angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, rest) {
+angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, rest, $cookies) {
 	$http.get(urlRestPath.url + "/api/token").then(function(response) {
 		if (response != null && response.data != null) {
 			rest("publicUser/getCurrentUser").get(function(data) {
-				if (!data.status) {
-					$scope.logout();
+				if (!data.status || data.token != null) {
+					$rootScope.logout();
 				} else {
 					if (data != null) {
 						$rootScope.currentUser = data;
@@ -14,12 +14,12 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 					}
 				}
 			}, function(error) {
-				$scope.logout();
+				$rootScope.logout();
 			});
 		}
 	});
 
-	$scope.logout = function() {
+	$rootScope.logout = function() {
 		let request = {
 			method: 'POST',
 			url: urlRestPath.url + '/logout',
@@ -94,7 +94,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 	// 	if (response != null && response.data != null) {
 	// 		rest('publicUser/getCurrentUser').get(function(data) {
 	// 			if (!data.status) {
-	// 				$scope.logout();
+	// 				$rootScope.logout();
 	// 			} else {
 	// 				if (data != null) {
 	// 					$rootScope.currentUser = data;
@@ -106,7 +106,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 	// 				}
 	// 			}
 	// 		}, function(error) {
-	// 			$scope.logout();
+	// 			$rootScope.logout();
 	// 		});
 	// 	}
 	// });
@@ -115,7 +115,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 	// 	login();
 	// }
 
-	// $scope.logout = function() {
+	// $rootScope.logout = function() {
 	// 	let request = {
 	// 		method: 'POST',
 	// 		url: urlRestPath.url + '/logout',

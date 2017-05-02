@@ -1,4 +1,4 @@
-angular.module('Core').factory('rest', function($resource, $q, $rootScope, $cookies, $location, urlRestPath, forEach, Const) {
+angular.module('Core').factory('rest', function($resource, $q, $rootScope, $cookies, $location, urlRestPath, forEach, Const, notif) {
 	let baseUrl = urlRestPath.url + "/api/";
 
 	let resourceInterceptor = {
@@ -16,12 +16,7 @@ angular.module('Core').factory('rest', function($resource, $q, $rootScope, $cook
 			}
 
 			if (response.data == null || (response.data != null && !response.data.custom)) {
-				/*toaster.pop({
-					type: 'warning',
-					title: 'Oops, algo salió mal...',
-					body: 'Por favor vuelve a inténtarlo más tarde',
-					showCloseButton: true
-				});*/
+				notif.danger("Oops, algo salió mal... Por favor vuelve a inténtarlo más tarde");
 			}
 
 			return $q.reject(response);

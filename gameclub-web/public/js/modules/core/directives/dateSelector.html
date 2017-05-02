@@ -3,15 +3,15 @@
         <input class="date-number" placeholder="01" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-click="selection($event.currentTarget)"/>
         <i class="fa fa-caret-down"></i>
     </div>
-    <div class="selector">
-        <input class="date-number" placeholder="01" size="3" maxlength="2" ng-disabled="disableSelectors" readonly/>
+    <div class="selector" ng-class="disableSelectors ? 'disabled' : ''">
+        <input class="date-number" placeholder="01" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-click="selection($event.currentTarget)"/>
         <i class="fa fa-caret-down"></i>
     </div>
-    <div class="selector">
-        <input class="date-number" placeholder="99" size="3" maxlength="2" ng-disabled="disableSelectors" readonly/>
+    <div class="selector" ng-class="disableSelectors ? 'disabled' : ''">
+        <input class="date-number" placeholder="99" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-click="selection($event.currentTarget)"/>
         <i class="fa fa-caret-down"></i>
     </div>
-    <div class="calendar-icon">
+    <div class="calendar-icon" ng-class="disableSelectors ? 'disabled' : ''">
         <i class="fa fa-calendar"></i>
     </div>
 </div>

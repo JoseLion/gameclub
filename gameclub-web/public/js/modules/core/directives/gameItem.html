@@ -2,7 +2,7 @@
     <div class="col-xs-12 col-md-2 cover">
         <game-score src="src" no-score></game-score>
     </div>
-    <div class="col-xs-12 col-md-6 information">
+    <div class="col-xs-12 col-md-7 information">
         <span class="description">{{title}}</span>
         <div class="rating-container">
             <img class="score-1" src="img/star-no-score.svg"/>
@@ -14,8 +14,8 @@
         <span class="price" ng-if="showCoins">Costo prestamo por semana: <span class="light">{{coins}} coins</span></span>
         <button class="btn btn-primary small" ng-click="viewDetails()">Ver juego</button>
     </div>
-    <div class="col-xs-12 col-md-4 rating">
-        <div class="col-md-8 text-right">
+    <div class="col-xs-12 col-md-3 rating">
+        <div class="col-md-8 text-right platform">
             <img ng-src="{{platform}}" class="platform"/>
             <div class="types">
                 <img ng-repeat="type in types" ng-src="{{type.src}}" />

@@ -1,6 +1,8 @@
 angular.module('Core').factory('notif', function(notify) {
 	let url = "views/notify.html";
 
+	notify.config({startTop:130});
+
 	return {
 		info: function(text) {
 			return notify({

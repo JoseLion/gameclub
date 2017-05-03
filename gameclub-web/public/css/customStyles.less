@@ -4,6 +4,7 @@
 html{background-color:@color-primary;}
 body{background-color:transparent;}
 input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
+.gc{font-family:gameclub!important;}
 /*******************************/
 
 /********** GENERAL **********/
@@ -32,7 +33,9 @@ button.small,button.small:hover,button.small:visited,button.small:focus,button.s
 .row-right{margin-left:0;margin-right:0;padding-right:20%;}
 .title{font-size:2em;text-transform:uppercase;font-weight:700;}
 form label::after{content:":";}
+form label.control-label{text-align:right;}
 form input,form textarea{background:transparent;border:none;outline:none;box-shadow:none;}
+form input.complete{width:100%;}
 form .selector{width:100%;padding:5px 0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
 form .selector span{font-size:1em;}
 form .selector .ui-select-match>span{padding:0px!important;border:none!important;}
@@ -56,7 +59,8 @@ form .selector .ui-select-choices::-webkit-scrollbar{width:0px;}
 /********** HEADER **********/
 header{background:@color-primary;font-weight:700;}
 header .social-media{text-align:left;padding-top:5px;}
-header .social-media a{margin:0px 0.2em;font-size:1.2em;color:@color-secundary;}
+header .social-media a{margin:0px 0.2em;font-size:1.2em;color:@color-secundary;text-decoration:none;}
+header .social-media a i{font-weight:700;}
 header .social-media a:hover{color:@color-tertiary;}
 header .contacts{text-align:right;font-size:0.7em;}
 header .contacts a{position:relative;display:inline-block;color:@color-secundary;text-decoration:none;padding:10px 0 5px 30px;margin-left:10px;}
@@ -66,7 +70,7 @@ header .contacts a i,header .contacts a img{font-size:1.3em;position:absolute;le
 header .contacts a img{width:1.2em;left:5%;}
 header .contacts a:hover span{color:@color-tertiary;}
 header .contacts a i:hover{color:@color-secundary;}
-header .shortcut-links{position:absolute;font-size:18px;padding-top:1%;padding-bottom:3%;font-weight:700;left:0;right:0;z-index:1;
+header .shortcut-links{position:absolute;font-size:18px;padding-top:1%;padding-bottom:1%;font-weight:700;left:0;right:0;z-index:1;
 background:@color-primary-85;background:linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);background:-webkit-linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);background:-o-linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);background:-moz-linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);}
 header .shortcut-links img{cursor:pointer;}
 header .shortcut-links .links{padding:1.5em 0;}
@@ -228,6 +232,24 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-primar
 #game-item .rating .types img{height:2.5em;padding:0.5em;border:2px solid @color-primary;border-radius:50%;margin:auto 1%;}
 #game-item .rating .content-rating img{width:85%;margin-top:1em;}
 /*******************************/
+
+/********** NOTIFY **********/
+#notify.cg-notify-message.notify{background:@color-primary-65;border:none;color:@color-tertiary;padding:10px 3% 6px;right:0;
+box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);-webkit-box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);-moz-box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);}
+#notify.cg-notify-message.notify.alert-danger{border-left:6px solid @color-secundary;}
+#notify.cg-notify-message.notify.alert-warning{border-left:6px solid #2CB4BF;}
+#notify.cg-notify-message.notify.alert-success{border-left:6px solid @color-primary;}
+#notify.cg-notify-message.notify.alert-info{border-left:6px solid @color-tertiary;}
+#notify.cg-notify-message button.cg-notify-close{background:transparent;border:none;font-size:0.7em;font-weight:400;color:@color-tertiary;text-shadow:none;opacity:1;right:0.5em;top:1em;line-height:1;}
+/****************************/
+
+/********** MODAL **********/
+.modal-content{background:@color-primary;border:5px solid @color-tertiary;color:@color-tertiary;}
+.modal-content .modal-heading{color:@color-secundary;text-transform:uppercase;}
+.modal-content button.save{border-color:@color-secundary;background:@color-tertiary;color:@color-primary;}
+.modal-content button.cancel{border-color:@color-secundary;background:transparent;color:@color-tertiary;}
+.modal-content form input{border:2px solid @color-tertiary;padding:2px;color:@color-primary-alt;}
+/***************************/
 
 /********** HOME-PAGE **********/
 #home{color:@color-tertiary;display:block;position:relative;}

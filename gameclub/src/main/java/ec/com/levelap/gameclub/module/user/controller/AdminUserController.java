@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class AdminUserController {
 	}
 	
 	@RequestMapping(value="findAdminUsers", method=RequestMethod.POST)
-	public ResponseEntity<List<AdminUserLite>> findAdminUsers(@RequestBody(required=false) Search search) throws ServletException {
+	public ResponseEntity<List<AdminUserLite>> findAdminUsers(@RequestBody(required=false) Search search, HttpServletRequest request) throws ServletException {
 		if (search == null) {
 			search = new Search();
 		}

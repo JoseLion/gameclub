@@ -66,8 +66,6 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 				banner: $scope.images.banner
 			};
 
-			console.log("formData: ", formData);
-
 			rest("game/save").multipart(formData, function() {
 				sweet.success();
 				sweet.close();

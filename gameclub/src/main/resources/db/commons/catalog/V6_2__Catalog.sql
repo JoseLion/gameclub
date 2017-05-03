@@ -1,7 +1,7 @@
 INSERT INTO commons.catalog(name, code, other, parent) VALUES
 ('Magazines', 'MGZ', NULL, NULL);
 	INSERT INTO commons.catalog(name, code, other, parent) VALUES
-	('IGN', 'MGZIGN', 'img/catalog/ign.jpg', (SELECT id FROM commons.catalog WHERE code='MGZ')),
+	('IGN', 'MGZIGN', 'img/catalog/ign.png', (SELECT id FROM commons.catalog WHERE code='MGZ')),
 	('Gamespot', 'MGZGSP', 'img/catalog/gamespot.png', (SELECT id FROM commons.catalog WHERE code='MGZ')),
 	('Metacritic', 'MGZMTC', 'img/catalog/metacritic.png', (SELECT id FROM commons.catalog WHERE code='MGZ'));
 	

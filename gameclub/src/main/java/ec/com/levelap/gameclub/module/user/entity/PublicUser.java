@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.user.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -37,6 +39,15 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(columnDefinition="VARCHAR")
 	private String token;
+	
+	@Column(columnDefinition="VARCHAR")
+	private String document;
+	
+	@Column(name="birth_date")
+	private Date birthDate;
+	
+	@Column(columnDefinition="VARCHAR")
+	private String occupation;
 
 	public String getUsername() {
 		return username;

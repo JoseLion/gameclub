@@ -12,13 +12,21 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 			.state('gameclub.account', {
 				url: '/account',
 				templateUrl: 'views/account.html',
-				controller: [
-					'$state', function($state) {
-						if($state.current.name == 'gameclub.account') {
-							$state.go('gameclub.account.profile')
-						}
+				controller: "AccountCtrl",
+				resolve: {
+					loadPlugin: function($ocLazyLoad) {
+						return $ocLazyLoad.load([{
+							name: 'GameClub',
+							files: ['js/modules/account/accountCtrl.js']
+						}]);
+					},
+
+					token: function(rest) {
+						return rest("token").get(function(data) {
+							return data;
+						});
 					}
-				]
+				}
 			});
 
 }).run(function($rootScope, $state, Const, $location, $anchorScroll) {

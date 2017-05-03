@@ -5,7 +5,6 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 
 	if (game != null) {
 		game.$promise.then(function(data) {
-			console.log("data: ", data);
 			$scope.game = data;
 		});
 	} else {

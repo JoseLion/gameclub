@@ -1,0 +1,30 @@
+INSERT INTO commons.archive(name, module, type) VALUES
+('action-black.svg', 'Category', 'image/svg+xml'),
+('action-white.svg', 'Category', 'image/svg+xml'),
+('adventure-black.svg', 'Category', 'image/svg+xml'),
+('adventure-white.svg', 'Category', 'image/svg+xml'),
+('fight-black.svg', 'Category', 'image/svg+xml'),
+('fight-white.svg', 'Category', 'image/svg+xml'),
+('multiplayer-black.svg', 'Category', 'image/svg+xml'),
+('multiplayer-white.svg', 'Category', 'image/svg+xml'),
+('rpg-black.svg', 'Category', 'image/svg+xml'),
+('rpg-white.svg', 'Category', 'image/svg+xml'),
+('shooter-black.svg', 'Category', 'image/svg+xml'),
+('shooter-white.svg', 'Category', 'image/svg+xml'),
+('simulation-black.svg', 'Category', 'image/svg+xml'),
+('simulation-white.svg', 'Category', 'image/svg+xml'),
+('sports-black.svg', 'Category', 'image/svg+xml'),
+('sports-white.svg', 'Category', 'image/svg+xml'),
+('strategy-black.svg', 'Category', 'image/svg+xml'),
+('strategy-white.svg', 'Category', 'image/svg+xml');
+
+INSERT INTO gameclub.category(name, black_vector, white_vector) VALUES
+('Action', (SELECT id FROM commons.archive WHERE name='action-black.svg'), (SELECT id FROM commons.archive WHERE name='action-white.svg')),
+('Adventure', (SELECT id FROM commons.archive WHERE name='adventure-black.svg'), (SELECT id FROM commons.archive WHERE name='adventure-white.svg')),
+('Fight', (SELECT id FROM commons.archive WHERE name='fight-black.svg'), (SELECT id FROM commons.archive WHERE name='fight-white.svg')),
+('Mass Multiplayer', (SELECT id FROM commons.archive WHERE name='multiplayer-black.svg'), (SELECT id FROM commons.archive WHERE name='multiplayer-white.svg')),
+('RPG', (SELECT id FROM commons.archive WHERE name='rpg-black.svg'), (SELECT id FROM commons.archive WHERE name='rpg-white.svg')),
+('Shooter', (SELECT id FROM commons.archive WHERE name='shooter-black.svg'), (SELECT id FROM commons.archive WHERE name='shooter-white.svg')),
+('Simulation', (SELECT id FROM commons.archive WHERE name='simulation-black.svg'), (SELECT id FROM commons.archive WHERE name='simulation-white.svg')),
+('Sports', (SELECT id FROM commons.archive WHERE name='sports-black.svg'), (SELECT id FROM commons.archive WHERE name='sports-white.svg')),
+('Strategy', (SELECT id FROM commons.archive WHERE name='strategy-black.svg'), (SELECT id FROM commons.archive WHERE name='strategy-white.svg'));

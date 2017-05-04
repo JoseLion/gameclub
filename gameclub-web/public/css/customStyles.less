@@ -721,11 +721,11 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game section.header .principal .rating-container{padding:0;}
 #game section.header .principal .rating-container i::before{font-size:1.2em;color:@color-primary-s;}
 #game section.header .principal .rating-container i.yes::before{-webkit-text-fill-color:transparent;
-background:@color-primary;background:linear-gradient(90deg,@color-secundary 40%,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary 40%,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary 40%,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary 40%,@color-primary-alt);
+background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-primary-alt);
 -webkit-background-clip:text;}
 #game section.header .principal .video{padding:0;font-family:@font-family-jaapokki!important;font-size:1.2em;}
 #game section.header .principal .video i::before{font-size:1.6em;-webkit-text-fill-color:transparent;
-background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-primary-alt);
 -webkit-background-clip:text;}
 #game section.header .rating{margin-top:-5em;}
 #game section.header .rating .content-rating img{height:4em;margin-bottom:1em;}
@@ -765,6 +765,10 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game section.games .games-availables .table-container table tr td.blue{color:@color-primary-alt;}
 #game section.games .games-availables .table-container table tr td.red{color:@color-secundary;}
 #game section.games .games-availables .table-container table tr td.game-status{font-weight:700;color:@color-secundary;}
+#game section.games .games-availables .table-container table tr td i::before{font-size:1.2em;color:@color-primary-s;}
+#game section.games .games-availables .table-container table tr td i.yes::before{-webkit-text-fill-color:transparent;
+background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-primary-alt);
+-webkit-background-clip:text;}
 #game section.games .games-availables .table-container table tr td img{height:1em;}
 #game section.games .games-availables .table-container table tr td button.dark{background:@color-primary;color:@color-tertiary;white-space:normal;}
 #game section.games .filters{margin-bottom:-1%;}
@@ -772,9 +776,10 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game section.games .filters li::before{content:"";position:absolute;left:-1px;top:20%;bottom:20%;border-left:2px solid @color-secundary-65;}
 #game section.games .filters li:first-child::before{border:none;}
 #game section.games .filters li:last-child::before{border:none;}
-#game section.games .filters li.active{background:transparent;}
-#game section.games .filters li>a{position:absolute;left:0;right:0;top:0.25em;}
-#game section.games .filters li img{height:1em;}
+#game section.games .filters li:last-child{background:transparent;}
+#game section.games .filters li>a{color:@color-tertiary;}
+#game section.games .filters li>a.active{color:@color-primary-alt;}
+#game section.games .filters li>a{position:absolute;left:0;right:0;top:0.25em;text-decoration:none;}
 #game section.games div>button{padding:5px 1% 2px;}
 
 #game #most-played>div.separator{display:none;}

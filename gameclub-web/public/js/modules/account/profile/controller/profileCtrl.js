@@ -1,9 +1,53 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, provinces, $state) {
+angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest) {
     $scope.contactInfo = {};
     $scope.contactMean = {fb:'Pablo Ponce'};
 
+    $scope.file = {};
+
     provinces.$promise.then(function(data) {
         $scope.provinces = data;
+    });
+
+    $scope.changeAvatar = function() {
+        setTimeout(function() {
+            angular.element("#avatar_input").trigger('click');
+        }, 0);
+    }
+
+    $scope.save = function() {
+        sweet.save(function() {
+            let formData = {
+                user: $rootScope.currentUser,
+                avatar: $scope.file.avatar
+            };
+
+            rest("publicUser/save").multipart(formData, function(data) {
+                $rootScope.currentUser = data;
+                sweet.success();
+                sweet.close();
+            }, function(error) {
+                sweet.close();
+            });
+        });
+    }
+
+    $scope.$watch('file.avatar', function(newValue, oldValue) {
+        if (newValue != null) {
+            let reader = new FileReader();
+            reader.readAsArrayBuffer(newValue);
+
+            reader.onload = function() {
+                setTimeout(function() {
+                    $scope.$apply(function() {
+                        $scope.file.base64 = getImageBase64(reader.result, newValue.type);
+                    });
+                }, 0);
+            }
+        } else {
+            $scope.file = {};
+            let img = angular.element("#avatar_img");
+            img.attr('src', img.attr('placeholder'));
+        }
     });
 
     $scope.isEditContact = false;
@@ -27,6 +71,4 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, provinces, 
     };
 
     $scope.games = [1];
-
-
 });

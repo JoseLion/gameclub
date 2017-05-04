@@ -1,6 +1,5 @@
 package ec.com.levelap.gameclub.module.user.entity;
 
-import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -11,6 +10,8 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -62,7 +63,7 @@ public class PublicUser extends BaseEntity {
 	private Date birthDate;
 	
 	@Column(columnDefinition="VARCHAR")
-	private String occupation;
+	private String profession;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JoinColumn(name="location", foreignKey=@ForeignKey(name="location_fk"))
@@ -74,17 +75,17 @@ public class PublicUser extends BaseEntity {
 	@Column(name="first_receiver", columnDefinition="VARCHAR")
 	private String firstReceiver;
 	
-	@Column(name="first_morning_start_time")
-	private Time firstMorningStartTime;
+	@Column(name="first_morning_start_time", columnDefinition="VARCHAR")
+	private String firstMorningStartTime;
 	
-	@Column(name="first_morning_end_time")
-	private Time firstMorningEndTime;
+	@Column(name="first_morning_end_time", columnDefinition="VARCHAR")
+	private String firstMorningEndTime;
 	
-	@Column(name="first_noon_start_time")
-	private Time firstNoonStartTime;
+	@Column(name="first_noon_start_time", columnDefinition="VARCHAR")
+	private String firstNoonStartTime;
 	
-	@Column(name="first_noon_end_time")
-	private Time firstNoonEndTime;
+	@Column(name="first_noon_end_time", columnDefinition="VARCHAR")
+	private String firstNoonEndTime;
 	
 	@Column(name="second_address", columnDefinition="VARCHAR")
 	private String secondAddress;
@@ -92,17 +93,17 @@ public class PublicUser extends BaseEntity {
 	@Column(name="second_receiver", columnDefinition="VARCHAR")
 	private String secondReceiver;
 	
-	@Column(name="second_morning_start_time")
-	private Time secondMorningStartTime;
+	@Column(name="second_morning_start_time", columnDefinition="VARCHAR")
+	private String secondMorningStartTime;
 	
-	@Column(name="second_morning_end_time")
-	private Time secondMorningEndTime;
+	@Column(name="second_morning_end_time", columnDefinition="VARCHAR")
+	private String secondMorningEndTime;
 	
-	@Column(name="second_noon_start_time")
-	private Time secondNoonStartTime;
+	@Column(name="second_noon_start_time", columnDefinition="VARCHAR")
+	private String secondNoonStartTime;
 	
-	@Column(name="second_noon_end_time")
-	private Time secondNoonEndTime;
+	@Column(name="second_noon_end_time", columnDefinition="VARCHAR")
+	private String secondNoonEndTime;
 
 	public String getUsername() {
 		return username;
@@ -200,12 +201,12 @@ public class PublicUser extends BaseEntity {
 		this.birthDate = birthDate;
 	}
 
-	public String getOccupation() {
-		return occupation;
+	public String getProfession() {
+		return profession;
 	}
 
-	public void setOccupation(String occupation) {
-		this.occupation = occupation;
+	public void setProfession(String profession) {
+		this.profession = profession;
 	}
 
 	public Location getLocation() {
@@ -232,35 +233,35 @@ public class PublicUser extends BaseEntity {
 		this.firstReceiver = firstReceiver;
 	}
 
-	public Time getFirstMorningStartTime() {
+	public String getFirstMorningStartTime() {
 		return firstMorningStartTime;
 	}
 
-	public void setFirstMorningStartTime(Time firstMorningStartTime) {
+	public void setFirstMorningStartTime(String firstMorningStartTime) {
 		this.firstMorningStartTime = firstMorningStartTime;
 	}
 
-	public Time getFirstMorningEndTime() {
+	public String getFirstMorningEndTime() {
 		return firstMorningEndTime;
 	}
 
-	public void setFirstMorningEndTime(Time firstMorningEndTime) {
+	public void setFirstMorningEndTime(String firstMorningEndTime) {
 		this.firstMorningEndTime = firstMorningEndTime;
 	}
 
-	public Time getFirstNoonStartTime() {
+	public String getFirstNoonStartTime() {
 		return firstNoonStartTime;
 	}
 
-	public void setFirstNoonStartTime(Time firstNoonStartTime) {
+	public void setFirstNoonStartTime(String firstNoonStartTime) {
 		this.firstNoonStartTime = firstNoonStartTime;
 	}
 
-	public Time getFirstNoonEndTime() {
+	public String getFirstNoonEndTime() {
 		return firstNoonEndTime;
 	}
 
-	public void setFirstNoonEndTime(Time firstNoonEndTime) {
+	public void setFirstNoonEndTime(String firstNoonEndTime) {
 		this.firstNoonEndTime = firstNoonEndTime;
 	}
 
@@ -280,35 +281,35 @@ public class PublicUser extends BaseEntity {
 		this.secondReceiver = secondReceiver;
 	}
 
-	public Time getSecondMorningStartTime() {
+	public String getSecondMorningStartTime() {
 		return secondMorningStartTime;
 	}
 
-	public void setSecondMorningStartTime(Time secondMorningStartTime) {
+	public void setSecondMorningStartTime(String secondMorningStartTime) {
 		this.secondMorningStartTime = secondMorningStartTime;
 	}
 
-	public Time getSecondMorningEndTime() {
+	public String getSecondMorningEndTime() {
 		return secondMorningEndTime;
 	}
 
-	public void setSecondMorningEndTime(Time secondMorningEndTime) {
+	public void setSecondMorningEndTime(String secondMorningEndTime) {
 		this.secondMorningEndTime = secondMorningEndTime;
 	}
 
-	public Time getSecondNoonStartTime() {
+	public String getSecondNoonStartTime() {
 		return secondNoonStartTime;
 	}
 
-	public void setSecondNoonStartTime(Time secondNoonStartTime) {
+	public void setSecondNoonStartTime(String secondNoonStartTime) {
 		this.secondNoonStartTime = secondNoonStartTime;
 	}
 
-	public Time getSecondNoonEndTime() {
+	public String getSecondNoonEndTime() {
 		return secondNoonEndTime;
 	}
 
-	public void setSecondNoonEndTime(Time secondNoonEndTime) {
+	public void setSecondNoonEndTime(String secondNoonEndTime) {
 		this.secondNoonEndTime = secondNoonEndTime;
 	}
 }

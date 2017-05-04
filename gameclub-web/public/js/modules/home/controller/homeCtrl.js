@@ -31,12 +31,12 @@ angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor
         {
             id: 2,
             url: 'img/test/game-2.png',
-            score: 5
+            score: 4
         },
         {
             id: 3,
             url: 'img/test/game-3.png',
-            score: 4
+            score: 5
         },
         {
             id: 4,

@@ -55,24 +55,24 @@
                 <input placeholder="Estudiante - Programador" ng-disabled="!isEditContact" ng-model="contactInfo.profession"/>
             </div>
             <div class="col-md-6">
-                <label class="col-xs-12 col-md-4">Ciudad</label>
+                <label class="col-xs-12 col-md-4">Provincia</label>
                 <div class="col-xs-12 col-md-8">
-                    <ui-select ng-model="contactInfo.city" theme="bootstrap" class="selector" ng-disabled="!isEditContact">
-                        <ui-select-match allow-clear>{{$select.selected | limitTo:10}}{{$select.selected.length > 10 ? '...' : ''}}</ui-select-match>
-                        <ui-select-choices repeat="city in ['Quito','Guayaquil','Cuenca'] | filter: $select.search">
-                            <div ng-bind-html="city | highlight: $select.search"></div>
+                    <ui-select ng-model="currentUser.province" theme="bootstrap" class="selector" ng-disabled="!isEditContact">
+                        <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                        <ui-select-choices repeat="province in provinces | filter: $select.search">
+                            <div ng-bind-html="province.name | highlight: $select.search"></div>
                         </ui-select-choices>
                     </ui-select>
                 </div>
             </div>
             <div class="clearfix"></div>
             <div class="col-md-6">
-                <label class="col-xs-12 col-md-4">Provincia</label>
+                <label class="col-xs-12 col-md-4">Ciudad</label>
                 <div class="col-xs-12 col-md-8">
-                    <ui-select ng-model="contactInfo.state" theme="bootstrap" class="selector" ng-disabled="!isEditContact">
-                        <ui-select-match allow-clear>{{$select.selected | limitTo:10}}{{$select.selected.length > 10 ? '...' : ''}}</ui-select-match>
-                        <ui-select-choices repeat="state in ['Pichincha','Guayas','Azuay'] | filter: $select.search">
-                            <div ng-bind-html="state | highlight: $select.search"></div>
+                    <ui-select ng-model="currentUser.location" theme="bootstrap" class="selector" ng-disabled="!isEditContact">
+                        <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                        <ui-select-choices repeat="city in currentUser.province.children | filter: $select.search">
+                            <div ng-bind-html="city.name | highlight: $select.search"></div>
                         </ui-select-choices>
                     </ui-select>
                 </div>

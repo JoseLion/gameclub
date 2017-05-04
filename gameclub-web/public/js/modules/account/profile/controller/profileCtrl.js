@@ -1,7 +1,10 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, $state) {
-
+angular.module('Profile').controller('ProfileCtrl', function($scope, provinces, $state) {
     $scope.contactInfo = {};
     $scope.contactMean = {fb:'Pablo Ponce'};
+
+    provinces.$promise.then(function(data) {
+        $scope.provinces = data;
+    });
 
     $scope.isEditContact = false;
     $scope.editContact = function() {

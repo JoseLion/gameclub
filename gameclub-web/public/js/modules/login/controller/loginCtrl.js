@@ -209,7 +209,13 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 				});
 			}
 		}, function(error) {
-			notif.danger(error.data);
+			console.log("error: ", error);
+			if (error.status == -1) {
+				notif.danger(Const.messages.unableToConnect);
+			} else {
+				notif.danger(error.data);
+			}
+			
 			$scope.isLoginIn = false;
 			$scope.isFbLogIn = false;
 		});

@@ -1,5 +1,6 @@
 package ec.com.levelap.gameclub.module.user.service;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +18,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.base.entity.ErrorControl;
+import ec.com.levelap.base.entity.FileData;
+import ec.com.levelap.commons.archive.Archive;
+import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
@@ -32,6 +37,9 @@ public class PublicUserService {
 	
 	@Autowired
 	private MailService mailService;
+	
+	@Autowired
+	private DocumentService documentService;
 	
 	@Transactional
 	public ResponseEntity<?> signIn(PublicUser publicUser, HttpServletRequest request) throws ServletException, MessagingException {
@@ -77,6 +85,36 @@ public class PublicUserService {
 		params.put("link", baseUrl + "open/publicUser/verifyAccount/" + publicUser.getToken() + "/" + publicUser.getId());
 		
 		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
+	}
+	
+	@Transactional
+	public PublicUser save(PublicUser user, MultipartFile avatar) throws ServletException, IOException {
+		PublicUser original = publicUserRepo.findOne(user.getId());
+		
+		if (avatar != null) {
+			Archive archive = new Archive();
+			
+			if (original.getAvatar() != null) {
+				documentService.deleteFile(original.getAvatar().getName(), PublicUser.class.getSimpleName());
+				archive = original.getAvatar();
+			}
+			
+			FileData fileData = documentService.saveFile(avatar, PublicUser.class.getSimpleName());
+			
+			archive.setModule(PublicUser.class.getSimpleName());
+			archive.setName(fileData.getName());
+			archive.setType(avatar.getContentType());
+			user.setAvatar(archive);
+		} else {
+			if (original.getAvatar() != null) {
+				documentService.deleteFile(original.getAvatar().getName(), PublicUser.class.getSimpleName());
+			}
+			
+			user.setAvatar(null);
+		}
+		
+		user = publicUserRepo.save(user);
+		return user;
 	}
 
 	public PublicUserRepo getPublicUserRepo() {

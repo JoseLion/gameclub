@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import ec.com.levelap.gameclub.module.mail.service.MailService;
@@ -219,6 +221,22 @@ public class GameClubSecurity implements SecurityConfig {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public void handleSuccess() {
+		PublicUserRepo publicUserRepo = ApplicationContextHolder.getContext().getBean(PublicUserRepo.class);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		PublicUser publicUser = publicUserRepo.findByUsername(auth.getName());
+		publicUser.setLastConnection(new Date());
+		
+		publicUserRepo.save(publicUser);
+	}
+
+	@Override
+	public void handleError() {
+		
 	}
 
 }

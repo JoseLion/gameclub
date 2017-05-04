@@ -14,6 +14,12 @@ angular.module('Profile').config(function($stateProvider) {
 					name: 'Profile',
 					files: ['js/modules/account/profile/controller/profileCtrl.js']
 				}]);
+			},
+
+			provinces: function(openRest) {
+				return openRest("location/findChildrenOf/:code", true).get({code: 'EC'}, function(data) {
+					return data;
+				});
 			}
 		}
 	});

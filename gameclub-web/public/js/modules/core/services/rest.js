@@ -7,15 +7,16 @@ angular.module('Core').factory('rest', function($resource, $q, $rootScope, $cook
 		},
 
 		responseError: function(response) {
-			if (response.status == 403 && $rootScope.currentUser != null) {
+			if (response.status == 403) {
 				$rootScope.currentUser = null;
+				notif.danger("No Autorizado");
 			}
 
 			if (response.status <= 0) {
 				response.data = {message: Const.messages.unableToConnect, status: 500};
 			}
 
-			if (response.data == null || (response.data != null && !response.data.custom)) {
+			if (response.data == null || (response.data != null && !response.data.custom && response.status != 403)) {
 				notif.danger("Oops, algo salió mal... Por favor vuelve a inténtarlo más tarde");
 			}
 

@@ -1,4 +1,4 @@
-angular.module("Core").factory('sweet', function(SweetAlert, Const) {
+angular.module("Core").factory('sweet', function(SweetAlert, Const, notif) {
 	return {
 		default: function(message, confirm, cancel) {
 			SweetAlert.swal({
@@ -56,6 +56,10 @@ angular.module("Core").factory('sweet', function(SweetAlert, Const) {
 
 		error: function(message) {
 			SweetAlert.swal("Error", message, "error");
+		},
+
+		success: function() {
+			notif.success(Const.messages.success);
 		}
 	};
 });

@@ -1,0 +1,145 @@
+@font-face {
+  font-family: 'gameclub';
+  src:
+    url('../fonts/gameclub.ttf?fuintj') format('truetype'),
+    url('../fonts/gameclub.woff?fuintj') format('woff'),
+    url('../fonts/gameclub.svg?fuintj#gameclub') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.gc {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'gameclub' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.gc-address:before {
+  content: "\e000";
+}
+.gc-arrow-down:before {
+  content: "\e001";
+}
+.gc-arrow-left:before {
+  content: "\e002";
+}
+.gc-arrow-right:before {
+  content: "\e003";
+}
+.gc-arrow-up:before {
+  content: "\e004";
+}
+.gc-calendar:before {
+  content: "\e005";
+}
+.gc-card-number:before {
+  content: "\e006";
+}
+.gc-cd:before {
+  content: "\e007";
+}
+.gc-circle-large:before {
+  content: "\e008";
+}
+.gc-circle-normal:before {
+  content: "\e009";
+}
+.gc-circle-small:before {
+  content: "\e00a";
+}
+.gc-cross:before {
+  content: "\e00b";
+}
+.gc-diamond:before {
+  content: "\e00c";
+}
+.gc-facebook:before {
+  content: "\e00d";
+}
+.gc-facebook-f:before {
+  content: "\e00e";
+}
+.gc-filter:before {
+  content: "\e00f";
+}
+.gc-help:before {
+  content: "\e010";
+}
+.gc-help-o:before {
+  content: "\e011";
+}
+.gc-instagram:before {
+  content: "\e012";
+}
+.gc-link:before {
+  content: "\e013";
+}
+.gc-locker:before {
+  content: "\e014";
+}
+.gc-mail:before {
+  content: "\e015";
+}
+.gc-map-marker:before {
+  content: "\e016";
+}
+.gc-message:before {
+  content: "\e017";
+}
+.gc-pencil:before {
+  content: "\e018";
+}
+.gc-person:before {
+  content: "\e019";
+}
+.gc-phone:before {
+  content: "\e01a";
+}
+.gc-protect:before {
+  content: "\e01b";
+}
+.gc-rating:before {
+  content: "\e01c";
+}
+.gc-send:before {
+  content: "\e01d";
+}
+.gc-send-mail:before {
+  content: "\e01e";
+}
+.gc-step-one:before {
+  content: "\e01f";
+}
+.gc-step-three:before {
+  content: "\e020";
+}
+.gc-step-two:before {
+  content: "\e021";
+}
+.gc-turn-on:before {
+  content: "\e022";
+}
+.gc-twitter:before {
+  content: "\e023";
+}
+.gc-usd:before {
+  content: "\e024";
+}
+.gc-usd-o:before {
+  content: "\e025";
+}
+.gc-whatsapp:before {
+  content: "\e026";
+}
+.gc-youtube:before {
+  content: "\e027";
+}

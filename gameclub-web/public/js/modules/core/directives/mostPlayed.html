@@ -11,13 +11,13 @@
         <div class="clearfix"></div>
     </div>
     <div class="games">
-        <div class="col-xs-12 col-md-1 left"><button class="btn btn-most-played" ng-click="previous()"><i class="fa fa-angle-left"></i></button></div>
+        <div class="col-xs-12 col-md-1 left"><button class="btn btn-most-played" ng-click="previous()"><i class="gc gc-arrow-left"></i></button></div>
         <div class="col-xs-12 col-md-10 list">
             <div class="col-xs-12 col-md-3 no-padding-left no-padding-right" ng-repeat="game in games">
                 <game-rating src="game.url" score="game.score" ng-click="viewGameDetail(game)"></game-rating>
             </div>
         </div>
-        <div class="col-xs-12 col-md-1 right"><button class="btn btn-most-played" ng-click="next()"><i class="fa fa-angle-right"></i></button></div>
+        <div class="col-xs-12 col-md-1 right"><button class="btn btn-most-played" ng-click="next()"><i class="gc gc-arrow-right"></i></button></div>
         <div class="clearfix"></div>
     </div>
 </section>

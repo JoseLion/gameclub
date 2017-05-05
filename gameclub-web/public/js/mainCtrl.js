@@ -1,4 +1,4 @@
-angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, rest, $cookies) {
+angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, rest, $cookies, openRest) {
 	$http.get(urlRestPath.url + "/api/token").then(function(response) {
 		if (response != null && response.data != null) {
 			$rootScope.paddingLogged = {
@@ -25,6 +25,16 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 				$rootScope.logout();
 			});
 		}
+	}, function(error) {
+		$rootScope.currentUser = null;
+	});
+
+	openRest("category/findAll", true).get(function(data) {
+		$rootScope.categories = data;
+	});
+
+	openRest("console/findAll", true).get(function(data) {
+		$rootScope.consoles = data;
 	});
 
 	$rootScope.logout = function() {
@@ -41,14 +51,6 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			delete $rootScope.currentUser;
 			$state.go(Const.mainState);
 		});
-
-		/*FB.getLoginStatus(function(response) {
-			if (response.status === "connected") {
-				FB.logout(function(response) {
-
-				}, response.authResponse.accessToken);
-			}
-		});*/
 	}
 
 	$rootScope.link = {

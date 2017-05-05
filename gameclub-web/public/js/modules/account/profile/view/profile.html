@@ -162,15 +162,16 @@
             <div class="col-xs-12 col-md-4">
                 <form class="col-xs-12 col-md-12">
                     <input placeholder="XXXX@MAIL.COM" />
-                    <button class="btn btn-primary full small">Verificar</button>
+                    <button type="button" class="btn btn-primary full small" ng-click="resendMailVerification()" ng-if="currentUser.token">Verificar</button>
+                    <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="contactMean.fb != null" ng-if="!currentUser.token">
                     <span>Se te enviar&aacute; un mail<br>con un link de verificaci&oacute;n.</span>
                 </form>
             </div>
             <div class="col-xs-12 col-md-4">
                 <form class="col-xs-12 col-md-12">
-                    <input placeholder="PABLO PONCE" ng-model="contactMean.fb" />
-                    <button class="btn btn-primary full small" ng-if="contactMean.fb == null">Verificar</button>
-                    <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="contactMean.fb != null"/>
+                    <input placeholder="FACEBOOK" ng-model="currentUser.fbName" readonly>
+                    <button type="button" class="btn btn-primary full small" ng-click="verifyFacebook()" ng-if="!currentUser.isFacebookUser">Verificar</button>
+                    <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="currentUser.isFacebookUser">
                     <span>Ingresa tu cuenta de Facebook<br>para verificar tu ID.</span>
                 </form>
             </div>

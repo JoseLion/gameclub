@@ -1,4 +1,4 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray) {
+angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif) {
     $scope.contactInfo = {};
     $scope.contactMean = {fb:'Pablo Ponce'};
 
@@ -7,6 +7,38 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
 
     provinces.$promise.then(function(data) {
         $scope.provinces = data;
+
+        $rootScope.$watch('currentUser.location', function(newValue, oldValue) {
+            if (newValue != null && $rootScope.currentUser.province == null) {
+                let index = getIndexOfArray($scope.provinces, 'id', newValue.parent.id);
+                $rootScope.currentUser.province = $scope.provinces[index];
+            }
+        });
+
+        $scope.$watch('currentUser.province', function(newValue, oldValue) {
+            if (newValue == null && $rootScope.currentUser != null) {
+                $rootScope.currentUser.location = null;
+            }
+        });
+    });
+
+    $scope.$watch('file.avatar', function(newValue, oldValue) {
+        if (newValue != null) {
+            let reader = new FileReader();
+            reader.readAsArrayBuffer(newValue);
+
+            reader.onload = function() {
+                setTimeout(function() {
+                    $scope.$apply(function() {
+                        $scope.file.base64 = getImageBase64(reader.result, newValue.type);
+                    });
+                }, 0);
+            }
+        } else {
+            $scope.file = {};
+            let img = angular.element("#avatar_img");
+            img.attr('src', img.attr('placeholder'));
+        }
     });
 
     $scope.changeAvatar = function() {
@@ -34,6 +66,26 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             }, function(error) {
                 sweet.close();
             });
+        });
+    }
+
+    $scope.resendMailVerification = function() {
+        sweet.default("Se reenviará el correo con el link de verificación a tu correo", function() {
+            rest("publicUser/resendVerification").get(function() {
+                notif.success("El correo se reenvió con éxito");
+                sweet.close();
+            }, function(error) {
+                sweet.close();
+            });
+        });
+    }
+
+    $scope.verifyFacebook = function() {
+        FB.login(function(response) {
+
+        }, {
+            scope: 'public_profile,email',
+            auth_type: 'rerequest'
         });
     }
 
@@ -99,38 +151,6 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         $scope.InfoPercent = percent;
         return percent;
     }
-
-    $scope.$watch('file.avatar', function(newValue, oldValue) {
-        if (newValue != null) {
-            let reader = new FileReader();
-            reader.readAsArrayBuffer(newValue);
-
-            reader.onload = function() {
-                setTimeout(function() {
-                    $scope.$apply(function() {
-                        $scope.file.base64 = getImageBase64(reader.result, newValue.type);
-                    });
-                }, 0);
-            }
-        } else {
-            $scope.file = {};
-            let img = angular.element("#avatar_img");
-            img.attr('src', img.attr('placeholder'));
-        }
-    });
-
-    $rootScope.$watch('currentUser.location', function(newValue, oldValue) {
-        if (newValue != null && $rootScope.currentUser.province == null) {
-            let index = getIndexOfArray($scope.provinces, 'id', newValue.parent.id);
-            $rootScope.currentUser.province = $scope.provinces[index];
-        }
-    });
-
-    $scope.$watch('currentUser.province', function(newValue, oldValue) {
-        if (newValue == null && $rootScope.currentUser != null) {
-            $rootScope.currentUser.location = null;
-        }
-    });
 
     $scope.editInfo = function() {
         $scope.isEditable = !$scope.isEditable;

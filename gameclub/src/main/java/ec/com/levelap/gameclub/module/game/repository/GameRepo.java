@@ -13,6 +13,7 @@ import ec.com.levelap.gameclub.module.category.entity.Category;
 import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameLite;
+import ec.com.levelap.gameclub.module.game.entity.GameOpen;
 
 @Repository
 public interface GameRepo extends JpaRepository<Game, Long> {
@@ -44,4 +45,18 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 	public Game findByName(String name);
 	
 	public Game findByNameAndNameIsNot(String name, String notName);
+	
+	@Query(	"SELECT DISTINCT " +
+				"g.id AS id, " +
+				"g.name AS name, " +
+				"g.contentRating AS contentRating " +
+			"FROM Game g " +
+				"LEFT JOIN g.consoles cn " +
+				"LEFT JOIN g.categories ct " +
+			"WHERE " +
+				"UPPER(g.name) LIKE UPPER('%' || :name || '%') AND " +
+				"(:category IS NULL OR ct.category=:category) AND " +
+				"cn.console=:console " +
+			"ORDER BY g.name DESC")
+	public Page<GameOpen> findGamesOpen(@Param("name") String name, @Param("category") Category category, @Param("console") Console console, Pageable page);
 }

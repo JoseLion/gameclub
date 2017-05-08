@@ -1,13 +1,13 @@
 <div id="game-rating">
     <div class="game-container">
-        <div class="background {{bgColor}}">
+        <div class="{{bgColor}} background no-hover">
             <img archive="imageArchive" ng-src="{{src}}" />
-            <div class="score-container" ng-hide="hideScore">
-                <i class="gc gc-rating rating-1"></i>
-                <i class="gc gc-rating rating-2"></i>
-                <i class="gc gc-rating rating-3"></i>
-                <i class="gc gc-rating rating-4"></i>
-                <i class="gc gc-rating rating-5"></i>
+            <div class="rating-container" ng-if="!hideRating">
+                <i class="gc gc-rating" ng-class="1 <= rating ? 'yes' : ''"></i>
+                <i class="gc gc-rating" ng-class="2 <= rating ? 'yes' : ''"></i>
+                <i class="gc gc-rating" ng-class="3 <= rating ? 'yes' : ''"></i>
+                <i class="gc gc-rating" ng-class="4 <= rating ? 'yes' : ''"></i>
+                <i class="gc gc-rating" ng-class="5 <= rating ? 'yes' : ''"></i>
             </div>
         </div>
     </div>

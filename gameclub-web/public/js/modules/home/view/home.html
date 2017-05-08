@@ -40,13 +40,14 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-2 text-left">
-                    <button type="submit" class="btn btn-tertiary"><i class="fa fa-power-off "></i></button>
+                    <button type="submit" class="btn btn-tertiary"><i class="gc gc-turn-on"></i></button>
                 </div>
             </form>
             <div class="col-xs-12 col-md-1"></div>
         </div>
+        <loading showing="true" bottom="5em"/>
     </section>
-    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()"/>
+    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="gameConsoles"/>
     <section id="how-it-works" class="how-it-works">
         <div class="separator"></div>
         <div class="row">
@@ -195,9 +196,9 @@
         </div>
         <div class="games">
             <div class="game">
-                <button class="btn previous"><i class="fa fa-chevron-up" ng-click="previousGameByCat()"></i></button>
-                <game-rating image-archive="gamesByCat[catCounter].cover" src="" score="gamesByCat[catCounter].rating" bg-color="light-red" class="info" ng-click="viewGame(gamesByCat[catCounter])">
-                <button class="btn next"><i class="fa fa-chevron-down" ng-click="nextGameByCat()"></i></button>
+                <button class="btn previous"><i class="gc gc-arrow-up" ng-click="previousGameByCat()"></i></button>
+                <game-rating image-archive="gamesByCat[catCounter].cover" src="" score="gamesByCat[catCounter].rating" bg-color="light-red" class="info" ng-click="viewGame(gamesByCat[catCounter])"></game-rating>
+                <button class="btn next"><i class="gc gc-arrow-down" ng-click="nextGameByCat()"></i></button>
             </div>
         </div>
         <div class="clearfix"></div>

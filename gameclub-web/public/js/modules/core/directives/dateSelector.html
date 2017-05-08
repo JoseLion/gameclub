@@ -1,27 +1,27 @@
 <div id="date-selector">
     <div class="selector" ng-class="disableSelectors ? 'disabled' : ''" ng-click="selection(0)">
         <input class="date-number" placeholder="01" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-model="day" />
-        <i class="fa fa-caret-down"></i>
+        <i class="gc gc-arrow-down"></i>
         <ul id="day" class="dropdown" ng-if="dayFocused">
             <li ng-repeat="number in numberSelector" ng-click="daySelected(number)">{{number}}</li>
         </ul>
     </div>
     <div class="selector" ng-class="disableSelectors ? 'disabled' : ''" ng-click="selection(1)">
         <input class="date-number" placeholder="01" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-model="month" />
-        <i class="fa fa-caret-down"></i>
+        <i class="gc gc-arrow-down"></i>
         <ul id="day" class="dropdown" ng-if="monthFocused">
             <li ng-repeat="number in numberSelector" ng-click="monthSelected(number)">{{number}}</li>
         </ul>
     </div>
     <div class="selector" ng-class="disableSelectors ? 'disabled' : ''" ng-click="selection(2)">
         <input class="date-number" placeholder="1999" size="5" maxlength="4" ng-disabled="disableSelectors" readonly ng-model="year" />
-        <i class="fa fa-caret-down"></i>
+        <i class="gc gc-arrow-down"></i>
         <ul id="day" class="dropdown" ng-if="yearFocused">
             <li ng-repeat="number in numberSelector" ng-click="yearSelected(number)">{{number}}</li>
         </ul>
     </div>
     <div class="calendar-icon" ng-class="disableSelectors ? 'disabled' : ''" ng-click="calendarSelected()">
-        <i class="fa fa-calendar"></i>
+        <i class="gc gc-calendar"></i>
         <table ng-if="false">
             <col width="14.28%">
             <col width="14.28%">

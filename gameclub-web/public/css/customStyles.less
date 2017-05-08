@@ -204,10 +204,22 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #date-selector div.selector ul.dropdown li{display:block;padding:1px 5px 0;}
 #date-selector div.selector ul.dropdown li:hover{background:@color-secundary;}
 #date-selector div.calendar-icon{display:inline;position:relative;}
-#date-selector div.calendar-icon>i{font-size:1.7em;position:relative;cursor:pointer;}
+#date-selector div.calendar-icon>i{font-size:1.7em;position:relative;cursor:pointer;margin-left:0.3em;}
 #date-selector div.calendar-icon.disabled>i{cursor:not-allowed;}
-#date-selector div.calendar-icon>i::before{position:absolute;top:-0.7em;left:0.5em;}
-#date-selector div.calendar-icon table{position:absolute;z-index:10;}
+#date-selector div.calendar-icon table{position:absolute;z-index:10;text-align:center;width:16em;color:@color-primary;background:@color-tertiary;border:3px solid @color-primary;border-radius:10px;border-collapse:separate;}
+#date-selector div.calendar-icon table>thead>tr>th,#date-selector div.calendar-icon table>tbody>tr>td{text-align:center;padding:0.25em;}
+#date-selector div.calendar-icon table>thead>tr{background:@color-tertiary;}
+#date-selector div.calendar-icon table>thead>tr:first-child{background:@color-primary;color:@color-tertiary;}
+#date-selector div.calendar-icon table>thead>tr:first-child>th{padding-top:0.5em;padding-bottom:0.5em;cursor:pointer;}
+#date-selector div.calendar-icon table>thead>tr:first-child>th:first-child{text-align:left;padding-left:1em;color:@color-secundary;}
+#date-selector div.calendar-icon table>thead>tr:first-child>th:last-child{text-align:right;padding-right:1em;color:@color-secundary;}
+#date-selector div.calendar-icon table>thead>tr:last-child>th:first-child,#date-selector div.calendar-icon table>thead>tr:last-child>th:last-child{width:0.7em;}
+#date-selector div.calendar-icon table>thead>tr>th{color:@color-tertiary-alt;}
+#date-selector div.calendar-icon table>tbody{font-size:0.7em;}
+#date-selector div.calendar-icon table>tbody>tr>td>div{width:2em;height:2em;padding:0.5em;border-radius:50%;margin:auto;cursor:pointer;}
+#date-selector div.calendar-icon table>tbody>tr>td>div.active{background:@color-secundary;color:@color-tertiary;}
+#date-selector div.calendar-icon table>tfoot>tr>td{padding-bottom:0.5em;}
+
 /***********************************/
 
 /********** TIME-SELECTOR **********/
@@ -238,7 +250,7 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game-item .rating{padding-top:3%;padding-left:0;padding-right:0}
 #game-item .rating div.platform{padding-left:0;padding-right:0;}
 #game-item .rating img.platform{height:1.2em;margin-bottom:5%;}
-#game-item .rating .types img{height:2.5em;padding:0.5em;border:2px solid @color-primary;border-radius:50%;margin:auto 1%;}
+#game-item .rating .types img{width:2.5em;height:2.5em;padding:0.5em;border:2px solid @color-primary;border-radius:50%;margin:auto 1%;}
 #game-item .rating .content-rating img{width:85%;margin-top:1em;}
 /*******************************/
 
@@ -741,7 +753,7 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game section.header .rating{margin-top:-5em;}
 #game section.header .rating .content-rating img{height:4em;margin-bottom:1em;}
 #game section.header .rating .platform img{height:1.7em;}
-#game section.header .rating .category img{height:2.5em;border:2px solid @color-primary;padding:0.35em;border-radius:50%;}
+#game section.header .rating .category img{width:2.5em;height:2.5em;border:2px solid @color-primary;padding:0.35em;border-radius:50%;}
 #game section.header .rating>div{margin-bottom:1em;}
 
 #game section.information{color:@color-secundary;background:@color-tertiary-alt;}

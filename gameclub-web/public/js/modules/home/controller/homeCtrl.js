@@ -3,7 +3,12 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
     $scope.contactUs = {};
 
     $scope.find = function() {
-        $state.go("^.search", {search: $scope.search, title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))});
+        $state.go("^.search", {
+            name: $scope.search.name,
+            categoryId: $scope.search.category != null ? $scope.search.category.id : null,
+            consoleId: $scope.search.console.id,
+            title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))
+        });
     }
 
     $scope.sendContactUs = function() {
@@ -29,6 +34,16 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
         openRest("game/findGamesByCategory/:categoryId", true).get({categoryId: categoryId}, function(data) {
             $scope.gamesByCat = data;
         });
+    }
+
+    $scope.getCategoryVector = function(category, index) {
+        let element = angular.element("#home-category-" + index);
+
+        if (element.hasClass("active")) {
+            return category.whiteBase64;
+        } else {
+            return category.blackBase64;
+        }
     }
 
     $scope.previousGameByCat = function() {

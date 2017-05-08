@@ -189,7 +189,7 @@
             </div>
             <div class="col-md-12 categories no-padding-left">
                 <div id="home-category-{{$index}}" class="category text-center" ng-repeat="category in categories">
-                    <img ng-src="{{category.blackBase64}}" ng-click="categoryChoosen($index, category.id)"/><br/>
+                    <img ng-src="{{getCategoryVector(category, $index)}}" ng-click="categoryChoosen($index, category.id)"/><br/>
                     <span>{{category.name}}</span>
                 </div>
             </div>

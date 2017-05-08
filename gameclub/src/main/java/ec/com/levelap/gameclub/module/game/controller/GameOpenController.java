@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.com.levelap.gameclub.module.category.entity.Category;
-import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
 import ec.com.levelap.gameclub.module.game.service.GameService;
@@ -35,7 +33,8 @@ public class GameOpenController {
 			search = new Search();
 		}
 		
-		Page<GameOpen> games = gameService.getGameRepo().findGamesOpen(search.name, search.category, search.console, new PageRequest(search.page, Const.TABLE_SIZE));
+		System.out.println("***************** name: " + search.name);
+		Page<GameOpen> games = gameService.getGameRepo().findGamesOpen(search.name, search.categoryId, search.consoleId, new PageRequest(search.page, Const.TABLE_SIZE));
 		
 		for (GameOpen gameOpen : games.getContent()) {
 			Game game = gameService.getGameRepo().findOne(gameOpen.getId());
@@ -44,6 +43,12 @@ public class GameOpenController {
 		}
 		
 		return new ResponseEntity<Page<GameOpen>>(games, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="findOne/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Game> findOne(@PathVariable Long id) throws ServletException {
+		Game game = gameService.getGameRepo().findOne(id);
+		return new ResponseEntity<Game>(game, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="findGamesByCategory/{categoryId}", method=RequestMethod.GET)
@@ -55,9 +60,9 @@ public class GameOpenController {
 	private static class Search {
 		public String name = "";
 		
-		public Category category;
+		public Long categoryId;
 		
-		public Console console;
+		public Long consoleId;
 		
 		public Integer page = 0;
 	}

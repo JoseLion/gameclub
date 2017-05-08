@@ -17,8 +17,10 @@ angular.module('Game').config(function($stateProvider) {
 				}]);
 			},
 
-			idGame: function($stateParams) {
-				return $stateParams.id;
+			game: function(openRest, $stateParams) {
+				return openRest("game/findOne/:id").get({id: $stateParams.id}, function(data) {
+					return data;
+				});
 			}
 		}
 	});

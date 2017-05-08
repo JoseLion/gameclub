@@ -60,6 +60,7 @@ angular.module("Game").controller('ViewGamesCtrl', function($scope, games, conso
 	}
 
 	function setPagedData(data) {
+		console.log("Data:", data);
 		$scope.games = data.content;
 		$scope.totalElements = data.totalElements;
 		$scope.beginning = (Const.tableSize * data.number) + 1;

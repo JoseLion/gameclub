@@ -3,7 +3,7 @@ angular.module('Core').directive('gameRating', function() {
 		restrict: 'E',
 		templateUrl: 'js/modules/core/directives/gameRating.html',
 		scope: {
-			src: '=',
+			src: '=?',
 			rating: '=',
 			bgColor: '@',
 			ngClick: '&',

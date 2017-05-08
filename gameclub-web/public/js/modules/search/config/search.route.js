@@ -4,8 +4,8 @@ angular.module('Search').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'search', {
-		url: '/search/:title',
-		params: {search: null, title: null},
+		url: '/search/:name/:categoryId/:consoleId/:page/:title',
+		params: {name: null, categoryId: null, consoleId: null, page: null, title: null},
 		templateUrl: 'js/modules/search/view/search.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'SearchCtrl',
@@ -18,13 +18,25 @@ angular.module('Search').config(function($stateProvider) {
 			},
 
 			games: function(openRest, $stateParams) {
-				return openRest("game/findGames").post($stateParams.search, function(data) {
+				let search = {
+					name: $stateParams.name != null ? $stateParams.name : "",
+					categoryId: $stateParams.categoryId,
+					consoleId: $stateParams.consoleId,
+					page: $stateParams.page != null ? $stateParams.page : 0
+				};
+
+				return openRest("game/findGames").post(search, function(data) {
 					return data;
 				});
 			},
 
 			search: function($stateParams) {
-				return $stateParams.search;
+				return {
+					name: $stateParams.name != null ? $stateParams.name : "",
+					categoryId: $stateParams.categoryId,
+					consoleId: $stateParams.consoleId,
+					$stateParams: $stateParams.page != null ? $stateParams.page : 0
+				};
 			}
 		}
 	});

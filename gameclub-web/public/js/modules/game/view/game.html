@@ -5,7 +5,7 @@
     </section>
     <section class="row header">
         <div class="col-md-3 cover">
-            <game-rating src="'img/test/game-5.png'" no-score></game-rating>
+            <game-rating src="'img/test/game-5.png'" no-rating no-selection="true"></game-rating>
         </div>
         <div class="col-md-6 principal">
             <h2 class="col-md-12 title">THE LEGEND OF ZELDA: Breath of the Wild</h2>
@@ -120,8 +120,8 @@
                     <col width="17%">
                     <col width="15%">
                     <col width="17%">
-                    <col width="16%">
                     <col width="15%">
+                    <col width="16%">
                     <col width="13%">
                     <col width="5%">
 
@@ -163,6 +163,6 @@
             <button class="btn btn-secundary small">Ver todas las propuestas</button>
         </div>
     </section>
-    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()"/>
+    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="gameConsoles"/>
     <section class="final"></section>
 </div>

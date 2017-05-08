@@ -4,22 +4,32 @@ angular.module('Core').directive('gameRating', function() {
 		templateUrl: 'js/modules/core/directives/gameRating.html',
 		scope: {
 			src: '=',
-			score: '=',
+			rating: '=',
 			bgColor: '@',
-			ngClick: '&'
+			ngClick: '&',
+			noSelection: '='
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
-			if(attrs.noScore == '' || attrs.noScore) {
-				$scope.hideScore = true;
-			} else {
-				$scope.hideScore = false;
-				if($scope.score != null && !isNaN($scope.score)) {
-					for(let i=1 ; i<=$scope.score ; i++) {
-						angular.element(element[0].querySelector('.rating-'+i)).addClass('yes');
-					}
-				}
+			$scope.hideRating = false;
+			if(attrs.noRating == '' || attrs.noRating) {
+				$scope.hideRating = true;
 			}
+
+			if($scope.noSelection == null || $scope.noSelection == '' || !$scope.noSelection) {
+				element.find('.background').after().mouseover(function(e) {
+					element.find('.background').removeClass('no-hover');
+					element.find('.background').addClass('hover');
+					element.find('.background').addClass('pointer');
+				});
+
+				element.find('.background').after().mouseout(function(e) {
+					element.find('.background').removeClass('hover');
+					element.find('.background').addClass('no-hover');
+					element.find('.background').removeClass('pointer');
+				});
+			}
+
 		}
 	};
 });

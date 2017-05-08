@@ -8,22 +8,22 @@ angular.module('Game').controller('GameCtrl', function($scope) {
         {
             id: 1,
             url: 'img/test/game-1.png',
-            score: 4
+            rating: 4
         },
         {
             id: 2,
             url: 'img/test/game-2.png',
-            score: 5
+            rating: 5
         },
         {
             id: 3,
             url: 'img/test/game-3.png',
-            score: 4
+            rating: 4
         },
         {
             id: 4,
             url: 'img/test/game-4.png',
-            score: 3
+            rating: 3
         }
     ];
     $scope.getPreviousGame = function() {
@@ -64,6 +64,19 @@ angular.module('Game').controller('GameCtrl', function($scope) {
             coins: 100,
             rating: 3,
             gameStatus: 10
+        }
+    ];
+
+    $scope.gameConsoles =[
+        {
+            name: 'PlayStation 4',
+            img: 'img/test/svg/ps4.svg'
+        }, {
+            name: 'XBOX ONE',
+            img: 'img/test/svg/xbox-one.svg'
+        }, {
+            name: 'Nintendo Switch',
+            img: 'img/test/svg/nintendo-switch.svg'
         }
     ];
 

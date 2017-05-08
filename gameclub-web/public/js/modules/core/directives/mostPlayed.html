@@ -1,23 +1,33 @@
 <section id="most-played" class="row">
     <div class="separator"></div>
-    <div>
-        <div class="col-xs-3 col-md-3"></div>
-        <div class="col-xs-6 col-md-6">
-            <div class="col-xs-1 col-md-2"></div>
-            <h2 class="col-xs-10 col-md-8 title">Los m&aacute;s <span class="game-font game-font-blue">jugados</span></h2>
-            <div class="col-xs-1 col-md-2"></div>
-        </div>
-        <div class="col-xs-3 col-md-3"></div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="games">
-        <div class="col-xs-12 col-md-1 left"><button class="btn btn-most-played" ng-click="previous()"><i class="gc gc-arrow-left"></i></button></div>
-        <div class="col-xs-12 col-md-10 list">
-            <div class="col-xs-12 col-md-3 no-padding-left no-padding-right" ng-repeat="game in games">
-                <game-rating src="game.url" score="game.score" ng-click="viewGameDetail(game)"></game-rating>
+    <form>
+        <div>
+            <div class="col-xs-3 col-md-3"></div>
+            <div class="col-xs-6 col-md-6">
+                <div class="col-xs-1 col-md-2"></div>
+                <h2 class="col-xs-10 col-md-8 title">Los m&aacute;s <span class="game-font game-font-blue">jugados</span></h2>
+                <div class="col-xs-1 col-md-2"></div>
             </div>
+            <div class="col-xs-3 col-md-3 no-padding-right text-right">
+                <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector">
+                    <ui-select-match><img ng-src="{{$select.selected.img}}" class="gameConsole"/></ui-select-match>
+                    <ui-select-choices repeat="gameConsole in gameConsoles | filter: $select.search.name" class="text-center">
+                        <div ng-bind-html="'' | highlight: $select.search.name"></div>
+                        <img ng-src="{{gameConsole.img}}" class="gameConsole"/>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="col-xs-12 col-md-1 right"><button class="btn btn-most-played" ng-click="next()"><i class="gc gc-arrow-right"></i></button></div>
-        <div class="clearfix"></div>
-    </div>
+        <div class="games">
+            <div class="col-xs-12 col-md-1 left"><button class="btn btn-most-played" ng-click="previous()"><i class="gc gc-arrow-left"></i></button></div>
+            <div class="col-xs-12 col-md-10 list">
+                <div class="col-xs-12 col-md-3 no-padding-left no-padding-right" ng-repeat="game in games">
+                    <game-rating src="game.url" rating="game.rating" ng-click="viewGameDetail(game)"></game-rating>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-1 right"><button class="btn btn-most-played" ng-click="next()"><i class="gc gc-arrow-right"></i></button></div>
+            <div class="clearfix"></div>
+        </div>
+    </form>
 </section>

@@ -23,7 +23,7 @@
                 Completa los 3 niveles de registro para poder navegar en toda la plataforma, pedir prestado cualquier juego y ganar 100 coins mensuales.
             </p>
             <div class="col-md-12 check-list">
-                <li><div class="box" ng-class="true ? 'checked' : ''"></div><span>Completa tu informaci&oacute;n de contacto</span></li>
+                <li><div class="box" ng-class="InfoPercent >= 100 ? 'checked' : ''"></div><span>Completa tu informaci&oacute;n de contacto</span></li>
                 <li><div class="box" ng-class="false ? 'checked' : ''"></div><span>Completa tu verificaci&oacute;n de identidad</span></li>
                 <li><div class="box" ng-class="false ? 'checked' : ''"></div><span>Mant&eacute;n m&iacute;nimo un juego cargado en la WEB</span></li>
             </div>
@@ -33,33 +33,33 @@
     <section class="row contact-information">
         <form role="form" on-submit="save()" novalidate>
             <div class="completed">
-                <span class="col-md-12 percent">0%</span>
+                <span class="col-md-12 percent">{{getInfoPercentage()}}%</span>
                 <span class="col-md-12">Informaci&oacute;n de contacto</span>
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-tertiary full small" ng-if="isEditContact">Guardar perfil</button>
+                    <button type="submit" class="btn btn-tertiary full small" ng-if="isEditable">Guardar perfil</button>
                 </div>
                 <div class="col-md-12">
-                    <button type="button" class="btn btn-tertiary small" ng-click="editContact()">{{isEditContact ? 'Volver' : 'Editar perfil'}}</button>
+                    <button type="button" class="btn btn-tertiary small" ng-click="editInfo()">{{isEditable ? 'Volver' : 'Editar perfil'}}</button>
                 </div>
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-8 form">
                 <div class="col-md-12 to-validate">
                     <label>N&uacute;mero de c&eacute;dula</label>
-                    <input validation placeholder="171143229805" ng-disabled="!isEditContact" ng-model="currentUser.document" ci-required>
+                    <input validation placeholder="171143229805" ng-disabled="!isEditable" ng-model="currentUser.document" ci-required>
                 </div>
                 <div class="col-md-12 to-validate">
                     <label>Fecha de nacimiento</label>
-                    <date-selector validation ng-model="currentUser.birthDate" ng-disabled="!isEditContact">
+                    <date-selector validation ng-model="currentUser.birthDate" ng-disabled="!isEditable">
                 </div>
                 <div class="col-md-12 to-validate">
                     <label>Ocupaci&oacute;n</label>
-                    <input validation placeholder="Estudiante - Programador" ng-disabled="!isEditContact" ng-model="currentUser.profession"/>
+                    <input validation placeholder="Estudiante - Programador" ng-disabled="!isEditable" ng-model="currentUser.profession"/>
                 </div>
                 <div class="col-md-6">
                     <label class="col-xs-12 col-md-4">Provincia</label>
                     <div class="col-xs-12 col-md-8">
-                        <ui-select ng-model="currentUser.province" theme="bootstrap" class="selector" ng-disabled="!isEditContact">
+                        <ui-select ng-model="currentUser.province" theme="bootstrap" class="selector" ng-disabled="!isEditable" on-select="currentUser.location = null">
                             <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
                             <ui-select-choices repeat="province in provinces | filter: $select.search">
                                 <div ng-bind-html="province.name | highlight: $select.search"></div>
@@ -71,7 +71,7 @@
                 <div class="col-md-6">
                     <label class="col-xs-12 col-md-4">Ciudad</label>
                     <div class="col-xs-12 col-md-8">
-                        <ui-select ng-model="currentUser.location" theme="bootstrap" class="selector" ng-disabled="!isEditContact">
+                        <ui-select ng-model="currentUser.location" theme="bootstrap" class="selector" ng-disabled="!isEditable">
                             <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
                             <ui-select-choices repeat="city in currentUser.province.children | filter: $select.search">
                                 <div ng-bind-html="city.name | highlight: $select.search"></div>
@@ -83,43 +83,43 @@
                 <div class="col-md-12 to-validate">
                     <label class="col-xs-12 col-md-2">Direcci&oacute;n</label>
                     <div class="col-xs-12 col-md-10">
-                        <input validation type="address" placeholder="Para poder entregar/recoger juegos" ng-disabled="!isEditContact" ng-model="currentUser.firstAddress">
+                        <input validation type="address" placeholder="Para poder entregar/recoger juegos" ng-disabled="!isEditable" ng-model="currentUser.firstAddress">
                     </div>
                 </div>
                 <div class="col-md-12 to-validate">
                     <label class="col-xs-12 col-md-4">Persona de recepci&oacute;n 1</label>
                     <div class="col-xs-12 col-md-8">
-                        <input validation type="person" placeholder="Persona quién recojerá/entregará los juegos en dirección 1" ng-disabled="!isEditContact" ng-model="currentUser.firstReceiver">
+                        <input validation type="person" placeholder="Persona quién recojerá/entregará los juegos en dirección 1" ng-disabled="!isEditable" ng-model="currentUser.firstReceiver">
                     </div>
                 </div>
                 <div class="col-md-12">
                     <label class="col-xs-12 col-md-4 separator">Horas de preferencia, <small>para entrega y retiro de juegos 2</small></label>
                     <div class="col-xs-12 col-md-4">
-                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Mañana"/>
+                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditable" placeholder="Mañana"/>
                     </div>
                     <div class="col-xs-12 col-md-4">
-                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Tarde"/>
+                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditable" placeholder="Tarde"/>
                     </div>
                 </div>
                 <div class="col-md-12 to-validate">
                     <label class="col-xs-12 col-md-2">Direcci&oacute;n 2</label>
                     <div class="col-xs-12 col-md-10">
-                        <input validation type="address" placeholder="En caso de no poder entregar/recojer de la direccíon 1" ng-disabled="!isEditContact" ng-model="currentUser.secondAddress">
+                        <input validation type="address" placeholder="En caso de no poder entregar/recojer de la direccíon 1" ng-disabled="!isEditable" ng-model="currentUser.secondAddress">
                     </div>
                 </div>
                 <div class="col-md-12 to-validate">
                     <label class="col-xs-12 col-md-4">Persona de recepci&oacute;n 2</label>
                     <div class="col-xs-12 col-md-8">
-                        <input validation type="person" placeholder="Persona quién recojerá/entregará los juegos en dirección 2" ng-disabled="!isEditContact" ng-model="currentUser.secondReceiver"/>
+                        <input validation type="person" placeholder="Persona quién recojerá/entregará los juegos en dirección 2" ng-disabled="!isEditable" ng-model="currentUser.secondReceiver"/>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <label class="col-xs-12 col-md-4 separator">Horas de preferencia, <small>para entrega y retiro de juegos 2</small></label>
                     <div class="col-xs-12 col-md-4">
-                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Mañana"/>
+                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditable" placeholder="Mañana"/>
                     </div>
                     <div class="col-xs-12 col-md-4">
-                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditContact" placeholder="Tarde"/>
+                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditable" placeholder="Tarde"/>
                     </div>
                 </div>
             </div>
@@ -133,8 +133,8 @@
                 <span class="subtitle">
                     <img src="img/lock-icon.svg" /><span>Verificaci&oacute;n de identidad</span>
                 </span>
-                <button class="btn btn-tertiary full small" ng-if="isEditContactMean">Guardar info</button>
-                <button class="btn btn-primary small" ng-click="editContactMean()">{{isEditContactMean ? 'Volver' : 'Actualizar info'}}</button>
+                <button type="button" class="btn btn-tertiary full small" ng-if="isEditableMean">Guardar info</button>
+                <button type="button" class="btn btn-primary small" ng-click="editContactMean()">{{isEditableMean ? 'Volver' : 'Actualizar info'}}</button>
                 <span class="description">Verificar estos tres campos para poder ser un usuario 100% confiable.<br>Si lo haces recibes 10 coins.</span>
             </div>
             <div class="clearfix"></div>
@@ -162,15 +162,16 @@
             <div class="col-xs-12 col-md-4">
                 <form class="col-xs-12 col-md-12">
                     <input placeholder="XXXX@MAIL.COM" />
-                    <button class="btn btn-primary full small">Verificar</button>
+                    <button type="button" class="btn btn-primary full small" ng-click="resendMailVerification()" ng-if="currentUser.token">Verificar</button>
+                    <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="contactMean.fb != null" ng-if="!currentUser.token">
                     <span>Se te enviar&aacute; un mail<br>con un link de verificaci&oacute;n.</span>
                 </form>
             </div>
             <div class="col-xs-12 col-md-4">
                 <form class="col-xs-12 col-md-12">
-                    <input placeholder="PABLO PONCE" ng-model="contactMean.fb" />
-                    <button class="btn btn-primary full small" ng-if="contactMean.fb == null">Verificar</button>
-                    <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="contactMean.fb != null"/>
+                    <input placeholder="FACEBOOK" ng-model="currentUser.fbName" readonly>
+                    <button type="button" class="btn btn-primary full small" ng-click="verifyFacebook()" ng-if="!currentUser.isFacebookUser">Verificar</button>
+                    <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="currentUser.isFacebookUser">
                     <span>Ingresa tu cuenta de Facebook<br>para verificar tu ID.</span>
                 </form>
             </div>

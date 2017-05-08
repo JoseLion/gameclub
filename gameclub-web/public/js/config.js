@@ -29,12 +29,12 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 				}
 			});
 
-}).run(function($rootScope, $state, Const, $location, $anchorScroll, rest) {
+}).run(function($rootScope, $state, Const, $location, $anchorScroll, $http, urlRestPath) {
 	$rootScope.$state = $state;
 	$rootScope.Const = Const;
 
 	$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, options) {
-		rest("token").get(function() {}, function(error) {
+		$http.get(urlRestPath.url + "/api/token").then(function() {}, function(error) {
 			$rootScope.currentUser = null;
 		});
 	});

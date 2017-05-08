@@ -4,10 +4,8 @@ angular.module('Game').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'game', {
-		url: '/game',
-		params: {
-			idGame: null
-		},
+		url: '/game/:id/:name',
+		params: {id: null, name: null},
 		templateUrl: 'js/modules/game/view/game.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'GameCtrl',
@@ -20,7 +18,7 @@ angular.module('Game').config(function($stateProvider) {
 			},
 
 			idGame: function($stateParams) {
-				return $stateParams.idGame;
+				return $stateParams.id;
 			}
 		}
 	});

@@ -8,32 +8,39 @@
         </div>
         <div class="row search white-search">
             <div class="col-xs-12 col-md-1"></div>
-            <form class="col-xs-12 col-md-11">
+            <form class="col-xs-12 col-md-11" role="form" on-submit="find()" novalidate>
                 <div class="col-xs-12 col-md-10 search-params">
                     <div class="col-xs-12 col-md-4 filter">
-                        <input placeholder="T&iacute;tulo..."/>
+                        <input placeholder="T&iacute;tulo..." ng-model="search.name">
                     </div>
                     <div class="col-xs-12 col-md-4 filter">
-                        <ui-select ng-model="type.selected" theme="bootstrap" class="selector">
-                            <ui-select-match allow-clear placeholder="Categoría...">{{$select.selected | limitTo:10}}{{$select.selected.length > 10 ? '...' : ''}}</ui-select-match>
-                            <ui-select-choices repeat="type in ['Action','Adventure','Shooter','Mass Multiplayer','Simulation','RPG','Strategy','Sports'] | filter: $select.search">
-                                <div ng-bind-html="type | highlight: $select.search"></div>
-                                <img src="img/test/svg/sports-w.svg" class="category"/>
+                        <ui-select ng-model="search.category" theme="bootstrap" class="selector">
+                            <ui-select-match allow-clear placeholder="Categoría...">
+                                {{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="category in categories | filter: $select.search">
+                                <div ng-bind-html="category.name | highlight: $select.search"></div>
+                                <img ng-src="{{category.whiteBase64}}" class="category">
+                                <!-- <img archive="category.whiteVector" src="" class="category"> -->
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div class="col-xs-12 col-md-4 filter">
-                        <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector text-center">
-                            <ui-select-match allow-clear placeholder="Consola..."><img ng-src="{{$select.selected.img}}" class="gameConsole"/></ui-select-match>
-                            <ui-select-choices repeat="gameConsole in gameConsoles | filter: $select.search.name" class="text-center">
-                                <div ng-bind-html="'' | highlight: $select.search.name"></div>
-                                <img ng-src="{{gameConsole.img}}" class="gameConsole"/>
+                    <div class="col-xs-12 col-md-4 filter to-validate">
+                        <ui-select validation ng-model="search.console" theme="bootstrap" class="selector text-center" required>
+                            <ui-select-match allow-clear placeholder="Consola...">
+                                <img ng-src="{{$select.selected.base64}}" class="gameConsole"/>
+                                <!-- <img archive="$select.selected.logo" src="" class="gameConsole"> -->
+                            </ui-select-match>
+                            <ui-select-choices repeat="console in consoles | filter: $select.search" class="text-center">
+                                <div ng-bind-html="'' | highlight: $select.search"></div>
+                                <img ng-src="{{console.base64}}" class="gameConsole">
+                                <!-- <img archive="console.logo" src="" class="gameConsole"> -->
                             </ui-select-choices>
                         </ui-select>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-2 text-left">
-                    <button class="btn btn-tertiary" ng-click="$state.go('gameclub.search')"><i class="gc gc-turn-on"></i></button>
+                    <button type="submit" class="btn btn-tertiary"><i class="gc gc-turn-on"></i></button>
                 </div>
             </form>
             <div class="col-xs-12 col-md-1"></div>
@@ -210,42 +217,42 @@
     </section>
     <section class="contact-us">
         <div class="row">
-            <form class="col-md-12 contact-form">
+            <form class="col-md-12 contact-form" role="form" on-submit="sendMail()">
                 <h2 class="title">&iquest;Quieres saber m&aacute;s de <span class="game-font game-font-white">Game</span>Club?</h2>
                 <span class="description">D&eacute;janos tu mail y nosotros te contactamos</span>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <input name="name" placeholder="Nombre..."></input>
+                <div class="col-md-6 to-validate">
+                    <input validation name="name" placeholder="Nombre..." ng-model="contactUs.name" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <input name="email" placeholder="E-mail..."/>
+                <div class="col-md-6 to-validate">
+                    <input validation name="email" placeholder="E-mail..." ng-model="contactUs.email" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <input name="phone" placeholder="Teléfono..."/>
+                <div class="col-md-6 to-validate">
+                    <input name="phone" placeholder="Teléfono..." ng-model="contactUs.phone">
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <textarea name="message" placeholder="Mensaje..." rows="6"></textarea>
+                <div class="col-md-6 to-validate">
+                    <textarea validation name="message" placeholder="Mensaje..." rows="6" ng-model="contactUs.message" required></textarea>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-4"></div>
                 <div class="col-md-4 send-button">
-                    <button class="btn btn-secundary">Enviar</button>
+                    <button type="submit" class="btn btn-secundary">Enviar</button>
                 </div>
                 <div class="col-md-4"></div>
 

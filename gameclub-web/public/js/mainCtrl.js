@@ -1,4 +1,4 @@
-angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, rest, $cookies) {
+angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, rest, $cookies, openRest, forEach, getImageBase64) {
 	$http.get(urlRestPath.url + "/api/token").then(function(response) {
 		if (response != null && response.data != null) {
 			$rootScope.paddingLogged = {
@@ -25,6 +25,32 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 				$rootScope.logout();
 			});
 		}
+	}, function(error) {
+		$rootScope.currentUser = null;
+	});
+
+	openRest("category/findAll", true).get(function(data) {
+		$rootScope.categories = data;
+
+		forEach($rootScope.categories, function(category) {
+			openRest("archive/downloadFile").download({name: category.whiteVector.name, module: category.whiteVector.module}, function(data) {
+				category.whiteBase64 = getImageBase64(data, category.whiteVector.type);
+			});
+
+			openRest("archive/downloadFile").download({name: category.blackVector.name, module: category.blackVector.module}, function(data) {
+				category.blackBase64 = getImageBase64(data, category.blackVector.type);
+			});
+		});
+	});
+
+	openRest("console/findAll", true).get(function(data) {
+		$rootScope.consoles = data;
+
+		forEach($rootScope.consoles, function(cnsl) {
+			openRest("archive/downloadFile").download({name: cnsl.logo.name, module: cnsl.logo.module}, function(data) {
+				cnsl.base64 = getImageBase64(data, cnsl.logo.type);
+			});
+		});
 	});
 
 	$rootScope.logout = function() {
@@ -41,14 +67,6 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			delete $rootScope.currentUser;
 			$state.go(Const.mainState);
 		});
-
-		/*FB.getLoginStatus(function(response) {
-			if (response.status === "connected") {
-				FB.logout(function(response) {
-
-				}, response.authResponse.accessToken);
-			}
-		});*/
 	}
 
 	$rootScope.link = {

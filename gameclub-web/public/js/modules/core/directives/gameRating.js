@@ -7,7 +7,8 @@ angular.module('Core').directive('gameRating', function() {
 			rating: '=',
 			bgColor: '@',
 			ngClick: '&',
-			noSelection: '='
+			noSelection: '=',
+			imageArchive: "=?"
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {

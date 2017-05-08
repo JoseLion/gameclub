@@ -1,17 +1,34 @@
-angular.module('Search').controller('SearchCtrl', function($scope) {
+angular.module('Search').controller('SearchCtrl', function($scope, games, search, $state, friendlyUrl) {
+    $scope.search = search;
+    console.log("search: ", search);
+    $scope.totalElements;
 
-    $scope.gameConsoles =[
-        {
-            name: 'PlayStation 4',
-            img: 'img/test/svg/ps4.svg'
-        }, {
-            name: 'XBOX ONE',
-            img: 'img/test/svg/xbox-one.svg'
-        }, {
-            name: 'Nintendo Switch',
-            img: 'img/test/svg/nintendo-switch.svg'
-        }
-    ];
+    games.$promise.then(function(data) {
+        setPagedData(data);
+    });
+
+    $scope.find = function() {
+        $state.go("^.search", {search: $scope.search, title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))});
+    }
+
+    $scope.pageChanged = function() {
+        $scope.search.page = $scope.currentPage - 1;
+        $scope.find();
+    }
+
+    function setPagedData(data) {
+        $scope.games = data.content;
+        $scope.totalElements = data.totalElements;
+        $scope.totalPages = data.totalPages;
+    }
+
+
+
+
+
+
+
+
 
     $scope.currentPage = 0;
     $scope.gameList = [

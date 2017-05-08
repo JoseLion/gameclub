@@ -1,9 +1,9 @@
 <div id="game-item">
     <div class="col-xs-12 col-md-2 cover">
-        <game-rating src="src" no-rating no-selection="true"></game-rating>
+        <game-rating image-archive="ngModel.cover" src="src" no-rating no-selection="true"></game-rating>
     </div>
     <div class="col-xs-12 col-md-7 information">
-        <span class="description">{{title}}</span>
+        <span class="description">{{ngModel.name}}</span>
         <div class="rating-container">
             <i class="gc gc-rating" ng-class="1 <= rating ? 'yes' : ''"></i>
             <i class="gc gc-rating" ng-class="2 <= rating ? 'yes' : ''"></i>
@@ -11,18 +11,18 @@
             <i class="gc gc-rating" ng-class="4 <= rating ? 'yes' : ''"></i>
             <i class="gc gc-rating" ng-class="5 <= rating ? 'yes' : ''"></i>
         </div>
-        <span class="price" ng-if="showCoins">Costo prestamo por semana: <span class="light">{{coins}} coins</span></span>
+        <span class="price" ng-if="showCoins">Costo prestamo por semana: <span class="light">{{ngModel.averageWeekCost}} coins</span></span>
         <button class="btn btn-primary small" ng-click="viewDetails()">Ver juego</button>
     </div>
     <div class="col-xs-12 col-md-3 rating">
         <div class="col-md-8 text-right platform">
-            <img ng-src="{{platform}}" class="platform"/>
+            <img archive="ngModel.consoles[0].console.logo" src="" class="platform"/>
             <div class="types">
-                <img ng-repeat="type in types" ng-src="{{type.src}}" />
+                <img ng-repeat="category in ngModel.categories" archive="category.category.whiteVector" src="">
             </div>
         </div>
         <div class="col-md-4 text-center content-rating">
-            <img ng-src="{{contentRating}}" />
+            <img ng-src="{{ngModel.contentRating.other}}">
         </div>
     </div>
     <div class="clearfix"></div>

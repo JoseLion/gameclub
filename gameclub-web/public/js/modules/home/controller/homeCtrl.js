@@ -1,22 +1,34 @@
-angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor, $state) {
+angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif) {
+    $scope.search = {};
+    $scope.contactUs = {};
+
+    $scope.find = function() {
+        $state.go("^.search", {search: $scope.search, title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))});
+    }
+
+    $scope.sendMail = function() {
+        sweet.default("Nos enviará un correo con su mensaje e información", function() {
+            openRest("publicUser/contactUs").get(function() {
+                notif.success("El correo se envió con éxito");
+                sweet.close();
+            }, function(error) {
+                sweet.close();
+            });
+        });
+    }
+
+
+
+
+
+
+
+
 
     if (anchor != null) {
         $location.hash(anchor);
         //$anchorScroll.yOffset = angular.element('#fixedbar')[0].offsetHeight;
     }
-
-    $scope.gameConsoles =[
-        {
-            name: 'PlayStation 4',
-            img: 'img/test/svg/ps4.svg'
-        }, {
-            name: 'XBOX ONE',
-            img: 'img/test/svg/xbox-one.svg'
-        }, {
-            name: 'Nintendo Switch',
-            img: 'img/test/svg/nintendo-switch.svg'
-        }
-    ];
 
     $scope.type = {};
     $scope.gameConsole = {};
@@ -44,6 +56,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor
             rating: 3
         }
     ];
+
     $scope.getPreviousGame = function() {
         let temp = $scope.mostPlayed.splice(0, 1);
         $scope.mostPlayed[3] = temp[0];
@@ -53,57 +66,6 @@ angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor
         $scope.mostPlayed.unshift(temp[0]);
     };
 
-    $scope.categoryActive = 0;
-    $scope.categories = [
-        {
-            id: 1,
-            name: 'Action',
-            logo: 'img/test/svg/sports.svg',
-            active: true
-        },
-        {
-            id: 2,
-            name: 'Adventure',
-            logo: 'img/test/svg/sports.svg',
-            active: false
-        },
-        {
-            id: 3,
-            name: 'Shooter',
-            logo: 'img/test/svg/sports.svg',
-            active: false
-        },
-        {
-            id: 4,
-            name: 'Mass Multiplayer',
-            logo: 'img/test/svg/sports.svg',
-            active: false
-        },
-        {
-            id: 5,
-            name: 'Simulation',
-            logo: 'img/test/svg/sports.svg',
-            active: false
-        },
-        {
-            id: 6,
-            name: 'RPG',
-            logo: 'img/test/svg/sports.svg',
-            active: false
-        },
-        {
-            id: 7,
-            name: 'Strategy',
-            logo: 'img/test/svg/sports.svg',
-            active: false
-        },
-        {
-            id: 8,
-            name: 'Sports',
-            logo: 'img/test/svg/sports.svg',
-            active: false
-        }
-    ];
     $scope.categoryChoosen = function(category, idx) {
         $scope.categories[$scope.categoryActive].active = false;
         $scope.categoryActive = idx

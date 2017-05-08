@@ -5,10 +5,15 @@ angular.module('Core').directive('mostPlayed', function($state) {
 		scope: {
 			games: '=',
             previous: '&',
-            next: '&'
+            next: '&',
+			gameConsoles: '='
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
+
+			$scope.gameConsole = {
+				selected : $scope.gameConsoles[0]
+			};
 
 			$scope.viewGameDetail = function(game) {
 				$state.go('gameclub.game', {idGame: 0});

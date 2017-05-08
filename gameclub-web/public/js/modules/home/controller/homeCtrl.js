@@ -38,22 +38,22 @@ angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor
         {
             id: 1,
             url: 'img/test/game-1.png',
-            score: 4
+            rating: 4
         },
         {
             id: 2,
             url: 'img/test/game-2.png',
-            score: 4
+            rating: 4
         },
         {
             id: 3,
             url: 'img/test/game-3.png',
-            score: 5
+            rating: 5
         },
         {
             id: 4,
             url: 'img/test/game-4.png',
-            score: 3
+            rating: 3
         }
     ];
 

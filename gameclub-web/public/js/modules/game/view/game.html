@@ -5,7 +5,7 @@
     </section>
     <section class="row header">
         <div class="col-md-3 cover">
-            <game-rating src="'img/test/game-5.png'" no-score></game-rating>
+            <game-rating src="'img/test/game-5.png'" no-rating no-selection="true"></game-rating>
         </div>
         <div class="col-md-6 principal">
             <h2 class="col-md-12 title">THE LEGEND OF ZELDA: Breath of the Wild</h2>
@@ -102,7 +102,17 @@
     <section class="row games">
         <div class="subtitle">Juegos disponibles<button class="btn btn-tertiary small dark">Sube tu juego</button></div>
         <div class="filters">
-            <li><a href><i class="fa fa-paper-plane-o"></i></a></li><li><a href><i class="fa fa-map-marker"></i></a></li><li><a href><i class="fa fa-usd"></i></a></li><li><a href><img src="img/star-score.svg" /></a></li><li><a href><i class="fa fa-circle-o"></i></a></li><li class="active"><a href><i class="fa fa-filter"></i></a></li>
+            <li>
+                <a href><i class="gc gc-send"></i></a>
+            </li><li>
+                <a href><i class="gc gc-address"></i></a>
+            </li><li>
+                <a href class="active"><i class="gc gc-usd"></i></a>
+            </li><li>
+                <a href><i class="gc gc-rating"></i></a>
+            </li><li>
+                <a href><i class="gc gc-cd"></i></a>
+            </li><li><a href><i class="gc gc-filter"></i></a></li>
         </div>
         <div class="games-availables">
             <div class="table-container">
@@ -110,8 +120,8 @@
                     <col width="17%">
                     <col width="15%">
                     <col width="17%">
-                    <col width="16%">
                     <col width="15%">
+                    <col width="16%">
                     <col width="13%">
                     <col width="5%">
 
@@ -135,11 +145,11 @@
                             <td ng-class="game.available ? 'blue' : 'red'">{{game.coins | currency:'+ ':0}}</td>
                             <td>
                                 <div class="col-md-12 rating-container">
-                                    <img class="score-1-m" src="img/star-no-score.svg"/>
-                                    <img class="score-2-m" src="img/star-no-score.svg"/>
-                                    <img class="score-3-m" src="img/star-no-score.svg"/>
-                                    <img class="score-4-m" src="img/star-no-score.svg"/>
-                                    <img class="score-5-m" src="img/star-score.svg"/>
+                                    <i class="gc gc-rating" ng-class="1 <= game.rating ? 'yes' : ''"></i>
+                                    <i class="gc gc-rating" ng-class="2 <= game.rating ? 'yes' : ''"></i>
+                                    <i class="gc gc-rating" ng-class="3 <= game.rating ? 'yes' : ''"></i>
+                                    <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
+                                    <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
                                 </div>
                             </td>
                             <td class="game-status">{{game.gameStatus}}/10</td>
@@ -153,6 +163,6 @@
             <button class="btn btn-secundary small">Ver todas las propuestas</button>
         </div>
     </section>
-    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()"/>
+    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="gameConsoles"/>
     <section class="final"></section>
 </div>

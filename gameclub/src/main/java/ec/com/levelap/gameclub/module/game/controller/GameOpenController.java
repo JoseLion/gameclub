@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.gameclub.module.category.entity.Category;
 import ec.com.levelap.gameclub.module.console.entity.Console;
-import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
 import ec.com.levelap.gameclub.module.game.service.GameService;
 import ec.com.levelap.gameclub.utils.Const;

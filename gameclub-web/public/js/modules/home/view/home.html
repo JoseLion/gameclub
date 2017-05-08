@@ -20,18 +20,21 @@
                             </ui-select-match>
                             <ui-select-choices repeat="category in categories | filter: $select.search">
                                 <div ng-bind-html="category.name | highlight: $select.search"></div>
-                                <img archive="category.whiteVector" src="" class="category">
+                                <img ng-src="{{category.whiteBase64}}" class="category">
+                                <!-- <img archive="category.whiteVector" src="" class="category"> -->
                             </ui-select-choices>
                         </ui-select>
                     </div>
                     <div class="col-xs-12 col-md-4 filter to-validate">
                         <ui-select validation ng-model="search.console" theme="bootstrap" class="selector text-center" required>
                             <ui-select-match allow-clear placeholder="Consola...">
-                                <img archive="$select.selected.logo" src="" class="gameConsole"/>
+                                <img ng-src="{{$select.selected.base64}}" class="gameConsole"/>
+                                <!-- <img archive="$select.selected.logo" src="" class="gameConsole"> -->
                             </ui-select-match>
                             <ui-select-choices repeat="console in consoles | filter: $select.search" class="text-center">
                                 <div ng-bind-html="'' | highlight: $select.search"></div>
-                                <img archive="console.logo" src="" class="gameConsole">
+                                <img ng-src="{{console.base64}}" class="gameConsole">
+                                <!-- <img archive="console.logo" src="" class="gameConsole"> -->
                             </ui-select-choices>
                         </ui-select>
                     </div>

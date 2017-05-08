@@ -5,23 +5,16 @@ angular.module('Core').directive('gameItem', function($state) {
 		required: 'ngModel',
 		scope: {
             ngModel: '=',
-            src: '=',
-            title: '=',
-            coins: '=',
-            rating: '=',
-            types: '=',
-            contentRating: '=',
-            showCoins: '=',
-			platform: '='
+            showCoins: '=?'
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
-            for(let i=0 ; i<=$scope.rating ; i++) {
+            for (let i = 0; i <= $scope.ngModel.rating; i++) {
                 angular.element('.score-'+i).attr('src', 'img/star-score.svg')
             }
 
 			$scope.viewDetails = function() {
-				$state.go('gameclub.game', {idGame: $scope.ngModel.id});
+				$state.go('gameclub.game', {id: $scope.ngModel.id, name: friendlyUrl($scope.ngModel.name)});
 			}
 		}
 	};

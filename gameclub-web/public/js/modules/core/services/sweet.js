@@ -2,7 +2,7 @@ angular.module("Core").factory('sweet', function(SweetAlert, Const, notif) {
 	return {
 		default: function(message, confirm, cancel) {
 			SweetAlert.swal({
-				title: message,
+				title: "¿Está seguro?",
 				text: message,
 				type: "info",
 				showCancelButton: true,

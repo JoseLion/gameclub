@@ -227,11 +227,12 @@ public class GameClubSecurity implements SecurityConfig {
 	public void handleSuccess() {
 		PublicUserRepo publicUserRepo = ApplicationContextHolder.getContext().getBean(PublicUserRepo.class);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
 		PublicUser publicUser = publicUserRepo.findByUsername(auth.getName());
-		publicUser.setLastConnection(new Date());
 		
-		publicUserRepo.save(publicUser);
+		if (publicUser != null) {
+			publicUser.setLastConnection(new Date());
+			publicUserRepo.save(publicUser);
+		}
 	}
 
 	@Override

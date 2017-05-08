@@ -1,4 +1,4 @@
-angular.module('Core').directive('gameItem', function($state) {
+angular.module('Core').directive('gameItem', function($state, friendlyUrl) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/modules/core/directives/gameItem.html',

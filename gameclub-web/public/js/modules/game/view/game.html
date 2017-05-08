@@ -1,14 +1,14 @@
 <div id="game">
     <section class="row banner">
-        <div ng-style="background">
+        <div ng-style="game.background">
         </div>
     </section>
     <section class="row header">
         <div class="col-md-3 cover">
-            <game-rating src="'img/test/game-5.png'" no-rating no-selection="true"></game-rating>
+            <game-rating image-archive="game.cover" src="" no-rating no-selection="true"></game-rating>
         </div>
         <div class="col-md-6 principal">
-            <h2 class="col-md-12 title">THE LEGEND OF ZELDA: Breath of the Wild</h2>
+            <h2 class="col-md-12 title">{{game.name}}</h2>
             <div class="col-md-12 rating-container">
                 <i class="gc gc-rating rating-1 yes"></i>
                 <i class="gc gc-rating rating-2 yes"></i>
@@ -22,15 +22,13 @@
         </div>
         <div class="col-md-3 rating text-right">
             <div class="col=md-12 content-rating">
-                <img src="img/test/svg/esrb.svg" />
+                <img ng-src="{{game.contentRating.other}}">
             </div>
             <div class="col=md-12 platform">
-                <img src="img/test/svg/nintendo-switch-b.svg" />
+                <img archive="cross.console.logo" src="" ng-repeat="cross in game.consoles">
             </div>
             <div class="col=md-12 category">
-                <img src="img/test/svg/sports.svg" />
-                <img src="img/test/svg/sports.svg" />
-                <img src="img/test/svg/sports.svg" />
+                <img archive="cross.category.blackVector" src="" ng-repeat="cross in game.categories">
             </div>
         </div>
     </section>
@@ -38,18 +36,22 @@
         <div class="col-md-9 data">
             <div class="description ">
                 <span class="col-md-12 subtitle">Descripci&oacute;n:</span>
-                <p>El juego comienza con un Link que ha perdido la memoria, y que despierta en un misterioso santuario, sin saber cómo ni por qué ha acabado ahí. La única pista sobre su pasado se la dará una vocecilla que le encomienda la misión de acabar con el malvado Calamity Ganon, un ser maligno que aparece desde tiempos inmemoriables y responsable del cataclismo que asoló en el reino de Hyrule hace mucho tiempo. En su aventura, Link conocerá a la princesa Zelda y a la familia real de Hyrule, e irá descubriendo qué fue lo que realmente ocurrió hace 100 años. El juego introduce un mundo abierto en el que los usuarios serán capaces de encontrar distintos caminos o vías para llegar a un objetivo en el mapa.</p>
+                <p ng-if="!showMore">{{game.description | maxwords: 150}}</p>
+                <p ng-if="showMore">{{game.description}}</p>
+                <div class="text-right">
+                    <small><a href="" ng-click="showMore = !showMore">Mostrar {{!showMore ? 'más' : 'menos'}}</a></small>
+                </div>
             </div>
-            <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">03-03-2017</span></span>
-            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">100-200 coins</span></span>
+            <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">{{game.releaseDate | date: 'dd-MM-yyyy'}}</span></span>
+            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{game.averageWeekCost}} coins</span></span>
         </div>
         <div class="col-md-3 rating">
             <div class="reviews text-center">
                 <span class="subtitle">Los reviews</span>
                 <ul>
-                    <li>
+                    <li ng-repeat="cross in game.magazineRatings">
                         <div class="col-md-12">
-                            <img src="img/review-ign.png" />
+                            <img ng-src="{{cross.magazine.other}}">
                         </div>
                         <div class="col-md-12 rating-container">
                             <i class="gc gc-rating rating-1 yes"></i>
@@ -59,39 +61,7 @@
                             <i class="gc gc-rating rating-5 yes"></i>
                         </div>
                         <div class="col-md-12">
-                            <a href="http://www.ign.com/games/the-legend-of-zelda-breath-of-the-wild/nintendo-switch-20052872" target="_blank">Leer m&aacute;s</a>
-                        </div>
-                        <div class="clearfix"></div>
-                    </li>
-                    <li>
-                        <div class="col-md-12">
-                            <img src="img/review-metacritic.png" />
-                        </div>
-                        <div class="col-md-12 rating-container">
-                            <i class="gc gc-rating rating-1 yes"></i>
-                            <i class="gc gc-rating rating-2 yes"></i>
-                            <i class="gc gc-rating rating-3 yes"></i>
-                            <i class="gc gc-rating rating-4 yes"></i>
-                            <i class="gc gc-rating rating-5"></i>
-                        </div>
-                        <div class="col-md-12">
-                            <a href="http://www.metacritic.com/game/switch/the-legend-of-zelda-breath-of-the-wild" target="_blank">Leer m&aacute;s</a>
-                        </div>
-                        <div class="clearfix"></div>
-                    </li>
-                    <li>
-                        <div class="col-md-12">
-                            <img src="img/review-gamespot.png" />
-                        </div>
-                        <div class="col-md-12 rating-container">
-                            <i class="gc gc-rating rating-1 yes"></i>
-                            <i class="gc gc-rating rating-2 yes"></i>
-                            <i class="gc gc-rating rating-3 yes"></i>
-                            <i class="gc gc-rating rating-4 yes"></i>
-                            <i class="gc gc-rating rating-5"></i>
-                        </div>
-                        <div class="col-md-12">
-                            <a href="https://www.gamespot.com/the-legend-of-zelda-breath-of-the-wild/" target="_blank">Leer m&aacute;s</a>
+                            <a ng-href="{{cross.url}}" target="_blank">Leer m&aacute;s</a>
                         </div>
                         <div class="clearfix"></div>
                     </li>
@@ -100,7 +70,11 @@
         </div>
     </section>
     <section class="row games">
-        <div class="subtitle">Juegos disponibles<button class="btn btn-tertiary small dark">Sube tu juego</button></div>
+        <div class="subtitle">
+            Juegos disponibles
+            <button type="button" class="btn btn-tertiary small dark" ng-click="addToLibrary()" ng-if="currentUser">Sube tu juego</button>
+            <button type="button" class="btn btn-tertiary small dark" ng-click="login()" ng-if="!currentUser">Inicia Sesión</button>
+        </div>
         <div class="filters">
             <li>
                 <a href><i class="gc gc-send"></i></a>

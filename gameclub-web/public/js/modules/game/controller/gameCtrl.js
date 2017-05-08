@@ -1,8 +1,17 @@
-angular.module('Game').controller('GameCtrl', function($scope) {
+angular.module('Game').controller('GameCtrl', function($scope, game, $state, Const, openRest, getImageBase64) {
+    if (game != null) {
+        game.$promise.then(function(data) {
+            $scope.game = data;
 
-    $scope.background = {
-        background: "url('img/test/cover-zelda.jpg') center bottom / 100% no-repeat"
-    };
+            openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(data) {
+                $scope.game.background = {
+                    background: "url('" + getImageBase64(data, $scope.game.banner.type) + "') center bottom / 100% no-repeat"
+                };
+            });
+        });
+    } else {
+        $state.go(Const.mainState);
+    }
 
     $scope.mostPlayed = [
         {

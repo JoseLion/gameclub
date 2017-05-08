@@ -187,8 +187,8 @@
                 </h2>
             </div>
             <div class="col-md-12 categories no-padding-left">
-                <div class="category text-center" ng-repeat="category in categories" ng-class="category.active ? 'active' : ''">
-                    <img ng-src="{{category.logo}}" ng-click="categoryChoosen(category, $index)"/><br/>
+                <div id="home-category-{{$index}}" class="category text-center" ng-repeat="category in categories">
+                    <img ng-src="{{category.blackBase64}}" ng-click="categoryChoosen($index, category.id)"/><br/>
                     <span>{{category.name}}</span>
                 </div>
             </div>
@@ -196,7 +196,7 @@
         <div class="games">
             <div class="game">
                 <button class="btn previous"><i class="fa fa-chevron-up" ng-click="previousGameByCat()"></i></button>
-                <game-rating src="gameByCat.url" score="gameByCat.score" bg-color="light-red" class="info" />
+                <game-rating image-archive="gamesByCat[catCounter].cover" src="" score="gamesByCat[catCounter].rating" bg-color="light-red" class="info" ng-click="viewGame(gamesByCat[catCounter])">
                 <button class="btn next"><i class="fa fa-chevron-down" ng-click="nextGameByCat()"></i></button>
             </div>
         </div>
@@ -214,7 +214,7 @@
     </section>
     <section class="contact-us">
         <div class="row">
-            <form class="col-md-12 contact-form" role="form" on-submit="sendMail()">
+            <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()">
                 <h2 class="title">&iquest;Quieres saber m&aacute;s de <span class="game-font game-font-white">Game</span>Club?</h2>
                 <span class="description">D&eacute;janos tu mail y nosotros te contactamos</span>
                 <div class="clearfix"></div>

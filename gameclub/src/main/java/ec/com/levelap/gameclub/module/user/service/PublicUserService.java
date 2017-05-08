@@ -25,6 +25,7 @@ import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
+import ec.com.levelap.gameclub.module.user.controller.PublicUserOpenController.ContactUs;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.utils.Const;
@@ -115,6 +116,25 @@ public class PublicUserService {
 		
 		user = publicUserRepo.save(user);
 		return user;
+	}
+	
+	@Transactional
+	public void sendContactUs(ContactUs contactUs) throws ServletException, MessagingException {
+		MailParameters mailParameters = new MailParameters();
+		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
+		//mailParameters.setRecipentTO(Arrays.asList("joseluis.levelap@gmail.com"));
+		Map<String, String> params = new HashMap<>();
+		params.put("name", contactUs.name);
+		params.put("email", contactUs.email);
+		params.put("message", contactUs.message);
+		
+		if (contactUs.phone != null && !contactUs.phone.isEmpty()) {
+			params.put("phone", contactUs.phone);
+		} else {
+			params.put("phone", "N/A");
+		}
+		
+		mailService.sendMailWihTemplate(mailParameters, "CNCTUS", params);
 	}
 
 	public PublicUserRepo getPublicUserRepo() {

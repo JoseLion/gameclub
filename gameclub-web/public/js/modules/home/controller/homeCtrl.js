@@ -1,4 +1,4 @@
-angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif) {
+angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl) {
     $scope.search = {};
     $scope.contactUs = {};
 
@@ -6,15 +6,49 @@ angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor
         $state.go("^.search", {search: $scope.search, title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))});
     }
 
-    $scope.sendMail = function() {
+    $scope.sendContactUs = function() {
         sweet.default("Nos enviará un correo con su mensaje e información", function() {
-            openRest("publicUser/contactUs").get(function() {
+            openRest("publicUser/sendContactUs").post($scope.contactUs, function() {
                 notif.success("El correo se envió con éxito");
                 sweet.close();
             }, function(error) {
                 sweet.close();
             });
         });
+    }
+
+    $scope.categoryChoosen = function(index, categoryId) {
+        forEach($rootScope.categories, function(category, i) {
+            angular.element("#home-category-" + i).removeClass("active");
+        });
+
+        angular.element("#home-category-" + index).addClass("active");
+        $scope.gamesByCat = [];
+        $scope.catCounter = 0;
+
+        openRest("game/findGamesByCategory/:categoryId", true).get({categoryId: categoryId}, function(data) {
+            $scope.gamesByCat = data;
+        });
+    }
+
+    $scope.previousGameByCat = function() {
+        if ($scope.catCounter == 0) {
+            $scope.catCounter = $scope.gamesByCat.length - 1;
+        } else {
+            $scope.catCounter--;
+        }
+    }
+
+    $scope.nextGameByCat = function() {
+        if ($scope.catCounter == $scope.gamesByCat.length - 1) {
+            $scope.catCounter = 0;
+        } else {
+            $scope.catCounter++;
+        }
+    }
+
+    $scope.viewGame = function(game) {
+        $state.go('gameclub.game', {id: game.id, name: friendlyUrl(game.name)});
     }
 
 
@@ -64,30 +98,6 @@ angular.module('Home').controller('HomeCtrl', function($scope, $location, anchor
     $scope.getNextGame = function() {
         let temp = $scope.mostPlayed.splice(-1, 1);
         $scope.mostPlayed.unshift(temp[0]);
-    };
-
-    $scope.categoryChoosen = function(category, idx) {
-        $scope.categories[$scope.categoryActive].active = false;
-        $scope.categoryActive = idx
-        category.active = true;
-    };
-
-    // REMPLAZAR POR FUNCIONALIDAD CON SERVICIO WEB
-    let counter = 2;
-    $scope.gameByCat = $scope.mostPlayed[counter];
-    $scope.previousGameByCat = function() {
-        if(counter-- == 0) { counter += 4;}
-        $scope.gameByCat = $scope.mostPlayed[counter];
-        setTimeout(function() {
-            $scope.$apply();
-        }, 0);
-    };
-    $scope.nextGameByCat = function() {
-        if(counter++ == 3) { counter -= 4; }
-        $scope.gameByCat = $scope.mostPlayed[counter];
-        setTimeout(function() {
-            $scope.$apply();
-        }, 0);
     };
 
     $scope.blogs = [

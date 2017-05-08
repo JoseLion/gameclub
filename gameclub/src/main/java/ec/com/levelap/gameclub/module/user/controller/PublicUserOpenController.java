@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,5 +44,21 @@ public class PublicUserOpenController {
 				response.flushBuffer();
 			}
 		}
+	}
+	
+	@RequestMapping(value="sendContactUs", method=RequestMethod.POST)
+	public ResponseEntity<?> sendContactUs(@RequestBody ContactUs contactUs) throws ServletException, MessagingException {
+		publicUserService.sendContactUs(contactUs);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	public static class ContactUs {
+		public String name;
+		
+		public String email;
+		
+		public String phone;
+		
+		public String message;
 	}
 }

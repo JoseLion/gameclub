@@ -1,6 +1,7 @@
 package ec.com.levelap.gameclub.module.game.repository;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,4 +60,6 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 				"cn.console=:console " +
 			"ORDER BY g.name DESC")
 	public Page<GameOpen> findGamesOpen(@Param("name") String name, @Param("category") Category category, @Param("console") Console console, Pageable page);
+	
+	public List<GameOpen> findByCategoriesCategoryIdOrderByName(Long categoryId);
 }

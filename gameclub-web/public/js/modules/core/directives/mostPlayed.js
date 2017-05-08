@@ -11,9 +11,13 @@ angular.module('Core').directive('mostPlayed', function($state) {
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
 
-			$scope.gameConsole = {
-				selected : $scope.gameConsoles[0]
-			};
+			$scope.$watch('gameConsoles', function(newValue, oldValue) {
+				if(newValue != null) {
+					$scope.gameConsole = {
+						selected : $scope.gameConsoles[0]
+					};
+				}
+			});
 
 			$scope.viewGameDetail = function(game) {
 				$state.go('gameclub.game', {idGame: 0});

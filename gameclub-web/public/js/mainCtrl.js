@@ -69,6 +69,12 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 		});
 	}
 
+	$scope.goToAccount = function() {
+		if (!$state.includes("gameclub.account")) {
+			$state.go("gameclub.account");
+		}
+	}
+
 	$rootScope.link = {
 		shareAndPlay : {
 			name: 'Share & Play',

@@ -2,6 +2,8 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
     $scope.search = {};
     $scope.contactUs = {};
 
+    chooseFirstCategory(0);
+
     $scope.find = function() {
         $state.go("^.search", {
             name: $scope.search.name,
@@ -64,6 +66,24 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
 
     $scope.viewGame = function(game) {
         $state.go('gameclub.game', {id: game.id, name: friendlyUrl(game.name)});
+    }
+
+    function chooseFirstCategory(counter) {
+        if ($rootScope.categories != null) {
+            setTimeout(function() {
+                angular.element("#category-icon-0").trigger("click");
+            }, 0);
+        } else {
+            if (counter < 20) {
+                counter++;
+
+                setTimeout(function() {
+                    $scope.$apply(function() {
+                        chooseFirstCategory(counter);
+                    });
+                }, 500);
+            }
+        }
     }
 
 

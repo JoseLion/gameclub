@@ -1,7 +1,4 @@
 angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif) {
-    $scope.contactInfo = {};
-    $scope.contactMean = {fb:'Pablo Ponce'};
-
     $scope.file = {};
     let tempUserInfo;
 
@@ -91,6 +88,8 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                         }, response.authResponse.accessToken);
                     } else {
                         $rootScope.currentUser.facebookToken = response.authResponse.accessToken;
+                        $rootScope.currentUser.facebookName = me.name;
+                        
                         let formData = {
                             user: $rootScope.currentUser
                         };
@@ -211,8 +210,6 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             delete tempUserInfo;
         }
     }
-
-
 
 
 

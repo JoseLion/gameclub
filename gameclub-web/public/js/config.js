@@ -24,6 +24,8 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 					token: function(rest) {
 						return rest("token").get(function(data) {
 							return data;
+						}, function(error) {
+							return error;
 						});
 					}
 				}

@@ -64,7 +64,8 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 								lastName: "",
 								password: me.userID,
 								isFacebookUser: true,
-								facebookToken: response.authResponse.accessToken
+								facebookToken: response.authResponse.accessToken,
+								facebookName: me.name
 							};
 
 							signIn(user);

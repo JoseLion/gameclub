@@ -113,6 +113,9 @@ public class PublicUser extends BaseEntity {
 	@Column(name="facebook_token", columnDefinition="VARCHAR")
 	private String facebookToken;
 	
+	@Column(name="facebook_name", columnDefinition="VARCHAR")
+	private String facebookName;
+	
 	@Transient
 	private Integer numberOfGames;
 
@@ -338,6 +341,14 @@ public class PublicUser extends BaseEntity {
 
 	public void setFacebookToken(String facebookToken) {
 		this.facebookToken = facebookToken;
+	}
+
+	public String getFacebookName() {
+		return facebookName;
+	}
+
+	public void setFacebookName(String facebookName) {
+		this.facebookName = facebookName;
 	}
 
 	public Integer getNumberOfGames() {

@@ -46,8 +46,14 @@ form .selector .glyphicon-remove{color:@color-tertiary;}
 form .selector .ui-select-match>span,form .selector .ui-select-match>span>span,form .selector .ui-select-match .ui-select-placeholder,form .selector input{background:transparent;color:@color-tertiary;border:none;box-shadow:none;}
 form .selector .ui-select-match .ui-select-match-text img.gameConsole{height:100%;position:absolute;}
 form .ui-select-match .ui-select-placeholder{text-transform:none;}
-form .selector .ui-select-choices{background:@color-primary;color:@color-tertiary;border:1px solid @color-primary;border-radius:10px;border-top-left-radius:0px;border-top-right-radius:0px;width:120%;margin-left:-10%;}
-form .selector.direction-up .ui-select-choices{border-bottom-left-radius:0px;border-bottom-right-radius:0px}
+form .selector .ui-select-choices{background:@color-primary;color:@color-tertiary;border:1px solid @color-primary;border-radius:10px;border-top-left-radius:0px;border-top-right-radius:0px;width:120%;margin-left:-10%;overflow-y:scroll;}
+form .selector.direction-up .ui-select-choices{border-bottom-left-radius:0px;border-bottom-right-radius:0px;}
+form .selector .ui-select-choices::-webkit-scrollbar{background:transparent;width:0.5em!important;}
+form .selector .ui-select-choices::-webkit-scrollbar-track{background:transparent;}
+form .selector .ui-select-choices::-webkit-scrollbar-thumb{background:@color-secundary;}
+
+
+
 form .selector .ui-select-choices .ui-select-choices-row{text-transform:uppercase;padding-left:15px;padding-right:15px;font-size:1em;padding-top:5px;position:relative;}
 form .selector .ui-select-choices .ui-select-choices-row img.category{height:1em;position:absolute;top:5px;right:10px;}
 form .selector .ui-select-choices .ui-select-choices-row img.gameConsole{width:75%;margin-bottom:5px;}
@@ -166,9 +172,6 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
 -webkit-background-clip:text;}
 #game-rating .game-container .background.hover::before{background:@color-tertiary;-webkit-background-clip:text;}
-// #game-rating .game-container .background:hover::after{content:"\E00C";font-family:gameclub;position:absolute;top:0;left:0;right:0;font-size:10em;-webkit-text-fill-color:transparent;
-// background:@color-tertiary;-webkit-background-clip:text;}
-// #game-rating .game-container .background:hover::before{background:@color-tertiary;-webkit-background-clip:text;}
 #game-rating .game-container .background>img{position:absolute;top:3.3em;left:0;right:0;width:8em;margin:auto;}
 #game-rating .rating-container{text-align:center;}
 #game-rating .rating-container i{color:@color-primary-s;cursor:pointer;}
@@ -223,14 +226,25 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 /***********************************/
 
 /********** TIME-SELECTOR **********/
-#time-selector{text-align:center;font-weight:700;}
-#time-selector span.placeholder{display:block;text-transform:uppercase;}
+#time-selector{text-align:center;font-weight:700;display:inline;padding:0;}
 #time-selector div.selector{position:relative;display:inline;cursor:pointer;}
 #time-selector div.selector.disabled{cursor:not-allowed;}
-#time-selector div.selector>input{width:43%;text-align:center;cursor:pointer;}
+#time-selector div.selector>input{width:100%;text-align:left;cursor:pointer;}
 #time-selector div.selector.disabled>input{cursor:not-allowed;}
-#time-selector div.selector>i{position:absolute;right:5px;top:0;bottom:0;}
+#time-selector div.selector>i{position:absolute;right:0.2em;top:-0.2em;}
 #time-selector div.selector.disabled>i{cursor:not-allowed;}
+
+.clockpicker-popover.popover{background-color:@color-tertiary!important;border-color:@color-tertiary!important;}
+.clockpicker-popover .popover-title{border-bottom-color:@color-tertiary!important};
+.clockpicker-popover .popover.bottom>.arrow:after{border-bottom-color:@color-primary;}
+.clockpicker-popover .popover-title,.clockpicker-popover .popover-content{background-color:@color-primary!important;color:@color-tertiary!important;}
+.clockpicker-popover .popover-title .text-primary{color:@color-secundary!important;}
+.clockpicker-popover .popover-content .clockpicker-plate{background-color:@color-primary!important;border-color:@color-tertiary!important;}
+.clockpicker-popover .popover-content .clockpicker-dial .clockpicker-tick{color:@color-tertiary!important;}
+.clockpicker-canvas line{stroke:@color-secundary!important;}
+.clockpicker-canvas-bearing, .clockpicker-canvas-fg{fill:@color-secundary!important;}
+.clockpicker-canvas-bg{fill:@color-secundary!important;}
+.clockpicker-canvas-bearing, .clockpicker-canvas-fg{fill:@color-secundary!important;}
 /***********************************/
 
 /********** GAME-ITEM **********/
@@ -529,6 +543,8 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #profile section.contact-information .form .selector .ui-select-match span[disabled]{background:transparent;border:none;}
 #account #profile section.contact-information .form input[type="address"]{width:100%;padding-right:25px;background:url("../img/map-marker.svg") no-repeat center;background-size:1em;background-position-x:99%;}
 #account #profile section.contact-information .form input[type="person"]{width:100%;}
+#account #profile section.contact-information .form .placeholder{text-align:center;text-transform:uppercase;}
+#account #profile section.contact-information .form .time-selector .separator{padding:0;text-align:center;}
 
 #account #profile section.contact-means{background:@color-tertiary-alt;padding-bottom:3%;}
 #account #profile section.contact-means>div{text-align:center;}
@@ -715,7 +731,7 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #search section.banner .search button{border-color:@color-tertiary;}
 #search section.banner .search.white-search .btn-tertiary{background-color:@color-secundary-65;width:2em;height:2em;border-radius:50%;padding:5px;position:relative;text-align:center;vertical-align:middle;color:@color-primary-alt;}
 #search section.banner .search.white-search .btn-tertiary i{font-size:1em;position:absolute;left:0.1em;right:0;top:0.1em;bottom:0.1em;margin:auto;padding-top:0.2em;}
-#search section.banner .selector .ui-select-match-text img{height:1.5em;padding-top:0.25em;}
+#search section.banner .selector .ui-select-match-text img{height:1.5em;padding-bottom:0.3em;}
 
 #search section.result{padding-top:3%;}
 #search section.result .rating .types img{border-color:@color-tertiary;}

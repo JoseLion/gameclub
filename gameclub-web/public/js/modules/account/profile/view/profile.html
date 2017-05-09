@@ -94,11 +94,17 @@
                 </div>
                 <div class="col-md-12">
                     <label class="col-xs-12 col-md-4 separator">Horas de preferencia, <small>para entrega y retiro de juegos 2</small></label>
-                    <div class="col-xs-12 col-md-4">
-                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditable" placeholder="Mañana"/>
+                    <div class="col-xs-12 col-md-4 time-selector">
+                        <div class="placeholder">Ma&ntilde;ana</div>
+                        <time-selector ng-model="currentUser.firstMorningStartTime" ng-disabled="!isEditable" class="col-md-5" />
+                        <span class="separator col-md-2"><i class="fa fa-minus"></i></span>
+                        <time-selector ng-model="currentUser.firstMorningEndTime" ng-disabled="!isEditable" class="col-md-5" />
                     </div>
-                    <div class="col-xs-12 col-md-4">
-                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditable" placeholder="Tarde"/>
+                    <div class="col-xs-12 col-md-4 time-selector">
+                        <div class="placeholder">Tarde</div>
+                        <time-selector ng-model="currentUser.firstNoonStartTime" ng-disabled="!isEditable" class="col-md-5" />
+                        <span class="separator col-md-2"><i class="fa fa-minus"></i></span>
+                        <time-selector ng-model="currentUser.firstNoonEndTime" ng-disabled="!isEditable" class="col-md-5" />
                     </div>
                 </div>
                 <div class="col-md-12 to-validate">
@@ -115,11 +121,17 @@
                 </div>
                 <div class="col-md-12">
                     <label class="col-xs-12 col-md-4 separator">Horas de preferencia, <small>para entrega y retiro de juegos 2</small></label>
-                    <div class="col-xs-12 col-md-4">
-                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditable" placeholder="Mañana"/>
+                    <div class="col-xs-12 col-md-4 time-selector">
+                        <div class="placeholder">Ma&ntilde;ana</div>
+                        <time-selector ng-model="currentUser.secondMorningStartTime" ng-disabled="!isEditable" class="col-md-5" />
+                        <span class="separator col-md-2"><i class="fa fa-minus"></i></span>
+                        <time-selector ng-model="currentUser.secondMorningEndTime" ng-disabled="!isEditable" class="col-md-5" />
                     </div>
-                    <div class="col-xs-12 col-md-4">
-                        <time-selector ng-model="contactInfo.firstReferenceTimeStart" ng-disabled="!isEditable" placeholder="Tarde"/>
+                    <div class="col-xs-12 col-md-4 time-selector">
+                        <div class="placeholder">Tarde</div>
+                        <time-selector ng-model="currentUser.secondNoonStartTime" ng-disabled="!isEditable" class="col-md-5" />
+                        <span class="separator col-md-2"><i class="fa fa-minus"></i></span>
+                        <time-selector ng-model="currentUser.secondNoonEndTime" ng-disabled="!isEditable" class="col-md-5" />
                     </div>
                 </div>
             </div>

@@ -1,6 +1,8 @@
 package ec.com.levelap.gameclub.module.user.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,7 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -102,6 +106,15 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(name="second_noon_end_time", columnDefinition="VARCHAR")
 	private String secondNoonEndTime;
+	
+	@OneToMany(mappedBy="publicUser", fetch=FetchType.LAZY)
+	private List<PublicUserGame> games = new ArrayList<>();
+	
+	@Column(name="facebook_token", columnDefinition="VARCHAR")
+	private String facebookToken;
+	
+	@Transient
+	private Integer numberOfGames;
 
 	public String getUsername() {
 		return username;
@@ -309,5 +322,29 @@ public class PublicUser extends BaseEntity {
 
 	public void setSecondNoonEndTime(String secondNoonEndTime) {
 		this.secondNoonEndTime = secondNoonEndTime;
+	}
+
+	public List<PublicUserGame> getGames() {
+		return games;
+	}
+
+	public void setGames(List<PublicUserGame> games) {
+		this.games = games;
+	}
+
+	public String getFacebookToken() {
+		return facebookToken;
+	}
+
+	public void setFacebookToken(String facebookToken) {
+		this.facebookToken = facebookToken;
+	}
+
+	public Integer getNumberOfGames() {
+		return this.games.size();
+	}
+
+	public void setNumberOfGames(Integer numberOfGames) {
+		this.numberOfGames = numberOfGames;
 	}
 }

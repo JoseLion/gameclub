@@ -5,8 +5,7 @@ angular.module('Core').directive('timeSelector', function() {
         required: 'ngModel',
 		scope: {
             ngModel: '=',
-            ngDisabled: '=',
-            placeholder: '@'
+            ngDisabled: '='
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
@@ -31,7 +30,7 @@ angular.module('Core').directive('timeSelector', function() {
 				}
 			});
 
-			$scope.selection = function(element) {
+			// $scope.selection = function(element) {
 			// 	let input = angular.element(element);
 			// 	let parent = input.parent();
 			// 	currentList = '<ul class="dropdown">';
@@ -41,7 +40,7 @@ angular.module('Core').directive('timeSelector', function() {
 			// 	currentList = currentList.concat('</ul>');
 			//
 			// 	angular.element(input).parent().append(currentList);
-			};
+			// };
 		}
 	};
 });

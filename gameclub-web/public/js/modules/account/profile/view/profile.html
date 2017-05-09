@@ -17,15 +17,15 @@
             </div>
             <div class="clearfix"></div>
             <div class="col-md-12 completed">
-                Usuario completado: <span>0%</span>
+                Usuario completado: <span>{{getFullPercentaje()}}%</span>
             </div>
             <p class="col-md-12 description">
                 Completa los 3 niveles de registro para poder navegar en toda la plataforma, pedir prestado cualquier juego y ganar 100 coins mensuales.
             </p>
             <div class="col-md-12 check-list">
-                <li><div class="box" ng-class="InfoPercent >= 100 ? 'checked' : ''"></div><span>Completa tu informaci&oacute;n de contacto</span></li>
-                <li><div class="box" ng-class="false ? 'checked' : ''"></div><span>Completa tu verificaci&oacute;n de identidad</span></li>
-                <li><div class="box" ng-class="false ? 'checked' : ''"></div><span>Mant&eacute;n m&iacute;nimo un juego cargado en la WEB</span></li>
+                <li><div class="box" ng-class="getInfoPercentage() >= 100 ? 'checked' : ''"></div><span>Completa tu informaci&oacute;n de contacto</span></li>
+                <li><div class="box" ng-class="getIdentityPercentage() >= 100 ? 'checked' : ''"></div><span>Completa tu verificaci&oacute;n de identidad</span></li>
+                <li><div class="box" ng-class="currentUser.numberOfGames > 0 ? 'checked' : ''"></div><span>Mant&eacute;n m&iacute;nimo un juego cargado en la WEB</span></li>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -128,7 +128,7 @@
     </section>
     <section class="contact-means">
         <div class="row completed">
-            <div class="col-md-3 text-right"><span class="percent">0%</span></div>
+            <div class="col-md-3 text-right"><span class="percent">{{getIdentityPercentage()}}%</span></div>
             <div class="col-md-9">
                 <span class="subtitle">
                     <img src="img/lock-icon.svg" /><span>Verificaci&oacute;n de identidad</span>
@@ -170,8 +170,8 @@
             <div class="col-xs-12 col-md-4">
                 <form class="col-xs-12 col-md-12">
                     <input placeholder="FACEBOOK" ng-model="currentUser.fbName" readonly>
-                    <button type="button" class="btn btn-primary full small" ng-click="verifyFacebook()" ng-if="!currentUser.isFacebookUser">Verificar</button>
-                    <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="currentUser.isFacebookUser">
+                    <button type="button" class="btn btn-primary full small" ng-click="verifyFacebook()" ng-if="currentUser.facebookToken == null">Verificar</button>
+                    <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="currentUser.facebookToken != null">
                     <span>Ingresa tu cuenta de Facebook<br>para verificar tu ID.</span>
                 </form>
             </div>
@@ -184,7 +184,7 @@
             <button class="btn btn-tertiary small" ng-click="$state.go('gameclub.account.games')">Cargar juego a tu biblioteca</button>
         </div>
         <div class="col-xs-12 col-md-8">
-            <span>Juegos cargados: <span class="quantity" ng-class="games.length > 0 ? 'more' : ''">{{games.length}}</span></span>
+            <span>Juegos cargados: <span class="quantity" ng-class="currentUser.numberOfGames > 0 ? 'more' : ''">{{currentUser.numberOfGames}}</span></span>
             <p>Para poder pedir prestado cualquier juego, tu tienes que cargar un juego para que pueda ser pedido / prestado. Si prestas, juegas.</p>
         </div>
         <div class="clearfix"></div>

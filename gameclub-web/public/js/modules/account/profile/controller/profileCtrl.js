@@ -48,16 +48,17 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     }
 
     $scope.provinceRemoved = function() {
-        console.log("REMOVED");
         $rootScope.currentUser.location = null;
     }
 
     $scope.save = function() {
         sweet.save(function() {
-            let formData = {
-                user: $rootScope.currentUser,
-                avatar: $scope.file.avatar
-            };
+            let formData = {};
+            formData.user = $rootScope.currentUser;
+
+            if ($scope.file.avatar != null) {
+                formData.avatar = $scope.file.avatar;
+            }
 
             rest("publicUser/save").multipart(formData, function(data) {
                 $rootScope.currentUser = data;
@@ -82,7 +83,27 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
 
     $scope.verifyFacebook = function() {
         FB.login(function(response) {
+            if (response.authResponse != null) {
+                FB.api('/me', {fields: 'name, email'}, function(me) {
+                    if (me.email == null) {
+                        FB.logout(function(logoutResponse) {
+                            notif.warning("El correo electrónico es necesario para verificar tu cuenta. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
+                        }, response.authResponse.accessToken);
+                    } else {
+                        $rootScope.currentUser.facebookToken = response.authResponse.accessToken;
+                        let formData = {
+                            user: $rootScope.currentUser
+                        };
 
+                        rest("publicUser/save").multipart(formData, function(data) {
+                            $rootScope.currentUser = data;
+                            notif.success("Cuenta verificada con Facebook");
+                        }, function(error) {
+                            notif.danger("No se pudo actualizar el token de Facebook. Por favor vuelva a intentarlo");
+                        });
+                    }
+                });
+            }
         }, {
             scope: 'public_profile,email',
             auth_type: 'rerequest'
@@ -148,7 +169,35 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         }
 
         percent = Math.round(percent);
-        $scope.InfoPercent = percent;
+        return percent;
+    }
+
+    $scope.getIdentityPercentage = function() {
+        let percent = 0;
+
+        if ($rootScope.currentUser != null) {
+            percent += $rootScope.currentUser.token == null ? 100 : 0;
+            percent += $rootScope.currentUser.facebookToken != null ? 100 : 0;
+
+            percent = percent / 3;
+            percent = Math.round(percent);
+        }
+
+        return percent;
+    }
+
+    $scope.getFullPercentaje = function() {
+        let percent = 0;
+
+        if ($rootScope.currentUser != null) {
+            percent += $scope.getInfoPercentage();
+            percent += $scope.getIdentityPercentage();
+            percent += $rootScope.currentUser.numberOfGames > 0 ? 100 : 0;
+
+            percent = percent / 3.0;
+            percent = Math.round(percent);
+        }
+
         return percent;
     }
 
@@ -162,6 +211,14 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             delete tempUserInfo;
         }
     }
+
+
+
+
+
+
+
+
 
     $scope.isEditableMean = false;
     $scope.editContactMean = function() {

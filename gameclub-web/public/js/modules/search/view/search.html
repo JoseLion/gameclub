@@ -20,11 +20,11 @@
                     <div class="col-xs-12 col-md-4 filter to-validate">
                         <ui-select validation ng-model="search.console" theme="bootstrap" class="selector text-center" required>
                             <ui-select-match allow-clear placeholder="Consola...">
-                                <img ng-src="{{$select.selected.base64}}" class="gameConsole"/>
+                                <img ng-src="{{$select.selected.whiteBase64}}" class="gameConsole"/>
                             </ui-select-match>
                             <ui-select-choices repeat="console in consoles | filter: $select.search" class="text-center">
                                 <div ng-bind-html="'' | highlight: $select.search"></div>
-                                <img ng-src="{{console.base64}}" class="gameConsole"/>
+                                <img ng-src="{{console.whiteBase64}}" class="gameConsole"/>
                             </ui-select-choices>
                         </ui-select>
                     </div>

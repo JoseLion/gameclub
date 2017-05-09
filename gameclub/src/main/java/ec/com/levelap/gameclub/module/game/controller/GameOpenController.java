@@ -33,7 +33,6 @@ public class GameOpenController {
 			search = new Search();
 		}
 		
-		System.out.println("***************** name: " + search.name);
 		Page<GameOpen> games = gameService.getGameRepo().findGamesOpen(search.name, search.categoryId, search.consoleId, new PageRequest(search.page, Const.TABLE_SIZE));
 		
 		for (GameOpen gameOpen : games.getContent()) {

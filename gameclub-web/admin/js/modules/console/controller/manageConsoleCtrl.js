@@ -1,5 +1,6 @@
 angular.module("Console").controller('ManageConsoleCtrl', function($scope, consl, sweet, rest, $state) {
 	$scope.consl = {};
+	$scope.images = {};
 
 	if (consl != null) {
 		consl.$promise.then(function(data) {
@@ -11,7 +12,8 @@ angular.module("Console").controller('ManageConsoleCtrl', function($scope, consl
 		sweet.save(function() {
 			let formData = {
 				console: $scope.consl,
-				logo: $scope.image
+				whiteLogo: $scope.images.white,
+				blackLogo: $scope.images.black
 			};
 
 			rest("console/save").multipart(formData, function() {

@@ -6,7 +6,9 @@ angular.module('Core').directive('loading', function() {
 		scope: {
 			showing: '=',
 			top: '@',
-			bottom: '@'
+			bottom: '@',
+			inline: '@',
+			width: '@'
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
@@ -16,6 +18,13 @@ angular.module('Core').directive('loading', function() {
 			}
 			if($scope.bottom != null && $scope.bottom != '') {
 				$scope.style.bottom = $scope.bottom;
+			}
+			if($scope.inline != null && ($scope.inline == '' || JSON.parse($scope.inline))) {
+				$scope.style.position = 'relative';
+			}
+			if($scope.width != null && $scope.width != '') {
+				$scope.style.width = $scope.width;
+				$scope.style.height = $scope.width;
 			}
 		}
 	};

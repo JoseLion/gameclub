@@ -10,14 +10,39 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 	});
 
 	$scope.signIn = function() {
-		if ($scope.user.terms) {
-			sweet.save(function() {
-				signIn($scope.user);
-			});
-		} else {
-			notif.warning(Const.messages.acceptTerms);
-		}
-	}
+		let modal = $uibModal.open({
+			size: "sm",
+			backdrop: true,
+			templateUrl: "completeSignIn.html",
+			controller: function($scope, $uibModalInstance, notif, sweet, user) {
+				$scope.user = user;
+				$scope.isSaving = false;
+				$scope.ok = function() {
+					if ($scope.user.terms) {
+						$scope.isSaving = true;
+						openRest("publicUser/signIn").post($scope.user, function() {
+							notif.success(Const.messages.success);
+							$uibModalInstance.close(true);
+						}, function(error) {
+							$scope.isSaving = false;
+							sweet.error(error.data.message);
+						});
+					} else {
+						notif.warning(Const.messages.acceptTerms);
+					}
+				};
+
+				$scope.cancel = function() {
+					$uibModalInstance.dismiss();
+				};
+			},
+			resolve: {
+				user : function() {
+					return $scope.user;
+				}
+			}
+		});
+	};
 
 	$scope.login = function() {
 		logIn($scope.credentials);
@@ -27,16 +52,19 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 		$scope.isFbSingIn = true;
 
 		let modal = $uibModal.open({
-			size: "md",
+			size: "sm",
 			backdrop: true,
 			templateUrl: "facebookSignIn.html",
 			controller: function($scope, $uibModalInstance, notif, Const) {
 				$scope.terms = {};
+				$scope.isSaving = false;
 
 				$scope.ok = function() {
+					$scope.isSaving = true;
 					if ($scope.terms.status) {
 						$uibModalInstance.close();
 					} else {
+						$scope.isSaving = false;
 						notif.warning(Const.messages.acceptTerms);
 					}
 				}
@@ -226,7 +254,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 			} else {
 				notif.danger(error.data);
 			}
-			
+
 			$scope.isLoginIn = false;
 			$scope.isFbLogIn = false;
 		});

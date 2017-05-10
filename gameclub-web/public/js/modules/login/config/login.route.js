@@ -16,6 +16,21 @@ angular.module('Login').config(function($stateProvider) {
 				}]);
 			}
 		}
+	})
+
+	.state(prefix + 'validate', {
+		url: '/validate',
+		templateUrl: 'js/modules/login/view/validate.html',
+		data: {displayName: 'GameClub', description: '', keywords: ''},
+		controller: 'ValidateCtrl',
+		resolve: {
+			loadPlugin: function($ocLazyLoad) {
+				return $ocLazyLoad.load([{
+					name: 'Login',
+					files: ['js/modules/login/controller/validateCtrl.js']
+				}]);
+			}
+		}
 	});
 
 });

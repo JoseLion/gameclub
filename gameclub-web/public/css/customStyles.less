@@ -119,6 +119,7 @@ footer .spacing{letter-spacing:2.5px;}
 footer .top-space{margin-top:5px;}
 footer .designed{background-color:@color-secundary;color:@color-tertiary;text-align:center;padding-top:8px;font-size:14px;}
 footer .designed span{letter-spacing:1px;}
+.fixed-bottom{position:fixed;bottom:0;}
 /****************************/
 
 
@@ -847,9 +848,11 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #game section.final{height:2em;width:100%;background:@color-primary-alt;}
 /*******************************/
 
-
-
-
+/********** VALIDATION-PAGE **********/
+#validate-account{padding-top:15em;}
+#validate-account::before{content:"";background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%;position:absolute;top:0;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;width:100%;height:100%}
+#validate-account h2{color:@color-tertiary;}
+/*************************************/
 
 /*
 background:@color-primary;

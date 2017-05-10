@@ -62,8 +62,10 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 								username: me.email,
 								name: me.name,
 								lastName: "",
-								password: me.id,
-								isFacebookUser: true
+								password: me.userID,
+								isFacebookUser: true,
+								facebookToken: response.authResponse.accessToken,
+								facebookName: me.name
 							};
 
 							signIn(user);
@@ -89,16 +91,25 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 				FB.api('/me', {fields: 'name, email'}, function(me) {
 					if (me.email == null) {
 						FB.logout(function(logoutResponse) {
-							notif.warning("El correo electrónico es necesario para crea una cuenta en Smartbid. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
+							notif.warning("El correo electrónico es necesario para crea una cuenta en Game Club. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
 							$scope.isFbLogIn = false;
 						}, response.authResponse.accessToken);
 					} else {
 						let credentials = {
 							username: me.email,
-							password: me.id
+							password: me.userID
 						};
 
 						logIn(credentials);
+
+						$rootScope.currentUser.facebookToken = response.authResponse.accessToken;
+						let formData = {
+							user: $rootScope.currentUser
+						};
+
+						rest("publicUser/save").multipart(formData, function(data) {
+							$rootScope.currentUser = data;
+						}, function(error) {});
 					}
 				});
 			} else {

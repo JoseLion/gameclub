@@ -47,8 +47,12 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 		$rootScope.consoles = data;
 
 		forEach($rootScope.consoles, function(cnsl) {
-			openRest("archive/downloadFile").download({name: cnsl.logo.name, module: cnsl.logo.module}, function(data) {
-				cnsl.base64 = getImageBase64(data, cnsl.logo.type);
+			openRest("archive/downloadFile").download({name: cnsl.whiteLogo.name, module: cnsl.whiteLogo.module}, function(data) {
+				cnsl.whiteBase64 = getImageBase64(data, cnsl.whiteLogo.type);
+			});
+
+			openRest("archive/downloadFile").download({name: cnsl.blackLogo.name, module: cnsl.blackLogo.module}, function(data) {
+				cnsl.blackBase64 = getImageBase64(data, cnsl.blackLogo.type);
 			});
 		});
 	});
@@ -67,6 +71,12 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			delete $rootScope.currentUser;
 			$state.go(Const.mainState);
 		});
+	}
+
+	$scope.goToAccount = function() {
+		if (!$state.includes("gameclub.account")) {
+			$state.go("gameclub.account");
+		}
 	}
 
 	$rootScope.link = {

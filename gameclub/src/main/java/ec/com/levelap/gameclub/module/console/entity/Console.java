@@ -24,8 +24,12 @@ public class Console extends BaseEntity {
 	private String name;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="logo", foreignKey=@ForeignKey(name="logo_archive_fk"))
-	private Archive logo;
+	@JoinColumn(name="white_logo", foreignKey=@ForeignKey(name="white_logo_archive_fk"))
+	private Archive whiteLogo;
+	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="black_logo", foreignKey=@ForeignKey(name="black_logo_archive_fk"))
+	private Archive blackLogo;
 
 	public String getName() {
 		return name;
@@ -35,11 +39,19 @@ public class Console extends BaseEntity {
 		this.name = name;
 	}
 
-	public Archive getLogo() {
-		return logo;
+	public Archive getWhiteLogo() {
+		return whiteLogo;
 	}
 
-	public void setLogo(Archive logo) {
-		this.logo = logo;
+	public void setWhiteLogo(Archive whiteLogo) {
+		this.whiteLogo = whiteLogo;
+	}
+
+	public Archive getBlackLogo() {
+		return blackLogo;
+	}
+
+	public void setBlackLogo(Archive blackLogo) {
+		this.blackLogo = blackLogo;
 	}
 }

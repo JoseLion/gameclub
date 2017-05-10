@@ -25,8 +25,8 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 		$scope.consoles = data;
 
 		forEach($scope.consoles, function(consl) {
-			rest("archive/downloadFile").download({name: consl.logo.name, module: consl.logo.module}, function(data) {
-				consl.base64 = getImageBase64(data, consl.logo.type);
+			rest("archive/downloadFile").download({name: consl.whiteLogo.name, module: consl.whiteLogo.module}, function(data) {
+				consl.base64 = getImageBase64(data, consl.whiteLogo.type);
 			});
 		});
 	});

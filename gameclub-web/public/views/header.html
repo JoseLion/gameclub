@@ -19,12 +19,16 @@
             <nav>
                 <li><button class="btn btn-primary" ui-sref="{{link.shareAndPlay.route}}" ui-sref-active="active"><span class="spacing">{{link.shareAndPlay.name}}</span></button></li>
                 <li><button class="btn btn-primary" ><span class="upper-case">{{link.faq.name}}</span></button></li>
-                <li><button class="btn btn-primary" ui-sref="{{link.blog.route}}" ui-sref-active="active"><span class="upper-case">{{link.blog.name}}</span></button></li>
+                <li>
+                    <button class="btn btn-primary" ui-sref="{{link.blog.route}}" ui-sref-active="active">
+                        <span class="upper-case">{{link.blog.name}}</span>
+                    </button>
+                </li>
                 <li ng-if="!currentUser">
-                    <button class="btn btn-primary" ui-sref="{{link.login.route}}" ui-sref-active="active"><span class="upper-case">{{link.login.name}}</span></button>
+                    <button type="button" class="btn btn-primary" ui-sref="gameclub.login" ui-sref-active="active"><span class="upper-case">Inicia sesión</span></button>
                 </li>
                 <li ng-if="currentUser" class="account">
-                    <button class="btn btn-primary" ui-sref="{{link.account.route}}" ui-sref-active="active">
+                    <button type="button" class="btn btn-primary" ng-click="goToAccount()">
                         <span class="upper-case">
                             <span class="name">{{currentUser.name}}</span> <span class="last-name">{{currentUser.lastName}}</span>
                         </span>

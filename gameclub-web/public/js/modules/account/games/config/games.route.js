@@ -5,6 +5,10 @@ angular.module('Games').config(function($stateProvider) {
 	$stateProvider
 	.state(prefix + 'games', {
 		url: '/games',
+		params: {
+			isGameLoan: true,
+			isEditing: false
+		},
 		templateUrl: 'js/modules/account/games/view/games.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'GamesCtrl',
@@ -14,6 +18,12 @@ angular.module('Games').config(function($stateProvider) {
 					name: 'Games',
 					files: ['js/modules/account/games/controller/gamesCtrl.js']
 				}]);
+			},
+			isGameLoan: function($stateParams) {
+				return $stateParams.isGameLoan;
+			},
+			isEditing: function($stateParams) {
+				return $stateParams.isEditing;
 			}
 		}
 	});

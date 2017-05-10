@@ -6,6 +6,16 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 	if (game != null) {
 		game.$promise.then(function(data) {
 			$scope.game = data;
+
+			setTimeout(function() {
+				forEach($scope.game.magazineRatings, function(gameMagazine, i) {
+					console.log("ion: ", angular.element("#rating-slider-" + i));
+					let element = angular.element("#rating-slider-" + i)[0];
+					element.updateData({
+						from: gameMagazine.rating
+					});
+				});
+			}, 100);
 		});
 	} else {
 		magazines.$promise.then(function(data) {
@@ -40,6 +50,21 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 			});
 		});
 	});
+
+	$scope.getSliderOptions = function(gameMagazine) {
+		return {
+			min: 0,
+			max: 100,
+			type: 'single',
+			step: 1,
+			//postfix: '%',
+			prettify: false,
+			hasGrid: true,
+			onChange: function(val) {
+				gameMagazine.rating = val.fromNumber;
+			}
+		};
+	}
 
 	$scope.changeVideo = function() {
 		if ($scope.game.trailerUrl != null) {

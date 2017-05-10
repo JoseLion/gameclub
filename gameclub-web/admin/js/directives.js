@@ -333,10 +333,11 @@ function ionRangeSlider() {
     return {
         restrict: 'A',
         scope: {
-            rangeOptions: '='
+            //rangeOptions: '=',
+            rangeOptions: '&'
         },
         link: function (scope, elem, attrs) {
-            elem.ionRangeSlider(scope.rangeOptions);
+            elem.ionRangeSlider(scope.rangeOptions());
         }
     }
 }

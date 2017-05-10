@@ -38,10 +38,16 @@
         </div>
         <div class="clearfix"></div>
     </section>
-    <section class="row games">
+    <section class="row games" ng-if="!isGameLoan">
         <form class="header">
             <div class="col-md-4 text-left no-padding-left filters">
-                <li><a href><i class="gc gc-usd"></i></a></li><li><a href><img src="img/star-score.svg" /></a></li><li class="active"><a href><i class="gc gc-filter"></i></a></li>
+                <li>
+                    <a href class="active"><i class="gc gc-usd"></i></a>
+                </li><li>
+                    <a href><i class="gc gc-rating"></i></a>
+                </li><li>
+                    <a href><i class="gc gc-filter"></i></a>
+                </li>
             </div>
             <div class="col-md-4 text-center"><span class="subtitle">Tus juegos</span></div>
             <div class="col-md-4 text-rigth no-padding-right">
@@ -72,6 +78,108 @@
             <blog-paging pages="3" current="currentPage" class="paging"/>
         </div>
     </section>
+    <div id="game">
+        <section class="row banner">
+            <div ng-style="background"></div>
+        </section>
+        <section class="row header">
+            <div class="col-md-3 cover">
+                <game-rating src="'img/test/game-5.png'" no-rating no-selection="true"></game-rating>
+            </div>
+            <div class="col-md-6 principal">
+                <h2 class="col-md-12 title">THE LEGEND OF ZELDA: Breath of the Wild</h2>
+                <div class="col-md-12 rating-container">
+                    <i class="gc gc-rating rating-1 yes"></i>
+                    <i class="gc gc-rating rating-2 yes"></i>
+                    <i class="gc gc-rating rating-3 yes"></i>
+                    <i class="gc gc-rating rating-4 yes"></i>
+                    <i class="gc gc-rating rating-5"></i>
+                </div>
+                <div class="col-md-12 no-padding-left no-padding-right">
+                    <button class="btn btn-primary small">Editar informaci&oacute;n</button>
+                </div>
+            </div>
+            <div class="col-md-3 rating text-right">
+                <div class="col=md-12 content-rating">
+                    <img src="img/test/svg/esrb.svg" />
+                </div>
+                <div class="col=md-12 platform">
+                    <img src="img/test/svg/nintendo-switch-b.svg" />
+                </div>
+                <div class="col=md-12 category">
+                    <img src="img/test/svg/sports.svg" />
+                    <img src="img/test/svg/sports.svg" />
+                    <img src="img/test/svg/sports.svg" />
+                </div>
+            </div>
+        </section>
+        <section class="row information">
+            <form class="form-horizontal">
+                <div class="col-md-12">
+                    <label class="col-md-2">Estatus</label>
+                    <div class="col-md-3">
+                        <ui-select ng-model="gameLoan.status" theme="bootstrap" class="selector">
+                            <ui-select-match placeholder="Seleccionar...">{{$select.selected}}</ui-select-match>
+                            <ui-select-choices repeat="status in [ 'DISPONIBLE', 'PRESTADO' ]  | filter: $select.search">
+                                <div ng-bind-html="status | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="col-md-3">Estado del juego</label>
+                    <div class="col-md-2">
+                        <ui-select ng-model="gameLoan.gameStatus" theme="bootstrap" class="selector">
+                            <ui-select-match placeholder="Seleccionar...">{{$select.selected}}/10</ui-select-match>
+                            <ui-select-choices repeat="status in [ 1, 2, 3, 4, 5, 6 ]  | filter: $select.search">
+                                <div ng-bind-html="status | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="col-md-3">Observaciones</label>
+                    <div class="col-md-9">
+                        <textarea ng-model="gameLoan.comments" class="complete" rows="3">
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="col-md-5">Obligacion de asegurar el juego</label>
+                    <div class="col-md-7 no-padding-left">
+                        <div class="col-md-12 check" ng-class="gameLoan.insured ? 'active' : ''" ng-click="gameLoan.insured = !gameLoan.insured">
+                            Si <span class="help">(el jugador está obligado a pagar el fee de seguro para poder pedir prestado el juego.)</span>
+                        </div>
+                        <div class="col-md-12 check" ng-class="!gameLoan.insured ? 'active' : ''" ng-click="gameLoan.insured = !gameLoan.insured">
+                            No <span class="help">(el jugador no está obligado a pagar el fee de seguro para poder pedir prestado el juego.)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="col-md-4">Costo prestamo por semana</label>
+                    <div class="col-md-4">
+                        <input ng-model="gameLoan.coins" class="coins" placeholder="Coins" type="number" />
+                    </div>
+                    <span class="col-md-4 text-right help">
+                        (Recomendación del juego: 100-200 Coins)
+                    </span>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <button class="btn btn-primary small">Guardar informaci&oacute;n</button>
+                    </div>
+                </div>
+            </form>
+            <div class="clearfix"></div>
+        </section>
+    </div>
     <section class="row upload text-center" ng-if="!isSearching">
         <span class="subtitle">Carga tus juegos</span>
         <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar COINS y poder pedir prestado otros juegos.</p>

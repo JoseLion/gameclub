@@ -39,8 +39,8 @@ public class ConsoleController {
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<?> save(@RequestPart Console console, @RequestPart(required=false) MultipartFile logo) throws ServletException, IOException {
-		return consoleService.save(console, logo);
+	public ResponseEntity<?> save(@RequestPart Console console, @RequestPart(required=false) MultipartFile whiteLogo, @RequestPart(required=false) MultipartFile blackLogo) throws ServletException, IOException {
+		return consoleService.save(console, whiteLogo, blackLogo);
 	}
 	
 	@Transactional

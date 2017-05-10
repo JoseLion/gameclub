@@ -32,7 +32,7 @@ public class ConsoleService extends BaseService<Console> {
 	public DocumentService documentService;
 	
 	@Transactional
-	public ResponseEntity<?> save(Console console, MultipartFile logo) throws ServletException, IOException {
+	public ResponseEntity<?> save(Console console, MultipartFile whiteLogo, MultipartFile blackLogo) throws ServletException, IOException {
 		if (console.getId() == null) {
 			Console found = consoleRepo.findByName(console.getName());
 			
@@ -48,21 +48,38 @@ public class ConsoleService extends BaseService<Console> {
 			}
 		}
 		
-		if (logo != null) {
+		if (whiteLogo != null) {
 			Archive archive = new Archive();
 			
 			if (console.getId() != null) {
 				Console original = consoleRepo.findOne(console.getId());
-				documentService.deleteFile(original.getLogo().getName(), Console.class.getSimpleName());
-				archive = original.getLogo();
+				documentService.deleteFile(original.getWhiteLogo().getName(), Console.class.getSimpleName());
+				archive = original.getWhiteLogo();
 			}
 			
-			FileData fileData = documentService.saveFile(logo, Console.class.getSimpleName());
+			FileData fileData = documentService.saveFile(whiteLogo, Console.class.getSimpleName());
 			
 			archive.setModule(Console.class.getSimpleName());
 			archive.setName(fileData.getName());
-			archive.setType(logo.getContentType());
-			console.setLogo(archive);
+			archive.setType(whiteLogo.getContentType());
+			console.setWhiteLogo(archive);
+		}
+		
+		if (blackLogo != null) {
+			Archive archive = new Archive();
+			
+			if (console.getId() != null) {
+				Console original = consoleRepo.findOne(console.getId());
+				documentService.deleteFile(original.getBlackLogo().getName(), Console.class.getSimpleName());
+				archive = original.getBlackLogo();
+			}
+			
+			FileData fileData = documentService.saveFile(blackLogo, Console.class.getSimpleName());
+			
+			archive.setModule(Console.class.getSimpleName());
+			archive.setName(fileData.getName());
+			archive.setType(blackLogo.getContentType());
+			console.setBlackLogo(archive);
 		}
 		
 		consoleRepo.save(console);

@@ -1,4 +1,4 @@
-angular.module('Games').controller('GamesCtrl', function($scope) {
+angular.module('Games').controller('GamesCtrl', function($scope, isGameLoan, isEditing) {
 
     $scope.isSearching = false;
     $scope.showSearch = function() {
@@ -166,5 +166,20 @@ angular.module('Games').controller('GamesCtrl', function($scope) {
     $scope.viewGame = function(game) {
         console.log('DIRECCIONAR AL JUEGO');
     };
+
+    /* MAQUETACIÓN DE LA FICHA DE PRESTAMO */
+    $scope.background = {
+        background: "url('img/test/cover-zelda.jpg') center bottom / 100% no-repeat"
+    };
+    $scope.isGameLoan = isGameLoan;
+    $scope.isEditing = isEditing;
+    $scope.gameLoan = {
+        status: 'DISPONIBLE',
+        gameStatus: 9,
+        comments: 'El juego tiene un rasguño en el tiro del CD.',
+        insured: true,
+        coins: 150
+    };
+
 
 });

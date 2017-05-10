@@ -12,9 +12,16 @@
 				</div>
 
 				<div class="form-group to-validate">
-					<label class="col-md-3 control-label">Logotipo</label>
+					<label class="col-md-3 control-label">Logotipo Blanco</label>
 					<div class="col-md-4">
-						<image-upload ng-model="image" archive="consl.logo" required></image-upload>
+						<image-upload ng-model="images.white" archive="consl.whiteLogo" required></image-upload>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Logotipo Negro</label>
+					<div class="col-md-4">
+						<image-upload ng-model="images.black" archive="consl.blackLogo" required></image-upload>
 					</div>
 				</div>
 

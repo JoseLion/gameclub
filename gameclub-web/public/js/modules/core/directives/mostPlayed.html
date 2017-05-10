@@ -10,10 +10,10 @@
             </div>
             <div class="col-xs-3 col-md-3 no-padding-right text-right">
                 <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector">
-                    <ui-select-match><img ng-src="{{$select.selected.base64}}" class="gameConsole"/></ui-select-match>
+                    <ui-select-match><img ng-src="{{$select.selected.whiteBase64}}" class="gameConsole"/></ui-select-match>
                     <ui-select-choices repeat="gameConsole in gameConsoles | filter: $select.search.name" class="text-center">
                         <div ng-bind-html="'' | highlight: $select.search.name"></div>
-                        <img ng-src="{{gameConsole.base64}}" class="gameConsole"/>
+                        <img ng-src="{{gameConsole.whiteBase64}}" class="gameConsole"/>
                     </ui-select-choices>
                 </ui-select>
             </div>

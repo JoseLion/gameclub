@@ -7,7 +7,6 @@ angular.module('TermsConditions').controller('TermsConditionsCtrl', function($sc
         $scope.showConfirmation = false;
     }
     $scope.ok = function() {
-        console.log($scope.terms.accepted)
         if ($scope.terms.accepted) {
             $scope.isSaving = true;
 

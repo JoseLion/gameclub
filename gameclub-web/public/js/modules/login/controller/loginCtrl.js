@@ -1,4 +1,4 @@
-angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, sweet, openRest, $state, Const, authenticate, rest, SweetAlert, $uibModal, notif) {
+angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, sweet, openRest, $state, Const, authenticate, rest, SweetAlert, $uibModal, notif, $location) {
 	$scope.user = {};
 	$scope.credentials = {};
 	$scope.passRegex = '^(?=.*[0-9])(?=.*[A-Z])([0-9-a-zA-Z]+)$';
@@ -188,7 +188,9 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 	}
 
 	function signIn(user) {
-		openRest("publicUser/signIn").post(user, function() {
+		let url = $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2);
+		
+		openRest("publicUser/signIn").post({baseUrl: url, publicUser: user}, function() {
 			SweetAlert.swal("Registro Exitoso", "Para completar el registro entra a tu correo y da click en el link de confirmación que hemos enviado", "success");
 			$scope.isFbSingIn = false;
 		}, function(error) {

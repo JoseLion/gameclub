@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,8 @@ public class PublicUserOpenController {
 	private PublicUserService publicUserService;
 	
 	@RequestMapping(value="signIn", method=RequestMethod.POST)
-	public ResponseEntity<?> signIn(@RequestBody PublicUser publicUser, HttpServletRequest request) throws ServletException, MessagingException {
-		return publicUserService.signIn(publicUser, request);
+	public ResponseEntity<?> signIn(@RequestBody SignObj signObj) throws ServletException, MessagingException {
+		return publicUserService.signIn(signObj.publicUser, signObj.baseUrl);
 	}
 	
 	@RequestMapping(value="verifyAccount/{token}/{id}", method=RequestMethod.GET)
@@ -60,5 +59,11 @@ public class PublicUserOpenController {
 		public String phone;
 		
 		public String message;
+	}
+	
+	private static class SignObj {
+		public PublicUser publicUser;
+		
+		public String baseUrl;
 	}
 }

@@ -43,7 +43,7 @@ public class PublicUserService {
 	private DocumentService documentService;
 	
 	@Transactional
-	public ResponseEntity<?> signIn(PublicUser publicUser, HttpServletRequest request) throws ServletException, MessagingException {
+	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl) throws ServletException, MessagingException {
 		PublicUser found = publicUserRepo.findByUsername(publicUser.getUsername());
 		
 		if (found != null) {
@@ -58,8 +58,7 @@ public class PublicUserService {
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		String baseUrl = request.getRequestURL().substring(0, request.getRequestURL().indexOf(request.getRequestURI())).toString() + "/gameclub/";
-		params.put("link", baseUrl + "open/publicUser/verifyAccount/" + publicUser.getToken() + "/" + publicUser.getId());
+		params.put("link", baseUrl + "/gameclub/verification/" + publicUser.getToken() + "/" + publicUser.getId());
 		
 		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
 		

@@ -42,13 +42,6 @@
 
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a href>T&eacute;rminos y Condiciones</a></span>
-            </div>
-            <div class="col-md-1"></div>
-            <div class="clearfix"></div>
-
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
                 <button type="submit" class="btn btn-primary-alt">Registrarme</button>
             </div>
             <div class="col-md-1"></div>
@@ -134,32 +127,23 @@
 <script type="text/ng-template" id="facebookSignIn.html">
     <div class="inmodal">
         <div class="modal-heading text-center">
-            <h2>Registro por Facebook</h2>
+            <h2 class="tertiary"><i class="gc gc-facebook"></i></h2>
         </div>
 
         <div class="modal-body">
-            <div class="form-group">
-                <div class="col-md-12">
-                    <span>Para registrarte con Facebook primero debes aceptar los terminos y condiciones</span>
+            <form role="form" on-submit="ok()" class="terms-form form-horizontal" novalidate>
+                <div class="form-group text-center">
+                    <input type="checkbox" ng-model="terms.status"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" ng-click="cancel()">{{link.termsConditions.name}}</a></span>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-12 text-center">
-                    <input type="checkbox" ng-model="terms.status"><span class="legal">Acepto los <a href>T&eacute;rminos y Condiciones</a></span>
+                <div class="form-group text-center">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn save"><span ng-if="!isSaving">OK</span><loading showing="isSaving" inline width="1em"/></button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-6 text-center">
-                    <button type="button" class="btn btn-primary" ng-click="ok()">OK</button>
-                </div>
-
-                <div class="col-md-6 text-center">
-                    <button type="button" class="btn btn-primary-alt" ng-click="cancel()">Cancelar</button>
-                </div>
-            </div>
-
+            </form>
             <div class="clearfix"></div>
         </div>
     </div>
@@ -196,6 +180,25 @@
                     <div class="col-md-6 text-center">
                         <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
                     </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="completeSignIn.html">
+    <div class="inmodal">
+        <div class="modal-heading text-center">
+            <h2 class="tertiary"><i class="gc gc-person"></i></h2>
+        </div>
+
+        <div class="modal-body">
+            <form role="form" on-submit="ok()" class="terms-form form-horizontal" novalidate>
+                <div class="form-group text-center">
+                    <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" ng-click="cancel()">{{link.termsConditions.name}}</a></span>
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn cancel"><span ng-if="!isSaving">Continuar</span><loading showing="isSaving" inline width="1em"/></button>
                 </div>
             </form>
         </div>

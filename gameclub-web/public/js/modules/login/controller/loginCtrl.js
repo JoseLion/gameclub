@@ -58,7 +58,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 			controller: function($scope, $uibModalInstance, notif, Const) {
 				$scope.terms = {};
 				$scope.isSaving = false;
-
+				$scope.isFacebook = true;
 				$scope.ok = function() {
 					$scope.isSaving = true;
 					if ($scope.terms.status) {

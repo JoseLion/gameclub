@@ -4,7 +4,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			$rootScope.paddingLogged = {
 				padding: '1.4em 0'
 			};
-			
+
 			rest("publicUser/getCurrentUser").get(function(data) {
 				if (!data.status || data.token != null) {
 					$rootScope.logout();
@@ -99,6 +99,10 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 		account : {
 			name: 'Pablo Ponce',
 			route: 'gameclub.account'
+		},
+		termsConditions : {
+			name: 'Términos y Condiciones',
+			route: 'gameclub.termsConditions({user:user, isFacebook:isFacebook})'
 		}
 	};
 	$rootScope.accountlinks = {

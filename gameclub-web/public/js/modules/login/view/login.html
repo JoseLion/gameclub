@@ -133,7 +133,7 @@
         <div class="modal-body">
             <form role="form" on-submit="ok()" class="terms-form form-horizontal" novalidate>
                 <div class="form-group text-center">
-                    <input type="checkbox" ng-model="terms.status"><span class="legal">Acepto los <a href>T&eacute;rminos y Condiciones</a></span>
+                    <input type="checkbox" ng-model="terms.status"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" ng-click="cancel()">{{link.termsConditions.name}}</a></span>
                 </div>
                 <div class="form-group text-center">
                     <div class="col-md-6">
@@ -195,7 +195,7 @@
         <div class="modal-body">
             <form role="form" on-submit="ok()" class="terms-form form-horizontal" novalidate>
                 <div class="form-group text-center">
-                    <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a href>T&eacute;rminos y Condiciones</a></span>
+                    <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" ng-click="cancel()">{{link.termsConditions.name}}</a></span>
                 </div>
                 <div class="form-group text-center">
                     <button type="submit" class="btn cancel"><span ng-if="!isSaving">Continuar</span><loading showing="isSaving" inline width="1em"/></button>

@@ -40,28 +40,19 @@
 								</div>
 							</div>
 
-							<div class="form-group to-validate">
-								<label class="col-md-3 control-label">Rating</label>
-								<div class="col-md-3">
-									<ui-select ng-model="game.rating" theme="bootstrap">
-										<ui-select-match allow-clear placeholder="0">{{$select.selected}}</ui-select-match>
-										<ui-select-choices repeat="rate in [1, 2, 3, 4, 5]">
-											<div ng-bind-html="rate"></div>
-										</ui-select-choices>
-									</ui-select>
-								</div>
-							</div>
-
 							<div class="form-group" ng-repeat="gameMagazine in game.magazineRatings">
 								<div class="to-validate">
 									<label class="col-md-3 control-label">Rating {{gameMagazine.magazine.name}}</label>
 									<div class="col-md-3">
-										<ui-select validation ng-model="gameMagazine.rating" theme="bootstrap" required>
+										<div id="rating-slider-{{$index}}" ion-range-slider range-options="getSliderOptions(gameMagazine)"></div>
+
+
+										<!-- <ui-select validation ng-model="gameMagazine.rating" theme="bootstrap" required>
 											<ui-select-match allow-clear placeholder="0">{{$select.selected}}</ui-select-match>
 											<ui-select-choices repeat="rate in [1, 2, 3, 4, 5]">
 												<div ng-bind-html="rate"></div>
 											</ui-select-choices>
-										</ui-select>
+										</ui-select> -->
 									</div>
 								</div>
 

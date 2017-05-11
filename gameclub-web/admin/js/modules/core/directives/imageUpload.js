@@ -49,7 +49,6 @@ angular.module("Core").directive('imageUpload', function(getImageBase64, rest) {
 			});
 
 			$scope.$watch("imageInput.file", function(newValue, oldValue) {
-				console.log("file: ", newValue);
 				if (newValue != null) {
 					ctrl.$setViewValue(newValue);
 				}

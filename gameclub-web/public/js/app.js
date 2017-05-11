@@ -15,7 +15,7 @@ angular.module('GameClub', [
 	'Search',
 	'Settings',
 	'Profile',
-	'Games',
+	'MyGames',
 	'Game',
 	'TermsConditions'
 ])

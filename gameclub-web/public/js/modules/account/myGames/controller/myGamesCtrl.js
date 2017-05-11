@@ -1,9 +1,66 @@
-angular.module('Games').controller('GamesCtrl', function($scope, isGameLoan, isEditing) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, game, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest) {
+    $scope.myGame = {};
+    $scope.search = {};
+    $scope.totalElements;
 
-    $scope.isSearching = false;
+    gamesList.$promise.then(function(data) {
+        setPagedData(data);
+    });
+
+    if (game != null) {
+        $scope.showGame = true;
+        $scope.myGame.game = game;
+        $scope.myGame.console = game.consoles[0].console;
+
+        openRest("archive/downloadFile").download({name: $scope.myGame.game.banner.name, module: $scope.myGame.game.banner.module}, function(data) {
+            $scope.background = {
+                background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
+            };
+        });
+    }
+
     $scope.showSearch = function() {
         $scope.isSearching = true;
-    };
+    }
+
+    $scope.find = function() {
+        if ($scope.search.console != null) {
+            $state.go("gameclub.search", {
+                name: $scope.search.name != null ? $scope.search.name : "",
+                categoryId: $scope.search.category != null ? $scope.search.category.id : null,
+                consoleId: $scope.search.console.id,
+                title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))
+            });
+        } else {
+            notif.warning("La consola es requerida para realizar la búsqueda");
+        }
+    }
+
+    $scope.save = function() {
+        sweet.save(function() {
+            rest("publicUser/saveGame").post($scope.myGame, function(data) {
+                sweet.success();
+                setPagedData(data);
+                $scope.showGame = false;
+                sweet.close();
+            }, function(error) {
+                sweet.close();
+            });
+        });
+    }
+
+    function setPagedData(data) {
+        $scope.gamesList = data.content;
+        $scope.totalElements = data.totalElements;
+        $scope.totalPages = data.totalPages;
+    }
+
+
+
+
+
+
+
 
     $scope.gameConsolesW =[
         {
@@ -168,11 +225,7 @@ angular.module('Games').controller('GamesCtrl', function($scope, isGameLoan, isE
     };
 
     /* MAQUETACIÓN DE LA FICHA DE PRESTAMO */
-    $scope.background = {
-        background: "url('img/test/cover-zelda.jpg') center bottom / 100% no-repeat"
-    };
-    $scope.isGameLoan = isGameLoan;
-    $scope.isEditing = isEditing;
+
     $scope.gameLoan = {
         status: 'DISPONIBLE',
         gameStatus: 9,

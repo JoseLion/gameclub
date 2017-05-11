@@ -105,26 +105,4 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			route: 'gameclub.termsConditions({user:user, isFacebook:isFacebook})'
 		}
 	};
-	$rootScope.accountlinks = {
-		profile : {
-			name: 'Tu perfil',
-			route: 'gameclub.account.profile'
-		},
-		settings : {
-			name: 'Tu cuenta',
-			route: 'gameclub.account.settings'
-		},
-		games : {
-			name: 'Tus juegos',
-			route: 'gameclub.account.games'
-		},
-		messages : {
-			name: 'Mensajes',
-			route: ''
-		},
-		getCoins : {
-			name: 'Obtén coins',
-			route: ''
-		}
-	};
 });

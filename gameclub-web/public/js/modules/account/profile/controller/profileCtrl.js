@@ -1,4 +1,4 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif) {
+angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location) {
     $scope.file = {};
     let tempUserInfo;
 
@@ -69,7 +69,9 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
 
     $scope.resendMailVerification = function() {
         sweet.default("Se reenviará el correo con el link de verificación a tu correo", function() {
-            rest("publicUser/resendVerification").get(function() {
+            let baseUrl = $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2);
+            
+            rest("publicUser/resendVerification").post(baseUrl, function() {
                 notif.success("El correo se reenvió con éxito");
                 sweet.close();
             }, function(error) {

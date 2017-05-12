@@ -27,6 +27,7 @@ import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
+import ec.com.levelap.gameclub.module.user.controller.PublicUserController.Password;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserOpenController.ContactUs;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
@@ -151,6 +152,22 @@ public class PublicUserService {
 		
 		Page<PublicUserGame> gameList = publicUserGameRepo.findMyGames(user, null, new PageRequest(0, Const.TABLE_SIZE, new Sort("game.name")));
 		return gameList;
+	}
+	
+	@Transactional
+	public ResponseEntity<?> changePassword(Password password) throws ServletException {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
+		PublicUser user = this.getCurrentUser();
+		
+		if (encoder.matches(password.current, user.getPassword())) {
+			user.setPassword(encoder.encode(password.change));
+			user.setHasTempPassword(false);
+			user = publicUserRepo.save(user);
+			
+			return new ResponseEntity<PublicUser>(user, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ErrorControl>(new ErrorControl("Contraseña incorrecta. Por favor intentelo nuevamente", true), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	public PublicUserRepo getPublicUserRepo() {

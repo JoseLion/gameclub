@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
@@ -75,11 +74,22 @@ public class PublicUserController {
 		return new ResponseEntity<Page<PublicUserGame>>(gameList, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="changePassword", method=RequestMethod.POST)
+	public ResponseEntity<?> changePassword(@RequestBody Password password) throws ServletException {
+		return publicUserService.changePassword(password);
+	}
+	
 	private static class Filter {
 		public String sort;
 		
 		public Long consoleId;
 		
 		public Integer page = 0;
+	}
+	
+	public static class Password {
+		public String current;
+		
+		public String change;
 	}
 }

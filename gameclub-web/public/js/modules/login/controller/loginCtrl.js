@@ -221,11 +221,18 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 			if (response.data == Const.ok) {
 				rest("publicUser/getCurrentUser").get(function(data) {
 					if (data != null) {
-						$rootScope.currentUser = data;
+						if (data.hasTempPassword) {
+							let modal = changePassword();
 
-						/*if ($rootScope.currentUser.isTempPassword) {
-							changePassword();
-						}*/
+							modal.result.then(function(userData) {
+								$rootScope.currentUser = userData;
+							}, function() {
+								$cookies.remove(Const.cookieToken);
+								$rootScope.currentUser = null;
+							});
+						} else {
+							$rootScope.currentUser = data;
+						}
 					} else {
 						$cookies.remove(Const.cookieToken);
 					}

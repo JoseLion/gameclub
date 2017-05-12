@@ -1,27 +1,35 @@
 angular.module('Core').directive('blogPaging', function() {
 	return {
 		restrict: 'E',
+		require: 'ngModel',
 		templateUrl: 'js/modules/core/directives/blogPaging.html',
 		scope: {
 			pages: '=',
-			current: '='
+			ngModel: '='
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
-			if($scope.current == null) {
-				$scope.current = 0;
-			}
-			$scope.pageList = [];
-			for(let i=0 ; i<$scope.pages ; i++) {
-				$scope.pageList.push({active: i==0 ? true : false});
+			if ($scope.ngModel == null) {
+				ctrl.$setViewValue(0);
 			}
 
-			$scope.changePage = function(page, idx) {
-				$scope.pageList[$scope.current].active = false;
+			$scope.changePage = function(page) {
+				$scope.pageList[$scope.ngModel].active = false;
 				page.active = true;
-				$scope.current = idx;
-			};
+				ctrl.$setViewValue(page.number);
+			}
 
+			$scope.$watch("pages", function(newValue, oldValue) {
+				if (newValue != null) {
+					$scope.pageList = [];
+					for(let i = 0; i < newValue; i++) {
+						$scope.pageList.push({
+							number: i,
+							active: ($scope.ngModel == i ? true : false)
+						});
+					}
+				}
+			});
 		}
 	};
 });

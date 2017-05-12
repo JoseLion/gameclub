@@ -8,10 +8,10 @@ import javax.servlet.ServletException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,11 +19,16 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
 
+/**
+ * @author Jose
+ *
+ */
 @RestController
 @RequestMapping(value="api/publicUser", produces=MediaType.APPLICATION_JSON_VALUE)
 public class PublicUserController {
@@ -48,14 +53,18 @@ public class PublicUserController {
 		return new ResponseEntity<PublicUser>(user, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="getGamesList/{page}", method=RequestMethod.GET)
-	public ResponseEntity<Page<PublicUserGame>> getGamesList(@PathVariable(required=false) Integer page) throws ServletException {
-		if (page == null) {
-			page = 0;
+	@RequestMapping(value="getGamesList", method=RequestMethod.POST)
+	public ResponseEntity<Page<PublicUserGame>> getGamesList(@RequestBody(required=false) Filter filter) throws ServletException {
+		if (filter == null) {
+			filter = new Filter();
+		}
+		
+		if (filter.sort == null || filter.sort.isEmpty()) {
+			filter.sort = "game.name";
 		}
 		
 		PublicUser user = publicUserService.getCurrentUser();
-		Page<PublicUserGame> gamesList = publicUserService.getPublicUserGameRepo().findByPublicUserOrderByGameName(user, new PageRequest(page, Const.TABLE_SIZE));
+		Page<PublicUserGame> gamesList = publicUserService.getPublicUserGameRepo().findMyGames(user, filter.consoleId, new PageRequest(filter.page, Const.TABLE_SIZE, new Sort(filter.sort)));
 		
 		return new ResponseEntity<Page<PublicUserGame>>(gamesList, HttpStatus.OK);
 	}
@@ -64,5 +73,13 @@ public class PublicUserController {
 	public ResponseEntity<Page<PublicUserGame>> saveGame(@RequestBody PublicUserGame myGame) throws ServletException {
 		Page<PublicUserGame> gameList = publicUserService.saveGame(myGame);
 		return new ResponseEntity<Page<PublicUserGame>>(gameList, HttpStatus.OK);
+	}
+	
+	private static class Filter {
+		public String sort;
+		
+		public Long consoleId;
+		
+		public Integer page = 0;
 	}
 }

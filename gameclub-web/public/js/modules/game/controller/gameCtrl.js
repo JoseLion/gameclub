@@ -1,4 +1,4 @@
-angular.module('Game').controller('GameCtrl', function($scope, game, $state, Const, openRest, getImageBase64) {
+angular.module('Game').controller('GameCtrl', function($scope, game, $state, Const, openRest, getImageBase64, $location) {
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
@@ -14,7 +14,11 @@ angular.module('Game').controller('GameCtrl', function($scope, game, $state, Con
     }
 
     $scope.addToLibrary = function() {
-        $state.go("gameclub.account.myGames", {game: $scope.game});
+        $state.go("^.account.myGames", {game: $scope.game});
+    }
+
+    $scope.login = function() {
+        $state.go("^.login", {redirect: $location.$$absUrl});
     }
 
 

@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -148,7 +149,7 @@ public class PublicUserService {
 		myGame.setPublicUser(user);
 		publicUserGameRepo.saveAndFlush(myGame);
 		
-		Page<PublicUserGame> gameList = publicUserGameRepo.findByPublicUserOrderByGameName(user, new PageRequest(0, Const.TABLE_SIZE));
+		Page<PublicUserGame> gameList = publicUserGameRepo.findMyGames(user, null, new PageRequest(0, Const.TABLE_SIZE, new Sort("game.name")));
 		return gameList;
 	}
 

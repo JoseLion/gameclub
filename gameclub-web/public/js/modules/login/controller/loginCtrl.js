@@ -1,11 +1,15 @@
-angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, sweet, openRest, $state, Const, authenticate, rest, SweetAlert, $uibModal, notif, $location) {
+angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, redirect, sweet, openRest, $state, Const, authenticate, rest, SweetAlert, $uibModal, notif, $location) {
 	$scope.user = {};
 	$scope.credentials = {};
 	$scope.passRegex = '^(?=.*[0-9])(?=.*[A-Z])([0-9-a-zA-Z]+)$';
 
 	$rootScope.$watch("currentUser", function(newValue, oldValue) {
 		if (newValue != null) {
-			$state.go(Const.mainState);
+			if (redirect == null) {
+				$state.go(Const.mainState);
+			} else {
+				window.location.href = redirect;
+			}
 		}
 	});
 
@@ -231,7 +235,6 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 				});
 			}
 		}, function(error) {
-			console.log("error: ", error);
 			if (error.status == -1) {
 				notif.danger(Const.messages.unableToConnect);
 			} else {

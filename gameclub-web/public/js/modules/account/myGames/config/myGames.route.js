@@ -18,7 +18,7 @@ angular.module('MyGames').config(function($stateProvider) {
 			},
 
 			gamesList: function(rest) {
-				return rest("publicUser/getGamesList/:page").get({page: 0}, function(data) {
+				return rest("publicUser/getGamesList").post(function(data) {
 					return data;
 				});
 			},

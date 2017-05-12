@@ -1,54 +1,51 @@
-angular.module("Game").controller('ManageGameCtrl', function($scope, game, contentRatings, magazines, consoles, categories, sweet, rest, $state, forEach, getImageBase64, notif, $sce) {
+angular.module("Game").controller('ManageGameCtrl', function($scope, game, contentRatings, magazines, consoles, categories, sweet, rest, $state, forEach, getImageBase64, notif, $sce, $q) {
 	$scope.tabs = [{name: "General", active: true}, {name: "Multimedia", active: false}];
 	$scope.game = {};
 	$scope.images = {};
 
-	if (game != null) {
-		game.$promise.then(function(data) {
-			$scope.game = data;
+	$q.all({
+		game: game != null ? game.$promise : null,
+		magazines: magazines.$promise,
+		contentRatings: contentRatings.$promise,
+		consoles: consoles.$promise,
+		categories: categories.$promise
+	}).then(function(result) {
+		$scope.contentRatings = result.contentRatings;
 
-			setTimeout(function() {
-				forEach($scope.game.magazineRatings, function(gameMagazine, i) {
-					console.log("ion: ", angular.element("#rating-slider-" + i));
-					let element = angular.element("#rating-slider-" + i)[0];
-					element.updateData({
-						from: gameMagazine.rating
-					});
-				});
-			}, 100);
-		});
-	} else {
-		magazines.$promise.then(function(data) {
-			$scope.game.magazineRatings = [];
-
-			forEach(data, function(mag) {
-				$scope.game.magazineRatings.push({magazine: mag});
-			});
-		});
-	}
-
-	contentRatings.$promise.then(function(data) {
-		$scope.contentRatings = data;
-	});
-
-	consoles.$promise.then(function(data) {
-		$scope.consoles = data;
+		$scope.consoles = result.consoles;
 
 		forEach($scope.consoles, function(consl) {
-			rest("archive/downloadFile").download({name: consl.whiteLogo.name, module: consl.whiteLogo.module}, function(data) {
-				consl.base64 = getImageBase64(data, consl.whiteLogo.type);
+			rest("archive/downloadFile").download({name: consl.blackLogo.name, module: consl.blackLogo.module}, function(data) {
+				consl.base64 = getImageBase64(data, consl.blackLogo.type);
 			});
 		});
-	});
 
-	categories.$promise.then(function(data) {
-		$scope.categories = data;
+		$scope.categories = result.categories;
 
 		forEach($scope.categories, function(category) {
 			rest("archive/downloadFile").download({name: category.blackVector.name, module: category.blackVector.module}, function(data) {
 				category.base64 = getImageBase64(data, category.blackVector.type);
 			});
 		});
+
+		if (result.game != null) {
+			$scope.game = result.game;
+
+			setTimeout(function() {
+				forEach($scope.game.magazineRatings, function(gameMagazine, i) {
+					let element = angular.element("#rating-slider-" + i)[0];
+					element.updateData({
+						from: gameMagazine.rating
+					});
+				});
+			}, 100);
+		} else {
+			$scope.game.magazineRatings = [];
+
+			forEach(result.magazines, function(mag) {
+				$scope.game.magazineRatings.push({magazine: mag});
+			});
+		}
 	});
 
 	$scope.getSliderOptions = function(gameMagazine) {

@@ -1,14 +1,13 @@
 angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, game, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest) {
     $scope.myGame = {};
+    $scope.filter = {};
     $scope.search = {};
-    $scope.totalElements;
 
     gamesList.$promise.then(function(data) {
         setPagedData(data);
     });
 
     if (game != null) {
-        $scope.showGame = true;
         $scope.myGame.game = game;
         $scope.myGame.console = game.consoles[0].console;
 
@@ -17,6 +16,19 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
                 background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
             };
         });
+
+        $scope.showGame = true;
+    }
+
+    $scope.editGame = function(cross) {
+        $scope.myGame = cross;
+        openRest("archive/downloadFile").download({name: $scope.myGame.game.banner.name, module: $scope.myGame.game.banner.module}, function(data) {
+            $scope.background = {
+                background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
+            };
+        });
+
+        $scope.showGame = true;
     }
 
     $scope.showSearch = function() {
@@ -49,10 +61,36 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
         });
     }
 
+    $scope.pageChanged = function() {
+        filter();
+    }
+
+    $scope.consoleSelected = function() {
+        filter();
+    }
+
+    $scope.sortGames = function(sort) {
+        $scope.filter.sort = sort;
+        filter();
+    }
+
     function setPagedData(data) {
         $scope.gamesList = data.content;
-        $scope.totalElements = data.totalElements;
         $scope.totalPages = data.totalPages;
+        $scope.filter.page = data.number;
+    }
+
+    function filter() {
+        let filter = angular.copy($scope.filter);
+        filter.console = null;
+
+        if ($scope.filter.console != null) {
+            filter.consoleId = $scope.filter.console.id;
+        }
+
+        rest("publicUser/getGamesList").post(filter, function(data) {
+            setPagedData(data);
+        });
     }
 
 

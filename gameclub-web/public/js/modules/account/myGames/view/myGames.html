@@ -38,20 +38,20 @@
         </div>
         <div class="clearfix"></div>
     </section>
-    <section class="row games" ng-if="!showGame && gamesList.length > 0">
+    <section class="row games" ng-if="!showGame">
         <form class="header">
             <div class="col-md-4 text-left no-padding-left filters">
                 <li>
-                    <a href class="active"><i class="gc gc-usd"></i></a>
+                    <a href ng-class="filter.sort == 'cost' ? 'active' : ''" ng-click="sortGames('cost')"><i class="gc gc-usd"></i></a>
                 </li><li>
-                    <a href><i class="gc gc-rating"></i></a>
+                    <a href ng-class="filter.sort == 'game.rating' ? 'active' : ''" ng-click="sortGames('game.rating')"><i class="gc gc-rating"></i></a>
                 </li><li>
-                    <a href><i class="gc gc-filter"></i></a>
+                    <a href ng-click="sortGames(null)"><i class="gc gc-filter"></i></a>
                 </li>
             </div>
             <div class="col-md-4 text-center"><span class="subtitle">Tus juegos</span></div>
             <div class="col-md-4 text-rigth no-padding-right">
-                <ui-select ng-model="filter.console" theme="bootstrap" class="selector">
+                <ui-select ng-model="filter.console" theme="bootstrap" class="selector" on-select="consoleSelected()">
                     <ui-select-match allow-clear placeholder="Consola...">
                         <img ng-src="{{$select.selected.blackBase64}}" class="gameConsole">
                     </ui-select-match>
@@ -63,12 +63,12 @@
             </div>
             <div class="clearfix"></div>
         </form>
-        <div class="list">
+        <div class="list" ng-if="gamesList.length > 0">
             <div ng-repeat="cross in gamesList">
-                <game-item ng-model="cross.game"></game-item>
+                <game-item ng-model="cross.game" console="cross.console" inverse="true" is-editable="true" on-edit="editGame(cross)"></game-item>
                 <div class="separator" ng-if="$index+1 < gamesList.length"></div>
             </div>
-            <blog-paging pages="totalPages" current="currentPage" class="paging"></blog-paging>
+            <blog-paging pages="totalPages" ng-model="$parent.filter.page" class="paging" ng-change="pageChanged()"></blog-paging>
         </div>
     </section>
     <div id="game" ng-if="showGame">

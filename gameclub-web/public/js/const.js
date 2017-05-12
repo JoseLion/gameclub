@@ -20,7 +20,10 @@ angular.module('GameClub').constant('Const', {
 		account: 'gameclub.account.'
 	},
 
-	kushkiPublicMerchantId: 'YYYYYYYYYY',
+	kushki: {
+		publicMerchantId: '10000002423230048673149322144567',
+		isTest: true
+	},
 
 	errorMessages: {
 		required: 'El dato es requerido.',

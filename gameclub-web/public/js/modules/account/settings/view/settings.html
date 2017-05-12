@@ -4,20 +4,21 @@
         <div class="col-md-8 no-padding-left no-padding-right">
             <div class="col-md-10 name">
                 <div class="col-md-3 no-padding-left no-padding-right">
-                    <img src="img/test/profile-pic.png" />
+                    <img id="avatar_img" archive="currentUser.avatar" placeholder="img/test/profile-pic.png" ng-src="{{file.base64}}">
                 </div>
                 <div class="col-md-9">
-                    <h1 class="title">Pablo Ponce</h1>
+                    <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
                     <div class="col-md-12 no-padding-left no-padding-right">
-                        <div class="connection">&uacute;ltima vez conectado: <span>01-04-2017</span></div>
+                        <div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
                     </div>
-                    <button class="btn btn-tertiary full small">Cambiar avatar</button>
+                    <!-- <button class="btn btn-tertiary full small" ng-click="changeAvatar()">Cambiar avatar</button> -->
+                    <!-- <input id="avatar_input" type="file" ng-model="file.avatar" file-model ng-hide="true"> -->
                 </div>
             </div>
             <div class="clearfix"></div>
             <div class="col-md-10 coins">
                 <div class="col-md-6 no-padding-left">
-                    <span class="subtitle">Coins: <span class="dark">850</span> <i class="gc gc-usd-o"></i></span>
+                    <span class="subtitle">Coins: <span class="dark">{{currentUser.coins}}</span> <i class="gc gc-usd-o"></i></span>
                 </div>
                 <div class="col-md-6 text-center">
                     <button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
@@ -26,21 +27,11 @@
             <div class="clearfix"></div>
             <div class="col-md-12 payment">
                 <h2 class="subtitle">Formas de pago:</h2>
-                <form class="col-md-7 new-payment">
-                    <div class="col-md-11 name">
-                        <input type="text" placeholder="Nombre"/>
-                    </div>
-                    <div class="col-md-11 card-number">
-                        <input type="text" placeholder="1111-2222-3333-4444" maxlength="19"/>
-                    </div>
-                    <div class="col-md-3 expiry">
-                        <input type="text" placeholder="01/21" maxlength="5" />
-                    </div>
-                    <div class="col-md-7 cvc">
-                        <input type="text" placeholder="Código de seguridad" maxlength="3" />
-                    </div>
-                    <button class="btn btn-tertiary small">Validar forma de pago</button>
-                </form>
+                <div class="col-md-12 card-info" > <!--ng-if="kushkiSubscription"-->
+                    <input value="xxxx xxxx xxxx 1234" readonly />
+                    <button class="btn btn-secundary full small">Borrar tarjeta</button>
+                </div>
+                <kushki class="col-md-7 new-payment" />
             </div>
         </div>
         <div class="clearfix"></div>

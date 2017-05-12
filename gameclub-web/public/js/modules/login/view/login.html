@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary-alt btn-fb" ng-click="fbSignIn()" ng-if="!isFbSingIn">Reg&iacute;strate usando&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></button>
-                <span ng-if="isFbSingIn">Loading...</span> <!-- TODO: Reemplazar por spinner -->
+                <loading showing="isFbSingIn"></loading>
             </div>
             <div class="col-md-12">o</div>
             <div class="clearfix"></div>
@@ -55,7 +55,7 @@
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-tertiary btn-fb" ng-click="fbLogIn()" ng-if="!isFbLogIn">Inicia tu sesi&oacute;n con&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></button>
-                <span ng-if="isFbLogIn">Loading...</span> <!-- TODO: Reemplazar por spinner -->
+                <loading showing="isFbLogIn"></loading>
             </div>
             <div class="col-md-12">o</div>
             <div class="clearfix"></div>
@@ -77,7 +77,7 @@
             <div class="col-md-1"></div>
             <div class="col-md-10">
                 <button type="submit" class="btn btn-tertiary login" ng-if="!isLoginIn">Iniciar sesi&oacute;n</button>
-                <span ng-if="isLoginIn">Loading...</span> <!-- TODO: Reemplazar por spinner -->
+                <loading showing="isLoginIn"></loading>
             </div>
             <div class="col-md-1"></div>
             <div class="clearfix"></div>
@@ -94,35 +94,6 @@
 
 
 <!-- ********************* MODALS ********************* -->
-
-<script type="text/ng-template" id="accountVerification.html">
-    <div class="inmodal">
-        <div class="modal-heading text-center">
-            <h2>Verificación de la Cuenta</h2>
-        </div>
-
-        <div class="modal-body">
-            <div class="form-group">
-                <div class="col-md-12">
-                    <span>Para poder acceder a su cuenta debe verificarla entrando a su correo y dando click en el enlace que le hemos enviado</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-6 text-center">
-                    <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="isLoading">Aceptar</button>
-                </div>
-
-                <div class="col-md-6 text-center">
-                    <button type="button" class="btn btn-primary-alt" ng-click="resendVerification()" ng-if="!isLoading">Reenviar Correo</button>
-                    <span ng-if="isLoading">Loading...</span> <!-- TODO: Reemplazar por spinner -->
-                </div>
-            </div>
-
-            <div class="clearfix"></div>
-        </div>
-    </div>
-</script>
 
 <script type="text/ng-template" id="facebookSignIn.html">
     <div class="inmodal">

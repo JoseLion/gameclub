@@ -8,10 +8,12 @@ import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,6 +29,8 @@ import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserOpenController.ContactUs;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
+import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
+import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.mail.MailParameters;
@@ -35,6 +39,9 @@ import ec.com.levelap.mail.MailParameters;
 public class PublicUserService {
 	@Autowired
 	private PublicUserRepo publicUserRepo;
+	
+	@Autowired
+	private PublicUserGameRepo publicUserGameRepo;
 	
 	@Autowired
 	private MailService mailService;
@@ -58,7 +65,7 @@ public class PublicUserService {
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		params.put("link", baseUrl + "/gameclub/verification/" + publicUser.getToken() + "/" + publicUser.getId());
+		params.put("link", baseUrl + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
 		
 		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
 		
@@ -74,15 +81,16 @@ public class PublicUserService {
 	}
 	
 	@Transactional
-	public void resendVerification(HttpServletRequest request) throws ServletException, MessagingException {
+	public void resendVerification(String baseUrl) throws ServletException, MessagingException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PublicUser publicUser = publicUserRepo.findByUsername(auth.getName());
+		publicUser.setToken(UUID.randomUUID().toString());
+		publicUser = publicUserRepo.save(publicUser);
 		
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		String baseUrl = request.getRequestURL().substring(0, request.getRequestURL().indexOf(request.getRequestURI())).toString() + "/gameclub/";
-		params.put("link", baseUrl + "open/publicUser/verifyAccount/" + publicUser.getToken() + "/" + publicUser.getId());
+		params.put("link", baseUrl + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
 		
 		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
 	}
@@ -121,7 +129,6 @@ public class PublicUserService {
 	public void sendContactUs(ContactUs contactUs) throws ServletException, MessagingException {
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
-		//mailParameters.setRecipentTO(Arrays.asList("joseluis.levelap@gmail.com"));
 		Map<String, String> params = new HashMap<>();
 		params.put("name", contactUs.name);
 		params.put("email", contactUs.email);
@@ -135,8 +142,22 @@ public class PublicUserService {
 		
 		mailService.sendMailWihTemplate(mailParameters, "CNCTUS", params);
 	}
+	
+	@Transactional
+	public Page<PublicUserGame> saveGame(PublicUserGame myGame) throws ServletException {
+		PublicUser user = this.getCurrentUser();
+		myGame.setPublicUser(user);
+		publicUserGameRepo.saveAndFlush(myGame);
+		
+		Page<PublicUserGame> gameList = publicUserGameRepo.findMyGames(user, null, new PageRequest(0, Const.TABLE_SIZE, new Sort("game.name")));
+		return gameList;
+	}
 
 	public PublicUserRepo getPublicUserRepo() {
 		return publicUserRepo;
+	}
+
+	public PublicUserGameRepo getPublicUserGameRepo() {
+		return publicUserGameRepo;
 	}
 }

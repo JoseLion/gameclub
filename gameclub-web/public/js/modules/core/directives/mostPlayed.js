@@ -6,10 +6,10 @@ angular.module('Core').directive('mostPlayed', function($state) {
 			games: '=',
             previous: '&',
             next: '&',
-			gameConsoles: '='
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
+
 
 			$scope.$watch('gameConsoles', function(newValue, oldValue) {
 				if(newValue != null) {

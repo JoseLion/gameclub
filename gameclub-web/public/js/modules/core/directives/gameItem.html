@@ -26,13 +26,14 @@
             <i class="gc gc-rating" ng-class="5 <= rating ? 'yes' : ''"></i>
         </div>
         <span class="price" ng-if="showCoins">Costo prestamo por semana: <span class="light">{{ngModel.averageWeekCost}} coins</span></span>
-        <button class="btn btn-primary small" ng-click="viewDetails()">Ver juego</button>
+        <button class="btn btn-primary small" ng-click="viewDetails()">{{isEditable ? 'Editar' : 'Ver juego'}}</button>
     </div>
     <div class="col-xs-12 col-md-3 rating">
         <div class="col-md-8 text-right platform">
-            <img archive="ngModel.consoles[0].console.whiteLogo" src="" class="platform"/>
+            <img archive="inverse ? ngModel.consoles[0].console.blackLogo : ngModel.consoles[0].console.whiteLogo" src="" class="platform" ng-if="console == null">
+            <img archive="inverse ? console.blackLogo : console.whiteLogo" src="" class="platform" ng-if="console != null">
             <div class="types">
-                <img ng-repeat="category in ngModel.categories" archive="category.category.whiteVector" src="">
+                <img ng-repeat="category in ngModel.categories" archive="inverse ? category.category.blackVector : category.category.whiteVector" src="">
             </div>
         </div>
         <div class="col-md-4 text-center content-rating">

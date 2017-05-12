@@ -1,11 +1,15 @@
-angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, sweet, openRest, $state, Const, authenticate, rest, SweetAlert, $uibModal, notif, $location) {
+angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, redirect, sweet, openRest, $state, Const, authenticate, rest, SweetAlert, $uibModal, notif, $location) {
 	$scope.user = {};
 	$scope.credentials = {};
 	$scope.passRegex = '^(?=.*[0-9])(?=.*[A-Z])([0-9-a-zA-Z]+)$';
 
 	$rootScope.$watch("currentUser", function(newValue, oldValue) {
 		if (newValue != null) {
-			$state.go(Const.mainState);
+			if (redirect == null) {
+				$state.go(Const.mainState);
+			} else {
+				window.location.href = redirect;
+			}
 		}
 	});
 
@@ -14,18 +18,26 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 			size: "sm",
 			backdrop: true,
 			templateUrl: "completeSignIn.html",
-			controller: function($scope, $uibModalInstance, notif, sweet, user) {
-				$scope.user = user;
+			controller: function($scope, $uibModalInstance, notif, sweet, user, $location) {
 				$scope.isSaving = false;
+
 				$scope.ok = function() {
 					if ($scope.user.terms) {
 						$scope.isSaving = true;
-						openRest("publicUser/signIn").post($scope.user, function() {
-							notif.success(Const.messages.success);
+						let signObj = {
+							baseUrl: $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2),
+							publicUser: user
+						};
+						
+						openRest("publicUser/signIn").post(signObj, function() {
+							SweetAlert.swal("Registro Exitoso", "Para completar el registro entra a tu correo y da click en el link de confirmación que hemos enviado", "success");
+							$scope.isFbSingIn = false;
+							$scope.isSaving = false;
 							$uibModalInstance.close(true);
 						}, function(error) {
+							sweet.error(error.data != null ? error.data.message : error.message);
+							$scope.isFbSingIn = false;
 							$scope.isSaving = false;
-							sweet.error(error.data.message);
 						});
 					} else {
 						notif.warning(Const.messages.acceptTerms);
@@ -188,9 +200,12 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 	}
 
 	function signIn(user) {
-		let url = $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2);
+		let signObj = {
+			baseUrl: $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2),
+			publicUser: user
+		};
 		
-		openRest("publicUser/signIn").post({baseUrl: url, publicUser: user}, function() {
+		openRest("publicUser/signIn").post(signObj, function() {
 			SweetAlert.swal("Registro Exitoso", "Para completar el registro entra a tu correo y da click en el link de confirmación que hemos enviado", "success");
 			$scope.isFbSingIn = false;
 		}, function(error) {
@@ -206,41 +221,11 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 			if (response.data == Const.ok) {
 				rest("publicUser/getCurrentUser").get(function(data) {
 					if (data != null) {
+						$rootScope.currentUser = data;
 
-						if (data.token == null) {
-							$rootScope.currentUser = data;
-
-							/*if ($rootScope.currentUser.isTempPassword) {
-								changePassword();
-							}*/
-						} else {
-							let modal = $uibModal.open({
-								size: "md",
-								backdrop: true,
-								templateUrl: "accountVerification.html",
-								controller: function($scope, $uibModalInstance, rest) {
-									$scope.ok = function() {
-										$uibModalInstance.dismiss();
-									}
-
-									$scope.resendVerification = function() {
-										$scope.isLoading = true;
-										rest("publicUser/resendVerification").get(function() {
-											$scope.isLoading = false;
-											notif.success("Correo reenviado con éxito");
-											$scope.ok();
-										});
-									}
-								},
-								resolve: {}
-							});
-
-							modal.result.then(function() {
-								$rootScope.logout();
-							}, function() {
-								$rootScope.logout();
-							});
-						}
+						/*if ($rootScope.currentUser.isTempPassword) {
+							changePassword();
+						}*/
 					} else {
 						$cookies.remove(Const.cookieToken);
 					}
@@ -250,7 +235,6 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, swe
 				});
 			}
 		}, function(error) {
-			console.log("error: ", error);
 			if (error.status == -1) {
 				notif.danger(Const.messages.unableToConnect);
 			} else {

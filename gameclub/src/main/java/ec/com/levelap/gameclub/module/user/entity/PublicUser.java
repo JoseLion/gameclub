@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
@@ -107,6 +108,7 @@ public class PublicUser extends BaseEntity {
 	@Column(name="second_noon_end_time", columnDefinition="VARCHAR")
 	private String secondNoonEndTime;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="publicUser", fetch=FetchType.LAZY)
 	private List<PublicUserGame> games = new ArrayList<>();
 	

@@ -15,7 +15,7 @@
 							<div class="form-group to-validate">
 								<label class="col-md-3 control-label">Descripción</label>
 								<div class="col-md-9">
-									<textarea validation type="text" class="form-control" ng-model="game.description" required style="resize: vertical;"></textarea>
+									<textarea validation type="text" class="form-control" ng-model="game.description" required style="resize: vertical;" rows="7"></textarea>
 								</div>
 							</div>
 
@@ -45,14 +45,6 @@
 									<label class="col-md-3 control-label">Rating {{gameMagazine.magazine.name}}</label>
 									<div class="col-md-3">
 										<div id="rating-slider-{{$index}}" ion-range-slider range-options="getSliderOptions(gameMagazine)"></div>
-
-
-										<!-- <ui-select validation ng-model="gameMagazine.rating" theme="bootstrap" required>
-											<ui-select-match allow-clear placeholder="0">{{$select.selected}}</ui-select-match>
-											<ui-select-choices repeat="rate in [1, 2, 3, 4, 5]">
-												<div ng-bind-html="rate"></div>
-											</ui-select-choices>
-										</ui-select> -->
 									</div>
 								</div>
 
@@ -73,7 +65,7 @@
 								<div class="col-md-4">
 									<multi-select validation id="image-multi-select" ng-model="game.consoles" list="consoles" property="console" match-template="consoleMatch.html" choice-template="consoleChoice.html" required></multi-select>
 									<script type="text/ng-template" id="consoleMatch.html">
-										<img ng-src="{{$item.base64}}" style="max-width: 100%;">
+										<img ng-src="{{$item.base64}}" style="max-width: 100%; width: 100%;">
 									</script>
 									<script type="text/ng-template" id="consoleChoice.html">
 										<img ng-src="{{item.base64}}" style="max-width: 100%;">
@@ -212,7 +204,7 @@
 		margin-top: -2px;
 	}
 
-	#image-multi-select .ui-select-match-item {
+	/*#image-multi-select .ui-select-match-item {
 		background: linear-gradient(rgba(227, 42, 61, 1), #03070d 113%);
 	}
 
@@ -230,5 +222,5 @@
 
 	#image-multi-select .ui-select-choices-row.active > a:hover {
 		background: linear-gradient(rgba(41, 168, 181, 1), #03070d 113%);
-	}
+	}*/
 </style>

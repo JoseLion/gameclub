@@ -43,9 +43,9 @@
             </form>
             <div class="col-xs-12 col-md-1"></div>
         </div>
-        <loading showing="false" bottom="5em"/>
+        <loading showing="true" bottom="5em"/>
     </section>
-    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="gameConsoles"/>
+    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()"></most-played>
     <section id="how-it-works" class="how-it-works">
         <div class="separator"></div>
         <div class="row">
@@ -209,7 +209,7 @@
                 <blog-preview blog-id="blog.blogId" subtitle="blog.subtitle" desc="blog.desc" img-src="blog.imgSrc" date="blog.date" url="blog.url" />
             </div>
         </div>
-        <blog-paging pages="5" current="currentBlogPage" class="paging"/>
+        <blog-paging pages="5" ng-model="currentBlogPage" class="paging"></blog-paging>
     </section>
     <section class="contact-us">
         <div class="row">

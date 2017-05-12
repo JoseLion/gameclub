@@ -593,19 +593,25 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #settings section.header .payment{margin-top:2%;padding:0;}
 #account #settings section.header .payment::before{content:"\E008";position:absolute;top:1em;left:-2.5em;font-size:0.4em;font-family:gameclub;}
 #account #settings section.header .payment h2.subtitle{font-size:1em;text-transform:uppercase;display:block;font-weight:700;margin-bottom:2%;position:relative;letter-spacing:1px;}
+#account #settings section.header .payment .card-info{padding:0;}
+#account #settings section.header .payment .card-info input{border:none;outline:none;border-radius:7px;text-align:center;color:@color-primary;padding:0.5em 4em 0.25em;font-size:0.8em;}
+#account #settings section.header .payment .card-info button{text-align:center;padding:0.5em 1.5em 0.25em;font-size:0.7em;margin:auto 0.5em;border-radius:7px;}
 #account #settings section.header .payment .new-payment{padding:0;}
-#account #settings section.header .payment .new-payment .name,#account #settings section.header .payment .new-payment .card-number,#account #settings section.header .payment .new-payment .expiry,#account #settings section.header .payment .new-payment .cvc{border-bottom:1px solid @color-tertiary;padding:1% 10% 0;margin:1% 2%;position:relative;}
-#account #settings section.header .payment .new-payment input{width:100%;}
-#account #settings section.header .payment .new-payment div.name,
-#account #settings section.header .payment .new-payment div.card-number,
-#account #settings section.header .payment .new-payment div.expiry{padding-right:0;}
-#account #settings section.header .payment .new-payment div.name::before,
-#account #settings section.header .payment .new-payment div.card-number::before,
-#account #settings section.header .payment .new-payment div.expiry::before,
-#account #settings section.header .payment .new-payment div.cvc::before{font-family:gameclub;position:absolute;left:0;bottom:0;}
-#account #settings section.header .payment .new-payment div.cvc::after{font-family:gameclub;position:absolute;right:0;bottom:0;}
+#account #settings section.header .payment .new-payment .name,#account #settings section.header .payment .new-payment .card-number,#account #settings section.header .payment .new-payment .expiry,#account #settings section.header .payment .new-payment .cvc
+{border-bottom:1px solid @color-tertiary;padding:1% 10% 0;margin:1% 0;}
+#account #settings section.header .payment .new-payment input::-webkit-input-placeholder{color:@color-primary-40;}
+#account #settings section.header .payment .new-payment input::-moz-placeholder{color:@color-primary-40;}
+#account #settings section.header .payment .new-payment input::-ms-input-placeholder{color:@color-primary-40;}
+#account #settings section.header .payment .new-payment div.name,#account #settings section.header .payment .new-payment div.card-number,#account #settings section.header .payment .new-payment div.expiry
+{padding-right:0;}
+#account #settings section.header .payment .new-payment div.name::before,#account #settings section.header .payment .new-payment div.card-number::before,#account #settings section.header .payment .new-payment div.expiry::before,#account #settings section.header .payment .new-payment div.cvc::before
+{font-family:gameclub;position:absolute;left:0.5em;bottom:0;}
+#account #settings section.header .payment .new-payment div.cvc::after{font-family:gameclub;position:absolute;right:0.5em;bottom:0;}
+#account #settings section.header .payment .new-payment div.name>div{padding-right:0;}
+#account #settings section.header .payment .new-payment div.name>div:first-child{padding-left:0;}
 #account #settings section.header .payment .new-payment div.name::before{content:"\E019";}
 #account #settings section.header .payment .new-payment div.card-number::before{content:"\E006";}
+#account #settings section.header .payment .new-payment div.expiry{margin-right:1em;}
 #account #settings section.header .payment .new-payment div.expiry::before{content:"\E005";}
 #account #settings section.header .payment .new-payment div.cvc::before{content:"\E014";}
 #account #settings section.header .payment .new-payment div.cvc::after{content:"\E011";}

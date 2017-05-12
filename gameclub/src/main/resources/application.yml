@@ -43,7 +43,7 @@ flyway:
   
 kushki-configuration:
   show-log: true
-  private-merchant-id: xxxxxxxxxx
+  private-merchant-id: 10000002423281133314149322144567
   end-point:
     path: https://api-uat.kushkipagos.com/v1
 

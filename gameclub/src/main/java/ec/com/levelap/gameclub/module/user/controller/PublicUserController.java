@@ -24,10 +24,6 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
 
-/**
- * @author Jose
- *
- */
 @RestController
 @RequestMapping(value="api/publicUser", produces=MediaType.APPLICATION_JSON_VALUE)
 public class PublicUserController {
@@ -77,6 +73,12 @@ public class PublicUserController {
 	@RequestMapping(value="changePassword", method=RequestMethod.POST)
 	public ResponseEntity<?> changePassword(@RequestBody Password password) throws ServletException {
 		return publicUserService.changePassword(password);
+	}
+	
+	@RequestMapping(value="deleteAccount", method=RequestMethod.DELETE)
+	public ResponseEntity<?> deleteAccount() throws ServletException {
+		publicUserService.deleteAccount();
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	private static class Filter {

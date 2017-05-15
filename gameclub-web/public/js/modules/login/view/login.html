@@ -6,8 +6,10 @@
                 <h2 class="title game-font">Reg&iacute;strate</h2>
             </div>
             <div class="col-md-12">
-                <button type="button" class="btn btn-primary-alt btn-fb" ng-click="fbSignIn()" ng-if="!isFbSingIn">Reg&iacute;strate usando&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></button>
-                <loading showing="isFbSingIn"></loading>
+                <button type="button" class="btn btn-primary-alt btn-fb" ng-click="fbSignIn()">
+                    <span ng-if="!isFbSingIn">Reg&iacute;strate usando&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
+                    <loading showing="isFbSingIn"></loading>
+                </button>
             </div>
             <div class="col-md-12">o</div>
             <div class="clearfix"></div>
@@ -54,8 +56,10 @@
                 <h2 class="title game-font">Inicia sesi&oacute;n</h2>
             </div>
             <div class="col-md-12">
-                <button type="button" class="btn btn-tertiary btn-fb" ng-click="fbLogIn()" ng-if="!isFbLogIn">Inicia tu sesi&oacute;n con&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></button>
-                <loading showing="isFbLogIn"></loading>
+                <button type="button" class="btn btn-tertiary btn-fb" ng-click="fbLogIn()">
+                    <span ng-if="!isFbLogIn">Inicia tu sesi&oacute;n con&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
+                    <loading showing="isFbLogIn"></loading>
+                </button>
             </div>
             <div class="col-md-12">o</div>
             <div class="clearfix"></div>
@@ -76,8 +80,10 @@
 
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <button type="submit" class="btn btn-tertiary login" ng-if="!isLoginIn">Iniciar sesi&oacute;n</button>
-                <loading showing="isLoginIn"></loading>
+                <button type="submit" class="btn btn-tertiary login">
+                    <span ng-if="!isLoginIn">Iniciar sesi&oacute;n</span>
+                    <loading showing="isLoginIn"></loading>
+                </button>
             </div>
             <div class="col-md-1"></div>
             <div class="clearfix"></div>

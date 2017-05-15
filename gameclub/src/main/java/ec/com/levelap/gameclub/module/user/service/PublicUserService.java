@@ -169,6 +169,34 @@ public class PublicUserService {
 			return new ResponseEntity<ErrorControl>(new ErrorControl("Contraseña incorrecta. Por favor intentelo nuevamente", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@Transactional
+	public void deleteAccount() throws ServletException {
+		PublicUser user = this.getCurrentUser();
+		user.setUsername(getRevokedUsername(user.getUsername(), 0));
+		user.setPassword("********************");
+		user.setStatus(false);
+		
+		publicUserRepo.save(user);
+	}
+	
+	private String getRevokedUsername(String username, int i) {
+		if (i == 0) {
+			username += "(Revoked)";
+		} else {
+			int index = username.indexOf("(");
+			username = username.substring(0, index) + "(Revoked#" + i + ")";
+		}
+		
+		PublicUser found = publicUserRepo.findByUsername(username);
+		
+		if (found != null) {
+			i++;
+			username = getRevokedUsername(username, i);
+		}
+		
+		return username;
+	}
 
 	public PublicUserRepo getPublicUserRepo() {
 		return publicUserRepo;

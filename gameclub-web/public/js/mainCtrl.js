@@ -6,7 +6,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			};
 
 			rest("publicUser/getCurrentUser").get(function(data) {
-				if (!data.status || data.token != null) {
+				if (!data.status) {
 					$rootScope.logout();
 				} else {
 					if (data != null) {

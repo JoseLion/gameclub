@@ -1,7 +1,7 @@
 package ec.com.levelap.gameclub.utils;
 
 public interface Const {
-	
+
 	public static final String SCHEMA = "gameclub";
 
 	public static final String PACKAGE_NAMING = "ec.com.levelap";
@@ -15,8 +15,15 @@ public interface Const {
 	public final static int ENCODER_STRENGTH = 12;
 
 	public final static Integer TABLE_SIZE = 20;
-	
+
 	public final static String ADMIN_USER = "adminUser";
-	
+
 	public final static String PUBLIC_USER = "publicUser";
+
+	public final static String KUSHKI_PLAN_NAME = "GAMECLUB";
+
+	public final static String KUSHKI_PERIODICITY = "custom";
+
+	public final static String KUSHKI_LANGUAGE = "es";
+
 }

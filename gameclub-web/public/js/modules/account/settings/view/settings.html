@@ -27,9 +27,9 @@
             <div class="clearfix"></div>
             <div class="col-md-12 payment">
                 <h2 class="subtitle">Formas de pago:</h2>
-                <div class="col-md-12 card-info" > <!--ng-if="kushkiSubscription"-->
-                    <input value="xxxx xxxx xxxx 1234" readonly />
-                    <button class="btn btn-secundary full small">Borrar tarjeta</button>
+                <div class="col-md-12 card-info" ng-if="hasKushkiSubscription">
+                    <input value="xxxx xxxx xxxx {{extraData}}" readonly />
+                    <button class="btn btn-secundary full small" ng-click="removeCard()">Borrar tarjeta</button>
                 </div>
                 <kushki class="col-md-7 new-payment" />
             </div>

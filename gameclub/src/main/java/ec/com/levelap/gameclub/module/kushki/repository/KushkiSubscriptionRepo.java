@@ -9,7 +9,7 @@ import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 
 @Repository
-public interface KushkiSubscriptionRepository extends JpaRepository<KushkiSubscription, Long> {
+public interface KushkiSubscriptionRepo extends JpaRepository<KushkiSubscription, Long> {
 
 	public KushkiSubscription findByPublicUser(PublicUser publicUser);
 

@@ -26,6 +26,8 @@ import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.service.DocumentService;
+import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
+import ec.com.levelap.gameclub.module.kushki.repository.KushkiSubscriptionRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserController.Password;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserOpenController.ContactUs;
@@ -34,10 +36,15 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.kushki.KushkiException;
+import ec.com.levelap.kushki.object.KushkiAmount;
+import ec.com.levelap.kushki.object.KushkiContact;
+import ec.com.levelap.kushki.service.KushkiService;
 import ec.com.levelap.mail.MailParameters;
 
 @Service
 public class PublicUserService {
+
 	@Autowired
 	private PublicUserRepo publicUserRepo;
 	
@@ -49,7 +56,13 @@ public class PublicUserService {
 	
 	@Autowired
 	private DocumentService documentService;
-	
+
+	@Autowired
+	private KushkiSubscriptionRepo kushkiSubscriptionRepo;
+
+	@Autowired
+	private KushkiService kushkiService;
+
 	@Transactional
 	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl) throws ServletException, MessagingException {
 		PublicUser found = publicUserRepo.findByUsername(publicUser.getUsername());
@@ -198,6 +211,78 @@ public class PublicUserService {
 		return username;
 	}
 
+	@Transactional
+	public Map<String, Object> createUpdateKushkiSubscription(final String token, final String firstName, final String lastName, final String email, final String cardFinale) throws ServletException {
+		PublicUser publicUser = this.publicUserRepo.findByUsername(email);
+		if (!publicUser.getKushkiSubscriptionActive()) {
+			return this.createKushkiSubscription(token, firstName, lastName, email, publicUser, cardFinale);
+		} else {
+			KushkiSubscription kushkiSubscription = this.kushkiSubscriptionRepo.findByPublicUser(publicUser);
+			return this.updateKushkiSubscription(token, kushkiSubscription.getSubscriptionId(), publicUser, cardFinale);
+		}
+	}
+
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> createKushkiSubscription(final String token, String firstName, String lastName, String email, PublicUser publicUser, String cardFinale) throws ServletException {
+		try {
+			String subscriptionId = this.kushkiService.subscriptionCreate(token, Const.KUSHKI_PLAN_NAME, Const.KUSHKI_PERIODICITY, new KushkiContact(firstName, lastName, email), new KushkiAmount());
+			publicUser.setKushkiSubscriptionActive(true);
+			KushkiSubscription kushkiSubscription = new KushkiSubscription();
+			kushkiSubscription.setFirstName(firstName.toUpperCase());
+			kushkiSubscription.setLastName(lastName.toUpperCase());
+			kushkiSubscription.setEmail(email);
+			kushkiSubscription.setSubscriptionId(subscriptionId);
+			kushkiSubscription.setPublicUser(publicUser);
+			kushkiSubscription.setCardFinale(cardFinale);
+			kushkiSubscription = this.kushkiSubscriptionRepo.save(kushkiSubscription);
+			
+			Map<String, Object> kushkiResponse = new HashMap<>();
+			kushkiResponse.put("publicUser", publicUser);
+			kushkiResponse.put("extraData", kushkiSubscription.getCardFinale());
+			return kushkiResponse;
+		} catch (KushkiException ex) {
+			// TODO Registrar log en archivo.
+			throw new ServletException(ex.getCause());
+		}
+	}
+
+	@Transactional
+	public Map<String, Object> updateKushkiSubscription(final String token, String subscriptionId, PublicUser publicUser, String cardFinale) throws ServletException {
+		try {
+			this.kushkiService.suscriptionUpdateCard(subscriptionId, token);
+			publicUser.setKushkiSubscriptionActive(Boolean.TRUE);
+		} catch (KushkiException ex) {
+			publicUser.setKushkiSubscriptionActive(Boolean.FALSE);
+			// TODO Registrar log en archivo.
+		}
+		KushkiSubscription kushkiSubscription = this.kushkiSubscriptionRepo.findBySubscriptionId(subscriptionId);
+		kushkiSubscription.setCardFinale(publicUser.getKushkiSubscriptionActive() ? cardFinale : "----");
+		this.kushkiSubscriptionRepo.save(kushkiSubscription);
+		
+		Map<String, Object> kushkiResponse = new HashMap<>();
+		kushkiResponse.put("publicUser", publicUser);
+		kushkiResponse.put("extraData", kushkiSubscription.getCardFinale());
+		return kushkiResponse;
+	}
+
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public PublicUser removeKushkiSubscription(Long id) throws ServletException {
+		PublicUser publicUser = this.publicUserRepo.findOne(id);
+		try{
+			KushkiSubscription kushkiSubscription = this.kushkiSubscriptionRepo.findByPublicUser(publicUser);
+			this.kushkiService.subscriptionCancel(kushkiSubscription.getSubscriptionId());
+			this.kushkiSubscriptionRepo.delete(kushkiSubscription);
+		}catch(KushkiException ex) {
+			// TODO Registrar log en archivo.
+			throw new ServletException(ex.getCause());
+		}
+		publicUser.setKushkiSubscriptionActive(Boolean.FALSE);
+		this.publicUserRepo.save(publicUser);
+		return publicUser;
+	}
+
 	public PublicUserRepo getPublicUserRepo() {
 		return publicUserRepo;
 	}
@@ -205,4 +290,9 @@ public class PublicUserService {
 	public PublicUserGameRepo getPublicUserGameRepo() {
 		return publicUserGameRepo;
 	}
+
+	public KushkiSubscriptionRepo getKushkiSubscriptionRepo() {
+		return kushkiSubscriptionRepo;
+	}
+
 }

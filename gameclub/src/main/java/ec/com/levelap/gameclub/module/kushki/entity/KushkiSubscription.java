@@ -24,7 +24,7 @@ import ec.com.levelap.kushki.entity.BaseKushkiSubscription;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class KushkiSubscription extends BaseKushkiSubscription {
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "public_user", nullable = false, foreignKey = @ForeignKey(name = "public_user_kushki_subscription_fk"))
 	private PublicUser publicUser;
 

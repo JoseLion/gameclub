@@ -1,4 +1,4 @@
-angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const, sweet, notif, $rootScope) {
+angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const, sweet, notif, $rootScope, rest) {
     return {
         restrict: 'E',
         templateUrl: 'js/modules/core/directives/kushki/kushki.html',
@@ -10,7 +10,7 @@ angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const,
             }]);
 
             $scope.ctrlDown = false;
-    		$scope.ctrlKey = 17;
+            $scope.ctrlKey = 17;
             $scope.cmdKey = 91;
             $scope.cKey = 67;
             $scope.vKey = 86;
@@ -51,7 +51,6 @@ angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const,
                     valid = false;
                 }
 
-
                 if(valid) {
                     sweet.save(function() {
                         var kushki = new Kushki({merchantId: Const.kushki.publicMerchantId, inTestEnvironment: Const.kushki.isTest});
@@ -63,35 +62,30 @@ angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const,
                             expiryMonth: expiry[0],
                             expiryYear: expiry[1]
                         };
-                    //     var kushkiCallback = function (response) {
-                    //         if(response.token != null) {
-                    //                 let kushkiSubscription = {
-                    //                     token: response.token,
-                    //                     firstName: $scope.kushki.cardFirstName,
-                    //                     lastName: $scope.kushki.cardLastName,
-                    //                     email: username,
-                    //                     extraData: cardData.number.substr(cardData.number.length - 4, 4)
-                    //                 }
-                    //                 rest("publicUser/createUpdateKushkiSubscription").post(kushkiSubscription, function(data) {
-                    //             $rootScope.currentUser.kushkiSubscriptionActive = data.kushkiSubscriptionActive;
-                    //                     toaster.success({body: Const.messages.success});
-                    //                     sweet.close();
-                    //                     $uibModalInstance.close(true);
-                    //                 }, function(error) {
-                    //                     sweet.close();
-                    //                 });
-                    //         } else {
-                    //           sweet.close();
-                    //           $uibModalInstance.close(false);
-                    //           toaster.pop({
-                    //                     type: 'warning',
-                    //                     title: Const.messages.kushkiError,
-                    //                     body: 'Por favor vuelve a inténtarlo más tarde',
-                    //                     showCloseButton: true
-                    //                 });
-                    //         }
-                    //     };
-                    //     kushki.requestSubscriptionToken({card: cardData}, kushkiCallback);
+                        var kushkiCallback = function (response) {
+                            if(response.token != null) {
+                                let kushkiSubscription = {
+                                    token: response.token,
+                                    name: $scope.kushki.cardFirstName,
+                                    lastName: $scope.kushki.cardLastName,
+                                    email: $rootScope.currentUser.username,
+                                    extraData: cardData.number.substr(cardData.number.length - 4, 4)
+                                }
+                                rest("publicUser/createUpdateKushkiSubscription").post(kushkiSubscription, function(data) {
+                                    $rootScope.currentUser.kushkiSubscriptionActive = data.publicUser.kushkiSubscriptionActive;
+                                    $rootScope.extraData = data.extraData;
+                                    notif.success(Const.messages.success);
+                                    sweet.close();
+                                    $scope.kushki = {};
+                                }, function(error) {
+                                    sweet.close();
+                                });
+                            } else {
+                                notif.danger(Const.messages.kushkiError);
+                                sweet.close();
+                            }
+                        };
+                        kushki.requestSubscriptionToken({card: cardData}, kushkiCallback);
                     });
                 }
             };

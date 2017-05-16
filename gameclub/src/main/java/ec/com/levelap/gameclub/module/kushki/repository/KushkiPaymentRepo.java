@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiPayment;
 
 @Repository
-public interface KushkiPaymentRepository extends JpaRepository<KushkiPayment, Long> {
+public interface KushkiPaymentRepo extends JpaRepository<KushkiPayment, Long> {
 
 }

@@ -171,7 +171,8 @@
                 <div class="col-md-2"></div>
             </div>
             <div class="col-md-12 white-search">
-                <button class="btn btn-primary" ui-sref="{{link.login.route}}">Inicia sesión</button>
+                <button type="button" class="btn btn-primary" ui-sref="^.login" ng-if="currentUser == null">Inicia sesión</button>
+                <button type="button" class="btn btn-primary" ui-sref="^.account.myGames" ng-if="currentUser != null">Carga tus juegos</button>
             </div>
             <div class="clearfix"></div>
         </div>

@@ -6,7 +6,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			};
 
 			rest("publicUser/getCurrentUser").get(function(data) {
-				if (!data.status || data.token != null) {
+				if (!data.status) {
 					$rootScope.logout();
 				} else {
 					if (data != null) {
@@ -103,28 +103,6 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 		termsConditions : {
 			name: 'Términos y Condiciones',
 			route: 'gameclub.termsConditions({user:user, isFacebook:isFacebook})'
-		}
-	};
-	$rootScope.accountlinks = {
-		profile : {
-			name: 'Tu perfil',
-			route: 'gameclub.account.profile'
-		},
-		settings : {
-			name: 'Tu cuenta',
-			route: 'gameclub.account.settings'
-		},
-		games : {
-			name: 'Tus juegos',
-			route: 'gameclub.account.games'
-		},
-		messages : {
-			name: 'Mensajes',
-			route: ''
-		},
-		getCoins : {
-			name: 'Obtén coins',
-			route: ''
 		}
 	};
 });

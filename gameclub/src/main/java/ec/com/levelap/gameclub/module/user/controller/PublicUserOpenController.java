@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 
@@ -31,7 +32,7 @@ public class PublicUserOpenController {
 	}
 	
 	@RequestMapping(value="verifyAccount/{token}/{id}", method=RequestMethod.GET)
-	public void verifyAccount(@PathVariable String token, @PathVariable Long id, HttpServletResponse response) throws ServletException, IOException {
+	public ResponseEntity<?> verifyAccount(@PathVariable String token, @PathVariable Long id, HttpServletResponse response) throws ServletException, IOException {
 		PublicUser user = publicUserService.getPublicUserRepo().findOne(id);
 		
 		if (user != null) {
@@ -39,10 +40,11 @@ public class PublicUserOpenController {
 				user.setToken(null);
 				publicUserService.getPublicUserRepo().save(user);
 				
-				response.sendRedirect("http://localhost/Gameclub/gameclub-web/public/#!/gameclub/login");
-				response.flushBuffer();
+				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
+		
+		return new ResponseEntity<ErrorControl>(new ErrorControl("No se pudo verificar el correo. Por favor inténtelo nuevamente", true), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@RequestMapping(value="sendContactUs", method=RequestMethod.POST)

@@ -1,10 +1,10 @@
-angular.module('Game').controller('GameCtrl', function($scope, game, $state, Const, openRest, getImageBase64) {
+angular.module('Game').controller('GameCtrl', function($scope, game, $state, Const, openRest, getImageBase64, $location) {
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
 
             openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(data) {
-                $scope.game.background = {
+                $scope.background = {
                     background: "url('" + getImageBase64(data, $scope.game.banner.type) + "') center bottom / 100% no-repeat"
                 };
             });
@@ -12,6 +12,21 @@ angular.module('Game').controller('GameCtrl', function($scope, game, $state, Con
     } else {
         $state.go(Const.mainState);
     }
+
+    $scope.addToLibrary = function() {
+        $state.go("^.account.myGames", {game: $scope.game});
+    }
+
+    $scope.login = function() {
+        $state.go("^.login", {redirect: $location.$$absUrl});
+    }
+
+
+
+
+
+
+
 
     $scope.mostPlayed = [
         {

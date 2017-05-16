@@ -26,19 +26,19 @@ angular.module('GameClub').constant('Const', {
 	},
 
 	errorMessages: {
-		required: 'El dato es requerido.',
-		number: 'El dato debe ser numérico.',
-		email: 'Correo eletrónico inválido.',
-		pattern: 'Formato inválido.',
-		ciRequired: 'Número de cédula inválido.',
-		rucRequired: 'Número de RUC inválido.',
-		date: 'Formato de fecha inválido.',
-		min: 'Valor por debajo del minímo establecido.',
-		max: 'Valor por encima del máximo establecido.',
-		url: 'Formato de URL inválido.',
+		required: 'El dato es requerido',
+		number: 'El dato debe ser numérico',
+		email: 'Correo eletrónico inválido',
+		pattern: 'Formato inválido',
+		ciRequired: 'Número de cédula inválido',
+		rucRequired: 'Número de RUC inválido',
+		date: 'Formato de fecha inválido',
+		min: 'Valor por debajo del minímo establecido',
+		max: 'Valor por encima del máximo establecido',
+		url: 'Formato de URL inválido',
 		maxlength: 'El texto sobrepasa la cantidad máxima de caracteres',
 		minlength: 'El texto no cumple con la cantidad mínima de caracteres',
-		tableRequired: 'La tabla debe contener al menos un elemento.'
+		tableRequired: 'La tabla debe contener al menos un elemento'
 	},
 
 	messages: {
@@ -52,7 +52,7 @@ angular.module('GameClub').constant('Const', {
 		unableToConnect: 'No se pudo conectar al servidor.',
 		error: 'Oops, algo salió mal. Por favor intente más tarde.',
 		kushkiError: 'Su tarjeta no superó la validación satisfactoriamente.',
-		acceptTerms: 'Debes aceptar los términos y consiciones para continuar'
+		acceptTerms: 'Debes aceptar los términos y condiciones para continuar'
 	},
 
 	tooltips: {

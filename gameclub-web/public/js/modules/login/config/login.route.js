@@ -5,6 +5,7 @@ angular.module('Login').config(function($stateProvider) {
 	$stateProvider
 	.state(prefix + 'login', {
 		url: '/login',
+		params: {redirect: null},
 		templateUrl: 'js/modules/login/view/login.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'LoginCtrl',
@@ -14,12 +15,17 @@ angular.module('Login').config(function($stateProvider) {
 					name: 'Login',
 					files: ['js/modules/login/controller/loginCtrl.js']
 				}]);
+			},
+
+			redirect: function($stateParams) {
+				return $stateParams.redirect;
 			}
 		}
 	})
 
 	.state(prefix + 'validate', {
-		url: '/validate',
+		url: '/validate/:token/:id',
+		params: {token: null, id: null},
 		templateUrl: 'js/modules/login/view/validate.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'ValidateCtrl',
@@ -29,6 +35,14 @@ angular.module('Login').config(function($stateProvider) {
 					name: 'Login',
 					files: ['js/modules/login/controller/validateCtrl.js']
 				}]);
+			},
+
+			token: function($stateParams) {
+				return $stateParams.token;
+			},
+
+			id: function($stateParams) {
+				return $stateParams.id;
 			}
 		}
 	});

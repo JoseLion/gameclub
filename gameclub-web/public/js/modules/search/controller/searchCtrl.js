@@ -1,6 +1,6 @@
 angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, games, search, $state, friendlyUrl, getIndexOfArray) {
     $scope.search = {};
-    $scope.totalElements;
+    $scope.totalPages;
 
     if (search != null) {
         setSerchFields();
@@ -21,14 +21,14 @@ angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, g
     }
 
     $scope.pageChanged = function() {
-        $scope.search.page = $scope.currentPage - 1;
+        $scope.search.page = $scope.currentPage;
         $scope.find();
     }
 
     function setPagedData(data) {
         $scope.games = data.content;
-        $scope.totalElements = data.totalElements;
         $scope.totalPages = data.totalPages;
+        $scope.currentPage = data.number;
     }
 
     function setSerchFields() {

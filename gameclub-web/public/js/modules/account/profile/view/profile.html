@@ -173,8 +173,8 @@
             </div>
             <div class="col-xs-12 col-md-4">
                 <form class="col-xs-12 col-md-12">
-                    <input placeholder="XXXX@MAIL.COM" />
-                    <button type="button" class="btn btn-primary full small" ng-click="resendMailVerification()" ng-if="currentUser.token">Verificar</button>
+                    <input placeholder="XXXX@MAIL.COM" ng-model="currentUser.username" readonly>
+                    <button type="button" class="btn btn-primary full small" ng-click="resendMailVerification()" ng-if="currentUser.token">Reenviar Correo</button>
                     <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="!currentUser.token">
                     <span>Se te enviar&aacute; un mail<br>con un link de verificaci&oacute;n.</span>
                 </form>

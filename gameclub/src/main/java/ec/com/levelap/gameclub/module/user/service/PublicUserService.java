@@ -8,10 +8,12 @@ import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,8 +29,11 @@ import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.kushki.repository.KushkiSubscriptionRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
+import ec.com.levelap.gameclub.module.user.controller.PublicUserController.Password;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserOpenController.ContactUs;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
+import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
+import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.kushki.KushkiException;
@@ -42,10 +47,13 @@ public class PublicUserService {
 
 	@Autowired
 	private PublicUserRepo publicUserRepo;
-
+	
+	@Autowired
+	private PublicUserGameRepo publicUserGameRepo;
+	
 	@Autowired
 	private MailService mailService;
-
+	
 	@Autowired
 	private DocumentService documentService;
 
@@ -58,62 +66,63 @@ public class PublicUserService {
 	@Transactional
 	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl) throws ServletException, MessagingException {
 		PublicUser found = publicUserRepo.findByUsername(publicUser.getUsername());
-
+		
 		if (found != null) {
 			return new ResponseEntity<ErrorControl>(new ErrorControl("El correo ingresado ya se encuentra registrado", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
+		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
 		publicUser.setPassword(encoder.encode(publicUser.getPassword()));
 		publicUser.setToken(UUID.randomUUID().toString());
 		publicUser = publicUserRepo.save(publicUser);
-
+		
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		params.put("link", baseUrl + "/gameclub/verification/" + publicUser.getToken() + "/" + publicUser.getId());
-
+		params.put("link", baseUrl + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
+		
 		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
-
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+	
 	@Transactional
 	public PublicUser getCurrentUser() throws ServletException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PublicUser user = publicUserRepo.findByUsername(auth.getName());
-
+		
 		return user;
 	}
-
+	
 	@Transactional
-	public void resendVerification(HttpServletRequest request) throws ServletException, MessagingException {
+	public void resendVerification(String baseUrl) throws ServletException, MessagingException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PublicUser publicUser = publicUserRepo.findByUsername(auth.getName());
-
+		publicUser.setToken(UUID.randomUUID().toString());
+		publicUser = publicUserRepo.save(publicUser);
+		
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		String baseUrl = request.getRequestURL().substring(0, request.getRequestURL().indexOf(request.getRequestURI())).toString() + "/gameclub/";
-		params.put("link", baseUrl + "open/publicUser/verifyAccount/" + publicUser.getToken() + "/" + publicUser.getId());
-
+		params.put("link", baseUrl + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
+		
 		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
 	}
-
+	
 	@Transactional
 	public PublicUser save(PublicUser user, MultipartFile avatar) throws ServletException, IOException {
 		PublicUser original = publicUserRepo.findOne(user.getId());
-
+		
 		if (avatar != null) {
 			Archive archive = new Archive();
-
+			
 			if (original.getAvatar() != null) {
 				documentService.deleteFile(original.getAvatar().getName(), PublicUser.class.getSimpleName());
 				archive = original.getAvatar();
 			}
-
+			
 			FileData fileData = documentService.saveFile(avatar, PublicUser.class.getSimpleName());
-
+			
 			archive.setModule(PublicUser.class.getSimpleName());
 			archive.setName(fileData.getName());
 			archive.setType(avatar.getContentType());
@@ -122,35 +131,92 @@ public class PublicUserService {
 			if (original.getAvatar() != null) {
 				documentService.deleteFile(original.getAvatar().getName(), PublicUser.class.getSimpleName());
 			}
-
+			
 			user.setAvatar(null);
 		}
-
+		
 		user = publicUserRepo.save(user);
 		return user;
 	}
-
+	
 	@Transactional
 	public void sendContactUs(ContactUs contactUs) throws ServletException, MessagingException {
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
-		// mailParameters.setRecipentTO(Arrays.asList("joseluis.levelap@gmail.com"));
 		Map<String, String> params = new HashMap<>();
 		params.put("name", contactUs.name);
 		params.put("email", contactUs.email);
 		params.put("message", contactUs.message);
-
+		
 		if (contactUs.phone != null && !contactUs.phone.isEmpty()) {
 			params.put("phone", contactUs.phone);
 		} else {
 			params.put("phone", "N/A");
 		}
-
+		
 		mailService.sendMailWihTemplate(mailParameters, "CNCTUS", params);
+	}
+	
+	@Transactional
+	public Page<PublicUserGame> saveGame(PublicUserGame myGame) throws ServletException {
+		PublicUser user = this.getCurrentUser();
+		myGame.setPublicUser(user);
+		publicUserGameRepo.saveAndFlush(myGame);
+		
+		Page<PublicUserGame> gameList = publicUserGameRepo.findMyGames(user, null, new PageRequest(0, Const.TABLE_SIZE, new Sort("game.name")));
+		return gameList;
+	}
+	
+	@Transactional
+	public ResponseEntity<?> changePassword(Password password) throws ServletException {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
+		PublicUser user = this.getCurrentUser();
+		
+		if (encoder.matches(password.current, user.getPassword())) {
+			user.setPassword(encoder.encode(password.change));
+			user.setHasTempPassword(false);
+			user = publicUserRepo.save(user);
+			
+			return new ResponseEntity<PublicUser>(user, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ErrorControl>(new ErrorControl("Contraseña incorrecta. Por favor intentelo nuevamente", true), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@Transactional
+	public void deleteAccount() throws ServletException {
+		PublicUser user = this.getCurrentUser();
+		user.setUsername(getRevokedUsername(user.getUsername(), 0));
+		user.setPassword("********************");
+		user.setStatus(false);
+		
+		publicUserRepo.save(user);
+	}
+	
+	private String getRevokedUsername(String username, int i) {
+		if (i == 0) {
+			username += "(Revoked)";
+		} else {
+			int index = username.indexOf("(");
+			username = username.substring(0, index) + "(Revoked#" + i + ")";
+		}
+		
+		PublicUser found = publicUserRepo.findByUsername(username);
+		
+		if (found != null) {
+			i++;
+			username = getRevokedUsername(username, i);
+		}
+		
+		return username;
 	}
 
 	public PublicUserRepo getPublicUserRepo() {
 		return publicUserRepo;
+	}
+
+	public PublicUserGameRepo getPublicUserGameRepo() {
+		return publicUserGameRepo;
 	}
 
 	@Transactional

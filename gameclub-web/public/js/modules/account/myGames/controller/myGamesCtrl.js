@@ -262,6 +262,37 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
         console.log('DIRECCIONAR AL JUEGO');
     };
 
+    $scope.mostPlayed = [
+        {
+            id: 1,
+            url: 'img/test/game-1.png',
+            rating: 4
+        },
+        {
+            id: 2,
+            url: 'img/test/game-2.png',
+            rating: 4
+        },
+        {
+            id: 3,
+            url: 'img/test/game-3.png',
+            rating: 5
+        },
+        {
+            id: 4,
+            url: 'img/test/game-4.png',
+            rating: 3
+        }
+    ];
+    $scope.getPreviousGame = function() {
+        let temp = $scope.mostPlayed.splice(0, 1);
+        $scope.mostPlayed[3] = temp[0];
+    };
+    $scope.getNextGame = function() {
+        let temp = $scope.mostPlayed.splice(-1, 1);
+        $scope.mostPlayed.unshift(temp[0]);
+    };
+
     /* MAQUETACIÓN DE LA FICHA DE PRESTAMO */
 
     $scope.gameLoan = {
@@ -271,6 +302,5 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
         insured: true,
         coins: 150
     };
-
 
 });

@@ -8,10 +8,14 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
     })
     function loadExtraData() {
         $scope.hasKushkiSubscription = false;
+        $scope.kushkiHelpText = "Ingresar";
         if($rootScope.currentUser != null) {
             rest("publicUser/getExtraData/:id").get({id: $rootScope.currentUser.id}, function(response) {
                 $scope.extraData = response.extra;
                 $scope.hasKushkiSubscription = response.subscriptionActive;
+                if($scope.hasKushkiSubscription) {
+                    $scope.kushkiHelpText = "Actualizar";
+                }
             });
         }
     }
@@ -21,6 +25,7 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
                 $rootScope.currentUser.kushkiSubscriptionActive = data.kushkiSubscriptionActive;
                 delete $rootScope.extraData;
                 $scope.hasKushkiSubscription = false;
+                $scope.kushkiHelpText = "Ingresar";
                 notif.success(Const.messages.success);
                 sweet.close();
             }, function(error) {

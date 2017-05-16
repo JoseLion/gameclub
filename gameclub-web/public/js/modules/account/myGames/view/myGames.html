@@ -107,8 +107,8 @@
         <section class="row information">
             <form class="form-horizontal" role="form" on-submit="save()" novalidate>
                 <div class="col-md-12">
-                    <label class="col-md-2">Estatus</label>
-                    <div class="col-md-3">
+                    <label class="form-cell">Estatus</label>
+                    <div class="form-cell">
                         <ui-select ng-model="gameLoan.status" theme="bootstrap" class="selector">
                             <ui-select-match placeholder="Seleccionar...">{{$select.selected}}</ui-select-match>
                             <ui-select-choices repeat="status in ['DISPONIBLE', 'NO DISPONIBLE']  | filter: $select.search">
@@ -120,8 +120,8 @@
                 </div>
 
                 <div class="col-md-12 to-validate">
-                    <label class="col-md-3">Estado del juego</label>
-                    <div class="col-md-2">
+                    <label class="form-cell">Estado del juego</label>
+                    <div class="form-cell">
                         <ui-select validation ng-model="myGame.integrity" theme="bootstrap" class="selector" required>
                             <ui-select-match placeholder="Seleccionar...">{{$select.selected}}/10</ui-select-match>
                             <ui-select-choices repeat="item in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] | filter: $select.search">
@@ -132,16 +132,16 @@
                     <div class="clearfix"></div>
                 </div>
 
-                <div class="col-md-12">
-                    <label class="col-md-3">Observaciones</label>
-                    <div class="col-md-9">
+                <div class="col-md-12 obs">
+                    <label class="form-cell">Observaciones</label>
+                    <div class="form-cell">
                         <textarea ng-model="myGame.observations" class="complete" rows="3"></textarea>
                     </div>
                 </div>
 
-                <div class="col-md-12">
-                    <label class="col-md-5">Obligacion de asegurar el juego</label>
-                    <div class="col-md-7 no-padding-left">
+                <div class="col-md-12 insured">
+                    <label class="form-cell">Obligacion de asegurar el juego</label>
+                    <div class="form-cell">
                         <div class="col-md-12 check" ng-class="myGame.isInsured ? 'active' : ''" ng-click="myGame.isInsured = true">
                             Si <span class="help">(el jugador está obligado a pagar el fee de seguro para poder pedir prestado el juego.)</span>
                         </div>
@@ -151,12 +151,12 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 to-validate">
-                    <label class="col-md-4">Costo prestamo por semana</label>
-                    <div class="col-md-4">
+                <div class="col-md-12 help to-validate">
+                    <label class="form-cell">Costo prestamo por semana</label>
+                    <div class="form-cell">
                         <input validation ng-model="myGame.cost" class="coins" placeholder="Coins" type="number" min="0">
                     </div>
-                    <span class="col-md-4 text-right help">
+                    <span class="form-cell text-right">
                         (Recomendación del juego: {{myGame.game.averageWeekCost}} Coins)
                     </span>
                 </div>

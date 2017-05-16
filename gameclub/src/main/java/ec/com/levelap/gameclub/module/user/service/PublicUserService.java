@@ -211,16 +211,8 @@ public class PublicUserService {
 		return username;
 	}
 
-	public PublicUserRepo getPublicUserRepo() {
-		return publicUserRepo;
-	}
-
-	public PublicUserGameRepo getPublicUserGameRepo() {
-		return publicUserGameRepo;
-	}
-
 	@Transactional
-	public PublicUser createUpdateKushkiSubscription(final String token, final String firstName, final String lastName, final String email, final String cardFinale) throws ServletException {
+	public Map<String, Object> createUpdateKushkiSubscription(final String token, final String firstName, final String lastName, final String email, final String cardFinale) throws ServletException {
 		PublicUser publicUser = this.publicUserRepo.findByUsername(email);
 		if (!publicUser.getKushkiSubscriptionActive()) {
 			return this.createKushkiSubscription(token, firstName, lastName, email, publicUser, cardFinale);
@@ -232,7 +224,7 @@ public class PublicUserService {
 
 	@Transactional
 	@SuppressWarnings("unchecked")
-	public PublicUser createKushkiSubscription(final String token, final String firstName, final String lastName, final String email, final PublicUser publicUser, final String cardFinale) throws ServletException {
+	public Map<String, Object> createKushkiSubscription(final String token, String firstName, String lastName, String email, PublicUser publicUser, String cardFinale) throws ServletException {
 		try {
 			String subscriptionId = this.kushkiService.subscriptionCreate(token, Const.KUSHKI_PLAN_NAME, Const.KUSHKI_PERIODICITY, new KushkiContact(firstName, lastName, email), new KushkiAmount());
 			publicUser.setKushkiSubscriptionActive(true);
@@ -243,8 +235,12 @@ public class PublicUserService {
 			kushkiSubscription.setSubscriptionId(subscriptionId);
 			kushkiSubscription.setPublicUser(publicUser);
 			kushkiSubscription.setCardFinale(cardFinale);
-			this.kushkiSubscriptionRepo.save(kushkiSubscription);
-			return publicUser;
+			kushkiSubscription = this.kushkiSubscriptionRepo.save(kushkiSubscription);
+			
+			Map<String, Object> kushkiResponse = new HashMap<>();
+			kushkiResponse.put("publicUser", publicUser);
+			kushkiResponse.put("extraData", kushkiSubscription.getCardFinale());
+			return kushkiResponse;
 		} catch (KushkiException ex) {
 			// TODO Registrar log en archivo.
 			throw new ServletException(ex.getCause());
@@ -252,7 +248,7 @@ public class PublicUserService {
 	}
 
 	@Transactional
-	public PublicUser updateKushkiSubscription(final String token, final String subscriptionId, final PublicUser publicUser, final String cardFinale) throws ServletException {
+	public Map<String, Object> updateKushkiSubscription(final String token, String subscriptionId, PublicUser publicUser, String cardFinale) throws ServletException {
 		try {
 			this.kushkiService.suscriptionUpdateCard(subscriptionId, token);
 			publicUser.setKushkiSubscriptionActive(Boolean.TRUE);
@@ -263,7 +259,40 @@ public class PublicUserService {
 		KushkiSubscription kushkiSubscription = this.kushkiSubscriptionRepo.findBySubscriptionId(subscriptionId);
 		kushkiSubscription.setCardFinale(publicUser.getKushkiSubscriptionActive() ? cardFinale : "----");
 		this.kushkiSubscriptionRepo.save(kushkiSubscription);
+		
+		Map<String, Object> kushkiResponse = new HashMap<>();
+		kushkiResponse.put("publicUser", publicUser);
+		kushkiResponse.put("extraData", kushkiSubscription.getCardFinale());
+		return kushkiResponse;
+	}
+
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public PublicUser removeKushkiSubscription(Long id) throws ServletException {
+		PublicUser publicUser = this.publicUserRepo.findOne(id);
+		try{
+			KushkiSubscription kushkiSubscription = this.kushkiSubscriptionRepo.findByPublicUser(publicUser);
+			this.kushkiService.subscriptionCancel(kushkiSubscription.getSubscriptionId());
+			this.kushkiSubscriptionRepo.delete(kushkiSubscription);
+		}catch(KushkiException ex) {
+			// TODO Registrar log en archivo.
+			throw new ServletException(ex.getCause());
+		}
+		publicUser.setKushkiSubscriptionActive(Boolean.FALSE);
+		this.publicUserRepo.save(publicUser);
 		return publicUser;
+	}
+
+	public PublicUserRepo getPublicUserRepo() {
+		return publicUserRepo;
+	}
+
+	public PublicUserGameRepo getPublicUserGameRepo() {
+		return publicUserGameRepo;
+	}
+
+	public KushkiSubscriptionRepo getKushkiSubscriptionRepo() {
+		return kushkiSubscriptionRepo;
 	}
 
 }

@@ -1,6 +1,8 @@
 package ec.com.levelap.gameclub.module.user.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
@@ -84,10 +88,33 @@ public class PublicUserController {
 
 	@RequestMapping(value = "createUpdateKushkiSubscription", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> createUpdateKushkiSubscription(@RequestBody Subscription subscription) throws ServletException {
-		PublicUser publicUser = this.publicUserService.createUpdateKushkiSubscription(subscription.token, subscription.name.split(" ")[0].toUpperCase(), subscription.lastName.split(" ")[0].toUpperCase(), subscription.email, subscription.extraData);
-		return new ResponseEntity<>(publicUser, HttpStatus.OK);
+		Map<String, Object> kushkiResponse = this.publicUserService.createUpdateKushkiSubscription(
+				subscription.token,
+				subscription.name.split(" ")[0].toUpperCase(),
+				subscription.lastName.split(" ")[0].toUpperCase(),
+				subscription.email,
+				subscription.extraData);
+		return new ResponseEntity<>(kushkiResponse, HttpStatus.OK);
 	}
-	
+
+	@RequestMapping(value = "getExtraData/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> getExtraData(@PathVariable Long id) throws ServletException {
+		PublicUser publicUser = this.publicUserService.getCurrentUser();
+		KushkiSubscription kushkiSubscription = this.publicUserService.getKushkiSubscriptionRepo().findByPublicUser(publicUser);
+		if(kushkiSubscription != null) {
+			Map<String, Object> response = new HashMap<>();
+			response.put("extra", kushkiSubscription.getCardFinale());
+			response.put("subscriptionActive", publicUser.getKushkiSubscriptionActive());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "removeKushkiSubscription/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> removeKushkiSubscription(@PathVariable Long id) throws ServletException {
+		return new ResponseEntity<>(this.publicUserService.removeKushkiSubscription(id), HttpStatus.OK);
+	}
+
 	private static class Filter {
 		public String sort;
 		

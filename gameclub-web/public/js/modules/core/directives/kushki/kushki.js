@@ -1,4 +1,4 @@
-angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const, sweet, notif, $rootScope) {
+angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const, sweet, notif, $rootScope, rest) {
     return {
         restrict: 'E',
         templateUrl: 'js/modules/core/directives/kushki/kushki.html',
@@ -51,7 +51,6 @@ angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const,
                     valid = false;
                 }
 
-
                 if(valid) {
                     sweet.save(function() {
                         var kushki = new Kushki({merchantId: Const.kushki.publicMerchantId, inTestEnvironment: Const.kushki.isTest});
@@ -67,19 +66,23 @@ angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const,
                             if(response.token != null) {
                                 let kushkiSubscription = {
                                     token: response.token,
-                                    firstName: $scope.kushki.cardFirstName,
+                                    name: $scope.kushki.cardFirstName,
                                     lastName: $scope.kushki.cardLastName,
-                                    email: username,
+                                    email: $rootScope.currentUser.username,
                                     extraData: cardData.number.substr(cardData.number.length - 4, 4)
                                 }
                                 rest("publicUser/createUpdateKushkiSubscription").post(kushkiSubscription, function(data) {
-                                    $rootScope.currentUser.kushkiSubscriptionActive = data.kushkiSubscriptionActive;
+                                    $rootScope.currentUser.kushkiSubscriptionActive = data.publicUser.kushkiSubscriptionActive;
+                                    $rootScope.extraData = data.extraData;
                                     notif.success(Const.messages.success);
+                                    sweet.close();
+                                    $scope.kushki = {};
                                 }, function(error) {
-                                    console.log(error);
+                                    sweet.close();
                                 });
                             } else {
                                 notif.danger(Const.messages.kushkiError);
+                                sweet.close();
                             }
                         };
                         kushki.requestSubscriptionToken({card: cardData}, kushkiCallback);

@@ -10,7 +10,7 @@ angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const,
             }]);
 
             $scope.ctrlDown = false;
-    		$scope.ctrlKey = 17;
+            $scope.ctrlKey = 17;
             $scope.cmdKey = 91;
             $scope.cKey = 67;
             $scope.vKey = 86;
@@ -63,35 +63,26 @@ angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const,
                             expiryMonth: expiry[0],
                             expiryYear: expiry[1]
                         };
-                    //     var kushkiCallback = function (response) {
-                    //         if(response.token != null) {
-                    //                 let kushkiSubscription = {
-                    //                     token: response.token,
-                    //                     firstName: $scope.kushki.cardFirstName,
-                    //                     lastName: $scope.kushki.cardLastName,
-                    //                     email: username,
-                    //                     extraData: cardData.number.substr(cardData.number.length - 4, 4)
-                    //                 }
-                    //                 rest("publicUser/createUpdateKushkiSubscription").post(kushkiSubscription, function(data) {
-                    //             $rootScope.currentUser.kushkiSubscriptionActive = data.kushkiSubscriptionActive;
-                    //                     toaster.success({body: Const.messages.success});
-                    //                     sweet.close();
-                    //                     $uibModalInstance.close(true);
-                    //                 }, function(error) {
-                    //                     sweet.close();
-                    //                 });
-                    //         } else {
-                    //           sweet.close();
-                    //           $uibModalInstance.close(false);
-                    //           toaster.pop({
-                    //                     type: 'warning',
-                    //                     title: Const.messages.kushkiError,
-                    //                     body: 'Por favor vuelve a inténtarlo más tarde',
-                    //                     showCloseButton: true
-                    //                 });
-                    //         }
-                    //     };
-                    //     kushki.requestSubscriptionToken({card: cardData}, kushkiCallback);
+                        var kushkiCallback = function (response) {
+                            if(response.token != null) {
+                                let kushkiSubscription = {
+                                    token: response.token,
+                                    firstName: $scope.kushki.cardFirstName,
+                                    lastName: $scope.kushki.cardLastName,
+                                    email: username,
+                                    extraData: cardData.number.substr(cardData.number.length - 4, 4)
+                                }
+                                rest("publicUser/createUpdateKushkiSubscription").post(kushkiSubscription, function(data) {
+                                    $rootScope.currentUser.kushkiSubscriptionActive = data.kushkiSubscriptionActive;
+                                    notif.success(Const.messages.success);
+                                }, function(error) {
+                                    console.log(error);
+                                });
+                            } else {
+                                notif.danger(Const.messages.kushkiError);
+                            }
+                        };
+                        kushki.requestSubscriptionToken({card: cardData}, kushkiCallback);
                     });
                 }
             };

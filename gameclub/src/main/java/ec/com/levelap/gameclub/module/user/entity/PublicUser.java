@@ -115,7 +115,10 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(name="facebook_name", columnDefinition="VARCHAR")
 	private String facebookName;
-	
+
+	@Column(name = "kushki_subscription_active", columnDefinition = "BOOLEAN DEFAULT FALSE")
+	private Boolean kushkiSubscriptionActive = Boolean.FALSE;
+
 	@Transient
 	private Integer numberOfGames;
 
@@ -358,4 +361,14 @@ public class PublicUser extends BaseEntity {
 	public void setNumberOfGames(Integer numberOfGames) {
 		this.numberOfGames = numberOfGames;
 	}
+
+	
+	public Boolean getKushkiSubscriptionActive() {
+		return kushkiSubscriptionActive;
+	}
+
+	public void setKushkiSubscriptionActive(Boolean kushkiSubscriptionActive) {
+		this.kushkiSubscriptionActive = kushkiSubscriptionActive;
+	}
+
 }

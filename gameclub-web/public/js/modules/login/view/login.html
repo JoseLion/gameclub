@@ -6,7 +6,7 @@
                 <h2 class="title game-font">Reg&iacute;strate</h2>
             </div>
             <div class="col-md-12">
-                <button type="button" class="btn btn-primary-alt btn-fb" ng-click="fbSignIn()">
+                <button type="button" class="btn btn-primary-alt btn-fb" ng-click="fbSignIn()" ng-disabled="isFbSingIn">
                     <span ng-if="!isFbSingIn">Reg&iacute;strate usando&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
                     <loading showing="isFbSingIn"></loading>
                 </button>
@@ -56,7 +56,7 @@
                 <h2 class="title game-font">Inicia sesi&oacute;n</h2>
             </div>
             <div class="col-md-12">
-                <button type="button" class="btn btn-tertiary btn-fb" ng-click="fbLogIn()">
+                <button type="button" class="btn btn-tertiary btn-fb" ng-click="fbLogIn()" ng-disabled="isFbLogIn">
                     <span ng-if="!isFbLogIn">Inicia tu sesi&oacute;n con&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
                     <loading showing="isFbLogIn"></loading>
                 </button>
@@ -80,7 +80,7 @@
 
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <button type="submit" class="btn btn-tertiary login">
+                <button type="submit" class="btn btn-tertiary login" ng-disabled="isLoginIn">
                     <span ng-if="!isLoginIn">Iniciar sesi&oacute;n</span>
                     <loading showing="isLoginIn"></loading>
                 </button>
@@ -114,7 +114,10 @@
                 </div>
                 <div class="form-group text-center">
                     <div class="col-md-6">
-                        <button type="submit" class="btn save"><span ng-if="!isSaving">OK</span><loading showing="isSaving" inline width="1em"/></button>
+                        <button type="submit" class="btn save" ng-disabled="isSaving">
+                            <span ng-if="!isSaving">OK</span>
+                            <loading showing="isSaving" inline width="1em">
+                        </button>
                     </div>
                     <div class="col-md-6">
                         <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
@@ -175,7 +178,10 @@
                     <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" ng-click="cancel()">{{link.termsConditions.name}}</a></span>
                 </div>
                 <div class="form-group text-center">
-                    <button type="submit" class="btn cancel"><span ng-if="!isSaving">Continuar</span><loading showing="isSaving" inline width="1em"/></button>
+                    <button type="submit" class="btn cancel" ng-disabled="isSaving">
+                        <span ng-if="!isSaving">Continuar</span>
+                        <loading showing="isSaving" inline width="1em">
+                    </button>
                 </div>
             </form>
         </div>

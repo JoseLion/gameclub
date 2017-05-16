@@ -38,7 +38,7 @@
         </div>
         <div class="clearfix"></div>
     </section>
-    <section class="row games" ng-if="!showGame">
+    <section class="row games" ng-if="!showGame && gamesList.length > 0">
         <form class="header">
             <div class="col-md-4 text-left no-padding-left filters">
                 <li>
@@ -63,9 +63,9 @@
             </div>
             <div class="clearfix"></div>
         </form>
-        <div class="list" ng-if="gamesList.length > 0">
+        <div class="list">
             <div ng-repeat="cross in gamesList">
-                <game-item ng-model="cross.game" console="cross.console" inverse="true" is-editable="true" on-edit="editGame(cross)"></game-item>
+                <game-item ng-model="cross.game" console="cross.console" inverse="true" is-editable="true" on-edit="editGame(cross)" show-coins="true"></game-item>
                 <div class="separator" ng-if="$index+1 < gamesList.length"></div>
             </div>
             <blog-paging pages="totalPages" ng-model="$parent.filter.page" class="paging" ng-change="pageChanged()"></blog-paging>
@@ -170,7 +170,8 @@
             <div class="clearfix"></div>
         </section>
     </div>
-    <section class="row upload text-center" ng-if="!isSearching">
+    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" title="Tus juegos" ng-if="showGame"></most-played>
+    <section class="row upload text-center" ng-if="!isSearching && !showGame">
         <span class="subtitle">Carga tus juegos</span>
         <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar COINS y poder pedir prestado otros juegos.</p>
         <button class="btn btn-secundary small" ng-click="showSearch()">Subir juegos</button>

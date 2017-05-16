@@ -33,7 +33,7 @@
     <section class="row contact-information">
         <form role="form" on-submit="save()" novalidate>
             <div class="completed">
-                <span class="col-md-12 percent">{{getInfoPercentage()}}%</span>
+                <!-- <span class="col-md-12 percent">{{getInfoPercentage()}}%</span> -->
                 <span class="col-md-12">Informaci&oacute;n de contacto</span>
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-tertiary full small" ng-if="isEditable">Guardar perfil</button>
@@ -140,14 +140,14 @@
     </section>
     <section class="contact-means">
         <div class="row completed">
-            <div class="col-md-3 text-right"><span class="percent">{{getIdentityPercentage()}}%</span></div>
+            <div class="col-md-3 text-right"><!-- <span class="percent">{{getIdentityPercentage()}}%</span> --></div>
             <div class="col-md-9">
                 <span class="subtitle">
                     <img src="img/lock-icon.svg" /><span>Verificaci&oacute;n de identidad</span>
                 </span>
                 <button type="button" class="btn btn-tertiary full small" ng-if="isEditableMean">Guardar info</button>
                 <button type="button" class="btn btn-primary small" ng-click="editContactMean()">{{isEditableMean ? 'Volver' : 'Actualizar info'}}</button>
-                <span class="description">Verificar estos tres campos para poder ser un usuario 100% confiable.<br>Si lo haces recibes 10 coins.</span>
+                <span class="description">Verificar estos tres campos para poder ser un usuario 100% confiable.<!-- <br>Si lo haces recibes 10 coins. --></span>
             </div>
             <div class="clearfix"></div>
         </div>

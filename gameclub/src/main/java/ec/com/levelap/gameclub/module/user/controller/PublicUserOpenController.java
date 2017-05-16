@@ -36,11 +36,15 @@ public class PublicUserOpenController {
 		PublicUser user = publicUserService.getPublicUserRepo().findOne(id);
 		
 		if (user != null) {
-			if (user.getToken().equals(token)) {
-				user.setToken(null);
-				publicUserService.getPublicUserRepo().save(user);
-				
-				return new ResponseEntity<>(HttpStatus.OK);
+			if (user.getToken() == null) {
+				return new ResponseEntity<ErrorControl>(new ErrorControl("Ya se verificó la cuenta anteriormente", true), HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				if (user.getToken().equals(token)) {
+					user.setToken(null);
+					user = publicUserService.getPublicUserRepo().save(user);
+					
+					return new ResponseEntity<PublicUser>(user, HttpStatus.OK);
+				}
 			}
 		}
 		

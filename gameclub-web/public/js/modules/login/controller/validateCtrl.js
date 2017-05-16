@@ -1,10 +1,11 @@
-angular.module('Login').controller('ValidateCtrl', function($scope, token, id, $state, Const, openRest, notif) {
+angular.module('Login').controller('ValidateCtrl', function($scope, $rootScope, token, id, $state, Const, openRest, notif) {
 	$scope.isLoading = true;
 
 	if (token == null || id == null) {
 		$state.go(Const.mainState);
 	} else {
-		openRest("publicUser/verifyAccount/:token/:id").get({token: token, id: id}, function() {
+		openRest("publicUser/verifyAccount/:token/:id").get({token: token, id: id}, function(data) {
+			$rootScope.currentUser = data;
 			$scope.isLoading = false;
 		}, function(error) {
 			$scope.isLoading = false;

@@ -21,9 +21,9 @@ angular.module('Core').directive('blogPaging', function() {
 
 			$scope.$watch("pages", function(newValue, oldValue) {
 				if (newValue != null) {
-					$scope.pageList = [];
+					$scope.blogPage = [];
 					for(let i = 0; i < newValue; i++) {
-						$scope.pageList.push({
+						$scope.blogPage.push({
 							number: i,
 							active: ($scope.ngModel == i ? true : false)
 						});

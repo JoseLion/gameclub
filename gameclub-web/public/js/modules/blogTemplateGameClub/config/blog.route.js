@@ -15,12 +15,7 @@ angular.module('Blog').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Blog',
-					files: [
-						'js/modules/blog/controller/blogCtrl.js',
-						'js/modules/blog/resources/blog.css',
-						'js/modules/blog/resources/articlePreview.js',
-						'js/modules/blog/resources/mostSeen.js'
-					]
+					files: ['js/modules/blog/controller/blogCtrl.js']
 				}]);
 			},
 			idBlog: function($stateParams) {

@@ -1,0 +1,30 @@
+<article id="blog-article">
+    <header>
+        <div class="image-section">
+            <img archive="ngModel.banner" ng-src="{{ngModel.banner.src}}" />
+            <div class="post-date"><span>{{ngModel.creationDate | date:'dd'}}</span><span>{{ngModel.creationDate | date:'MMM'}}</span></div>
+        </div>
+        <h2>{{ngModel.title}}</h2>
+        <div class="tags">
+            <span class="tags-cell">Por: <span class="posted-by">{{ngModel.author}}</span></span>
+            <div class="tags-cell">
+                <div class="tag" ng-repeat="tag in ngModel.tags"><span>{{tag.name}}</span></div>
+            </div>
+        </div>
+    </header>
+    <div class="description">
+        <p>{{ngModel.summary}}</p>
+    </div>
+    <footer>
+        <div class="cell more">
+            <a href>Leer m&aacute;s</a>
+        </div>
+        <div class="cell social-media">
+            Share:
+            <a href><i class="fa fa-facebook"></i></a>
+            <a href><i class="fa fa-instagram"></i></a>
+            <a href><i class="fa fa-youtube-play"></i></a>
+            <a href><i class="fa fa-twitter"></i></a>
+        </div>
+    </footer>
+</article>

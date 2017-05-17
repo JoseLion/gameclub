@@ -12,6 +12,7 @@ angular.module("Gameclub", [
 	'oitozero.ngSweetAlert',
 	'datatables',
 	'datatables.buttons',
+	'LevelapBlogAdmin',
 	'Core',
 	'Login',
 	'Profile',

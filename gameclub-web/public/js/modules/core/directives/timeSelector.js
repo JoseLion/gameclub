@@ -10,9 +10,6 @@ angular.module('Core').directive('timeSelector', function() {
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
 
-			let currentList = "";
-			let itemList = '<li>#number</li>';
-
 			if(attrs.disabled != null) {
 				if(attrs.disabled === '') {
 					$scope.disableSelectors = true;
@@ -30,17 +27,12 @@ angular.module('Core').directive('timeSelector', function() {
 				}
 			});
 
-			// $scope.selection = function(element) {
-			// 	let input = angular.element(element);
-			// 	let parent = input.parent();
-			// 	currentList = '<ul class="dropdown">';
-			// 	for(let i=1 ; i<=31 ; i++) {
-			// 		currentList = currentList.concat(itemList.replace('#number', i));
-			// 	}
-			// 	currentList = currentList.concat('</ul>');
-			//
-			// 	angular.element(input).parent().append(currentList);
-			// };
+			$scope.openClock = function() {
+				setTimeout(function() {
+					element.find('input').trigger('click')
+				}, 0);
+			}
+
 		}
 	};
 });

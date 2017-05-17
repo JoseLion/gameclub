@@ -86,14 +86,6 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
         }
     }
 
-
-
-
-
-
-
-
-
     if (anchor != null) {
         $location.hash(anchor);
         //$anchorScroll.yOffset = angular.element('#fixedbar')[0].offsetHeight;
@@ -173,6 +165,15 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
     $scope.$watch('currentBlogPage', function(newValue, oldValue) {
         if(newValue != null && newValue != oldValue) {
             console.log('SE DEBE HACER LA CONSULTA PARA LLAMAR A MAS PREVIEWS');
+        }
+    });
+
+    $scope.nameAutocomplete = [];
+    $scope.$watch('search.name', function(newValue, oldValue) {
+        if(newValue != null && newValue.length % 3 == 0) {
+            openRest("game/findAutocomplete/:name", true).get({name: newValue}, function(data) {
+                $scope.nameAutocomplete = data;
+            });
         }
     });
 

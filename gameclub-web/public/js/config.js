@@ -42,6 +42,7 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 	});
 
 	$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {
+		angular.element('#footer').removeClass('fixed-bottom');
 		$location.hash();
 		$anchorScroll();
 	});

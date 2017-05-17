@@ -56,6 +56,11 @@ public class GameOpenController {
 		return new ResponseEntity<List<GameOpen>>(games, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="findAutocomplete/{name}", method=RequestMethod.GET)
+	public ResponseEntity<?> findAutocomplete(@PathVariable String name) throws ServletException {
+		return new ResponseEntity<>(this.gameService.getGameRepo().findAutocomplete(name), HttpStatus.OK);
+	}
+	
 	private static class Search {
 		public String name = "";
 		

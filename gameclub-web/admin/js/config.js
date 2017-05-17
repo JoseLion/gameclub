@@ -29,6 +29,13 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 		url: "/portal",
 		templateUrl: "views/common/content.html",
 		data: {displayName: "Portal"}
+	})
+
+	.state('levelapBlog', {
+		abstract: true,
+		url: "/blog",
+		templateUrl: "views/common/content.html",
+		data: {displayName: "Blog"}
 	});
 }).run(function($rootScope, $state, Const, rest, $location, $anchorScroll, authenticate) {
 	$rootScope.$state = $state;

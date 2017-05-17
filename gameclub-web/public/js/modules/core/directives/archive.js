@@ -23,6 +23,7 @@ angular.module("Core").directive('archive', function(openRest, getImageBase64) {
 					openRest("archive/downloadFile").download({name: $scope.archive.name, module: $scope.archive.module}, function(data) {
 						attrs.$set('src', getImageBase64(data, $scope.archive.type));
 						attrs.$set('alt', $scope.archive.name);
+						attrs.$set('title', $scope.archive.title);
 					});
 				}
 			}

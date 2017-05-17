@@ -188,4 +188,13 @@ angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, g
         console.log('DIRECCIONAR AL JUEGO');
     };
 
+    $scope.nameAutocomplete = [];
+    $scope.$watch('search.name', function(newValue, oldValue) {
+        if(newValue != null && newValue.length % 3 == 0) {
+            openRest("game/findAutocomplete/:name", true).get({name: newValue}, function(data) {
+                $scope.nameAutocomplete = data;
+            });
+        }
+    });
+
 });

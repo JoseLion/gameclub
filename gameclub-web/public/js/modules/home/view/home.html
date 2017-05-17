@@ -11,7 +11,7 @@
             <form class="col-xs-12 col-md-11" role="form" on-submit="find()" novalidate>
                 <div class="col-xs-12 col-md-10 search-params">
                     <div class="col-xs-12 col-md-4 filter">
-                        <input placeholder="T&iacute;tulo..." ng-model="search.name">
+                        <input placeholder="T&iacute;tulo..." ng-model="search.name" uib-typeahead="state for state in nameAutocomplete | filter:$viewValue">
                     </div>
                     <div class="col-xs-12 col-md-4 filter">
                         <ui-select ng-model="search.category" theme="bootstrap" class="selector">

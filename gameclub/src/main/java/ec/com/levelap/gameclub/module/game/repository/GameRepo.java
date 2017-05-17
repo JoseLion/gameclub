@@ -62,4 +62,8 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 	public Page<GameOpen> findGamesOpen(@Param("name") String name, @Param("categoryId") Long categoryId, @Param("consoleId") Long consoleId, Pageable page);
 	
 	public List<GameOpen> findByCategoriesCategoryIdOrderByName(Long categoryId);
+	
+	@Query(value = "SELECT DISTINCT g.name FROM Game g WHERE UPPER(g.name) LIKE '%' || UPPER(?1) || '%'")
+	public List<String> findAutocomplete(String name);
+	
 }

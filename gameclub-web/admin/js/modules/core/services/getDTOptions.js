@@ -25,10 +25,14 @@ angular.module("Core").factory('getDTOptions', function(DTOptionsBuilder, DTColu
 		},
 
 		infoCallback: function(totalElements, begining, end) {
-			if (!totalElements) {
+			if (totalElements == null) {
 				return "Mostrando...";
 			} else {
-				return "Mostrando " + begining + " al " + end + " de " + totalElements + " registros";
+				if (totalElements == 0) {
+					return "La tabla no contiene ningún registro";
+				} else {
+					return "Mostrando " + begining + " al " + end + " de " + totalElements + " registros";
+				}
 			};
 		},
 

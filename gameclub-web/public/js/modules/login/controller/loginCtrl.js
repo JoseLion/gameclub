@@ -19,6 +19,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 			backdrop: true,
 			templateUrl: "completeSignIn.html",
 			controller: function($scope, $uibModalInstance, notif, sweet, user, $location) {
+				$scope.user = user;
 				$scope.isSaving = false;
 
 				$scope.ok = function() {

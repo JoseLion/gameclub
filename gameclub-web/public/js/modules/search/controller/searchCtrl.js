@@ -1,4 +1,4 @@
-angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, games, search, $state, friendlyUrl, getIndexOfArray) {
+angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, games, search, $state, friendlyUrl, getIndexOfArray, openRest) {
     $scope.search = {};
     $scope.totalPages;
 
@@ -7,6 +7,7 @@ angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, g
     }
 
     games.$promise.then(function(data) {
+        console.log(data)
         setPagedData(data);
     });
 

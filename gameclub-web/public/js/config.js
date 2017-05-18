@@ -29,7 +29,12 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 						});
 					}
 				}
-			});
+			})
+		.state('levelapBlog', {
+			abstract: true,
+			url: '/gameclub',
+			templateUrl: 'views/content.html'
+		});
 
 }).run(function($rootScope, $state, Const, $location, $anchorScroll, $http, urlRestPath) {
 	$rootScope.$state = $state;

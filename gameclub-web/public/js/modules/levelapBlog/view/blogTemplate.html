@@ -9,15 +9,7 @@
     <div class="clearfix"></div>
 
     <section class="blog-panel left">
-        <article-preview ng-repeat="article in blogs" ng-model="article" />
-        <div class="navegation">
-            <div class="cell">
-                <a href><i class="fa fa-angle-left"></i> Anterior</a>
-            </div>
-            <div class="cell">
-                <a href>Siguiente <i class="fa fa-angle-right"></i></a>
-            </div>
-        </div>
+        <div ui-view></div>
     </section>
     <section class="blog-panel right">
 
@@ -51,7 +43,7 @@
             <div class="tag" ng-repeat="category in categories"><span>{{category.text}}</span></div>
         </div>
 
-        <div class="tags">
+        <div class="tags-section">
             <h2>Tags</h2>
             <hr class="subtitle" />
             <div class="tag" ng-repeat="tag in tags"><span>{{tag.text}}</span></div>

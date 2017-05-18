@@ -30,7 +30,7 @@
 						<label class="col-md-3 control-label">Tags</label>
 						<div class="col-md-9">
 							<ui-select validation multiple ng-model="search.tags" theme="bootstrap">
-								<ui-select-match placeholder="Seleccione...">{{$select.selected.text}}</ui-select-match>
+								<ui-select-match placeholder="Seleccione...">{{$item.text}}</ui-select-match>
 								<ui-select-choices repeat="tag in tags | filter: $select.search">
 									<div ng-bind-html="tag.text | highlight: $select.search"></div>
 								</ui-select-choices>
@@ -82,8 +82,8 @@
 
 				<div class="col-md-12">
 					<div class="form-group" style="text-align: right;">
-						<button type="submit" class="btn btn-primary">Buscar</button>
-						<button type="button" class="btn btn-default" ng-click="clear()">Limpiar</button>
+						<button type="submit" class="btn btn-w-m btn-primary">Buscar</button>
+						<button type="button" class="btn btn-w-m btn-default" ng-click="clear()">Limpiar</button>
 					</div>
 				</div>
 			</form>
@@ -120,14 +120,15 @@
 							<td style="text-align: center;">{{article.creationDate | date: 'dd-MM-yyyy'}}</td>
 							<td>{{article.title}}</td>
 							<td ng-if="BlogConst.config.hasCategories">{{article.category.text}}</td>
-							<td ng-if="BlogConst.config.hasTags">
-								<ul ng-repeat="tag in article.tags">
-									<li>{{tag.text}}</li>
+							<td multi-value list="article.tags" property="text" ng-if="BlogConst.config.hasTags" style="width: 15%"></td>
+							<!-- <td ng-if="BlogConst.config.hasTags">
+								<ul>
+									<li ng-repeat="tag in article.tags">{{tag.text}}</li>
 								</ul>
-							</td>
+							</td> -->
 							<td style="text-align: center;">
-								<i class="fa fa-check" ng-if="article.isFeatured"></i>
-								<i class="fa fa-times" ng-if="!article.isFeatured"></i>
+								<i class="fa fa-check fa-lg" ng-if="article.isFeatured"></i>
+								<i class="fa fa-times fa-lg" ng-if="!article.isFeatured"></i>
 							</td>
 							<td>{{article.status ? 'Activo' : 'Inactivo'}}</td>
 							<td style="text-align: center;">
@@ -139,7 +140,7 @@
 									<i class="fa fa-comments"></i>
 								</button>
 
-								<button type="button" class="btn btn-xs" ng-class="{{article.status ? 'btn-primary' : 'btn-danger'}}" ng-click="changeStatus(article)">
+								<button type="button" class="btn btn-xs" ng-class="article.status ? 'btn-success' : 'btn-danger'" ng-click="changeStatus(article)">
 									<i class="fa fa-power-off"></i>
 								</button>
 							</td>

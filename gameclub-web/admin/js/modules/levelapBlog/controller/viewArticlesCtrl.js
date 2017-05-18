@@ -1,4 +1,4 @@
-angular.module("LevelapBlogAdmin").controller('ViewArticlesCtrl', function($scope, articles, categories, tags, getDTOptions, BlogConst) {
+angular.module("LevelapBlogAdmin").controller('ViewArticlesCtrl', function($scope, articles, categories, tags, getDTOptions, BlogConst, $state, friendlyUrl) {
 	$scope.search = {};
 	$scope.totalElements;
 	$scope.beginning;
@@ -8,11 +8,17 @@ angular.module("LevelapBlogAdmin").controller('ViewArticlesCtrl', function($scop
 		return getDTOptions.infoCallback($scope.totalElements, $scope.beginning, $scope.end);
 	});
 
-	setTimeout(function() {
-		$scope.$apply(function() {
-			$scope.dtColumnDefs = getDTOptions.notSortableAll(angular.element("#articles-table")[0].rows[0].cells.length);
-		});
-	}, 100);
+	let columns = 5;
+
+	if (BlogConst.config.hasCategories) {
+		columns++;
+	}
+
+	if (BlogConst.config.hasTags) {
+		columns++;
+	}
+
+	$scope.dtColumnDefs = getDTOptions.notSortableAll(columns);
 
 	if (categories != null) {
 		categories.$promise.then(function(data) {
@@ -29,6 +35,14 @@ angular.module("LevelapBlogAdmin").controller('ViewArticlesCtrl', function($scop
 	articles.$promise.then(function(data) {
 		setPagedData(data);
 	});
+
+	$scope.addArticle = function() {
+		$state.go("^.addArticle");
+	}
+
+	$scope.editArticle = function(article) {
+		$state.go("^.editArticle", {id: article.id, title: friendlyUrl(article.title)});
+	}
 
 	function setPagedData(data) {
 		$scope.articles = data.content;

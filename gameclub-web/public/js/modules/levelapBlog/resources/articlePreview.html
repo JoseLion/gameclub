@@ -4,7 +4,8 @@
             <img archive="ngModel.banner" ng-src="{{ngModel.banner.src}}" />
             <div class="post-date"><span>{{ngModel.creationDate | date:'dd'}}</span><span>{{ngModel.creationDate | date:'MMM'}}</span></div>
         </div>
-        <h2>{{ngModel.title}}</h2>
+        <h2 ng-if="!showAllInfo">{{ngModel.title}}</h2>
+        <h1 ng-if="showAllInfo">{{ngModel.title}}</h2>
         <div class="tags">
             <span class="tags-cell">Por: <span class="posted-by">{{ngModel.author}}</span></span>
             <div class="tags-cell">
@@ -13,11 +14,12 @@
         </div>
     </header>
     <div class="description">
-        <p>{{ngModel.summary}}</p>
+        <p ng-if="!showAllInfo">{{ngModel.summary}}</p>
+        <pre ng-if="showAllInfo">{{ngModel.body}}</pre>
     </div>
     <footer>
         <div class="cell more">
-            <a href>Leer m&aacute;s</a>
+            <a href ng-if="!showAllInfo">Leer m&aacute;s</a>
         </div>
         <div class="cell social-media">
             Share:
@@ -27,4 +29,8 @@
             <a href><i class="fa fa-twitter"></i></a>
         </div>
     </footer>
+    <div class="comments" ng-if="showAllInfo">
+        <h2>Deja un comentario</h2>
+        <article-comments ng-model="comments" />
+    </div>
 </article>

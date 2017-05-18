@@ -10,14 +10,14 @@ angular.module('GameClub', [
 	'cgNotify',
 	'Core',
 	'Home',
-	'Blog',
 	'Login',
 	'Search',
 	'Settings',
 	'Profile',
 	'MyGames',
 	'Game',
-	'TermsConditions'
+	'TermsConditions',
+	'LevelapBlog'
 ])
 .config(['$locationProvider' ,'$httpProvider', function($locationProvider, $httpProvider, $http) {
 	$httpProvider.defaults.withCredentials = true;

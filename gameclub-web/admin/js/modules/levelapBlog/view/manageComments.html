@@ -1,0 +1,149 @@
+<div class=" col-md-1"></div>
+<div class="col-md-10">
+	<div class="ibox">
+		<div class="ibox-content text-center">
+			<div class="col-md-12">
+				<h3>{{article.title}}</h3>
+				<small>{{article.summary}}</small>
+				<br/>
+				<button type="button" class="btn btn-white btn-w-m" style="margin-top: 25px;" ng-click="article.isReplying = true" ng-if="!article.isReplying">
+					<i class="fa fa-comment"></i> Comentar
+				</button>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+	<div class="ibox" ng-if="article.isReplying">
+		<div class="ibox-content">
+			<div class="col-md-12">
+				<form class="form-horizontal" role="form" on-submit="addComment(article)" novalidate>
+					<div class="form-group">
+						<textarea validation class="form-control" placeholder="Escribe tu comentario..." ng-model="article.newReply" required ng-disabled="article.isLoading" style="resize: vertical;" rows="3"></textarea>
+					</div>
+
+					<div class="form-group" style="text-align: right;">
+						<div class="btn-group">
+							<button type="submit" class="btn btn-white">
+								<span ng-if="!article.isLoading">Publicar</span>
+								<i class="fa fa-spinner loading" ng-if="article.isLoading"></i>
+							</button>
+							<button type="button" class="btn btn-white" ng-click="article.newReply = null; article.isReplying = false;" ng-disabled="article.isLoading">Descartar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+	<div class="social-feed-box" ng-repeat="comment in comments">
+		<div class="social-avatar">
+			<a href="" class="pull-left">
+				<img alt="user-image" ng-src="{{userPlaceholder}}">
+			</a>
+			
+			<div class="media-body">
+				<a href="">{{comment.username}}</a>
+				<small class="text-muted" ng-if="isToday(comment.creationDate)">Hoy {{comment.creationDate | date: 'hh:mm a - dd.MM.yyyy'}}</small>
+				<small class="text-muted" ng-if="!isToday(comment.creationDate)">{{comment.creationDate | date: 'EEEE hh:mm a - dd.MM.yyyy'}}</small>
+			</div>
+		</div>
+
+		<div class="social-body">
+			<p>{{comment.comment}}</p>
+			<div class="btn-group">
+				<button type="button" class="btn btn-white btn-xs" ng-click="comment.isReplying = true">
+					<i class="fa fa-comment-o"></i> Responder
+				</button>
+				<button type="button" class="btn btn-white btn-xs" ng-click="changeStatus(comment)">
+					<i class="fa" ng-class="comment.status ? 'fa-ban' : 'fa-undo'"></i> {{comment.status ? 'Bloquear' : 'Desbloquear'}}
+				</button>
+				<button type="button" class="btn btn-white btn-xs" ng-click="getRepliesOf(comment)" ng-if="comment.childrenSize > 0">
+					<i class="fa fa-comments"></i> Ver Respuestas
+				</button>
+			</div>
+		</div>
+
+		<div class="social-footer" ng-if="comment.children.length > 0 || comment.isReplying">
+			<div ng-include="'recursiveComment.html'" scope="this" ng-repeat="reply in comment.children"></div>
+
+			<div class="social-comment" ng-if="comment.isReplying">
+				<a href="" class="pull-left">
+					<img alt="image" ng-src="{{userPlaceholder}}">
+				</a>
+				<div class="media-body">
+					<form class="form-horizontal" role="form" on-submit="addComment(comment)" novalidate>
+						<textarea validation class="form-control" placeholder="Escribe tu comentario..." ng-model="comment.newReply" required ng-disabled="article.isLoading" style="resize: vertical;" rows="3"></textarea>
+						<div class="btn-group" style="text-align: left;">
+							<button type="submit" class="btn btn-white btn-xs">
+						<span ng-if="!comment.isLoading">Publicar</span>
+						<i class="fa fa-spinner loading" ng-if="comment.isLoading"></i>
+					</button>
+							<button type="button" class="btn btn-white btn-xs" ng-click="comment.newReply = null; comment.isReplying = false;" ng-disabled="article.isLoading">Descartar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="recursiveComment.html">
+	<div class="social-comment">
+		<a href="" class="pull-left">
+			<img alt="user-image" ng-src="{{userPlaceholder}}">
+		</a>
+
+		<div class="media-body">
+			<a href="">{{reply.username}}</a>
+			{{reply.comment}}
+			<br/>
+			<small class="text-muted" ng-if="isToday(reply.creationDate)">Hoy {{reply.creationDate | date: 'hh:mm a - dd.MM.yyyy'}}</small>
+			<small class="text-muted" ng-if="!isToday(reply.creationDate)">{{reply.creationDate | date: 'EEEE hh:mm a - dd.MM.yyyy'}}</small>
+			<br/>
+			<a href="" class="small" ng-click="reply.isReplying = true;">
+				<i class="fa fa-comment-o"></i> Responder
+			</a>
+			<a href="" class="small" ng-click="changeStatus(reply)">
+				<i class="fa" ng-class="reply.status ? 'fa-ban' : 'fa-undo'"></i> {{reply.status ? 'Bloquear' : 'Desbloquear'}}
+			</a>
+		</div>
+
+		<div ng-include="'recursiveComment.html'" scope="this" ng-repeat="reply in reply.children" ng-if="reply.children.length > 0"></div>
+
+		<div class="social-comment" ng-if="reply.isReplying">
+			<a href="" class="pull-left">
+				<img alt="image" ng-src="{{userPlaceholder}}">
+			</a>
+			<div class="media-body">
+				<form class="form-horizontal" role="form" on-submit="addComment(reply)" novalidate>
+					<textarea validation class="form-control" placeholder="Escribe tu comentario..." ng-model="reply.newReply" required ng-disabled="article.isLoading" style="resize: vertical;" rows="3"></textarea>
+					<div class="btn-group" style="text-align: left;">
+						<button type="submit" class="btn btn-white btn-xs">
+							<span ng-if="!reply.isLoading">Publicar</span>
+							<i class="fa fa-spinner loading" ng-if="reply.isLoading"></i>
+						</button>
+						<button type="button" class="btn btn-white btn-xs" ng-click="reply.newReply = null; reply.isReplying = false;" ng-disabled="article.isLoading">Descartar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</script>
+
+<style type="text/css">
+	.loading {
+		transition-property: transform;
+		transition-duration: 1s;
+		animation-name: rotate;
+		animation-duration: 2s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+	}
+
+	@keyframes rotate {
+		from {transform: rotate(0deg);}
+		to {transform: rotate(360deg);}
+	}
+</style>

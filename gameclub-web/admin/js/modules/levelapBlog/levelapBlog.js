@@ -142,6 +142,34 @@ angular.module("LevelapBlogAdmin", []).config(function($stateProvider) {
 				return null;
 			}
 		}
+	})
+
+	.state(prefix + 'manageComments', {
+		url: "/manage-comments/:id/:title",
+		params: {id: null, title: null},
+		templateUrl: baseSrc + "view/manageComments.html",
+		data: {displayName: 'Administar Comentarios'},
+		controller: "ManageCommentsCtrl",
+		resolve: {
+			loadPlugin: function($ocLazyLoad) {
+				return $ocLazyLoad.load([{
+					name: 'LevelapBlogAdmin',
+					files: [baseSrc + 'controller/manageCommentsCtrl.js']
+				}]);
+			},
+
+			article: function(rest, $stateParams) {
+				return rest("levelapBlog/findOne/:id").get({id: $stateParams.id}, function(data) {
+					return data;
+				});
+			},
+
+			comments: function(rest, $stateParams) {
+				return rest("levelapBlog/getCommentsOf/:articleId/:page").get({articleId: $stateParams.id, page: 0}, function(data) {
+					return data;
+				});
+			}
+		}
 	});
 }).constant('BlogConst', {
 	config: {

@@ -18,6 +18,8 @@ server:
       - text/plain
 
 levelap:
+  blog:
+    comment-page-size: 3
   securityEnabled: true
   allowedOrigins: http://localhost,
                   http://localhost:8080,

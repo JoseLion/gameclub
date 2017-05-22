@@ -1,11 +1,4 @@
 <div class="blog-home">
     <article-preview ng-repeat="article in blogs" ng-model="article" />
-    <div class="navegation">
-        <div class="cell">
-            <a href><i class="fa fa-angle-left"></i> Anterior</a>
-        </div>
-        <div class="cell">
-            <a href>Siguiente <i class="fa fa-angle-right"></i></a>
-        </div>
-    </div>
+    <blog-navigation pages="totalPagesHome" active-page="currentPageHome"/>
 </div>

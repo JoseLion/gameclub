@@ -91,7 +91,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                             }
                         ]
                     );
-                }, 1000);
+                }, 500);
                 deferred.$promise = deferred.promise;
                 return deferred;
             },
@@ -116,7 +116,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                             }
                         ]
                     );
-                }, 1000);
+                }, 500);
                 deferred.$promise = deferred.promise;
                 return deferred;
             },
@@ -355,7 +355,7 @@ laborum."
                             `
                         }
                     );
-                }, 500);
+                }, 100);
                 deferred.$promise = deferred.promise;
                 return deferred;
             },
@@ -371,19 +371,22 @@ laborum."
                                         id: 1,
                                     },
                                     username: 'usuario1',
-                                    comment: 'Comentario 1'
+                                    comment: 'Comentario 1',
+                                    level: 0
                                 }, {
                                     blogArticle: {
                                         id: 2,
                                     },
                                     username: 'usuario2',
-                                    comment: 'Comentario 2Comentario 2Comentario 2'
+                                    comment: 'Comentario 2Comentario 2Comentario 2',
+                                    level: 0
                                 }, {
                                     blogArticle: {
                                         id: 3,
                                     },
                                     username: 'usuario3',
-                                    comment: 'Comentario 3'
+                                    comment: 'Comentario 3',
+                                    level: 0
                                 }
                             ],
                             last: false
@@ -399,7 +402,7 @@ laborum."
 
 }).constant('BlogConst', {
 
-
+    commentsLevel: 1
 
 }).run(function($rootScope, BlogConst) {
     $rootScope.BlogConst = BlogConst;

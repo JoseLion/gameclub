@@ -1,30 +1,27 @@
-angular.module('LevelapBlog').directive('articleComments', function() {
-
+angular.module('LevelapBlog').directive('articleComments', function($rootScope) {
+    let baseSrc;
+    for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
+        let script = angular.element(document.getElementsByTagName("script")[i]);
+        if (script.attr("src") != null && script.attr("src").indexOf("levelapBlog.js") > -1) {
+            baseSrc = script.attr("src").substring(0, script.attr("src").indexOf("levelapBlog.js"));
+            break;
+        }
+    }
     return {
         restrict: 'E',
-        template: `
-            <div id="article-comment">
-                <div class="comment" ng-repeat="comment in result">
-                    <span>{{comment.username}}</span>
-                    <p>{{comment.comment}}</p>
-                    <div class="comments-links">
-                        <a href ng-click="comment.showReplies = true" ng-if="!comment.showReplies">Mostrar respuestas</a>
-                    </div>
-                    <article-comments ng-model="comment.resultChildren" ng-if="comment.showReplies"/>
-                </div>
-                <div class="comments-links">
-                    <a href ng-click="showMoreComments()" ng-if="showMore">Ver m&aacute;s</a>
-                </div>
-            </div>
-        `,
+        templateUrl: baseSrc.concat('resources/articleComments.html'),
         required: 'ngModel',
         scope: {
-            ngModel: '='
+            ngModel: '=',
+            level: '='
         },
         replace: true,
         link: function($scope, element, attrs, ctrl) {
 
             $scope.result = [];
+            $scope.commentsLevel = $rootScope.BlogConst.commentsLevel
+            $scope.currentUser = $rootScope.currentUser;
+            $scope.showCommentForm = false;
 
             $scope.$watch('ngModel', function(newValue, oldValue) {
                 if(newValue != null) {
@@ -34,22 +31,34 @@ angular.module('LevelapBlog').directive('articleComments', function() {
             });
 
             /* TODO CARGAR MÁS COMENTARIOS */
-            $scope.showMoreComments = function() {
+            $scope.showMoreComments = function(level) {
                 $scope.result.pushArray(
                     [
                         {
                             username: 'usuario1',
-                            comment: 'Comentario 1'
+                            comment: 'Comentario 1',
+                            level: level
                         }, {
                             username: 'usuario2',
-                            comment: 'Comentario 2Comentario 2Comentario 2'
+                            comment: 'Comentario 2Comentario 2Comentario 2',
+                            level: level
                         }, {
                             username: 'usuario3',
-                            comment: 'Comentario 3'
+                            comment: 'Comentario 3',
+                            level: level
                         }
                     ]
                 );
                 $scope.showMore = false;
+            };
+
+            $scope.form = {};
+            $scope.submitComment = function() {
+                if($scope.currentUser != null) {
+                    $scope.form.username = $scope.currentUser.fullName;
+                    $scope.form.email = $scope.currentUser.username;
+                }
+                console.log('FORMULARIO LLENO: ', $scope.form);
             };
 
             Array.prototype.pushArray = function(newValues) {
@@ -60,13 +69,16 @@ angular.module('LevelapBlog').directive('articleComments', function() {
                             content: [
                                 {
                                     username: 'usuario1',
-                                    comment: 'Comentario 1'
+                                    comment: 'Comentario 1',
+                                    level: 1
                                 }, {
                                     username: 'usuario2',
-                                    comment: 'Comentario 2'
+                                    comment: 'Comentario 2',
+                                    level: 1
                                 }, {
                                     username: 'usuario3',
-                                    comment: 'Comentario 3'
+                                    comment: 'Comentario 3',
+                                    level: 1
                                 }
                             ],
                             last: false

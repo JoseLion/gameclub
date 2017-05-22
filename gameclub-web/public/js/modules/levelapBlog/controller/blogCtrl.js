@@ -1,17 +1,21 @@
-angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $state, $q, importantBlogs, categories, tags, blogsPreview) {
+angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope, $state, importantBlogs, categories, tags, blogsPreview) {
 
-    /* TODO CAMBIAR POR PROMESAS */
-    $q.all({
-        importantBlogs: importantBlogs.$promise,
-        categories: categories.$promise,
-        tags: tags.$promise,
-        blogsPreview: blogsPreview.$promise
-    }).then(function(result) {
-        $scope.importantBlogs = result.importantBlogs;
-        $scope.categories = result.categories;
-        $scope.tags = result.tags;
-        $scope.blogsPreview = result.blogsPreview;
+    importantBlogs.$promise.then(function(data) {
+        $scope.importantBlogs = data;
     });
+
+    categories.$promise.then(function(data) {
+        $scope.categories = data;
+    });
+
+    tags.$promise.then(function(data) {
+        $scope.tags = data;
+    });
+
+    blogsPreview.$promise.then(function(data) {
+        $scope.blogsPreview = data;
+    });
+
     if ($state.current.name == 'levelapBlog.blog') {
         $state.go('levelapBlog.blog.home');
     }

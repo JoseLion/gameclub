@@ -19,7 +19,7 @@
     </div>
     <footer>
         <div class="cell more">
-            <a href ng-if="!showAllInfo">Leer m&aacute;s</a>
+            <a ng-if="!showAllInfo" ui-sref="levelapBlog.blog.detail({id:ngModel.id, title: ngModel.title})">Leer m&aacute;s</a>
         </div>
         <div class="cell social-media">
             Share:
@@ -31,6 +31,6 @@
     </footer>
     <div class="comments" ng-if="showAllInfo">
         <h2>Deja un comentario</h2>
-        <article-comments ng-model="comments" />
+        <article-comments ng-model="comments" level="0"/>
     </div>
 </article>

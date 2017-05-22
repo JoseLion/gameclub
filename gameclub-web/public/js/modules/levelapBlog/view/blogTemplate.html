@@ -37,13 +37,13 @@
             </article>
         </div>
 
-        <div class="categories">
+        <div class="categories" ng-if="categories.length > 0">
             <h2>Categor&iacute;as</h2>
             <hr class="subtitle" />
             <div class="tag" ng-repeat="category in categories"><span>{{category.text}}</span></div>
         </div>
 
-        <div class="tags-section">
+        <div class="tags-section" ng-if="tags.length > 0">
             <h2>Tags</h2>
             <hr class="subtitle" />
             <div class="tag" ng-repeat="tag in tags"><span>{{tag.text}}</span></div>
@@ -55,5 +55,5 @@
     </section>
     <div class="clearfix"></div>
 
-    <most-seen ng-model="blogsPreview" pages="5" active-page="currentBlogPage" class="most-seen"/>
+    <most-seen ng-model="blogsPreview" pages="totalPagesMostSeen" active-page="currentPageMostSeen" class="most-seen"/>
 </div>

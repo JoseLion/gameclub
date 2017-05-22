@@ -23,10 +23,14 @@
 #blog section.blog-panel.left{float:left;width:54%;}
 #blog section.blog-panel.right{float:right;width:44%;}
 
-#blog div.navegation{display:table;font-weight:700;width:100%;}
-#blog div.navegation div.cell{display:table-cell;text-transform:uppercase;width:50%;}
-#blog div.navegation div.cell:first-child{padding-left:1em;text-align:left;}
-#blog div.navegation div.cell:last-child{padding-right:1em;text-align:right;}
+#blog #navigation{display:table;font-weight:700;width:100%;}
+#blog #navigation div.cell{display:table-cell;text-transform:uppercase;}
+#blog #navigation div.cell:first-child{padding-left:1em;text-align:left;width:25%;}
+#blog #navigation div.cell.pages{text-align:center;width:50%;}
+#blog #navigation div.cell:last-child{padding-right:1em;text-align:right;width:25%;}
+#blog #navigation a[disabled]{cursor:not-allowed;text-decoration:none;}
+#blog #navigation div.cell.pages>div{display:inline-block;}
+#blog #navigation button{background:#FFFFFF;border:2px solid #7BCABC;border-radius:5px;color:#7BCABC;margin:auto 0.25em;outline:none;width:2em;}
 
 #blog div.search,#blog div.important,#blog div.categories,#blog div.tags-section,#blog section.most-seen{background:#EEEEEE;margin-bottom:2em;padding:1em;position:relative;}
 

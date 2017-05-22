@@ -3,7 +3,7 @@
         <a href ng-click="previousPage()" ng-disabled="activePage == 0"><i class="fa fa-angle-left"></i> Anterior</a>
     </div>
     <div class="cell pages">
-        <div ng-repeat="page in pageList">
+        <div ng-repeat="page in pageList" ng-if="!hidePages">
             <span ng-if="page.number == (pages - 1) && activePage < (pages - 3)">...</span>
             <button class="page-button" ng-class="page.active ? 'page-active' : ''" ng-click="changePage(page)" ng-if="page.visible || page.number == 0 || page.number == pages - 1">{{page.number + 1}}</button>
             <span ng-if="page.number == 0 && activePage > 2">...</span>

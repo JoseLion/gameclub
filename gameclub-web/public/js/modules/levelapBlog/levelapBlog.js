@@ -34,26 +34,26 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
 
             importantBlogs: function(openRest) {
                 return openRest("levelapBlog/findArticles").post({isFeatured: true}, function(data) {
-					return data;
-				});
+                    return data;
+                });
             },
 
             categories: function(openRest) {
                 return openRest("levelapBlog/getCategories", true).get(function(data) {
-					return data;
-				});
+                    return data;
+                });
             },
 
             tags: function(openRest) {
                 return openRest("levelapBlog/getTags", true).get(function(data) {
-					return data;
-				});
+                    return data;
+                });
             },
 
             blogsPreview: function(openRest) {
                 return openRest("levelapBlog/findArticles").post({isMostSeen: true}, function(data) {
-					return data;
-				});
+                    return data;
+                });
             }
 
         }
@@ -76,8 +76,8 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
 
             blogs: function(openRest) {
                 return openRest("levelapBlog/findArticles").post({isHomePage: true}, function(data) {
-					return data;
-				});
+                    return data;
+                });
             }
 
         }
@@ -102,94 +102,16 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                 }]);
             },
 
-            article: function($stateParams, $q) {
-                var deferred = $q.defer();
-                setTimeout(function() {
-                    deferred.resolve(
-                        {
-                            id: $stateParams.id,
-                            banner: {
-                                name: 'halo-5-wallpaper.png',
-                                src: 'img/test/blog-cover-01.png',
-                                title: 'HALO 5 Wallpaper'
-                            },
-                            creationDate: new Date('11-05-2017'),
-                            title: 'Algunos tipos para superar Halo 5...',
-                            author: 'Game Club',
-                            tags: [
-                                {
-                                    name: 'Juegos XBOX'
-                                }, {
-                                    name: 'Más jugados'
-                                }, {
-                                    name: 'Games PS4'
-                                }
-                            ],
-                            body: `
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commo-
-do consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commo-
-do consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est labo-
-rum.""Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-laborum.""Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-laborum.""Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-laborum."
-                            `
-                        }
-                    );
-                }, 100);
-                deferred.$promise = deferred.promise;
-                return deferred;
+            article: function($stateParams, openRest) {
+                return openRest("levelapBlog/findOne/:id").get({id: $stateParams.id}, function(data) {
+                    return data;
+                });
             },
 
-            comments: function($stateParams, $q) {
-                var deferred = $q.defer();
-                setTimeout(function() {
-                    deferred.resolve(
-                        {
-                            content: [
-                                {
-                                    blogArticle: {
-                                        id: 1,
-                                    },
-                                    username: 'usuario1',
-                                    comment: 'Comentario 1',
-                                    level: 0
-                                }, {
-                                    blogArticle: {
-                                        id: 2,
-                                    },
-                                    username: 'usuario2',
-                                    comment: 'Comentario 2Comentario 2Comentario 2',
-                                    level: 0
-                                }, {
-                                    blogArticle: {
-                                        id: 3,
-                                    },
-                                    username: 'usuario3',
-                                    comment: 'Comentario 3',
-                                    level: 0
-                                }
-                            ],
-                            last: false
-                        }
-                    );
-                }, 500);
-                deferred.$promise = deferred.promise;
-                return deferred;
+            comments: function($stateParams, openRest) {
+                return openRest("levelapBlog/getCommentsOf/:articleId/:page").get({articleId: $stateParams.id, page: 0}, function(data) {
+                    return data;
+                });
             }
 
         }

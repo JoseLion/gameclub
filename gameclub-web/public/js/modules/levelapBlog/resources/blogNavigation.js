@@ -12,12 +12,21 @@ angular.module('LevelapBlog').directive('blogNavigation', function() {
 		templateUrl: baseSrc.concat('resources/blogNavigation.html'),
 		scope: {
 			pages: '=',
-			activePage: '='
+			activePage: '=',
+			hidePages: '@'
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
 			let beforeIdx;
 			let afterIdx;
+
+			if($scope.hidePages != null) {
+				if($scope.hidePages == '') {
+					$scope.hidePages = true;
+				} else {
+					$scope.hidePages = JSON.parse($scope.hidePages);
+				}
+			}
 
 			if ($scope.activePage == null) { $scope.activePage = 0; }
 			$scope.previousPage = function() {

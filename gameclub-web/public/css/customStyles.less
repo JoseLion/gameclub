@@ -302,7 +302,8 @@ box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);-webkit-box-
 #home .banner .title{font-family:@font-family-jaapokki!important;font-size:2.4em;letter-spacing:6px;margin-top:15px;}
 #home .banner .title-down{margin-right:12%;margin-left:53%;}
 #home .banner .description{font-size:1.5em;font-family:@font-family-jaapokki!important;}
-#home .banner .search .search-params{font-size:1.1em;font-weight:700;padding:0;}
+#home .banner .search .search-params{font-size:1.1em;font-weight:400;padding:0;}
+#home .banner .search .search-params .selector .ui-select-placeholder,#home .banner .search .search-params .selector .ui-select-match-text{font-weight:400;}
 #home .banner .search .search-params .filter{padding-top:7px;padding-bottom:5px;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;height:3em;}
 #home .banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
 #home .banner .search .search-params .filter:last-child{border-right-width:2.5px;border-top-right-radius:8px;border-bottom-right-radius:8px;}
@@ -691,8 +692,8 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #search{color:@color-tertiary;display:block;position:relative;padding-top:9em;}
 #search::before{content:"";background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%;position:absolute;top:-5%;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;}
 
-#search section.banner .search .search-params{font-size:0.8em;font-weight:700;padding:0;}
-#search section.banner .search .search-params .filter{padding-top:0;padding-bottom:0;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;}
+#search section.banner .search .search-params{font-size:0.8em;font-weight:400;padding:0;}
+#search section.banner .search .search-params .filter{padding-top:0.25em;padding-bottom:0.25em;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;}
 #search section.banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
 #search section.banner .search .search-params .filter:last-child{border-right-width:2.5px;border-top-right-radius:8px;border-bottom-right-radius:8px;}
 #search section.banner .search .search-params input{height:21px;}
@@ -704,6 +705,7 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #search section.banner .search .search-params .selector{margin-top:4%;margin-bottom:-4%;}
 #search section.banner .search .search-params .selector input.ui-select-search{margin-top:-4%;margin-bottom:4%;}
 #search section.banner .search .search-params .selector .ui-select-match>span{height:21px;}
+#search section.banner .search .search-params .selector .ui-select-placeholder,#search section.banner .search .search-params .selector .ui-select-match-text{font-weight:400;}
 #search section.banner .search button{border-color:@color-tertiary;}
 #search section.banner .search.white-search .btn-tertiary{background-color:@color-secundary-65;width:2em;height:2em;border-radius:50%;padding:5px;position:relative;text-align:center;vertical-align:middle;color:@color-primary-alt;}
 #search section.banner .search.white-search .btn-tertiary i{font-size:1em;position:absolute;left:0.1em;right:0;top:0.1em;bottom:0.1em;margin:auto;padding-top:0.2em;}

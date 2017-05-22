@@ -41,16 +41,17 @@
 #blog div.search input:focus{outline:1px solid #7BCABC;}
 #blog div.search span.search-icon{color:#7BCABC;font-size:2.5em;position:absolute;right:0.5em;top:0.5em;}
 
-#blog div.important article{display:table;margin-bottom:2em;width:100%;}
-#blog div.important article div.image-preview{display:table-cell;padding-bottom:1em;padding-top:1.5em;text-align:center;vertical-align:middle;width:25%;}
-#blog div.important article div.image-preview>div{height:6em;margin:auto;overflow:hidden;transform:rotate(45deg) translateY(10px);transform-origin:50% 50%;width:6em;}
-#blog div.important article div.image-preview>div>div{height:25em;margin:auto;overflow:hidden;transform:rotate(-45deg) translateY(-74px);transform-origin:50% 50%;width:25em;}
-#blog div.important article div.image-preview>div>div>img{cursor:pointer;height:auto;width:70%;}
-#blog div.important article div.info{cursor:pointer;display:table-cell;vertical-align:middle;width:75%;}
-#blog div.important article div.info h2{font-size:1em;}
-#blog div.important article div.info p{font-size:0.9em;}
+#blog div.important article,#blog div.search article{display:table;margin-bottom:2em;width:100%;}
+#blog div.important article div.image-preview,#blog div.search article div.image-preview{display:table-cell;padding-bottom:1em;padding-top:1.5em;text-align:center;vertical-align:middle;width:25%;}
+#blog div.important article div.image-preview>div,#blog div.search article div.image-preview>div{height:6em;margin:auto;overflow:hidden;transform:rotate(45deg) translateY(10px);transform-origin:50% 50%;width:6em;}
+#blog div.important article div.image-preview>div>div,#blog div.search article div.image-preview>div>div{height:25em;margin:auto;overflow:hidden;transform:rotate(-45deg) translateY(-74px);transform-origin:50% 50%;width:25em;}
+#blog div.important article div.image-preview>div>div>img,#blog div.search article div.image-preview>div>div>img{cursor:pointer;height:auto;width:70%;}
+#blog div.important article div.info,#blog div.search article div.info{cursor:pointer;display:table-cell;vertical-align:middle;width:75%;}
+#blog div.important article div.info h2,#blog div.search article div.info h2{font-size:1em;}
+#blog div.important article div.info p,#blog div.search article div.info p{font-size:0.9em;}
+#blog div.search article div.image-preview>div>div>img,#blog div.search article div.info{cursor:default;}
 
-
+#blog div.search div.no-data h2{font-size:1em;}
 
 /* BLOG ARTICLE PREVIEW DIRECTIVE */
 #blog #blog-article{background:#EEEEEE;color:#6A615A;padding:1em;margin-bottom:2em;}

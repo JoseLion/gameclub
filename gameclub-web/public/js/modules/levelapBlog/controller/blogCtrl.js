@@ -32,4 +32,8 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
         $scope.totalPagesMostSeen = data.totalPages;
     }
 
+    $scope.searchArticles = function() {
+        $state.go('levelapBlog.blog.search', {text: $scope.search.value});
+    };
+
 });

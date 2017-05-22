@@ -1,7 +1,6 @@
 angular.module('LevelapBlog').controller('BlogDetailCtrl', function($scope, article, comments, $state) {
 
     article.$promise.then(function(data) {
-        console.log(data)
         $scope.article = data;
         $scope.showInfo = true;
     });

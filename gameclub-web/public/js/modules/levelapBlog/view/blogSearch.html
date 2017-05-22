@@ -1,0 +1,27 @@
+<div class="search">
+
+    <div ng-if="articles.length > 0">
+        <article ng-repeat="article in articles">
+            <div class="image-preview">
+                <div>
+                    <div>
+                        <img archive="article.banner" ng-src="{{article.banner.src}}" />
+                    </div>
+                </div>
+            </div>
+            <div class="info">
+                <h2>{{article.title}}</h2>
+                <div class="description">
+                    <p>{{article.summary | limitTo:200}}{{article.summary.length > 200 ? '...' : ''}}</p>
+                </div>
+                <a ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})">Leer m&aacute;s</a>
+            </div>
+        </article>
+        <blog-navigation pages="totalPagesSearch" active-page="currentPageSearch"/>
+    </div>
+
+    <div ng-if="articles.length == 0" class="no-data">
+        <h2>No obtuvimos resultados, favor verif&iacute;ca tu informaci&oacute;n.</h2>
+    </div>
+
+</div>

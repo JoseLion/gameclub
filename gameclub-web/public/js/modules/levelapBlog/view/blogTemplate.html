@@ -14,7 +14,7 @@
     <section class="blog-panel right">
 
         <div class="search">
-            <input placeholder="Buscar..." /><span class="fa fa-search search-icon"></span>
+            <input placeholder="Buscar..." ng-model="search.value" ng-keyup="$event.keyCode == 13 && searchArticles()"/><span class="fa fa-search search-icon" ng-click="searchArticles()"></span>
         </div>
 
         <div class="important">
@@ -24,11 +24,11 @@
                 <div class="image-preview">
                     <div>
                         <div>
-                            <img archive="article.banner" ng-src="{{article.banner.src}}" />
+                            <img archive="article.banner" ng-src="{{article.banner.src}}" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})"/>
                         </div>
                     </div>
                 </div>
-                <div class="info">
+                <div class="info" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})">
                     <h2>{{article.title}}</h2>
                     <div class="description">
                         <p>{{article.summary | limitTo:200}}{{article.summary.length > 200 ? '...' : ''}}</p>
@@ -37,13 +37,13 @@
             </article>
         </div>
 
-        <div class="categories">
+        <div class="categories" ng-if="categories.length > 0">
             <h2>Categor&iacute;as</h2>
             <hr class="subtitle" />
             <div class="tag" ng-repeat="category in categories"><span>{{category.text}}</span></div>
         </div>
 
-        <div class="tags-section">
+        <div class="tags-section" ng-if="tags.length > 0">
             <h2>Tags</h2>
             <hr class="subtitle" />
             <div class="tag" ng-repeat="tag in tags"><span>{{tag.text}}</span></div>
@@ -55,5 +55,5 @@
     </section>
     <div class="clearfix"></div>
 
-    <most-seen ng-model="blogsPreview" pages="5" active-page="currentBlogPage" class="most-seen"/>
+    <most-seen ng-model="blogsPreview" pages="totalPagesMostSeen" active-page="currentPageMostSeen" class="most-seen"/>
 </div>

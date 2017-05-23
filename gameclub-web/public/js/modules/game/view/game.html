@@ -38,7 +38,7 @@
                 <span class="col-md-12 subtitle">Descripci&oacute;n:</span>
                 <p ng-if="!showMore">{{game.description | maxwords: 150}}</p>
                 <p ng-if="showMore">{{game.description}}</p>
-                <div class="text-right">
+                <div class="text-right" ng-if="game.description.length > 400">
                     <small><a href="" ng-click="showMore = !showMore">Mostrar {{!showMore ? 'más' : 'menos'}}</a></small>
                 </div>
             </div>

@@ -1,7 +1,19 @@
-angular.module('LevelapBlog').controller('BlogHomeCtrl', function($scope, blogs) {
+angular.module('LevelapBlog').controller('BlogHomeCtrl', function($scope, blogs, openRest) {
 
     blogs.$promise.then(function(data) {
-        $scope.blogs = data;
+        setPageHome(data);
     });
+
+    $scope.$watch('currentPageHome', function(newValue, oldValue) {
+        if(newValue != null && newValue != oldValue) {
+            openRest("levelapBlog/findArticles").post({isHomePage: true, page: newValue}, function(data) {
+                setPageHome(data);
+            });
+        }
+    });
+    function setPageHome(data) {
+        $scope.blogs = data.content;
+        $scope.totalPagesHome = data.totalPages;
+    }
 
 });

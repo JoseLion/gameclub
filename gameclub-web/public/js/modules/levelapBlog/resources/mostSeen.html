@@ -1,5 +1,6 @@
+<!-- MOST SEEN DIRECTIVE START -->
 <section id="most-seen">
-    <h2>Lo m&aacute;s visto</h2>
+    <h2>{{title}}</h2>
     <hr class="subtitle" />
     <div class="article-row">
         <div class="col-md-6" ng-repeat="preview in ngModel">
@@ -7,7 +8,7 @@
                 <div class="col-md-7 info">
                     <h2>{{preview.title}}</h2>
                     <p>{{preview.summary | limitTo:200}}{{preview.summary.length > 200 ? '...' : ''}}</p>
-                    <a href ng-click="completeBlog()">Leer m&aacute;s</a>
+                    <a href ui-sref="levelapBlog.blog.detail({id:preview.id,title:preview.title})">Leer m&aacute;s</a>
                 </div>
                 <div class="col-md-5 picture">
                     <div class="image-section">
@@ -22,3 +23,4 @@
         <div ng-repeat="page in pageList" ng-class="page.active ? 'page-active' : ''" ng-click="changePage(page)" class="page-button"></div>
     </div>
 </section>
+<!-- MOST SEEN DIRECTIVE END -->

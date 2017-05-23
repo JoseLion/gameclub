@@ -1,36 +1,64 @@
+<!-- ARTICLE COMMENTS DIRECTIVE START -->
 <div id="article-comment">
-    <div class="new-comment">
-        <button class="btn btn-primary" ng-click="$parent.showCommentForm2 = true;" ng-if="!showCommentForm2">Agregar</button>
-        <div ng-include="'commentsForm.html'" ng-if="showCommentForm2"></div>
-    </div>
     <div class="comment" ng-repeat="comment in result">
-        <span class="username">{{comment.username}}</span>
-        <p>{{comment.comment}}</p>
-        <div class="comments-links" ng-if="comment.level < commentsLevel">
-            <a href ng-click="comment.showReplies = true" ng-if="!comment.showReplies">Mostrar respuestas</a>
+        <div class="comment-row">
+            <div class="avatar">
+                <img src="img/picture-holder.svg" />
+            </div>
+            <div class="information">
+                <span class="username">{{comment.username}}</span>
+                <span class="datetime"><small>{{comment.creationDate | date:"EEEE, dd 'de' MMMM 'de' yyyy"}}</small><small>{{comment.creationDate | date:"hh:mm a"}}</small></span>
+                <p>{{comment.comment}}</p>
+                <div class="comments-links" ng-if="comment.level < commentsLevel">
+                    <a href ng-click="comment.showReplies = true" ng-if="!comment.showReplies">Mostrar respuestas</a>
+                </div>
+            </div>
         </div>
         <article-comments ng-model="comment.resultChildren" ng-if="comment.showReplies && comment.level < commentsLevel" level="level + 1" />
     </div>
     <div class="comments-links">
         <a href ng-click="showMoreComments(level)" ng-if="showMore">Ver m&aacute;s</a>
     </div>
-
+    <div class="new-comment">
+        <button class="btn btn-primary" ng-click="$parent.showCommentMainForm = true;" ng-if="!showCommentMainForm">Agregar</button>
+        <div ng-include="'commentsForm.html'" ng-if="showCommentMainForm"></div>
+    </div>
     <script type="text/ng-template" id="commentsForm.html">
-        <form id="comments-form" ng-if="currentUser == null" ng-submit="submitComment()">
-            <span>Tu direcci&oacute;n de correo electr&oacute;nico no ser&aacute; publicada. Los campos obligatorios est&aacute;n marcados con *</span>
-            <textarea placeholder="Comentario" ng-model="form.comment" required></textarea>
-            <input placeholder="Nombre" ng-model="form.username" required />
-            <input placeholder="Email" ng-model="form.email" required />
+        <form id="comments-form-logged" ng-if="currentUser != null" ng-submit="submitComment($event)" novalidate>
+            <div class="comment-row">
+                <div class="avatar">
+                    <img src="img/picture-holder.svg" />
+                </div>
+                <div class="information">
+                    <span class="username">{{currentUser.name}} {{currentUser.lastName}}</span>
+                    <div class="comment-input">
+                        <label>Comentario</label>
+                        <textarea ng-model="form.comment" required rows="7"></textarea>
+                    </div>
+                </div>
+            </div>
             <div class="send">
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </div>
         </form>
-        <form id="comments-form-logged" ng-if="currentUser != null">
-            <span class="username">{{currentUser.name}} {{currentUser.lastName}}</span>
-            <textarea placeholder="Comentario" rows="2" ng-model="form.comment"></textarea>
+        <form id="comments-form" ng-if="currentUser == null" ng-submit="submitComment($event)" novalidate>
+            <span>Tu direcci&oacute;n de correo electr&oacute;nico no ser&aacute; publicada. Los campos obligatorios est&aacute;n marcados con *</span>
+            <div class="comment-input">
+                <label>Comentario</label>
+                <textarea ng-model="form.comment" required rows="7"></textarea>
+            </div>
+            <div class="name-input">
+                <label>Nombre</label>
+                <input ng-model="form.username" required />
+            </div>
+            <div class="email-input">
+                <label>Email</label>
+                <input ng-model="form.email" required />
+            </div>
             <div class="send">
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </div>
         </form>
     </script>
 </div>
+<!-- ARTICLE COMMENTS DIRECTIVE END -->

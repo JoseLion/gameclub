@@ -1,3 +1,13 @@
+/*!
+ * levelapBlog.js - v0.1
+ * http://www.levelapsoftware.com
+ * License: MIT
+ * Requirements:
+ * - RESTful Web Services
+ * - openRest factory
+ * Using plugin:
+ * - You must add the module 'LevelapBlog'
+ */
 angular.module('LevelapBlog', []).config(function($stateProvider) {
 
     let prefix = 'levelapBlog.';
@@ -9,7 +19,6 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
             break;
         }
     }
-
     $stateProvider
     .state(prefix + 'blog', {
         url: '/blog',
@@ -17,7 +26,6 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
         data: {displayName: 'Blog', description: '', keywords: ''},
         controller: 'BlogCtrl',
         resolve: {
-
             loadPlugin: function($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'LevelapBlog',
@@ -31,31 +39,26 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                     ]
                 }]);
             },
-
             importantBlogs: function(openRest) {
                 return openRest("levelapBlog/findArticles").post({isFeatured: true}, function(data) {
                     return data;
                 });
             },
-
             categories: function(openRest) {
                 return openRest("levelapBlog/getCategories", true).get(function(data) {
                     return data;
                 });
             },
-
             tags: function(openRest) {
                 return openRest("levelapBlog/getTags", true).get(function(data) {
                     return data;
                 });
             },
-
             blogsPreview: function(openRest) {
                 return openRest("levelapBlog/findArticles").post({isMostSeen: true}, function(data) {
                     return data;
                 });
             }
-
         }
     })
     .state(prefix + 'blog.home', {
@@ -64,7 +67,6 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
         data: {displayName: 'Blog', description: '', keywords: ''},
         controller: 'BlogHomeCtrl',
         resolve: {
-
             loadPlugin: function($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'LevelapBlog',
@@ -73,13 +75,11 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                     ]
                 }]);
             },
-
             blogs: function(openRest) {
                 return openRest("levelapBlog/findArticles").post({isHomePage: true}, function(data) {
                     return data;
                 });
             }
-
         }
     })
     .state(prefix + 'blog.detail', {
@@ -92,7 +92,6 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
         data: {displayName: 'Blog', description: '', keywords: ''},
         controller: 'BlogDetailCtrl',
         resolve: {
-
             loadPlugin: function($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'LevelapBlog',
@@ -101,19 +100,16 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                     ]
                 }]);
             },
-
             article: function($stateParams, openRest) {
                 return openRest("levelapBlog/findOne/:id").get({id: $stateParams.id}, function(data) {
                     return data;
                 });
             },
-
             comments: function($stateParams, openRest) {
                 return openRest("levelapBlog/getCommentsOf/:articleId/:page").get({articleId: $stateParams.id, page: 0}, function(data) {
                     return data;
                 });
             }
-
         }
     })
     .state(prefix + 'blog.search', {
@@ -125,7 +121,6 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
         data: {displayName: 'Blog', description: '', keywords: ''},
         controller: 'BlogSearchCtrl',
         resolve: {
-
             loadPlugin: function($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'LevelapBlog',
@@ -134,24 +129,21 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                     ]
                 }]);
             },
-
             articles: function($stateParams, openRest) {
                 return openRest("levelapBlog/findArticles").post({isSearch: true, text: $stateParams.text}, function(data) {
                     return data;
                 });
             },
-
             searchValue: function($stateParams) {
                 return $stateParams.text;
             }
-
         }
     });
-
 }).constant('BlogConst', {
-
-    commentsLevel: 1
-
+    commentsLevel: 1,
+    messages: {
+        required: 'Debe completar los campos marcados con *'
+    }
 }).run(function($rootScope, BlogConst) {
     $rootScope.BlogConst = BlogConst;
 });

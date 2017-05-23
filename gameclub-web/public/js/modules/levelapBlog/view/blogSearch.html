@@ -1,5 +1,5 @@
+<!-- BLOG SEARCH PAGE START -->
 <div class="search">
-
     <div ng-if="articles.length > 0">
         <article ng-repeat="article in articles">
             <div class="image-preview">
@@ -19,9 +19,8 @@
         </article>
         <blog-navigation pages="totalPagesSearch" active-page="currentPageSearch"/>
     </div>
-
     <div ng-if="articles.length == 0" class="no-data">
         <h2>No obtuvimos resultados, favor verif&iacute;ca tu informaci&oacute;n.</h2>
     </div>
-
 </div>
+<!-- BLOG SEARCH PAGE END -->

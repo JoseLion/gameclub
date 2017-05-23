@@ -1,21 +1,23 @@
+<!-- ARTICLE PREVIEW DIRECTIVE START -->
 <article id="blog-article">
     <header>
         <div class="image-section">
             <img archive="ngModel.banner" ng-src="{{ngModel.banner.src}}" />
             <div class="post-date"><span>{{ngModel.creationDate | date:'dd'}}</span><span>{{ngModel.creationDate | date:'MMM'}}</span></div>
         </div>
+        <h1 ng-if="showAllInfo">{{ngModel.title}}</h1>
         <h2 ng-if="!showAllInfo">{{ngModel.title}}</h2>
-        <h1 ng-if="showAllInfo">{{ngModel.title}}</h2>
+        <span class="datetime">{{ngModel.creationDate | date:"EEEE, dd 'de' MMMM 'de' yyyy"}}</span>
         <div class="tags">
             <span class="tags-cell">Por: <span class="posted-by">{{ngModel.author}}</span></span>
             <div class="tags-cell">
-                <div class="tag" ng-repeat="tag in ngModel.tags"><span>{{tag.name}}</span></div>
+                <div class="tag" ng-repeat="tag in ngModel.tags"><span>{{tag.text}}</span></div>
             </div>
         </div>
     </header>
     <div class="description">
         <p ng-if="!showAllInfo">{{ngModel.summary}}</p>
-        <pre ng-if="showAllInfo">{{ngModel.body}}</pre>
+        <pre ng-if="showAllInfo" ng-bind-html="ngModel.body"></pre>
     </div>
     <footer>
         <div class="cell more">
@@ -34,3 +36,4 @@
         <article-comments ng-model="comments" level="0"/>
     </div>
 </article>
+<!-- ARTICLE PREVIEW DIRECTIVE END -->

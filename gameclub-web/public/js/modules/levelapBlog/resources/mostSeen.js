@@ -1,5 +1,11 @@
+/*!
+ * mostSeen.js - v0.1
+ * http://www.levelapsoftware.com
+ * License: MIT
+ * Using directive:
+ * - You must add the file reference on your index.html or by lazy load
+ */
 angular.module('LevelapBlog').directive('mostSeen', function() {
-
 	let baseSrc;
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
         let script = angular.element(document.getElementsByTagName("script")[i]);
@@ -8,7 +14,6 @@ angular.module('LevelapBlog').directive('mostSeen', function() {
             break;
         }
     }
-
     return {
         restrict: 'E',
         templateUrl: baseSrc.concat('resources/mostSeen.html'),
@@ -16,19 +21,11 @@ angular.module('LevelapBlog').directive('mostSeen', function() {
         scope: {
             ngModel: '=',
             pages: '=',
-            activePage: '='
+            activePage: '=',
+			title: '@'
         },
         replace: true,
         link: function($scope, element, attrs, ctrl) {
-
-            $scope.completeBlog = function() {
-                console.log('MANDA AL BLOG COMPLETO')
-            };
-
-
-            /**
-            * Page section:
-            */
             if ($scope.activePage == null) { $scope.activePage = 0; }
             $scope.changePage = function(page) {
                 $scope.pageList[$scope.activePage].active = false;
@@ -46,7 +43,6 @@ angular.module('LevelapBlog').directive('mostSeen', function() {
                     }
                 }
             });
-
         }
     };
 });

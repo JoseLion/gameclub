@@ -12,7 +12,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
 
     $stateProvider
     .state(prefix + 'blog', {
-        url: '',
+        url: '/blog',
         templateUrl: baseSrc.concat('view/blogTemplate.html'),
         data: {displayName: 'Blog', description: '', keywords: ''},
         controller: 'BlogCtrl',
@@ -59,7 +59,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
         }
     })
     .state(prefix + 'blog.home', {
-        url: '/blog',
+        url: '/home',
         templateUrl: baseSrc.concat('view/blogHome.html'),
         data: {displayName: 'Blog', description: '', keywords: ''},
         controller: 'BlogHomeCtrl',
@@ -83,7 +83,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
         }
     })
     .state(prefix + 'blog.detail', {
-        url: '/blog/:id/:title',
+        url: '/detail/:id/:title',
         params: {
             id: null,
             title: null
@@ -112,6 +112,37 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                 return openRest("levelapBlog/getCommentsOf/:articleId/:page").get({articleId: $stateParams.id, page: 0}, function(data) {
                     return data;
                 });
+            }
+
+        }
+    })
+    .state(prefix + 'blog.search', {
+        url: '/search/:text',
+        params: {
+            text: null
+        },
+        templateUrl: baseSrc.concat('view/blogSearch.html'),
+        data: {displayName: 'Blog', description: '', keywords: ''},
+        controller: 'BlogSearchCtrl',
+        resolve: {
+
+            loadPlugin: function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'LevelapBlog',
+                    files: [
+                        baseSrc.concat('controller/blogSearchCtrl.js')
+                    ]
+                }]);
+            },
+
+            articles: function($stateParams, openRest) {
+                return openRest("levelapBlog/findArticles").post({isSearch: true, text: $stateParams.text}, function(data) {
+                    return data;
+                });
+            },
+
+            searchValue: function($stateParams) {
+                return $stateParams.text;
             }
 
         }

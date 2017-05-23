@@ -5,8 +5,8 @@ angular.module("LevelapBlogAdmin", []).config(function($stateProvider) {
 	for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
 		let script = angular.element(document.getElementsByTagName("script")[i]);
 
-		if (script.attr("src") != null && script.attr("src").indexOf("levelapBlog.js") > -1) {
-			baseSrc = script.attr("src").substring(0, script.attr("src").indexOf("levelapBlog.js"));
+		if (script.attr("src") != null && script.attr("src").indexOf("levelapBlogAdmin.js") > -1) {
+			baseSrc = script.attr("src").substring(0, script.attr("src").indexOf("levelapBlogAdmin.js"));
 			break;
 		}
 	}
@@ -170,11 +170,54 @@ angular.module("LevelapBlogAdmin", []).config(function($stateProvider) {
 				});
 			}
 		}
+	})
+
+	.state(prefix + 'viewCategories', {
+		url: "/view-categories",
+		templateUrl: baseSrc + "view/viewCategories.html",
+		data: {displayName: 'Ver Categorías'},
+		controller: "ViewCategoriesCtrl",
+		resolve: {
+			loadPlugin: function($ocLazyLoad) {
+				return $ocLazyLoad.load([{
+					name: 'LevelapBlogAdmin',
+					files: [baseSrc + 'controller/viewCategoriesCtrl.js']
+				}]);
+			},
+
+			categories: function(rest) {
+				return rest("levelapBlog/findBlogExtra/:isTag", true).get({isTag: false}, function(data) {
+					return data;
+				});
+			}
+		}
+	})
+
+	.state(prefix + 'viewTags', {
+		url: "/view-tags",
+		templateUrl: baseSrc + "view/viewTags.html",
+		data: {displayName: 'Ver Tags'},
+		controller: "ViewTagsCtrl",
+		resolve: {
+			loadPlugin: function($ocLazyLoad) {
+				return $ocLazyLoad.load([{
+					name: 'LevelapBlogAdmin',
+					files: [baseSrc + 'controller/viewTagsCtrl.js']
+				}]);
+			},
+
+			tags: function(rest) {
+				return rest("levelapBlog/findBlogExtra/:isTag", true).get({isTag: true}, function(data) {
+					return data;
+				});
+			}
+		}
 	});
 }).constant('BlogConst', {
 	config: {
-		hasCategories: true,
-		hasTags: true
+		hasCategories: false,
+		hasTags: true,
+		recursiveComments: false
 	},
 
 	tableSize: 20

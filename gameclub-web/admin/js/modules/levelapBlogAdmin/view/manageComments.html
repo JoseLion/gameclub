@@ -45,6 +45,7 @@
 			
 			<div class="media-body">
 				<a href="">{{comment.username}}</a>
+				<span class="label label-danger" ng-if="!comment.status">BLOQUEADO</span>
 				<small class="text-muted" ng-if="isToday(comment.creationDate)">Hoy {{comment.creationDate | date: 'hh:mm a - dd.MM.yyyy'}}</small>
 				<small class="text-muted" ng-if="!isToday(comment.creationDate)">{{comment.creationDate | date: 'EEEE hh:mm a - dd.MM.yyyy'}}</small>
 			</div>
@@ -53,15 +54,17 @@
 		<div class="social-body">
 			<p>{{comment.comment}}</p>
 			<div class="btn-group">
-				<button type="button" class="btn btn-white btn-xs" ng-click="comment.isReplying = true">
+				<button type="button" class="btn btn-white btn-xs" ng-click="replyComment(comment, $index)" ng-if="BlogConst.config.recursiveComments">
 					<i class="fa fa-comment-o"></i> Responder
 				</button>
 				<button type="button" class="btn btn-white btn-xs" ng-click="changeStatus(comment)">
 					<i class="fa" ng-class="comment.status ? 'fa-ban' : 'fa-undo'"></i> {{comment.status ? 'Bloquear' : 'Desbloquear'}}
 				</button>
-				<button type="button" class="btn btn-white btn-xs" ng-click="getRepliesOf(comment)" ng-if="comment.childrenSize > 0">
-					<i class="fa fa-comments"></i> Ver Respuestas
+				<button type="button" class="btn btn-white btn-xs" ng-click="getRepliesOf(comment)" ng-if="BlogConst.config.recursiveComments && comment.childrenSize > 0 && !comment.repliesLoaded">
+					<span ng-if="!comment.isLoadingReplies"><i class="fa fa-comments"></i> Ver Respuestas</span>
+					<i class="fa fa-spinner loading" ng-if="comment.isLoadingReplies"></i>
 				</button>
+
 			</div>
 		</div>
 
@@ -74,7 +77,7 @@
 				</a>
 				<div class="media-body">
 					<form class="form-horizontal" role="form" on-submit="addComment(comment)" novalidate>
-						<textarea validation class="form-control" placeholder="Escribe tu comentario..." ng-model="comment.newReply" required ng-disabled="article.isLoading" style="resize: vertical;" rows="3"></textarea>
+						<textarea id="textbox_{{$index}}" validation class="form-control" placeholder="Escribe tu comentario..." ng-model="comment.newReply" required ng-disabled="article.isLoading" style="resize: vertical;" rows="3"></textarea>
 						<div class="btn-group" style="text-align: left;">
 							<button type="submit" class="btn btn-white btn-xs">
 						<span ng-if="!comment.isLoading">Publicar</span>
@@ -86,6 +89,11 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div class="col-md-12 text-center" ng-if="hasMore">
+		<button type="button" class="btn btn-sm btn-white" ng-click="loadMoreComments()" style="margin-bottom: 15px;" ng-if="!isLoadingComments">Ver más</button>
+		<i class="fa fa-spinner fa-2x loading" ng-if="isLoadingComments" style="margin-bottom: 15px;"></i>
 	</div>
 </div>
 
@@ -99,18 +107,23 @@
 			<a href="">{{reply.username}}</a>
 			{{reply.comment}}
 			<br/>
+			<span class="label label-danger" ng-if="!reply.status">BLOQUEADO</span>
 			<small class="text-muted" ng-if="isToday(reply.creationDate)">Hoy {{reply.creationDate | date: 'hh:mm a - dd.MM.yyyy'}}</small>
 			<small class="text-muted" ng-if="!isToday(reply.creationDate)">{{reply.creationDate | date: 'EEEE hh:mm a - dd.MM.yyyy'}}</small>
 			<br/>
-			<a href="" class="small" ng-click="reply.isReplying = true;">
+			<a href="" class="small" ng-click="replyComment(reply, $index)">
 				<i class="fa fa-comment-o"></i> Responder
 			</a>
 			<a href="" class="small" ng-click="changeStatus(reply)">
 				<i class="fa" ng-class="reply.status ? 'fa-ban' : 'fa-undo'"></i> {{reply.status ? 'Bloquear' : 'Desbloquear'}}
 			</a>
+			<a href="" class="small" ng-click="getRepliesOf(reply)" ng-if="reply.childrenSize > 0 && !reply.isLoadingReplies && !reply.repliesLoaded">
+				<i class="fa fa-comments"></i> Ver Respuestas
+			</a>
+			<i class="fa fa-spinner loading" ng-if="reply.isLoadingReplies" style="margin-left: 1%;"></i>
 		</div>
 
-		<div ng-include="'recursiveComment.html'" scope="this" ng-repeat="reply in reply.children" ng-if="reply.children.length > 0"></div>
+		<div ng-include="'recursiveComment.html'" scope="this" ng-repeat="reply in reply.children" ng-if="BlogConst.config.recursiveComments"></div>
 
 		<div class="social-comment" ng-if="reply.isReplying">
 			<a href="" class="pull-left">
@@ -118,7 +131,8 @@
 			</a>
 			<div class="media-body">
 				<form class="form-horizontal" role="form" on-submit="addComment(reply)" novalidate>
-					<textarea validation class="form-control" placeholder="Escribe tu comentario..." ng-model="reply.newReply" required ng-disabled="article.isLoading" style="resize: vertical;" rows="3"></textarea>
+					<textarea id="textbox_{{$index}}" validation class="form-control" placeholder="Escribe tu comentario..." ng-model="reply.newReply" required ng-disabled="article.isLoading" style="resize: vertical;" rows="3"></textarea>
+
 					<div class="btn-group" style="text-align: left;">
 						<button type="submit" class="btn btn-white btn-xs">
 							<span ng-if="!reply.isLoading">Publicar</span>
@@ -129,6 +143,13 @@
 				</form>
 			</div>
 		</div>
+
+		<div class="col-md-12 text-center" ng-if="$last && reply.parent.hasMore">
+			<button type="button" class="btn btn-xs btn-white" ng-click="loadMoreReplies(reply)" ng-if="!reply.parent.isLoadingReplies">Ver más</button>
+			<i class="fa fa-spinner loading" ng-if="reply.parent.isLoadingReplies" style="margin-bottom: 15px;"></i>
+		</div>
+
+		<div class="clearfix"></div>
 	</div>
 </script>
 

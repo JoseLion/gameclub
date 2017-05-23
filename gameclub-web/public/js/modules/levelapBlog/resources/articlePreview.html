@@ -9,13 +9,13 @@
         <div class="tags">
             <span class="tags-cell">Por: <span class="posted-by">{{ngModel.author}}</span></span>
             <div class="tags-cell">
-                <div class="tag" ng-repeat="tag in ngModel.tags"><span>{{tag.name}}</span></div>
+                <div class="tag" ng-repeat="tag in ngModel.tags"><span>{{tag.text}}</span></div>
             </div>
         </div>
     </header>
     <div class="description">
         <p ng-if="!showAllInfo">{{ngModel.summary}}</p>
-        <pre ng-if="showAllInfo">{{ngModel.body}}</pre>
+        <div ng-bind-html="ngModel.body" ng-if="showAllInfo"></div>
     </div>
     <footer>
         <div class="cell more">

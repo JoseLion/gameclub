@@ -1,4 +1,4 @@
-angular.module("LevelapBlogAdmin").controller('ViewArticlesCtrl', function($scope, articles, categories, tags, getDTOptions, BlogConst, $state, friendlyUrl) {
+angular.module("LevelapBlogAdmin").controller('ViewArticlesCtrl', function($scope, articles, categories, tags, getDTOptions, BlogConst, $state, friendlyUrl, rest, sweet) {
 	$scope.search = {};
 	$scope.totalElements;
 	$scope.beginning;
@@ -36,12 +36,44 @@ angular.module("LevelapBlogAdmin").controller('ViewArticlesCtrl', function($scop
 		setPagedData(data);
 	});
 
+	$scope.find = function() {
+		rest("levelapBlog/findArticles").post($scope.search, function(data) {
+			setPagedData(data);
+		});
+	}
+
+	$scope.clear = function() {
+		$scope.search = {};
+		$scope.find();
+	}
+
+	$scope.pageChanged = function() {
+		$scope.search.page = $scope.currentPage - 1;
+		$scope.find();
+	}
+
 	$scope.addArticle = function() {
 		$state.go("^.addArticle");
 	}
 
 	$scope.editArticle = function(article) {
 		$state.go("^.editArticle", {id: article.id, title: friendlyUrl(article.title)});
+	}
+
+	$scope.manageComments = function(article) {
+		$state.go("^.manageComments", {id: article.id, title: friendlyUrl(article.title)});
+	}
+
+	$scope.changeStatus = function(article) {
+		sweet.changeStatus(function() {
+			rest("levelapBlog/changeArticleStatus/:id").get({id: article.id}, function(data) {
+				article.status = data;
+				sweet.statusChanged();
+				sweet.close();
+			}, function(error) {
+				sweet.close();
+			});
+		});
 	}
 
 	function setPagedData(data) {

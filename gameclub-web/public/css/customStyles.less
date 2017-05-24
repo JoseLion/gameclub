@@ -124,17 +124,6 @@ footer#main-footer .designed span{letter-spacing:1px;}
 .fixed-bottom{position:fixed;bottom:0;}
 /****************************/
 
-
-
-/********** BLOG-PREVIEW **********/
-.preview-blog{background:@color-tertiary-alt;padding-top:1%;box-shadow:5px 10px 25px 5px @color-primary-30;}
-.preview-blog .title{text-transform:uppercase;font-size:2.5em;font-weight:700;}
-.preview-blog hr{width:10%;margin-left:0;margin-bottom:0;margin-top:15px;border-width:3px;border-color:@color-primary-alt;}
-.preview-blog .article-row{margin-left:-15px;margin-right:-15px;display:inline-block;}
-.preview-blog .article-row>div{margin-bottom:5%;}
-.preview-blog .article-row .paging{margin-top:-2%;}
-/**********************************/
-
 /********** HOW WORKS **********/
 .how-it-works .step.second-step{position:relative;}
 .how-it-works .step.third-step{padding-bottom:4.5%;position:relative;}
@@ -834,8 +823,28 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #terms-conditions section.final{height:2em;width:100%;background:@color-primary-alt;}
 /***********************************************/
 
+/* BLOG VARIABLES */
+@blog-padding-left: 37.037037037%!important;
 
+/* BLOG FOR GAMECLUB, HOME MOST SEEN */
+#most-seen{background:@color-tertiary-alt!important;box-shadow:5px 10px 25px 5px @color-primary-30!important;padding:1% 20% 0.25em!important;}
+#most-seen>h2{color:@color-primary-alt!important;font-family:@font-family-jaapokki!important;font-weight:400!important;}
+#most-seen>hr{width:8%!important;border-color:@color-primary-alt!important;}
+#most-seen .article-row{margin-top:1em;}
+#most-seen .article-row .blog-preview .info h2{color:@color-primary;font-weight:400;text-transform:none;}
+#most-seen .article-row .blog-preview .info p{color:@color-primary-alt;}
+#most-seen .article-row .blog-preview .info a{color:@color-secundary;text-transform:none;}
+#most-seen .article-row .blog-preview .picture .post-date,#blog #blog-article header .image-section .post-date{background:@color-secundary!important;border:none!important;color:@color-tertiary!important;font-size:0.8em!important;height:4.5em!important;width:4.5em!important;}
+#most-seen .article-row .blog-preview .info,#most-seen>.article-row .blog-preview .picture{background:@color-tertiary;}
+#most-seen .pagging .page-button{border-color:@color-primary-alt!important;}
+#most-seen .pagging .page-button.page-active{background:@color-secundary!important;border-color:transparent!important;}
 
+#blog{background:url("../img/blog/blog-bg.png") repeat-y center top!important;background-size:100%!important;}
+#blog section.banner .title{color:@color-primary-alt;}
+#blog section.banner hr,#blog section.banner hr::before{border-color:@color-tertiary!important;}
+#blog section.blog-panel.left .blog-home .article-section{background:@color-tertiary-85!important;padding-left:@blog-padding-left}
+#blog #blog-article{background:transparent!important;}
+#blog #navigation{padding-left:@blog-padding-left}
 /*
 background:@color-primary;
 background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);
@@ -843,36 +852,6 @@ background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@colo
 background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
 background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /********** BLOG-PAGE **********/

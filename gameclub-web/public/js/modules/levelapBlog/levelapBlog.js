@@ -140,7 +140,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
         }
     });
 }).constant('BlogConst', {
-    commentsLevel: 1,
+    commentsLevel: 0,
     messages: {
         required: 'Debe completar los campos marcados con *'
     }

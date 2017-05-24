@@ -22,11 +22,17 @@ angular.module('LevelapBlog').directive('mostSeen', function() {
             ngModel: '=',
             pages: '=',
             activePage: '=',
-			title: '@'
+			title: '@',
+			size: '='
         },
         replace: true,
         link: function($scope, element, attrs, ctrl) {
             if ($scope.activePage == null) { $scope.activePage = 0; }
+			if($scope.size == null) {
+				$scope.filterSize = 200;
+			} else {
+				$scope.filterSize = $scope.size;
+			}
             $scope.changePage = function(page) {
                 $scope.pageList[$scope.activePage].active = false;
                 page.active = true;

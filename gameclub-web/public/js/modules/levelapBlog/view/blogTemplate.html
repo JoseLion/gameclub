@@ -32,7 +32,7 @@
                 <div class="image-preview">
                     <div>
                         <div>
-                            <img archive="article.banner" ng-src="{{article.banner.src}}" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})"/>
+                            <img archive="article.banner" ng-src="{{article.banner.src}}" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})" ng-style="article.crop" />
                         </div>
                     </div>
                 </div>
@@ -68,6 +68,6 @@
     <div class="clearfix"></div>
 
     <!-- DIRECTIVE OF MOST SEEN -->
-    <most-seen ng-model="blogsPreview" pages="totalPagesMostSeen" active-page="currentPageMostSeen" class="most-seen" title="Lo más visto"/>
+    <most-seen ng-model="blogsPreview" pages="totalPagesMostSeen" active-page="currentPageMostSeen" class="most-seen" title="Lo más visto" size="100" />
 </div>
 <!-- BLOG TEMPLATE END -->

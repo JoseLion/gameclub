@@ -7,14 +7,20 @@
             <article class="blog-preview">
                 <div class="col-md-7 info">
                     <h2>{{preview.title}}</h2>
-                    <p>{{preview.summary | limitTo:200}}{{preview.summary.length > 200 ? '...' : ''}}</p>
+                    <p>{{preview.summary | limitTo:filterSize}}{{preview.summary.length > filterSize ? '...' : ''}}</p>
                     <a href ui-sref="levelapBlog.blog.detail({id:preview.id,title:preview.title})">Leer m&aacute;s</a>
                 </div>
                 <div class="col-md-5 picture">
                     <div class="image-section">
-                        <div class="post-date"><span>{{preview.creationDate | date:'dd'}}</span><span>{{preview.creationDate | date:'MMM'}}</span></div>
+                        <div class="post-date">
+                            <div class="post-date-content">
+                                <span>{{preview.creationDate | date:'dd'}}</span><span>{{preview.creationDate | date:'MMM'}}</span>
+                            </div>
+                        </div>
+                        <div class="image-cropped">
+                            <img archive="preview.banner" ng-src="{{preview.banner.src}}" ng-style="preview.crop" />
+                        </div>
                     </div>
-                    <img archive="preview.banner" ng-src="{{preview.banner.src}}" />
                 </div>
             </article>
         </div>

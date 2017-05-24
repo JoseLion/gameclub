@@ -1,4 +1,4 @@
-angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl) {
+angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview) {
     $scope.search = {};
     $scope.contactUs = {};
 
@@ -127,45 +127,8 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
         $scope.mostPlayed.unshift(temp[0]);
     };
 
-    $scope.blogs = [
-        {
-            blogId: 1,
-            subtitle: 'Artículo',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            imgSrc: 'img/test/blog-preview-01.png',
-            date: new Date('11-09-2016'),
-            url: '#'
-        },
-        {
-            blogId: 2,
-            subtitle: 'Artículo',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            imgSrc: 'img/test/blog-preview-02.png',
-            date: new Date('11-09-2016'),
-            url: '#'
-        },
-        {
-            blogId: 3,
-            subtitle: 'Artículo',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            imgSrc: 'img/test/blog-preview-03.png',
-            date: new Date('11-09-2016'),
-            url: '#'
-        },
-        {
-            blogId: 4,
-            subtitle: 'Artículo',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            imgSrc: 'img/test/blog-preview-04.png',
-            date: new Date('11-09-2016'),
-            url: '#'
-        }
-    ];
-
-    $scope.$watch('currentBlogPage', function(newValue, oldValue) {
-        if(newValue != null && newValue != oldValue) {
-            console.log('SE DEBE HACER LA CONSULTA PARA LLAMAR A MAS PREVIEWS');
-        }
+    blogsPreview.$promise.then(function(data) {
+        setPageBlogsMostSeen(data);
     });
 
     $scope.nameAutocomplete = [];
@@ -176,5 +139,23 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
             });
         }
     });
+
+    $scope.$watch('currentPageMostSeen', function(newValue, oldValue) {
+        if(newValue != null && newValue != oldValue) {
+            openRest("levelapBlog/findArticles").post({isMostSeen: true, page: newValue}, function(data) {
+                setPageBlogsMostSeen(data);
+            });
+        }
+    });
+    function setPageBlogsMostSeen(data) {
+        $scope.blogsPreview = data.content;
+        $scope.blogsPreview.forEach(function(preview) {
+            preview.crop = {
+                width: '335px',
+                transform: 'translate(-80px,0)'
+            };
+        });
+        $scope.totalPagesMostSeen = data.totalPages;
+    }
 
 });

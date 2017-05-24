@@ -7,6 +7,7 @@
  * - openRest factory
  */
 angular.module('LevelapBlog').controller('BlogSearchCtrl', function($scope, articles, searchValue, openRest) {
+    $scope.searchValue = searchValue;
     articles.$promise.then(function(data) {
         setPageSearch(data);
         $scope.showInfo = true;
@@ -20,6 +21,12 @@ angular.module('LevelapBlog').controller('BlogSearchCtrl', function($scope, arti
     });
     function setPageSearch(data) {
         $scope.articles = data.content;
+        $scope.articles.forEach(function(preview) {
+            preview.crop = {
+                width: '238px',
+                transform: 'translate(-98px,-10px)'
+            };
+        });
         $scope.totalPagesSearch = data.totalPages;
     }
 });

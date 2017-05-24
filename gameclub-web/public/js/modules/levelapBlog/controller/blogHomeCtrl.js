@@ -10,6 +10,7 @@ angular.module('LevelapBlog').controller('BlogHomeCtrl', function($scope, blogs,
     blogs.$promise.then(function(data) {
         setPageHome(data);
     });
+    $scope.currentPageHome = 0;
     $scope.$watch('currentPageHome', function(newValue, oldValue) {
         if(newValue != null && newValue != oldValue) {
             openRest("levelapBlog/findArticles").post({isHomePage: true, page: newValue}, function(data) {

@@ -3,7 +3,11 @@
     <header>
         <div class="image-section">
             <img archive="ngModel.banner" ng-src="{{ngModel.banner.src}}" />
-            <div class="post-date"><span>{{ngModel.creationDate | date:'dd'}}</span><span>{{ngModel.creationDate | date:'MMM'}}</span></div>
+            <div class="post-date">
+                <div class="post-date-content">
+                    <span>{{ngModel.creationDate | date:'dd'}}</span><span>{{ngModel.creationDate | date:'MMM'}}</span>
+                </div>
+            </div>
         </div>
         <h1 ng-if="showAllInfo">{{ngModel.title}}</h1>
         <h2 ng-if="!showAllInfo">{{ngModel.title}}</h2>
@@ -21,18 +25,17 @@
     </div>
     <footer>
         <div class="cell more">
-            <a ng-if="!showAllInfo" ui-sref="levelapBlog.blog.detail({id:ngModel.id, title: ngModel.title})">Leer m&aacute;s</a>
+            <button class="btn btn-primary small" ui-sref="levelapBlog.blog.detail({id:ngModel.id, title: ngModel.title})" ng-if="!showAllInfo">Leer m&aacute;s</button>
         </div>
         <div class="cell social-media">
             Share:
-            <a href><i class="fa fa-facebook"></i></a>
-            <a href><i class="fa fa-instagram"></i></a>
-            <a href><i class="fa fa-youtube-play"></i></a>
-            <a href><i class="fa fa-twitter"></i></a>
+            <a href><i class="gc gc-facebook"></i></a>
+            <a href><i class="gc gc-instagram"></i></a>
+            <a href><i class="gc gc-twitter"></i></a>
         </div>
     </footer>
     <div class="comments" ng-if="showAllInfo">
-        <h2>Deja un comentario</h2>
+        <h2>Deja un <span class="normal">comentario</span></h2>
         <article-comments ng-model="comments" level="0"/>
     </div>
 </article>

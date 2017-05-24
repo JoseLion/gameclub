@@ -9,6 +9,12 @@
 angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope, $state, importantBlogs, categories, tags, blogsPreview, openRest) {
     importantBlogs.$promise.then(function(data) {
         $scope.importantBlogs = data.content;
+        $scope.importantBlogs.forEach(function(preview) {
+            preview.crop = {
+                width: '238px',
+                transform: 'translate(-98px,-10px)'
+            };
+        });
     });
     categories.$promise.then(function(data) {
         $scope.categories = data;
@@ -31,6 +37,12 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
     });
     function setPageMostSeen(data) {
         $scope.blogsPreview = data.content;
+        $scope.blogsPreview.forEach(function(preview) {
+            preview.crop = {
+                width: '330px',
+                transform: 'translate(-80px,0)'
+            };
+        });
         $scope.totalPagesMostSeen = data.totalPages;
     }
     if ($state.current.name == 'levelapBlog.blog') {

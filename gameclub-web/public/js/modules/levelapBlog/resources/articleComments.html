@@ -9,20 +9,14 @@
                 <span class="username">{{comment.username}}</span>
                 <span class="datetime"><small>{{comment.creationDate | date:"EEEE, dd 'de' MMMM 'de' yyyy"}}</small><small>{{comment.creationDate | date:"hh:mm a"}}</small></span>
                 <p>{{comment.comment}}</p>
-                <div class="comments-links" ng-if="comment.level < commentsLevel">
-                    <a href ng-click="comment.showReplies = true" ng-if="!comment.showReplies">Mostrar respuestas</a>
-                </div>
             </div>
         </div>
-        <article-comments ng-model="comment.resultChildren" ng-if="comment.showReplies && comment.level < commentsLevel" level="level + 1" />
+        <article-comments ng-model="comment.resultChildren" />
     </div>
     <div class="comments-links">
         <a href ng-click="showMoreComments(level)" ng-if="showMore">Ver m&aacute;s</a>
     </div>
-    <div class="new-comment">
-        <button class="btn btn-primary" ng-click="$parent.showCommentMainForm = true;" ng-if="!showCommentMainForm">Agregar</button>
-        <div ng-include="'commentsForm.html'" ng-if="showCommentMainForm"></div>
-    </div>
+    <div ng-include="'commentsForm.html'"></div>
     <script type="text/ng-template" id="commentsForm.html">
         <form id="comments-form-logged" ng-if="currentUser != null" ng-submit="submitComment($event)" novalidate>
             <div class="comment-row">
@@ -56,7 +50,7 @@
                 <input ng-model="form.email" required />
             </div>
             <div class="send">
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="submit" class="btn btn-primary small">Enviar</button>
             </div>
         </form>
     </script>

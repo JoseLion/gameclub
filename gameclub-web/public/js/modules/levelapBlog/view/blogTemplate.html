@@ -26,7 +26,7 @@
 
         <!-- SHOW IMPORTANT BLOGS -->
         <div class="important">
-            <h2>Articulos destacados</h2>
+            <h2>Art&iacute;culos <span class="normal">destacados</span></h2>
             <hr class="subtitle" />
             <article ng-repeat="article in importantBlogs">
                 <div class="image-preview">
@@ -54,9 +54,9 @@
 
         <!-- SHOW TAGS -->
         <div class="tags-section" ng-if="tags.length > 0">
-            <h2>Tags</h2>
+            <h2>Etiquetas</h2>
             <hr class="subtitle" />
-            <div class="tag" ng-repeat="tag in tags"><span>{{tag.text}}</span></div>
+            <div class="tag" ng-repeat="tag in tags" ui-sref="levelapBlog.blog.search({text:tag.text})"><span>{{tag.text}}</span></div>
         </div>
 
         <!-- HERE TO PUT EXTRA INFORMATION -->

@@ -7,6 +7,7 @@
  * - openRest factory
  */
 angular.module('LevelapBlog').controller('BlogSearchCtrl', function($scope, articles, searchValue, openRest) {
+    $scope.searchValue = searchValue;
     articles.$promise.then(function(data) {
         setPageSearch(data);
         $scope.showInfo = true;

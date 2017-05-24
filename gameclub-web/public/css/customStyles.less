@@ -8,7 +8,7 @@ h2{margin:0;}
 /*******************************/
 
 /********** GENERAL **********/
-.game-font{font-family:@font-family-jaapokki!important;}
+.game-font{font-family:@font-family-jaapokki;}
 .game-font-blue{color:@color-primary-alt;/*NEW FONT*/}
 .game-font-white{color:@color-tertiary;/*NEW FONT*/}
 .game-font-light-red{color:@color-secundary;/*NEW FONT*/}
@@ -18,15 +18,15 @@ h2{margin:0;}
 .btn,.btn:hover,.btn:visited,.btn:focus,.btn:active,.btn:active:focus,.btn:active:hover{border-width:2px;border-style:solid;background:transparent;text-transform:uppercase;padding:5px 30px 2.5px;border-radius:12px;font-weight:700;box-shadow:none;}
 .btn.active,.btn.active:hover,.btn.active:visited,.btn.active:focus,.btn.active:active,.btn.active:active:focus,.btn.active:active:hover{border-width:2px;border-style:solid;background:transparent;box-shadow:none;}
 .btn-primary,.btn-primary:hover,.btn-primary:visited,.btn-primary:focus,.btn-primary:active,.btn-primary:active:focus,.btn-primary:active:hover,
-.btn-primary.active,.btn-primary.active:hover,.btn-primary.active:visited,.btn-primary.active:focus,.btn-primary.active:active,.btn-primary.active:active:focus,.btn-primary.active:active:hover{color:@color-primary;border-color:@color-secundary;}
+.btn-primary.active,.btn-primary.active:hover,.btn-primary.active:visited,.btn-primary.active:focus,.btn-primary.active:active,.btn-primary.active:active:focus,.btn-primary.active:active:hover{color:@color-primary!important;border-color:@color-secundary!important;}
 .btn-primary.full,.btn-primary.full:hover,.btn-primary.full:visited,.btn-primary.full:focus,.btn-primary.full:active,.btn-primary.full:active:focus,.btn-primary.full:active:hover,
-.btn-primary.full.active,.btn-primary.full.active:hover,.btn-primary.full.active:visited,.btn-primary.full.active:focus,.btn-primary.full.active:active,.btn-primary.full.active:active:focus,.btn-primary.full.active:active:hover{color:@color-primary;background:@color-secundary;}
+.btn-primary.full.active,.btn-primary.full.active:hover,.btn-primary.full.active:visited,.btn-primary.full.active:focus,.btn-primary.full.active:active,.btn-primary.full.active:active:focus,.btn-primary.full.active:active:hover{color:@color-primary!important;background:@color-secundary!important;}
 .btn-primary-alt,.btn-primary-alt:hover,.btn-primary-alt:visited,.btn-primary-alt:focus,.btn-primary-alt:active,.btn-primary-alt:active:focus,.btn-primary-alt:active:hover,
-.btn-primary-alt.active,.btn-primary-alt.active:hover,.btn-primary-alt.active:visited,.btn-primary-alt.active:focus,.btn-primary-alt.active:active,.btn-primary-alt.active:active:focus,.btn-primary-alt.active:active:hover{color:@color-primary;border-color:@color-primary-alt;}
-.btn-secundary,.btn-secundary:hover,.btn-secundary:visited,.btn-secundary:focus,.btn-secundary:active,.btn-secundary:active:focus,.btn-secundary:active:hover{color:@color-tertiary;border-color:@color-primary;}
-.btn-secundary.full,.btn-secundary.full:hover,.btn-secundary.full:visited,.btn-secundary.full:focus,.btn-secundary.full:active,.btn-secundary.full:active:focus,.btn-secundary.full:active:hover{color:@color-tertiary;background:@color-primary;}
-.btn-tertiary,.btn-tertiary:hover,.btn-tertiary:visited,.btn-tertiary:focus,.btn-tertiary:active,.btn-tertiary:active:focus,.btn-tertiary:active:hover{color:@color-primary;border-color:@color-tertiary;}
-.btn-tertiary.full,.btn-tertiary.full:hover,.btn-tertiary.full:visited,.btn-tertiary.full:focus,.btn-tertiary.full:active,.btn-tertiary.full:active:focus,.btn-tertiary.full:active:hover{color:@color-primary;background:@color-tertiary;}
+.btn-primary-alt.active,.btn-primary-alt.active:hover,.btn-primary-alt.active:visited,.btn-primary-alt.active:focus,.btn-primary-alt.active:active,.btn-primary-alt.active:active:focus,.btn-primary-alt.active:active:hover{color:@color-primary!important;border-color:@color-primary-alt!important;}
+.btn-secundary,.btn-secundary:hover,.btn-secundary:visited,.btn-secundary:focus,.btn-secundary:active,.btn-secundary:active:focus,.btn-secundary:active:hover{color:@color-tertiary!important;border-color:@color-primary!important;}
+.btn-secundary.full,.btn-secundary.full:hover,.btn-secundary.full:visited,.btn-secundary.full:focus,.btn-secundary.full:active,.btn-secundary.full:active:focus,.btn-secundary.full:active:hover{color:@color-tertiary!important;background:@color-primary!important;}
+.btn-tertiary,.btn-tertiary:hover,.btn-tertiary:visited,.btn-tertiary:focus,.btn-tertiary:active,.btn-tertiary:active:focus,.btn-tertiary:active:hover{color:@color-primary!important;border-color:@color-tertiary!important;}
+.btn-tertiary.full,.btn-tertiary.full:hover,.btn-tertiary.full:visited,.btn-tertiary.full:focus,.btn-tertiary.full:active,.btn-tertiary.full:active:focus,.btn-tertiary.full:active:hover{color:@color-primary!important;background:@color-tertiary!important;}
 button.small,button.small:hover,button.small:visited,button.small:focus,button.small:active,button.small:active:focus,button.small:active:hover{border-radius:5px;padding:3px 6% 0;font-size:0.7em;margin-top:1%;}
 .ui-select-toggle .btn,.ui-select-toggle .btn:hover,.ui-select-toggle .btn:visited,.ui-select-toggle .btn:focus,.ui-select-toggle .btn:active,.ui-select-toggle .btn:active:focus,.ui-select-toggle .btn:active:hover{padding:0;}
 .row-left{margin-left:0;margin-right:0;padding-left:20%;}
@@ -171,14 +171,14 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 /*******************************/
 
 /********** BLOG-PREVIEW **********/
-#blog-preview .info{background:@color-tertiary;color:@color-primary-alt;font-size:0.6em;margin:7% 0;font-size:0.8em;padding:5%;text-align:justify;}
-#blog-preview .info .subtitle{font-size:1.6em;color:@color-primary;}
-#blog-preview .info a{color:@color-secundary;font-size:1.3em;position:relative;}
-#blog-preview .info a::before{content:"";width:30%;height:1px;display:inline-block;background:@color-primary;position:absolute;top:40%;left:110%;}
-#blog-preview .info a::after{content:"";width:5px;height:5px;display:inline-block;background:@color-primary;position:absolute;top:4px;left:135%;border-radius:50%;}
-#blog-preview .picture{background:@color-tertiary;position:absolute;left:58%;right:0;top:0;bottom:5%;padding:0;border-radius:5%;}
-#blog-preview .picture .date{color:@color-tertiary;background:@color-secundary;width:5em;height:5em;text-align:center;padding:7%;margin-left:-1.5em;margin-top:-1.5em;border-radius:50%;font-size:0.8em;font-weight:700;position:absolute;text-transform:uppercase;}
-#blog-preview .picture img{width:100%;height:100%;border-radius:5%;}
+// #blog-preview .info{background:@color-tertiary;color:@color-primary-alt;font-size:0.6em;margin:7% 0;font-size:0.8em;padding:5%;text-align:justify;}
+// #blog-preview .info .subtitle{font-size:1.6em;color:@color-primary;}
+// #blog-preview .info a{color:@color-secundary;font-size:1.3em;position:relative;}
+// #blog-preview .info a::before{content:"";width:30%;height:1px;display:inline-block;background:@color-primary;position:absolute;top:40%;left:110%;}
+// #blog-preview .info a::after{content:"";width:5px;height:5px;display:inline-block;background:@color-primary;position:absolute;top:4px;left:135%;border-radius:50%;}
+// #blog-preview .picture{background:@color-tertiary;position:absolute;left:58%;right:0;top:0;bottom:5%;padding:0;border-radius:5%;}
+// #blog-preview .picture .date{color:@color-tertiary;background:@color-secundary;width:5em;height:5em;text-align:center;padding:7%;margin-left:-1.5em;margin-top:-1.5em;border-radius:50%;font-size:0.8em;font-weight:700;position:absolute;text-transform:uppercase;}
+// #blog-preview .picture img{width:100%;height:100%;border-radius:5%;}
 /**********************************/
 
 /********** BLOG-PAGING **********/
@@ -248,7 +248,7 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 // #game-rating .game-container .background:hover::before
 #game-item .cover .background img{top:-1.7em;width:7.5em;}
 #game-item .information{padding-bottom:1%;padding-top:2%;}
-#game-item .information span.description{font-weight:700;font-size:1.2em;display:block;font-family:@font-family-jaapokki!important;letter-spacing:1px;}
+#game-item .information span.description{font-weight:700;font-size:1.2em;display:block;font-family:@font-family-jaapokki;letter-spacing:1px;}
 #game-item .information div.rating-container img{width:1em;}
 #game-item .information span.price{text-transform:uppercase;display:block;font-size:1em;font-weight:700;margin-top:1%;}
 #game-item .information span.price span.light{margin-left:1em;color:@color-secundary;letter-spacing:1px;}
@@ -288,9 +288,9 @@ box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);-webkit-box-
 #home .banner::before{content:"";background:url("../img/home/banner-pad-bg.png") no-repeat center top;background-size:40%;position:absolute;top:0;right:0;bottom:0;left:0;z-index:-5;opacity:0.7;}
 #home .banner hr{border-top:2px solid @color-tertiary;margin-bottom:5px;margin-top:0px;}
 #home .banner .title-up{margin-left:12%;margin-right:54%;}
-#home .banner .title{font-family:@font-family-jaapokki!important;font-size:2.4em;letter-spacing:6px;margin-top:15px;}
+#home .banner .title{font-family:@font-family-jaapokki;font-size:2.4em;letter-spacing:6px;margin-top:15px;}
 #home .banner .title-down{margin-right:12%;margin-left:53%;}
-#home .banner .description{font-size:1.5em;font-family:@font-family-jaapokki!important;}
+#home .banner .description{font-size:1.5em;font-family:@font-family-jaapokki;}
 #home .banner .search .search-params{font-size:1.1em;font-weight:400;padding:0;}
 #home .banner .search .search-params .selector .ui-select-placeholder,#home .banner .search .search-params .selector .ui-select-match-text{font-weight:400;}
 #home .banner .search .search-params .filter{padding-top:7px;padding-bottom:5px;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;height:3em;}
@@ -509,9 +509,9 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #settings section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
 #account #settings section.header .name .connection span{color:@color-primary-alt;}
 #account #settings section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
-#account #settings section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki!important;text-transform:uppercase;position:relative;letter-spacing:1px;}
+#account #settings section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
 #account #settings section.header .coins::before{content:"\E008";position:absolute;top:2.2em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
-#account #settings section.header .coins span.dark{font-family:@font-family-josefinsans!important;color:@color-primary;font-weight:700;letter-spacing:2px;}
+#account #settings section.header .coins span.dark{font-family:@font-family-josefinsans;color:@color-primary;font-weight:700;letter-spacing:2px;}
 #account #settings section.header .coins button>span.light{color:@color-tertiary;}
 #account #settings section.header .coins button{position:relative;padding:4px 25% 1px;border-width:1px;font-size:0.7em;}
 #account #settings section.header .coins button::before,#account #settings section.header .coins button::after{color:@color-tertiary;position:absolute;font-family:gameclub;}
@@ -577,9 +577,9 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #games section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
 #account #games section.header .name .connection span{color:@color-primary-alt;}
 #account #games section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
-#account #games section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki!important;text-transform:uppercase;position:relative;letter-spacing:1px;}
+#account #games section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
 #account #games section.header .coins::before{content:"\E008";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
-#account #games section.header .coins span.dark{font-family:@font-family-josefinsans!important;color:@color-primary;font-weight:700;letter-spacing:2px;}
+#account #games section.header .coins span.dark{font-family:@font-family-josefinsans;color:@color-primary;font-weight:700;letter-spacing:2px;}
 #account #games section.header .coins button>span.light{color:@color-tertiary;}
 #account #games section.header .coins button{position:relative;padding:4px 25% 1px;border-width:1px;font-size:0.7em;}
 #account #games section.header .coins button::before{content:"\f155";color:@color-tertiary;position:absolute;left:5px;}
@@ -646,15 +646,15 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 
 #account #games section.upload{padding-top:2%;padding-bottom:2%;}
 #account #games section.upload .subtitle{text-transform:uppercase;padding:1%;border-left:1px solid @color-primary;border-right:1px solid @color-primary;font-size:1.5em;font-weight:700;}
-#account #games section.upload p{width:60%;margin:2% auto 1%;font-weight:700;font-family:@font-family-jaapokki!important;}
+#account #games section.upload p{width:60%;margin:2% auto 1%;font-weight:700;font-family:@font-family-jaapokki;}
 #account #games section.upload button{padding:5px 0 2px;width:18em;}
 
 #account #games section.banner{padding-top:4%;padding-bottom:10%;text-align:center;display:block;position:relative;background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%}
 #account #games section.banner hr{border-top:2px solid @color-tertiary;margin-bottom:5px;margin-top:0px;}
 #account #games section.banner .title-up{margin-left:12%;margin-right:54%;}
-#account #games section.banner .title{font-family:@font-family-jaapokki!important;font-size:2.4em;letter-spacing:6px;margin-top:15px;}
+#account #games section.banner .title{font-family:@font-family-jaapokki;font-size:2.4em;letter-spacing:6px;margin-top:15px;}
 #account #games section.banner .title-down{margin-right:12%;margin-left:53%;}
-#account #games section.banner .description{font-size:1.5em;font-family:@font-family-jaapokki!important;}
+#account #games section.banner .description{font-size:1.5em;font-family:@font-family-jaapokki;}
 #account #games section.banner .search .search-params{font-size:1.1em;font-weight:700;padding:0;}
 #account #games section.banner .search .search-params .filter{padding-top:7px;padding-bottom:5px;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;}
 #account #games section.banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
@@ -703,7 +703,7 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #search section div.separator{width:100%;height:0.3em;margin-top:-1%;margin-bottom:4%;background:@color-primary;
 background:linear-gradient(45deg,@color-tertiary -10%,transparent 80%);background:-webkit-linear-gradient(45deg,@color-tertiary -10%,transparent 80%);background:-o-linear-gradient(45deg,@color-tertiary -10%,transparent 80%);background:-moz-linear-gradient(45deg,@color-tertiary -10%,transparent 80%);}
 #search section.no-result{padding-top:5%;padding-bottom:6%;}
-#search section.no-result h2{text-transform:uppercase;font-size:2.4em;font-family:@font-family-jaapokki!important;color:@color-secundary;}
+#search section.no-result h2{text-transform:uppercase;font-size:2.4em;font-family:@font-family-jaapokki;color:@color-secundary;}
 #search section.no-result div.separator{margin-bottom:0;margin-top:4%;}
 #search section.result{padding-top:3%;}
 #search section.result .rating .types img{border-color:@color-tertiary;}
@@ -726,13 +726,13 @@ background:linear-gradient(45deg,@color-tertiary -10%,transparent 80%);backgroun
 background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
 -webkit-background-clip:text;}
 #game section.header .principal{padding:0;}
-#game section.header .principal .title{text-transform:none;font-size:1.2em;font-weight:700;margin-top:0.5em;margin-bottom:0;padding:0;font-family:@font-family-jaapokki!important;letter-spacing:1px;}
+#game section.header .principal .title{text-transform:none;font-size:1.2em;font-weight:700;margin-top:0.5em;margin-bottom:0;padding:0;font-family:@font-family-jaapokki;letter-spacing:1px;}
 #game section.header .principal .rating-container{padding:0;}
 #game section.header .principal .rating-container i::before{font-size:1.2em;color:@color-primary-s;}
 #game section.header .principal .rating-container i.yes::before{-webkit-text-fill-color:transparent;
 background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);
 -webkit-background-clip:text;}
-#game section.header .principal .video{padding:0;font-family:@font-family-jaapokki!important;font-size:1.2em;}
+#game section.header .principal .video{padding:0;font-family:@font-family-jaapokki;font-size:1.2em;}
 #game section.header .principal .video i::before{font-size:1.6em;-webkit-text-fill-color:transparent;
 background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
 -webkit-background-clip:text;}
@@ -743,13 +743,13 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game section.header .rating>div{margin-bottom:1em;}
 
 #game section.information{color:@color-secundary;background:@color-tertiary-alt;}
-#game section.information .data .subtitle{color:@color-primary-alt;padding-left:1.5em;font-family:@font-family-jaapokki!important;font-size:1.4em;text-transform:uppercase;position:relative;margin-bottom:1em;}
+#game section.information .data .subtitle{color:@color-primary-alt;padding-left:1.5em;font-family:@font-family-jaapokki;font-size:1.4em;text-transform:uppercase;position:relative;margin-bottom:1em;}
 #game section.information .data .subtitle::after{content:"";position:absolute;width:3em;left:0;bottom:0;border-bottom:2px solid @color-primary-alt;}
-#game section.information .data .subtitle span.red{color:@color-secundary;font-family:@font-family-josefinsans!important;font-size:0.7em;font-weight:700;}
+#game section.information .data .subtitle span.red{color:@color-secundary;font-family:@font-family-josefinsans;font-size:0.7em;font-weight:700;}
 #game section.information .data .description p{line-height:1.3;padding-left:3em;font-size:0.8em;font-weight:700;}
 
 #game section.information .rating .reviews{position:absolute;background:@color-primary-alt;top:0;left:0;right:0;color:@color-tertiary;padding-top:0.5em;padding-bottom:0.5em;border-radius:7px;z-index:1;box-shadow:5px 10px 25px 5px @color-primary-30;}
-#game section.information .rating .reviews .subtitle{font-size:1.4em;font-family:@font-family-jaapokki!important;text-transform:uppercase;}
+#game section.information .rating .reviews .subtitle{font-size:1.4em;font-family:@font-family-jaapokki;text-transform:uppercase;}
 #game section.information .rating .reviews ul{padding:0;padding-left:1em;margin:0;}
 #game section.information .rating .reviews ul li{display:block;position:relative;text-align:left;}
 #game section.information .rating .reviews ul li::before{content:"\E008";position:absolute;top:2.5em;left:0;font-size:0.4em;font-family:gameclub;}
@@ -761,7 +761,7 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game section.information .rating .reviews li>div>a::after{content:"";width:5px;height:5px;display:inline-block;background:@color-tertiary;position:absolute;top:20%;left:135%;border-radius:50%;}
 
 #game section.games{background:@color-secundary;padding-top:2%;padding-bottom:2%;}
-#game section.games .subtitle{color:@color-tertiary;padding-left:1.5em;font-family:@font-family-jaapokki!important;font-size:1.4em;text-transform:uppercase;position:relative;margin-bottom:1em;}
+#game section.games .subtitle{color:@color-tertiary;padding-left:1.5em;font-family:@font-family-jaapokki;font-size:1.4em;text-transform:uppercase;position:relative;margin-bottom:1em;}
 #game section.games .subtitle::after{content:"";position:absolute;width:3em;left:0;bottom:0;border-bottom:2px solid @color-tertiary;}
 #game section.games .subtitle button.dark{background:@color-primary;color:@color-secundary;padding:4px 2% 1px;margin-left:3%;margin-top:-1%;font-size:0.45em;letter-spacing:1px;}
 #game section.games .games-availables{padding:10px;border:2px solid @color-primary;background:transparent;margin-bottom:1%;}
@@ -800,12 +800,12 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 /********** VALIDATION-PAGE **********/
 #validate-account{padding-top:15em;}
 #validate-account::before{content:"";background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%;position:absolute;top:0;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;width:100%;height:100%}
-#validate-account h2{color:@color-tertiary;font-family:@font-family-jaapokki!important;}
+#validate-account h2{color:@color-tertiary;font-family:@font-family-jaapokki;}
 /*************************************/
 
 /********** TERMS-AND-CONDITIONS-PAGE **********/
 #terms-conditions section.banner{background:@color-secundary;color:@color-tertiary;padding-top:11em;padding-bottom:3em;text-align:center;}
-#terms-conditions section.banner h2{font-size:3em;font-family:@font-family-jaapokki!important;}
+#terms-conditions section.banner h2{font-size:3em;font-family:@font-family-jaapokki;}
 
 #terms-conditions section.information{background:@color-tertiary-alt;}
 #terms-conditions section.information pre{padding:2em 3em 3em;background:transparent;border:none;white-space:pre-wrap;text-align:justify;}
@@ -825,27 +825,79 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 
 /* BLOG VARIABLES */
 @blog-padding-left: 37.037037037%!important;
+@blog-padding-right: 12.5%!important;
+@blog-padding-section-right: 45.454545455%!important;
+@blog-padding-section-right-alt: 35.454545455%!important;
 
 /* BLOG FOR GAMECLUB, HOME MOST SEEN */
 #most-seen{background:@color-tertiary-alt!important;box-shadow:5px 10px 25px 5px @color-primary-30!important;padding:1% 20% 0.25em!important;}
-#most-seen>h2{color:@color-primary-alt!important;font-family:@font-family-jaapokki!important;font-weight:400!important;}
-#most-seen>hr{width:8%!important;border-color:@color-primary-alt!important;}
+#most-seen>h2{color:@color-primary-alt!important;font-family:@font-family-jaapokki;font-weight:400!important;}
+#most-seen>hr.subtitle,#blog hr.subtitle{width:8%!important;border-color:@color-primary-alt!important;}
 #blog h1,#blog h2{color:@color-primary-alt!important;}
-#most-seen .article-row{margin-top:1em;}
-#most-seen .article-row .blog-preview .info h2{color:@color-primary;font-weight:400;text-transform:none;}
-#most-seen .article-row .blog-preview .info p{color:@color-primary-alt;}
-#most-seen .article-row .blog-preview .info a{color:@color-secundary;text-transform:none;}
+#most-seen .article-row{margin-top:1em!important;}
+#most-seen .article-row .blog-preview .info h2{color:@color-primary!important;font-weight:400!important;text-transform:none!important;}
+#most-seen .article-row .blog-preview .info p{color:@color-primary-alt!important;}
+#most-seen .article-row .blog-preview .info a{color:@color-secundary!important;text-transform:none!important;}
 #most-seen .article-row .blog-preview .picture .post-date,#blog #blog-article header .image-section .post-date{background:@color-secundary!important;border:none!important;color:@color-tertiary!important;font-size:0.8em!important;height:4.5em!important;width:4.5em!important;}
-#most-seen .article-row .blog-preview .info,#most-seen>.article-row .blog-preview .picture{background:@color-tertiary;}
+#most-seen .article-row .blog-preview .info,#most-seen .article-row .blog-preview .picture{background:@color-tertiary!important;}
 #most-seen .pagging .page-button{border-color:@color-primary-alt!important;}
 #most-seen .pagging .page-button.page-active{background:@color-secundary!important;border-color:transparent!important;}
 
 #blog{background:url("../img/blog/blog-bg.png") repeat-y center top!important;background-size:100%!important;}
-#blog section.banner .title{color:@color-primary-alt;}
+#blog .search, #blog .important, #blog .categories, #blog .tags-section, #blog section.most-seen{background:@color-tertiary-85!important;}
+#blog section.banner .title{color:@color-primary-alt!important;}
 #blog section.banner hr,#blog section.banner hr::before{border-color:@color-tertiary!important;}
-#blog section.blog-panel.left .blog-home .article-section{background:@color-tertiary-85!important;padding-left:@blog-padding-left}
-#blog #blog-article{background:transparent!important;}
-#blog #navigation{padding-left:@blog-padding-left}
+#blog section.blog-panel.left .blog-home .article-section{background:@color-tertiary-85!important;padding-left:@blog-padding-left;padding-right:@blog-padding-right;}
+#blog #blog-article{background:transparent!important;color:@color-primary!important;}
+#blog section.blog-panel.left .blog-home #blog-article header .image-section img{width:100%!important;}
+#blog section.blog-panel.left .blog-home #blog-article header .image-section .post-date{display:none!important;}
+#blog #blog-article header span.datetime{font-size:0.65em!important;}
+#blog #blog-article header .tags .tags-cell:first-child{font-size:0.7em!important;border-right:1px solid @color-primary-alt!important;}
+#blog #blog-article header .tags .tags-cell .tag{border-radius:2.5px!important;font-size:0.4em!important;padding-bottom:0!important;padding-top:0.5em!important;text-align:center!important;width:10em!important;}
+#blog .tag{background:@color-secundary!important;border:none!important;color:@color-tertiary!important;}
+#blog #blog-article footer .cell.more button{color:@color-primary-65!important;}
+#blog #blog-article footer .cell.social-media a{color:@color-secundary!important;}
+#blog #navigation{padding-left:@blog-padding-left;padding-top:2em;}
+#blog #navigation a,#blog #navigation span{color:@color-tertiary!important;}
+#blog #navigation .cell.pages>div>button{background:transparent!important;border-color:@color-tertiary!important;color:@color-tertiary!important;}
+#blog section.blog-panel.right .search{padding:0.5em!important;margin-bottom:1em!important;padding-right:@blog-padding-section-right;}
+#blog section.blog-panel.right .search .search-icon{color:@color-secundary!important;right:@blog-padding-section-right;top:0.25em!important;}
+#blog section.blog-panel.right .search input:focus{outline:none!important;}
+#blog section.blog-panel.right .search input{background:transparent!important;border:1px solid @color-primary-alt!important;color:@color-primary-65!important;padding-right:0.5em!important;width:85%!important;}
+#blog .important{padding-right:@blog-padding-section-right-alt;}
+#blog .important>h2{color:@color-secundary!important;font-size:1.75em!important;}
+#blog .important>h2 span.normal{color:@color-primary-alt;font-size:0.7em;}
+#blog .important hr.subtitle{width:10em!important;margin:0 0 1.5em!important;}
+#blog .important article .info, #blog .search article .info{width:35%!important;}
+#blog .important article .image-preview,#blog .search article .image-preview{position:relative!important;}
+#blog .important article .image-preview{padding-bottom:3em!important;}
+#blog .important article .image-preview::before,#blog .search article .image-preview::before{content:"\e00c";bottom:0;color:red;left:-1%;font-family:gameclub;font-size:9.5em;position:absolute;right:0;top:-23%;-webkit-text-fill-color:transparent;
+background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#blog .important article{margin-bottom:1em!important;}
+#blog .search article .image-preview::before{top:-13%;}
+#blog section.blog-panel.left .search{background:transparent!important;padding:0!important;}
+#blog section.blog-panel.left .search article:last-child{margin-bottom:0!important;}
+#blog #blog-article:last-child{margin-bottom:0!important;padding-bottom:3em!important;}
+#blog section.blog-panel.left .search .article-section{background:@color-tertiary-85!important;padding:1em!important;padding-left:@blog-padding-left;padding-right:@blog-padding-right;}
+#blog section.blog-panel{margin-bottom:3em!important;}
+#blog .tags-section{padding-right:@blog-padding-section-right;}
+#blog section.blog-panel.right .tags-section .tag{cursor:pointer!important;font-size:0.9em;margin:3% 2%!important;padding:0.5em 0 0.25em!important;text-align:center!important;width:46%!important;}
+#blog .tags-section>h2{font-size:1.75em!important;font-family:@font-family-jaapokki;font-weight:400!important;}
+#blog .tags-section hr.subtitle{width:7.5em!important;}
+#most-seen .article-row .blog-preview .info a::after{content:"\e013";color:@color-primary;font-family:gameclub;font-size:1.5em;position:absolute;top:-0.4em;right:-1.25em;}
+#blog section.blog-panel.left .blog-detail .article-section{background:@color-tertiary-85!important;padding-left:@blog-padding-left;padding-right:2.5%!important;}
+#blog .comments>h2,#blog .comments>h2 span.normal{color:@color-secundary!important;font-family:@font-family-jaapokki;font-size:1.25em!important;font-weight:400!important}
+#blog .comments>h2 span.normal{color:@color-primary-alt!important;}
+#blog #article-comment form#comments-form{border:none!important;padding:0!important;width:100%!important;}
+#blog #article-comment form#comments-form>span{display:block!important;font-size:0.7em!important;display:block!important;}
+#blog #article-comment form#comments-form>div{padding:0 1.5em!important;}
+#blog #article-comment form#comments-form>div>label{color:@color-primary-85!important;text-transform:uppercase!important;}
+#blog #article-comment form#comments-form>div>textarea,#blog #article-comment form#comments-form>div>input{border:none!important;color:@color-primary-85!important;}
+#blog #article-comment form#comments-form>.send{text-align:left!important;}
+#blog #article-comment form#comments-form>.send button{background:transparent!important;padding:0.5em 2em 0.25em!important;}
+#blog section.blog-panel.left .search>.article-section>h2{color:@color-secundary!important;font-size:1.5em!important;font-weight:400!important;font-family:@font-family-jaapokki;margin:1em auto 2em!important;}
+#blog section.blog-panel.left .search>.article-section>h2 span.normal{color:@color-primary-alt!important;}
 /*
 background:@color-primary;
 background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);

@@ -1,6 +1,8 @@
 <!-- BLOG DETAIL PAGE START -->
-<div class="blog-home">
-    <article-preview ng-model="article" ng-show="showInfo" is-complete comments="comments" />
+<div class="blog-detail">
+    <div class="article-section">
+        <article-preview ng-model="article" ng-show="showInfo" is-complete comments="comments" />
+    </div>
     <div id="navigation">
         <div class="cell">
             <a href ng-disabled="article.prevArticleId == null" ng-click="prevArticle(article)"><i class="fa fa-angle-left"></i> Anterior</a>

@@ -1,3 +1,8 @@
+/*!
+ * blogNavigation.js - v0.1
+ * http://www.levelapsoftware.com
+ * License: MIT
+ */
 angular.module('LevelapBlog').directive('blogNavigation', function() {
 	let baseSrc;
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
@@ -19,7 +24,6 @@ angular.module('LevelapBlog').directive('blogNavigation', function() {
 		link: function($scope, element, attrs, ctrl) {
 			let beforeIdx;
 			let afterIdx;
-
 			if($scope.hidePages != null) {
 				if($scope.hidePages == '') {
 					$scope.hidePages = true;
@@ -27,7 +31,6 @@ angular.module('LevelapBlog').directive('blogNavigation', function() {
 					$scope.hidePages = JSON.parse($scope.hidePages);
 				}
 			}
-
 			if ($scope.activePage == null) { $scope.activePage = 0; }
 			$scope.previousPage = function() {
 				if($scope.activePage > 0) {
@@ -49,6 +52,18 @@ angular.module('LevelapBlog').directive('blogNavigation', function() {
 				$scope.activePage = page.number;
 				updatePageVisible(page);
 			};
+			$scope.$watch("pages", function(newValue, oldValue) {
+				if (newValue != null) {
+					$scope.pageList = [];
+					for(let i = 0; i < newValue; i++) {
+						$scope.pageList.push({
+							number: i,
+							active: ($scope.activePage == i ? true : false),
+							visible: (i < 3 || i == newValue - 1) ? true : false
+						});
+					}
+				}
+			});
 			function updatePageVisible(page) {
 				if(beforeIdx != null && afterIdx != null) {
 					$scope.pageList[beforeIdx].visible = false;
@@ -57,7 +72,6 @@ angular.module('LevelapBlog').directive('blogNavigation', function() {
 				if($scope.activePage != 0 && $scope.activePage < ($scope.pages - 2)) {
 					beforeIdx = $scope.activePage - 1;
 					afterIdx = $scope.activePage + 1;
-
 					$scope.pageList[beforeIdx].visible = true;
 					page.visible = true;
 					$scope.pageList[afterIdx].visible = true;
@@ -76,19 +90,6 @@ angular.module('LevelapBlog').directive('blogNavigation', function() {
 					}
 				}
 			}
-			$scope.$watch("pages", function(newValue, oldValue) {
-				if (newValue != null) {
-					$scope.pageList = [];
-					for(let i = 0; i < newValue; i++) {
-						$scope.pageList.push({
-							number: i,
-							active: ($scope.activePage == i ? true : false),
-							visible: (i < 3 || i == newValue - 1) ? true : false
-						});
-					}
-				}
-			});
-
 		}
 	};
 });

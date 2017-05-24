@@ -30,7 +30,7 @@ levelap:
     environment: GAMECLUB_HOME
   blog:
     comment-page-size: 3
-    home-page-size: 2
+    home-page-size: 4
     important-size: 3
     most-seen-size: 4
     search-size: 10

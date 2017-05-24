@@ -16,12 +16,21 @@ angular.module('Home').config(function($stateProvider) {
 				return $ocLazyLoad.load([{
 					name: 'Home',
 					files: ['js/modules/home/controller/homeCtrl.js']
+				}, {
+					name: 'LevelapBlog',
+					files: ['js/modules/levelapBlog/resources/blog.css', 'js/modules/levelapBlog/resources/mostSeen.js']
 				}]);
 			},
 
 			anchor: function($stateParams) {
 				return $stateParams.anchor;
-			}
+			},
+
+            blogsPreview: function(openRest) {
+                return openRest("levelapBlog/findArticles").post({isMostSeen: true}, function(data) {
+                    return data;
+                });
+            }
 		}
 	});
 

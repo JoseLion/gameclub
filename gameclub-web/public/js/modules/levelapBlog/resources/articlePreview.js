@@ -1,3 +1,8 @@
+/*!
+ * articlePreview.js - v0.1
+ * http://www.levelapsoftware.com
+ * License: MIT
+ */
 angular.module('LevelapBlog').directive('articlePreview', function() {
 	let baseSrc;
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {

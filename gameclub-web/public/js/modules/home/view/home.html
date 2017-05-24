@@ -21,7 +21,6 @@
                             <ui-select-choices repeat="category in categories | filter: $select.search">
                                 <div ng-bind-html="category.name | highlight: $select.search"></div>
                                 <img ng-src="{{category.whiteBase64}}" class="category">
-                                <!-- <img archive="category.whiteVector" src="" class="category"> -->
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -201,16 +200,7 @@
         </div>
         <div class="clearfix"></div>
     </section>
-    <section class="row preview-blog">
-        <h2 class="title game-font game-font-light-blue">Blog</h2>
-        <hr/>
-        <div class="article-row">
-            <div class="col-xs-12 col-md-6" ng-repeat="blog in blogs">
-                <blog-preview blog-id="blog.blogId" subtitle="blog.subtitle" desc="blog.desc" img-src="blog.imgSrc" date="blog.date" url="blog.url" />
-            </div>
-        </div>
-        <blog-paging pages="5" ng-model="currentBlogPage" class="paging"></blog-paging>
-    </section>
+    <most-seen ng-model="blogsPreview" pages="totalPagesMostSeen" active-page="currentPageMostSeen" class="most-seen" title="Blog" size="100" />
     <section class="contact-us">
         <div class="row">
             <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()">

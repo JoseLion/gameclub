@@ -68,6 +68,11 @@ angular.module("LevelapBlogAdmin", []).config(function($stateProvider) {
 				}, {
 					name: 'ui.tinymce',
 					files: ['js/plugins/ui-tinymce/tinymce.min.js']
+				}, {
+					files: [baseSrc + 'plugins/rzslider/rzslider.min.css']
+				}, {
+					name: 'rzModule',
+					files: [baseSrc + 'plugins/rzslider/rzslider.min.js']
 				}]);
 			},
 
@@ -113,6 +118,11 @@ angular.module("LevelapBlogAdmin", []).config(function($stateProvider) {
 				}, {
 					name: 'ui.tinymce',
 					files: ['js/plugins/ui-tinymce/tinymce.min.js']
+				}, {
+					files: [baseSrc + 'plugins/rzslider/rzslider.min.css']
+				}, {
+					name: 'rzModule',
+					files: [baseSrc + 'plugins/rzslider/rzslider.min.js']
 				}]);
 			},
 

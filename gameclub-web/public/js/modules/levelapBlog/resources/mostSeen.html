@@ -6,7 +6,7 @@
         <div class="col-md-6" ng-repeat="preview in ngModel">
             <article class="blog-preview">
                 <div class="col-md-7 info">
-                    <h2>{{preview.title}}</h2>
+                    <h2 title="{{preview.title}}">{{preview.title | limitTo: 12}}{{preview.title.length > 12 ? '...' : ''}}</h2>
                     <p>{{preview.summary | limitTo:filterSize}}{{preview.summary.length > filterSize ? '...' : ''}}</p>
                     <a href ui-sref="levelapBlog.blog.detail({id:preview.id,title:preview.title})">Leer m&aacute;s</a>
                 </div>

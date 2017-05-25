@@ -33,6 +33,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                         baseSrc.concat('controller/blogCtrl.js'),
                         baseSrc.concat('resources/blog.css'),
                         baseSrc.concat('resources/articleComments.js'),
+                        baseSrc.concat('resources/articleCommentsForm.js'),
                         baseSrc.concat('resources/articlePreview.js'),
                         baseSrc.concat('resources/mostSeen.js'),
                         baseSrc.concat('resources/blogNavigation.js')
@@ -142,7 +143,8 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
 }).constant('BlogConst', {
     commentsLevel: 0,
     messages: {
-        required: 'Debe completar los campos marcados con *'
+        required: 'Debe completar los campos marcados con *',
+        emailValidation: 'Debe ingresar un email válido'
     }
 }).run(function($rootScope, BlogConst) {
     $rootScope.BlogConst = BlogConst;

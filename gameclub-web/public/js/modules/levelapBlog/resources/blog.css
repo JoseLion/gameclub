@@ -82,7 +82,7 @@
 #blog #article-comment .comment-row{display:table-row;}
 #blog #article-comment .comment-row .avatar{display:table-cell;text-align:center;vertical-align:middle;width:10%;}
 #blog #article-comment .comment-row .avatar img{border:2px solid #7BCABC;border-radius:50%;width:80%;}
-#blog #article-comment .comment-row .information{display:table-cell;vertical-align:middle;}
+#blog #article-comment .comment-row .information{display:table-cell;vertical-align:middle;padding-left:0.5em;}
 #blog #article-comment .comment,#blog #article-comment form#comments-form-logged{background:#FFFFFF;border:2px solid #7BCABC;border-radius:10px;margin-bottom:1em;margin-left:1em;padding:0.5em;position:relative;}
 #blog #article-comment .comment::before,#blog #article-comment form#comments-form-logged::before{content:"";border:0.5em solid transparent;border-right-color:#7BCABC;height:1em;left:-1em;position:absolute;top:10px;}
 #blog #article-comment .comment .comment-row .information span{display:block;}
@@ -97,10 +97,10 @@
 #blog #article-comment form#comments-form{border:2px solid #6A615A;border-radius:10px;margin:auto auto 1em;padding:0.5em;width:80%;}
 #blog #article-comment form#comments-form input,#blog #article-comment #comments-form textarea,#blog #article-comment form#comments-form-logged textarea{background:#FFFFFF;border:2px solid #7BCABC;color:#6A615A;outline:none;margin-bottom:0.5em;padding:0.5em;resize:none;width:100%;}
 #blog #article-comment form#comments-form label{display:block;margin:0;}
-#blog #article-comment form#comments-form label::before{content:"* ";}
-#blog #article-comment form#comments-form label::after{content:":";}
-#blog #article-comment form#comments-form .error label{color:#F15E2A;}
-#blog #article-comment form#comments-form .error textarea,#blog #article-comment form#comments-form .error input{border-color:#F15E2A;}
+#blog #article-comment form label::before{content:"* ";}
+#blog #article-comment form label::after{content:":";}
+#blog #article-comment form .error label{color:#F15E2A!important;}
+#blog #article-comment form .error textarea,#blog #article-comment form .error input{border:2px solid #F15E2A!important;}
 #blog #article-comment form#comments-form-logged .comment-row .avatar{vertical-align:top;}
 
 /** MOST-SEEN **/

@@ -30,13 +30,17 @@
         <div class="cell social-media">
             Share:
             <a href><i class="gc gc-facebook"></i></a>
-            <a href><i class="gc gc-instagram"></i></a>
+            <a href><i class="fa fa-google-plus"></i></a>
             <a href><i class="gc gc-twitter"></i></a>
         </div>
     </footer>
     <div class="comments" ng-if="showAllInfo">
-        <h2>Deja un <span class="normal">comentario</span></h2>
-        <article-comments ng-model="comments" level="0"/>
+        <div class="comments-title" ng-if="showCommentsSection">
+            <h2>Comentario</h2>
+            <hr class="subtitle"></hr>
+            <article-comments ng-model="comments" page="currentPage" article-id="ngModel.id" />
+        </div>
+        <article-comments-form ng-model="ngModel.id" />
     </div>
 </article>
 <!-- ARTICLE PREVIEW DIRECTIVE END -->

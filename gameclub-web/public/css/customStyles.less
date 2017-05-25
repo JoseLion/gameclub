@@ -841,6 +841,7 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #blog section.blog-panel.left .blog-home #blog-article header .image-section img{width:100%!important;}
 #blog section.blog-panel.left .blog-home #blog-article header .image-section .post-date{display:none!important;}
 #blog #blog-article header span.datetime{font-size:0.65em!important;}
+#blog #blog-article header .tags .tags-cell{display:inline-block!important;}
 #blog #blog-article header .tags .tags-cell:first-child{font-size:0.7em!important;border-right:1px solid @color-primary-alt!important;}
 #blog #blog-article header .tags .tags-cell .tag{border-radius:2.5px!important;font-size:0.4em!important;padding-bottom:0!important;padding-top:0.5em!important;text-align:center!important;width:10em!important;}
 #blog .tag{background:@color-secundary!important;border:none!important;color:@color-tertiary!important;}
@@ -875,16 +876,22 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #blog .tags-section>h2{font-size:1.75em!important;font-family:@font-family-jaapokki;font-weight:400!important;}
 #blog .tags-section hr.subtitle{width:7.5em!important;}
 #most-seen .article-row .blog-preview .info a::after{content:"\e013";color:@color-primary;font-family:gameclub;font-size:1.5em;position:absolute;top:-0.4em;right:-1.25em;}
-#blog section.blog-panel.left .blog-detail .article-section{background:@color-tertiary-85!important;padding-left:@blog-padding-left;padding-right:2.5%!important;}
-#blog .comments>h2,#blog .comments>h2 span.normal{color:@color-secundary!important;font-family:@font-family-jaapokki;font-size:1.25em!important;font-weight:400!important}
-#blog .comments>h2 span.normal{color:@color-primary-alt!important;}
-#blog #article-comment form#comments-form{border:none!important;padding:0!important;width:100%!important;}
-#blog #article-comment form#comments-form>span{display:block!important;font-size:0.7em!important;display:block!important;}
+#blog section.blog-panel.left .blog-detail .article-section{background:@color-tertiary-85!important;padding-left:@blog-padding-left;padding-right:5%!important;}
+#blog #article-comment h2,#blog #article-comment h2 span.normal,#blog .comments-title h2{color:@color-secundary!important;font-family:@font-family-jaapokki;font-size:1.25em!important;font-weight:400!important}
+#blog #article-comment h2 span.normal{color:@color-primary-alt!important;font-size:1em!important;}
+#blog #article-comment hr{margin:0 0 1.5em!important;width:5em!important;}
+#blog .comments-title hr{margin:0 0 1.5em!important;width:8.5em!important;}
+#blog #article-comment form#comments-form,#blog #article-comment form#comments-form-logged,#blog #article-comment .comment{background:transparent!important;border:none!important;padding:0!important;width:100%!important;}
+#blog #article-comment .comment{margin:0!important;margin-bottom:2em!important;}
+#blog #article-comment .comment .comment-row .avatar{width:15%!important;}
+#blog #article-comment .comment .comment-row .information .datetime{color:@color-primary-alt!important;text-align:right!important;}
+#blog #article-comment .comment::before, #blog #article-comment form#comments-form-logged::before{content:none!important;}
+#blog #article-comment form#comments-form>span{display:block!important;font-size:0.7em!important;margin-bottom:2em!important;margin-right:-1%!important;}
 #blog #article-comment form#comments-form>div{padding:0 1.5em!important;}
-#blog #article-comment form#comments-form>div>label{color:@color-primary-85!important;text-transform:uppercase!important;}
-#blog #article-comment form#comments-form>div>textarea,#blog #article-comment form#comments-form>div>input{border:none!important;color:@color-primary-85!important;}
-#blog #article-comment form#comments-form>.send{text-align:left!important;}
-#blog #article-comment form#comments-form>.send button{background:transparent!important;padding:0.5em 2em 0.25em!important;color:@color-primary!important;border-color:@color-secundary!important;}
+#blog #article-comment form label{color:@color-primary-85!important;text-transform:uppercase!important;}
+#blog #article-comment form textarea,#blog #article-comment form input{border:none!important;color:@color-primary-85!important;}
+#blog #article-comment form .send{text-align:left!important;}
+#blog #article-comment form .send button{background:transparent!important;padding:0.5em 2em 0.25em!important;color:@color-primary!important;border-color:@color-secundary!important;}
 #blog section.blog-panel.left .search>.article-section>h2{color:@color-secundary!important;font-size:1.5em!important;font-weight:400!important;font-family:@font-family-jaapokki;margin:1em auto 2em!important;}
 #blog section.blog-panel.left .search>.article-section>h2 span.normal{color:@color-primary-alt!important;}
 #blog .extra-info{background:@color-primary;box-shadow:-5px 5px 30px 1px @color-primary;padding:1em;padding-bottom:2em;}
@@ -903,8 +910,8 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #blog .extra-info .get-coins button::before,#blog .extra-info  button::after{color:@color-tertiary;position:absolute;font-family:gameclub;}
 #blog .extra-info .get-coins button::before{content:"\E024";left:5px;}
 #blog .extra-info .get-coins button::after{content:"\E024";right:5px;}
-
-
+#blog #article-comment .comment-row .avatar img{border-color:@color-primary!important;}
+#blog .important article .info p,#blog .search article .info p{height:105px;}
 /*
 background:@color-primary;
 background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);

@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="info">
-                    <h2>{{article.title}}</h2>
+                    <h2 title="{{article.title}}">{{article.title | limitTo: 12}}{{article.title.length > 12 ? '...' : ''}}</h2>
                     <div class="description">
                         <p>{{article.summary | limitTo:200}}{{article.summary.length > 200 ? '...' : ''}}</p>
                     </div>

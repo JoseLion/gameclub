@@ -1,4 +1,4 @@
-angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($scope, $rootScope, article, categories, tags, $state, $uibModal, sweet, rest) {
+angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($scope, $rootScope, article, categories, tags, $state, $uibModal, sweet, rest, getImageBase64) {
 	$scope.article = {};
 	setAuthor();
 
@@ -14,6 +14,7 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 
 	if (article != null) {
 		article.$promise.then(function(data) {
+			console.log("data: ", data);
 			$scope.article = data;
 		});
 	}
@@ -29,6 +30,19 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 			$scope.tags = data;
 		});
 	}
+
+	$scope.$watch("banner", function(newValue, oldValue) {
+		if (newValue != null) {
+			let reader = new FileReader();
+			reader.onload = function() {
+				$scope.bannerBase64 = getImageBase64(reader.result, newValue.type);
+			};
+
+			reader.readAsArrayBuffer(newValue);
+		}
+		console.log("newValue: ", newValue);
+	});
+
 	$scope.cancel = function() {
 		$state.go("^.viewArticles");
 	}

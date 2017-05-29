@@ -846,10 +846,8 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #blog #blog-article header .tags .tags-cell:first-child{font-size:0.7em!important;border-right:1px solid @color-primary-alt!important;}
 #blog #blog-article header .tags .tags-cell .tag{border-radius:2.5px!important;font-size:0.4em!important;padding-bottom:0!important;padding-top:0.5em!important;text-align:center!important;width:10em!important;}
 #blog .tag{background:@color-secundary!important;border:none!important;color:@color-tertiary!important;}
-#blog #blog-article footer .cell{padding-bottom:2em!important;position:relative!important;}
+#blog #blog-article footer .cell{padding-bottom:2em!important;}
 #blog #blog-article footer .cell.more button{color:@color-primary-65!important;}
-#blog #blog-article footer .cell.social-media::before{content:"";bottom:1.5em;height:5px;position:absolute;right:-26.5%;width:53%;background:@color-primary;
-background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);}
 #blog #blog-article footer .cell.social-media a{color:@color-secundary!important;}
 #blog #navigation{padding-left:@blog-padding-left;padding-top:2em;}
 #blog #navigation a,#blog #navigation span{color:@color-tertiary!important;}
@@ -917,8 +915,11 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #blog #article-comment .comment-row .avatar img{border-color:@color-primary!important;}
 #blog .important article .info p,#blog .search article .info p{height:105px;}
 #blog .search div.no-data h2{color:@color-primary!important;}
-#blog .tags-section hr.subtitle{border:none!important;height:2px!important;background:@color-primary;
+#blog #blog-article footer .cell.social-media::after{content:"";height:3px;margin-top:1.5em;position:absolute;right:0;width:14%;background:@color-primary;
 background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);}
+#blog .tags-section hr.subtitle{border:none!important;height:3px!important;background:@color-primary;
+background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);}
+#blog .blog-home #blog-article footer .cell.social-media::before{content:none;}
 /*
 background:@color-primary;
 background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);

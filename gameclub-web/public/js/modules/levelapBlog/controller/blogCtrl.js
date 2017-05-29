@@ -26,7 +26,7 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
         setPageMostSeen(data);
     });
     $scope.searchArticles = function() {
-        $state.go('levelapBlog.blog.search', {text: $scope.search.value});
+        $state.go('levelapBlog.blog.search', {text: $scope.search == null ? '' : $scope.search.value});
     };
     $scope.$watch('currentPageMostSeen', function(newValue, oldValue) {
         if(newValue != null && newValue != oldValue) {

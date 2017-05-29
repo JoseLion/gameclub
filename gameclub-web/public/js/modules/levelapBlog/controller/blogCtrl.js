@@ -11,8 +11,7 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
         $scope.importantBlogs = data.content;
         $scope.importantBlogs.forEach(function(preview) {
             preview.crop = {
-                width: '238px',
-                transform: 'translate(-98px,-10px)'
+                transform: 'translate(' + preview.diamondCrop.a + 'px,' + preview.diamondCrop.b + 'px) scale(' + preview.diamondCrop.c + ')'
             };
         });
     });
@@ -39,8 +38,7 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
         $scope.blogsPreview = data.content;
         $scope.blogsPreview.forEach(function(preview) {
             preview.crop = {
-                width: '330px',
-                transform: 'translate(-80px,0)'
+                transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px) scale(' + preview.squareCrop.c + ')'
             };
         });
         $scope.totalPagesMostSeen = data.totalPages;

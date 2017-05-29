@@ -3,7 +3,7 @@
  * http://www.levelapsoftware.com
  * License: MIT
  */
-angular.module('LevelapBlog').directive('articlePreview', function(openRest, $location) {
+angular.module('LevelapBlog').directive('articlePreview', function(openRest, $location, $state) {
 	let baseSrc;
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
         let script = angular.element(document.getElementsByTagName("script")[i]);
@@ -23,7 +23,13 @@ angular.module('LevelapBlog').directive('articlePreview', function(openRest, $lo
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
-			$scope.socialShareUrl = $location.$$host;
+			$scope.socialShareUrl = $location.$$absUrl;
+			$scope.socialShareUrlDomain = $location.$$protocol + "://" + $location.$$host;
+			if($state.current.name == 'levelapBlog.blog.home') {
+				$state.isBlogHome = true;
+			} else {
+				$state.isBlogHome = false;
+			}
 			$scope.showAllInfo = false;
 			$scope.currentPage = 0;
 			$scope.showCommentsSection = $scope.comments == null ? false : $scope.comments.content.length > 0;

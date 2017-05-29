@@ -1,7 +1,7 @@
 <!-- BLOG SEARCH PAGE START -->
 <div class="search">
     <div class="article-section">
-        <h2>Resultados para: <span class="normal">{{searchValue}}</span></h2>
+        <h2 ng-if="articles.length > 0 && searchValue != null && searchValue != ''">Resultados para: <span class="normal">{{searchValue}}</span></h2>
         <div ng-if="articles.length > 0">
             <article ng-repeat="article in articles">
                 <div class="image-preview">
@@ -20,10 +20,10 @@
                 </div>
             </article>
         </div>
+        <div ng-if="articles.length == 0" class="no-data">
+            <h2>No obtuvimos resultados, favor verif&iacute;ca tu informaci&oacute;n.</h2>
+        </div>
     </div>
-    <blog-navigation pages="totalPagesSearch" active-page="currentPageSearch"/>
-    <div ng-if="articles.length == 0" class="no-data">
-        <h2>No obtuvimos resultados, favor verif&iacute;ca tu informaci&oacute;n.</h2>
-    </div>
+    <blog-navigation pages="$parent.totalPagesSearch" active-page="$parent.currentPageSearch"  ng-if="articles.length != 0" />
 </div>
 <!-- BLOG SEARCH PAGE END -->

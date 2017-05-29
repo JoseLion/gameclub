@@ -7,6 +7,7 @@ angular.module('LevelapBlog').controller('BlogDetailCtrl', function($scope, arti
     article.$promise.then(function(data) {
         $scope.article = data;
         $scope.showInfo = true;
+        $state.current.data.description = $scope.article.summary;
     });
     comments.$promise.then(function(data) {
         $scope.comments = data;

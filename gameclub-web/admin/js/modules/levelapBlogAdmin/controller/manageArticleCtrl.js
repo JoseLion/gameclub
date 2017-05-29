@@ -3,12 +3,12 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 		squareCrop: {
 			a: 0,
 			b: 0,
-			c: 100
+			c: 1.0
 		},
 		diamondCrop: {
 			a: 0,
 			b: 0,
-			c: 100
+			c: 1.0
 		}
 	};
 
@@ -28,8 +28,10 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 	};
 
 	$scope.zoomOptions = {
-		ceil: 200,
-		floor: 0,
+		ceil: 2.0,
+		floor: 0.1,
+		step: 0.01,
+		precision: 2,
 		vertical: true,
 		showSelectionBar: true
 	};
@@ -69,7 +71,7 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 				$scope.article.squareCrop = {
 					a: 0,
 					b: 0,
-					c: 100
+					c: 1.0
 				};
 			}
 
@@ -77,7 +79,7 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 				$scope.article.diamondCrop = {
 					a: 0,
 					b: 0,
-					c: 100
+					c: 1.0
 				};
 			}
 		});
@@ -105,11 +107,7 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 
 			reader.readAsArrayBuffer(newValue);
 		} else {
-			//setTimeout(function() {
-				//$scope.$apply(function() {
-					$scope.bannerBase64 = '//:0';
-				//});
-			//}, 0);
+			$scope.bannerBase64 = '//:0';
 		}
 	});
 

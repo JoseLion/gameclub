@@ -39,7 +39,7 @@
                 <p ng-if="!showMore">{{game.description | maxwords: 150}}</p>
                 <p ng-if="showMore">{{game.description}}</p>
                 <div class="text-right" ng-if="game.description.length > 400">
-                    <small><a href="" ng-click="showMore = !showMore">Mostrar {{!showMore ? 'más' : 'menos'}}</a></small>
+                    <small><a href="" ng-click="$parent.showMore = !$parent.showMore">Mostrar {{!showMore ? 'más' : 'menos'}}</a></small>
                 </div>
             </div>
             <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">{{game.releaseDate | date: 'dd-MM-yyyy'}}</span></span>

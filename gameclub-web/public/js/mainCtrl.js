@@ -97,7 +97,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			route: 'gameclub.login'
 		},
 		account : {
-			name: 'Pablo Ponce',
+			name: '',
 			route: 'gameclub.account'
 		},
 		termsConditions : {
@@ -105,4 +105,5 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			route: 'gameclub.termsConditions({user:user, isFacebook:isFacebook})'
 		}
 	};
+
 });

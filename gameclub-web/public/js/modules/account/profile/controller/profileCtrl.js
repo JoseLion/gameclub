@@ -1,4 +1,4 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location) {
+angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, ciValidation) {
     $scope.file = {};
     let tempUserInfo;
 
@@ -49,28 +49,37 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     }
 
     $scope.save = function() {
-        sweet.save(function() {
-            let formData = {};
-            formData.user = $rootScope.currentUser;
-
-            if ($scope.file.avatar != null) {
-                formData.avatar = $scope.file.avatar;
-            }
-
-            rest("publicUser/save").multipart(formData, function(data) {
-                $rootScope.currentUser = data;
-                sweet.success();
-                sweet.close();
-            }, function(error) {
-                sweet.close();
+        let isValid = true;
+        if($rootScope.currentUser.document == null || $rootScope.currentUser.document == '') {
+            isValid = true;
+        } else if($rootScope.currentUser.document != null && $rootScope.currentUser.document.length != 10) {
+            isValid = false;
+            notif.danger('Tu número de cédula debe tener 10 dígitos');
+        } else if(!ciValidation($rootScope.currentUser.document)) {
+            isValid = false;
+            notif.danger('Ingresa un número de cédula válido');
+        }
+        if($rootScope.currentUser.province != null && $rootScope.currentUser.location == null) {
+            isValid = false;
+            notif.danger('Completa tu ciudad');
+        }
+        if(isValid) {
+            sweet.save(function() {
+                rest("publicUser/save").post($rootScope.currentUser, function(data) {
+                    $rootScope.currentUser = data;
+                    sweet.success();
+                    sweet.close();
+                }, function(error) {
+                    sweet.close();
+                });
             });
-        });
+        }
     }
 
     $scope.resendMailVerification = function() {
         sweet.default("Se reenviará el correo con el link de verificación a tu correo", function() {
             let baseUrl = $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2);
-            
+
             rest("publicUser/resendVerification").post(baseUrl, function() {
                 notif.success("El correo se reenvió con éxito");
                 sweet.close();
@@ -91,7 +100,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                     } else {
                         $rootScope.currentUser.facebookToken = response.authResponse.accessToken;
                         $rootScope.currentUser.facebookName = me.name;
-                        
+
                         let formData = {
                             user: $rootScope.currentUser
                         };
@@ -113,92 +122,52 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
 
     $scope.getInfoPercentage = function() {
         let percent = 0;
-        let factor = 100 / 13;
-
+        let factor = 100 / 7;
         if ($rootScope.currentUser != null) {
             if ($rootScope.currentUser.document != null) {
                 percent += factor;
             }
-
             if ($rootScope.currentUser.birthDate != null) {
                 percent += factor;
             }
-
             if ($rootScope.currentUser.profession != null) {
                 percent += factor;
             }
-
             if ($rootScope.currentUser.province != null) {
                 percent += factor;
             }
-
             if ($rootScope.currentUser.location != null) {
                 percent += factor;
             }
-
-            if ($rootScope.currentUser.firstAddress != null) {
+            if ($rootScope.currentUser.billingAddress != null) {
                 percent += factor;
             }
-
-            if ($rootScope.currentUser.firstReceiver != null) {
-                percent += factor;
-            }
-
-            if ($rootScope.currentUser.firstMorningStartTime != null && $rootScope.currentUser.firstMorningEndTime != null) {
-                percent += factor;
-            }
-
-            if ($rootScope.currentUser.firstNoonStartTime != null && $rootScope.currentUser.firstNoonEndTime != null) {
-                percent += factor;
-            }
-
-            if ($rootScope.currentUser.secondAddress != null) {
-                percent += factor;
-            }
-
-            if ($rootScope.currentUser.secondReceiver != null) {
-                percent += factor;
-            }
-
-            if ($rootScope.currentUser.secondMorningStartTime != null && $rootScope.currentUser.secondMorningEndTime != null) {
-                percent += factor;
-            }
-
-            if ($rootScope.currentUser.secondNoonStartTime != null && $rootScope.currentUser.secondNoonEndTime != null) {
+            if ($rootScope.currentUser.contactPhone != null) {
                 percent += factor;
             }
         }
-
         percent = Math.round(percent);
         return percent;
     }
 
     $scope.getIdentityPercentage = function() {
         let percent = 0;
-
         if ($rootScope.currentUser != null) {
             percent += $rootScope.currentUser.token == null ? 100 : 0;
-            percent += $rootScope.currentUser.facebookToken != null ? 100 : 0;
-
-            percent = percent / 3;
             percent = Math.round(percent);
         }
-
         return percent;
     }
 
     $scope.getFullPercentaje = function() {
         let percent = 0;
-
         if ($rootScope.currentUser != null) {
             percent += $scope.getInfoPercentage();
             percent += $scope.getIdentityPercentage();
             percent += $rootScope.currentUser.numberOfGames > 0 ? 100 : 0;
-
             percent = percent / 3.0;
             percent = Math.round(percent);
         }
-
         return percent;
     }
 
@@ -213,12 +182,6 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         }
     }
 
-
-
-
-
-
-
     $scope.isEditableMean = false;
     $scope.editContactMean = function() {
         $scope.isEditableMean = !$scope.isEditableMean;
@@ -229,5 +192,4 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         }
     };
 
-    $scope.games = [1];
 });

@@ -15,6 +15,7 @@ angular.module("Core").directive('imageUpload', function(getImageBase64, rest) {
 			$scope.placeholder = $scope.placeholder != null ? $scope.placeholder : 'img/picture-holder.svg';
 			$scope.isDisabled = ('disabled' in attrs) ? true : false;
 			$scope.isRequired = ('required' in attrs) ? true : false;
+			$scope.isVisible = ('notVisible' in attrs) ? false : true;
 
 			$scope.$watch('ngModel', function(newValue, oldValue) {
 				ctrl.$setDirty();

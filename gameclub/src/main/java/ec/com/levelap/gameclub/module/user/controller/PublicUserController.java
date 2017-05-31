@@ -1,16 +1,20 @@
 package ec.com.levelap.gameclub.module.user.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,69 +22,67 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
+import ec.com.levelap.gameclub.module.user.entity.PublicUserLite;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
 
 @RestController
-@RequestMapping(value="api/publicUser", produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/publicUser", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PublicUserController {
 
 	@Autowired
 	private PublicUserService publicUserService;
-	
-	@RequestMapping(value="getCurrentUser", method=RequestMethod.GET)
+
+	@RequestMapping(value = "getCurrentUser", method = RequestMethod.GET)
 	public ResponseEntity<PublicUser> getCurrentUser() throws ServletException {
 		PublicUser user = publicUserService.getCurrentUser();
 		return new ResponseEntity<PublicUser>(user, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="resendVerification", method=RequestMethod.POST)
+
+	@RequestMapping(value = "resendVerification", method = RequestMethod.POST)
 	public ResponseEntity<?> resendVerification(@RequestBody Object baseUrl) throws ServletException, MessagingException {
-		publicUserService.resendVerification((String)baseUrl);
+		publicUserService.resendVerification((String) baseUrl);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="save", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<PublicUser> save(@RequestPart PublicUser user, @RequestPart(required=false) MultipartFile avatar) throws ServletException, IOException {
-		user = publicUserService.save(user, avatar);
-		return new ResponseEntity<PublicUser>(user, HttpStatus.OK);
+
+	@RequestMapping(value = "save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> save(@RequestBody PublicUser user) throws ServletException, IOException {
+		return this.publicUserService.save(user);
 	}
-	
-	@RequestMapping(value="getGamesList", method=RequestMethod.POST)
-	public ResponseEntity<Page<PublicUserGame>> getGamesList(@RequestBody(required=false) Filter filter) throws ServletException {
+
+	@RequestMapping(value = "getGamesList", method = RequestMethod.POST)
+	public ResponseEntity<Page<PublicUserGame>> getGamesList(@RequestBody(required = false) Filter filter) throws ServletException {
 		if (filter == null) {
 			filter = new Filter();
 		}
-		
+
 		if (filter.sort == null || filter.sort.isEmpty()) {
 			filter.sort = "game.name";
 		}
-		
+
 		PublicUser user = publicUserService.getCurrentUser();
 		Page<PublicUserGame> gamesList = publicUserService.getPublicUserGameRepo().findMyGames(user, filter.consoleId, new PageRequest(filter.page, Const.TABLE_SIZE, new Sort(filter.sort)));
-		
+
 		return new ResponseEntity<Page<PublicUserGame>>(gamesList, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="saveGame", method=RequestMethod.POST)
+
+	@RequestMapping(value = "saveGame", method = RequestMethod.POST)
 	public ResponseEntity<Page<PublicUserGame>> saveGame(@RequestBody PublicUserGame myGame) throws ServletException {
 		Page<PublicUserGame> gameList = publicUserService.saveGame(myGame);
 		return new ResponseEntity<Page<PublicUserGame>>(gameList, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="changePassword", method=RequestMethod.POST)
+
+	@RequestMapping(value = "changePassword", method = RequestMethod.POST)
 	public ResponseEntity<?> changePassword(@RequestBody Password password) throws ServletException {
 		return publicUserService.changePassword(password);
 	}
-	
-	@RequestMapping(value="deleteAccount", method=RequestMethod.DELETE)
+
+	@RequestMapping(value = "deleteAccount", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteAccount() throws ServletException {
 		publicUserService.deleteAccount();
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -88,12 +90,7 @@ public class PublicUserController {
 
 	@RequestMapping(value = "createUpdateKushkiSubscription", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> createUpdateKushkiSubscription(@RequestBody Subscription subscription) throws ServletException {
-		Map<String, Object> kushkiResponse = this.publicUserService.createUpdateKushkiSubscription(
-				subscription.token,
-				subscription.name.split(" ")[0].toUpperCase(),
-				subscription.lastName.split(" ")[0].toUpperCase(),
-				subscription.email,
-				subscription.extraData);
+		Map<String, Object> kushkiResponse = this.publicUserService.createUpdateKushkiSubscription(subscription.token, subscription.name.split(" ")[0].toUpperCase(), subscription.lastName.split(" ")[0].toUpperCase(), subscription.email, subscription.extraData);
 		return new ResponseEntity<>(kushkiResponse, HttpStatus.OK);
 	}
 
@@ -101,7 +98,7 @@ public class PublicUserController {
 	public ResponseEntity<?> getExtraData(@PathVariable Long id) throws ServletException {
 		PublicUser publicUser = this.publicUserService.getCurrentUser();
 		KushkiSubscription kushkiSubscription = this.publicUserService.getKushkiSubscriptionRepo().findByPublicUser(publicUser);
-		if(kushkiSubscription != null) {
+		if (kushkiSubscription != null) {
 			Map<String, Object> response = new HashMap<>();
 			response.put("extra", kushkiSubscription.getCardFinale());
 			response.put("subscriptionActive", publicUser.getKushkiSubscriptionActive());
@@ -115,17 +112,54 @@ public class PublicUserController {
 		return new ResponseEntity<>(this.publicUserService.removeKushkiSubscription(id), HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "findPublicUsers", method = RequestMethod.POST)
+	public ResponseEntity<?> findPublicUsers(@RequestBody(required = false) Search search) throws ServletException {
+		if (search == null) {
+			search = new Search();
+		}
+		Page<PublicUserLite> publicUsers = this.publicUserService.getPublicUserRepo().findPublicUsers(
+				search.name,
+				search.lastName,
+				search.status,
+				search.startDate,
+				search.endDate,
+				new PageRequest(
+						search.page,
+						Const.TABLE_SIZE,
+						new Sort(
+								new Order(Direction.ASC, "name"),
+								new Order(Direction.ASC, "lastName"))));
+		return new ResponseEntity<>(publicUsers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "findOne/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> findOne(@PathVariable Long id) throws ServletException {
+		PublicUser publicUser = this.publicUserService.getPublicUserRepo().findOne(id);
+		return new ResponseEntity<>(publicUser, HttpStatus.OK);
+	}
+
+	@Transactional
+	@RequestMapping(value = "changeStatus/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> changeStatus(@PathVariable Long id) throws ServletException {
+		PublicUser publicUser = this.publicUserService.getPublicUserRepo().findOne(id);
+		publicUser = this.publicUserService.changeStatus(publicUser);
+		publicUser = this.publicUserService.getPublicUserRepo().save(publicUser);
+		return new ResponseEntity<Boolean>(publicUser.getStatus(), HttpStatus.OK);
+	}
+
 	private static class Filter {
+
 		public String sort;
-		
+
 		public Long consoleId;
-		
+
 		public Integer page = 0;
 	}
-	
+
 	public static class Password {
+
 		public String current;
-		
+
 		public String change;
 	}
 
@@ -140,7 +174,22 @@ public class PublicUserController {
 		public String email;
 
 		public String extraData;
+
+	}
+
+	private static class Search {
+
+		public Integer page = 0;
+
+		public String name = "";
 		
+		public String lastName = "";
+
+		public Boolean status;
+
+		public Date startDate = new Date(0);
+
+		public Date endDate = new Date();
 	}
 
 }

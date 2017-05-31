@@ -1,6 +1,5 @@
 package ec.com.levelap.gameclub.module.user.service;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,12 +19,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.base.entity.ErrorControl;
-import ec.com.levelap.base.entity.FileData;
-import ec.com.levelap.commons.archive.Archive;
-import ec.com.levelap.commons.service.DocumentService;
+import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.kushki.repository.KushkiSubscriptionRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
@@ -43,7 +39,7 @@ import ec.com.levelap.kushki.service.KushkiService;
 import ec.com.levelap.mail.MailParameters;
 
 @Service
-public class PublicUserService {
+public class PublicUserService extends BaseService<PublicUser> {
 
 	@Autowired
 	private PublicUserRepo publicUserRepo;
@@ -54,14 +50,18 @@ public class PublicUserService {
 	@Autowired
 	private MailService mailService;
 	
-	@Autowired
-	private DocumentService documentService;
+//	@Autowired
+//	private DocumentService documentService;
 
 	@Autowired
 	private KushkiSubscriptionRepo kushkiSubscriptionRepo;
 
 	@Autowired
 	private KushkiService kushkiService;
+	
+	public PublicUserService() {
+		super(PublicUser.class);
+	}
 
 	@Transactional
 	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl) throws ServletException, MessagingException {
@@ -110,33 +110,33 @@ public class PublicUserService {
 	}
 	
 	@Transactional
-	public PublicUser save(PublicUser user, MultipartFile avatar) throws ServletException, IOException {
-		PublicUser original = publicUserRepo.findOne(user.getId());
-		
-		if (avatar != null) {
-			Archive archive = new Archive();
-			
-			if (original.getAvatar() != null) {
-				documentService.deleteFile(original.getAvatar().getName(), PublicUser.class.getSimpleName());
-				archive = original.getAvatar();
-			}
-			
-			FileData fileData = documentService.saveFile(avatar, PublicUser.class.getSimpleName());
-			
-			archive.setModule(PublicUser.class.getSimpleName());
-			archive.setName(fileData.getName());
-			archive.setType(avatar.getContentType());
-			user.setAvatar(archive);
-		} else {
-			if (original.getAvatar() != null) {
-				documentService.deleteFile(original.getAvatar().getName(), PublicUser.class.getSimpleName());
-			}
-			
-			user.setAvatar(null);
-		}
-		
+	public ResponseEntity<?> save(PublicUser user) throws ServletException {
+//		PublicUser original = publicUserRepo.findOne(user.getId());
+//		
+//		if (avatar != null) {
+//			Archive archive = new Archive();
+//			
+//			if (original.getAvatar() != null) {
+//				documentService.deleteFile(original.getAvatar().getName(), PublicUser.class.getSimpleName());
+//				archive = original.getAvatar();
+//			}
+//			
+//			FileData fileData = documentService.saveFile(avatar, PublicUser.class.getSimpleName());
+//			
+//			archive.setModule(PublicUser.class.getSimpleName());
+//			archive.setName(fileData.getName());
+//			archive.setType(avatar.getContentType());
+//			user.setAvatar(archive);
+//		} else {
+//			if (original.getAvatar() != null) {
+//				documentService.deleteFile(original.getAvatar().getName(), PublicUser.class.getSimpleName());
+//			}
+//			
+//			user.setAvatar(null);
+//		}
+//		
 		user = publicUserRepo.save(user);
-		return user;
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
 	@Transactional

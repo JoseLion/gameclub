@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
@@ -20,106 +22,78 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
-import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.location.Location;
+import ec.com.levelap.gameclub.module.avatar.entity.Avatar;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
-@Table(schema=Const.SCHEMA, name="public_user", uniqueConstraints=@UniqueConstraint(columnNames="username", name="public_username_uk"))
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(schema = Const.SCHEMA, name = "public_user", uniqueConstraints = @UniqueConstraint(columnNames = "username", name = "public_username_uk"))
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class PublicUser extends BaseEntity {
-	@Column(columnDefinition="VARCHAR", nullable=false)
+
+	@Column(columnDefinition = "VARCHAR", nullable = false)
 	private String username;
-	
-	@Column(columnDefinition="VARCHAR", nullable=false)
+
+	@Column(columnDefinition = "VARCHAR", nullable = false)
 	private String password;
-	
-	@Column(columnDefinition="VARCHAR", nullable=false)
+
+	@Column(columnDefinition = "VARCHAR", nullable = false)
 	private String name;
-	
-	@Column(name="last_name", columnDefinition="VARCHAR", nullable=false)
+
+	@Column(name = "last_name", columnDefinition = "VARCHAR", nullable = false)
 	private String lastName;
-	
-	@Column(name="has_temp_password", columnDefinition="BOOLEAN DEFAULT FALSE")
+
+	@Column(name = "has_temp_password", columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean hasTempPassword = false;
-	
-	@Column(name="is_facebook_user", columnDefinition="BOOLEAN DEFAULT FALSE")
+
+	@Column(name = "is_facebook_user", columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean isFacebookUser = false;
-	
-	@Column(columnDefinition="INTEGER DEFAULT 0")
+
+	@Column(columnDefinition = "INTEGER DEFAULT 0")
 	private Integer coins = 0;
-	
-	@Column(columnDefinition="VARCHAR")
+
+	@Column(columnDefinition = "VARCHAR")
 	private String token;
-	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="avatar", foreignKey=@ForeignKey(name="avatar_archive_fk"))
-	private Archive avatar;
-	
-	@Column(name="last_connection")
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "avatar", foreignKey = @ForeignKey(name = "avatar_archive_fk"))
+	private Avatar avatar;
+
+	@Column(name = "last_connection")
 	private Date lastConnection;
-	
-	@Column(columnDefinition="VARCHAR")
+
+	@Column(columnDefinition = "VARCHAR")
 	private String document;
-	
-	@Column(name="birth_date")
+
+	@Column(name = "birth_date")
+	@Temporal(TemporalType.DATE)
 	private Date birthDate;
-	
-	@Column(columnDefinition="VARCHAR")
+
+	@Column(columnDefinition = "VARCHAR")
 	private String profession;
-	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="location", foreignKey=@ForeignKey(name="location_fk"))
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "location", foreignKey = @ForeignKey(name = "location_fk"))
 	private Location location;
-	
-	@Column(name="first_address", columnDefinition="VARCHAR")
-	private String firstAddress;
-	
-	@Column(name="first_receiver", columnDefinition="VARCHAR")
-	private String firstReceiver;
-	
-	@Column(name="first_morning_start_time", columnDefinition="VARCHAR")
-	private String firstMorningStartTime;
-	
-	@Column(name="first_morning_end_time", columnDefinition="VARCHAR")
-	private String firstMorningEndTime;
-	
-	@Column(name="first_noon_start_time", columnDefinition="VARCHAR")
-	private String firstNoonStartTime;
-	
-	@Column(name="first_noon_end_time", columnDefinition="VARCHAR")
-	private String firstNoonEndTime;
-	
-	@Column(name="second_address", columnDefinition="VARCHAR")
-	private String secondAddress;
-	
-	@Column(name="second_receiver", columnDefinition="VARCHAR")
-	private String secondReceiver;
-	
-	@Column(name="second_morning_start_time", columnDefinition="VARCHAR")
-	private String secondMorningStartTime;
-	
-	@Column(name="second_morning_end_time", columnDefinition="VARCHAR")
-	private String secondMorningEndTime;
-	
-	@Column(name="second_noon_start_time", columnDefinition="VARCHAR")
-	private String secondNoonStartTime;
-	
-	@Column(name="second_noon_end_time", columnDefinition="VARCHAR")
-	private String secondNoonEndTime;
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy="publicUser", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "publicUser", fetch = FetchType.LAZY)
 	private List<PublicUserGame> games = new ArrayList<>();
-	
-	@Column(name="facebook_token", columnDefinition="VARCHAR")
+
+	@Column(name = "facebook_token", columnDefinition = "VARCHAR")
 	private String facebookToken;
-	
-	@Column(name="facebook_name", columnDefinition="VARCHAR")
+
+	@Column(name = "facebook_name", columnDefinition = "VARCHAR")
 	private String facebookName;
 
 	@Column(name = "kushki_subscription_active", columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean kushkiSubscriptionActive = Boolean.FALSE;
+
+	@Column(name = "billing_address", columnDefinition = "VARCHAR")
+	private String billingAddress;
+
+	@Column(name = "contact_phone", columnDefinition = "VARCHAR")
+	private String contactPhone;
 
 	@Transient
 	private Integer numberOfGames;
@@ -188,11 +162,11 @@ public class PublicUser extends BaseEntity {
 		this.token = token;
 	}
 
-	public Archive getAvatar() {
+	public Avatar getAvatar() {
 		return avatar;
 	}
 
-	public void setAvatar(Archive avatar) {
+	public void setAvatar(Avatar avatar) {
 		this.avatar = avatar;
 	}
 
@@ -236,102 +210,6 @@ public class PublicUser extends BaseEntity {
 		this.location = location;
 	}
 
-	public String getFirstAddress() {
-		return firstAddress;
-	}
-
-	public void setFirstAddress(String firstAddress) {
-		this.firstAddress = firstAddress;
-	}
-
-	public String getFirstReceiver() {
-		return firstReceiver;
-	}
-
-	public void setFirstReceiver(String firstReceiver) {
-		this.firstReceiver = firstReceiver;
-	}
-
-	public String getFirstMorningStartTime() {
-		return firstMorningStartTime;
-	}
-
-	public void setFirstMorningStartTime(String firstMorningStartTime) {
-		this.firstMorningStartTime = firstMorningStartTime;
-	}
-
-	public String getFirstMorningEndTime() {
-		return firstMorningEndTime;
-	}
-
-	public void setFirstMorningEndTime(String firstMorningEndTime) {
-		this.firstMorningEndTime = firstMorningEndTime;
-	}
-
-	public String getFirstNoonStartTime() {
-		return firstNoonStartTime;
-	}
-
-	public void setFirstNoonStartTime(String firstNoonStartTime) {
-		this.firstNoonStartTime = firstNoonStartTime;
-	}
-
-	public String getFirstNoonEndTime() {
-		return firstNoonEndTime;
-	}
-
-	public void setFirstNoonEndTime(String firstNoonEndTime) {
-		this.firstNoonEndTime = firstNoonEndTime;
-	}
-
-	public String getSecondAddress() {
-		return secondAddress;
-	}
-
-	public void setSecondAddress(String secondAddress) {
-		this.secondAddress = secondAddress;
-	}
-
-	public String getSecondReceiver() {
-		return secondReceiver;
-	}
-
-	public void setSecondReceiver(String secondReceiver) {
-		this.secondReceiver = secondReceiver;
-	}
-
-	public String getSecondMorningStartTime() {
-		return secondMorningStartTime;
-	}
-
-	public void setSecondMorningStartTime(String secondMorningStartTime) {
-		this.secondMorningStartTime = secondMorningStartTime;
-	}
-
-	public String getSecondMorningEndTime() {
-		return secondMorningEndTime;
-	}
-
-	public void setSecondMorningEndTime(String secondMorningEndTime) {
-		this.secondMorningEndTime = secondMorningEndTime;
-	}
-
-	public String getSecondNoonStartTime() {
-		return secondNoonStartTime;
-	}
-
-	public void setSecondNoonStartTime(String secondNoonStartTime) {
-		this.secondNoonStartTime = secondNoonStartTime;
-	}
-
-	public String getSecondNoonEndTime() {
-		return secondNoonEndTime;
-	}
-
-	public void setSecondNoonEndTime(String secondNoonEndTime) {
-		this.secondNoonEndTime = secondNoonEndTime;
-	}
-
 	public List<PublicUserGame> getGames() {
 		return games;
 	}
@@ -356,21 +234,36 @@ public class PublicUser extends BaseEntity {
 		this.facebookName = facebookName;
 	}
 
-	public Integer getNumberOfGames() {
-		return this.games.size();
-	}
-
-	public void setNumberOfGames(Integer numberOfGames) {
-		this.numberOfGames = numberOfGames;
-	}
-
-	
 	public Boolean getKushkiSubscriptionActive() {
 		return kushkiSubscriptionActive;
 	}
 
 	public void setKushkiSubscriptionActive(Boolean kushkiSubscriptionActive) {
 		this.kushkiSubscriptionActive = kushkiSubscriptionActive;
+	}
+
+	public String getBillingAddress() {
+		return billingAddress;
+	}
+
+	public void setBillingAddress(String billingAddress) {
+		this.billingAddress = billingAddress;
+	}
+
+	public String getContactPhone() {
+		return contactPhone;
+	}
+
+	public void setContactPhone(String contactPhone) {
+		this.contactPhone = contactPhone;
+	}
+
+	public Integer getNumberOfGames() {
+		return this.games.size();
+	}
+
+	public void setNumberOfGames(Integer numberOfGames) {
+		this.numberOfGames = numberOfGames;
 	}
 
 }

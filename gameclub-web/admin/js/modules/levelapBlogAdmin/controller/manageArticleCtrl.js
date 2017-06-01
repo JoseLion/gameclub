@@ -36,6 +36,14 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 		showSelectionBar: true
 	};
 
+	$scope.getCropStyle = function() {
+		let diamondDiv = angular.element("#diamond-div");
+		console.log("diamondDiv: ", diamondDiv[0].clientWidth);
+		return {
+			height: diamondDiv[0].clientWidth + 'px'
+		};
+	}
+
 	$scope.beginDrag = function($event) {
 		isDragging = true;
 		dx = $event.offsetX;
@@ -82,6 +90,10 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 					c: 1.0
 				};
 			}
+
+			setTimeout(function() {
+				$scope.$broadcast('rzSliderForceRender');
+			}, 0);
 		});
 	}
 
@@ -98,7 +110,6 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 	}
 
 	$scope.$watch("banner", function(newValue, oldValue) {
-		console.log("newValue: ", newValue);
 		if (newValue != null) {
 			let reader = new FileReader();
 			reader.onload = function() {

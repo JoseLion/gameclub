@@ -6,7 +6,7 @@
 		</div>
 
 		<div class="row">
-			<div class="btn-group" style="text-align: center; margin-top: 2%;">
+			<div class="btn-group" style="text-align: center; margin-top: 2%;" ng-if="isVisible">
 				<button type="button" class="btn btn-sm btn-default" ng-click="addImage()" ng-disabled="isDisabled">
 					<span ng-if="!isLoading">{{!isNgModelFile() ? 'Imagen' : 'Cambiar'}}</span>
 					<div class="sk-spinner sk-spinner-circle" ng-if="isLoading">

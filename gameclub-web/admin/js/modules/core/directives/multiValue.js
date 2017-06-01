@@ -10,7 +10,6 @@ angular.module('Core').directive('multiValue', function() {
 			$scope.isOpened = false;
 
 			$scope.toggle = function() {
-				console.log("several: ", angular.element("#several_" + $scope.$id));
 				angular.element("#several_" + $scope.$id).slideToggle(200);
 				$scope.isOpened = !$scope.isOpened;
 			}

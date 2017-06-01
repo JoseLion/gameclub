@@ -1,0 +1,98 @@
+<div class="col-md-1"></div>
+<div class="col-md-10">
+	<div class="ibox">
+		<div class="ibox-content">
+			<form class="form-horizontal" role="form" on-submit="save()" novalidate>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Correo Electrónico</label>
+					<div class="col-md-9">
+						<input validation type="email" class="form-control" ng-model="publicUser.username" maxlength="50" disabled>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Nombre(s)</label>
+					<div class="col-md-9">
+						<input validation type="text" class="form-control" ng-model="publicUser.name" required maxlength="100">
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Apellido(s)</label>
+					<div class="col-md-9">
+						<input validation type="text" class="form-control" ng-model="publicUser.lastName" required maxlength="100">
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Número de Cédula</label>
+					<div class="col-md-9">
+						<input validation type="text" class="form-control" ng-model="publicUser.document" data-mask="9999999999">
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Fecha de Nacimiento</label>
+					<div class="col-md-9">
+						<input validation type="datetime" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="publicUser.birthDate" is-open="openBirth" ng-focus="openBirth = true" data-mask="99-99-9999">
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Ocupación</label>
+					<div class="col-md-9">
+						<input validation type="text" class="form-control" ng-model="publicUser.profession" >
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Provincia</label>
+					<div class="col-md-9">
+						<ui-select ng-model="location.parent" theme="bootstrap" ng-change="findCities()">
+							<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected.name}}</ui-select-match>
+							<ui-select-choices repeat="location in locationStates | filter: $select.search">
+								<div ng-bind-html="location.name | highlight: $select.search"></div>
+							</ui-select-choices>
+						</ui-select>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Ciudad</label>
+					<div class="col-md-9">
+						<ui-select validation ng-model="location.final" theme="bootstrap" ng-required="location.parent != null">
+							<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected.name}}</ui-select-match>
+							<ui-select-choices repeat="location in locationCities | filter: $select.search">
+								<div ng-bind-html="location.name | highlight: $select.search"></div>
+							</ui-select-choices>
+						</ui-select>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Dirección de Facturación</label>
+					<div class="col-md-9">
+						<textarea validation type="text" class="form-control" ng-model="publicUser.billingAddress" rows="3" style="resize: none;"></textarea>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Teléfono de Contacto</label>
+					<div class="col-md-9">
+						<input validation type="text" class="form-control" ng-model="publicUser.contactPhone" >
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-12" style="text-align: right;">
+						<button type="submit" class="btn btn-w-m btn-primary">Guardar</button>
+						<button type="button" class="btn btn-w-m btn-default" ng-click="cancel()">Cancelar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="col-md-1"></div>
+<div class="clearfix"></div>

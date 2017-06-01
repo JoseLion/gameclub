@@ -1,20 +1,22 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, ciValidation) {
+angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, ciValidation, $location) {
     $scope.file = {};
     let tempUserInfo;
+    $scope.currentUserTemp = angular.copy($rootScope.currentUser);
+    $scope.newUsername = angular.copy($rootScope.currentUser.username);
 
     provinces.$promise.then(function(data) {
         $scope.provinces = data;
 
-        $rootScope.$watch('currentUser.location', function(newValue, oldValue) {
-            if (newValue != null && $rootScope.currentUser.province == null) {
+        $rootScope.$watch('currentUserTemp.location', function(newValue, oldValue) {
+            if (newValue != null && $scope.currentUserTemp.province == null) {
                 let index = getIndexOfArray($scope.provinces, 'id', newValue.parent.id);
-                $rootScope.currentUser.province = $scope.provinces[index];
+                $scope.currentUserTemp.province = $scope.provinces[index];
             }
         });
 
-        $scope.$watch('currentUser.province', function(newValue, oldValue) {
-            if (newValue == null && $rootScope.currentUser != null) {
-                $rootScope.currentUser.location = null;
+        $scope.$watch('currentUserTemp.province', function(newValue, oldValue) {
+            if (newValue == null && $scope.currentUserTemp != null) {
+                $scope.currentUserTemp.location = null;
             }
         });
     });
@@ -33,40 +35,41 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             }
         } else {
             $scope.file = {};
-            let img = angular.element("#avatar_img");
+            let img = angular.element('#avatar_img');
             img.attr('src', img.attr('placeholder'));
         }
     });
 
     $scope.changeAvatar = function() {
         setTimeout(function() {
-            angular.element("#avatar_input").trigger('click');
+            angular.element('#avatar_input').trigger('click');
         }, 0);
     }
 
     $scope.provinceRemoved = function() {
-        $rootScope.currentUser.location = null;
+        $scope.currentUserTemp.location = null;
     }
 
     $scope.save = function() {
         let isValid = true;
-        if($rootScope.currentUser.document == null || $rootScope.currentUser.document == '') {
+        if($scope.currentUserTemp.document == null || $scope.currentUserTemp.document == '') {
             isValid = true;
-        } else if($rootScope.currentUser.document != null && $rootScope.currentUser.document.length != 10) {
+        } else if($scope.currentUserTemp.document != null && $scope.currentUserTemp.document.length != 10) {
             isValid = false;
             notif.danger('Tu número de cédula debe tener 10 dígitos');
-        } else if(!ciValidation($rootScope.currentUser.document)) {
+        } else if(!ciValidation($scope.currentUserTemp.document)) {
             isValid = false;
             notif.danger('Ingresa un número de cédula válido');
         }
-        if($rootScope.currentUser.province != null && $rootScope.currentUser.location == null) {
+        if($scope.currentUserTemp.province != null && $scope.currentUserTemp.location == null) {
             isValid = false;
             notif.danger('Completa tu ciudad');
         }
         if(isValid) {
             sweet.save(function() {
-                rest("publicUser/save").post($rootScope.currentUser, function(data) {
+                rest('publicUser/save').post($scope.currentUserTemp, function(data) {
                     $rootScope.currentUser = data;
+                    $scope.currentUserTemp = data;
                     sweet.success();
                     sweet.close();
                 }, function(error) {
@@ -74,14 +77,38 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                 });
             });
         }
-    }
+    };
+
+    $scope.changeMail = function() {
+        let isValid = true;
+        let emailValidation = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if($scope.newUsername == null || $scope.newUsername == '') {
+            isValid = false;
+            notif.danger('Completa tu correo electrónico')
+        } else if(!emailValidation.test($scope.newUsername)) {
+            isValid = false;
+            notif.danger('Ingresa un correo electrónico válido')
+        }
+        if(isValid) {
+            sweet.save(function() {
+                rest('publicUser/changeMail').post({oldUsername: $rootScope.currentUser.username, newUsername: $scope.newUsername, baseUrl: $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2)}, function(data) {
+                    $rootScope.currentUser = data;
+                    $scope.currentUserTemp = data;
+                    sweet.success();
+                    sweet.close();
+                }, function(error) {
+                    sweet.error(error.data.message);
+                });
+            });
+        }
+    };
 
     $scope.resendMailVerification = function() {
-        sweet.default("Se reenviará el correo con el link de verificación a tu correo", function() {
-            let baseUrl = $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2);
+        sweet.default('Se reenviará el correo con el link de verificación a tu correo', function() {
+            let baseUrl = $location.$$absUrl.substring(0, $location.$$absUrl.indexOf('#!') + 2);
 
-            rest("publicUser/resendVerification").post(baseUrl, function() {
-                notif.success("El correo se reenvió con éxito");
+            rest('publicUser/resendVerification').post(baseUrl, function() {
+                notif.success('El correo se reenvió con éxito');
                 sweet.close();
             }, function(error) {
                 sweet.close();
@@ -95,7 +122,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                 FB.api('/me', {fields: 'name, email'}, function(me) {
                     if (me.email == null) {
                         FB.logout(function(logoutResponse) {
-                            notif.warning("El correo electrónico es necesario para verificar tu cuenta. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
+                            notif.warning('El correo electrónico es necesario para verificar tu cuenta. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook');
                         }, response.authResponse.accessToken);
                     } else {
                         $rootScope.currentUser.facebookToken = response.authResponse.accessToken;
@@ -105,11 +132,11 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                             user: $rootScope.currentUser
                         };
 
-                        rest("publicUser/save").multipart(formData, function(data) {
+                        rest('publicUser/save').multipart(formData, function(data) {
                             $rootScope.currentUser = data;
-                            notif.success("Cuenta verificada con Facebook");
+                            notif.success('Cuenta verificada con Facebook');
                         }, function(error) {
-                            notif.danger("No se pudo actualizar el token de Facebook. Por favor vuelva a intentarlo");
+                            notif.danger('No se pudo actualizar el token de Facebook. Por favor vuelva a intentarlo');
                         });
                     }
                 });
@@ -185,10 +212,8 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     $scope.isEditableMean = false;
     $scope.editContactMean = function() {
         $scope.isEditableMean = !$scope.isEditableMean;
-        if($scope.isEditableMean) {
-            $scope.contactMeanTmp = angular.copy($scope.contactMean);
-        } else {
-            $scope.contactMean = angular.copy($scope.contactMeanTmp);
+        if(!$scope.isEditableMean) {
+            $scope.newUsername = angular.copy($rootScope.currentUser.username);
         }
     };
 

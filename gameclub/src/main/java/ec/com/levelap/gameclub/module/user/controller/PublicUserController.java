@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
@@ -117,18 +119,7 @@ public class PublicUserController {
 		if (search == null) {
 			search = new Search();
 		}
-		Page<PublicUserLite> publicUsers = this.publicUserService.getPublicUserRepo().findPublicUsers(
-				search.name,
-				search.lastName,
-				search.status,
-				search.startDate,
-				search.endDate,
-				new PageRequest(
-						search.page,
-						Const.TABLE_SIZE,
-						new Sort(
-								new Order(Direction.ASC, "name"),
-								new Order(Direction.ASC, "lastName"))));
+		Page<PublicUserLite> publicUsers = this.publicUserService.getPublicUserRepo().findPublicUsers(search.name, search.lastName, search.status, search.startDate, search.endDate, new PageRequest(search.page, Const.TABLE_SIZE, new Sort(new Order(Direction.ASC, "name"), new Order(Direction.ASC, "lastName"))));
 		return new ResponseEntity<>(publicUsers, HttpStatus.OK);
 	}
 
@@ -145,6 +136,18 @@ public class PublicUserController {
 		publicUser = this.publicUserService.changeStatus(publicUser);
 		publicUser = this.publicUserService.getPublicUserRepo().save(publicUser);
 		return new ResponseEntity<Boolean>(publicUser.getStatus(), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "changeMail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> changeMail(@RequestBody ChangeUsernameObj usernameObj) throws ServletException, MessagingException {
+		PublicUser publicUser = this.publicUserService.getPublicUserRepo().findByUsername(usernameObj.newUsername);
+		if (publicUser != null) {
+			return new ResponseEntity<ErrorControl>(new ErrorControl("El correo ingresado ya se encuentra registrado", true), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		publicUser = this.publicUserService.getPublicUserRepo().findByUsername(usernameObj.oldUsername);
+		publicUser.setToken(UUID.randomUUID().toString());
+		publicUser.setUsername(usernameObj.newUsername);
+		return this.publicUserService.save(publicUser, usernameObj.baseUrl);
 	}
 
 	private static class Filter {
@@ -182,7 +185,7 @@ public class PublicUserController {
 		public Integer page = 0;
 
 		public String name = "";
-		
+
 		public String lastName = "";
 
 		public Boolean status;
@@ -190,6 +193,16 @@ public class PublicUserController {
 		public Date startDate = new Date(0);
 
 		public Date endDate = new Date();
+	}
+
+	private static class ChangeUsernameObj {
+
+		public String oldUsername;
+
+		public String newUsername;
+
+		public String baseUrl;
+
 	}
 
 }

@@ -45,20 +45,20 @@
             <div class="col-md-8 form">
                 <div class="col-md-12 to-validate ci-req">
                     <label>N&uacute;mero de c&eacute;dula</label>
-                    <input ng-disabled="!isEditable" ng-model="currentUser.document">
+                    <input ng-disabled="!isEditable" ng-model="currentUserTemp.document">
                 </div>
                 <div class="col-md-12 to-validate">
                     <label>Fecha de nacimiento</label>
-                    <date-selector ng-model="currentUser.birthDate" ng-disabled="!isEditable">
+                    <date-selector ng-model="currentUserTemp.birthDate" ng-disabled="!isEditable">
                 </div>
                 <div class="col-md-12 to-validate">
                     <label>Ocupaci&oacute;n</label>
-                    <input placeholder="Estudiante - Programador" ng-disabled="!isEditable" ng-model="currentUser.profession"/>
+                    <input placeholder="Estudiante - Programador" ng-disabled="!isEditable" ng-model="currentUserTemp.profession"/>
                 </div>
                 <div class="col-md-6">
                     <label class="col-xs-12 col-md-4">Provincia</label>
                     <div class="col-xs-12 col-md-8">
-                        <ui-select ng-model="currentUser.province" theme="bootstrap" class="selector" ng-disabled="!isEditable" on-select="currentUser.location = null">
+                        <ui-select ng-model="currentUserTemp.province" theme="bootstrap" class="selector" ng-disabled="!isEditable" on-select="currentUserTemp.location = null">
                             <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
                             <ui-select-choices repeat="province in provinces | filter: $select.search">
                                 <div ng-bind-html="province.name | highlight: $select.search"></div>
@@ -70,7 +70,7 @@
                 <div class="col-md-6">
                     <label class="col-xs-12 col-md-4">Ciudad</label>
                     <div class="col-xs-12 col-md-8">
-                        <ui-select ng-model="currentUser.location" theme="bootstrap" class="selector" ng-disabled="!isEditable">
+                        <ui-select ng-model="currentUserTemp.location" theme="bootstrap" class="selector" ng-disabled="!isEditable">
                             <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
                             <ui-select-choices repeat="city in currentUser.province.children | filter: $select.search">
                                 <div ng-bind-html="city.name | highlight: $select.search"></div>
@@ -82,14 +82,14 @@
                 <div class="col-md-12 to-validate billing">
                     <label class="col-xs-12 col-md-4">Direcci&oacute;n de factuaci&oacute;n</label>
                     <div class="col-xs-12 col-md-12 billing-address">
-                        <textarea type="address" ng-disabled="!isEditable" ng-model="currentUser.billingAddress" rows="2" maxlength="150"></textarea>
+                        <textarea type="address" ng-disabled="!isEditable" ng-model="currentUserTemp.billingAddress" rows="2" maxlength="150"></textarea>
                     </div>
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-12 to-validate phone">
                     <label class="col-xs-12 col-md-4">Tel&eacute;fono de contacto</label>
                     <div class="col-xs-12 col-md-8">
-                        <input type="phone" ng-disabled="!isEditable" ng-model="currentUser.contactPhone" />
+                        <input type="phone" ng-disabled="!isEditable" ng-model="currentUserTemp.contactPhone" />
                     </div>
                 </div>
             </div>
@@ -97,32 +97,36 @@
         </form>
     </section>
     <section class="contact-means">
-        <div class="row completed">
-            <div class="col-md-12">
-                <span class="subtitle">
-                    <i class="gc gc-mail"></i>
-                    <span>
-                        Verificaci&oacute;n de tu correo
-                        <button type="button" class="btn btn-tertiary full small" ng-if="isEditableMean">Guardar info</button>
-                        <button type="button" class="btn btn-primary small" ng-click="editContactMean()">{{isEditableMean ? 'Volver' : 'Cambiar correo'}}</button>
+        <form role="form" ng-submit="changeMail()">
+            <div class="completed">
+                <div class="col-md-12 text-center">
+                    <span class="subtitle">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <i class="gc gc-mail"></i>
+                            <span>Verificaci&oacute;n de tu correo</span>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary small" ng-if="isEditableMean">Guardar info</button>
+                            <button type="button" class="btn btn-primary small" ng-click="editContactMean()">{{isEditableMean ? 'Volver' : 'Cambiar correo'}}</button>
+                        </div>
+                        <div class="clearfix"></div>
                     </span>
-                </span>
-                <span class="description">Verifica que tu correo electr&oacute;nico es correcto y funcional. Se te enviar&aacute; un mail con un c&oacute;digo de verificaci&oacute;n.</span>
+                    <span class="description">Verifica que tu correo electr&oacute;nico es correcto y funcional. Se te enviar&aacute; un mail con un c&oacute;digo de verificaci&oacute;n.</span>
+                </div>
+                <div class="clearfix"></div>
             </div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="row form">
-            <div class="col-xs-12 col-md-3"></div>
-            <div class="col-xs-12 col-md-6">
-                <form class="col-xs-12 col-md-12">
-                    <input placeholder="XXXX@MAIL.COM" ng-model="currentUser.username" readonly>
+            <div class="row form">
+                <div class="col-xs-12 col-md-3"></div>
+                <div class="col-xs-12 col-md-6">
+                    <input placeholder="XXXX@MAIL.COM" ng-model="newUsername" ng-readonly="!isEditableMean">
                     <button type="button" class="btn btn-primary full small" ng-click="resendMailVerification()" ng-if="currentUser.token">Verificar</button>
                     <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="!currentUser.token">
-                </form>
+                </div>
+                <div class="col-xs-12 col-md-3"></div>
+                <div class="clearfix"></div>
             </div>
-            <div class="col-xs-12 col-md-3"></div>
-            <div class="clearfix"></div>
-        </div>
+        </form>
     </section>
     <section class="row games">
         <div class="col-xs-12 col-md-4">

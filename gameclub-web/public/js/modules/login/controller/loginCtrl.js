@@ -29,7 +29,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 							baseUrl: $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2),
 							publicUser: user
 						};
-						
+
 						openRest("publicUser/signIn").post(signObj, function() {
 							SweetAlert.swal("Registro Exitoso", "Para completar el registro entra a tu correo y da click en el link de confirmación que hemos enviado", "success");
 							$scope.isFbSingIn = false;
@@ -103,7 +103,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 								username: me.email,
 								name: me.name,
 								lastName: "",
-								password: me.userID,
+								password: me.id,
 								isFacebookUser: true,
 								facebookToken: response.authResponse.accessToken,
 								facebookName: me.name
@@ -138,12 +138,12 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 					} else {
 						let credentials = {
 							username: me.email,
-							password: me.userID
+							password: me.id
 						};
 
 						logIn(credentials);
 
-						$rootScope.currentUser.facebookToken = response.authResponse.accessToken;
+						// $rootScope.currentUser.facebookToken = response.authResponse.accessToken;
 						let formData = {
 							user: $rootScope.currentUser
 						};
@@ -205,7 +205,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 			baseUrl: $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2),
 			publicUser: user
 		};
-		
+
 		openRest("publicUser/signIn").post(signObj, function() {
 			SweetAlert.swal("Registro Exitoso", "Para completar el registro entra a tu correo y da click en el link de confirmación que hemos enviado", "success");
 			$scope.isFbSingIn = false;

@@ -4,15 +4,14 @@
         <div class="col-md-8 no-padding-left no-padding-right">
             <div class="col-md-10 name">
                 <div class="col-md-3 no-padding-left no-padding-right">
-                    <img id="avatar_img" archive="currentUser.avatar" placeholder="img/test/profile-pic.png" ng-src="{{file.base64}}">
+                    <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
                 </div>
                 <div class="col-md-9">
                     <h2 class="title">{{currentUser.name}} {{currentUser.lastName}}</h2>
                     <div class="col-md-12 no-padding-left no-padding-right">
                         <div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
                     </div>
-                    <button class="btn btn-tertiary full small" ng-click="changeAvatar()">Cambiar avatar</button>
-                    <input id="avatar_input" type="file" ng-model="file.avatar" file-model ng-hide="true">
+                    <button class="btn btn-tertiary full small" ng-click="chooseAvatar()">Cambiar avatar</button>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -58,7 +57,7 @@
                 <div class="col-md-6">
                     <label class="col-xs-12 col-md-4">Provincia</label>
                     <div class="col-xs-12 col-md-8">
-                        <ui-select ng-model="currentUserTemp.province" theme="bootstrap" class="selector" ng-disabled="!isEditable" on-select="currentUserTemp.location = null">
+                        <ui-select ng-model="currentUserTemp.province" theme="bootstrap" class="selector" ng-disabled="!isEditable" ng-change="findCities()">
                             <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
                             <ui-select-choices repeat="province in provinces | filter: $select.search">
                                 <div ng-bind-html="province.name | highlight: $select.search"></div>
@@ -72,7 +71,7 @@
                     <div class="col-xs-12 col-md-8">
                         <ui-select ng-model="currentUserTemp.location" theme="bootstrap" class="selector" ng-disabled="!isEditable">
                             <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
-                            <ui-select-choices repeat="city in currentUser.province.children | filter: $select.search">
+                            <ui-select-choices repeat="city in locationCities | filter: $select.search">
                                 <div ng-bind-html="city.name | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
@@ -89,7 +88,7 @@
                 <div class="col-md-12 to-validate phone">
                     <label class="col-xs-12 col-md-4">Tel&eacute;fono de contacto</label>
                     <div class="col-xs-12 col-md-8">
-                        <input type="phone" ng-disabled="!isEditable" ng-model="currentUserTemp.contactPhone" />
+                        <input type="phone" ng-disabled="!isEditable" ng-model="currentUserTemp.contactPhone" class="complete" />
                     </div>
                 </div>
             </div>
@@ -106,7 +105,7 @@
                             <i class="gc gc-mail"></i>
                             <span>Verificaci&oacute;n de tu correo</span>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 text-left">
                             <button type="submit" class="btn btn-primary small" ng-if="isEditableMean">Guardar info</button>
                             <button type="button" class="btn btn-primary small" ng-click="editContactMean()">{{isEditableMean ? 'Volver' : 'Cambiar correo'}}</button>
                         </div>

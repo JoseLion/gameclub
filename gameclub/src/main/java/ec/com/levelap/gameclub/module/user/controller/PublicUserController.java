@@ -140,11 +140,11 @@ public class PublicUserController {
 
 	@RequestMapping(value = "changeMail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> changeMail(@RequestBody ChangeUsernameObj usernameObj) throws ServletException, MessagingException {
-		PublicUser publicUser = this.publicUserService.getPublicUserRepo().findByUsername(usernameObj.newUsername);
+		PublicUser publicUser = this.publicUserService.getPublicUserRepo().findByUsernameIgnoreCase(usernameObj.newUsername);
 		if (publicUser != null) {
 			return new ResponseEntity<ErrorControl>(new ErrorControl("El correo ingresado ya se encuentra registrado", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		publicUser = this.publicUserService.getPublicUserRepo().findByUsername(usernameObj.oldUsername);
+		publicUser = this.publicUserService.getPublicUserRepo().findByUsernameIgnoreCase(usernameObj.oldUsername);
 		publicUser.setToken(UUID.randomUUID().toString());
 		publicUser.setUsername(usernameObj.newUsername);
 		return this.publicUserService.save(publicUser, usernameObj.baseUrl);

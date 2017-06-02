@@ -42,7 +42,7 @@ public class AdminUserService extends BaseService<AdminUser> {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
 		if (auth != null) {
-			AdminUser adminUser = adminUserRepo.findByUsername(auth.getName());
+			AdminUser adminUser = adminUserRepo.findByUsernameIgnoreCase(auth.getName());
 			return adminUser;
 		}
 		
@@ -71,7 +71,7 @@ public class AdminUserService extends BaseService<AdminUser> {
 	@Transactional
 	public ResponseEntity<?> save(AdminUser adminUser) throws ServletException {
 		if (adminUser.getId() == null) {
-			AdminUser found = adminUserRepo.findByUsername(adminUser.getUsername());
+			AdminUser found = adminUserRepo.findByUsernameIgnoreCase(adminUser.getUsername());
 			
 			if (found != null) {
 				return new ResponseEntity<ErrorControl>(new ErrorControl("El correo electrónico ingresado ya existe", true), HttpStatus.INTERNAL_SERVER_ERROR);

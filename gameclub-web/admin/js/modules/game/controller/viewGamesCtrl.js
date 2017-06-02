@@ -1,4 +1,4 @@
-angular.module("Game").controller('ViewGamesCtrl', function($scope, games, consoles, categories, getDTOptions, $state, sweet, rest, Const, friendlyUrl) {
+angular.module("Game").controller('ViewGamesCtrl', function($scope, games, consoles, categories, getDTOptions, $state, sweet, rest, Const, friendlyUrl, $uibModal) {
 	$scope.search = {};
 	$scope.totalElements;
 	$scope.beginning;
@@ -56,6 +56,27 @@ angular.module("Game").controller('ViewGamesCtrl', function($scope, games, conso
 			}, function(error) {
 				sweet.close();
 			});
+		});
+	}
+
+	$scope.bulkLoad = function() {
+		let modal = $uibModal.open({
+			size: 'lg',
+			backdrop: 'static',
+			templateUrl: 'js/modules/game/view/bulkLoad.html',
+			controller: 'BulkLoadCtrl',
+			resolve: {
+				loadPlugin: function($ocLazyLoad) {
+					return $ocLazyLoad.load([{
+						name: 'Game',
+						files: ['js/modules/game/controller/bulkLoadCtrl.js']
+					}, {
+						serie: true,
+						name: 'angular-ladda',
+						files: ['js/plugins/ladda/spin.min.js', 'js/plugins/ladda/ladda.min.js', 'css/plugins/ladda/ladda-themeless.min.css','js/plugins/ladda/angular-ladda.min.js']
+					}]);
+				}
+			}
 		});
 	}
 

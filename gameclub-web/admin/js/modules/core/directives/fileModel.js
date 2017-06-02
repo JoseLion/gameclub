@@ -8,15 +8,17 @@ angular.module("Core").directive('fileModel', function(Const) {
 			element.parent().parent().append(helpBlock);
 
 			element.on('change', function() {
-				if (element[0].files != null) {
-					if ('multiple' in attrs) {
-						ctrl.$setViewValue(element[0].files);
+				$scope.$apply(function() {
+					if (element[0].files != null) {
+						if ('multiple' in attrs) {
+							ctrl.$setViewValue(element[0].files);
+						} else {
+							ctrl.$setViewValue(element[0].files.item(0));
+						}
 					} else {
-						ctrl.$setViewValue(element[0].files[0]);
+						ctrl.$setViewValue(null);
 					}
-				} else {
-					ctrl.$setViewValue(null);
-				}
+				});
 			});
 
 			$scope.$watch('ngModel', function(newValue, oldValue) {

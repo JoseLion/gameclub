@@ -7,5 +7,5 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 
 @Repository
 public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
-	public PublicUser findByUsername(String username);
+	public PublicUser findByUsernameIgnoreCase(String username);
 }

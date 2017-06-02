@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.gameclub.module.category.entity.Category;
 import ec.com.levelap.gameclub.module.console.entity.Console;
+import ec.com.levelap.gameclub.module.game.entity.ExcelReport;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameLite;
 import ec.com.levelap.gameclub.module.game.service.GameService;
@@ -67,6 +71,24 @@ public class GameController {
 		game = gameService.getGameRepo().save(game);
 		
 		return new ResponseEntity<Boolean>(game.getStatus(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="downloadGamesTemplate", method=RequestMethod.POST)
+	public void downloadGamesTemplate(HttpServletResponse response) throws ServletException, IOException {
+		Workbook workbook = gameService.getGamesTemplate();
+		response.setContentType("application/vnd.ms-excel");
+		workbook.write(response.getOutputStream());
+		response.flushBuffer();
+		workbook.close();
+	}
+	
+	@RequestMapping(value="processGamesExcel", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<ExcelReport> processGamesExcel(@RequestPart("bulkloadFile") MultipartFile bulkloadFile) throws ServletException, IOException {
+		XSSFWorkbook workbook = new XSSFWorkbook(bulkloadFile.getInputStream());
+		ExcelReport report = gameService.processGamesExcel(workbook);
+		
+		workbook.close();
+		return new ResponseEntity<ExcelReport>(report, HttpStatus.OK);
 	}
 	
 	private static class Search {

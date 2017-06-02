@@ -11,6 +11,8 @@ import ec.com.levelap.gameclub.module.category.entity.Category;
 public interface CategoryRepo extends JpaRepository<Category, Long> {
 	public List<Category> findAllByOrderByName();
 	
+	public List<Category> findAllByOrderByIdAsc();
+	
 	public Category findByName(String name);
 	
 	public Category findByNameAndNameIsNot(String name, String notName);

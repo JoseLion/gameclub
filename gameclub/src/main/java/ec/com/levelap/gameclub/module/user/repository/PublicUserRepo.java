@@ -14,8 +14,8 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUserLite;
 
 @Repository
 public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
-
-	public PublicUser findByUsername(String username);
+	
+	public PublicUser findByUsernameIgnoreCase(String username);
 
 	@Query(   "SELECT "
 			+ "     a.id AS id, "

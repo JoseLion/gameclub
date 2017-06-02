@@ -13,7 +13,7 @@ import ec.com.levelap.gameclub.module.user.entity.AdminUserLite;
 
 @Repository
 public interface AdminUserRepo extends JpaRepository<AdminUser, Long> {
-	public AdminUser findByUsername(String username);
+	public AdminUser findByUsernameIgnoreCase(String username);
 	
 	@Query(	"SELECT a.id AS id, " + 
 				"a.fullName AS fullName, " +

@@ -28,7 +28,7 @@ public class GameClubSecurity implements SecurityConfig {
 		if (extra != null) {
 			if (extra.equals(Const.ADMIN_USER)) {
 				AdminUserRepo adminUserRepo = ApplicationContextHolder.getContext().getBean(AdminUserRepo.class);
-				AdminUser user = adminUserRepo.findByUsername(username);
+				AdminUser user = adminUserRepo.findByUsernameIgnoreCase(username);
 				
 				if (user != null) {
 					return user.getId();
@@ -37,7 +37,7 @@ public class GameClubSecurity implements SecurityConfig {
 			
 			if (extra.equals(Const.PUBLIC_USER)) {
 				PublicUserRepo publicUserRepo = ApplicationContextHolder.getContext().getBean(PublicUserRepo.class);
-				PublicUser user = publicUserRepo.findByUsername(username);
+				PublicUser user = publicUserRepo.findByUsernameIgnoreCase(username);
 				
 				if (user != null) {
 					return user.getId();
@@ -53,7 +53,7 @@ public class GameClubSecurity implements SecurityConfig {
 		if (extra != null) {
 			if (extra.equals(Const.ADMIN_USER)) {
 				AdminUserRepo adminUserRepo = ApplicationContextHolder.getContext().getBean(AdminUserRepo.class);
-				AdminUser user = adminUserRepo.findByUsername(username);
+				AdminUser user = adminUserRepo.findByUsernameIgnoreCase(username);
 				
 				if (user != null) {
 					return user.getPassword();
@@ -62,7 +62,7 @@ public class GameClubSecurity implements SecurityConfig {
 			
 			if (extra.equals(Const.PUBLIC_USER)) {
 				PublicUserRepo publicUserRepo = ApplicationContextHolder.getContext().getBean(PublicUserRepo.class);
-				PublicUser user = publicUserRepo.findByUsername(username);
+				PublicUser user = publicUserRepo.findByUsernameIgnoreCase(username);
 				
 				if (user != null) {
 					return user.getPassword();
@@ -83,7 +83,7 @@ public class GameClubSecurity implements SecurityConfig {
 		if (extra != null) {
 			if (extra.equals(Const.ADMIN_USER)) {
 				AdminUserRepo adminUserRepo = ApplicationContextHolder.getContext().getBean(AdminUserRepo.class);
-				AdminUser user = adminUserRepo.findByUsername(username);
+				AdminUser user = adminUserRepo.findByUsernameIgnoreCase(username);
 				
 				if (user != null) {
 					return !user.getStatus();
@@ -92,7 +92,7 @@ public class GameClubSecurity implements SecurityConfig {
 			
 			if (extra.equals(Const.PUBLIC_USER)) {
 				PublicUserRepo publicUserRepo = ApplicationContextHolder.getContext().getBean(PublicUserRepo.class);
-				PublicUser user = publicUserRepo.findByUsername(username);
+				PublicUser user = publicUserRepo.findByUsernameIgnoreCase(username);
 				
 				if (user != null) {
 					return !user.getStatus();
@@ -155,7 +155,7 @@ public class GameClubSecurity implements SecurityConfig {
 			
 			if (extra.equals(Const.ADMIN_USER)) {
 				AdminUserRepo adminUserRepo = ApplicationContextHolder.getContext().getBean(AdminUserRepo.class);
-				AdminUser user = adminUserRepo.findByUsername(username);
+				AdminUser user = adminUserRepo.findByUsernameIgnoreCase(username);
 				
 				if (user != null) {
 					BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
@@ -188,7 +188,7 @@ public class GameClubSecurity implements SecurityConfig {
 			
 			if (extra.equals(Const.PUBLIC_USER)) {
 				PublicUserRepo publicUserRepo = ApplicationContextHolder.getContext().getBean(PublicUserRepo.class);
-				PublicUser user = publicUserRepo.findByUsername(username);
+				PublicUser user = publicUserRepo.findByUsernameIgnoreCase(username);
 				
 				if (user != null) {
 					BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
@@ -227,7 +227,7 @@ public class GameClubSecurity implements SecurityConfig {
 	public void handleSuccess() {
 		PublicUserRepo publicUserRepo = ApplicationContextHolder.getContext().getBean(PublicUserRepo.class);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		PublicUser publicUser = publicUserRepo.findByUsername(auth.getName());
+		PublicUser publicUser = publicUserRepo.findByUsernameIgnoreCase(auth.getName());
 		
 		if (publicUser != null) {
 			publicUser.setLastConnection(new Date());

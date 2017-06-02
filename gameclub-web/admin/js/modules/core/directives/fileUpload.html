@@ -1,0 +1,91 @@
+<div id="file-upload">
+	<table width="100%">
+		<col width="{{!hasFile() ? '90%' : '80%'}}">
+		<col width="10%" ng-if="hasFile()">
+		<col width="10%">
+
+		<tbody>
+			<tr>
+				<td>
+					<i class="fa fa-file" style="position: absolute; bottom: 10px; left: 25px;" ng-if="hasFile()"></i>
+					<input type="text" class="form-control file-input-field" ng-model="ngModel.name" ng-click="!isDisabled ? addFile() : null" readonly ng-disabled="isDisabled">
+					<i class="fa fa-cloud-download fa-lg" style="cursor: pointer; position: absolute; bottom: 10px; right: 175px;" ng-click="downloadFile()" ng-if="hasFile() && !isLoading"></i>
+					<div class="sk-spinner sk-spinner-circle" style="position: absolute; bottom: 5px; right: 100px; transform: scale(0.85);" ng-if="isLoading">
+						<div class="sk-circle1 sk-circle"></div>
+						<div class="sk-circle2 sk-circle"></div>
+						<div class="sk-circle3 sk-circle"></div>
+						<div class="sk-circle4 sk-circle"></div>
+						<div class="sk-circle5 sk-circle"></div>
+						<div class="sk-circle6 sk-circle"></div>
+						<div class="sk-circle7 sk-circle"></div>
+						<div class="sk-circle8 sk-circle"></div>
+						<div class="sk-circle9 sk-circle"></div>
+						<div class="sk-circle10 sk-circle"></div>
+						<div class="sk-circle11 sk-circle"></div>
+						<div class="sk-circle12 sk-circle"></div>
+					</div>
+				</td>
+				<td ng-if="hasFile()">
+					<button type="button" class="btn btn-default file-input-btn-left" ng-click="addFile()" ng-disabled="isDisabled">Cambiar</button>
+				</td>
+				<td>
+					<button type="button" class="btn btn-default file-input-btn-right" ng-click="addFile()" ng-if="!hasFile()" ng-disabled="isDisabled">Archivo</button>
+					<button type="button" class="btn btn-default file-input-btn-right" ng-click="removeFile()" ng-if="hasFile()" ng-disabled="isDisabled">Quitar</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<input id="file-input-element-{{$id}}" type="file" ng-model="fileInput.file" file-model ng-hide="true">
+
+	<style type="text/css">
+		.file-input-field {
+			width: 100%;
+			text-overflow: ellipsis;
+			white-space: normal;
+			word-wrap: break-word;
+			padding-right: 35px;
+			padding-left: 25px;
+		}
+
+		.file-input-field:read-only {
+			width: 100%;
+			background-color: #fff;
+			opacity: inherit;
+			cursor: text;
+		}
+
+		.file-input-field:-moz-read-only {
+			width: 100%;
+			background-color: #fff;
+			opacity: inherit;
+			cursor: text;
+		}
+
+		.file-input-field:disabled {
+			width: 100%;
+			background-color: #eee;
+			opacity: 1;
+			cursor: not-allowed;
+		}
+
+		.file-input-btn-right {
+			width: 100%;
+			border-top-left-radius: 0px;
+			border-bottom-left-radius: 0px;
+			border-left-width: 0px;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+			/*border-color: #ed5565;*/
+		}
+
+		.file-input-btn-left {
+			width: 100%;
+			border-top-left-radius: 0px;
+			border-bottom-left-radius: 0px;
+			border-left-width: 0px;
+			border-top-right-radius: 0px;
+			border-bottom-right-radius: 0px;
+		}
+	</style>
+</div>

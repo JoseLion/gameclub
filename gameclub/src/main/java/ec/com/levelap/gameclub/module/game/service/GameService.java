@@ -69,7 +69,6 @@ public class GameService extends BaseService<Game> {
 	
 	public GameService() {
 		super(Game.class);
-		this.updateHeaders();
 	}
 	
 	@Transactional
@@ -94,8 +93,11 @@ public class GameService extends BaseService<Game> {
 			
 			if (game.getId() != null) {
 				Game original = gameRepo.findOne(game.getId());
-				documentService.deleteFile(original.getCover().getName(), Game.class.getSimpleName());
-				archive = original.getCover();
+				
+				if (original.getCover() != null) {
+					documentService.deleteFile(original.getCover().getName(), Game.class.getSimpleName());
+					archive = original.getCover();
+				}
 			}
 			
 			FileData fileData = documentService.saveFile(cover, Game.class.getSimpleName());
@@ -111,8 +113,11 @@ public class GameService extends BaseService<Game> {
 			
 			if (game.getId() != null) {
 				Game original = gameRepo.findOne(game.getId());
-				documentService.deleteFile(original.getBanner().getName(), Game.class.getSimpleName());
-				archive = original.getBanner();
+				
+				if (original.getBanner() != null) {
+					documentService.deleteFile(original.getBanner().getName(), Game.class.getSimpleName());
+					archive = original.getBanner();
+				}
 			}
 			
 			FileData fileData = documentService.saveFile(banner, Game.class.getSimpleName());

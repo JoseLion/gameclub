@@ -4,22 +4,23 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     $scope.currentUserTemp = angular.copy($rootScope.currentUser);
     $scope.newUsername = angular.copy($rootScope.currentUser.username);
 
+    if($scope.currentUserTemp.location != null) {
+        $scope.currentUserTemp.province = $scope.currentUserTemp.location.parent;
+        $scope.currentUserTemp.location = $scope.currentUserTemp.location;
+    }
+
     provinces.$promise.then(function(data) {
         $scope.provinces = data;
-
-        $rootScope.$watch('currentUserTemp.location', function(newValue, oldValue) {
-            if (newValue != null && $scope.currentUserTemp.province == null) {
-                let index = getIndexOfArray($scope.provinces, 'id', newValue.parent.id);
-                $scope.currentUserTemp.province = $scope.provinces[index];
-            }
-        });
-
-        $scope.$watch('currentUserTemp.province', function(newValue, oldValue) {
-            if (newValue == null && $scope.currentUserTemp != null) {
-                $scope.currentUserTemp.location = null;
-            }
-        });
     });
+
+    $scope.findCities = function() {
+		$scope.currentUserTemp.location = null;
+		if($scope.currentUserTemp.province != null) {
+            rest("location/findChildrenOf/:code", true).get({code: $scope.currentUserTemp.province.code}, function(data) {
+				$scope.locationCities = data;
+			});
+		}
+	};
 
     $scope.provinceRemoved = function() {
         $scope.currentUserTemp.location = null;
@@ -45,6 +46,10 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                 rest('publicUser/save').post($scope.currentUserTemp, function(data) {
                     $rootScope.currentUser = data;
                     $scope.currentUserTemp = data;
+                    if($scope.currentUserTemp.location != null) {
+                        $scope.currentUserTemp.province = $scope.currentUserTemp.location.parent;
+                        $scope.currentUserTemp.location = $scope.currentUserTemp.location;
+                    }
                     sweet.success();
                     sweet.close();
                 }, function(error) {

@@ -45,6 +45,11 @@ angular.module("Game").config(function($stateProvider) {
 				return $ocLazyLoad.load([{
 					name: 'Game',
 					files: ['js/modules/game/controller/manageGameCtrl.js']
+				}, {
+					files: ['js/plugins/rzslider/rzslider.min.css']
+				}, {
+					name: 'rzModule',
+					files: ['js/plugins/rzslider/rzslider.min.js']
 				}]);
 			},
 
@@ -89,6 +94,11 @@ angular.module("Game").config(function($stateProvider) {
 				return $ocLazyLoad.load([{
 					name: 'Game',
 					files: ['js/modules/game/controller/manageGameCtrl.js']
+				}, {
+					files: ['js/plugins/rzslider/rzslider.min.css']
+				}, {
+					name: 'rzModule',
+					files: ['js/plugins/rzslider/rzslider.min.js']
 				}]);
 			},
 

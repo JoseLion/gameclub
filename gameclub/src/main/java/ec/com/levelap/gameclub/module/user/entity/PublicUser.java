@@ -13,8 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
@@ -55,7 +53,7 @@ public class PublicUser extends BaseEntity {
 	@Column(columnDefinition = "VARCHAR")
 	private String token;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "avatar", foreignKey = @ForeignKey(name = "avatar_archive_fk"))
 	private Avatar avatar;
 
@@ -66,7 +64,6 @@ public class PublicUser extends BaseEntity {
 	private String document;
 
 	@Column(name = "birth_date")
-	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 
 	@Column(columnDefinition = "VARCHAR")

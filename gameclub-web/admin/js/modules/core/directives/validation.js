@@ -33,7 +33,7 @@ angular.module('Core').directive('validation', function(Const, forEach) {
 			$scope.$watch(function() {return ctrl.$modelValue;}, function(newValue, oldValue) {
 				ctrl.$validate();
 				validateModel();
-			}, true);
+			});
 
 			element.on('blur', function() {
 				ctrl.$setDirty();

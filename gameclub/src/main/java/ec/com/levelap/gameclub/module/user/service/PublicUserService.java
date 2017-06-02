@@ -65,8 +65,8 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Transactional
 	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl) throws ServletException, MessagingException {
-		PublicUser found = publicUserRepo.findByUsername(publicUser.getUsername());
-
+		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(publicUser.getUsername());
+		
 		if (found != null) {
 			return new ResponseEntity<ErrorControl>(new ErrorControl("El correo ingresado ya se encuentra registrado", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -89,15 +89,15 @@ public class PublicUserService extends BaseService<PublicUser> {
 	@Transactional
 	public PublicUser getCurrentUser() throws ServletException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		PublicUser user = publicUserRepo.findByUsername(auth.getName());
-
+		PublicUser user = publicUserRepo.findByUsernameIgnoreCase(auth.getName());
+		
 		return user;
 	}
 
 	@Transactional
 	public void resendVerification(String baseUrl) throws ServletException, MessagingException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		PublicUser publicUser = publicUserRepo.findByUsername(auth.getName());
+		PublicUser publicUser = publicUserRepo.findByUsernameIgnoreCase(auth.getName());
 		publicUser.setToken(UUID.randomUUID().toString());
 		publicUser = publicUserRepo.save(publicUser);
 
@@ -187,9 +187,9 @@ public class PublicUserService extends BaseService<PublicUser> {
 			int index = username.indexOf("(");
 			username = username.substring(0, index) + "(Revoked#" + i + ")";
 		}
-
-		PublicUser found = publicUserRepo.findByUsername(username);
-
+		
+		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(username);
+		
 		if (found != null) {
 			i++;
 			username = getRevokedUsername(username, i);
@@ -200,7 +200,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Transactional
 	public Map<String, Object> createUpdateKushkiSubscription(final String token, final String firstName, final String lastName, final String email, final String cardFinale) throws ServletException {
-		PublicUser publicUser = this.publicUserRepo.findByUsername(email);
+		PublicUser publicUser = this.publicUserRepo.findByUsernameIgnoreCase(email);
 		if (!publicUser.getKushkiSubscriptionActive()) {
 			return this.createKushkiSubscription(token, firstName, lastName, email, publicUser, cardFinale);
 		} else {

@@ -11,6 +11,8 @@ import ec.com.levelap.gameclub.module.console.entity.Console;
 public interface ConsoleRepo extends JpaRepository<Console, Long> {
 	public List<Console> findAllByOrderByName();
 	
+	public List<Console> findAllByOrderByIdAsc();
+	
 	public Console findByName(String name);
 	
 	public Console findByNameAndNameIsNot(String name, String notName);

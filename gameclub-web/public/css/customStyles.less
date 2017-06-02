@@ -234,7 +234,6 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game-item .cover .background{padding:0;}
 #game-item .cover .background::before{top:-0.5em;font-size:9em;}
 #game-item .cover .background::after{top:-2em;}
-// #game-rating .game-container .background:hover::before
 #game-item .cover .background img{top:-1.7em;width:7.5em;}
 #game-item .information{padding-bottom:1%;padding-top:2%;}
 #game-item .information span.description{font-weight:700;font-size:1.2em;display:block;font-family:@font-family-jaapokki;letter-spacing:1px;}
@@ -261,8 +260,10 @@ box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);-webkit-box-
 
 /********** MODAL **********/
 .modal-content{background:@color-primary;border:5px solid @color-tertiary;color:@color-tertiary;}
-.modal-content .modal-heading{color:@color-secundary;text-transform:uppercase;padding:1em 0 0;}
+.modal-content .modal-heading,.modal-content .modal-header{color:@color-secundary;text-transform:uppercase;padding:2em 0 1em;text-align:center;}
 .modal-content .modal-heading .tertiary{color:@color-tertiary;}
+.modal-content .modal-header i.modal-icon{color:@color-tertiary;font-size:3em;}
+.modal-content .modal-header .modal-title{font-size:2em;font-family:@font-family-jaapokki;padding-top:0.5em;}
 .modal-content button.btn,.modal-content button.btn:hover,.modal-content button.btn:visited,.modal-content button.btn:focus,.modal-content button.btn:active,.modal-content button.btn:active:focus,.modal-content button.btn:active:hover,.modal-content button.btn.active,.modal-content button.btn.active:hover,.modal-content button.btn.active:visited,.modal-content button.btn.active:focus,.modal-content button.btn.active:active,.modal-content button.btn.active:active:focus,.modal-content button.btn.active:active:hover{padding-left:1em;padding-right:1em;}
 .modal-content button.save.btn,.modal-content button.save.btn:hover,.modal-content button.save.btn:visited,.modal-content button.save.btn:focus,.modal-content button.save.btn:active,.modal-content button.save.btn:active:focus,.modal-content button.save.btn:active:hover,.modal-content button.save.btn.active,.modal-content button.save.btn.active:hover,.modal-content button.save.btn.active:visited,.modal-content button.save.btn.active:focus,.modal-content button.save.btn.active:active,.modal-content button.save.btn.active:active:focus,.modal-content button.save.btn.active:active:hover{border-color:@color-secundary;background:@color-tertiary;color:@color-primary;}
 .modal-content button.cancel.btn,.modal-content button.cancel.btn:hover,.modal-content button.cancel.btn:visited,.modal-content button.cancel.btn:focus,.modal-content button.cancel.btn:active,.modal-content button.cancel.btn:active:focus,.modal-content button.cancel.btn:active:hover,.modal-content button.cancel.btn.active,.modal-content button.cancel.btn.active:hover,.modal-content button.cancel.btn.active:visited,.modal-content button.cancel.btn.active:focus,.modal-content button.cancel.btn.active:active,.modal-content button.cancel.btn.active:active:focus,.modal-content button.cancel.btn.active:active:hover{border-color:@color-secundary;background:transparent;color:@color-tertiary;}
@@ -451,7 +452,7 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #profile section.contact-information .form input::-ms-input-placeholder{color:@color-primary;}
 #account #profile section.contact-information .form .selector{width:100%;padding-top:0;padding-bottom:0;}
 #account #profile section.contact-information .form .selector *{outline:none;}
-#account #profile section.contact-information .form .selector .ui-select-match .ui-select-match-text{color:@color-primary;font-weight:400;height:2em;}
+#account #profile section.contact-information .form .selector .ui-select-match .ui-select-match-text{color:@color-primary;font-weight:400;height:2em;font-size:1.5em;}
 #account #profile section.contact-information .form .selector .ui-select-match>span.ui-select-toggle,#account #profile section.contact-information form .selector>input.ui-select-search{height:2em;font-size:0.8em;}
 #account #profile section.contact-information .form .selector .ui-select-match span[disabled]{background:transparent;border:none;}
 #account #profile section.contact-information .form input[type="address"]{width:100%;padding-right:25px;background:url("../img/map-marker.svg") no-repeat center;background-size:1em;background-position-x:99%;}
@@ -469,9 +470,8 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #profile section.contact-information .form .billing-address textarea::-webkit-scrollbar{background:transparent;width:0.5em!important;}
 #account #profile section.contact-information .form .billing-address textarea::-webkit-scrollbar-track{background:transparent;}
 #account #profile section.contact-information .form .billing-address textarea::-webkit-scrollbar-thumb{background:@color-primary;}
-#account #profile section.contact-information .form .phone>label{display:table-cell;float:none;padding-right:1%;padding-top:1%;vertical-align:middle;}
-#account #profile section.contact-information .form .phone>div{display:table-cell;float:none;vertical-align:middle;}
-//#account #profile section.contact-information .form .ci-req{}
+#account #profile section.contact-information .form .phone>label{display:table-cell;float:none;padding-top:1%;vertical-align:middle;}
+#account #profile section.contact-information .form .phone>div{display:table-cell;float:none;padding-left:1%;vertical-align:middle;}
 
 #account #profile section.contact-means{background:@color-tertiary-alt;padding-bottom:3%;}
 #account #profile section.contact-means>form>div{text-align:center;}
@@ -499,6 +499,17 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #profile section.games span.quantity{color:@color-primary-40;margin-left:2%;}
 #account #profile section.games span.quantity.more{color:@color-primary;}
 #account #profile section.games p{margin:2% auto;font-size:0.8em;}
+
+#avatar-choose .avatar{width:100%;}
+#avatar-choose .modal-body{padding:0;}
+#avatar-choose .avatar-table-row{display:table-row;padding:0;}
+#avatar-choose .avatar-cell{border:2px solid @color-tertiary;display:table-cell;padding:1.5em;position:relative;width:20%;}
+#avatar-choose .avatar-cell.empty{border-left:none;border-right:none;}
+#avatar-choose .avatar-cell.empty:first-child{border-left:2px solid @color-tertiary;}
+#avatar-choose .avatar-cell.choosen img{opacity:0.5;}
+#avatar-choose .avatar-cell.choosen::after{content:"";background:url('../img/ok-icon.svg') no-repeat center center;background-size:60%;bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%;}
+#avatar-choose .avatar-cell img{cursor:pointer;}
+#avatar.choose .modal-footer button{font-size:1.5em;}
 /**********************************/
 
 /********** SETTINGS-PAGE **********/
@@ -511,7 +522,7 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #settings section.header .name .connection span{color:@color-primary-alt;}
 #account #settings section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
 #account #settings section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
-#account #settings section.header .coins::before{content:"\E008";position:absolute;top:2.2em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
+#account #settings section.header .coins::before{content:"\E008";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
 #account #settings section.header .coins span.dark{font-family:@font-family-josefinsans;color:@color-primary;font-weight:700;letter-spacing:2px;}
 #account #settings section.header .coins button>span.light{color:@color-tertiary;}
 #account #settings section.header .coins button{position:relative;padding:4px 25% 1px;border-width:1px;font-size:0.7em;}
@@ -574,7 +585,7 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 
 #account #games section.header{color:@color-tertiary;padding-bottom:6%;}
 #account #games section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
-#account #games section.header .name h2.title{font-size:1.8em;margin-bottom:0;}
+#account #games section.header .name h1.title{font-size:1.8em;margin-bottom:0;}
 #account #games section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
 #account #games section.header .name .connection span{color:@color-primary-alt;}
 #account #games section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
@@ -583,8 +594,9 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #games section.header .coins span.dark{font-family:@font-family-josefinsans;color:@color-primary;font-weight:700;letter-spacing:2px;}
 #account #games section.header .coins button>span.light{color:@color-tertiary;}
 #account #games section.header .coins button{position:relative;padding:4px 25% 1px;border-width:1px;font-size:0.7em;}
-#account #games section.header .coins button::before{content:"\f155";color:@color-tertiary;position:absolute;left:5px;}
-#account #games section.header .coins button::after{content:"\f155";color:@color-tertiary;position:absolute;right:5px;}
+#account #games section.header .coins button::before,#account #games section.header .coins button::after{color:@color-tertiary;position:absolute;font-family:gameclub;}
+#account #games section.header .coins button::before{content:"\E024";left:5px;}
+#account #games section.header .coins button::after{content:"\E024";right:5px;}
 #account #games section.header .total{margin-top:2%;padding:0;}
 #account #games section.header .total .subtitle{font-size:1.2em;text-transform:uppercase;display:block;font-weight:700;margin-bottom:2%;position:relative;letter-spacing:1px;}
 #account #games section.header .total::before{content:"\E008";position:absolute;top:1.2em;left:-2.5em;font-size:0.4em;font-family:gameclub;}

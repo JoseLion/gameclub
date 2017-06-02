@@ -1,50 +1,26 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, ciValidation, $location) {
+angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, ciValidation, $location, $uibModal) {
     $scope.file = {};
     let tempUserInfo;
     $scope.currentUserTemp = angular.copy($rootScope.currentUser);
     $scope.newUsername = angular.copy($rootScope.currentUser.username);
 
+    if($scope.currentUserTemp.location != null) {
+        $scope.currentUserTemp.province = $scope.currentUserTemp.location.parent;
+        $scope.currentUserTemp.location = $scope.currentUserTemp.location;
+    }
+
     provinces.$promise.then(function(data) {
         $scope.provinces = data;
-
-        $rootScope.$watch('currentUserTemp.location', function(newValue, oldValue) {
-            if (newValue != null && $scope.currentUserTemp.province == null) {
-                let index = getIndexOfArray($scope.provinces, 'id', newValue.parent.id);
-                $scope.currentUserTemp.province = $scope.provinces[index];
-            }
-        });
-
-        $scope.$watch('currentUserTemp.province', function(newValue, oldValue) {
-            if (newValue == null && $scope.currentUserTemp != null) {
-                $scope.currentUserTemp.location = null;
-            }
-        });
     });
 
-    $scope.$watch('file.avatar', function(newValue, oldValue) {
-        if (newValue != null) {
-            let reader = new FileReader();
-            reader.readAsArrayBuffer(newValue);
-
-            reader.onload = function() {
-                setTimeout(function() {
-                    $scope.$apply(function() {
-                        $scope.file.base64 = getImageBase64(reader.result, newValue.type);
-                    });
-                }, 0);
-            }
-        } else {
-            $scope.file = {};
-            let img = angular.element('#avatar_img');
-            img.attr('src', img.attr('placeholder'));
-        }
-    });
-
-    $scope.changeAvatar = function() {
-        setTimeout(function() {
-            angular.element('#avatar_input').trigger('click');
-        }, 0);
-    }
+    $scope.findCities = function() {
+		$scope.currentUserTemp.location = null;
+		if($scope.currentUserTemp.province != null) {
+            rest("location/findChildrenOf/:code", true).get({code: $scope.currentUserTemp.province.code}, function(data) {
+				$scope.locationCities = data;
+			});
+		}
+	};
 
     $scope.provinceRemoved = function() {
         $scope.currentUserTemp.location = null;
@@ -70,6 +46,10 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                 rest('publicUser/save').post($scope.currentUserTemp, function(data) {
                     $rootScope.currentUser = data;
                     $scope.currentUserTemp = data;
+                    if($scope.currentUserTemp.location != null) {
+                        $scope.currentUserTemp.province = $scope.currentUserTemp.location.parent;
+                        $scope.currentUserTemp.location = $scope.currentUserTemp.location;
+                    }
                     sweet.success();
                     sweet.close();
                 }, function(error) {
@@ -216,5 +196,50 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             $scope.newUsername = angular.copy($rootScope.currentUser.username);
         }
     };
+
+    $scope.chooseAvatar = function() {
+		let modal = $uibModal.open({
+			size: 'lg',
+			backdrop: 'static',
+			templateUrl: 'js/modules/account/profile/view/chooseAvatar.html',
+			controller: chooseAvatarCtrl,
+            resolve: {
+                avatars: function(openRest) {
+                    return openRest('avatar/findAll', true).get(null, function(data) {
+                        return data;
+                    });
+                }
+            }
+		});
+	};
+
+    let chooseAvatarCtrl = function($scope, $uibModalInstance, sweet, rest, avatars, $rootScope, getIndexOfArray) {
+        $scope.isSaving = false;
+        avatars.$promise.then(function(data) {
+            $scope.avatars = data;
+            if($rootScope.currentUser.avatar != null) {
+                $scope.indexTemp = getIndexOfArray(avatars, 'id', $rootScope.currentUser.avatar.id);
+            }
+        });
+		$scope.cancel = function() {
+			$uibModalInstance.close();
+		};
+		$scope.save = function() {
+            $rootScope.currentUser.avatar = $scope.avatars[$scope.indexTemp];
+			sweet.save(function() {
+				rest("publicUser/save").post($rootScope.currentUser, function(data) {
+					sweet.success();
+					sweet.close();
+                    $rootScope.currentUser = data;
+					$uibModalInstance.close(data);
+				}, function(error) {
+					sweet.error(error.data != null ? error.data.message : error);
+				});
+			});
+		};
+        $scope.chooseThis = function(index) {
+            $scope.indexTemp = index;
+        };
+	}
 
 });

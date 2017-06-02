@@ -69,7 +69,6 @@ public class GameService extends BaseService<Game> {
 	
 	public GameService() {
 		super(Game.class);
-		this.updateHeaders();
 	}
 	
 	@Transactional

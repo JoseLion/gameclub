@@ -79,7 +79,6 @@ public class GameController {
 		response.setContentType("application/vnd.ms-excel");
 		workbook.write(response.getOutputStream());
 		response.flushBuffer();
-		workbook.close();
 	}
 	
 	@RequestMapping(value="processGamesExcel", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -87,8 +86,15 @@ public class GameController {
 		XSSFWorkbook workbook = new XSSFWorkbook(bulkloadFile.getInputStream());
 		ExcelReport report = gameService.processGamesExcel(workbook);
 		
-		workbook.close();
 		return new ResponseEntity<ExcelReport>(report, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="saveBulkLoad", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> saveBulkLoad(@RequestPart("bulkloadFile") MultipartFile bulkloadFile) throws ServletException, IOException {
+		XSSFWorkbook workbook = new XSSFWorkbook(bulkloadFile.getInputStream());
+		gameService.saveBulkLoad(workbook);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	private static class Search {

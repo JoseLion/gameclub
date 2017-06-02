@@ -61,7 +61,7 @@
 
 				<div class="form-group">
 					<div class="col-md-12">
-						<strong>>Total filas: </strong>{{excelReport.totalRows}}
+						<strong>Total filas: </strong>{{excelReport.totalRows}}
 					</div>
 				</div>
 
@@ -94,14 +94,14 @@
 								</tr>
 							</thead>
 
-							<tbody ng-if="excelReport.errors">
+							<tbody>
 								<tr ng-repeat="(cell, desc) in excelReport.errors">
 									<td class="text-center">{{cell}}</td>
 									<td class="text-left">{{desc}}</td>
 								</tr>
 							</tbody>
 
-							<tfoot ng-if="excelReport.errors.length <= 0">
+							<tfoot ng-if="isEmpty(excelReport.errors)">
 								<tr>
 									<td class="text-center" colspan="2">No existen errores en el archivo</td>
 								</tr>

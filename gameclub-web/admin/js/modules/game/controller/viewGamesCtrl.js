@@ -78,6 +78,10 @@ angular.module("Game").controller('ViewGamesCtrl', function($scope, games, conso
 				}
 			}
 		});
+
+		modal.result.then(function() {
+			$scope.clear();
+		});
 	}
 
 	function setPagedData(data) {

@@ -1,9 +1,7 @@
-angular.module("Game").controller('BulkLoadCtrl', function($scope, $uibModalInstance, excelReader, forEach, rest, saveAs, notif) {
+angular.module("Game").controller('BulkLoadCtrl', function($scope, $uibModalInstance, excelReader, forEach, rest, saveAs, notif, sweet, notif) {
 	$scope.$watch("bulkloadFile", function(newValue, oldValue) {
-		console.log("newValue: ", newValue);
 		if (newValue != null) {
 			excelReader.read(newValue).then(function(data) {
-				console.log("data: ", data);
 				if (data.sheets['Juegos'] != null) {
 					$scope.sheet = data.sheets['Juegos'];
 				} else {
@@ -60,5 +58,25 @@ angular.module("Game").controller('BulkLoadCtrl', function($scope, $uibModalInst
 	$scope.back = function() {
 		$scope.wasProcessed = false;
 		$scope.excelReport = null;
+	}
+
+	$scope.isEmpty = function(obj) {
+		if (obj == null || Object.keys(obj).length <= 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	$scope.save = function() {
+		sweet.default("Se guardarán todos los registros en el archivo", function() {
+			rest("game/saveBulkLoad").multipart({bulkloadFile: $scope.bulkloadFile}, function() {
+				notif.success("Todos los registros se guardaron con éxito");
+				sweet.close();
+				$uibModalInstance.close();
+			}, function(error) {
+				sweet.close();
+			});
+		});
 	}
 });

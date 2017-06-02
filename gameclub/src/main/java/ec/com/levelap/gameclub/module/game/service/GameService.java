@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
-import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -40,6 +40,9 @@ import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.console.repository.ConsoleRepo;
 import ec.com.levelap.gameclub.module.game.entity.ExcelReport;
 import ec.com.levelap.gameclub.module.game.entity.Game;
+import ec.com.levelap.gameclub.module.game.entity.GameCategory;
+import ec.com.levelap.gameclub.module.game.entity.GameConsole;
+import ec.com.levelap.gameclub.module.game.entity.GameMagazine;
 import ec.com.levelap.gameclub.module.game.repository.GameRepo;
 import ec.com.levelap.gameclub.utils.Code;
 
@@ -60,31 +63,13 @@ public class GameService extends BaseService<Game> {
 	@Autowired
 	private DocumentService documentService;
 	
-	private static List<String> headers = new ArrayList<>();
+	private static List<String> headers;
 	
 	private static final String[] chars = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 	
 	public GameService() {
 		super(Game.class);
-		
-		CatalogRepo repo = ApplicationContextHolder.getContext().getBean(CatalogRepo.class);
-		List<Catalog> magazines = repo.findByParentCode(Code.MAGAZINES);
-		
-		headers.add("*Nombre");
-		headers.add("*Descripcion");
-		headers.add("*Fecha Lanzamiento");
-		headers.add("Restriccion Contenido");
-		
-		for (Catalog magazine : magazines) {
-			headers.add("*Rating " + magazine.getName());
-			headers.add("*URL " + magazine.getName());
-		}
-		
-		headers.add("*Consolas");
-		headers.add("*Categorías");
-		headers.add("*Costo Promedio / Semana");
-		headers.add("*Coins por Cargar");
-		headers.add("URL Trailer");
+		this.updateHeaders();
 	}
 	
 	@Transactional
@@ -145,6 +130,7 @@ public class GameService extends BaseService<Game> {
 	
 	@Transactional
 	public XSSFWorkbook getGamesTemplate() throws ServletException {
+		updateHeaders();
 		List<Catalog> contentRatings = catalogRepo.findByParentCode(Code.CONTENT_RATINGS);
 		List<Console> consoles = consoleRepo.findAllByOrderByIdAsc();
 		List<Category> categories = categoryRepo.findAllByOrderByIdAsc();
@@ -155,7 +141,7 @@ public class GameService extends BaseService<Game> {
 		XSSFCell cell;
 		
 		for (int i = 0; i < headers.size(); i++) {
-			cell = headings.createCell(i, CellType.STRING);
+			cell = headings.createCell(i, Cell.CELL_TYPE_STRING);
 			setHeadingStyle(cell);
 			cell.setCellValue(headers.get(i));
 			gamesSheet.autoSizeColumn(i);
@@ -186,13 +172,13 @@ public class GameService extends BaseService<Game> {
 		headings = ratingsSheet.createRow(0);
 		i = 0;
 		
-		cell = headings.createCell(i, CellType.STRING);
+		cell = headings.createCell(i, Cell.CELL_TYPE_STRING);
 		setHeadingStyle(cell);
 		cell.setCellValue("ID");
 		ratingsSheet.autoSizeColumn(i);
 		i++;
 		
-		cell = headings.createCell(i, CellType.STRING);
+		cell = headings.createCell(i, Cell.CELL_TYPE_STRING);
 		setHeadingStyle(cell);
 		cell.setCellValue("ESRB");
 		ratingsSheet.autoSizeColumn(i);
@@ -202,12 +188,12 @@ public class GameService extends BaseService<Game> {
 			i = 0;
 			ratingRow = ratingsSheet.createRow(j);
 			
-			cell = ratingRow.createCell(i, CellType.NUMERIC);
+			cell = ratingRow.createCell(i, Cell.CELL_TYPE_NUMERIC);
 			cell.setCellValue(rating.getId());
 			ratingsSheet.autoSizeColumn(i);
 			i++;
 			
-			cell = ratingRow.createCell(i, CellType.STRING);
+			cell = ratingRow.createCell(i, Cell.CELL_TYPE_STRING);
 			cell.setCellValue(rating.getName());
 			ratingsSheet.autoSizeColumn(i);
 			i++;
@@ -220,13 +206,13 @@ public class GameService extends BaseService<Game> {
 		headings = consolesSheet.createRow(0);
 		i = 0;
 		
-		cell = headings.createCell(i, CellType.STRING);
+		cell = headings.createCell(i, Cell.CELL_TYPE_STRING);
 		setHeadingStyle(cell);
 		cell.setCellValue("ID");
 		consolesSheet.autoSizeColumn(i);
 		i++;
 		
-		cell = headings.createCell(i, CellType.STRING);
+		cell = headings.createCell(i, Cell.CELL_TYPE_STRING);
 		setHeadingStyle(cell);
 		cell.setCellValue("Consola");
 		consolesSheet.autoSizeColumn(i);
@@ -239,12 +225,12 @@ public class GameService extends BaseService<Game> {
 			i = 0;
 			consoleRow = consolesSheet.createRow(j);
 			
-			cell = consoleRow.createCell(i, CellType.NUMERIC);
+			cell = consoleRow.createCell(i, Cell.CELL_TYPE_NUMERIC);
 			cell.setCellValue(console.getId());
 			consolesSheet.autoSizeColumn(i);
 			i++;
 			
-			cell = consoleRow.createCell(i, CellType.STRING);
+			cell = consoleRow.createCell(i, Cell.CELL_TYPE_STRING);
 			cell.setCellValue(console.getName());
 			consolesSheet.autoSizeColumn(i);
 			i++;
@@ -257,13 +243,13 @@ public class GameService extends BaseService<Game> {
 		headings = categoriesSheet.createRow(0);
 		i = 0;
 		
-		cell = headings.createCell(i, CellType.STRING);
+		cell = headings.createCell(i, Cell.CELL_TYPE_STRING);
 		setHeadingStyle(cell);
 		cell.setCellValue("ID");
 		categoriesSheet.autoSizeColumn(i);
 		i++;
 		
-		cell = headings.createCell(i, CellType.STRING);
+		cell = headings.createCell(i, Cell.CELL_TYPE_STRING);
 		setHeadingStyle(cell);
 		cell.setCellValue("Categoria");
 		categoriesSheet.autoSizeColumn(i);
@@ -276,12 +262,12 @@ public class GameService extends BaseService<Game> {
 			i = 0;
 			categoryRow = categoriesSheet.createRow(j);
 			
-			cell = categoryRow.createCell(i, CellType.NUMERIC);
+			cell = categoryRow.createCell(i, Cell.CELL_TYPE_NUMERIC);
 			cell.setCellValue(category.getId());
 			consolesSheet.autoSizeColumn(i);
 			i++;
 			
-			cell = categoryRow.createCell(i, CellType.STRING);
+			cell = categoryRow.createCell(i, Cell.CELL_TYPE_STRING);
 			cell.setCellValue(category.getName());
 			consolesSheet.autoSizeColumn(i);
 			i++;
@@ -292,9 +278,9 @@ public class GameService extends BaseService<Game> {
 		return workbook;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Transactional
 	public ExcelReport processGamesExcel(XSSFWorkbook workbook) throws ServletException {
+		updateHeaders();
 		XSSFSheet sheet = workbook.getSheet("Juegos");
 		
 		if (sheet == null) {
@@ -329,6 +315,21 @@ public class GameService extends BaseService<Game> {
 				}
 				
 				if (cell != null) {
+					if (headers.get(i).toLowerCase().contains("*nombre")) {
+						try {
+							String name = cell.getStringCellValue();
+							Game found = gameRepo.findByName(name);
+							
+							if (found != null) {
+								rowHasError = true;
+								report.getErrors().put(chars[i] + (j+1), "El juego con nombre \"" + name + "\" ya existe");
+							}
+						} catch (Exception e) {
+							rowHasError = true;
+							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe der de tipo texto");
+						}
+					}
+					
 					if (headers.get(i).toLowerCase().contains("fecha")) {
 						try {
 							cell.getDateCellValue();
@@ -407,10 +408,10 @@ public class GameService extends BaseService<Game> {
 							if (cell.getRawValue() != null) {
 								String[] split;
 								
-								if (cell.getCellType() == 0) {
-									split = cell.getRawValue().trim().split(",");
-								} else {
+								if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
 									split = cell.getStringCellValue().trim().split(",");
+								} else {
+									split = cell.getRawValue().trim().split(",");
 								}
 								
 								for (String text : split) {
@@ -424,7 +425,6 @@ public class GameService extends BaseService<Game> {
 										} else {
 											if (headers.get(i).toLowerCase().contains("consolas")) {
 												Console console = consoleRepo.findOne(id);
-												System.out.println("Console ID: " + id);
 												
 												if (console == null) {
 													rowHasError = true;
@@ -458,7 +458,7 @@ public class GameService extends BaseService<Game> {
 					if (headers.get(i).toLowerCase().contains("costo") || headers.get(i).toLowerCase().contains("coins")) {
 						try {
 							if (cell.getRawValue() != null) {
-								Double number = Double.parseDouble(cell.getRawValue());
+								Double number = cell.getNumericCellValue();
 								
 								if (number < 0) {
 									rowHasError = true;
@@ -481,10 +481,98 @@ public class GameService extends BaseService<Game> {
 		return report;
 	}
 	
+	@Transactional
+	public void saveBulkLoad(XSSFWorkbook workbook) throws ServletException {
+		XSSFSheet sheet = workbook.getSheet("Juegos");
+		List<Game> games = new ArrayList<>();
+		
+		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+			XSSFRow row = sheet.getRow(i);
+			Game game = new Game();
+			int m = 0;
+			
+			game.setName(row.getCell(m).getStringCellValue());
+			m++;
+			game.setDescription(row.getCell(m).getStringCellValue());
+			m++;
+			game.setReleaseDate(row.getCell(m).getDateCellValue());
+			m++;
+			if (row.getCell(m) != null) {
+				game.setContentRating(catalogRepo.findOne(Long.parseLong(row.getCell(m).getRawValue())));
+			}
+			
+			m++;
+			
+			List<GameMagazine> gameMagazines = new ArrayList<>();
+			List<Catalog> magazines = catalogRepo.findByParentCode(Code.MAGAZINES);
+			for (Catalog magazine : magazines) {
+				GameMagazine cross = new GameMagazine();
+				cross.setGame(game);
+				cross.setMagazine(magazine);
+				cross.setRating((int)row.getCell(m).getNumericCellValue());
+				m++;
+				cross.setUrl(row.getCell(m).getStringCellValue());
+				m++;
+				
+				gameMagazines.add(cross);
+			}
+			
+			game.setMagazineRatings(gameMagazines);
+			String[] split;
+			
+			if (row.getCell(m).getCellType() == Cell.CELL_TYPE_STRING) {
+				split = row.getCell(m).getStringCellValue().trim().split(",");
+			} else {
+				split = row.getCell(m).getRawValue().trim().split(",");
+			}
+			
+			List<GameConsole> gameConsoles = new ArrayList<>();
+			for (String text : split) {
+				GameConsole cross = new GameConsole();
+				cross.setGame(game);
+				cross.setConsole(consoleRepo.findOne(Long.parseLong(text)));
+				gameConsoles.add(cross);
+			}
+			
+			game.setConsoles(gameConsoles);
+			m++;
+			
+			if (row.getCell(m).getCellType() == Cell.CELL_TYPE_STRING) {
+				split = row.getCell(m).getStringCellValue().trim().split(",");
+			} else {
+				split = row.getCell(m).getRawValue().trim().split(",");
+			}
+			
+			List<GameCategory> gameCategories = new ArrayList<>();
+			for (String text : split) {
+				GameCategory cross = new GameCategory();
+				cross.setGame(game);
+				cross.setCategory(categoryRepo.findOne(Long.parseLong(text)));
+				gameCategories.add(cross);
+			}
+			
+			game.setCategories(gameCategories);
+			m++;
+			
+			game.setAverageWeekCost((int)row.getCell(m).getNumericCellValue());
+			m++;
+			game.setUploadPayment((int)row.getCell(m).getNumericCellValue());
+			m++;
+			
+			if (row.getCell(m) != null) {
+				game.setTrailerUrl(row.getCell(m).getStringCellValue());
+			}
+			
+			games.add(game);
+		}
+		
+		gameRepo.save(games);
+	}
+	
 	private void setHeadingStyle(XSSFCell cell) {
 		XSSFCellStyle style = cell.getSheet().getWorkbook().createCellStyle();
 		Font font = cell.getSheet().getWorkbook().createFont();
-		font.setBold(true);
+		font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		style.setAlignment(HorizontalAlignment.CENTER);
 		style.setFont(font);
 		
@@ -506,6 +594,28 @@ public class GameService extends BaseService<Game> {
 		comment.setAuthor("Game Club");
 		
 		cell.setCellComment(comment);
+	}
+	
+	private void updateHeaders() {
+		CatalogRepo repo = ApplicationContextHolder.getContext().getBean(CatalogRepo.class);
+		List<Catalog> magazines = repo.findByParentCode(Code.MAGAZINES);
+		headers = new ArrayList<>();
+		
+		headers.add("*Nombre");
+		headers.add("*Descripcion");
+		headers.add("*Fecha Lanzamiento");
+		headers.add("Restriccion Contenido");
+		
+		for (Catalog magazine : magazines) {
+			headers.add("*Rating " + magazine.getName());
+			headers.add("*URL " + magazine.getName());
+		}
+		
+		headers.add("*Consolas");
+		headers.add("*Categorias");
+		headers.add("*Costo Promedio / Semana");
+		headers.add("*Coins por Cargar");
+		headers.add("URL Trailer");
 	}
 
 	public GameRepo getGameRepo() {

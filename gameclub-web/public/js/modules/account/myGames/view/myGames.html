@@ -37,7 +37,7 @@
         </div>
         <div class="clearfix"></div>
     </section>
-    <section class="row games" ng-if="!showGame && gamesList.length > 0">
+    <section class="row games" ng-if="!showGame && (gamesList.length > 0 || isConsoleFilter)">
         <form class="header">
             <div class="col-md-4 text-left no-padding-left filters">
                 <li>
@@ -96,7 +96,18 @@
                     <img ng-src="{{myGame.game.contentRating.other}}">
                 </div>
                 <div class="col=md-12 platform">
-                    <img ng-repeat="cross in myGame.game.consoles" archive="cross.console.blackLogo" src="">
+                    <!-- <img ng-repeat="cross in myGame.game.consoles" archive="cross.console.blackLogo" src=""> -->
+                    <form class="col=md-12 platform">
+                        <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
+                            <ui-select-match placeholder="Consola...">
+                                <img ng-src="{{$select.selected.console.blackLogoBase64}}" class="gameConsole">
+                            </ui-select-match>
+                            <ui-select-choices repeat="cross in myGame.game.consoles | filter: $select.search" class="text-center">
+                                <div ng-bind-html="'' | highlight: $select.search"></div>
+                                <img archive="cross.console.whiteLogo" >
+                            </ui-select-choices>
+                        </ui-select>
+                    </form>
                 </div>
                 <div class="col=md-12 category">
                     <img ng-repeat="cross in myGame.game.categories" archive="cross.category.blackVector" src="">

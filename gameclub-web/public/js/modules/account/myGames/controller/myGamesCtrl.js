@@ -1,4 +1,4 @@
-angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, game, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, game, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, consoleSelected) {
     $scope.myGame = {};
     $scope.filter = {};
     $scope.search = {};
@@ -9,12 +9,20 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
 
     if (game != null) {
         $scope.myGame.game = game;
-        $scope.myGame.console = game.consoles[0].console;
 
         openRest("archive/downloadFile").download({name: $scope.myGame.game.banner.name, module: $scope.myGame.game.banner.module}, function(data) {
             $scope.background = {
                 background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
             };
+        });
+
+        forEach($scope.myGame.game.consoles, function(gameConsole) {
+            openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
+                gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
+            });
+            if(consoleSelected == gameConsole){
+                $scope.search = {console: gameConsole};
+            }
         });
 
         $scope.showGame = true;
@@ -50,6 +58,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
 
     $scope.save = function() {
         sweet.save(function() {
+            $scope.myGame.console = $scope.search.console.console;
             rest("publicUser/saveGame").post($scope.myGame, function(data) {
                 sweet.success();
                 setPagedData(data);
@@ -91,6 +100,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
         rest("publicUser/getGamesList").post(filter, function(data) {
             setPagedData(data);
         });
+        $scope.isConsoleFilter = true;
     }
 
 
@@ -258,10 +268,6 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
         }
     ];
 
-    $scope.viewGame = function(game) {
-        console.log('DIRECCIONAR AL JUEGO');
-    };
-
     $scope.mostPlayed = [
         {
             id: 1,
@@ -305,7 +311,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
 
     $scope.nameAutocomplete = [];
     $scope.$watch('search.name', function(newValue, oldValue) {
-        if(newValue != null && newValue.length % 3 == 0) {
+        if(newValue != null && newValue != ''  && newValue.length % 3 == 0) {
             openRest("game/findAutocomplete/:name", true).get({name: newValue}, function(data) {
                 $scope.nameAutocomplete = data;
             });

@@ -70,6 +70,14 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 		}
 	}
 
+	$scope.getPositionStyle = function(obj) {
+		return {
+			left: obj.a + 'px',
+			top: obj.b + 'px',
+			zoom: (obj.c * 100) + '%'
+		};
+	}
+
 	if (article != null) {
 		article.$promise.then(function(data) {
 			console.log("data: ", data);
@@ -120,6 +128,10 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 		} else {
 			$scope.bannerBase64 = '//:0';
 		}
+
+		setTimeout(function() {
+			$scope.$broadcast('rzSliderForceRender');
+		}, 0);
 	});
 
 	$scope.cancel = function() {

@@ -53,6 +53,10 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 					});
 				});
 			}, 100);
+
+			setTimeout(function() {
+				$scope.$broadcast('rzSliderForceRender');
+			}, 0);
 		} else {
 			$scope.game.magazineRatings = [];
 
@@ -157,6 +161,14 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 		}
 	}
 
+	$scope.getPositionStyle = function(obj) {
+		return {
+			left: obj.a + 'px',
+			top: obj.b + 'px',
+			zoom: (obj.c * 100) + '%'
+		};
+	}
+
 	$scope.$watch("images.cover", function(newValue, oldValue) {
 		if (newValue != null) {
 			let reader = new FileReader();
@@ -168,5 +180,9 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 		} else {
 			$scope.coverBase64 = '//:0';
 		}
+
+		setTimeout(function() {
+			$scope.$broadcast('rzSliderForceRender');
+		}, 0);
 	});
 });

@@ -1,16 +1,20 @@
-angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview) {
+angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview, notif, Const) {
     $scope.search = {};
     $scope.contactUs = {};
 
     chooseFirstCategory(0);
 
     $scope.find = function() {
-        $state.go("^.search", {
-            name: $scope.search.name,
-            categoryId: $scope.search.category != null ? $scope.search.category.id : null,
-            consoleId: $scope.search.console.id,
-            title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))
-        });
+        if($scope.search.console == null) {
+            notif.danger(Const.errorMessages.consoleRequired);
+        } else {
+            $state.go("^.search", {
+                name: $scope.search.name,
+                categoryId: $scope.search.category != null ? $scope.search.category.id : null,
+                consoleId: $scope.search.console.id,
+                title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))
+            });
+        }
     }
 
     $scope.sendContactUs = function() {
@@ -35,6 +39,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
 
         openRest("game/findGamesByCategory/:categoryId", true).get({categoryId: categoryId}, function(data) {
             $scope.gamesByCat = data;
+            console.log($scope.gamesByCat)
         });
     }
 
@@ -150,9 +155,12 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
     function setPageBlogsMostSeen(data) {
         $scope.blogsPreview = data.content;
         $scope.blogsPreview.forEach(function(preview) {
-            preview.crop = {
-                transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px) scale(' + preview.squareCrop.c + ')'
-            };
+            if(preview.squareCrop != null) {
+                preview.crop = {
+                    transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px)',
+                    zoom: (preview.squareCrop.c * 0.75)
+                };
+            }
         });
         $scope.totalPagesMostSeen = data.totalPages;
     }

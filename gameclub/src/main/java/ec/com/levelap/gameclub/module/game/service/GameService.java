@@ -2,6 +2,7 @@ package ec.com.levelap.gameclub.module.game.service;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,7 +161,7 @@ public class GameService extends BaseService<Game> {
 				addCommentToCell(cell, "IDs de consolas separados por comas. Ejemplo: 1,5,3");
 				break;
 				
-			case "*Categorías":
+			case "*Categorias":
 				addCommentToCell(cell, "IDs de categorías separados por comas. Ejemplo: 2,7,1");
 				break;
 
@@ -331,7 +332,7 @@ public class GameService extends BaseService<Game> {
 							}
 						} catch (Exception e) {
 							rowHasError = true;
-							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe der de tipo texto");
+							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe ser de tipo texto");
 						}
 					}
 					
@@ -340,7 +341,7 @@ public class GameService extends BaseService<Game> {
 							cell.getDateCellValue();
 						} catch (Exception e) {
 							rowHasError = true;
-							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe der de tipo fecha");
+							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe ser de tipo fecha");
 						}
 					}
 					
@@ -363,7 +364,7 @@ public class GameService extends BaseService<Game> {
 						} catch (Exception e) {
 							e.printStackTrace();
 							rowHasError = true;
-							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe der de tipo numérico");
+							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe ser de tipo numérico");
 						}
 					}
 					
@@ -379,7 +380,7 @@ public class GameService extends BaseService<Game> {
 							}
 						} catch (Exception e) {
 							rowHasError = true;
-							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe der de tipo numérico");
+							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe ser de tipo numérico");
 						}
 					}
 					
@@ -391,8 +392,9 @@ public class GameService extends BaseService<Game> {
 								if (!url.isEmpty()) {
 									try {
 										URL test = new URL(url);
+										URLConnection conn = test.openConnection();
 										
-										if (test.getContent() == null) {
+										if (conn.getContentType() == null) {
 											rowHasError = true;
 											report.getErrors().put(chars[i] + (j+1), "El URL ingresado no es válido");
 										}
@@ -404,7 +406,7 @@ public class GameService extends BaseService<Game> {
 							}
 						} catch (Exception e) {
 							rowHasError = true;
-							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe der de tipo texto");
+							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe ser de tipo texto");
 						}
 					}
 					
@@ -456,7 +458,7 @@ public class GameService extends BaseService<Game> {
 							}
 						} catch (Exception e) {
 							rowHasError = true;
-							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe der de tipo texto");
+							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe ser de tipo texto");
 						}
 					}
 					
@@ -472,7 +474,7 @@ public class GameService extends BaseService<Game> {
 							}
 						} catch (Exception e) {
 							rowHasError = true;
-							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe der de tipo numérico");
+							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe ser de tipo numérico");
 						}
 					}
 				}
@@ -590,7 +592,7 @@ public class GameService extends BaseService<Game> {
 		ClientAnchor anchor = factory.createClientAnchor();
 		
 		anchor.setCol1(cell.getColumnIndex());
-		anchor.setCol2(cell.getColumnIndex()+1);
+		anchor.setCol2(cell.getColumnIndex()+2);
 		anchor.setRow1(cell.getRow().getRowNum());
 		anchor.setRow2(cell.getRow().getRowNum()+3);
 		

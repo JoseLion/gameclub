@@ -10,9 +10,12 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
     importantBlogs.$promise.then(function(data) {
         $scope.importantBlogs = data.content;
         $scope.importantBlogs.forEach(function(preview) {
-            preview.crop = {
-                transform: 'translate(' + preview.diamondCrop.a + 'px,' + preview.diamondCrop.b + 'px) scale(' + preview.diamondCrop.c + ')'
-            };
+            if(preview.diamondCrop != null) {
+                preview.crop = {
+                    transform: 'translate(' + preview.diamondCrop.a + 'px,' + preview.diamondCrop.b + 'px)',
+                    zoom: (preview.diamondCrop.c / 2)
+                };
+            }
         });
     });
     categories.$promise.then(function(data) {
@@ -37,9 +40,12 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
     function setPageMostSeen(data) {
         $scope.blogsPreview = data.content;
         $scope.blogsPreview.forEach(function(preview) {
-            preview.crop = {
-                transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px) scale(' + preview.squareCrop.c + ')'
-            };
+            if(preview.squareCrop != null) {
+                preview.crop = {
+                    transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px)',
+                    zoom: (preview.squareCrop.c * 0.75)
+                };
+            }
         });
         $scope.totalPagesMostSeen = data.totalPages;
     }

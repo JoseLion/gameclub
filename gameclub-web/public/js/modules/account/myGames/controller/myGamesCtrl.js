@@ -1,4 +1,4 @@
-angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, game, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, consoleSelected) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, game, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, consoleSelected, Const) {
     $scope.myGame = {};
     $scope.filter = {};
     $scope.search = {};
@@ -35,7 +35,14 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
                 background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
             };
         });
-
+        forEach($scope.myGame.game.consoles, function(gameConsole) {
+            openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
+                gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
+            });
+            if($scope.myGame.console.id == gameConsole.console.id){
+                $scope.search = {console: gameConsole};
+            }
+        });
         $scope.showGame = true;
     }
 
@@ -44,15 +51,15 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
     }
 
     $scope.find = function() {
-        if ($scope.search.console != null) {
+        if ($scope.search.console == null) {
+            notif.danger(Const.errorMessages.consoleRequired);
+        } else {
             $state.go("gameclub.search", {
                 name: $scope.search.name != null ? $scope.search.name : "",
                 categoryId: $scope.search.category != null ? $scope.search.category.id : null,
                 consoleId: $scope.search.console.id,
                 title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))
             });
-        } else {
-            notif.warning("La consola es requerida para realizar la búsqueda");
         }
     }
 

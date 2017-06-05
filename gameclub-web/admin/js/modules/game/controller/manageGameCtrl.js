@@ -1,6 +1,12 @@
 angular.module("Game").controller('ManageGameCtrl', function($scope, game, contentRatings, magazines, consoles, categories, sweet, rest, $state, forEach, getImageBase64, notif, $sce, $q) {
 	$scope.tabs = [{name: "General", active: true}, {name: "Multimedia", active: false}];
-	$scope.game = {};
+	$scope.game = {
+		diamondCrop: {
+			a: 0,
+			b: 0,
+			c: 1.0
+		}
+	};
 	$scope.images = {};
 
 	$q.all({
@@ -30,6 +36,14 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 
 		if (result.game != null) {
 			$scope.game = result.game;
+
+			if ($scope.game.diamondCrop == null) {
+				$scope.game.diamondCrop = {
+					a: 0,
+					b: 0,
+					c: 1.0
+				};
+			}
 
 			setTimeout(function() {
 				forEach($scope.game.magazineRatings, function(gameMagazine, i) {
@@ -100,4 +114,59 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 	$scope.cancel = function() {
 		$state.go("^.viewGames");
 	}
+
+	/* ----------------- CROP ------------------ */
+
+	let isDragging = false;
+	let dx = 0;
+	let dy = 0;
+
+	$scope.zoomOptions = {
+		ceil: 2.0,
+		floor: 0.1,
+		step: 0.01,
+		precision: 2,
+		vertical: true,
+		showSelectionBar: true
+	};
+
+	$scope.getCropStyle = function() {
+		let diamondDiv = angular.element("#diamond-div");
+		return {
+			height: diamondDiv[0].clientWidth + 'px'
+		};
+	}
+
+	$scope.beginDrag = function($event) {
+		isDragging = true;
+		dx = $event.offsetX;
+		dy = $event.offsetY;
+	}
+
+	$scope.endDrag = function() {
+		isDragging = false;
+	}
+
+	$scope.drag = function($event, shape) {
+		if (isDragging) {
+			$scope.game.diamondCrop.a += $event.offsetX - dx;
+			$scope.game.diamondCrop.b += $event.offsetY - dy;
+			
+			dx = $event.offsetX;
+			dy = $event.offsetY;
+		}
+	}
+
+	$scope.$watch("images.cover", function(newValue, oldValue) {
+		if (newValue != null) {
+			let reader = new FileReader();
+			reader.onload = function() {
+				$scope.coverBase64 = getImageBase64(reader.result, newValue.type);
+			};
+
+			reader.readAsArrayBuffer(newValue);
+		} else {
+			$scope.coverBase64 = '//:0';
+		}
+	});
 });

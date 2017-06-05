@@ -8,7 +8,8 @@ angular.module('Core').directive('gameRating', function() {
 			bgColor: '@',
 			ngClick: '&',
 			noSelection: '=',
-			imageArchive: "=?"
+			imageArchive: '=?',
+			crop: '='
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
@@ -16,7 +17,14 @@ angular.module('Core').directive('gameRating', function() {
 			if(attrs.noRating == '' || attrs.noRating) {
 				$scope.hideRating = true;
 			}
-
+			$scope.$watch('crop', function(newValue, oldValue) {
+				if(newValue != null) {
+					$scope.finalCrop = {
+	                    transform: 'translate(' + newValue.a + 'px,' + newValue.b + 'px)',
+						zoom: (newValue.c / 2)
+	                };
+				}
+			});
 			if($scope.noSelection == null || $scope.noSelection == '' || !$scope.noSelection) {
 				element.find('.background').after().mouseover(function(e) {
 					element.find('.background').removeClass('no-hover');

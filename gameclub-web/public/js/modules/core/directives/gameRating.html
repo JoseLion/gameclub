@@ -1,7 +1,11 @@
 <div id="game-rating">
     <div class="game-container">
         <div class="{{bgColor}} background no-hover">
-            <img archive="imageArchive" ng-src="{{src}}" />
+            <div class="image-container">
+                <div>
+                    <img archive="imageArchive" ng-src="{{src}}" ng-style="finalCrop"/>
+                </div>
+            </div>
             <div class="rating-container" ng-if="!hideRating">
                 <i class="gc gc-rating" ng-class="1 <= rating ? 'yes' : ''"></i>
                 <i class="gc gc-rating" ng-class="2 <= rating ? 'yes' : ''"></i>

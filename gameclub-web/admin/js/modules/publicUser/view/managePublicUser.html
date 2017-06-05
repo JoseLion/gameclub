@@ -28,15 +28,14 @@
 				<div class="form-group to-validate">
 					<label class="col-md-3 control-label">Número de Cédula</label>
 					<div class="col-md-9">
-						<input validation type="text" class="form-control" ng-model="publicUser.document" data-mask="9999999999">
+						<input validation type="text" class="form-control" ng-model="publicUser.document" data-mask="9999999999" disabled>
 					</div>
 				</div>
 
 				<div class="form-group to-validate">
 					<label class="col-md-3 control-label">Fecha de Nacimiento</label>
 					<div class="col-md-9">
-						<input validation type="datetime" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="publicUser.birthDate" is-open="openBirth" ng-click="openBirth = true" data-mask="99-99-9999">
-						<input validation type="datetime" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="game.releaseDate" is-open="openDate" ng-click="openDate = true" data-mask="99-99-9999">
+						<input validation type="datetime" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="publicUser.birthDate" is-open="openBirth" ng-focus="openBirth = true" data-mask="99-99-9999">
 					</div>
 				</div>
 

@@ -38,7 +38,8 @@ angular.module('GameClub').constant('Const', {
 		url: 'Formato de URL inválido',
 		maxlength: 'El texto sobrepasa la cantidad máxima de caracteres',
 		minlength: 'El texto no cumple con la cantidad mínima de caracteres',
-		tableRequired: 'La tabla debe contener al menos un elemento'
+		tableRequired: 'La tabla debe contener al menos un elemento',
+		consoleRequired: 'Elije una consola para poder realizar tu búsqueda'
 	},
 
 	messages: {

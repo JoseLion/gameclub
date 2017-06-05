@@ -1,4 +1,4 @@
-angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, games, search, $state, friendlyUrl, getIndexOfArray, openRest) {
+angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, games, search, $state, friendlyUrl, getIndexOfArray, openRest, notif, Const) {
     $scope.search = {};
     $scope.totalPages;
 
@@ -11,13 +11,17 @@ angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, g
     });
 
     $scope.find = function() {
-        $state.go("^.search", {
-            name: $scope.search.name != null ? $scope.search.name : "",
-            categoryId: $scope.search.category != null ? $scope.search.category.id : null,
-            consoleId: $scope.search.console.id,
-            page: $scope.search.page,
-            title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))
-        });
+        if($scope.search.console == null) {
+            notif.danger(Const.errorMessages.consoleRequired);
+        } else {
+            $state.go("^.search", {
+                name: $scope.search.name != null ? $scope.search.name : "",
+                categoryId: $scope.search.category != null ? $scope.search.category.id : null,
+                consoleId: $scope.search.console.id,
+                page: $scope.search.page,
+                title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))
+            });
+        }
     }
 
     $scope.pageChanged = function() {

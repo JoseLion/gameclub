@@ -90,7 +90,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 		},
 		blog : {
 			name: 'Blog',
-			route: 'levelapBlog.blog'
+			route: 'levelapBlog.blog.home'
 		},
 		login : {
 			name: 'Inicia sesión',

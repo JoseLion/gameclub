@@ -91,6 +91,9 @@ public class PublicUser extends BaseEntity {
 
 	@Column(name = "contact_phone", columnDefinition = "VARCHAR")
 	private String contactPhone;
+	
+	@Column(name="is_subscriber", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean isSubscriber = false;
 
 	@Transient
 	private Integer numberOfGames;

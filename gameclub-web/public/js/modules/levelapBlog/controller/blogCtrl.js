@@ -12,7 +12,8 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
         $scope.importantBlogs.forEach(function(preview) {
             if(preview.diamondCrop != null) {
                 preview.crop = {
-                    transform: 'translate(' + preview.diamondCrop.a + 'px,' + preview.diamondCrop.b + 'px) scale(' + (preview.diamondCrop.c / 2) + ')'
+                    transform: 'translate(' + preview.diamondCrop.a + 'px,' + preview.diamondCrop.b + 'px)',
+                    zoom: (preview.diamondCrop.c / 2)
                 };
             }
         });
@@ -41,7 +42,8 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
         $scope.blogsPreview.forEach(function(preview) {
             if(preview.squareCrop != null) {
                 preview.crop = {
-                    transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px) scale(' + (preview.squareCrop.c * 0.67) + ')'
+                    transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px)',
+                    zoom: (preview.squareCrop.c * 0.75)
                 };
             }
         });

@@ -13,16 +13,18 @@ angular.module('Core').directive('gameRating', function() {
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
-			console.log($scope)
 			$scope.hideRating = false;
 			if(attrs.noRating == '' || attrs.noRating) {
 				$scope.hideRating = true;
 			}
-			// if(preview.squareCrop != null) {
-            //     preview.crop = {
-            //         transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px) scale(' + preview.squareCrop.c + ')'
-            //     };
-            // }
+			$scope.$watch('crop', function(newValue, oldValue) {
+				if(newValue != null) {
+					$scope.finalCrop = {
+	                    transform: 'translate(' + newValue.a + 'px,' + newValue.b + 'px)',
+						zoom: (newValue.c / 2)
+	                };
+				}
+			});
 			if($scope.noSelection == null || $scope.noSelection == '' || !$scope.noSelection) {
 				element.find('.background').after().mouseover(function(e) {
 					element.find('.background').removeClass('no-hover');

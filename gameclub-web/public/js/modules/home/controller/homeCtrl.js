@@ -35,6 +35,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
 
         openRest("game/findGamesByCategory/:categoryId", true).get({categoryId: categoryId}, function(data) {
             $scope.gamesByCat = data;
+            console.log($scope.gamesByCat)
         });
     }
 
@@ -152,7 +153,8 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
         $scope.blogsPreview.forEach(function(preview) {
             if(preview.squareCrop != null) {
                 preview.crop = {
-                    transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px) scale(' + preview.squareCrop.c + ')'
+                    transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px)',
+                    zoom: (preview.squareCrop.c * 0.75)
                 };
             }
         });

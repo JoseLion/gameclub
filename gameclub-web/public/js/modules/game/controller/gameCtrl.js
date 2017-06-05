@@ -1,32 +1,36 @@
-angular.module('Game').controller('GameCtrl', function($scope, game, $state, Const, openRest, getImageBase64, $location) {
+angular.module('Game').controller('GameCtrl', function($scope, game, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64) {
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
-
             openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(data) {
                 $scope.background = {
                     background: "url('" + getImageBase64(data, $scope.game.banner.type) + "') center bottom / 100% no-repeat"
                 };
             });
+            forEach($scope.game.consoles, function(gameConsole) {
+                openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
+    				gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
+    			});
+            });
+            if($scope.game.consoles != null) {
+                $scope.search = {console: $scope.game.consoles[0]};
+            }
         });
     } else {
         $state.go(Const.mainState);
     }
 
     $scope.addToLibrary = function() {
-        $state.go("^.account.myGames", {game: $scope.game});
+        $state.go("^.account.myGames", {game: $scope.game, consoleSelected: $scope.search.console});
     }
 
     $scope.login = function() {
         $state.go("^.login", {redirect: $location.$$absUrl});
     }
 
-
-
-
-
-
-
+    $scope.consoleSelected = function() {
+        console.log('FIND AVAILABLES BY CONSOLE: ', $scope.search);
+    };
 
     $scope.mostPlayed = [
         {
@@ -88,19 +92,6 @@ angular.module('Game').controller('GameCtrl', function($scope, game, $state, Con
             coins: 100,
             rating: 3,
             gameStatus: 10
-        }
-    ];
-
-    $scope.gameConsoles =[
-        {
-            name: 'PlayStation 4',
-            img: 'img/test/svg/ps4.svg'
-        }, {
-            name: 'XBOX ONE',
-            img: 'img/test/svg/xbox-one.svg'
-        }, {
-            name: 'Nintendo Switch',
-            img: 'img/test/svg/nintendo-switch.svg'
         }
     ];
 

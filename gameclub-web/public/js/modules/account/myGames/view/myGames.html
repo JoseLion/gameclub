@@ -70,13 +70,13 @@
             <blog-paging pages="totalPages" ng-model="$parent.filter.page" class="paging" ng-change="pageChanged()"></blog-paging>
         </div>
     </section>
-    <div id="game" ng-if="showGame">
+    <div id="game" ng-if="showGame" class="my-game">
         <section class="row banner">
             <div ng-style="background"></div>
         </section>
         <section class="row header">
             <div class="col-md-3 cover">
-                <game-rating image-archive="myGame.game.cover" no-rating no-selection="true"></game-rating>
+                <game-rating image-archive="myGame.game.cover" no-rating no-selection="true" crop="myGame.game.diamondCrop"></game-rating>
             </div>
             <div class="col-md-6 principal">
                 <h2 class="col-md-12 title">{{myGame.game.name}}</h2>
@@ -96,7 +96,6 @@
                     <img ng-src="{{myGame.game.contentRating.other}}">
                 </div>
                 <div class="col=md-12 platform">
-                    <!-- <img ng-repeat="cross in myGame.game.consoles" archive="cross.console.blackLogo" src=""> -->
                     <form class="col=md-12 platform">
                         <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
                             <ui-select-match placeholder="Consola...">
@@ -119,7 +118,7 @@
                 <div class="col-md-12">
                     <label class="form-cell">Estatus</label>
                     <div class="form-cell">
-                        <ui-select ng-model="gameLoan.status" theme="bootstrap" class="selector">
+                        <ui-select ng-model="gameLoan.status" theme="bootstrap" class="selector status">
                             <ui-select-match placeholder="Seleccionar...">{{$select.selected}}</ui-select-match>
                             <ui-select-choices repeat="status in ['DISPONIBLE', 'NO DISPONIBLE']  | filter: $select.search">
                                 <div ng-bind-html="status | highlight: $select.search"></div>
@@ -132,8 +131,8 @@
                 <div class="col-md-12 to-validate">
                     <label class="form-cell">Estado del juego</label>
                     <div class="form-cell">
-                        <ui-select validation ng-model="myGame.integrity" theme="bootstrap" class="selector" required>
-                            <ui-select-match placeholder="Seleccionar...">{{$select.selected}}/10</ui-select-match>
+                        <ui-select validation ng-model="myGame.integrity" theme="bootstrap" class="selector integrity" required>
+                            <ui-select-match placeholder="...">{{$select.selected}}/10</ui-select-match>
                             <ui-select-choices repeat="item in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] | filter: $select.search">
                                 <div ng-bind-html="item | highlight: $select.search"></div>
                             </ui-select-choices>
@@ -164,9 +163,12 @@
                 <div class="col-md-12 help to-validate">
                     <label class="form-cell">Costo prestamo por semana</label>
                     <div class="form-cell">
-                        <input validation ng-model="myGame.cost" class="coins" placeholder="Coins" type="number" min="0">
+                        <input validation ng-model="myGame.cost" class="coins" type="number" min="0">
                     </div>
-                    <span class="form-cell text-right">
+                    <div class="form-cell help">
+                        <span>Coins</span>
+                    </div>
+                    <span class="form-cell text-left">
                         (Recomendación del juego: {{myGame.game.averageWeekCost}} Coins)
                     </span>
                 </div>

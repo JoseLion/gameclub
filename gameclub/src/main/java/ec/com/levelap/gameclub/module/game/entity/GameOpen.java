@@ -2,6 +2,8 @@ package ec.com.levelap.gameclub.module.game.entity;
 
 import java.util.List;
 
+import org.postgresql.geometric.PGline;
+
 import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
 
@@ -21,4 +23,7 @@ public interface GameOpen {
 	public void setConsoles(List<GameConsole> consoles);
 	
 	public void setCategories(List<GameCategory> categories);
+	
+	public PGline getDiamondCrop();
+	
 }

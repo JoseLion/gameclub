@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'gameclub';
   src:
-    url('fonts/gameclub.ttf?kvz2na') format('truetype'),
-    url('fonts/gameclub.woff?kvz2na') format('woff'),
-    url('fonts/gameclub.svg?kvz2na#gameclub') format('svg');
+    url('../fonts/gameclub.ttf?kvz2na') format('truetype'),
+    url('../fonts/gameclub.woff?kvz2na') format('woff'),
+    url('../fonts/gameclub.svg?kvz2na#gameclub') format('svg');
   font-weight: normal;
   font-style: normal;
 }

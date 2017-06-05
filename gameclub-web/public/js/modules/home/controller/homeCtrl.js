@@ -150,9 +150,11 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
     function setPageBlogsMostSeen(data) {
         $scope.blogsPreview = data.content;
         $scope.blogsPreview.forEach(function(preview) {
-            preview.crop = {
-                transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px) scale(' + preview.squareCrop.c + ')'
-            };
+            if(preview.squareCrop != null) {
+                preview.crop = {
+                    transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px) scale(' + preview.squareCrop.c + ')'
+                };
+            }
         });
         $scope.totalPagesMostSeen = data.totalPages;
     }

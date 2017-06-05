@@ -194,7 +194,7 @@
         <div class="games">
             <div class="game">
                 <button class="btn previous"><i class="gc gc-arrow-up" ng-click="previousGameByCat()"></i></button>
-                <game-rating image-archive="gamesByCat[catCounter].cover" src="" score="gamesByCat[catCounter].rating" bg-color="light-red" class="info" ng-click="viewGame(gamesByCat[catCounter])"></game-rating>
+                <game-rating image-archive="gamesByCat[catCounter].cover" src="" score="gamesByCat[catCounter].rating" bg-color="light-red" class="info" ng-click="viewGame(gamesByCat[catCounter])" crop="gamesByCat[catCounter].diamondCrop"></game-rating>
                 <button class="btn next"><i class="gc gc-arrow-down" ng-click="nextGameByCat()"></i></button>
             </div>
         </div>

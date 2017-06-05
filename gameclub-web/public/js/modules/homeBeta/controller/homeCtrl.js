@@ -33,7 +33,8 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
         $scope.blogsPreview = data.content;
         $scope.blogsPreview.forEach(function(preview) {
             preview.crop = {
-                transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px) scale(' + preview.squareCrop.c + ')'
+                transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px)',
+                zoom: (preview.squareCrop.c * 0.75)
             };
         });
         $scope.totalPagesMostSeen = data.totalPages;

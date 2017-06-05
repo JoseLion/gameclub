@@ -133,7 +133,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
 
     $scope.nameAutocomplete = [];
     $scope.$watch('search.name', function(newValue, oldValue) {
-        if(newValue != null && newValue.length % 3 == 0) {
+        if(newValue != null && newValue != '' && newValue.length % 3 == 0) {
             openRest("game/findAutocomplete/:name", true).get({name: newValue}, function(data) {
                 $scope.nameAutocomplete = data;
             });

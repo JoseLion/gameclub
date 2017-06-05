@@ -24,9 +24,17 @@
             <div class="col=md-12 content-rating">
                 <img ng-src="{{game.contentRating.other}}">
             </div>
-            <div class="col=md-12 platform">
-                <img archive="cross.console.blackLogo" src="" ng-repeat="cross in game.consoles">
-            </div>
+            <form class="col=md-12 platform">
+                <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
+                    <ui-select-match placeholder="Consola...">
+                        <img ng-src="{{$select.selected.console.blackLogoBase64}}" class="gameConsole">
+                    </ui-select-match>
+                    <ui-select-choices repeat="cross in game.consoles | filter: $select.search" class="text-center">
+                        <div ng-bind-html="'' | highlight: $select.search"></div>
+                        <img archive="cross.console.whiteLogo" >
+                    </ui-select-choices>
+                </ui-select>
+            </form>
             <div class="col=md-12 category">
                 <img archive="cross.category.blackVector" src="" ng-repeat="cross in game.categories">
             </div>
@@ -36,7 +44,7 @@
         <div class="col-md-9 data">
             <div class="description ">
                 <span class="col-md-12 subtitle">Descripci&oacute;n:</span>
-                <p ng-if="!showMore">{{game.description | maxwords: 150}}</p>
+                <p ng-if="!showMore">{{game.description | limitTo: 400}}...</p>
                 <p ng-if="showMore">{{game.description}}</p>
                 <div class="text-right" ng-if="game.description.length > 400">
                     <small><a href="" ng-click="$parent.showMore = !$parent.showMore">Mostrar {{!showMore ? 'más' : 'menos'}}</a></small>
@@ -137,6 +145,6 @@
             <button class="btn btn-secundary small">Ver todas las propuestas</button>
         </div>
     </section>
-    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="gameConsoles"/>
+    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="consoles"/>
     <section class="final"></section>
 </div>

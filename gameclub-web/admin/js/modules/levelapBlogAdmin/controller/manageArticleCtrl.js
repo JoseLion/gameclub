@@ -78,6 +78,12 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 		};
 	}
 
+	$scope.resetCrop = function(crop) {
+		crop.a = 0.0;
+		crop.b = 0.0;
+		crop.c = 1.0;
+	}
+
 	if (article != null) {
 		article.$promise.then(function(data) {
 			console.log("data: ", data);

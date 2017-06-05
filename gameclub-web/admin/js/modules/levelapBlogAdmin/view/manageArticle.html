@@ -90,8 +90,11 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label">Corte Rombo</label>
 					<div id="diamond-div" class="col-md-5" style="overflow: hidden; cursor: move;" ng-style="getCropStyle()" ng-mousedown="beginDrag($event)" ng-mouseup="endDrag()" ng-mousemove="drag($event, 'diamond')" ng-mouseleave="endDrag()">
-						<img class="crop-image" ng-src="{{bannerBase64}}" ng-style="getPositionStyle(article.diamondCrop)">
-						<div class="crop-image" style="width: 100%;" ng-style="getCropStyle()">
+						<div style="position: absolute; left: 20%; top: 20%;">
+							<img class="crop-image" ng-src="{{bannerBase64}}" ng-style="getPositionStyle(article.diamondCrop)">
+						</div>
+						
+						<div class="crop-image" style="width: 100%; border: 2px dashed #676a6c;" ng-style="getCropStyle()">
 							<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
 								<path d="M0 0 h100 v100 h-100 z M23 53 L47 77 C47 77 50 80 53 77 L77 53 C77 53 80 50 77 47 L53 23 C53 23 50 20 47 23 L23 47 C23 47 20 50 23 53 z" style="fill: rgba(50, 50, 50, 0.6);"></path>	
 							</svg>
@@ -105,8 +108,11 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label">Corte Cuadrado</label>
 					<div class="col-md-5" style="overflow: hidden; cursor: move;" ng-style="getCropStyle()" ng-mousedown="beginDrag($event)" ng-mouseup="endDrag()" ng-mousemove="drag($event, 'square')" ng-mouseleave="endDrag()">
-						<img class="crop-image" ng-src="{{bannerBase64}}" ng-style="getPositionStyle(article.squareCrop)">
-						<div class="crop-image" style="width: 100%;" ng-style="getCropStyle()">
+						<div style="position: absolute; left: 20%; top: 20%;">
+							<img class="crop-image" ng-src="{{bannerBase64}}" ng-style="getPositionStyle(article.squareCrop)">
+						</div>
+						
+						<div class="crop-image" style="width: 100%; border: 2px dashed #676a6c;" ng-style="getCropStyle()">
 							<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
 								<path d="M0 0 h100 v100 h-100 z M22.4 23 V77 C22.4 77 22.4 80 25.4 80 H74.6 C74.6 80 77.6 80 77.6 77 V23 C77.6 23 77.6 20 74.6 20 H25.4 C25.4 20 22.4 20 22.4 23 z" style="fill: rgba(50, 50, 50, 0.6);"></path>	
 							</svg>

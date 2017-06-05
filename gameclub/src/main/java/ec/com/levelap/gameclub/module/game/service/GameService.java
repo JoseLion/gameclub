@@ -161,7 +161,7 @@ public class GameService extends BaseService<Game> {
 				addCommentToCell(cell, "IDs de consolas separados por comas. Ejemplo: 1,5,3");
 				break;
 				
-			case "*Categorías":
+			case "*Categorias":
 				addCommentToCell(cell, "IDs de categorías separados por comas. Ejemplo: 2,7,1");
 				break;
 

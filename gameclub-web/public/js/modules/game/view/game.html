@@ -21,10 +21,10 @@
             </div>
         </div>
         <div class="col-md-3 rating text-right">
-            <div class="col=md-12 content-rating">
+            <div class="col-md-12 content-rating">
                 <img ng-src="{{game.contentRating.other}}">
             </div>
-            <form class="col=md-12 platform">
+            <form class="col-md-12 platform">
                 <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
                     <ui-select-match placeholder="Consola...">
                         <img ng-src="{{$select.selected.console.blackLogoBase64}}" class="gameConsole">
@@ -35,7 +35,7 @@
                     </ui-select-choices>
                 </ui-select>
             </form>
-            <div class="col=md-12 category">
+            <div class="col-md-12 category">
                 <img archive="cross.category.blackVector" src="" ng-repeat="cross in game.categories">
             </div>
         </div>

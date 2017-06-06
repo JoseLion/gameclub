@@ -21,10 +21,7 @@ angular.module("Game").controller('BulkLoadCtrl', function($scope, $uibModalInst
 			$scope.isProcessing = true;
 
 			rest("game/processGamesExcel").multipart({bulkloadFile: $scope.bulkloadFile}, function(data) {
-				console.log("data: ", data);
-
 				if (data.hasFormat) {
-
 					$scope.excelReport = data;
 					$scope.isProcessing = false;
 					$scope.wasProcessed = true;

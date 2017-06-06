@@ -9,7 +9,6 @@ angular.module("PublicUser").controller('ManagePublicUserCtrl', function($scope,
 			$scope.location.parent = $scope.publicUser.location.parent;
 			$scope.location.final = $scope.publicUser.location;
 		}
-		console.log($scope.publicUser)
 	});
 
 	locations.$promise.then(function(data) {

@@ -30,7 +30,13 @@ angular.module('Home').config(function($stateProvider) {
                 return openRest("levelapBlog/findArticles").post({isMostSeen: true}, function(data) {
                     return data;
                 });
-            }
+            },
+
+            provinces: function(openRest) {
+				return openRest("location/findChildrenOf/:code", true).get({code: 'EC'}, function(data) {
+					return data;
+				});
+			}
 		}
 	});
 

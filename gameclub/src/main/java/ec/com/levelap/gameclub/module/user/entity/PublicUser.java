@@ -29,16 +29,16 @@ import ec.com.levelap.gameclub.utils.Const;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class PublicUser extends BaseEntity {
 
-	@Column(columnDefinition = "VARCHAR", nullable = false)
+	@Column(columnDefinition="VARCHAR", nullable=false)
 	private String username;
 
-	@Column(columnDefinition = "VARCHAR", nullable = false)
+	@Column(columnDefinition="VARCHAR")
 	private String password;
 
-	@Column(columnDefinition = "VARCHAR", nullable = false)
+	@Column(columnDefinition="VARCHAR", nullable=false)
 	private String name;
 
-	@Column(name = "last_name", columnDefinition = "VARCHAR", nullable = false)
+	@Column(name = "last_name", columnDefinition="VARCHAR", nullable=false)
 	private String lastName;
 
 	@Column(name = "has_temp_password", columnDefinition = "BOOLEAN DEFAULT FALSE")

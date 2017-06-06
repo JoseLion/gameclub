@@ -1,20 +1,36 @@
-angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview) {
-
+angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, provinces, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview) {
     if (anchor != null) {
         $location.hash(anchor);
         //$anchorScroll.yOffset = angular.element('#fixedbar')[0].offsetHeight;
     }
 
-    $scope.contactUs = {};
-    $scope.sendContactUs = function() {
-        sweet.default("Nos enviará un correo con su mensaje e información", function() {
-            openRest("publicUser/sendContactUs").post($scope.contactUs, function() {
-                notif.success("El correo se envió con éxito");
-                sweet.close();
-            }, function(error) {
-                sweet.close();
+    provinces.$promise.then(function(data) {
+        $scope.provinces = data;
+    });
+
+    $scope.publicUser = {};
+    $scope.saveSubscriber = function(form) {
+        if (form.$valid == true) {
+            sweet.default("Nos enviará un correo con su información", function() {
+                $scope.publicUser.isSubscriber = true;
+
+                openRest("publicUser/saveSubscriber").post($scope.publicUser, function() {
+                    notif.success("El correo se envió con éxito. Ya te encuentras participando");
+                    $scope.publicUser = {};
+                    sweet.close();
+                }, function(error) {
+                    sweet.error(error.data != null ? error.data.message : error);
+                });
             });
-        });
+        } else {
+            if (form.$error.required) {
+                notif.danger("Completa todos los campos correctamente para poder participar");
+            }
+
+            if (form.$error.email) {
+                notif.danger("Ingresa un correo electrónico válido");
+            }
+        }
     }
 
     $scope.currentBlogPage = 0;
@@ -22,6 +38,11 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
     blogsPreview.$promise.then(function(data) {
         setPageBlogsMostSeen(data);
     });
+
+    $scope.provinceRemoved = function() {
+        $scope.publicUser.location = null;
+    }
+
     $scope.$watch('currentPageMostSeen', function(newValue, oldValue) {
         if(newValue != null && newValue != oldValue) {
             openRest("levelapBlog/findArticles").post({isMostSeen: true, page: newValue}, function(data) {
@@ -29,6 +50,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
             });
         }
     });
+
     function setPageBlogsMostSeen(data) {
         $scope.blogsPreview = data.content;
         $scope.blogsPreview.forEach(function(preview) {

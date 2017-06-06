@@ -15,28 +15,28 @@
 
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <input name="name" placeholder="Nombre..." ng-model="publicUser.name" required>
+                    <input name="name" placeholder="Nombre..." ng-model="publicUser.name" required class="complete" />
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <input placeholder="Apellido..." ng-model="publicUser.lastName" required>
+                    <input placeholder="Apellido..." ng-model="publicUser.lastName" required class="complete" />
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <date-selector ng-model="publicUser.birthDate" required>
+                    <date-selector ng-model="publicUser.birthDate" required />
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <ui-select ng-model="publicUser.province" theme="bootstrap" class="selector" on-removed="provinceRemoved()" required>
+                    <ui-select ng-model="publicUser.province" theme="bootstrap" class="selector location" on-removed="provinceRemoved()" required>
                         <ui-select-match allow-clear placeholder="Provincia...">{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
                         <ui-select-choices repeat="province in provinces | filter: $select.search">
                             <div ng-bind-html="province.name | highlight: $select.search"></div>
@@ -48,7 +48,7 @@
 
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <ui-select ng-model="publicUser.location" theme="bootstrap" class="selector" required>
+                    <ui-select ng-model="publicUser.location" theme="bootstrap" class="selector location" required>
                         <ui-select-match allow-clear placeholder="Ciudad...">{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
                         <ui-select-choices repeat="city in publicUser.province.children | filter: $select.search">
                             <div ng-bind-html="city.name | highlight: $select.search"></div>
@@ -60,7 +60,7 @@
 
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <input name="email" type="email" placeholder="E-mail..." ng-model="publicUser.username" required>
+                    <input name="email" type="email" placeholder="E-mail..." ng-model="publicUser.username" required class="complete" />
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>

@@ -25,5 +25,6 @@ public interface Const {
 	public final static String KUSHKI_PERIODICITY = "custom";
 
 	public final static String KUSHKI_LANGUAGE = "es";
-
+	
+	public final static long POSTGRESQL_MAX_DATE = 253402318800000L;
 }

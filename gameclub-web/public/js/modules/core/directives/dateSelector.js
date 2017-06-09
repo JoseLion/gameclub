@@ -45,6 +45,11 @@ angular.module('Core').directive('dateSelector', function($filter) {
 					$scope.day = $filter('date')($scope.ngModel, 'dd');
 					$scope.month = $filter('date')($scope.ngModel, 'MM');
 					$scope.year = $filter('date')($scope.ngModel, 'yyyy');
+				} else if(oldValue != null && newValue == null){
+					$scope.finalDate = new Date();
+					$scope.day = null;
+					$scope.month = null;
+					$scope.year = null;
 				}
 			})
 

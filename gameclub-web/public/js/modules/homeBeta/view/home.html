@@ -7,43 +7,60 @@
     </section>
     <section class="contact-us">
         <div class="row">
-            <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()">
+            <form name="subscriberForm" class="col-md-12 contact-form" role="form" ng-submit="saveSubscriber(subscriberForm)" novalidate>
                 <h2 class="title dark">Buscamos gamers</h2>
                 <h2 class="title light">&iquest;Quieres saber m&aacute;s de <span class="game-font game-font-white">Game</span>Club?</h2>
                 <span class="description">D&eacute;janos tu mail y participa para ser parte<br/>del lanzamiento de <span class="game-font">GAME</span>CLUB</span>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <input validation name="name" placeholder="Nombre..." ng-model="contactUs.name" required>
+                <div class="col-md-6">
+                    <input name="name" placeholder="Nombre..." ng-model="publicUser.name" required class="complete" />
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <input validation placeholder="Apellido..." ng-model="contactUs.lastName" required>
+                <div class="col-md-6">
+                    <input placeholder="Apellido..." ng-model="publicUser.lastName" required class="complete" />
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <input name="birth" placeholder="Año de nacimiento..." ng-model="contactUs.birthDate">
+                <div class="col-md-6">
+                    <date-selector ng-model="publicUser.birthDate" required />
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <input name="city" placeholder="Ciudad..." ng-model="contactUs.cityLocation">
+                <div class="col-md-6">
+                    <ui-select ng-model="publicUser.province" theme="bootstrap" class="selector location" on-removed="provinceRemoved()" required>
+                        <ui-select-match allow-clear placeholder="Provincia...">{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                        <ui-select-choices repeat="province in provinces | filter: $select.search">
+                            <div ng-bind-html="province.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <input validation name="email" placeholder="E-mail..." ng-model="contactUs.email" required>
+                <div class="col-md-6">
+                    <ui-select ng-model="publicUser.location" theme="bootstrap" class="selector location" required>
+                        <ui-select-match allow-clear placeholder="Ciudad...">{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                        <ui-select-choices repeat="city in publicUser.province.children | filter: $select.search">
+                            <div ng-bind-html="city.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-3"></div>
+                <div class="clearfix"></div>
+
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <input name="email" type="email" placeholder="E-mail..." ng-model="publicUser.username" required class="complete" />
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>

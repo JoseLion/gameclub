@@ -57,6 +57,11 @@ public class PublicUserOpenController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="saveSubscriber", method=RequestMethod.POST)
+	public ResponseEntity<?> saveSubscriber(@RequestBody PublicUser publicUser) throws ServletException, MessagingException {
+		return publicUserService.saveSubscriber(publicUser);
+	}
+	
 	public static class ContactUs {
 		public String name;
 		

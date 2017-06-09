@@ -86,7 +86,6 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 
 	if (article != null) {
 		article.$promise.then(function(data) {
-			console.log("data: ", data);
 			$scope.article = data;
 
 			if ($scope.article.squareCrop == null) {

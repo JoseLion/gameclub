@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.user.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -268,6 +270,32 @@ public class PublicUserService extends BaseService<PublicUser> {
 		publicUser.setKushkiSubscriptionActive(Boolean.FALSE);
 		this.publicUserRepo.save(publicUser);
 		return publicUser;
+	}
+	
+	@Transactional
+	public ResponseEntity<?> saveSubscriber(PublicUser publicUser) throws ServletException, MessagingException {
+		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(publicUser.getUsername());
+		
+		if (found != null) {
+			return new ResponseEntity<>(new ErrorControl("Ya te encuentras participando con este correo", true), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		publicUserRepo.save(publicUser);
+		
+		MailParameters mailParameters = new MailParameters();
+		//mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
+		mailParameters.setRecipentTO(Arrays.asList("joseluis.levelap@gmail.com"));
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		Map<String, String> params = new HashMap<>();
+		params.put("name", publicUser.getName() + " " + publicUser.getLastName());
+		params.put("email", publicUser.getUsername());
+		params.put("birthDate", df.format(publicUser.getBirthDate()));
+		params.put("province", publicUser.getLocation().getParent().getName());
+		params.put("city", publicUser.getLocation().getName());
+
+		mailService.sendMailWihTemplate(mailParameters, "SUBCBR", params);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	public PublicUserRepo getPublicUserRepo() {

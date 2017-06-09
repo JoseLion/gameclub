@@ -23,17 +23,9 @@ levelap:
                   http://localhost:8080,
                   http://gameclub.levelaptesting.com,
                   http://gameclub-admin.levelaptesting.com,
-                  https://gameclub.levelaptesting.com,
-                  https://gameclub-admin.levelaptesting.com,
-                  
-                  http://admin.gameclub.com.ec:8090,
-                  https://admin.gameclub.com.ec:8390,
-                  http://beta.gameclub.com.ec:8090,
-                  https://beta.gameclub.com.ec:8390,
-                  http://www.gameclub.com.ec:8090,
-                  https://www.gameclub.com.ec:8390,
-                  http://gameclub.com.ec:8090,
-                  https://gameclub.com.ec:8390
+                  https://admin.gameclub.com.ec,
+                  https://beta.gameclub.com.ec,
+                  https://www.gameclub.com.ec
   compressRequest: true
   file:
     environment: GAMECLUB_HOME

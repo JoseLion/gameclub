@@ -1,6 +1,7 @@
 package ec.com.levelap.gameclub.module.game.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -37,7 +38,7 @@ public class GameController {
 	private GameService gameService;
 	
 	@RequestMapping(value="findGames", method=RequestMethod.POST)
-	public ResponseEntity<Page<GameLite>> findGames(@RequestBody(required=false) Search search) throws ServletException {
+	public ResponseEntity<Page<GameLite>> findGames(@RequestBody(required=false) Search search) throws ServletException, ParseException {
 		if(search == null) {
 			search = new Search();
 		}
@@ -102,7 +103,7 @@ public class GameController {
 		
 		public Date releaseStart = new Date(0);
 		
-		public Date releaseEnd = new Date();
+		public Date releaseEnd = new Date(Const.POSTGRESQL_MAX_DATE);
 		
 		public Boolean status;
 		

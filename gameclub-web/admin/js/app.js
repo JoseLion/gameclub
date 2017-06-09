@@ -55,15 +55,9 @@ angular.module("Gameclub", [
 	uibDatepickerPopupConfig.closeText='Listo';
 	uibDatepickerPopupConfig.currentText='Hoy';
 }).service('urlRestPath', function($location) {
-	//if($location.$$host.match(/smartbid/)) {
-		//return {url: "https://app.smartbid.ec/back-end"};
-	//}
-
 	let port = "8090";
-
-	//if ($location.$$port == 443) {
-		//port = "8390";
-	//}
-
+	if ($location.$$port == 443) {
+		port = "8390";
+	}
 	return {url: $location.$$protocol + "://" + $location.$$host + ":" + port + "/gameclub"};
 });

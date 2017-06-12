@@ -1,1 +1,1 @@
-angular.module('Home', []);
+angular.module('Beta', []);

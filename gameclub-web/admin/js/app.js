@@ -60,6 +60,6 @@ angular.module("Gameclub", [
 	if ($location.$$port == 443) {
 		port = "8390";
 	}
-
+	
 	return {url: $location.$$protocol + "://" + $location.$$host + ":" + port + "/gameclub"};
 });

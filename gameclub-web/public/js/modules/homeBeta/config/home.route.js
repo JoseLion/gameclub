@@ -1,10 +1,10 @@
-angular.module('Home').config(function($stateProvider) {
+angular.module('Beta').config(function($stateProvider) {
 
 	let prefix = 'gameclub.';
 
 	$stateProvider
-	.state(prefix + 'home', {
-		url: '/home',
+	.state(prefix + 'beta', {
+		url: '/beta',
 		params: {
 			anchor: null
 		},

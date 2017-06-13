@@ -14,7 +14,7 @@ angular.module('Beta').config(function($stateProvider) {
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
-					name: 'Home',
+					name: 'Beta',
 					files: ['js/modules/homeBeta/controller/homeCtrl.js']
 				}, {
 					name: 'LevelapBlog',

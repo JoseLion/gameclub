@@ -10,7 +10,7 @@ angular.module('Beta').config(function($stateProvider) {
 		},
 		templateUrl: 'js/modules/homeBeta/view/home.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
-		controller: 'HomeCtrl',
+		controller: 'HomeBetaCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{

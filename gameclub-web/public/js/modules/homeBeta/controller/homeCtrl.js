@@ -1,4 +1,4 @@
-angular.module('Beta').controller('HomeCtrl', function($scope, $rootScope, provinces, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview) {
+angular.module('Beta').controller('HomeBetaCtrl', function($scope, $rootScope, provinces, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview) {
     if (anchor != null) {
         $location.hash(anchor);
         //$anchorScroll.yOffset = angular.element('#fixedbar')[0].offsetHeight;

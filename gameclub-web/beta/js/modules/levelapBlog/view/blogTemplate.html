@@ -1,0 +1,88 @@
+<!-- BLOG TEMPLATE START -->
+<div id="blog">
+
+    <!-- BANNER SECTION -->
+    <section class="banner">
+        <div class="row">
+            <hr class="title-up"/>
+            <div class="title">Blog</div>
+            <hr class="title-down"/>
+        </div>
+    </section>
+    <div class="clearfix"></div>
+
+    <!-- LEFT SECTION -->
+    <section class="blog-panel left">
+        <div ui-view></div>
+    </section>
+
+    <!-- RIGHT SECTION -->
+    <section class="blog-panel right">
+
+        <!-- SEARCH POST -->
+        <div class="search">
+            <input placeholder="Buscar..." ng-model="search.value" ng-keyup="$event.keyCode == 13 && searchArticles()"/><span class="fa fa-search search-icon" ng-click="searchArticles()"></span>
+        </div>
+
+        <!-- SHOW IMPORTANT BLOGS -->
+        <div class="important">
+            <h2>Art&iacute;culos <span class="normal">destacados</span></h2>
+            <hr class="subtitle" />
+            <article ng-repeat="article in importantBlogs">
+                <div class="image-preview">
+                    <div>
+                        <div>
+                            <img archive="article.banner" ng-src="{{article.banner.src}}" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})" ng-style="article.crop" />
+                        </div>
+                    </div>
+                </div>
+                <div class="info" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})">
+                    <h2 title="{{article.title}}">{{article.title | limitTo: 18}}{{article.title.length > 18 ? '...' : ''}}</h2>
+                    <div class="description">
+                        <p>{{article.summary | limitTo:200}}{{article.summary.length > 200 ? '...' : ''}}</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- SHOW CATEGORIES -->
+        <div class="categories" ng-if="categories.length > 0">
+            <h2>Categor&iacute;as</h2>
+            <hr class="subtitle" />
+            <div class="tag" ng-repeat="category in categories"><span>{{category.text}}</span></div>
+        </div>
+
+        <!-- SHOW TAGS -->
+        <div class="tags-section" ng-if="tags.length > 0">
+            <h2>Etiquetas</h2>
+            <hr class="subtitle" />
+            <div class="tag" ng-repeat="tag in tags" ui-sref="levelapBlog.blog.search({text:tag.text})"><span>{{tag.text}}</span></div>
+        </div>
+
+        <!-- HERE TO PUT EXTRA INFORMATION -->
+        <div class="extra-info">
+            <div class="step">
+                <div class="step-icon">
+                    <i class="gc gc-step-one"></i>
+                </div>
+                <div class="step-title">
+                    <h2><span class="normal">Consigue</span> coins</h2>
+                </div>
+            </div>
+            <ul>
+                <li>Registra tus juegos para prestarlos. Gana COINS.</li>
+                <li>Presta tus juegos. Gana COINS.</li>
+                <li>Refiere a tus amigos para que se unan. Gana COINS.</li>
+            </ul>
+            <div class="get-coins">
+                <button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
+            </div>
+        </div>
+
+    </section>
+    <div class="clearfix"></div>
+
+    <!-- DIRECTIVE OF MOST SEEN -->
+    <most-seen ng-model="blogsPreview" pages="totalPagesMostSeen" active-page="currentPageMostSeen" class="most-seen" title="Lo más visto" size="100" />
+</div>
+<!-- BLOG TEMPLATE END -->

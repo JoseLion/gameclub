@@ -1,0 +1,46 @@
+<!-- ARTICLE PREVIEW DIRECTIVE START -->
+<article id="blog-article">
+    <header>
+        <div class="image-section">
+            <img archive="ngModel.banner" ng-src="{{ngModel.banner.src}}" />
+            <div class="post-date">
+                <div class="post-date-content">
+                    <span>{{ngModel.creationDate | date:'dd'}}</span><span>{{ngModel.creationDate | date:'MMM'}}</span>
+                </div>
+            </div>
+        </div>
+        <h1 ng-if="showAllInfo">{{ngModel.title}}</h1>
+        <h2 ng-if="!showAllInfo">{{ngModel.title}}</h2>
+        <span class="datetime">{{ngModel.creationDate | date:"EEEE, dd 'de' MMMM 'de' yyyy"}}</span>
+        <div class="tags">
+            <span class="tags-cell">Por: <span class="posted-by">{{ngModel.author}}</span></span>
+            <div class="tags-cell">
+                <div class="tag" ng-repeat="tag in ngModel.tags"><span>{{tag.text}}</span></div>
+            </div>
+        </div>
+    </header>
+    <div class="description">
+        <p ng-if="!showAllInfo">{{ngModel.summary}}</p>
+        <pre ng-if="showAllInfo" ng-bind-html="ngModel.body"></pre>
+    </div>
+    <footer>
+        <div class="cell more">
+            <button class="btn btn-primary small" ui-sref="levelapBlog.blog.detail({id:ngModel.id, title: ngModel.title})" ng-if="!showAllInfo">Leer m&aacute;s</button>
+        </div>
+        <div class="cell social-media">
+            Share:
+            <a href><i class="gc gc-facebook" socialshare socialshare-provider="facebook" socialshare-url="{{isBlogHome ? socialShareUrlDomain : socialShareUrl}}"></i></a>
+            <a href><i class="fa fa-google-plus" socialshare socialshare-provider="google" socialshare-url="{{isBlogHome ? socialShareUrlDomain : socialShareUrl}}"></i></a>
+            <a href><i class="gc gc-twitter" socialshare socialshare-provider="twitter" socialshare-text="{{ngModel.title}}" socialshare-url="{{isBlogHome ? socialShareUrlDomain : socialShareUrl}}"></i></a>
+        </div>
+    </footer>
+    <div class="comments" ng-if="showAllInfo">
+        <div class="comments-title" ng-if="showCommentsSection">
+            <h2>Comentario</h2>
+            <hr class="subtitle"></hr>
+            <article-comments ng-model="comments" page="currentPage" article-id="ngModel.id" />
+        </div>
+        <article-comments-form ng-model="ngModel.id" />
+    </div>
+</article>
+<!-- ARTICLE PREVIEW DIRECTIVE END -->

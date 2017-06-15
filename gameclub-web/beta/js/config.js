@@ -40,11 +40,11 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 	$rootScope.$state = $state;
 	$rootScope.Const = Const;
 
-	$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, options) {
+	/*$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, options) {
 		$http.get(urlRestPath.url + "/api/token").then(function() {}, function(error) {
 			$rootScope.currentUser = null;
 		});
-	});
+	});*/
 
 	$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {
 		angular.element('#footer').removeClass('fixed-bottom');

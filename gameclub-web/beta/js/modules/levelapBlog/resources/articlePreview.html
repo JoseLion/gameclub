@@ -2,7 +2,7 @@
 <article id="blog-article">
     <header>
         <div class="image-section">
-            <img archive="ngModel.banner" ng-src="{{ngModel.banner.src}}" />
+            <img archive="ngModel.banner" ng-src="{{ngModel.banner.src}}" ng-click="goToDetails()"/>
             <div class="post-date">
                 <div class="post-date-content">
                     <span>{{ngModel.creationDate | date:'dd'}}</span><span>{{ngModel.creationDate | date:'MMM'}}</span>
@@ -21,11 +21,11 @@
     </header>
     <div class="description">
         <p ng-if="!showAllInfo">{{ngModel.summary}}</p>
-        <pre ng-if="showAllInfo" ng-bind-html="ngModel.body"></pre>
+        <div ng-if="showAllInfo" ng-bind-html="ngModel.body"></div>
     </div>
     <footer>
         <div class="cell more">
-            <button class="btn btn-primary small" ui-sref="levelapBlog.blog.detail({id:ngModel.id, title: ngModel.title})" ng-if="!showAllInfo">Leer m&aacute;s</button>
+            <button class="btn btn-primary small" ng-click="goToDetails()" ng-if="!showAllInfo">Leer m&aacute;s</button>
         </div>
         <div class="cell social-media">
             Share:

@@ -1,9 +1,3 @@
-/*!
- * blog.css - v0.1
- * http://www.levelapsoftware.com
- * License: MIT
- */
-
 /** COMMON **/
 #blog{background:#FFFFFF;}
 #blog h1,#blog h2{color:#7BCABC;font-weight:700;text-transform:uppercase;}
@@ -60,7 +54,7 @@
 /** ARTICLE **/
 #blog #blog-article{background:#EEEEEE;color:#6A615A;padding:1em;margin-bottom:2em;}
 #blog #blog-article header .image-section{position:relative;width:100%;}
-#blog #blog-article header .image-section img{border-radius:1em;margin-top:5%;width:97.5%;}
+#blog #blog-article header .image-section img{border-radius:1em;margin-top:5%;width:97.5%;cursor: pointer;}
 #blog #blog-article header .image-section .post-date{background:#FFFFFF;border:2px solid #7BCABC;border-radius:50%;color:#7BCABC;display:table;font-weight:700;height:5em;right:0;top:0;padding:0;position:absolute;text-align:center;text-transform:uppercase;width:5em;z-index:1;}
 #blog #blog-article header .image-section .post-date-content{display:table-cell;text-align:center;vertical-align:middle;}
 
@@ -70,12 +64,13 @@
 #blog #blog-article header .tags{display:table;font-weight:700;width:100%;}
 #blog #blog-article header .tags .tags-cell{display:table-cell;padding-right:0.5em;vertical-align:middle;}
 #blog #blog-article header .tags .tags-cell span.posted-by{text-transform:uppercase;}
-#blog #blog-article div.description p,#blog #blog-article div.description pre{background:transparent;border:none;overflow:hidden;padding:1em 0 0.5em;text-align:justify;white-space:pre-wrap;}
+#blog #blog-article div.description p,#blog #blog-article div.description pre{background:transparent;border:none;overflow:hidden;/*padding:1em 0 0.5em;*/text-align:justify;white-space:pre-wrap;}
 #blog #blog-article footer{display:table;font-weight:700;width:100%;}
 #blog #blog-article footer .cell{display:table-cell;text-transform:uppercase;width:50%;}
 #blog #blog-article footer .cell a{color:#7BCABC;}
 #blog #blog-article footer .cell:first-child{text-align:left;}
 #blog #blog-article footer .cell:last-child{text-align:right;}
+#blog .blog-detail .article-section #blog-article header .image-section img {cursor: auto;}
 
 /** COMMENTS **/
 #blog #article-comment button{background:#FFFFFF;border:2px solid #7BCABC;color:#7BCABC;font-size:0.75em;padding:0.5em 1.5em;}

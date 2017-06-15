@@ -11,7 +11,6 @@ angular.module('GameClub', [
 	'720kb.socialshare',
 	'Core',
 	'Home',
-	'Beta',
 	'Login',
 	'Search',
 	'Settings',

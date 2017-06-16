@@ -847,10 +847,32 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #terms-conditions section.confirmation form span{font-size:2em;}
 #terms-conditions section.confirmation form input{border:2px solid @color-tertiary;padding:2px;color:@color-primary-alt;width:2em;height:2em;}
 #terms-conditions section.confirmation form input::after{top:-0.4em;font-size:3em;}
-
-
 #terms-conditions section.final{height:2em;width:100%;background:@color-primary-alt;}
 /***********************************************/
+
+/********** WORK-FOR-US-PAGE **********/
+#work-for-us .contact-form{position:relative;}
+#work-for-us .contact-form::before{content:"";position:absolute;top:-35%;right:0;bottom:0;left:0;z-index:-3;background:@color-secundary;background-image:url("../img/work-for-us-bg.svg");background-position:center top;background-size:120% 115%;}
+#work-for-us .contact-form form.contact-form{background:@color-secundary;box-shadow:5px 10px 25px 5px @color-primary-30;text-align:center;padding-top:15%;margin-bottom:-2%;}
+#work-for-us .contact-form form.contact-form h2.title{font-size:1.4em;font-weight:700;text-transform:uppercase;color:@color-tertiary;margin-bottom:0.5em;}
+#work-for-us .contact-form form.contact-form h2.title .game-font-white,#work-for-us .contact-form form.contact-form h2.title .game-font-dark-blue{font-size:1.5em;font-weight:400;}
+#work-for-us .contact-form form.contact-form .description{font-size:1.2em;margin-bottom:0.75em;color:@color-tertiary;display:block;}
+#work-for-us .contact-form form.contact-form input,#work-for-us .contact-form form.contact-form textarea{width:100%;margin:1%;border:3px solid @color-primary;border-radius:5px;padding:1% 7% 1% 3%;background:transparent;}
+#work-for-us .contact-form form.contact-form textarea{background:@color-tertiary;border-color:transparent;color:@color-primary;border-radius:0;resize:none;}
+#work-for-us .contact-form form.contact-form input:focus,#work-for-us .contact-us form.contact-form textarea:focus{box-shadow:none;outline:none;}
+#work-for-us .contact-form form.contact-form input::-webkit-input-placeholder{color:@color-primary;}
+#work-for-us .contact-form form.contact-form input::-moz-placeholder{color:@color-primary;}
+#work-for-us .contact-form form.contact-form input::-ms-input-placeholder{color:@color-primary;}
+#work-for-us .contact-form form.contact-form input[name="name"]{background:url("../img/contact-person.svg") no-repeat right center;background-size:15px auto;background-position-x:97%;}
+#work-for-us .contact-form form.contact-form input[name="email"]{background:url("../img/contact-email.svg") no-repeat right center;background-size:15px auto;background-position-x:97%;}
+#work-for-us .contact-form form.contact-form input[name="phone"]{background:url("../img/contact-phone.svg") no-repeat right center;background-size:15px auto;background-position-x:97%;}
+#work-for-us .contact-form form.contact-form textarea[name="message"]{background-image:url("../img/contact-message.svg");background-size:15px auto;background-position-x:97%;background-position-y:2%;background-repeat:no-repeat;}
+#work-for-us .contact-form form.contact-form .file-upload[name="file"]{background:url("../img/contact-file.svg") no-repeat right center;background-size:15px auto;background-position-x:97%;margin:1%;padding:1% 7% 1% 3%;width:100%;border:3px solid @color-primary;text-align:left;border-radius:5px;margin-top:0;padding-top:0.5%;}
+#work-for-us .contact-form form.contact-form .file-upload button{padding-top:1px;margin-top:0;}
+#work-for-us .contact-form form.contact-form .send-button{margin-top:5%;margin-bottom:6%;}
+#work-for-us .contact-form form.contact-form .send-button button{border-radius:5px;border-width:3px;}
+#work-for-us #most-seen{padding-top:4%!important;}
+/**************************************/
 
 /* BLOG VARIABLES */
 @blog-padding-left: 37.037037037%!important;
@@ -960,6 +982,19 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secund
 background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);}
 #blog .blog-home #blog-article footer .cell.social-media::after{content:none;}
 #blog .blog-preview .info h2{height:2em;}
+
+#blog .extra-info h2{font-size:1.25em;color:@color-tertiary!important;}
+#blog .extra-info h2 .game-font,#blog .extra-info h2 .game-font-light-red{font-weight:400;}
+#blog .extra-info h2.icon-section{padding-bottom:1%;font-size:1.5em;}
+#blog .extra-info h2.icon-section i{padding-right:1%;-webkit-text-fill-color:transparent;
+background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#blog .extra-info .info{color:@color-primary-alt!important;}
+#blog .extra-info label{color:@color-tertiary!important;font-weight:400;display:block;}
+#blog .extra-info input{width:35%;border:2px solid @color-tertiary;border-radius:5px;padding:0.25% 3%;background:transparent;color:@color-secundary;background:url("../img/contact-email.svg") no-repeat right center;background-size:15px auto;background-position-x:97%;}
+#blog .extra-info input::-webkit-input-placeholder{color:@color-secundary;}
+#blog .extra-info input::-moz-placeholder{color:@color-secundary;}
+#blog .extra-info input::-ms-input-placeholder{color:@color-secundary;}
 
 /* BETA STYLING: ERASE BEFORE BETA PHASE */
 #home section.contact-us::before{background-size:125%;background-position:center top;top:0;}

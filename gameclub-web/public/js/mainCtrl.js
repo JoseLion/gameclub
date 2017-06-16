@@ -103,6 +103,10 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 		termsConditions : {
 			name: 'Términos y Condiciones',
 			route: 'gameclub.termsConditions({user:user, isFacebook:isFacebook})'
+		},
+		workForUs : {
+			name: 'Trabaja con nosotros',
+			route: 'gameclub.workForUs'
 		}
 	};
 

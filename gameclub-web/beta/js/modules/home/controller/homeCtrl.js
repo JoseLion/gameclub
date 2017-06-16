@@ -19,7 +19,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, provi
                     $scope.publicUser = {};
                     sweet.close();
                 }, function(error) {
-                    sweet.error(error.data != null ? error.data.message : error);
+                    notif.danger(error.data != null ? error.data.message : error);
                 });
             });
         } else {

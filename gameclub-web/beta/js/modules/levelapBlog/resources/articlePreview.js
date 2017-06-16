@@ -37,7 +37,6 @@ angular.module('LevelapBlog').directive('articlePreview', function(openRest, $lo
 			}
 
 			$scope.getShareUrl = function() {
-				console.log("URL: " + $location.$$absUrl.split("#")[0] + "#!/gameclub/blog/detail/" + $scope.ngModel.id + "/" + friendlyUrl($scope.ngModel.title));
 				return $location.$$absUrl.split("#")[0] + "#!/gameclub/blog/detail/" + $scope.ngModel.id + "/" + friendlyUrl($scope.ngModel.title);
 			}
 

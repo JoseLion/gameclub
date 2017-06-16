@@ -8,7 +8,7 @@
                 <div class="col-md-7 info">
                     <h2 title="{{preview.title}}">{{preview.title | limitTo: 18}}{{preview.title.length > 18 ? '...' : ''}}</h2>
                     <p>{{preview.summary | limitTo:filterSize}}{{preview.summary.length > filterSize ? '...' : ''}}</p>
-                    <a href ui-sref="levelapBlog.blog.detail({id:preview.id,title:preview.title})">Leer m&aacute;s</a>
+                    <a href ng-click="goToArticle(preview)">Leer m&aacute;s</a>
                 </div>
                 <div class="col-md-5 picture">
                     <div class="image-section">
@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div class="image-cropped">
-                            <img archive="preview.banner" ng-src="{{preview.banner.src}}" ng-style="preview.crop" />
+                            <img class="cursor-pointer" archive="preview.banner" ng-src="{{preview.banner.src}}" ng-style="preview.crop" ng-click="goToArticle(preview)"/>
                         </div>
                     </div>
                 </div>

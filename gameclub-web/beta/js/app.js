@@ -9,6 +9,7 @@ angular.module('GameClub', [
 	'oitozero.ngSweetAlert',
 	'cgNotify',
 	'720kb.socialshare',
+	'ngSocial',
 	'Core',
 	'Home',
 	/*'Login',

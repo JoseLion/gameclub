@@ -29,9 +29,9 @@
         </div>
         <div class="cell social-media">
             Share:
-            <a href><i class="gc gc-facebook" socialshare socialshare-provider="facebook" socialshare-url="{{isBlogHome ? socialShareUrlDomain : socialShareUrl}}"></i></a>
-            <a href><i class="fa fa-google-plus" socialshare socialshare-provider="google" socialshare-url="{{isBlogHome ? socialShareUrlDomain : socialShareUrl}}"></i></a>
-            <a href><i class="gc gc-twitter" socialshare socialshare-provider="twitter" socialshare-text="{{ngModel.title}}" socialshare-url="{{isBlogHome ? socialShareUrlDomain : socialShareUrl}}"></i></a>
+            <a href><i class="gc gc-facebook" socialshare socialshare-provider="facebook" socialshare-url="{{getShareUrl()}}" socialshare-title="{{ngModel.title}}" socialshare-description="{{ngModel.summary}}" socialshare-media="img/blog/share.png"></i></a>
+            <a href><i class="fa fa-google-plus" socialshare socialshare-provider="google" socialshare-url="{{getShareUrl()}}"></i></a>
+            <a href><i class="gc gc-twitter" socialshare socialshare-provider="twitter" socialshare-text="{{ngModel.title}}" socialshare-url="{{getShareUrl()}}"></i></a>
         </div>
     </footer>
     <div class="comments" ng-if="showAllInfo">

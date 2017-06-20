@@ -283,8 +283,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		publicUserRepo.save(publicUser);
 		
 		MailParameters mailParameters = new MailParameters();
-		//mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
-		mailParameters.setRecipentTO(Arrays.asList("joseluis.levelap@gmail.com"));
+		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String, String> params = new HashMap<>();
 		params.put("name", publicUser.getName() + " " + publicUser.getLastName());

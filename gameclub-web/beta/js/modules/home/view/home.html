@@ -5,7 +5,7 @@
             <span class="description">Intercambia juegos con la comunidad gamer m&aacute;s grande del Ecuador.</span>
         </div>
     </section>
-    <section class="contact-us">
+    <section class="contact-us" ng-if="true">
         <div class="row">
             <form name="subscriberForm" class="col-md-12 contact-form" role="form" ng-submit="saveSubscriber(subscriberForm)" novalidate>
                 <h2 class="title dark">Buscamos gamers</h2>
@@ -37,7 +37,7 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <ui-select ng-model="publicUser.province" theme="bootstrap" class="selector location" on-removed="provinceRemoved()" required>
-                        <ui-select-match allow-clear placeholder="Provincia...">{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                        <ui-select-match allow-clear placeholder="Provincia...">{{$select.selected.name | limitTo:30}}{{$select.selected.name.length > 30 ? '...' : ''}}</ui-select-match>
                         <ui-select-choices repeat="province in provinces | filter: $select.search">
                             <div ng-bind-html="province.name | highlight: $select.search"></div>
                         </ui-select-choices>
@@ -49,7 +49,7 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <ui-select ng-model="publicUser.location" theme="bootstrap" class="selector location" required>
-                        <ui-select-match allow-clear placeholder="Ciudad...">{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                        <ui-select-match allow-clear placeholder="Ciudad...">{{$select.selected.name | limitTo:30}}{{$select.selected.name.length > 30 ? '...' : ''}}</ui-select-match>
                         <ui-select-choices repeat="city in publicUser.province.children | filter: $select.search">
                             <div ng-bind-html="city.name | highlight: $select.search"></div>
                         </ui-select-choices>
@@ -70,10 +70,16 @@
                     <button type="submit" class="btn btn-secundary full">Enviar</button>
                 </div>
                 <div class="col-md-4"></div>
-
             </form>
         </div>
     </section>
+
+    <section class="user-subscribed" ng-if="false">
+        <div class="row">
+            div
+        </div>
+    </section>
+
     <section id="how-it-works" class="how-it-works">
         <div class="separator"></div>
         <div class="row">

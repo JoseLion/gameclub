@@ -1,4 +1,4 @@
-angular.module('LevelapBlog').directive('articlePreview', function(openRest, $location, $state, friendlyUrl) {
+angular.module('LevelapBlog').directive('articlePreview', function(openRest, $location, $state, friendlyUrl, ngMeta) {
 	let baseSrc;
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
         let script = angular.element(document.getElementsByTagName("script")[i]);
@@ -38,6 +38,14 @@ angular.module('LevelapBlog').directive('articlePreview', function(openRest, $lo
 
 			$scope.getShareUrl = function() {
 				return $location.$$absUrl.split("#")[0] + "#!/gameclub/blog/detail/" + $scope.ngModel.id + "/" + friendlyUrl($scope.ngModel.title);
+			}
+
+			$scope.changeMeta = function() {
+				ngMeta.setTag('og:url', $location.$$absUrl.split("#")[0] + "#!/gameclub/blog/detail/" + $scope.ngModel.id + "/" + friendlyUrl($scope.ngModel.title));
+				ngMeta.setTag('og:type', 'Article');
+				ngMeta.setTag('og:title', $scope.ngModel.title);
+				ngMeta.setTag('og:description', $scope.ngModel.summary);
+				ngMeta.setTag('og:image', $scope.ngModel.banner.src);
 			}
 
 			if ($scope.isComplete != null) {

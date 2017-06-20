@@ -6,7 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="{{$state.current.data.description}}">
 	<meta name="keywords" content="{{$state.current.data.keywords}}">
-    <meta property="og:image" content="http://gameclub.levelaptesting.com/img/gameclub-footer-logo.png">
+    <!-- <meta property="og:image" content="http://gameclub.levelaptesting.com/img/gameclub-footer-logo.png"> -->
+    <meta property="og:url" content="{{ngMeta['og:url']}}">
+    <meta property="og:type" content="{{ngMeta['og:type']}}">
+    <meta property="og:title" content="{{ngMeta['og:title']}}">
+    <meta property="og:description" content="{{ngMeta['og:description']}}">
+    <meta property="og:image" content="{{ngMeta['og:image']}}">
+
     <title>Game Club</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -45,7 +51,7 @@
     <!-- <script src="js/core/jasny-bootstrap.min.js"></script> -->
     <script src="js/modules/levelapBlog/levelapBlog.js"></script>
     <script src="js/core/angular-socialshare.min.js"></script>
-    <script src="js/core/plugins/angular-social/angular-social.js"></script>
+    <script src="js/core/plugins/ngMeta/ngMeta.min.js"></script>
 
     <!-- Anglar App Script -->
     <script src="js/app.js"></script>

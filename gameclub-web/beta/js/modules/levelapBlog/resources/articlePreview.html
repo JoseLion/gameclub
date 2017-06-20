@@ -29,7 +29,7 @@
         </div>
         <div class="cell social-media">
             Share:
-            <a href="" socialshare socialshare-provider="facebook" socialshare-via="1819533121697152" socialshare-url="https://gameclub.com.ec"><i class="gc gc-facebook"></i></a>
+            <a href="" ng-click="changeMeta()" socialshare socialshare-provider="facebook" socialshare-via="1819533121697152" socialshare-url="{{getShareUrl()}}"><i class="gc gc-facebook"></i></a>
             <a href><i class="fa fa-google-plus" socialshare socialshare-provider="google" socialshare-url="{{getShareUrl()}}"></i></a>
             <a href><i class="gc gc-twitter" socialshare socialshare-provider="twitter" socialshare-text="{{ngModel.title}}" socialshare-url="{{getShareUrl()}}"></i></a>
         </div>

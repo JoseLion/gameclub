@@ -9,7 +9,6 @@ angular.module('GameClub', [
 	'oitozero.ngSweetAlert',
 	'cgNotify',
 	'720kb.socialshare',
-	'ngMeta',
 	'Core',
 	'Home',
 	/*'Login',
@@ -45,6 +44,4 @@ angular.module('GameClub', [
 	}
 	
 	return {url: $location.$$protocol + '://' + $location.$$host + ':' + port + '/gameclub'};
-}).run(function(ngMeta) {
-	ngMeta.init();
 });

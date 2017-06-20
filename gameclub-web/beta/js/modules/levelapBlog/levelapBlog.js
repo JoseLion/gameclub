@@ -90,7 +90,14 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
             title: null
         },
         templateUrl: baseSrc.concat('view/blogDetail.html'),
-        data: {displayName: 'Blog', description: '', keywords: ''},
+        data: {
+            displayName: 'Blog',
+            description: '',
+            keywords: '',
+            meta: {
+                'og:title': "Test de meta-tag"
+            }
+        },
         controller: 'BlogDetailCtrl',
         resolve: {
             loadPlugin: function($ocLazyLoad) {

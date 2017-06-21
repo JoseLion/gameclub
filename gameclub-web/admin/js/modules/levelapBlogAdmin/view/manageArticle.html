@@ -108,13 +108,13 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label">Corte Cuadrado</label>
 					<div class="col-md-5" style="overflow: hidden; cursor: move;" ng-style="getCropStyle()" ng-mousedown="beginDrag($event)" ng-mouseup="endDrag()" ng-mousemove="drag($event, 'square')" ng-mouseleave="endDrag()">
-						<div style="position: absolute; left: 20%; top: 20%;">
+						<div style="position: absolute; left: 15%; top: 9.05%;">
 							<img class="crop-image" ng-src="{{bannerBase64}}" ng-style="getPositionStyle(article.squareCrop)">
 						</div>
 						
 						<div class="crop-image" style="width: 100%; border: 2px dashed #676a6c;" ng-style="getCropStyle()">
 							<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-								<path d="M0 0 h100 v100 h-100 z M22.4 23 V77 C22.4 77 22.4 80 25.4 80 H74.6 C74.6 80 77.6 80 77.6 77 V23 C77.6 23 77.6 20 74.6 20 H25.4 C25.4 20 22.4 20 22.4 23 z" style="fill: rgba(50, 50, 50, 0.6);"></path>	
+								<path d="M0 0 h100 v100 h-100 z M15 11.05 V88.95 C15 88.95 15 90.95 17 90.95 H83 C83 90.95 85 90.95 85 88.95 V11.05 C85 11.05 85 9.05 83 9.05 H17 C17 9.05 15 9.05 15 11.05 z" style="fill: rgba(50, 50, 50, 0.6);"></path> <!-- PROPORCION: 1.17 -->
 							</svg>
 						</div>
 					</div>

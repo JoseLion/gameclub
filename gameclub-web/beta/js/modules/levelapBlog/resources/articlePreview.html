@@ -2,7 +2,7 @@
 <article id="blog-article">
     <header>
         <div class="image-section">
-            <img archive="ngModel.banner" ng-src="{{ngModel.banner.src}}" ng-click="goToDetails()"/>
+            <img id="JL" archive="ngModel.banner" ng-src="{{ngModel.banner.src}}" ng-click="goToDetails()"/>
             <div class="post-date">
                 <div class="post-date-content">
                     <span>{{ngModel.creationDate | date:'dd'}}</span><span>{{ngModel.creationDate | date:'MMM'}}</span>
@@ -30,9 +30,9 @@
         <div class="cell social-media">
             Share:
             <!-- <a href="" socialshare socialshare-provider="facebook" socialshare-type="feed" socialshare-via="1819533121697152" socialshare-url="{{getShareUrl()}}"><i class="gc gc-facebook"></i></a> -->
-            <a href="" ng-click="shareFacebook()"><i class="gc gc-facebook"></i></a>
-            <a href><i class="fa fa-google-plus" socialshare socialshare-provider="google" socialshare-url="{{getShareUrl()}}"></i></a>
-            <a href><i class="gc gc-twitter" socialshare socialshare-provider="twitter" socialshare-text="{{ngModel.title}}" socialshare-url="{{getShareUrl()}}"></i></a>
+            <a href socialshare socialshare-provider="facebook" socialshare-url="{{getShareUrl()}}"><i class="gc gc-facebook"></i></a>
+            <a href socialshare socialshare-provider="google" socialshare-url="{{getShareUrl()}}"><i class="fa fa-google-plus"></i></a>
+            <a href socialshare socialshare-provider="twitter" socialshare-text="{{ngModel.title}}" socialshare-url="{{getShareUrl()}}"><i class="gc gc-twitter"></i></a>
         </div>
     </footer>
     <div class="comments" ng-if="showAllInfo">

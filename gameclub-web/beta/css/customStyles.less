@@ -1,0 +1,1025 @@
+ @import url("variables.less");
+
+/********** PRINCIPAL **********/
+html{background-color:@color-primary;}
+body{background-color:transparent;}
+input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill{transition:all 5000s ease-in-out 0s;}
+h2{margin:0;}
+/*******************************/
+
+/********** GENERAL **********/
+.game-font{font-family:@font-family-jaapokki;}
+.game-font-blue{color:@color-primary-alt;/*NEW FONT*/}
+.game-font-white{color:@color-tertiary;/*NEW FONT*/}
+.game-font-light-red{color:@color-secundary;/*NEW FONT*/}
+.game-font-dark-blue{color:@color-primary;/*NEW FONT*/}
+.game-font-light-blue{color:@color-primary-alt;/*NEW FONT*/}
+.white-search{background:@color-tertiary-50;padding-top:10px;padding-bottom:10px;text-transform:uppercase;margin-top:10px;}
+.btn,.btn:hover,.btn:visited,.btn:focus,.btn:active,.btn:active:focus,.btn:active:hover{border-width:2px;border-style:solid;background:transparent;text-transform:uppercase;padding:5px 30px 2.5px;border-radius:12px;font-weight:700;box-shadow:none;}
+.btn.active,.btn.active:hover,.btn.active:visited,.btn.active:focus,.btn.active:active,.btn.active:active:focus,.btn.active:active:hover{border-width:2px;border-style:solid;background:transparent;box-shadow:none;}
+.btn-primary,.btn-primary:hover,.btn-primary:visited,.btn-primary:focus,.btn-primary:active,.btn-primary:active:focus,.btn-primary:active:hover,
+.btn-primary.active,.btn-primary.active:hover,.btn-primary.active:visited,.btn-primary.active:focus,.btn-primary.active:active,.btn-primary.active:active:focus,.btn-primary.active:active:hover{color:@color-primary;border-color:@color-secundary;}
+.btn-primary.full,.btn-primary.full:hover,.btn-primary.full:visited,.btn-primary.full:focus,.btn-primary.full:active,.btn-primary.full:active:focus,.btn-primary.full:active:hover,
+.btn-primary.full.active,.btn-primary.full.active:hover,.btn-primary.full.active:visited,.btn-primary.full.active:focus,.btn-primary.full.active:active,.btn-primary.full.active:active:focus,.btn-primary.full.active:active:hover{color:@color-primary;background:@color-secundary;}
+.btn-primary-alt,.btn-primary-alt:hover,.btn-primary-alt:visited,.btn-primary-alt:focus,.btn-primary-alt:active,.btn-primary-alt:active:focus,.btn-primary-alt:active:hover,
+.btn-primary-alt.active,.btn-primary-alt.active:hover,.btn-primary-alt.active:visited,.btn-primary-alt.active:focus,.btn-primary-alt.active:active,.btn-primary-alt.active:active:focus,.btn-primary-alt.active:active:hover{color:@color-primary;border-color:@color-primary-alt;}
+.btn-secundary,.btn-secundary:hover,.btn-secundary:visited,.btn-secundary:focus,.btn-secundary:active,.btn-secundary:active:focus,.btn-secundary:active:hover{color:@color-tertiary;border-color:@color-primary;}
+.btn-secundary.full,.btn-secundary.full:hover,.btn-secundary.full:visited,.btn-secundary.full:focus,.btn-secundary.full:active,.btn-secundary.full:active:focus,.btn-secundary.full:active:hover{color:@color-tertiary;background:@color-primary;}
+.btn-tertiary,.btn-tertiary:hover,.btn-tertiary:visited,.btn-tertiary:focus,.btn-tertiary:active,.btn-tertiary:active:focus,.btn-tertiary:active:hover{color:@color-primary;border-color:@color-tertiary;}
+.btn-tertiary.full,.btn-tertiary.full:hover,.btn-tertiary.full:visited,.btn-tertiary.full:focus,.btn-tertiary.full:active,.btn-tertiary.full:active:focus,.btn-tertiary.full:active:hover{color:@color-primary;background:@color-tertiary;}
+button.small,button.small:hover,button.small:visited,button.small:focus,button.small:active,button.small:active:focus,button.small:active:hover{border-radius:5px;padding:3px 6% 0;font-size:0.7em;margin-top:1%;}
+.ui-select-toggle .btn,.ui-select-toggle .btn:hover,.ui-select-toggle .btn:visited,.ui-select-toggle .btn:focus,.ui-select-toggle .btn:active,.ui-select-toggle .btn:active:focus,.ui-select-toggle .btn:active:hover{padding:0;}
+.row-left{margin-left:0;margin-right:0;padding-left:20%;}
+.row-right{margin-left:0;margin-right:0;padding-right:20%;}
+.title{font-size:2em;text-transform:uppercase;font-weight:700;}
+.cursor-pointer{cursor:pointer;}
+form label::after{content:":";}
+form label.control-label{text-align:right;}
+form input,form textarea{background:transparent;border:none;outline:none;box-shadow:none;}
+form input.complete,form textarea.complete{width:100%;}
+form .selector{width:100%;padding:5px 0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
+form .selector span{font-size:1em;}
+form .selector .ui-select-match>span{padding:0px!important;border:none!important;}
+form .selector .ui-select-match>span .caret.pull-right{top:40%!important;right:0px!important;}
+form .selector .ui-select-match.btn-default-focus{color:@color-tertiary;background-color:transparent;border:none;outline:none;box-shadow:none;}
+form .selector .ui-select-search{font-size:1em;padding:0px;height:21px;border:none;box-shadow:none;}
+form .selector .glyphicon-remove{color:@color-tertiary;}
+form .selector .ui-select-match>span,form .selector .ui-select-match>span>span,form .selector .ui-select-match .ui-select-placeholder,form .selector input{background:transparent;color:@color-tertiary;border:none;box-shadow:none;}
+form .selector .ui-select-match .ui-select-match-text img.gameConsole{height:100%;position:absolute;}
+form .ui-select-match .ui-select-placeholder{text-transform:none;}
+form .selector .ui-select-choices{background:@color-primary;color:@color-tertiary;border:1px solid @color-primary;border-radius:10px;border-top-left-radius:0px;border-top-right-radius:0px;width:120%;margin-left:-10%;overflow-y:scroll;margin-top:5px;max-height:205px;}
+form .selector.direction-up .ui-select-choices{border-bottom-left-radius:0px;border-bottom-right-radius:0px;}
+form .selector .ui-select-choices::-webkit-scrollbar{background:transparent;width:0.5em!important;}
+form .selector .ui-select-choices::-webkit-scrollbar-track{background:transparent;}
+form .selector .ui-select-choices::-webkit-scrollbar-thumb{background:@color-secundary;}
+form .selector .ui-select-choices .ui-select-choices-row{text-transform:uppercase;padding-left:15px;padding-right:15px;font-size:1em;padding-top:5px;position:relative;padding-bottom:5px;}
+form .selector .ui-select-choices .ui-select-choices-row img.category{height:1em;position:absolute;top:5px;right:10px;}
+form .selector .ui-select-choices .ui-select-choices-row img.gameConsole{width:75%;margin-bottom:5px;}
+form .selector .ui-select-choices .ui-select-choices-row:hover{background:@color-secundary;margin-left:5px;margin-right:5px;padding-left:10px;padding-right:10px;}
+form .selector .ui-select-choices .ui-select-choices-row:hover img.category{right:5px;}
+form .selector .ui-select-choices::-webkit-scrollbar{width:0px;}
+form input[type="checkbox"]{-webkit-appearance:none;border:none;background:#071428;border-radius:5px;display:inline-block;position:relative;width:15px;height:15px;outline:none!important;margin-right:1em;}
+form input[type="checkbox"]:checked::after{content:"\f00c";position:absolute;top:-0.5em;left:0;color:@color-secundary;font-size:2em;}
+form ul.dropdown-menu{padding:2%;background:@color-primary;}
+form ul.dropdown-menu a{color:@color-tertiary;}
+form ul.dropdown-menu>.active>a,form ul.dropdown-menu>.active>a:focus,form ul.dropdown-menu>.active>a:hover{background:@color-secundary;}
+/*****************************/
+
+/********** HEADER **********/
+header#main-header{background:@color-primary;font-weight:700;}
+header#main-header .social-media{text-align:left;padding-top:5px;}
+header#main-header .social-media a{margin:0px 0.2em;font-size:1.2em;color:@color-secundary;text-decoration:none;}
+header#main-header .social-media a i{font-weight:700;}
+header#main-header .social-media a:hover{color:@color-tertiary;}
+header#main-header .contacts{text-align:right;font-size:0.7em;}
+header#main-header .contacts a{position:relative;display:inline-block;color:@color-secundary;text-decoration:none;padding:10px 0 5px 30px;margin-left:10px;}
+header#main-header .contacts a::before{content:"";position:absolute;top:0;bottom:-25%;left:0;border-left:1px solid @color-header-separator;z-index:5;}
+header#main-header .contacts a:first-child::before{border-left:0px;}
+header#main-header .contacts a i{font-size:1.6em;position:absolute;left:0.5em;top:0.5em;}
+header#main-header .contacts a:hover span{color:@color-tertiary;}
+header#main-header .contacts a i:hover{color:@color-secundary;}
+header#main-header .shortcut-links{position:absolute;font-size:18px;padding-top:1%;padding-bottom:1%;font-weight:700;left:0;right:0;z-index:1;
+background:@color-primary-85;background:linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);background:-webkit-linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);background:-o-linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);background:-moz-linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);}
+header#main-header .shortcut-links img{cursor:pointer;}
+header#main-header .shortcut-links .links{padding:1.5em 0;}
+header#main-header .shortcut-links .spacing{letter-spacing:1.5px;text-transform:lowercase;}
+header#main-header .shortcut-links .links nav>li{display:inline;border-left:1px solid @color-secundary;padding:6px 5px 6px 10px;}
+header#main-header .shortcut-links .links nav>li:first-child{border-left:none;}
+header#main-header .shortcut-links .links nav>li.account span.name{text-transform:capitalize;}
+header#main-header .shortcut-links .links nav>li.account span.last-name{text-transform:uppercase;}
+header#main-header .shortcut-links .links nav>li.account img.avatar{height:3em;}
+header#main-header .shortcut-links .links nav>li.account img.avatar{height:3em;}
+header#main-header .shortcut-links .links nav button.btn{border-radius:7px;text-transform:none;padding:1% 2% 0.5%;font-size:0.6em;}
+header#main-header .shortcut-links .links nav button.btn-primary{color:@color-tertiary;border-color:transparent;}
+header#main-header .shortcut-links .links nav button.btn-primary:hover{border-color:@color-secundary;}
+header#main-header .shortcut-links .links nav button.btn-primary.active{border-color:@color-secundary;}
+header#main-header .shortcut-links .coins{margin-top:-2%;font-size:0.8em;color:@color-tertiary;padding-right:1.5em;}
+header#main-header .shortcut-links .coins .text{position:absolute;right:3.5em;padding-top:0.25em;}
+header#main-header .shortcut-links .coins i.gc{font-size:1.5em;}
+/****************************/
+
+/********** FOOTER **********/
+footer#main-footer{background:@color-primary;font-weight:700;font-size:1em;}
+footer#main-footer section.row{margin:1% auto;}
+footer#main-footer .logo{text-align:center;}
+footer#main-footer .logo img{cursor:pointer;width:75%;}
+footer#main-footer .logo,footer#main-footer .links-text{padding:15px;}
+footer#main-footer .links-text{margin-top:1em;}
+footer#main-footer .links a{color:@color-tertiary;text-decoration:none;}
+footer#main-footer .contacts-shares .contacts{font-size:0.9em;}
+footer#main-footer .contacts-shares .contacts a{position:relative;display:inline-block;color:@color-secundary;text-decoration:none;padding-left:15%;}
+footer#main-footer .contacts-shares .contacts a i,footer#main-footer .contacts-shares .contacts a img{font-size:1.5em;position:absolute;left:3%;top:0;}
+footer#main-footer .contacts-shares .contacts a img{width:0.9em;left:3%;}
+footer#main-footer .contacts-shares .contacts a:hover span{color:@color-tertiary;}
+footer#main-footer .contacts-shares .contacts a i:hover{color:@color-secundary;}
+footer#main-footer .contacts-shares .social-media img{margin-left:0px;margin-right:0.25em;cursor:pointer;height:1em;}
+footer#main-footer .contacts-shares .social-media{text-align:left;padding-top:5px;}
+footer#main-footer .contacts-shares .social-media a{margin:0px 0.2em;font-size:1.2em;color:@color-secundary;}
+footer#main-footer .contacts-shares .social-media a:hover{color:@color-tertiary;}
+footer#main-footer .copyright{color:@color-secundary;margin-top:1em;}
+footer#main-footer .copyright span.title{text-transform:uppercase;font-size:1em;}
+footer#main-footer .spacing{letter-spacing:2.5px;}
+footer#main-footer .top-space{margin-top:5px;}
+footer#main-footer .designed{background-color:@color-secundary;color:@color-tertiary;text-align:center;padding-top:8px;font-size:14px;}
+footer#main-footer .designed span{letter-spacing:1px;}
+.fixed-bottom{position:fixed;bottom:0;}
+/****************************/
+
+/********** HOW WORKS **********/
+.how-it-works .step.second-step{position:relative;}
+.how-it-works .step.third-step{padding-bottom:4.5%;position:relative;}
+.how-it-works .step.third-step .description{margin-bottom:2%;color:@color-primary;font-size:1.2em;line-height:1em;}
+.how-it-works .step.third-step .description.white{color:@color-tertiary;margin-bottom:3%;}
+.how-it-works .step.third-step .description:last-child{margin-bottom:1%;}
+.how-it-works .step.third-step img{margin-bottom:1%;}
+.how-it-works .step ul{color:@color-primary-alt;padding-left:20px;margin-top:2%;}
+.how-it-works .step .title .number-container{position:absolute;width:20px;height:20px;top:0;left:0;border-radius:50%;}
+.how-it-works .step .title .number-container img{position:relative;width:100%;}
+.how-it-works .step .title .number-container.ib{display:inline-block;position:relative;margin-left:-7%;margin-right:2%}
+.how-it-works .step ul>li{margin:2% 0 1%;}
+/*******************************/
+
+/********* MOST-PLAYED **********/
+#most-played{background:@color-primary;text-align:center;position:relative;padding-top:1%;padding-bottom:5%;color:@color-tertiary;}
+#most-played .separator{width:2em;height:2em;position:absolute;top:-1em;left:0;right:0;margin:auto;background:@color-primary;border-radius:50%;}
+#most-played .title{padding-top:10px;margin-bottom:10px;text-transform:uppercase;font-size:1.5em;font-weight:700;border-left:2px solid @color-primary-alt;border-right:2px solid @color-primary-alt;}
+#most-played .games .left,#most-played .games .right{position:relative;padding-top:5em}
+#most-played .games .left .btn-most-played,#most-played .games .right .btn-most-played{padding:0;}
+#most-played .games .left .btn-most-played i,#most-played .games .right .btn-most-played i{font-size:4em;-webkit-text-fill-color:transparent;}
+#most-played .games .left .btn-most-played i{
+background:@color-primary;background:linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#most-played .games .right .btn-most-played i{
+background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#most-played .games .list{padding-top:7%;}
+#most-played .games .list>div #game-rating .game-container .background>div.image-container{width:100%;height:100%;margin:-18px auto auto;}
+#most-played .selector .ui-select-match-text img{height:1.7em;}
+/********************************/
+
+/********* GAME-RATING **********/
+#game-rating .rating-container{text-align:center;padding-top:10%;}
+#game-rating .rating-container i{color:@color-primary-s;cursor:pointer;}
+#game-rating .rating-container i.yes{color:@color-primary-alt;}
+#game-rating .game-container .background{display:table-cell;padding-bottom:1em;padding-top:1.5em;text-align:center;vertical-align:middle;width:25%;}
+#game-rating .game-container .background::before{content:"\e00c";bottom:0;color:red;left:-1%;font-family:gameclub;font-size:9.5em;position:absolute;right:0;top:-23%;-webkit-text-fill-color:transparent;height:2em;
+background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#game-rating .game-container .background>div.image-container{height:6em;margin:4px auto auto;overflow:hidden;transform:rotate(45deg);width:6em;}
+#game-rating .game-container .background>div.image-container>div{transform:rotate(-45deg);}
+#game-rating .game-container .background>div.image-container>div>img{cursor:pointer;height:auto;}
+/*******************************/
+
+/********** BLOG-PAGING **********/
+#blog-paging{text-align:center;margin-bottom:2%;}
+#blog-paging .page-button{width:20px;height:20px;border:2px solid @color-primary-alt;display:inline-block;margin-left:0.25%;margin-right:0.25%;border-radius:50%;cursor:pointer;}
+#blog-paging .page-button.page-active{background:@color-secundary;border-color:transparent;}
+/*********************************/
+
+/********** DATE-SELECTOR **********/
+#date-selector{display:inline-block;}
+#date-selector div.selector{border-right:1px solid @color-tertiary;cursor:pointer;display:inline;padding-right:3px;padding-top:5%!important;position:relative;}
+#date-selector div.selector.disabled{cursor:not-allowed;}
+#date-selector div.selector>input{text-align:right;cursor:pointer;}
+#date-selector div.selector.disabled>input{cursor:not-allowed;}
+#date-selector div.selector ul.dropdown{padding:0;text-align:right;position:absolute;width:100%;left:0;right:0;background:@color-primary;height:10.9em;overflow-y:scroll;z-index:10;border:5px solid @color-primary;}
+#date-selector div.selector ul.dropdown{border-bottom-left-radius:5px;border-bottom-right-radius:5px;}
+#date-selector div.selector ul.dropdown::-webkit-scrollbar{width:0;}
+#date-selector div.selector ul.dropdown li{display:block;padding:1px 5px 0;}
+#date-selector div.selector ul.dropdown li:hover{background:@color-secundary;}
+#date-selector div.calendar-icon{display:inline;position:relative;}
+#date-selector div.calendar-icon>i{font-size:1.7em;position:relative;cursor:pointer;margin-left:0.3em;}
+#date-selector div.calendar-icon.disabled>i{cursor:not-allowed;}
+#date-selector div.calendar-icon table{position:absolute;z-index:10;text-align:center;width:16em;color:@color-primary;background:@color-tertiary;border:3px solid @color-primary;border-radius:10px;border-collapse:separate;}
+#date-selector div.calendar-icon table>thead>tr>th,#date-selector div.calendar-icon table>tbody>tr>td{text-align:center;padding:0.25em;}
+#date-selector div.calendar-icon table>thead>tr{background:@color-tertiary;}
+#date-selector div.calendar-icon table>thead>tr:first-child{background:@color-primary;color:@color-tertiary;}
+#date-selector div.calendar-icon table>thead>tr:first-child>th{padding-top:0.5em;padding-bottom:0.5em;cursor:pointer;}
+#date-selector div.calendar-icon table>thead>tr:first-child>th:first-child{text-align:left;padding-left:1em;color:@color-secundary;}
+#date-selector div.calendar-icon table>thead>tr:first-child>th:last-child{text-align:right;padding-right:1em;color:@color-secundary;}
+#date-selector div.calendar-icon table>thead>tr:last-child>th:first-child,#date-selector div.calendar-icon table>thead>tr:last-child>th:last-child{width:0.7em;}
+#date-selector div.calendar-icon table>thead>tr>th{color:@color-tertiary-alt;}
+#date-selector div.calendar-icon table>tbody{font-size:0.7em;}
+#date-selector div.calendar-icon table>tbody>tr>td>div{width:2em;height:2em;padding:0.5em;border-radius:50%;margin:auto;cursor:pointer;}
+#date-selector div.calendar-icon table>tbody>tr>td>div.active{background:@color-secundary;color:@color-tertiary;}
+#date-selector div.calendar-icon table>tfoot>tr>td{padding-bottom:0.5em;}
+
+/***********************************/
+
+/********** TIME-SELECTOR **********/
+#time-selector{text-align:center;font-weight:700;display:inline;padding:0;}
+#time-selector div.selector{position:relative;display:inline;cursor:pointer;}
+#time-selector div.selector.disabled{cursor:not-allowed;}
+#time-selector div.selector>input{width:100%;text-align:left;cursor:pointer;}
+#time-selector div.selector.disabled>input{cursor:not-allowed;}
+#time-selector div.selector>i{position:absolute;right:0.2em;top:-0.2em;}
+#time-selector div.selector.disabled>i{cursor:not-allowed;}
+
+.clockpicker-popover.popover{background-color:@color-tertiary!important;border-color:@color-tertiary!important;}
+.clockpicker-popover .popover-title{border-bottom-color:@color-tertiary!important};
+.clockpicker-popover .popover.bottom>.arrow:after{border-bottom-color:@color-primary;}
+.clockpicker-popover .popover-title,.clockpicker-popover .popover-content{background-color:@color-primary!important;color:@color-tertiary!important;}
+.clockpicker-popover .popover-title .text-primary{color:@color-secundary!important;}
+.clockpicker-popover .popover-content .clockpicker-plate{background-color:@color-primary!important;border-color:@color-tertiary!important;}
+.clockpicker-popover .popover-content .clockpicker-dial .clockpicker-tick{color:@color-tertiary!important;}
+.clockpicker-canvas line{stroke:@color-secundary!important;}
+.clockpicker-canvas-bearing, .clockpicker-canvas-fg{fill:@color-secundary!important;}
+.clockpicker-canvas-bg{fill:@color-secundary!important;}
+.clockpicker-canvas-bearing, .clockpicker-canvas-fg{fill:@color-secundary!important;}
+/***********************************/
+
+/********** GAME-ITEM **********/
+#game-item{padding:3% 0;}
+#game-item .cover{padding:0;height:6.5em;}
+#game-item .cover .background{padding:0;}
+#game-item .cover .background::before{top:-0.5em;font-size:9em;}
+#game-item .cover .background::after{top:-2em;}
+#game-item .cover .background img{top:-1.7em;}
+#game-item .information{padding-bottom:1%;padding-top:2%;}
+#game-item .information span.description{font-weight:700;font-size:1.2em;display:block;font-family:@font-family-jaapokki;letter-spacing:1px;}
+#game-item .information div.rating-container img{width:1em;}
+#game-item .information span.price{text-transform:uppercase;display:block;font-size:1em;font-weight:700;margin-top:1%;}
+#game-item .information span.price span.light{margin-left:1em;color:@color-secundary;letter-spacing:1px;}
+#game-item .information button{background:@color-tertiary;border-width:3px;padding-left:3%;padding-right:3%;letter-spacing:0.5px;}
+#game-item .rating{padding-top:3%;padding-left:0;padding-right:0}
+#game-item .rating div.platform{padding-left:0;padding-right:0;}
+#game-item .rating img.platform{height:1.2em;margin-bottom:5%;}
+#game-item .rating .types img{width:2.5em;height:2.5em;padding:0.5em;border:2px solid @color-primary;border-radius:50%;margin:auto 1%;}
+#game-item .rating .content-rating img{width:85%;margin-top:1em;}
+/*******************************/
+
+/********** NOTIFY **********/
+#notify.cg-notify-message.notify{background:@color-primary-65;border:none;color:@color-tertiary;padding:10px 3% 6px;right:0;
+box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);-webkit-box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);-moz-box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);}
+#notify.cg-notify-message.notify.alert-danger{border-left:6px solid @color-secundary;}
+#notify.cg-notify-message.notify.alert-warning{border-left:6px solid @color-tertiary-alt;}
+#notify.cg-notify-message.notify.alert-success{border-left:6px solid @color-primary-alt;}
+#notify.cg-notify-message.notify.alert-info{border-left:6px solid @color-tertiary;}
+#notify.cg-notify-message button.cg-notify-close{background:transparent;border:none;font-size:0.7em;font-weight:400;color:@color-tertiary;text-shadow:none;opacity:1;right:0.5em;top:1em;line-height:1;}
+/****************************/
+
+/********** MODAL **********/
+.modal-content{background:@color-primary;border:5px solid @color-tertiary;color:@color-tertiary;}
+.modal-content .modal-heading,.modal-content .modal-header{color:@color-secundary;text-transform:uppercase;padding:2em 0 1em;text-align:center;}
+.modal-content .modal-heading .tertiary{color:@color-tertiary;}
+.modal-content .modal-header i.modal-icon{color:@color-tertiary;font-size:3em;}
+.modal-content .modal-header .modal-title{font-size:2em;font-family:@font-family-jaapokki;padding-top:0.5em;}
+.modal-content button.btn,.modal-content button.btn:hover,.modal-content button.btn:visited,.modal-content button.btn:focus,.modal-content button.btn:active,.modal-content button.btn:active:focus,.modal-content button.btn:active:hover,.modal-content button.btn.active,.modal-content button.btn.active:hover,.modal-content button.btn.active:visited,.modal-content button.btn.active:focus,.modal-content button.btn.active:active,.modal-content button.btn.active:active:focus,.modal-content button.btn.active:active:hover{padding-left:1em;padding-right:1em;}
+.modal-content button.save.btn,.modal-content button.save.btn:hover,.modal-content button.save.btn:visited,.modal-content button.save.btn:focus,.modal-content button.save.btn:active,.modal-content button.save.btn:active:focus,.modal-content button.save.btn:active:hover,.modal-content button.save.btn.active,.modal-content button.save.btn.active:hover,.modal-content button.save.btn.active:visited,.modal-content button.save.btn.active:focus,.modal-content button.save.btn.active:active,.modal-content button.save.btn.active:active:focus,.modal-content button.save.btn.active:active:hover{border-color:@color-secundary;background:@color-tertiary;color:@color-primary;}
+.modal-content button.cancel.btn,.modal-content button.cancel.btn:hover,.modal-content button.cancel.btn:visited,.modal-content button.cancel.btn:focus,.modal-content button.cancel.btn:active,.modal-content button.cancel.btn:active:focus,.modal-content button.cancel.btn:active:hover,.modal-content button.cancel.btn.active,.modal-content button.cancel.btn.active:hover,.modal-content button.cancel.btn.active:visited,.modal-content button.cancel.btn.active:focus,.modal-content button.cancel.btn.active:active,.modal-content button.cancel.btn.active:active:focus,.modal-content button.cancel.btn.active:active:hover{border-color:@color-secundary;background:transparent;color:@color-tertiary;}
+.modal-content form input{border:2px solid @color-tertiary;padding:2px;color:@color-primary-alt;}
+/***************************/
+
+/********** HOME-PAGE **********/
+#home{color:@color-tertiary;display:block;position:relative;}
+#home::before{content:"";background:url("../img/home/banner-bg.png") repeat-y center top;background-size:100%;position:absolute;top:-5%;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;}
+
+#home .banner{margin-top:10%;padding-top:4%;padding-bottom:20%;text-align:center;display:block;position:relative;}
+#home .banner::before{content:"";background:url("../img/home/banner-pad-bg.png") no-repeat center top;background-size:40%;position:absolute;top:0;right:0;bottom:0;left:0;z-index:-5;opacity:0.7;}
+#home .banner hr{border-top:2px solid @color-tertiary;margin-bottom:5px;margin-top:0px;}
+#home .banner .title-up{margin-left:12%;margin-right:54%;}
+#home .banner .title{font-family:@font-family-jaapokki;font-size:2.4em;letter-spacing:6px;margin-top:15px;}
+#home .banner .title-down{margin-right:12%;margin-left:53%;}
+#home .banner .description{font-size:1.5em;font-family:@font-family-jaapokki;}
+#home .banner .search .search-params{font-size:1.1em;font-weight:400;padding:0;}
+#home .banner .search .search-params .selector .ui-select-placeholder,#home .banner .search .search-params .selector .ui-select-match-text{font-weight:400;}
+#home .banner .search .search-params .filter{padding-top:7px;padding-bottom:5px;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;height:3em;}
+#home .banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
+#home .banner .search .search-params .filter:last-child{border-right-width:2.5px;border-top-right-radius:8px;border-bottom-right-radius:8px;}
+#home .banner .search .search-params input:focus{outline:none;}
+#home .banner .search .search-params input::-webkit-input-placeholder{color:@color-tertiary;text-transform:none;}
+#home .banner .search .search-params input::-moz-placeholder{color:@color-tertiary;text-transform:none;}
+#home .banner .search .search-params input::-ms-input-placeholder{color:@color-tertiary;text-transform:none;}
+#home .banner .search .search-params input,#home .banner .search .search-params .selector{width:100%;padding:5px 0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
+#home .banner .search .search-params .selector .ui-select-match>span{height:21px;}
+#home .banner .search button{border-color:@color-tertiary;}
+#home .banner .search.white-search .btn-tertiary{background-color:@color-secundary-65;width:3em;height:3em;border-radius:50%;padding:5px;position:relative;text-align:center;vertical-align:middle;color:@color-primary-alt;}
+#home .banner .search.white-search .btn-tertiary i{font-size:1.5em;position:absolute;left:5px;right:5px;top:5px;bottom:5px;margin:auto;padding-top:0.1em;}
+
+#home .how-it-works{text-align:center;position:relative;background:@color-primary;display:block;z-index:-5;}
+#home .how-it-works{z-index:0;}
+#home .how-it-works::before{content:"";background:transparent;position:absolute;left:0;right:0;top:0;bottom:0;width:100%;height:100%;z-index:-4;
+background:linear-gradient(150deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 65%,@color-how-work 80%);
+background:-webkit-linear-gradient(-60deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 65%,@color-how-work 80%);
+background:-o-linear-gradient(-60deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 65%,@color-how-work 80%);
+background:-moz-linear-gradient(-60deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt 65%,@color-how-work 80%);}
+#home .how-it-works .separator{width:2em;height:2em;position:absolute;top:-1em;left:0;right:0;margin:auto;background:@color-tertiary;border-radius:50%;}
+#home .how-it-works .title{padding:1% 0;text-transform:uppercase;font-size:1.7em;font-weight:700;margin-top:1%;margin-bottom:0;}
+#home .how-it-works .right-blue-box{background:@color-primary;padding:2% 20% 2.5% 1.5%;box-shadow:-15px 10px 60px -5px @color-primary;}
+#home .how-it-works .left-blue-box{background:@color-primary;padding:2% 1.5% 2.5% 20%;box-shadow:-15px 10px 60px -5px @color-primary;}
+#home .how-it-works .right-blue-box::before{content:"";position:absolute;border-left:8px solid @color-primary;height:100%;top:0;left:-4px;}
+#home .how-it-works .left-blue-box::before{content:"";position:absolute;border-right:8px solid @color-primary;height:100%;top:0;right:-4px;}
+#home .how-it-works .square-box{position:absolute;width:4em;height:4em;background:url("../img/home/how-it-works-square-box.svg") no-repeat center center;background-size:100%;}
+#home .how-it-works .rectangle-box{position:absolute;width:6em;height:4em;background:url("../img/home/how-it-works-rectangle-box.svg") no-repeat center center;background-size:100%;}
+#home .how-it-works .square-box.first{right:25%;top:75%;}
+#home .how-it-works .square-box.second{right:25%;margin-top:15%;z-index:1;}
+#home .how-it-works .rectangle-box.third{left:15%;margin-top:15%;z-index:1;}
+#home .how-it-works .rectangle-box.fourth{right:-55%;margin-top:40%;z-index:1;}
+#home .how-it-works .step .title{font-size:1.5em;color:@color-secundary;position:relative;padding-left:35px;padding-right:35px;}
+#home .how-it-works .step.first-step{margin-top:-4%;padding-top:4%;position:relative;}
+#home .how-it-works .step.first-step::before{content:"";background:url("../img/home/how-it-works-ps4-console.png") no-repeat;background-size:100%;display:block;position:absolute;width:50%;padding-top:25%;top:0;left:0;}
+#home .how-it-works .step.second-step::before{content:"";background:url("../img/home/how-it-works-ps4-pad-1.png") no-repeat;background-size:100%;display:block;position:absolute;width:30%;padding-top:25%;top:0;right:12%;}
+#home .how-it-works .step.third-step::before{content:"";background:url("../img/home/how-it-works-ps4-pad-2.png") no-repeat left bottom;background-size:50%;display:block;position:absolute;width:100%;padding-top:30%;bottom:0;left:0;}
+#home .how-it-works .path-left,#home .how-it-works .path-right,#home .how-it-works .path-bottom,#home .how-it-works .path-top{position:relative;border-style:solid;border-color:@color-tertiary;border-width:0px;}
+#home .how-it-works .path-left{border-left-width:1px;}
+#home .how-it-works .path-right{border-right-width:1px;}
+#home .how-it-works .path-bottom{border-bottom-width:1px;}
+#home .how-it-works .path-top{border-top-width:1px;}
+#home .how-it-works .path-left.path--2t,#home .how-it-works .path-right.path--2t{margin-top:-2px;}
+#home .how-it-works .path-left.path-4h,#home .how-it-works .path-right.path-4h{padding-top:4%;}
+#home .how-it-works .path-left.path-3h,#home .how-it-works .path-right.path-3h{padding-top:3%;}
+#home .how-it-works .path-left.path-2h,#home .how-it-works .path-right.path-2h{padding-top:2%;}
+#home .how-it-works .complete-1px-br::before{content:"";position:absolute;right:-1px;height:1px;border-right:1px solid @color-tertiary;}
+#home .how-it-works .complete-2px-br::before{content:"";position:absolute;right:-1px;height:2px;border-right:1px solid @color-tertiary;}
+#home .how-it-works .complete-1px-bl::before{content:"";position:absolute;left:-1px;height:1px;border-left:1px solid @color-tertiary;}
+#home .how-it-works .complete-1px-tr::before{content:"";position:absolute;right:-1px;height:1px;border-right:1px solid @color-tertiary;top:-1px;}
+#home .how-it-works .mini-separator{width:8px;height:8px;background:@color-tertiary;border-radius:50%;margin:auto;}
+
+#home .choose-by-cat{background:@color-secundary;text-transform:uppercase;position:relative;}
+#home .choose-by-cat h2.title{font-size:1.5em;padding-top:3%;padding-bottom:5%;font-weight:700;}
+#home .choose-by-cat h2.title .vertical{border-left:1px solid @color-primary;padding-top:2%;padding-bottom:1%;margin-right:4%;}
+#home .choose-by-cat .categories{white-space:nowrap;overflow-x:scroll;padding-bottom:4%;margin-bottom:5%;text-transform:uppercase;}
+#home .choose-by-cat .categories .category{display:inline-block;margin-left:2%;margin-right:2%;width:11em;height:11em;border:5px solid @color-primary;border-radius:50%;}
+#home .choose-by-cat .categories .category img{width:100%;padding:25%;cursor:pointer;margin-bottom:1em;}
+#home .choose-by-cat .categories .category.active{border-color:@color-tertiary;}
+#home .choose-by-cat .categories .category span{font-weight:700;color:@color-primary;}
+#home .choose-by-cat .categories .category.active span{font-weight:700;color:@color-tertiary;}
+#home .choose-by-cat .games{position:absolute;top:-13%;bottom:-10%;left:60%;right:19%;z-index:1;background:@color-secundary;box-shadow:5px 10px 25px 5px @color-primary-30;}
+#home .choose-by-cat .games .game{position:relative;width:100%;height:100%;}
+#home .choose-by-cat .games .game button{padding:0;width:3em;color:@color-tertiary;}
+#home .choose-by-cat .games .game .previous,#home .choose-by-cat .games .game .next{font-size:3em;margin:auto;position:absolute;left:0;right:0;z-index:10;}
+#home .choose-by-cat .games .game .previous{top:0;}
+#home .choose-by-cat .games .game .next{bottom:0;}
+#home .choose-by-cat .games .game .info{width:75%;position:absolute;left:0;right:0;top:8em;margin:auto;}
+#home .choose-by-cat .games .game .info div.image-container{margin: -6px auto auto;}
+#home .choose-by-cat .games .game .info .rating-container{padding-top:17%;}
+#home .choose-by-cat .categories::-webkit-scrollbar{background:transparent;height:24px;}
+#home .choose-by-cat .categories::-webkit-scrollbar-track{background:url("../img/home/scroll-track.svg") no-repeat center center;background-size:80%;border:2px solid @color-tertiary;border-radius:10px;margin-left:35%;margin-right:35%;}
+#home .choose-by-cat .categories::-webkit-scrollbar-thumb{background:url("../img/home/scroll-thumb.svg") no-repeat center center;}
+
+#home .contact-us{position:relative;}
+#home .contact-us::before{content:"";position:absolute;top:-20%;right:0;bottom:0;left:0;z-index:-3;background:@color-primary-alt;background-image:url("../img/home/contact-us-bg.svg");background-position:center top;background-size:105% 90%;}
+#home .contact-us::after{content:"";position:absolute;top:70%;right:0;bottom:0;left:0;z-index:-2;background:@color-primary;}
+#home .contact-us form.contact-form{background:@color-primary-alt;box-shadow:5px 10px 25px 5px @color-primary-30;text-align:center;padding-top:5%;}
+#home .contact-us form.contact-form h2.title{font-size:1.5em;font-weight:700;text-transform:uppercase;}
+#home .contact-us form.contact-form .description{font-size:1.2em;}
+#home .contact-us form.contact-form input,#home .contact-us form.contact-form textarea{width:100%;margin:1%;border:2px solid @color-primary;border-radius:5px;padding:1% 7% 1% 3%;background:transparent;}
+#home .contact-us form.contact-form textarea{background:@color-tertiary;border-color:transparent;color:@color-primary;border-radius:0;resize:none;}
+#home .contact-us form.contact-form input:focus,#home .contact-us form.contact-form textarea:focus{box-shadow:none;outline:none;}
+#home .contact-us form.contact-form input[name="name"]{background:url("../img/contact-person.svg") no-repeat right center;background-size:20px auto;background-position-x:97%;}
+#home .contact-us form.contact-form input[name="email"]{background:url("../img/contact-email.svg") no-repeat right center;background-size:20px auto;background-position-x:97%;}
+#home .contact-us form.contact-form input[name="phone"]{background:url("../img/contact-phone.svg") no-repeat right center;background-size:20px auto;background-position-x:97%;}
+#home .contact-us form.contact-form textarea[name="message"]{background-image:url("../img/contact-message.svg");background-size:15px auto;background-position-x:97%;background-position-y:2%;background-repeat:no-repeat;}
+#home .contact-us form.contact-form .send-button{margin-top:5%;margin-bottom:6%;}
+#home .contact-us form.contact-form .send-button button{border-radius:5px;}
+/*******************************/
+
+/********** LOGIN-PAGE **********/
+#login{text-align:center;color:@color-tertiary;padding-bottom:60%;position:relative;}
+#login::before{content:"";position:absolute;top:0;bottom:0;left:0;right:50%;z-index:-1;box-shadow:0px 0px 15px 5px @color-primary;
+background:@color-secundary;background:linear-gradient(45deg,@color-tertiary -45%,@color-secundary 35%);background:-webkit-linear-gradient(45deg,@color-tertiary -45%,@color-secundary 35%);background:-o-linear-gradient(45deg,@color-tertiary -45%,@color-secundary 35%);background:-moz-linear-gradient(225deg,@color-secundary 45%,@color-tertiary 155%);}
+#login::after{content:"";position:absolute;top:0;bottom:0;left:50%;right:0;z-index:-2;
+background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-alt 35%,@color-tertiary 145%);background:-webkit-linear-gradient(-45deg,@color-primary-alt 35%,@color-tertiary 145%);background:-o-linear-gradient(-45deg,@color-primary-alt 35%,@color-tertiary 145%);background:-moz-linear-gradient(-45deg,@color-primary-alt 35%,@color-tertiary 145%);}
+#login img.signup-bg{position:absolute;bottom:0;left:0;right:0;width:60%;margin:auto;}
+#login a{color:@color-tertiary;}
+#login button{color:@color-tertiary;margin-top:1%;}
+#login .btn-fb{border-radius:7px;margin-bottom:1%;}
+#login section{padding-top:10%;height:100%;}
+#login section.signup{background:transparent;left:0;}
+#login section.login{right:0;}
+#login section.login button{border-color:@color-secundary;}
+#login section.login button.login{color:@color-primary;margin-top:7%;margin-bottom:7%;}
+#login section.login a{margin-top:10%;}
+#login section form input{width:100%;margin:1%;border:2px solid @color-primary;border-radius:5px;padding:1% 7% 1% 3%;background:transparent;}
+#login section form input:focus{outline:none;}
+#login section form input::-webkit-input-placeholder{color:@color-tertiary;text-transform:none;}
+#login section form input::-moz-placeholder{color:@color-tertiary;text-transform:none;}
+#login section form input::-ms-input-placeholder{color:@color-tertiary;text-transform:none;}
+#login section form .image{padding:2% 0;text-align:left;}
+#login section form .image img{width:1.3em;}
+
+.terms-form .legal a{color:@color-tertiary;text-decoration:underline;}
+/********************************/
+
+/********** ACCOUNT-PAGE **********/
+#account{background:@color-secundary;color:@color-tertiary;}
+/**********************************/
+
+/********** ACCOUNT-LINKS **********/
+#accountLinks{background:@color-primary-alt;padding-top:9em;padding-bottom:1em;font-size:1em;font-weight:700;text-transform:uppercase;box-shadow:5px 5px 50px 2px @color-primary;position:absolute;left:20%;}
+#accountLinks nav li{position:relative;display:block;padding:10% 10% 5%;margin-left:5%;margin-right:5%;border-bottom:1px solid @color-primary;}
+#accountLinks nav li:last-child{border-bottom:none;}
+#accountLinks nav li .btn-account-links{color:@color-tertiary;width:100%;padding:0;text-align:left;}
+#accountLinks nav li .btn-account-links:hover::after,#accountLinks nav li .btn-account-links:visited::after,#accountLinks nav li .btn-account-links:focus::after,#accountLinks nav li .btn-account-links:active::after,#accountLinks nav li .btn-account-links:active:focus::after,#accountLinks nav li .btn-account-links:active:hover::after,
+#accountLinks nav li .btn-account-links.active::after,#accountLinks nav li .btn-account-links.active:hover::after,#accountLinks nav li .btn-account-links.active:visited::after,#accountLinks nav li .btn-account-links.active:focus::after,#accountLinks nav li .btn-account-links.active:active::after,#accountLinks nav li .btn-account-links.active:active:focus::after,#accountLinks nav li .btn-account-links.active:active:hover::after
+{content:"";position:absolute;width:17%;top:0;bottom:40%;right:-5%;border-bottom:4px solid @color-tertiary;box-shadow:none;}
+/***********************************/
+
+/********** PROFILE-PAGE **********/
+#account #profile{padding-top:9em;}
+
+#account #profile section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
+#account #profile section.header .name h2.title{font-size:1.8em;margin-bottom:0;}
+#account #profile section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
+#account #profile section.header .name .connection span{color:@color-primary-alt;}
+#account #profile section.header .completed{position:relative;font-size:1.2em;margin-top:5%;margin-bottom:3%;text-transform:uppercase;font-weight:700;}
+#account #profile section.header .completed span{color:@color-primary-40;}
+#account #profile section.header .completed::after{content:"";position:absolute;bottom:-10%;left:15px;width:15%;border-bottom:2px solid @color-tertiary;}
+#account #profile section.header .description{font-size:0.9em;font-weight:700;line-height:1.2;}
+#account #profile section.header .check-list li{width:100%;display:inline-block;font-size:1em;font-weight:700;margin-bottom:3%;position:relative;text-transform:uppercase;}
+#account #profile section.header .check-list li .box{position:relative;width:1.4em;height:1.4em;display:inline-block;border:2px solid @color-tertiary;margin-right:2%;color:@color-primary;}
+#account #profile section.header .check-list li .box.checked::after{content:"";background:url("../img/check.svg") no-repeat center center;position:absolute;left:1px;bottom:-2px;background-size:100%;width:1.5em;height:1.5em;}
+#account #profile section.header .check-list li span{position:absolute;top:10%;}
+
+#account #profile section.contact-information{position:relative;padding-bottom:4%;}
+#account #profile section.contact-information .completed{position:absolute;top:40%;left:20%;right:60%;bottom:0;text-align:center;font-size:1.2em;text-transform:uppercase;font-weight:700;}
+#account #profile section.contact-information .completed span.percent{color:@color-primary-40;}
+#account #profile section.contact-information .completed button{padding-top:1%;font-size:0.65em;width:50%;}
+#account #profile section.contact-information .form{margin-top:3%;margin-left:-1%;font-size:0.8em;position:relative;padding-left:3%;}
+#account #profile section.contact-information .form::before{content:"";position:absolute;top:1.5em;bottom:1em;left:0;border-left:5px solid @color-tertiary;}
+#account #profile section.contact-information .form>div{border-bottom:2px solid @color-tertiary;padding-bottom:1%;margin-top:1%;margin-bottom:2%;padding-left:0;padding-right:0;}
+#account #profile section.contact-information .form>div.clearfix{border:none;margin:0;padding:0;}
+#account #profile section.contact-information .form>div>label,#account #profile section.contact-information form>div>div{padding-left:0;padding-right:0;}
+#account #profile section.contact-information .form label{text-transform:uppercase;}
+#account #profile section.contact-information .form label.separator{line-height:1;}
+#account #profile section.contact-information .form label small{text-transform:none;display:inline-block;}
+#account #profile section.contact-information .form input{color:@color-primary;font-size:1.5em;}
+#account #profile section.contact-information .form input[disabled]{color:@color-primary;}
+#account #profile section.contact-information .form input[disabled]::-webkit-input-placeholder{color:@color-primary;}
+#account #profile section.contact-information .form input[disabled]::-moz-placeholder{color:@color-primary;}
+#account #profile section.contact-information .form input[disabled]::-ms-input-placeholder{color:@color-primary;}
+#account #profile section.contact-information .form input::-webkit-input-placeholder{color:@color-primary;}
+#account #profile section.contact-information .form input::-moz-placeholder{color:@color-primary;}
+#account #profile section.contact-information .form input::-ms-input-placeholder{color:@color-primary;}
+#account #profile section.contact-information .form .selector{width:100%;padding-top:0;padding-bottom:0;}
+#account #profile section.contact-information .form .selector *{outline:none;}
+#account #profile section.contact-information .form .selector .ui-select-match .ui-select-match-text{color:@color-primary;font-weight:400;height:2em;font-size:1.5em;}
+#account #profile section.contact-information .form .selector .ui-select-match>span.ui-select-toggle,#account #profile section.contact-information form .selector>input.ui-select-search{height:2em;font-size:0.8em;}
+#account #profile section.contact-information .form .selector .ui-select-match span[disabled]{background:transparent;border:none;}
+#account #profile section.contact-information .form input[type="address"]{width:100%;padding-right:25px;background:url("../img/map-marker.svg") no-repeat center;background-size:1em;background-position-x:99%;}
+#account #profile section.contact-information .form input[type="person"]{width:100%;}
+#account #profile section.contact-information .form .placeholder{text-align:center;text-transform:uppercase;}
+#account #profile section.contact-information .form .time-selector input::-webkit-input-placeholder{font-size:0.6em;}
+#account #profile section.contact-information .form .time-selector input::-moz-placeholder{font-size:0.6em;}
+#account #profile section.contact-information .form .time-selector input::-ms-input-placeholder{font-size:0.6em;}
+#account #profile section.contact-information .form .time-selector .separator{padding:0;text-align:center;}
+#account #profile section.contact-information .form .billing{border-bottom:none;}
+#account #profile section.contact-information .form .billing-address{padding:0;position:relative;}
+#account #profile section.contact-information .form .billing-address::before{content:"";border-bottom:2px solid @color-tertiary;left:0;right:0;position:absolute;top:42.5%;}
+#account #profile section.contact-information .form .billing-address::after{content:"";border-bottom:2px solid @color-tertiary;left:0;right:0;position:absolute;top:85.5%;}
+#account #profile section.contact-information .form .billing-address textarea{color:@color-primary;font-size:1.5em;resize:none;width:100%;}
+#account #profile section.contact-information .form .billing-address textarea::-webkit-scrollbar{background:transparent;width:0.5em!important;}
+#account #profile section.contact-information .form .billing-address textarea::-webkit-scrollbar-track{background:transparent;}
+#account #profile section.contact-information .form .billing-address textarea::-webkit-scrollbar-thumb{background:@color-primary;}
+#account #profile section.contact-information .form .phone>label{display:table-cell;float:none;padding-top:1%;vertical-align:middle;}
+#account #profile section.contact-information .form .phone>div{display:table-cell;float:none;padding-left:1%;vertical-align:middle;}
+
+#account #profile section.contact-means{background:@color-tertiary-alt;padding-bottom:1%;}
+#account #profile section.contact-means>form>div{text-align:center;}
+#account #profile section.contact-means>form>div.completed{text-align:left;font-size:1.2em;color:@color-secundary;text-transform:uppercase;font-weight:700;padding-top:2%;}
+#account #profile section.contact-means>form>div.completed span.percent{color:@color-primary-40;}
+#account #profile section.contact-means>form>div.completed .subtitle img{height:1.2em;margin-top:-2%;margin-right:2%;}
+#account #profile section.contact-means>form>div.completed button{font-size:0.65em;padding:0;padding-top:0.5%;margin-top:-2%;width:11em;}
+#account #profile section.contact-means>form>div.completed span.description{font-size:0.8em;text-transform:none;display:block;font-weight:700;}
+#account #profile section.contact-means>form>div.completed .subtitle>div,#account #profile section.contact-means>form>div.completed .subtitle>button{display:table-cell;}
+#account #profile section.contact-means>form>div.completed .subtitle>div>i{display:inline-block;font-size:2em;margin-top:-3%;padding-right:3%;vertical-align:middle;}
+#account #profile section.contact-means>form>div.completed .subtitle>div{vertical-align:bottom;}
+#account #profile section.contact-means>form>div.icons{background:@color-primary;padding-top:1em;}
+#account #profile section.contact-means>form>div.icons img{height:3em;}
+#account #profile section.contact-means>form>div.icons i{font-size:2em;padding:0.5em 0;color:#1C3664;}
+#account #profile section.contact-means>form>div.icons i.active{color:@color-secundary;}
+#account #profile section.contact-means>form>div.form input{margin:5% auto 2%;border-bottom:2px solid @color-secundary;font-size:1.1em;color:@color-primary;text-align:center;text-transform:uppercase;width:100%;}
+#account #profile section.contact-means>form>div.form button{margin:5% auto;}
+#account #profile section.contact-means>form>div.form img.verification-ok{height:3em;margin:2% auto;}
+#account #profile section.contact-means>form>div.form span{display:block;color:@color-primary;font-size:0.8em;font-weight:700;}
+
+#account #profile section.games{padding-top:2%;padding-bottom:3%;color:@color-tertiary;font-weight:700;}
+#account #profile section.games img{height:2em;display:block;margin:auto;margin-bottom:3%;}
+#account #profile section.games button{display:block;margin:auto;}
+#account #profile section.games span{font-size:1.2em;text-transform:uppercase;}
+#account #profile section.games span.quantity{color:@color-primary-40;margin-left:2%;}
+#account #profile section.games span.quantity.more{color:@color-primary;}
+#account #profile section.games p{margin:2% auto;font-size:0.8em;}
+
+#avatar-choose .avatar{width:100%;}
+#avatar-choose .modal-body{padding:0;}
+#avatar-choose .avatar-table-row{display:table-row;padding:0;}
+#avatar-choose .avatar-cell{border:2px solid @color-tertiary;display:table-cell;padding:1.5em;position:relative;width:20%;}
+#avatar-choose .avatar-cell.empty{border-left:none;border-right:none;}
+#avatar-choose .avatar-cell.empty:first-child{border-left:2px solid @color-tertiary;}
+#avatar-choose .avatar-cell.choosen img{opacity:0.5;}
+#avatar-choose .avatar-cell.choosen::after{content:"";background:url('../img/ok-icon.svg') no-repeat center center;background-size:60%;bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%;}
+#avatar-choose .avatar-cell img{cursor:pointer;}
+#avatar.choose .modal-footer button{font-size:1.5em;}
+/**********************************/
+
+/********** SETTINGS-PAGE **********/
+#account #settings{padding-top:9em;}
+
+#account #settings section.header{color:@color-tertiary;padding-bottom:6%;}
+#account #settings section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
+#account #settings section.header .name h1.title{font-size:1.8em;margin-bottom:0;}
+#account #settings section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
+#account #settings section.header .name .connection span{color:@color-primary-alt;}
+#account #settings section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
+#account #settings section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
+#account #settings section.header .coins::before{content:"\E008";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
+#account #settings section.header .coins span.dark{font-family:@font-family-josefinsans;color:@color-primary;font-weight:700;letter-spacing:2px;}
+#account #settings section.header .coins button>span.light{color:@color-tertiary;}
+#account #settings section.header .coins button{position:relative;padding:4px 25% 1px;border-width:1px;font-size:0.7em;}
+#account #settings section.header .coins button::before,#account #settings section.header .coins button::after{color:@color-tertiary;position:absolute;font-family:gameclub;}
+#account #settings section.header .coins button::before{content:"\E024";left:5px;}
+#account #settings section.header .coins button::after{content:"\E024";right:5px;}
+#account #settings section.header .payment{margin-top:2%;padding:0;}
+#account #settings section.header .payment::before{content:"\E008";position:absolute;top:1em;left:-2.5em;font-size:0.4em;font-family:gameclub;}
+#account #settings section.header .payment h2.subtitle{font-size:1em;text-transform:uppercase;display:block;font-weight:700;margin-bottom:2%;position:relative;letter-spacing:1px;}
+#account #settings section.header .payment .card-info{padding:0;margin-bottom:1em;}
+#account #settings section.header .payment .card-info input{border:none;outline:none;border-radius:7px;text-align:center;color:@color-primary;padding:0.5em 4em 0.25em;font-size:0.8em;}
+#account #settings section.header .payment .card-info button{text-align:center;padding:0.5em 1.5em 0.25em;font-size:0.7em;margin:auto 0.5em;border-radius:7px;}
+#account #settings section.header .payment .paymen-help{padding:0;text-transform:uppercase;font-weight:700;font-size:0.75em;}
+#account #settings section.header .payment .new-payment{padding:0;}
+#account #settings section.header .payment .new-payment .name,#account #settings section.header .payment .new-payment .card-number,#account #settings section.header .payment .new-payment .expiry,#account #settings section.header .payment .new-payment .cvc
+{border-bottom:1px solid @color-tertiary;padding:1% 10% 0;margin:1% 0;}
+#account #settings section.header .payment .new-payment input::-webkit-input-placeholder{color:@color-primary-40;}
+#account #settings section.header .payment .new-payment input::-moz-placeholder{color:@color-primary-40;}
+#account #settings section.header .payment .new-payment input::-ms-input-placeholder{color:@color-primary-40;}
+#account #settings section.header .payment .new-payment div.name,#account #settings section.header .payment .new-payment div.card-number,#account #settings section.header .payment .new-payment div.expiry
+{padding-right:0;}
+#account #settings section.header .payment .new-payment div.name::before,#account #settings section.header .payment .new-payment div.card-number::before,#account #settings section.header .payment .new-payment div.expiry::before,#account #settings section.header .payment .new-payment div.cvc::before
+{font-family:gameclub;position:absolute;left:0.5em;bottom:0;}
+#account #settings section.header .payment .new-payment div.cvc::after{font-family:gameclub;position:absolute;right:0.5em;bottom:0;}
+#account #settings section.header .payment .new-payment div.name>div{padding-right:0;}
+#account #settings section.header .payment .new-payment div.name>div:first-child{padding-left:0;}
+#account #settings section.header .payment .new-payment div.name::before{content:"\E019";}
+#account #settings section.header .payment .new-payment div.card-number::before{content:"\E006";}
+#account #settings section.header .payment .new-payment div.expiry{margin-right:1em;}
+#account #settings section.header .payment .new-payment div.expiry::before{content:"\E005";}
+#account #settings section.header .payment .new-payment div.cvc::before{content:"\E014";}
+#account #settings section.header .payment .new-payment div.cvc::after{content:"\E011";}
+#account #settings section.header .payment .new-payment button{padding:2% 12% 1%;font-size:0.8em;margin:4% auto 1%;}
+
+#account #settings section.reviews{background:@color-tertiary-alt;color:@color-primary;padding:2% 0}
+#account #settings section.reviews h2{text-align:center;text-transform:uppercase;font-size:1em;font-weight:700;color:@color-primary;}
+#account #settings section.reviews h2 i.gc-rating,#account #settings section.reviews .rating-container i.no,#account #settings section.reviews .body .title .rating-container i.no{color:@color-primary-s;}
+#account #settings section.reviews .header{border-top-width:2px;border-top-style:solid;padding-top:2%;}
+#account #settings section.reviews .header small{font-size:0.8em;}
+#account #settings section.reviews .body .title{color:@color-primary;font-size:1em;font-weight:400;}
+#account #settings section.reviews .body .title span{text-align:left;}
+#account #settings section.reviews .body .title .rating-container{text-align:right;}
+#account #settings section.reviews .body .title .col-md-6{padding:0;}
+#account #settings section.reviews .body .title .rating-container i{color:@color-tertiary;}
+#account #settings section.reviews .body .description{border-radius:5px;background:@color-tertiary;color:@color-primary-alt;padding:1%;font-size:0.8em;text-transform:none;text-align:left;}
+#account #settings section.reviews .body .rating{margin-bottom:3%;}
+#account #settings section.reviews .lender,#account #settings section.reviews .gamer{width:48%;padding-top:2%;text-align:center;}
+#account #settings section.reviews .lender{float:left;margin-right:2%;color:@color-secundary;}
+#account #settings section.reviews .lender .header{border-top-color:@color-secundary;padding-left:65%;}
+#account #settings section.reviews .lender .header .rating-container{color:@color-secundary;}
+#account #settings section.reviews .lender .body{background:@color-secundary;padding:1% 3% 1% 50%;}
+#account #settings section.reviews .gamer{float:right;margin-left:2%;color:@color-primary-alt;}
+#account #settings section.reviews .gamer .header{border-top-color:@color-primary-alt;padding-right:65%;}
+#account #settings section.reviews .gamer .header .rating-container{color:@color-primary-alt;}
+#account #settings section.reviews .gamer .body{background:@color-primary-alt;padding:1% 50% 1% 3%;}
+/***********************************/
+
+/********** GAMES-PAGE **********/
+#account #games{padding-top:9em;}
+
+#account #games section.header{color:@color-tertiary;padding-bottom:6%;}
+#account #games section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
+#account #games section.header .name h1.title{font-size:1.8em;margin-bottom:0;}
+#account #games section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
+#account #games section.header .name .connection span{color:@color-primary-alt;}
+#account #games section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
+#account #games section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
+#account #games section.header .coins::before{content:"\E008";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
+#account #games section.header .coins span.dark{font-family:@font-family-josefinsans;color:@color-primary;font-weight:700;letter-spacing:2px;}
+#account #games section.header .coins button>span.light{color:@color-tertiary;}
+#account #games section.header .coins button{position:relative;padding:4px 25% 1px;border-width:1px;font-size:0.7em;}
+#account #games section.header .coins button::before,#account #games section.header .coins button::after{color:@color-tertiary;position:absolute;font-family:gameclub;}
+#account #games section.header .coins button::before{content:"\E024";left:5px;}
+#account #games section.header .coins button::after{content:"\E024";right:5px;}
+#account #games section.header .total{margin-top:2%;padding:0;}
+#account #games section.header .total .subtitle{font-size:1.2em;text-transform:uppercase;display:block;font-weight:700;margin-bottom:2%;position:relative;letter-spacing:1px;}
+#account #games section.header .total::before{content:"\E008";position:absolute;top:1.2em;left:-2.5em;font-size:0.4em;font-family:gameclub;}
+#account #games section.header .total .description{font-size:1em;text-transform:uppercase;font-weight:700;line-height:1;margin-bottom:1%;letter-spacing:1px}
+#account #games section.header .total .description span.dark{color:@color-primary;font-size:1.5em;margin-left:4%;}
+#account #games section.header .total .description .updated{padding:4px 3% 2px;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;text-transform:none;}
+#account #games section.header .total .description .updated span{color:@color-primary-alt;}
+
+#account #games section.games{background:@color-tertiary-alt;color:@color-primary;}
+#account #games section.games .header{margin-bottom:2%;}
+#account #games section.games .header .text-center{padding-top:2%;}
+#account #games section.games .header span.subtitle{text-transform:uppercase;padding:1% 10%;border-left:1px solid @color-primary;border-right:1px solid @color-primary;font-size:1.5em;font-weight:700;}
+#account #games section.games .header .filters li{display:inline-block;width:2em;height:2em;background:@color-primary;position:relative;text-align:center;}
+#account #games section.games .header .filters li::before{content:"";position:absolute;left:-1px;top:20%;bottom:20%;border-left:2px solid @color-secundary-65;}
+#account #games section.games .header .filters li:first-child::before{border:none;}
+#account #games section.games .header .filters li:last-child::before{border:none;}
+#account #games section.games .header .filters li:last-child{background:transparent;}
+#account #games section.games .header .filters li:last-child>a{color:@color-primary;padding:0;}
+#account #games section.games .header .filters li:last-child>a>i::before{font-size:1.4em;}
+#account #games section.games .header .filters li>a{position:absolute;left:0;right:0;top:0.25em;text-decoration:none;color:@color-tertiary;padding-top:10%;}
+#account #games section.games .header .filters li>a.active{color:@color-primary-alt;}
+#account #games section.games .list div.separator{width:100%;height:0.3em;margin-top:-2%;margin-bottom:2%;background:@color-primary;
+background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transparent);background:-webkit-linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transparent);background:-o-linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transparent);background:-moz-linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transparent);}
+#account #games section.games .selector{width:46%;float:right;padding-top:4%;}
+#account #games section.games .selector .ui-select-choices{background:@color-tertiary-alt;}
+#account #games section.games .selector .ui-select-search,#account #games section.games .selector .ui-select-match>span,#account #games section.games .selector .ui-select-match>span>span,#account #games section.games .selector .ui-select-match .ui-select-placeholder,#account #games section.games .selector input{color:@color-primary;}
+#account #games section.games .selector img{height:1.3em;}
+#account #games section.games #game-item,#account #games section.games #game-item .rating{padding-top:4%;}
+#account #games section.games #game-item .information{padding-top:0;}
+#account #games section.games #game-item .image-container{margin-top:-15px;}
+#account #games #most-played .separator{display:none;}
+
+
+#account #games #game section.banner{padding-top:10em;background:@color-primary;}
+#account #games #game section.header{padding-bottom:0;}
+#account #games #game button.small{padding-left:1em;padding-right:1em;}
+#account #games #game section.information{padding-bottom:1.5em;}
+#account #games #game section.information form label{color:@color-primary;text-transform:uppercase;}
+#account #games #game section.information form .form-cell{display:table-cell;vertical-align:top;padding-left:15px;}
+#account #games #game section.information form .obs{margin-bottom:3%;}
+#account #games #game section.information form .obs div.form-cell{width:100%;}
+#account #games #game section.information form .insured{margin-bottom:2%;}
+#account #games #game section.information form .insured label.form-cell{width:36%;}
+#account #games #game section.information form .insured span.help,#account #games #game section.information form .help span{color:@color-primary-40;font-size:0.8em;width:100%;}
+#account #games #game section.information form .help{margin-bottom:1.5em;}
+#account #games #game section.information form .help label.form-cell{width:40%;}
+#account #games #game section.information form .selector{padding:0;width:10em;}
+#account #games #game section.information form .selector span.ui-select-toggle{height:21px;}
+#account #games #game section.information form .selector .ui-select-match .ui-select-match-text,
+#account #games #game section.information form .selector .ui-select-match .ui-select-placeholder,
+#account #games #game section.information form .selector .ui-select-match i,
+#account #games #game section.information form .selector .ui-select-search{color:@color-secundary;}
+#account #games #game section.information form textarea{resize:none;background:transparent url("../img/underline.svg") repeat;background-size:1em;}
+#account #games #game section.information form textarea::-webkit-scrollbar{background:transparent;width:0.5em!important;}
+#account #games #game section.information form textarea::-webkit-scrollbar-track{background:transparent;}
+#account #games #game section.information form textarea::-webkit-scrollbar-thumb{background:@color-secundary;}
+#account #games #game section.information form .check{color:@color-primary-40;text-transform:uppercase;padding:0;cursor:pointer;position:relative;}
+#account #games #game section.information form .check.active,#account #games #game section.information form .check.active span.help{color:@color-secundary;}
+#account #games #game section.information form .check.active::before{content:"\E003";left:-13px;font-family:@font-family-gameclub;position:absolute;font-size:0.75em;top:1px;}
+#account #games #game section.information form .check span.help{text-transform:none;}
+#account #games #game section.information form input.coins{border-bottom:3px solid @color-secundary;width:4em;text-align:right;margin-bottom:0;padding-bottom:0;}
+#account #games #game section.information form .selector.status .ui-select-match .ui-select-match-text{font-weight:400;}
+#account #games #game section.information form .selector.integrity{width:3em;}
+#account #games #game section.information form .selector.integrity ul,#account #games #game section.information form .selector.integrity ul li,#account #games #game section.information form .selector.integrity ul li div{width:3em;}
+#account #games #game section.information form .selector.integrity .dropdown-menu{min-width:0;}
+#account #games #game section.information form .form-cell.help{text-transform:uppercase;padding:0;border-bottom:3px solid @color-secundary;}
+#account #games #game section.information form .form-cell.help span{color:@color-secundary;}
+
+#account #games section.upload{padding-top:2%;padding-bottom:2%;}
+#account #games section.upload .subtitle{text-transform:uppercase;padding:1%;border-left:1px solid @color-primary;border-right:1px solid @color-primary;font-size:1.5em;font-weight:700;}
+#account #games section.upload p{width:60%;margin:2% auto 1%;font-weight:700;font-family:@font-family-jaapokki;}
+#account #games section.upload button{padding:5px 0 2px;width:18em;}
+
+#account #games section.banner{padding-top:4%;padding-bottom:10%;text-align:center;display:block;position:relative;background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%}
+#account #games section.banner hr{border-top:2px solid @color-tertiary;margin-bottom:5px;margin-top:0px;}
+#account #games section.banner .title-up{margin-left:12%;margin-right:54%;}
+#account #games section.banner .title{font-family:@font-family-jaapokki;font-size:2.4em;letter-spacing:6px;margin-top:15px;}
+#account #games section.banner .title-down{margin-right:12%;margin-left:53%;}
+#account #games section.banner .description{font-size:1.5em;font-family:@font-family-jaapokki;}
+#account #games section.banner .search .search-params{font-size:1.1em;font-weight:400;padding:0;}
+#account #games section.banner .search .search-params .selector .ui-select-placeholder,#account #games section.banner .search .search-params .selector .ui-select-match-text{font-weight:400;}
+#account #games section.banner .search .search-params .filter{padding-top:7px;padding-bottom:5px;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;height:3em;}
+#account #games section.banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
+#account #games section.banner .search .search-params .filter:last-child{border-right-width:2.5px;border-top-right-radius:8px;border-bottom-right-radius:8px;}
+#account #games section.banner .search .search-params input{text-transform:uppercase;}
+#account #games section.banner .search .search-params input:focus{outline:none;}
+#account #games section.banner .search .search-params input::-webkit-input-placeholder{color:@color-tertiary;text-transform:none;}
+#account #games section.banner .search .search-params input::-moz-placeholder{color:@color-tertiary;text-transform:none;}
+#account #games section.banner .search .search-params input::-ms-input-placeholder{color:@color-tertiary;text-transform:none;}
+#account #games section.banner .search .search-params input,#account #games section.banner .search .search-params .selector{width:100%;padding:5px 0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
+#account #games section.banner .search .search-params .selector .ui-select-match>span{height:21px;}
+#account #games section.banner .search button{border-color:@color-tertiary;}
+#account #games section.banner .search.white-search .btn-tertiary{background-color:@color-secundary-65;width:3em;height:3em;border-radius:50%;padding:5px;position:relative;text-align:center;vertical-align:middle;color:@color-primary-alt;}
+#account #games section.banner .search.white-search .btn-tertiary i{font-size:1.5em;position:absolute;left:5px;right:5px;top:5px;bottom:5px;margin:auto;padding-top:0.1em;}
+
+#account section.security{background:@color-primary-alt;padding:1% 0 1.5%;}
+#account section.security .subtitle{text-transform:uppercase;font-size:1.2em;position:relative;font-weight:700;}
+#account section.security .subtitle::before{content:"\E008";position:absolute;top:0.4em;left:-2.5em;font-size:0.4em;font-family:gameclub;}
+#account section.security .subtitle img{height:1em;margin-top:-0.5%;margin-left:5px;}
+#account section.security button{padding:5px 0 2px;width:18em;}
+/********************************/
+
+/********** SEARCH-PAGE **********/
+#search{color:@color-tertiary;display:block;position:relative;padding-top:9em;}
+#search::before{content:"";background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%;position:absolute;top:-5%;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;}
+
+#search section.banner .search .search-params{font-size:0.8em;font-weight:400;padding:0;}
+#search section.banner .search .search-params .filter{padding-top:0.25em;padding-bottom:0.25em;border:1.25px solid @color-primary;border-top-width:2.5px;border-bottom-width:2.5px;background-color:@color-secundary-65;}
+#search section.banner .search .search-params .filter:first-child{border-left-width:2.5px;border-top-left-radius:8px;border-bottom-left-radius:8px;}
+#search section.banner .search .search-params .filter:last-child{border-right-width:2.5px;border-top-right-radius:8px;border-bottom-right-radius:8px;}
+#search section.banner .search .search-params input{height:21px;}
+#search section.banner .search .search-params input:focus{outline:none;}
+#search section.banner .search .search-params input::-webkit-input-placeholder{color:@color-tertiary;text-transform:none;}
+#search section.banner .search .search-params input::-moz-placeholder{color:@color-tertiary;text-transform:none;}
+#search section.banner .search .search-params input::-ms-input-placeholder{color:@color-tertiary;text-transform:none;}
+#search section.banner .search .search-params input,#search section.banner .search .search-params .selector{width:100%;padding:0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
+#search section.banner .search .search-params .selector{margin-top:4%;margin-bottom:-4%;}
+#search section.banner .search .search-params .selector input.ui-select-search{margin-top:-4%;margin-bottom:4%;}
+#search section.banner .search .search-params .selector .ui-select-match>span{height:21px;}
+#search section.banner .search .search-params .selector .ui-select-placeholder,#search section.banner .search .search-params .selector .ui-select-match-text{font-weight:400;}
+#search section.banner .search .search-params .selector a.pull-right{margin-top:-3px;}
+#search section.banner .search .search-params .selector i.pull-right{margin-top:-5px;}
+#search section.banner .search button{border-color:@color-tertiary;}
+#search section.banner .search.white-search .btn-tertiary{background-color:@color-secundary-65;width:2em;height:2em;border-radius:50%;padding:5px;position:relative;text-align:center;vertical-align:middle;color:@color-primary-alt;}
+#search section.banner .search.white-search .btn-tertiary i{font-size:1em;position:absolute;left:0.1em;right:0;top:0.1em;bottom:0.1em;margin:auto;padding-top:0.2em;}
+#search section.banner .selector .ui-select-match-text img{height:1.5em;padding-bottom:0.3em;}
+
+#search section div.separator{width:100%;height:0.3em;margin-top:-1%;margin-bottom:4%;background:@color-primary;
+background:linear-gradient(45deg,@color-tertiary -10%,transparent 80%);background:-webkit-linear-gradient(45deg,@color-tertiary -10%,transparent 80%);background:-o-linear-gradient(45deg,@color-tertiary -10%,transparent 80%);background:-moz-linear-gradient(45deg,@color-tertiary -10%,transparent 80%);}
+#search section.no-result{padding-top:5%;padding-bottom:6%;}
+#search section.no-result h2{text-transform:uppercase;font-size:2.4em;font-family:@font-family-jaapokki;color:@color-secundary;}
+#search section.no-result div.separator{margin-bottom:0;margin-top:4%;}
+#search section.result{padding-top:3%;}
+#search section.result .rating .types img{border-color:@color-tertiary;}
+#search section.result #game-item #game-rating{margin-top:-15%;}
+
+#search section.final{height:2em;width:100%;background:@color-primary-alt;}
+/*********************************/
+
+/********** GAME-PAGE **********/
+#game section.banner{padding-top:20%;position:relative;background-color:@color-secundary-alt;}
+#game section.banner>div{position:absolute;width:100%;height:100%;opacity:0.5;top:0;right:0;bottom:0;left:0;}
+#game section.banner::after{content:"";position:absolute;display:block;background:@color-secundary-30;top:0;right:0;bottom:0;left:0;}
+
+#game section.header{background:@color-tertiary-alt;}
+
+#game section.header .cover{margin-top:-7em;}
+#game section.header .cover #game-rating{width:80%;margin:auto;}
+#game section.header .cover #game-rating .game-container .background::after{cursor:default;}
+#game section.header .cover #game-rating .game-container .background:hover::before{
+background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#game section.header .principal{padding:0;}
+#game section.header .principal .title{text-transform:none;font-size:1.2em;font-weight:700;margin-top:0.5em;margin-bottom:0;padding:0;font-family:@font-family-jaapokki;letter-spacing:1px;}
+#game section.header .principal .rating-container{padding:0;}
+#game section.header .principal .rating-container i::before{font-size:1.2em;color:@color-primary-s;}
+#game section.header .principal .rating-container i.yes::before{-webkit-text-fill-color:transparent;
+background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#game section.header .principal .video{padding:0;font-family:@font-family-jaapokki;font-size:1.2em;}
+#game section.header .principal .video i::before{font-size:1.6em;-webkit-text-fill-color:transparent;
+background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#game section.header .rating{margin-top:-5em;}
+#game section.header .rating .content-rating img{height:4em;margin-bottom:1em;}
+#game section.header .rating .platform img{height:1.7em;}
+#game.my-game section.header .rating .platform .selector{width:75%;margin-left:auto;position:relative;}
+#game.my-game section.header .rating .platform .selector::before{content:"";border-bottom:2px solid @color-secundary;position:absolute;left:0;right:0;bottom:20%;}
+#game section.header .rating .platform{height:3em;}
+#game section.header .rating .platform .selector .ui-select-match-text img{height:1.5em;right:15px;}
+#game section.header .rating .platform .selector i.caret.pull-right{color:@color-secundary;}
+#game section.header .rating .category img{width:2.5em;height:2.5em;border:2px solid @color-primary;padding:0.35em;border-radius:50%;margin:auto 1%;}
+#game section.header .rating>div{margin-bottom:1em;}
+
+#game section.information{color:@color-secundary;background:@color-tertiary-alt;}
+#game section.information .data .subtitle{color:@color-primary-alt;padding-left:1.5em;font-family:@font-family-jaapokki;font-size:1.4em;text-transform:uppercase;position:relative;margin-bottom:1em;}
+#game section.information .data .subtitle::after{content:"";position:absolute;width:3em;left:0;bottom:0;border-bottom:2px solid @color-primary-alt;}
+#game section.information .data .subtitle span.red{color:@color-secundary;font-family:@font-family-josefinsans;font-size:0.7em;font-weight:700;}
+#game section.information .data .description p{line-height:1.3;padding-left:3em;font-size:0.8em;font-weight:700;}
+
+#game section.information .rating .reviews{position:absolute;background:@color-primary-alt;top:0;left:0;right:0;color:@color-tertiary;padding-top:0.5em;padding-bottom:0.5em;border-radius:7px;z-index:1;box-shadow:5px 10px 25px 5px @color-primary-30;}
+#game section.information .rating .reviews .subtitle{font-size:1.4em;font-family:@font-family-jaapokki;text-transform:uppercase;}
+#game section.information .rating .reviews ul{padding:0;padding-left:1em;margin:0;}
+#game section.information .rating .reviews ul li{display:block;position:relative;text-align:left;}
+#game section.information .rating .reviews ul li::before{content:"\E008";position:absolute;top:2.5em;left:0;font-size:0.4em;font-family:gameclub;}
+#game section.information .rating .reviews li>div>img{height:2.5em;}
+#game section.information .rating .reviews li>div.rating-container i{color:@color-primary-s;}
+#game section.information .rating .reviews li>div.rating-container i.yes{color:@color-tertiary;}
+#game section.information .rating .reviews li>div>a{color:@color-primary;text-decoration:none;font-size:0.8em;position:relative;}
+#game section.information .rating .reviews li>div>a::before{content:"";width:30%;height:1px;display:inline-block;background:@color-tertiary;position:absolute;top:40%;left:110%;}
+#game section.information .rating .reviews li>div>a::after{content:"";width:5px;height:5px;display:inline-block;background:@color-tertiary;position:absolute;top:20%;left:135%;border-radius:50%;}
+
+#game section.games{background:@color-secundary;padding-top:2%;padding-bottom:2%;}
+#game section.games .subtitle{color:@color-tertiary;padding-left:1.5em;font-family:@font-family-jaapokki;font-size:1.4em;text-transform:uppercase;position:relative;margin-bottom:1em;}
+#game section.games .subtitle::after{content:"";position:absolute;width:3em;left:0;bottom:0;border-bottom:2px solid @color-tertiary;}
+#game section.games .subtitle button.dark{background:@color-primary;color:@color-secundary;padding:4px 2% 1px;margin-left:3%;margin-top:-1%;font-size:0.45em;letter-spacing:1px;}
+#game section.games .games-availables{padding:10px;border:2px solid @color-primary;background:transparent;margin-bottom:1%;}
+#game section.games .games-availables .table-container{background:@color-tertiary;padding:5px;}
+#game section.games .games-availables .table-container table{border:none;color:@color-primary;text-transform:uppercase;font-size:0.8em;background:transparent;}
+#game section.games .games-availables .table-container table th,#game section.games .games-availables .table-container table td{padding:5px;text-align:center;border-right:2px solid @color-tertiary-alt;border-bottom:2px solid @color-tertiary-alt;}
+#game section.games .games-availables .table-container table th{border-bottom:2px solid @color-secundary;}
+#game section.games .games-availables .table-container table th:last-child,#game section.games .games-availables .table-container table td:last-child{border-right:none;}
+#game section.games .games-availables .table-container table tr:last-child td{border-bottom:none;}
+#game section.games .games-availables .table-container table tr td.blue{color:@color-primary-alt;}
+#game section.games .games-availables .table-container table tr td.red{color:@color-secundary;}
+#game section.games .games-availables .table-container table tr td.game-status{font-weight:700;color:@color-secundary;}
+#game section.games .games-availables .table-container table tr td i::before{font-size:1.2em;color:@color-primary-s;}
+#game section.games .games-availables .table-container table tr td i.yes::before{-webkit-text-fill-color:transparent;
+background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#game section.games .games-availables .table-container table tr td img{height:1em;}
+#game section.games .games-availables .table-container table tr td button.dark{background:@color-primary;color:@color-tertiary;white-space:normal;font-weight:400;font-size:0.6em;}
+#game section.games .filters{margin-bottom:-1%;}
+#game section.games .filters li{display:inline-block;width:2em;height:2em;background:@color-primary;position:relative;text-align:center;}
+#game section.games .filters li::before{content:"";position:absolute;left:-1px;top:20%;bottom:20%;border-left:2px solid @color-secundary-65;}
+#game section.games .filters li:first-child::before{border:none;}
+#game section.games .filters li:last-child::before{border:none;}
+#game section.games .filters li:last-child{background:transparent;}
+#game section.games .filters li:last-child>a{color:@color-primary;padding:0;}
+#game section.games .filters li:last-child>a>i::before{font-size:1.4em;}
+#game section.games .filters li>a{position:absolute;left:0;right:0;top:0.25em;text-decoration:none;color:@color-tertiary;padding-top:10%;}
+#game section.games .filters li>a.active{color:@color-primary-alt;}
+#game section.games div>button{padding:5px 1% 2px;}
+
+#game #most-played>div.separator{display:none;}
+
+#game section.final{height:2em;width:100%;background:@color-primary-alt;}
+/*******************************/
+
+/********** VALIDATION-PAGE **********/
+#validate-account{padding-top:15em;}
+#validate-account::before{content:"";background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%;position:absolute;top:0;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;width:100%;height:100%}
+#validate-account h2{color:@color-tertiary;font-family:@font-family-jaapokki;}
+/*************************************/
+
+/********** TERMS-AND-CONDITIONS-PAGE **********/
+#terms-conditions section.banner{background:@color-secundary;color:@color-tertiary;padding-top:11em;padding-bottom:3em;text-align:center;}
+#terms-conditions section.banner h2{font-size:3em;font-family:@font-family-jaapokki;}
+
+#terms-conditions section.information{background:@color-tertiary-alt;}
+#terms-conditions section.information pre{padding:2em 3em 3em;background:transparent;border:none;white-space:pre-wrap;text-align:justify;}
+
+#terms-conditions section.confirmation{padding-top:2em;padding-bottom:1em;}
+#terms-conditions section.confirmation button.btn,#terms-conditions section.confirmation button.btn:hover,#terms-conditions section.confirmation button.btn:visited,#terms-conditions section.confirmation button.btn:focus,#terms-conditions section.confirmation button.btn:active,#terms-conditions section.confirmation button.btn:active:focus,#terms-conditions section.confirmation button.btn:active:hover,#terms-conditions section.confirmation button.btn.active,#terms-conditions section.confirmation button.btn.active:hover,#terms-conditions section.confirmation button.btn.active:visited,#terms-conditions section.confirmation button.btn.active:focus,#terms-conditions section.confirmation button.btn.active:active,#terms-conditions section.confirmation button.btn.active:active:focus,#terms-conditions section.confirmation button.btn.active:active:hover{padding-left:1em;padding-right:1em;}
+#terms-conditions section.confirmation button.save.btn,#terms-conditions section.confirmation button.save.btn:hover,#terms-conditions section.confirmation button.save.btn:visited,#terms-conditions section.confirmation button.save.btn:focus,#terms-conditions section.confirmation button.save.btn:active,#terms-conditions section.confirmation button.save.btn:active:focus,#terms-conditions section.confirmation button.save.btn:active:hover,#terms-conditions section.confirmation button.save.btn.active,#terms-conditions section.confirmation button.save.btn.active:hover,#terms-conditions section.confirmation button.save.btn.active:visited,#terms-conditions section.confirmation button.save.btn.active:focus,#terms-conditions section.confirmation button.save.btn.active:active,#terms-conditions section.confirmation button.save.btn.active:active:focus,#terms-conditions section.confirmation button.save.btn.active:active:hover{border-color:@color-secundary;background:@color-tertiary;color:@color-primary;}
+#terms-conditions section.confirmation button.cancel.btn,#terms-conditions section.confirmation button.cancel.btn:hover,#terms-conditions section.confirmation button.cancel.btn:visited,#terms-conditions section.confirmation button.cancel.btn:focus,#terms-conditions section.confirmation button.cancel.btn:active,#terms-conditions section.confirmation button.cancel.btn:active:focus,#terms-conditions section.confirmation button.cancel.btn:active:hover,#terms-conditions section.confirmation button.cancel.btn.active,#terms-conditions section.confirmation button.cancel.btn.active:hover,#terms-conditions section.confirmation button.cancel.btn.active:visited,#terms-conditions section.confirmation button.cancel.btn.active:focus,#terms-conditions section.confirmation button.cancel.btn.active:active,#terms-conditions section.confirmation button.cancel.btn.active:active:focus,#terms-conditions section.confirmation button.cancel.btn.active:active:hover{border-color:@color-secundary;background:transparent;color:@color-tertiary;}
+#terms-conditions section.confirmation form{color:@color-tertiary;}
+#terms-conditions section.confirmation form span{font-size:2em;}
+#terms-conditions section.confirmation form input{border:2px solid @color-tertiary;padding:2px;color:@color-primary-alt;width:2em;height:2em;}
+#terms-conditions section.confirmation form input::after{top:-0.4em;font-size:3em;}
+
+
+#terms-conditions section.final{height:2em;width:100%;background:@color-primary-alt;}
+/***********************************************/
+
+/* BLOG VARIABLES */
+@blog-padding-left: 37.037037037%!important;
+@blog-padding-right: 12.5%!important;
+@blog-padding-section-right: 45.454545455%!important;
+@blog-padding-section-right-alt: 35.454545455%!important;
+
+/* BLOG FOR GAMECLUB, HOME MOST SEEN */
+#most-seen{background:@color-tertiary-alt!important;box-shadow:5px 10px 25px 5px @color-primary-30!important;padding:1% 20% 0.25em!important;}
+#most-seen>h2{color:@color-primary-alt!important;font-family:@font-family-jaapokki;font-weight:400!important;}
+#most-seen>hr.subtitle,#blog hr.subtitle{width:8%!important;border-color:@color-primary-alt!important;}
+#blog h1,#blog h2{color:@color-primary-alt!important;}
+#most-seen .article-row{margin-top:1em!important;width:100%!important;}
+#most-seen .article-row .blog-preview .info h2{color:@color-primary!important;font-weight:400!important;text-transform:none!important;}
+#most-seen .article-row .blog-preview .info p{color:@color-primary-alt!important;}
+#most-seen .article-row .blog-preview .info a{color:@color-secundary!important;text-transform:none!important;}
+#most-seen .article-row .blog-preview .picture .post-date,#blog #blog-article header .image-section .post-date{background:@color-secundary!important;border:none!important;color:@color-tertiary!important;font-size:0.8em!important;height:4.5em!important;width:4.5em!important;}
+#most-seen .article-row .blog-preview .info,#most-seen .article-row .blog-preview .picture{background:@color-tertiary!important;}
+#most-seen .pagging .page-button{border-color:@color-primary-alt!important;}
+#most-seen .pagging .page-button.page-active{background:@color-secundary!important;border-color:transparent!important;}
+
+#blog{background:url("../img/blog/blog-bg.png") repeat-y center top!important;background-size:100%!important;}
+#blog .search, #blog .important, #blog .categories, #blog .tags-section, #blog section.most-seen{background:@color-tertiary-85!important;}
+#blog section.banner .title{color:@color-primary-alt!important;}
+#blog section.banner hr,#blog section.banner hr::before{border-color:@color-tertiary!important;}
+#blog section.blog-panel.left .blog-home .article-section{background:@color-tertiary-85!important;padding-left:@blog-padding-left;padding-right:@blog-padding-right;}
+#blog #blog-article{background:transparent!important;color:@color-primary!important;}
+#blog section.blog-panel.left .blog-home #blog-article header .image-section img{width:100%!important;}
+#blog section.blog-panel.left .blog-home #blog-article header .image-section .post-date{display:none!important;}
+#blog #blog-article header span.datetime{font-size:0.65em!important;}
+#blog #blog-article header .tags .tags-cell{display:inline-block!important;}
+#blog #blog-article header .tags .tags-cell:first-child{font-size:0.7em!important;border-right:1px solid @color-primary-alt!important;}
+#blog #blog-article header .tags .tags-cell .tag{border-radius:2.5px!important;font-size:0.4em!important;padding-bottom:0!important;padding-top:0.5em!important;text-align:center!important;width:10em!important;}
+#blog .tag{background:@color-secundary!important;border:none!important;color:@color-tertiary!important;}
+#blog #blog-article footer .cell{padding-bottom:2em!important;}
+#blog #blog-article footer .cell.more button{color:@color-primary-65!important;}
+#blog #blog-article footer .cell.social-media a{color:@color-secundary!important;}
+#blog #navigation{padding-left:@blog-padding-left;padding-top:2em;}
+#blog #navigation a,#blog #navigation span{color:@color-tertiary!important;}
+#blog #navigation .cell.pages>div>button{background:transparent!important;border-color:@color-tertiary!important;color:@color-tertiary!important;}
+#blog section.blog-panel.right .search{padding:0.5em!important;margin-bottom:1em!important;padding-right:@blog-padding-section-right;}
+#blog section.blog-panel.right .search .search-icon{color:@color-secundary!important;right:@blog-padding-section-right;top:0.25em!important;}
+#blog section.blog-panel.right .search input:focus{outline:none!important;}
+#blog section.blog-panel.right .search input{background:transparent!important;border:1px solid @color-primary-alt!important;color:@color-primary-65!important;font-weight:700;padding-right:0.5em!important;width:85%!important;}
+#blog .important{padding-right:@blog-padding-section-right-alt;}
+#blog .important>h2{color:@color-secundary!important;font-size:1.75em!important;}
+#blog .important>h2 span.normal{color:@color-primary-alt;font-size:0.7em;}
+#blog .important hr.subtitle{width:10em!important;margin:0 0 1.5em!important;}
+#blog .important article .info, #blog .search article .info{width:35%!important;}
+#blog .important article .image-preview,#blog .search article .image-preview{position:relative!important;}
+#blog .important article .image-preview{padding-bottom:3em!important;}
+#blog .important article .image-preview::before,#blog .search article .image-preview::before{content:"\e00c";bottom:0;color:red;left:-1%;font-family:gameclub;font-size:9.5em;position:absolute;right:0;top:-23%;-webkit-text-fill-color:transparent;
+background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#blog .important article{margin-bottom:1em!important;}
+#blog .search article .image-preview::before{top:-13%;}
+#blog section.blog-panel.left .search{background:transparent!important;padding:0!important;}
+#blog section.blog-panel.left .search article:last-child{margin-bottom:0!important;}
+#blog #blog-article:last-child{margin-bottom:0!important;padding-bottom:3em!important;}
+#blog section.blog-panel.left .search .article-section{background:@color-tertiary-85!important;padding:1em!important;padding-left:@blog-padding-left;padding-right:@blog-padding-right;padding-top:2em!important;}
+#blog section.blog-panel{margin-bottom:3em!important;}
+#blog .tags-section{padding-right:@blog-padding-section-right;}
+#blog section.blog-panel.right .tags-section .tag{cursor:pointer!important;font-size:0.9em;margin:3% 2%!important;padding:0.5em 0 0.25em!important;text-align:center!important;width:46%!important;}
+#blog .tags-section>h2{font-size:1.75em!important;font-family:@font-family-jaapokki;font-weight:400!important;}
+#blog .tags-section hr.subtitle{width:7.5em!important;}
+#most-seen .article-row .blog-preview .info a::after{content:"\e013";color:@color-primary;font-family:gameclub;font-size:1.5em;position:absolute;top:-0.4em;right:-1.25em;}
+#blog section.blog-panel.left .blog-detail .article-section{background:@color-tertiary-85!important;padding-left:@blog-padding-left;padding-right:5%!important;}
+#blog #article-comment h2,#blog #article-comment h2 span.normal,#blog .comments-title h2{color:@color-secundary!important;font-family:@font-family-jaapokki;font-size:1.25em!important;font-weight:400!important}
+#blog #article-comment h2 span.normal{color:@color-primary-alt!important;font-size:1em!important;}
+#blog #article-comment hr{margin:0 0 1.5em!important;width:5em!important;}
+#blog .comments-title hr{margin:0 0 1.5em!important;width:8.5em!important;}
+#blog #article-comment form#comments-form,#blog #article-comment form#comments-form-logged,#blog #article-comment .comment{background:transparent!important;border:none!important;padding:0!important;width:100%!important;}
+#blog #article-comment .comment{margin:0!important;margin-bottom:2em!important;}
+#blog #article-comment .comment .comment-row .avatar{width:15%!important;}
+#blog #article-comment .comment .comment-row .information .datetime{color:@color-primary-alt!important;text-align:right!important;}
+#blog #article-comment .comment::before, #blog #article-comment form#comments-form-logged::before{content:none!important;}
+#blog #article-comment form#comments-form>span{display:block!important;font-size:0.7em!important;margin-bottom:2em!important;margin-right:-1%!important;}
+#blog #article-comment form#comments-form>div{padding:0 1.5em!important;}
+#blog #article-comment form label{color:@color-primary-85!important;text-transform:uppercase!important;}
+#blog #article-comment form textarea,#blog #article-comment form input{border:none!important;color:@color-primary-85!important;}
+#blog #article-comment form .send{text-align:left!important;}
+#blog #article-comment form .send button{background:transparent!important;padding:0.5em 2em 0.25em!important;color:@color-primary!important;border-color:@color-secundary!important;}
+#blog section.blog-panel.left .search>.article-section>h2{color:@color-secundary!important;font-size:1.5em!important;font-weight:400!important;font-family:@font-family-jaapokki;margin:0 auto 2em!important;}
+#blog section.blog-panel.left .search>.article-section>h2 span.normal{color:@color-primary-alt!important;}
+#blog .extra-info{background:@color-primary;box-shadow:-5px 5px 30px 1px @color-primary;padding:1em;padding-bottom:2em;}
+#blog .extra-info .step{display:table;margin-bottom:1em;margin-top:2em;width:65%;}
+#blog .extra-info .step .step-icon{display:table-cell;vertical-align:middle;width:2em;}
+#blog .extra-info .step .step-icon i{font-size:1.5em;-webkit-text-fill-color:transparent;
+background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#blog .extra-info .step .step-title{display:table-cell;vertical-align:middle;}
+#blog .extra-info .step .step-title>h2{color:@color-tertiary!important;font-family:@font-family-jaapokki;font-size:1.5em;}
+#blog .extra-info .step .step-title>h2>span.normal{color:@color-secundary;}
+#blog .extra-info ul{color:@color-primary-alt;padding-left:1.5em;}
+#blog .extra-info .get-coins{width:65%;text-align:center;}
+#blog .extra-info .get-coins button{color:@color-secundary;position:relative;width:55%;}
+#blog .extra-info .get-coins button span.light{color:@color-tertiary;}
+#blog .extra-info .get-coins button::before,#blog .extra-info  button::after{color:@color-tertiary;position:absolute;font-family:gameclub;}
+#blog .extra-info .get-coins button::before{content:"\E024";left:5px;}
+#blog .extra-info .get-coins button::after{content:"\E024";right:5px;}
+#blog #article-comment .comment-row .avatar img{border-color:@color-primary!important;}
+#blog .important article .info p,#blog .search article .info p{height:105px;}
+#blog .search div.no-data h2{color:@color-primary!important;}
+#blog #blog-article footer .cell.social-media::after{content:"";height:3px;margin-top:1.5em;position:absolute;right:0;width:14%;background:@color-primary;
+background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);}
+#blog .tags-section hr.subtitle{border:none!important;height:3px!important;background:@color-primary;
+background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);}
+#blog .blog-home #blog-article footer .cell.social-media::after{content:none;}
+#blog .blog-preview .info h2{height:2em;}
+
+/* BETA STYLING: ERASE AFTER BETA PHASE */
+#home section.contact-us::before{background-size:125%;background-position:center top;top:0;}
+#home section.contact-us::after{content:none;}
+#home section.banner{margin-top:5%;}
+#home section.banner::before{background-size:50%;opacity:1;top:42%;}
+#home section.banner h1.title{margin-top:0;font-size:4em;letter-spacing:20px;text-shadow:0 0 5px @color-tertiary;font-weight:400;}
+#home section.banner .description{font-size:2em;font-weight:400;letter-spacing:5px;text-shadow:0 0 10px @color-primary;}
+#home section.contact-us h2.title.dark{color:@color-primary;letter-spacing:3px;margin:-0.25em 0 1em;}
+#home section.contact-us h2.title.light{letter-spacing:2px;margin:0.25em 0;}
+#home section.contact-us form.contact-form .description{display:inline-block;padding-bottom:1em;}
+#home section.contact-us form.contact-form input{border-width:3px;}
+#home section.contact-us form.contact-form .send-button{margin-bottom:7%;margin-top:2%;}
+#home section.how-it-works .title.first{font-size:2em;font-weight:400;letter-spacing:3px;}
+#home section.how-it-works .square-box.first{right:-7%;}
+#home section.how-it-works .right-blue-box,#home section.how-it-works .left-blue-box{color:@color-secundary;font-size:1.5em;font-weight:700;margin-bottom:2%;margin-top:3%;text-transform:uppercase;}
+#home section.how-it-works .right-blue-box{padding:3% 20% 2.5% 2%;}
+#home section.how-it-works .left-blue-box{padding:3% 2% 2.5% 20%;}
+#home section.how-it-works .right-blue-box i,#home section.how-it-works .left-blue-box i{display:table-cell;padding-right:10%;-webkit-text-fill-color:transparent;
+background:@color-secundary;
+background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#home section.how-it-works span.text1{display:table-cell;padding-right:2.5%;}
+#home section.how-it-works span.text2{display:table-cell;color:@color-tertiary;font-family:@font-family-jaapokki;font-size:1.5em;font-weight:400;padding-right:2.5%;}
+#home section.how-it-works .rectangle-box.fourth{margin-top:30%;}
+#home section.how-it-works .step.third-step{overflow-y:hidden;padding-bottom:6em;}
+#home section.how-it-works .step.third-step::before{bottom:-15em;}
+#home section.how-it-works .step .title{font-family:@font-family-jaapokki;color:@color-primary;font-size:2.25em;}
+#home section.how-it-works .step .title span{display:block;}
+#home section.how-it-works .step .title span:first-child{color:@color-tertiary;}
+#home .contact-us form.contact-form input{width:auto;}
+#home .contact-us form.contact-form input.complete{width:100%;}
+#home .contact-us form.contact-form #date-selector{border:3px solid @color-primary;border-radius:5px;margin:1%;width:100%;padding-top:5px;background:url("../img/contact-birth.svg") no-repeat right center;background-size:25px auto;background-position-x:98%;}
+#home .contact-us form.contact-form #date-selector .selector{padding-top:0!important;border-right:none;display:table-cell;width:25%;vertical-align:middle;}
+#home .contact-us form.contact-form #date-selector .calendar-icon{display:table-cell;vertical-align:middle;}
+#home .contact-us form.contact-form #date-selector input{border:none;padding-left:5px;padding-right:5px;margin:0;}
+#home .contact-us form.contact-form input.ui-select-search{border:none;height:1em;}
+#home .contact-us form.contact-form .selector.location{border:3px solid @color-primary;border-radius:5px;margin:1%;width:100%;padding:5px 10% 5px 3%;background:url("../img/contact-address.svg") no-repeat right center;background-size:20px auto;background-position-x:97%;}
+#home .contact-us form.contact-form .selector.location span.ui-select-toggle{height:1em;vertical-align:middle;display:table-cell;width:10%;}
+#home .contact-us form.contact-form .selector.location span.ui-select-toggle .ui-select-placeholder{color:@color-primary-s;font-weight: normal;}
+#home .contact-us form.contact-form input::-webkit-input-placeholder{color:@color-primary-s;}
+
+#home section.user-subscribed{position:relative;}
+#home section.user-subscribed::before{content:"";position:absolute;top:-20%;right:0;bottom:0;left:0;z-index:-3;background:@color-primary-alt;background-image:url("../img/home/contact-us-bg.svg");background-position:center top;background-size:105% 90%;}
+#home section.user-subscribed::after{content:"";position:absolute;top:70%;right:0;bottom:0;left:0;z-index:-2;background:@color-primary;}
+#home section.user-subscribed::before{background-size:125%;background-position:center top;top:0;}
+#home section.user-subscribed::after{content:none;}
+#home section.user-subscribed div.box{background:@color-primary-alt;box-shadow:5px 10px 25px 5px @color-primary-30;text-align:center;}
+#home section.user-subscribed img{height:16vw;margin-top:2.5vw;}
+#home section.user-subscribed h1{margin-top:3vw;text-transform:uppercase;font-size:1.4vw;font-weight:bold;letter-spacing:0.5vw;color:@color-primary;}
+#home section.user-subscribed h4{font-size: 1.45vw;margin-bottom: 4.3vw;}
+
+/*
+background:@color-primary;
+background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);
+background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+*/

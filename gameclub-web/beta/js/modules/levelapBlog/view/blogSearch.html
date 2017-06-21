@@ -1,0 +1,30 @@
+<!-- BLOG SEARCH PAGE START -->
+<div class="search">
+    <div class="article-section">
+        <h2 class="results-for" ng-if="articles.length > 0 && searchValue != null && searchValue != ''">Resultados para: <span class="normal">{{searchValue}}</span></h2>
+        <div ng-if="articles.length > 0">
+            <article-preview ng-repeat="article in articles" ng-model="article" />
+            <!-- <article ng-repeat="article in articles">
+                <div class="image-preview">
+                    <div>
+                        <div>
+                            <img archive="article.banner" ng-src="{{article.banner.src}}" ng-style="article.crop" />
+                        </div>
+                    </div>
+                </div>
+                <div class="info">
+                    <h2 title="{{article.title}}">{{article.title | limitTo: 12}}{{article.title.length > 12 ? '...' : ''}}</h2>
+                    <div class="description">
+                        <p>{{article.summary | limitTo:200}}{{article.summary.length > 200 ? '...' : ''}}</p>
+                    </div>
+                    <a ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})">Leer m&aacute;s</a>
+                </div>
+            </article> -->
+        </div>
+        <div ng-if="articles.length == 0" class="no-data">
+            <h2>No obtuvimos resultados, favor verif&iacute;ca tu informaci&oacute;n.</h2>
+        </div>
+    </div>
+    <blog-navigation pages="$parent.totalPagesSearch" active-page="$parent.currentPageSearch"  ng-if="articles.length != 0" />
+</div>
+<!-- BLOG SEARCH PAGE END -->

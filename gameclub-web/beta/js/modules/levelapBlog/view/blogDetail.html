@@ -1,0 +1,15 @@
+<!-- BLOG DETAIL PAGE START -->
+<div class="blog-detail">
+    <div class="article-section">
+        <article-preview ng-model="article" ng-show="showInfo" is-complete comments="comments" />
+    </div>
+    <div id="navigation">
+        <div class="cell">
+            <a href ng-disabled="article.prevArticleId == null" ng-click="prevArticle(article)"><i class="fa fa-angle-left"></i> Anterior</a>
+        </div>
+        <div class="cell">
+            <a href ng-disabled="article.nextArticleId == null" ng-click="nextArticle(article)">Siguiente <i class="fa fa-angle-right"></i></a>
+        </div>
+    </div>
+</div>
+<!-- BLOG DETAIL PAGE END -->

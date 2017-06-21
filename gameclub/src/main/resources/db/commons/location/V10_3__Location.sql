@@ -219,7 +219,7 @@ INSERT INTO commons.location(name, code, parent) VALUES
 		('Pedro Vicente Maldonado', 'ECPCPV', (SELECT id FROM commons.location WHERE code='ECPC')),
 		('Puerto Quito', 'ECPCPQ', (SELECT id FROM commons.location WHERE code='ECPC')),
 		('Quito', 'ECPCQT', (SELECT id FROM commons.location WHERE code='ECPC')),
-		('Rimiñahui', 'ECPCRM', (SELECT id FROM commons.location WHERE code='ECPC')),
+		('Rumiñahui', 'ECPCRM', (SELECT id FROM commons.location WHERE code='ECPC')),
 		('San Miguel de los Bancos', 'ECPCLB', (SELECT id FROM commons.location WHERE code='ECPC')),
 		
 		('La Libertad', 'ECSELB', (SELECT id FROM commons.location WHERE code='ECSE')),

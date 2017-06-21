@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app="GameClub">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="{{$state.current.data.description}}">
+	<meta name="keywords" content="{{$state.current.data.keywords}}">
+    <!-- <meta property="og:image" content="http://gameclub.levelaptesting.com/img/gameclub-footer-logo.png"> -->
+
+    <title>Game Club</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<link href="css/customStyles.less" rel="stylesheet/less">
+	<link href="css/responsive.less" rel="stylesheet/less">
+	<link href="css/select.min.css" rel="stylesheet">
+    <link href="js/core/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="js/core/plugins/angular-notify/angular-notify.min.css" rel="stylesheet">
+    <link href="css/gameclub-font.css" rel="stylesheet">
+    <link href="js/modules/core/directives/loading/loading.css" rel="stylesheet">
+    <!-- <link href="css/clockpicker.css" rel="stylesheet"> -->
+</head>
+
+<body ng-controller="MainCtrl as main">
+    <div ui-view></div>
+
+    <!-- MAIN DEPENDENCIES -->
+    <script src="js/core/jquery-2.1.1.min.js"></script>
+    <script src="js/core/less.min.js"></script>
+    <script src="js/core/angular.min.js"></script>
+    <script src="js/core/angular-sanitize.min.js"></script>
+    <script src="js/core/angular-resource.min.js"></script>
+    <script src="js/core/angular-cookies.min.js"></script>
+    <script src="js/core/angular-ui-router.min.js"></script>
+    <script src="js/core/angular-locale_es-ec.js"></script>
+    <script src="js/core/ocLazyLoad.min.js"></script>
+	<script src="js/core/select.min.js"></script>
+    <script src="js/core/plugins/pako/pako.min.js"></script>
+    <script src="js/core/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/core/plugins/sweetalert/angular-sweetalert.min.js"></script>
+    <script src="js/core/ui-bootstrap-tpls/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="js/core/plugins/angular-notify/angular-notify.min.js"></script>
+    <!-- <script src="js/core/clockpicker.js"></script> -->
+    <!-- <script src="js/core/jasny-bootstrap.min.js"></script> -->
+    <script src="js/modules/levelapBlog/levelapBlog.js"></script>
+    <script src="js/core/angular-socialshare.min.js"></script>
+
+    <!-- Anglar App Script -->
+    <script src="js/app.js"></script>
+    <script src="js/const.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/mainCtrl.js"></script>
+
+    <!-- Modules and Config -->
+    <script src="js/modules/core/core.module.js"></script>
+    <script src="js/modules/home/home.module.js"></script>
+    <script src="js/modules/home/config/home.route.js"></script>
+    <!-- <script src="js/modules/login/login.module.js"></script>
+    <script src="js/modules/login/config/login.route.js"></script>
+    <script src="js/modules/search/search.module.js"></script>
+    <script src="js/modules/search/config/search.route.js"></script>
+    <script src="js/modules/account/profile/profile.module.js"></script>
+    <script src="js/modules/account/profile/config/profile.route.js"></script>
+    <script src="js/modules/account/settings/settings.module.js"></script>
+    <script src="js/modules/account/settings/config/settings.route.js"></script>
+    <script src="js/modules/account/myGames/myGames.module.js"></script>
+    <script src="js/modules/account/myGames/config/myGames.route.js"></script>
+    <script src="js/modules/game/game.module.js"></script>
+    <script src="js/modules/game/config/game.route.js"></script>
+    <script src="js/modules/termsConditions/termsConditions.module.js"></script>
+    <script src="js/modules/termsConditions/config/termsConditions.route.js"></script> -->
+
+    <!-- Directives -->
+    <script src="js/modules/core/directives/onSubmit.js"></script>
+    <script src="js/modules/core/directives/validation.js"></script>
+    <!-- <script src="js/modules/core/directives/gameRating.js"></script> -->
+    <script src="js/modules/core/directives/blogPreview.js"></script>
+    <!-- <script src="js/modules/core/directives/blogPaging.js"></script>
+    <script src="js/modules/core/directives/mostPlayed.js"></script> -->
+    <script src="js/modules/core/directives/dateSelector.js"></script>
+    <!-- <script src="js/modules/core/directives/timeSelector.js"></script>
+    <script src="js/modules/core/directives/gameItem.js"></script> -->
+    <script src="js/modules/core/directives/archive.js"></script>
+    <script src="js/modules/core/directives/fileModel.js"></script>
+    <!-- <script src="js/modules/core/directives/ciRequired.js"></script> -->
+    <script src="js/modules/core/directives/loading/loading.js"></script>
+    <!-- <script src="js/modules/core/directives/angular-clockpicker.js"></script>
+    <script src="js/modules/core/directives/kushki/kushki.js"></script> -->
+
+    <!-- Services -->
+    <!-- <script src="js/modules/core/services/authenticate.js"></script> -->
+    <script src="js/modules/core/services/forEach.js"></script>
+    <script src="js/modules/core/services/friendlyUrl.js"></script>
+    <script src="js/modules/core/services/getImageBase64.js"></script>
+    <script src="js/modules/core/services/getIndexOfArray.js"></script>
+    <script src="js/modules/core/services/openRest.js"></script>
+    <!-- <script src="js/modules/core/services/rest.js"></script>
+    <script src="js/modules/core/services/saveAs.js"></script> -->
+    <script src="js/modules/core/services/sweet.js"></script>
+    <script src="js/modules/core/services/notif.js"></script>
+    <!-- <script src="js/modules/core/services/changePassword.js"></script>
+    <script src="js/modules/core/services/ciValidation.js"></script> -->
+
+    <!-- Filters -->
+    <!-- <script src="js/modules/core/filters/maxwords.js"></script> -->
+
+    <script type="text/javascript">
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '1819533121697152',
+                status: true,
+                cookie: true,
+                xfbml: true,
+                version: 'v2.9'
+            });
+
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id) {
+            let js, fjs = d.getElementsByTagName(s)[0];
+
+            if (d.getElementById(id)) {
+                return;
+            }
+
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/es_LA/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        } (document, 'script', 'facebook-jssdk'));
+    </script>
+</body>
+</html>

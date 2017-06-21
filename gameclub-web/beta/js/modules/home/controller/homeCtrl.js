@@ -19,6 +19,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, provi
                     $scope.wasSubscribed = true;
                     sweet.close();
                 }, function(error) {
+                    sweet.close();
                     notif.danger(error.data != null ? error.data.message : error);
                 });
             });

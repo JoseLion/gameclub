@@ -47,7 +47,7 @@ form .selector .glyphicon-remove{color:@color-tertiary;}
 form .selector .ui-select-match>span,form .selector .ui-select-match>span>span,form .selector .ui-select-match .ui-select-placeholder,form .selector input{background:transparent;color:@color-tertiary;border:none;box-shadow:none;}
 form .selector .ui-select-match .ui-select-match-text img.gameConsole{height:100%;position:absolute;}
 form .ui-select-match .ui-select-placeholder{text-transform:none;}
-form .selector .ui-select-choices{background:@color-primary;color:@color-tertiary;border:1px solid @color-primary;border-radius:10px;border-top-left-radius:0px;border-top-right-radius:0px;width:120%;margin-left:-10%;overflow-y:scroll;margin-top:5px;max-height:205px;}
+form .selector .ui-select-choices{background:@color-primary;color:@color-tertiary;border:1px solid @color-primary;border-radius:10px;border-top-left-radius:0px;border-top-right-radius:0px;width:100%;overflow-y:scroll;margin-top:5px;max-height:205px;}
 form .selector.direction-up .ui-select-choices{border-bottom-left-radius:0px;border-bottom-right-radius:0px;}
 form .selector .ui-select-choices::-webkit-scrollbar{background:transparent;width:0.5em!important;}
 form .selector .ui-select-choices::-webkit-scrollbar-track{background:transparent;}
@@ -961,6 +961,20 @@ background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secund
 background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);}
 #blog .blog-home #blog-article footer .cell.social-media::after{content:none;}
 #blog .blog-preview .info h2{height:2em;}
+
+#blog .extra-info h2{font-size:1.25em;color:@color-tertiary!important;}
+#blog .extra-info h2 .game-font,#blog .extra-info h2 .game-font-light-red{font-weight:400;}
+#blog .extra-info h2.icon-section{padding-bottom:1%;font-size:1.5em;}
+#blog .extra-info h2.icon-section i{padding-right:1%;-webkit-text-fill-color:transparent;
+background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
+-webkit-background-clip:text;}
+#blog .extra-info .info{color:@color-primary-alt!important;}
+#blog .extra-info label{color:@color-tertiary!important;font-weight:400;display:block;}
+#blog .extra-info input{width:35%;border:2px solid @color-tertiary;border-radius:5px;padding:0.25% 3%;background:transparent;color:@color-secundary;background:url("../img/contact-email.svg") no-repeat right center;background-size:15px auto;background-position-x:97%;cursor: pointer;}
+#blog .extra-info input::-webkit-input-placeholder{color:@color-secundary;}
+#blog .extra-info input::-moz-placeholder{color:@color-secundary;}
+#blog .extra-info input::-ms-input-placeholder{color:@color-secundary;}
+
 
 /* BETA STYLING: ERASE AFTER BETA PHASE */
 #home section.contact-us::before{background-size:125%;background-position:center top;top:0;}

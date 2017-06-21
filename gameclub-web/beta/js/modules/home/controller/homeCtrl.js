@@ -15,8 +15,8 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, provi
                 $scope.publicUser.isSubscriber = true;
 
                 openRest("publicUser/saveSubscriber").post($scope.publicUser, function() {
-                    notif.success("El correo se envió con éxito. Ya te encuentras participando");
                     $scope.publicUser = {};
+                    $scope.wasSubscribed = true;
                     sweet.close();
                 }, function(error) {
                     notif.danger(error.data != null ? error.data.message : error);

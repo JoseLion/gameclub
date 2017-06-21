@@ -5,7 +5,7 @@
             <span class="description">Intercambia juegos con la comunidad gamer m&aacute;s grande del Ecuador.</span>
         </div>
     </section>
-    <section class="contact-us" ng-if="true">
+    <section class="contact-us" ng-if="!wasSubscribed">
         <div class="row">
             <form name="subscriberForm" class="col-md-12 contact-form" role="form" ng-submit="saveSubscriber(subscriberForm)" novalidate>
                 <h2 class="title dark">Buscamos gamers</h2>
@@ -74,9 +74,13 @@
         </div>
     </section>
 
-    <section class="user-subscribed" ng-if="false">
+    <section class="user-subscribed" ng-if="wasSubscribed">
         <div class="row">
-            div
+            <div class="col-md-12 text-center box">
+                <img src="img/gameclub-logo-vertical.svg">
+                <h1>¡ Ya estas participando !</h1>
+                <h4>Estamos preparando una sorpresa para<br/>la comunidad gamer del ecuador</h4>
+            </div>
         </div>
     </section>
 

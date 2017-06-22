@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="{{$state.current.data.description}}">
 	<meta name="keywords" content="{{$state.current.data.keywords}}">
-    <meta property="og:url" content="https://www.gameclub.com.ec">
-    <meta property="og:title" content="{{$state.current.data.ogTitle}}">
-    <meta property="og:description" content="{{$state.current.data.ogDescription}}">
-    <meta property="og:image" content="{{$state.current.data.ogImage}}">
+    <meta property="og:url" content="{{$state.current.data.ogUrl}}" ng-if="$state.current.data.ogUrl != null">
+    <meta property="og:title" content="{{$state.current.data.ogTitle}}" ng-if="$state.current.data.ogTitle != null">
+    <meta property="og:description" content="{{$state.current.data.ogDescription}}" ng-if="$state.current.data.ogDescription != null">
+    <meta property="og:image" content="{{$state.current.data.ogImage}}" ng-if="$state.current.data.ogImage != null">
     <meta property="fb:app_id" content="1819533121697152">
 
     <title>Game Club</title>

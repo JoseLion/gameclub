@@ -73,6 +73,11 @@ angular.module("LevelapBlogAdmin", []).config(function($stateProvider) {
 				}, {
 					name: 'rzModule',
 					files: [baseSrc + 'plugins/rzslider/rzslider.min.js']
+				}, {
+					files: [baseSrc + 'plugins/angular-image-crop/image-crop-styles.css']
+				}, {
+					name: 'ImageCropper',
+					files: [baseSrc + 'plugins/angular-image-crop/image-crop.js']
 				}]);
 			},
 
@@ -123,6 +128,11 @@ angular.module("LevelapBlogAdmin", []).config(function($stateProvider) {
 				}, {
 					name: 'rzModule',
 					files: [baseSrc + 'plugins/rzslider/rzslider.min.js']
+				}, {
+					files: [baseSrc + 'plugins/angular-image-crop/image-crop-styles.css']
+				}, {
+					name: 'ImageCropper',
+					files: [baseSrc + 'plugins/angular-image-crop/image-crop.js']
 				}]);
 			},
 

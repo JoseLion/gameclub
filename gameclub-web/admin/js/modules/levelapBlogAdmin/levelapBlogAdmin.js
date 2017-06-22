@@ -133,6 +133,9 @@ angular.module("LevelapBlogAdmin", []).config(function($stateProvider) {
 				}, {
 					name: 'ImageCropper',
 					files: [baseSrc + 'plugins/angular-image-crop/image-crop.js']
+				}, {
+					name: 'angular-img-cropper',
+					files: [baseSrc + 'plugins/angular-img-cropper/angular-img-cropper.js']
 				}]);
 			},
 

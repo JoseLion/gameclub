@@ -1,4 +1,10 @@
 angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($scope, $rootScope, article, categories, tags, $state, $uibModal, sweet, rest, getImageBase64) {
+	$scope.bounds = {};
+	$scope.bounds.left = 0;
+	$scope.bounds.right = 100;
+	$scope.bounds.top = 93;
+	$scope.bounds.bottom = 100;
+
 	$scope.article = {
 		squareCrop: {
 			a: 0,
@@ -246,6 +252,62 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 			}, function(error) {
 				sweet.close();
 			});
+		});
+	}
+
+	$scope.cropImage = function(shape) {
+		let modal = $uibModal.open({
+			size: 'md',
+			backdrop: 'static',
+			templateUrl: 'cropImage.html',
+			controller: function($scope, $uibModalInstance, base64Image, shape) {
+				$scope.crop = {};
+				$scope.crop.base64Image = base64Image;
+				$scope.shape = shape;
+
+				$scope.ok = function() {
+					$uibModalInstance.close($scope.crop.croppedImage);
+				}
+
+				$scope.cancel = function() {
+					$uibModalInstance.dismiss();
+				}
+			},
+			resolve: {
+				loadPlugin: function($ocLazyLoad) {
+					let baseSrc;
+
+					for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
+						let script = angular.element(document.getElementsByTagName("script")[i]);
+
+						if (script.attr("src") != null && script.attr("src").indexOf("levelapBlogAdmin.js") > -1) {
+							baseSrc = script.attr("src").substring(0, script.attr("src").indexOf("levelapBlogAdmin.js"));
+							break;
+						}
+					}
+
+					return $ocLazyLoad.load([{
+						name: 'angular-img-cropper',
+						files: [baseSrc + 'plugins/angular-img-cropper/angular-img-cropper.js']
+					}]);
+				},
+
+				base64Image: function() {
+					return $scope.bannerBase64;
+				},
+
+				shape: function() {
+					return shape;
+				}
+			}
+		});
+
+		modal.result.then(function(croppedImage) {
+			if (shape == 'diamond') {
+				$scope.diamondCropImage = croppedImage;
+			} else {
+				$scope.squareCropImage = croppedImage;
+			}
 		});
 	}
 

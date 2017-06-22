@@ -969,7 +969,12 @@
 		  function loadImage(base64ImageSrc) {
 		  
 			//get the EXIF information from the image
-            var byteString = atob(base64ImageSrc.split(',')[1]);
+            var byteString = '//:0';
+
+            if (base64ImageSrc != '//:0') {
+                byteString = atob(base64ImageSrc.split(',')[1]);
+            }
+
             var binary = new BinaryFile(byteString, 0, byteString.length);
             exif = EXIF.readFromBinaryFile(binary);		  
            

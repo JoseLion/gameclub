@@ -277,7 +277,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(publicUser.getUsername());
 		
 		if (found != null) {
-			return new ResponseEntity<>(new ErrorControl("Ya te encuentras participando con este correo", true), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<ErrorControl>(new ErrorControl("Ya te encuentras participando con este correo", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		publicUserRepo.save(publicUser);

@@ -27,17 +27,22 @@ angular.module('LevelapBlog').directive('mostSeen', function() {
         },
         replace: true,
         link: function($scope, element, attrs, ctrl) {
-            if ($scope.activePage == null) { $scope.activePage = 0; }
-			if($scope.size == null) {
+            if ($scope.activePage == null) {
+                $scope.activePage = 0;
+            }
+
+			if ($scope.size == null) {
 				$scope.filterSize = 200;
 			} else {
 				$scope.filterSize = $scope.size;
 			}
+
             $scope.changePage = function(page) {
                 $scope.pageList[$scope.activePage].active = false;
                 page.active = true;
                 $scope.activePage = page.number;
             }
+
             $scope.$watch("pages", function(newValue, oldValue) {
                 if (newValue != null) {
                     $scope.pageList = [];

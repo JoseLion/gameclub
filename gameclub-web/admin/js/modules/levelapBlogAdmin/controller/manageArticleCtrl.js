@@ -56,13 +56,13 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 	$scope.drag = function($event, shape) {
 		if (isDragging) {
 			if (shape === 'square') {
-				$scope.article.squareCrop.a += $event.offsetX - dx;
-				$scope.article.squareCrop.b += $event.offsetY - dy;
+				$scope.article.squareCrop.a += ($event.offsetX - dx) / $scope.article.diamondCrop.c;
+				$scope.article.squareCrop.b += ($event.offsetY - dy) / $scope.article.diamondCrop.c;
 			}
 
 			if (shape === 'diamond') {
-				$scope.article.diamondCrop.a += $event.offsetX - dx;
-				$scope.article.diamondCrop.b += $event.offsetY - dy;
+				$scope.article.diamondCrop.a += ($event.offsetX - dx) / $scope.article.diamondCrop.c;
+				$scope.article.diamondCrop.b += ($event.offsetY - dy) / $scope.article.diamondCrop.c;
 			}
 			
 			dx = $event.offsetX;
@@ -76,12 +76,6 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 			top: obj.b + 'px',
 			zoom: (obj.c * 100) + '%'
 		};
-	}
-
-	$scope.resetCrop = function(crop) {
-		crop.a = 0.0;
-		crop.b = 0.0;
-		crop.c = 1.0;
 	}
 
 	if (article != null) {

@@ -1,21 +1,6 @@
-angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($scope, $rootScope, article, categories, tags, $state, $uibModal, sweet, rest, getImageBase64) {
-	$scope.article = {
-		squareCrop: {
-			a: 0,
-			b: 0,
-			c: 1.0
-		},
-		diamondCrop: {
-			a: 0,
-			b: 0,
-			c: 1.0
-		}
-	};
-
+angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($scope, $rootScope, article, categories, tags, $state, $uibModal, sweet, rest, getImageBase64, notif) {
+	$scope.article = {};
 	setAuthor();
-	let isDragging = false;
-	let dx = 0;
-	let dy = 0;
 
 	$scope.tinymceOptions = {
 		onChange: function(e) {},
@@ -27,80 +12,9 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 		language: 'es_MX'
 	};
 
-	$scope.zoomOptions = {
-		ceil: 2.0,
-		floor: 0.1,
-		step: 0.01,
-		precision: 2,
-		vertical: true,
-		showSelectionBar: true
-	};
-
-	$scope.getCropStyle = function() {
-		let diamondDiv = angular.element("#diamond-div");
-		return {
-			height: diamondDiv[0].clientWidth + 'px'
-		};
-	}
-
-	$scope.beginDrag = function($event) {
-		isDragging = true;
-		dx = $event.offsetX;
-		dy = $event.offsetY;
-	}
-
-	$scope.endDrag = function() {
-		isDragging = false;
-	}
-
-	$scope.drag = function($event, shape) {
-		if (isDragging) {
-			if (shape === 'square') {
-				$scope.article.squareCrop.a += ($event.offsetX - dx) / $scope.article.diamondCrop.c;
-				$scope.article.squareCrop.b += ($event.offsetY - dy) / $scope.article.diamondCrop.c;
-			}
-
-			if (shape === 'diamond') {
-				$scope.article.diamondCrop.a += ($event.offsetX - dx) / $scope.article.diamondCrop.c;
-				$scope.article.diamondCrop.b += ($event.offsetY - dy) / $scope.article.diamondCrop.c;
-			}
-			
-			dx = $event.offsetX;
-			dy = $event.offsetY;
-		}
-	}
-
-	$scope.getPositionStyle = function(obj) {
-		return {
-			left: obj.a + 'px',
-			top: obj.b + 'px',
-			zoom: (obj.c * 100) + '%'
-		};
-	}
-
 	if (article != null) {
 		article.$promise.then(function(data) {
 			$scope.article = data;
-
-			if ($scope.article.squareCrop == null) {
-				$scope.article.squareCrop = {
-					a: 0,
-					b: 0,
-					c: 1.0
-				};
-			}
-
-			if ($scope.article.diamondCrop == null) {
-				$scope.article.diamondCrop = {
-					a: 0,
-					b: 0,
-					c: 1.0
-				};
-			}
-
-			setTimeout(function() {
-				$scope.$broadcast('rzSliderForceRender');
-			}, 0);
 		});
 	}
 
@@ -126,11 +40,9 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 			reader.readAsArrayBuffer(newValue);
 		} else {
 			$scope.bannerBase64 = '//:0';
+			$scope.diamondCropImage = '//:0';
+			$scope.squareCropImage = '//:0';
 		}
-
-		setTimeout(function() {
-			$scope.$broadcast('rzSliderForceRender');
-		}, 0);
 	});
 
 	$scope.cancel = function() {
@@ -230,22 +142,90 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 	}
 
 	$scope.save = function() {
-		sweet.save(function() {
-			let formData = {
-				article: $scope.article,
-			}
+		if ($scope.diamondCropImage == null || $scope.diamondCropImage == '//:0' || $scope.squareCropImage == null || $scope.squareCropImage == '//:0') {
+			notif.danger("Se debe hacer los dos recortes para continuar")
+		} else {
+			sweet.save(function() {
+				let formData = {
+					article: $scope.article,
+				}
 
-			if ($scope.banner != null) {
-				formData.banner = $scope.banner;
-			}
+				if ($scope.banner != null) {
+					formData.banner = $scope.banner;
+				}
 
-			rest("levelapBlog/saveArticle").multipart(formData, function() {
-				sweet.success();
-				sweet.close();
-				$scope.cancel();
-			}, function(error) {
-				sweet.close();
+				if ($scope.diamondCropImage != null) {
+					formData.diamond = base64ToFile($scope.diamondCropImage, "diamond - " + $scope.banner.name);
+				}
+
+				if ($scope.squareCropImage != null) {
+					formData.square = base64ToFile($scope.squareCropImage, "square - " + $scope.banner.name);
+				}
+
+				rest("levelapBlog/saveArticle").multipart(formData, function() {
+					sweet.success();
+					sweet.close();
+					$scope.cancel();
+				}, function(error) {
+					sweet.close();
+				});
 			});
+		}
+	}
+
+	$scope.cropImage = function(shape) {
+		let modal = $uibModal.open({
+			size: 'md',
+			backdrop: 'static',
+			templateUrl: 'cropImage.html',
+			controller: function($scope, $uibModalInstance, base64Image, shape) {
+				$scope.crop = {};
+				$scope.crop.base64Image = base64Image;
+				$scope.shape = shape;
+
+				$scope.ok = function() {
+					$uibModalInstance.close($scope.crop.croppedImage);
+				}
+
+				$scope.cancel = function() {
+					$uibModalInstance.dismiss();
+				}
+			},
+			resolve: {
+				loadPlugin: function($ocLazyLoad) {
+					let baseSrc;
+
+					for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
+						let script = angular.element(document.getElementsByTagName("script")[i]);
+
+						if (script.attr("src") != null && script.attr("src").indexOf("levelapBlogAdmin.js") > -1) {
+							baseSrc = script.attr("src").substring(0, script.attr("src").indexOf("levelapBlogAdmin.js"));
+							break;
+						}
+					}
+
+					return $ocLazyLoad.load([{
+						name: 'angular-img-cropper',
+						files: [baseSrc + 'plugins/angular-img-cropper/angular-img-cropper.js']
+					}]);
+				},
+
+				base64Image: function() {
+					return $scope.bannerBase64;
+				},
+
+				shape: function() {
+					return shape;
+				}
+			}
+		});
+
+		modal.result.then(function(croppedImage) {
+			if (shape == 'diamond') {
+				$scope.diamondCropImage = croppedImage;
+			} else {
+				$scope.squareCropImage = croppedImage;
+			}
 		});
 	}
 
@@ -268,6 +248,17 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 		} else {
 			$scope.article.author = $rootScope.currentUser.fullName;
 		}
+	}
+
+	function base64ToFile(base64, filename) {
+		let arr = base64.split(','), mime = arr[0].match(/:(.*?);/)[1]
+		let bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+
+		while(n--){
+			u8arr[n] = bstr.charCodeAt(n);
+		}
+
+		return new File([u8arr], filename, {type:mime});
 	}
 
 	AddExtraModalCtrl = function($scope, $uibModalInstance, isTag) {

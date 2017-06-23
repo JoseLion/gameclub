@@ -94,11 +94,10 @@
 							<button type="button" class="btn btn-w-m btn-default" ng-click="cropImage('diamond')" ng-disabled="bannerBase64 == null || bannerBase64 == '//:0'">Recortar</button>
 						</div>
 						<div class="col-md-12">
-							<img ng-src="{{diamondCropImage}}" style="max-width: 100%; margin-top: 5%;">
-							<div  class="diamond-cover" ng-if="diamondCropImage != null">
+							<img archive-file="article.diamond" ng-model="diamondCropImage" ng-src="{{diamondCropImage}}" style="max-width: 100%; margin-top: 5%;">
+							<div  class="diamond-cover" ng-if="diamondCropImage != null && diamondCropImage != '//:0'">
 								<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-									<path d="M0 0 h100 v100 h-100 z M50 0 L0 50 L50 100 L100 50 z" style="fill: rgba(255, 255, 255, 0.5);"></path>
-									<!-- <path d="M0 0 h100 v100 h-100 z M23 53 L47 77 C47 77 50 80 53 77 L77 53 C77 53 80 50 77 47 L53 23 C53 23 50 20 47 23 L23 47 C23 47 20 50 23 53 z" style="fill: rgba(50, 50, 50, 0.6);"></path> -->
+									<path d="M0 0 h100 v100 h-100 z M47 3 L3 47 C3 47 0 50 3 53 L47 97 C47 97 50 100 53 97 L97 53 C97 53 100 50 97 47 L53 3 C53 3 50 0 47 3 z" style="fill: rgba(255, 255, 255, 0.7);"></path>
 								</svg>
 							</div>
 						</div>
@@ -110,7 +109,7 @@
 							<button type="button" class="btn btn-w-m btn-default" ng-click="cropImage('square')" ng-disabled="bannerBase64 == null || bannerBase64 == '//:0'">Recortar</button>
 						</div>
 						<div class="col-md-12">
-							<img ng-src="{{squareCropImage}}" style="max-width: 100%; margin-top: 5%;">
+							<img archive-file="article.square" ng-model="squareCropImage" ng-src="{{squareCropImage}}" style="max-width: 100%; margin-top: 5%;">
 						</div>
 					</div>
 				</div>

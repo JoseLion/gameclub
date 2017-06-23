@@ -29,11 +29,15 @@
             <h2>Art&iacute;culos <span class="normal">destacados</span></h2>
             <hr class="subtitle" />
             <article ng-repeat="article in importantBlogs">
-                <div class="image-preview">
-                    <div>
-                        <div>
-                            <img archive="article.banner" ng-src="{{article.banner.src}}" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})" ng-style="article.crop" />
-                        </div>
+                <div class="diamond-preview">
+                    <img archive="article.diamond">
+                    <div class="svg-canvas">
+                        <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                            <path d="M0 0 h100 v100 h-100 z M47 3 L3 47 C3 47 0 50 3 53 L47 97 C47 97 50 100 53 97 L97 53 C97 53 100 50 97 47 L53 3 C53 3 50 0 47 3 z" style="fill: rgba(218, 220, 223, 1.0);"></path>
+                        </svg>
+                    </div>
+                    <div class="diamond-border">
+                        <img class="cursor-pointer" ng-src="{{diamondBorderImg}}" ng-click="goToDetails(article)">
                     </div>
                 </div>
                 <div class="info" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})">

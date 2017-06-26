@@ -39,7 +39,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
 
         openRest("game/findGamesByCategory/:categoryId", true).get({categoryId: categoryId}, function(data) {
             $scope.gamesByCat = data;
-            console.log($scope.gamesByCat)
+            console.log("gamesByCat", $scope.gamesByCat);
         });
     }
 

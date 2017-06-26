@@ -40,6 +40,11 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 			reader.readAsArrayBuffer(newValue);
 		} else {
 			$scope.bannerBase64 = '//:0';
+		}
+	});
+
+	$scope.$watch("bannerBase64", function(newValue, oldValue) {
+		if (newValue == null || newValue == '//:0') {
 			$scope.diamondCropImage = '//:0';
 			$scope.squareCropImage = '//:0';
 		}

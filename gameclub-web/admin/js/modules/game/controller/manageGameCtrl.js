@@ -128,6 +128,12 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 		}
 	});
 
+	$scope.$watch("coverBase64", function(newValue, oldValue) {
+		if (newValue == null || newValue == '//:0') {
+			$scope.images.diamond = '//:0';
+		}
+	});
+
 	function base64ToFile(base64, filename) {
 		let arr = base64.split(','), mime = arr[0].match(/:(.*?);/)[1]
 		let bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);

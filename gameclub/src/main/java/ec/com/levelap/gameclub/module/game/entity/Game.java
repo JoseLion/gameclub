@@ -55,9 +55,6 @@ public class Game extends BaseEntity {
 	@OneToMany(mappedBy="game", fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<GameCategory> categories = new ArrayList<>();
 	
-	@Column(name="average_week_cost", columnDefinition="INTEGER DEFAULT 0")
-	private Integer averageWeekCost = 0;
-	
 	@Column(name="upload_payment", columnDefinition="INTEGER DEFAULT 0")
 	private Integer uploadPayment = 0;
 	
@@ -75,6 +72,9 @@ public class Game extends BaseEntity {
 	
 	@Column(name="trailer_url", columnDefinition="VARCHAR")
 	private String trailerUrl;
+	
+	@Column(name="price_charting_id")
+	private Integer priceChartingId;
 
 	public String getName() {
 		return name;
@@ -140,13 +140,6 @@ public class Game extends BaseEntity {
 		this.categories = categories;
 	}
 
-	public Integer getAverageWeekCost() {
-		return averageWeekCost;
-	}
-
-	public void setAverageWeekCost(Integer averageWeekCost) {
-		this.averageWeekCost = averageWeekCost;
-	}
 
 	public Integer getUploadPayment() {
 		return uploadPayment;
@@ -187,4 +180,16 @@ public class Game extends BaseEntity {
 	public void setTrailerUrl(String trailerUrl) {
 		this.trailerUrl = trailerUrl;
 	}
+
+	public Integer getPriceChartingId() {
+		return priceChartingId;
+	}
+
+	public void setPriceChartingId(Integer priceChartingId) {
+		this.priceChartingId = priceChartingId;
+	}
+
+	
+	
+	
 }

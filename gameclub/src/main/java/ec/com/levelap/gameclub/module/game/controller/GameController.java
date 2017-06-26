@@ -61,8 +61,8 @@ public class GameController {
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<?> save(@RequestPart Game game, @RequestPart(required=false) MultipartFile cover, @RequestPart(required=false) MultipartFile banner) throws ServletException, IOException {
-		return gameService.save(game, cover, banner);
+	public ResponseEntity<?> save(@RequestPart Game game, @RequestPart(required=false) MultipartFile cover, @RequestPart(required=false) MultipartFile banner, @RequestPart(required=false) MultipartFile diamond) throws ServletException, IOException {
+		return gameService.save(game, cover, banner, diamond);
 	}
 	
 	@RequestMapping(value="changeStatus/{id}", method=RequestMethod.GET)

@@ -9,14 +9,6 @@
 angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope, $state, importantBlogs, categories, tags, blogsPreview, openRest, friendlyUrl) {
     importantBlogs.$promise.then(function(data) {
         $scope.importantBlogs = data.content;
-        $scope.importantBlogs.forEach(function(preview) {
-            if(preview.diamondCrop != null) {
-                preview.crop = {
-                    transform: 'translate(' + preview.diamondCrop.a + 'px,' + preview.diamondCrop.b + 'px)',
-                    zoom: (preview.diamondCrop.c / 2)
-                };
-            }
-        });
     });
     
     categories.$promise.then(function(data) {

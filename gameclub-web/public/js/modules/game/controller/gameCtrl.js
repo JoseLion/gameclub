@@ -1,17 +1,20 @@
 angular.module('Game').controller('GameCtrl', function($scope, game, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64) {
     if (game != null) {
         game.$promise.then(function(data) {
+            console.log("game: ", data);
             $scope.game = data;
             openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(data) {
                 $scope.background = {
                     background: "url('" + getImageBase64(data, $scope.game.banner.type) + "') center bottom / 100% no-repeat"
                 };
             });
+
             forEach($scope.game.consoles, function(gameConsole) {
                 openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
     				gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
     			});
             });
+
             if($scope.game.consoles != null) {
                 $scope.search = {console: $scope.game.consoles[0]};
             }

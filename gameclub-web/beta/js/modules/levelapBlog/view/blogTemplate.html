@@ -29,16 +29,19 @@
             <h2>Art&iacute;culos <span class="normal">destacados</span></h2>
             <hr class="subtitle" />
             <article ng-repeat="article in importantBlogs">
-                <div class="diamond-preview">
-                    <img archive="article.diamond">
-                    <div class="svg-canvas">
-                        <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                            <path d="M0 0 h100 v100 h-100 z M47 3 L3 47 C3 47 0 50 3 53 L47 97 C47 97 50 100 53 97 L97 53 C97 53 100 50 97 47 L53 3 C53 3 50 0 47 3 z" style="fill: rgba(218, 220, 223, 1.0);"></path>
-                        </svg>
-                    </div>
-                    <div class="diamond-border">
-                        <img class="cursor-pointer" ng-src="{{diamondBorderImg}}" ng-click="goToDetails(article)">
-                    </div>
+                <div>
+                    <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <defs>
+                            <pattern id="border" patternUnits="userSpaceOnUse" width="100" height="100">
+                                <image xlink:href="" ng-href="{{diamondBorderImg}}" width="100" height="100" />
+                            </pattern>
+                            <pattern id="cropped" patternUnits="userSpaceOnUse" width="100" height="100">
+                                <image archive="article.diamond" xlink:href="" width="100" height="100" />
+                            </pattern>
+                        </defs>
+                        <path d="M47 3 L3 47 C3 47 0 50 3 53 L47 97 C47 97 50 100 53 97 L97 53 C97 53 100 50 97 47 L53 3 C53 3 50 0 47 3 z" style="fill: url(#border)"></path>
+                        <path d="M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" style="fill: url(#cropped); cursor: pointer;" ng-click="goToDetails(article)"></path>
+                    </svg>
                 </div>
                 <div class="info" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})">
                     <h2 title="{{article.title}}">{{article.title | limitTo: 18}}{{article.title.length > 18 ? '...' : ''}}</h2>
@@ -46,6 +49,7 @@
                         <p>{{article.summary | limitTo:200}}{{article.summary.length > 200 ? '...' : ''}}</p>
                     </div>
                 </div>
+                
             </article>
         </div>
 

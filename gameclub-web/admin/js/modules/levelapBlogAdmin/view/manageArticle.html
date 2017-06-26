@@ -94,10 +94,10 @@
 							<button type="button" class="btn btn-w-m btn-default" ng-click="cropImage('diamond')" ng-disabled="bannerBase64 == null || bannerBase64 == '//:0'">Recortar</button>
 						</div>
 						<div class="col-md-12">
-							<img archive-file="article.diamond" ng-model="diamondCropImage" ng-src="{{diamondCropImage}}" style="max-width: 100%; margin-top: 5%;">
+							<img class="cropped-img" archive-file="article.diamond" ng-model="diamondCropImage" ng-src="{{diamondCropImage}}">
 							<div  class="diamond-cover" ng-if="diamondCropImage != null && diamondCropImage != '//:0'">
 								<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-									<path d="M0 0 h100 v100 h-100 z M47 3 L3 47 C3 47 0 50 3 53 L47 97 C47 97 50 100 53 97 L97 53 C97 53 100 50 97 47 L53 3 C53 3 50 0 47 3 z" style="fill: rgba(255, 255, 255, 0.7);"></path>
+									<path d="M0 0 h100 v100 h-100 z M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" style="fill: rgba(255, 255, 255, 0.7);"></path>
 								</svg>
 							</div>
 						</div>
@@ -109,7 +109,7 @@
 							<button type="button" class="btn btn-w-m btn-default" ng-click="cropImage('square')" ng-disabled="bannerBase64 == null || bannerBase64 == '//:0'">Recortar</button>
 						</div>
 						<div class="col-md-12">
-							<img archive-file="article.square" ng-model="squareCropImage" ng-src="{{squareCropImage}}" style="max-width: 100%; margin-top: 5%;">
+							<img class="cropped-img" archive-file="article.square" ng-model="squareCropImage" ng-src="{{squareCropImage}}" style="max-width: 100%; margin-top: 5%;">
 						</div>
 					</div>
 				</div>
@@ -124,17 +124,6 @@
 		</div>
 	</div>
 </div>
-
-<style type="text/css">
-	.diamond-cover {
-		position: absolute;
-		left: 0; top: 4.75%;
-		max-width: 100%;
-		width: -webkit-fill-available;
-		margin-left: 15px;
-		margin-right: 15px;
-	}
-</style>
 
 <script type="text/ng-template" id="addExtraModal.html">
 	<div class="inmodal">

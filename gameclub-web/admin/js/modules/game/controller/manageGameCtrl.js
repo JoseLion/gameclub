@@ -1,12 +1,6 @@
-angular.module("Game").controller('ManageGameCtrl', function($scope, game, contentRatings, magazines, consoles, categories, sweet, rest, $state, forEach, getImageBase64, notif, $sce, $q) {
+angular.module("Game").controller('ManageGameCtrl', function($scope, game, contentRatings, magazines, consoles, categories, sweet, rest, $state, forEach, getImageBase64, notif, $sce, $q, cropImage) {
 	$scope.tabs = [{name: "General", active: true}, {name: "Multimedia", active: false}];
-	$scope.game = {
-		diamondCrop: {
-			a: 0,
-			b: 0,
-			c: 1.0
-		}
-	};
+	$scope.game = {};
 	$scope.images = {};
 
 	$q.all({
@@ -36,14 +30,6 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 
 		if (result.game != null) {
 			$scope.game = result.game;
-
-			if ($scope.game.diamondCrop == null) {
-				$scope.game.diamondCrop = {
-					a: 0,
-					b: 0,
-					c: 1.0
-				};
-			}
 
 			setTimeout(function() {
 				forEach($scope.game.magazineRatings, function(gameMagazine, i) {
@@ -105,6 +91,10 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 				banner: $scope.images.banner
 			};
 
+			if ($scope.images.diamond != null) {
+				formData.diamond = base64ToFile($scope.images.diamond, "diamond - " + $scope.images.cover.name);
+			}
+
 			rest("game/save").multipart(formData, function() {
 				sweet.success();
 				sweet.close();
@@ -119,54 +109,10 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 		$state.go("^.viewGames");
 	}
 
-	/* ----------------- CROP ------------------ */
-
-	let isDragging = false;
-	let dx = 0;
-	let dy = 0;
-
-	$scope.zoomOptions = {
-		ceil: 2.0,
-		floor: 0.1,
-		step: 0.01,
-		precision: 2,
-		vertical: true,
-		showSelectionBar: true
-	};
-
-	$scope.getCropStyle = function() {
-		let diamondDiv = angular.element("#diamond-div");
-		return {
-			height: diamondDiv[0].clientWidth + 'px'
-		};
-	}
-
-	$scope.beginDrag = function($event) {
-		isDragging = true;
-		dx = $event.offsetX;
-		dy = $event.offsetY;
-	}
-
-	$scope.endDrag = function() {
-		isDragging = false;
-	}
-
-	$scope.drag = function($event, shape) {
-		if (isDragging) {
-			$scope.game.diamondCrop.a += $event.offsetX - dx;
-			$scope.game.diamondCrop.b += $event.offsetY - dy;
-			
-			dx = $event.offsetX;
-			dy = $event.offsetY;
-		}
-	}
-
-	$scope.getPositionStyle = function(obj) {
-		return {
-			left: obj.a + 'px',
-			top: obj.b + 'px',
-			zoom: (obj.c * 100) + '%'
-		};
+	$scope.cropImage = function(shape) {
+		cropImage($scope.coverBase64, shape).result.then(function(croppedImage) {
+			$scope.images.diamond = croppedImage;
+		});
 	}
 
 	$scope.$watch("images.cover", function(newValue, oldValue) {
@@ -180,9 +126,16 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 		} else {
 			$scope.coverBase64 = '//:0';
 		}
-
-		setTimeout(function() {
-			$scope.$broadcast('rzSliderForceRender');
-		}, 0);
 	});
+
+	function base64ToFile(base64, filename) {
+		let arr = base64.split(','), mime = arr[0].match(/:(.*?);/)[1]
+		let bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+
+		while(n--){
+			u8arr[n] = bstr.charCodeAt(n);
+		}
+
+		return new File([u8arr], filename, {type:mime});
+	}
 });

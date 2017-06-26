@@ -51,7 +51,7 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 				"g.name AS name, " +
 				"g.contentRating AS contentRating, " +
 				"g.cover AS cover, " +
-				"g.diamondCrop AS diamondCrop " +
+				"g.diamond AS diamond " +
 			"FROM Game g " +
 				"LEFT JOIN g.consoles cn " +
 				"LEFT JOIN g.categories ct " +

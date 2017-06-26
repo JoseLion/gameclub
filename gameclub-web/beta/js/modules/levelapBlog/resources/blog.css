@@ -40,11 +40,6 @@
 #blog .important article .info{cursor:pointer;width:60% !important;padding-left:2%;}
 #blog .important article .info h2,#blog .search article .info h2{font-size:1em;}
 #blog .important article .info p,#blog .search article .info p{font-size:0.9em;}
-#blog .important article .diamond-preview{width:100%;padding: 0% 8% 0% 10%;display:-webkit-box;}
-#blog .important article .diamond-preview img{width:100%;}
-#blog .important article .diamond-preview .svg-canvas{transform:translate(-100%, 0);}
-#blog .important article .diamond-preview .diamond-border{transform:translate(-200%, 0);}
-#blog .important article .diamond-preview .diamond-border img{transform:scale(1.15);}
 
 /** ** DIRECTIVES SECTION ** **/
 /** NAVIGATION **/

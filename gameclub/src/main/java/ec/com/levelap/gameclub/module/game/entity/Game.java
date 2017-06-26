@@ -15,8 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.postgresql.geometric.PGline;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -67,8 +65,9 @@ public class Game extends BaseEntity {
 	@JoinColumn(name="cover", foreignKey=@ForeignKey(name="cover_archive_fk"))
 	private Archive cover;
 	
-	@Column(name="diamond_crop")
-	private PGline diamondCrop;
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="diamond", foreignKey=@ForeignKey(name="diamond_archive_fk"))
+	private Archive diamond;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="banner", foreignKey=@ForeignKey(name="banner_archive_fk"))
@@ -165,12 +164,12 @@ public class Game extends BaseEntity {
 		this.cover = cover;
 	}
 
-	public PGline getDiamondCrop() {
-		return diamondCrop;
+	public Archive getDiamond() {
+		return diamond;
 	}
 
-	public void setDiamondCrop(PGline diamondCrop) {
-		this.diamondCrop = diamondCrop;
+	public void setDiamond(Archive diamond) {
+		this.diamond = diamond;
 	}
 
 	public Archive getBanner() {

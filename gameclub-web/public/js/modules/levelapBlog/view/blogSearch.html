@@ -1,9 +1,10 @@
 <!-- BLOG SEARCH PAGE START -->
 <div class="search">
     <div class="article-section">
-        <h2 ng-if="articles.length > 0 && searchValue != null && searchValue != ''">Resultados para: <span class="normal">{{searchValue}}</span></h2>
+        <h2 class="results-for" ng-if="articles.length > 0 && searchValue != null && searchValue != ''">Resultados para: <span class="normal">{{searchValue}}</span></h2>
         <div ng-if="articles.length > 0">
-            <article ng-repeat="article in articles">
+            <article-preview ng-repeat="article in articles" ng-model="article" />
+            <!-- <article ng-repeat="article in articles">
                 <div class="image-preview">
                     <div>
                         <div>
@@ -18,7 +19,7 @@
                     </div>
                     <a ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})">Leer m&aacute;s</a>
                 </div>
-            </article>
+            </article> -->
         </div>
         <div ng-if="articles.length == 0" class="no-data">
             <h2>No obtuvimos resultados, favor verif&iacute;ca tu informaci&oacute;n.</h2>

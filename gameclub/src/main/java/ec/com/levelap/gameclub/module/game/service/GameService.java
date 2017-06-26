@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -22,9 +24,15 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.base.entity.ErrorControl;
@@ -64,7 +72,14 @@ public class GameService extends BaseService<Game> {
 	@Autowired
 	private DocumentService documentService;
 	
+	@Autowired
+	private RestTemplate restTemplate;
+	
 	private static List<String> headers;
+	
+	@Value("${priceCharting-configuration.url}")
+	private String url;
+	
 	
 	private static final String[] chars = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 	
@@ -561,8 +576,8 @@ public class GameService extends BaseService<Game> {
 			game.setCategories(gameCategories);
 			m++;
 			
-			game.setAverageWeekCost((int)row.getCell(m).getNumericCellValue());
-			m++;
+//			game.setAverageWeekCost((int)row.getCell(m).getNumericCellValue());
+//			m++;
 			game.setUploadPayment((int)row.getCell(m).getNumericCellValue());
 			m++;
 			
@@ -627,5 +642,28 @@ public class GameService extends BaseService<Game> {
 
 	public GameRepo getGameRepo() {
 		return gameRepo;
+	}
+	
+	@Transactional
+	public ResponseEntity<?> getPriceCharting(Game game) throws ServletException {
+		this.checkConfiguration();
+		HttpEntity<?> httpRequest = new HttpEntity<>(null, this.createHeaderRest());
+		ResponseEntity<HashMap> httpResponse = this.restTemplate.exchange(url.concat(game.getPriceChartingId().toString()), HttpMethod.GET, httpRequest, HashMap.class);
+		
+		return null;
+		
+	}
+	
+	private void checkConfiguration() throws ServletException {
+		if (url == null || url.equals("")) {
+			throw new ServletException("Make sure you set up Price Charting Url into your application.properties or application.yml");
+		}
+	}
+	
+	private HttpHeaders createHeaderRest() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		return headers;
 	}
 }

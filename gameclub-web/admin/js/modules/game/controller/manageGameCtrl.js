@@ -119,6 +119,14 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 		$state.go("^.viewGames");
 	}
 
+	$scope.getPriceCharting = function() {
+		rest("game/getPriceCharting/:id").get({id: game.id}, function(data) {
+				
+			}, function(error) {
+				sweet.close();
+			});
+	}
+
 	/* ----------------- CROP ------------------ */
 
 	let isDragging = false;

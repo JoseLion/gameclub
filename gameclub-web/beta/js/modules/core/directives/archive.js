@@ -3,7 +3,8 @@ angular.module("Core").directive('archive', function(openRest, getImageBase64) {
 		restrict: 'A',
 		scope: {
 			archive: "=",
-			placeholder: "@?"
+			placeholder: "@?",
+			ngModel: "=?"
 		},
 		link: function($scope, element, attrs) {
 			if ($scope.placeholder != null) {
@@ -21,9 +22,15 @@ angular.module("Core").directive('archive', function(openRest, getImageBase64) {
 			function setImageSource() {
 				if ($scope.archive != null) {
 					openRest("archive/downloadFile").download({name: $scope.archive.name, module: $scope.archive.module}, function(data) {
-						attrs.$set('src', getImageBase64(data, $scope.archive.type));
-						attrs.$set('alt', $scope.archive.name);
-						attrs.$set('title', $scope.archive.title);
+						if (element[0].tagName == "image") {
+							attrs.$set('xlink:href', getImageBase64(data, $scope.archive.type));
+						} else {
+							attrs.$set('src', getImageBase64(data, $scope.archive.type));
+							attrs.$set('alt', $scope.archive.name);
+							attrs.$set('title', $scope.archive.title);
+						}
+
+						$scope.ngModel = getImageBase64(data, $scope.archive.type);
 					});
 				}
 			}

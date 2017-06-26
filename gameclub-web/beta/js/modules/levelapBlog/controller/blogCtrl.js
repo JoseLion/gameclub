@@ -6,17 +6,9 @@
  * - RESTful Web Services
  * - openRest factory
  */
-angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope, $state, importantBlogs, categories, tags, blogsPreview, openRest) {
+angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope, $state, importantBlogs, categories, tags, blogsPreview, openRest, friendlyUrl) {
     importantBlogs.$promise.then(function(data) {
         $scope.importantBlogs = data.content;
-        $scope.importantBlogs.forEach(function(preview) {
-            if(preview.diamondCrop != null) {
-                preview.crop = {
-                    transform: 'translate(' + preview.diamondCrop.a + 'px,' + preview.diamondCrop.b + 'px)',
-                    zoom: (preview.diamondCrop.c / 2)
-                };
-            }
-        });
     });
     
     categories.$promise.then(function(data) {
@@ -50,5 +42,20 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
 
     if ($state.current.name == 'levelapBlog.blog') {
         $state.go('levelapBlog.blog.home');
+    }
+
+    let baseSrc;
+    for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
+        let script = angular.element(document.getElementsByTagName("script")[i]);
+        if (script.attr("src") != null && script.attr("src").indexOf("levelapBlog.js") > -1) {
+            baseSrc = script.attr("src").substring(0, script.attr("src").indexOf("levelapBlog.js"));
+            break;
+        }
+    }
+
+    $scope.diamondBorderImg = baseSrc + "resources/img/diamond-border.svg";
+
+    $scope.goToDetails = function(article) {
+        $state.go("levelapBlog.blog.detail", {id: article.id, title: friendlyUrl(article.title)})
     }
 });

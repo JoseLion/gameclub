@@ -4,6 +4,7 @@
 #blog .tag{background:#FFFFFF;border:2px solid #7BCABC;border-radius:5px;color:#7BCABC;display:inline-block;margin:0.5em;padding:0.25em 1em;text-transform:uppercase;}
 #blog hr.subtitle{border-top:3px solid #7BCABC;margin:0.5em 0 0;width:10%;}
 #blog .search,#blog .important,#blog .categories,#blog .tags-section,#blog section.most-seen{background:#EEEEEE;margin-bottom:2em;padding:1em;position:relative;}
+#blog .cursor-pointer{cursor:pointer;}
 
 /** BANNER **/
 #blog section.banner{padding-top:10em;padding-bottom:5em;text-align:center;display:block;position:relative;}
@@ -36,7 +37,7 @@
 #blog .important article .image-preview>div>div,#blog .search article .image-preview>div>div{transform:rotate(-45deg);}
 #blog .important article .image-preview>div>div>img{cursor:pointer;height:auto;}
 #blog .important article .info,#blog .search article .info{display:table-cell;vertical-align:middle;width:75%;}
-#blog .important article .info{cursor:pointer;}
+#blog .important article .info{cursor:pointer;width:60% !important;padding-left:2%;}
 #blog .important article .info h2,#blog .search article .info h2{font-size:1em;}
 #blog .important article .info p,#blog .search article .info p{font-size:0.9em;}
 
@@ -113,6 +114,7 @@
 #most-seen .blog-preview .picture .post-date span{display:block;line-height:1;}
 #most-seen .blog-preview .picture .image-section{width:100%;height:100%;}
 #most-seen .blog-preview .picture .image-section .image-cropped{border-radius:10px;height:100%;overflow:hidden;width:100%;}
+#most-seen .blog-preview .picture .image-section .image-cropped img{width:100%;}
 #most-seen .pagging{margin-bottom:1em;margin-top:-1em;text-align:center;}
 #most-seen .pagging .page-button{border:2px solid #7BCABC;border-radius:50%;cursor:pointer;display:inline-block;height:20px;margin-left:0.25%;margin-right:0.25%;width:20px;}
 #most-seen .pagging .page-button.page-active{background:#7BCABC;border-color:transparent;}

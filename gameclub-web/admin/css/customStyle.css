@@ -36,3 +36,21 @@ table tbody tr td {
 .dataTables_filter {
 	text-align: left !important;
 }
+
+.cropped-img {
+	margin-top: 5%;
+	width: 100%;
+}
+
+.diamond-cover {
+	position: absolute;
+	left: 0; top: 4.75%;
+	max-width: 100%;
+	width: -webkit-fill-available;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.irs-slider {
+	cursor: pointer !important;
+}

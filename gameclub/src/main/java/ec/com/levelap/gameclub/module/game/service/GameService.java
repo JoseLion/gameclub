@@ -88,7 +88,7 @@ public class GameService extends BaseService<Game> {
 	}
 	
 	@Transactional
-	public ResponseEntity<?> save(Game game, MultipartFile cover, MultipartFile banner) throws ServletException, IOException {
+	public ResponseEntity<?> save(Game game, MultipartFile cover, MultipartFile banner, MultipartFile diamond) throws ServletException, IOException {
 		if (game.getId() == null) {
 			Game found = gameRepo.findByName(game.getName());
 			
@@ -142,6 +142,26 @@ public class GameService extends BaseService<Game> {
 			archive.setName(fileData.getName());
 			archive.setType(banner.getContentType());
 			game.setBanner(archive);
+		}
+		
+		if (banner != null) {
+			Archive archive = new Archive();
+			
+			if (game.getId() != null) {
+				Game original = gameRepo.findOne(game.getId());
+				
+				if (original.getDiamond() != null) {
+					documentService.deleteFile(original.getDiamond().getName(), Game.class.getSimpleName());
+					archive = original.getDiamond();
+				}
+			}
+			
+			FileData fileData = documentService.saveFile(diamond, Game.class.getSimpleName());
+			
+			archive.setModule(Game.class.getSimpleName());
+			archive.setName(fileData.getName());
+			archive.setType(diamond.getContentType());
+			game.setDiamond(archive);
 		}
 		
 		gameRepo.save(game);

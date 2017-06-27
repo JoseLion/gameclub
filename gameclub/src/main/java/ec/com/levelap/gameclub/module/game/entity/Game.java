@@ -55,8 +55,8 @@ public class Game extends BaseEntity {
 	@OneToMany(mappedBy="game", fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<GameCategory> categories = new ArrayList<>();
 	
-	@Column(name="upload_payment", columnDefinition="INTEGER DEFAULT 0")
-	private Integer uploadPayment = 0;
+	@Column(name="upload_payment", columnDefinition="DECIMAL(9, 2) DEFAULT 0.0")
+	private Double uploadPayment = 0.0;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="cover", foreignKey=@ForeignKey(name="cover_archive_fk"))
@@ -74,7 +74,7 @@ public class Game extends BaseEntity {
 	private String trailerUrl;
 	
 	@Column(name="price_charting_id")
-	private Integer priceChartingId;
+	private Long priceChartingId;
 
 	public String getName() {
 		return name;
@@ -140,12 +140,11 @@ public class Game extends BaseEntity {
 		this.categories = categories;
 	}
 
-
-	public Integer getUploadPayment() {
+	public Double getUploadPayment() {
 		return uploadPayment;
 	}
 
-	public void setUploadPayment(Integer uploadPayment) {
+	public void setUploadPayment(Double uploadPayment) {
 		this.uploadPayment = uploadPayment;
 	}
 
@@ -181,15 +180,11 @@ public class Game extends BaseEntity {
 		this.trailerUrl = trailerUrl;
 	}
 
-	public Integer getPriceChartingId() {
+	public Long getPriceChartingId() {
 		return priceChartingId;
 	}
 
-	public void setPriceChartingId(Integer priceChartingId) {
+	public void setPriceChartingId(Long priceChartingId) {
 		this.priceChartingId = priceChartingId;
 	}
-
-	
-	
-	
 }

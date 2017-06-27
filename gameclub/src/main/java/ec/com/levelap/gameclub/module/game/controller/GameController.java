@@ -98,14 +98,14 @@ public class GameController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="getPriceCharting/{id}", method=RequestMethod.GET)
+	/*@RequestMapping(value="getPriceCharting/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Game> getPriceCharting(@PathVariable Long id) throws ServletException {
 		Game game = gameService.getGameRepo().findOne(id);
 		if(game.getPriceChartingId() != null || game.getPriceChartingId()!= 0) {
 			gameService.getPriceCharting(game);
 		}
 		return new ResponseEntity<Game>(game, HttpStatus.OK);
-	}
+	}*/
 	
 	private static class Search {
 		public String name = "";

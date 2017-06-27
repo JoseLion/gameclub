@@ -51,7 +51,7 @@
                 </div>
             </div>
             <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">{{game.releaseDate | date: 'dd-MM-yyyy'}}</span></span>
-            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{game.uploadPayment / 4.0}} coins</span></span>
+            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{(game.uploadPayment / 4.0) | number: 2}} coins</span></span>
         </div>
         <div class="col-md-3 rating">
             <div class="reviews text-center">

@@ -58,6 +58,7 @@ import ec.com.levelap.gameclub.module.game.entity.GameConsole;
 import ec.com.levelap.gameclub.module.game.entity.GameMagazine;
 import ec.com.levelap.gameclub.module.game.repository.GameRepo;
 import ec.com.levelap.gameclub.utils.Code;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Service
 public class GameService extends BaseService<Game> {
@@ -82,7 +83,7 @@ public class GameService extends BaseService<Game> {
 	private static List<String> headers;
 	
 	@Value("${priceCharting-configuration.url}")
-	private String url;
+	private String priceChartingUrl;
 	
 	
 	private static final String[] chars = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
@@ -683,10 +684,9 @@ public class GameService extends BaseService<Game> {
 	public HashMap<String, String> getPriceCharting(String id) throws ServletException {
 		restTemplate.setErrorHandler(new RestResponseHandler());
 		this.checkConfiguration();
-		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString("http://www.pricecharting.com/api/product");
-		uriBuilder.queryParam("t", "bf03e53dcbc519e849eafba5189cc928dc139a65");
+		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(priceChartingUrl);
+		uriBuilder.queryParam("t", Const.PRICE_CHARTING_TOKEN);
 		uriBuilder.queryParam("id", id);
-		//System.out.println("URI: " + uriBuilder.build().toUri());
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -694,8 +694,6 @@ public class GameService extends BaseService<Game> {
 		HttpEntity<?> httpRequest = new HttpEntity<>(null, headers);
 		
 		ResponseEntity<HashMap<String, String>> response = restTemplate.exchange(uriBuilder.build().toUri(), HttpMethod.GET, httpRequest, new ParameterizedTypeReference<HashMap<String, String>>() {});
-		System.out.println("********* TEST: " + response.getBody());
-		
 		return response.getBody();
 	}
 	
@@ -704,19 +702,23 @@ public class GameService extends BaseService<Game> {
 			return Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
 		}
 		
-		if (priceChart.get("retail-cib-buy") != null) {
-			return Double.parseDouble(priceChart.get("retail-cib-buy")) / 100.0;
+		if (priceChart.get("retail-new-sell") != null) {
+			return Double.parseDouble(priceChart.get("retail-new-sell")) / 100.0;
 		}
 		
-		if (priceChart.get("retail-new-buy") != null) {
-			return Double.parseDouble(priceChart.get("retail-new-buy")) / 100.0;
+		if (priceChart.get("retail-cib-sell") != null) {
+			return Double.parseDouble(priceChart.get("retail-cib-sell")) / 100.0;
+		}
+		
+		if (priceChart.get("retail-loose-sell") != null) {
+			return Double.parseDouble(priceChart.get("retail-loose-sell")) / 100.0;
 		}
 		
 		return null;
 	}
 	
 	private void checkConfiguration() throws ServletException {
-		if (url == null || url.equals("")) {
+		if (priceChartingUrl == null || priceChartingUrl.equals("")) {
 			throw new ServletException("Make sure you set up Price Charting Url into your application.properties or application.yml");
 		}
 	}

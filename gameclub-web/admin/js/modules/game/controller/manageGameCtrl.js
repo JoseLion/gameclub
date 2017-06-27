@@ -109,6 +109,15 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 		$state.go("^.viewGames");
 	}
 
+	$scope.getPriceCharting = function() {
+		rest("game/getPriceCharting/:id").get({id: game.id}, function(data) {
+				
+			}, function(error) {
+				sweet.close();
+		});
+	}
+
+	
 	$scope.cropImage = function(shape) {
 		cropImage($scope.coverBase64, shape).result.then(function(croppedImage) {
 			$scope.images.diamond = croppedImage;

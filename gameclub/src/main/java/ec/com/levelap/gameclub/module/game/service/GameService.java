@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
@@ -24,13 +25,19 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.entity.FileData;
@@ -503,14 +510,14 @@ public class GameService extends BaseService<Game> {
 									rowHasError = true;
 									report.getErrors().put(chars[i] + (j+1), "El valor debe ser mayor o igual a cero");
 								} else {
-									PriceCharting priceChart = getPriceCharting("" + number.intValue());
-									System.out.println("STATUS: " + priceChart.status);
+									HashMap<String, String> priceChart = getPriceCharting("" + number.intValue());
+									System.out.println("STATUS: " + priceChart.get("status"));
 									
-									if (priceChart.getStatus() != null && priceChart.getStatus().equals("error")) {
-										if (priceChart.getErrorMessage().equals("No such product")) {
+									if (priceChart.get("status") != null && priceChart.get("status").equals("error")) {
+										if (priceChart.get("error_message").equals("No such product")) {
 											report.getErrors().put(chars[i] + (j+1), "No se pudo encontrar el ID de Price Charting");
 										} else {
-											report.getErrors().put(chars[i] + (j+1), "Error en Price Charting: " + priceChart.getErrorMessage());
+											report.getErrors().put(chars[i] + (j+1), "Error en Price Charting: " + priceChart.get("error_message"));
 										}
 									}
 								}
@@ -673,27 +680,36 @@ public class GameService extends BaseService<Game> {
 	}
 	
 	@Transactional
-	public PriceCharting getPriceCharting(String id) throws ServletException {
+	public HashMap<String, String> getPriceCharting(String id) throws ServletException {
+		restTemplate.setErrorHandler(new RestResponseHandler());
 		this.checkConfiguration();
-		String uri = "https://pricecharting.com/api/product?t=bf03e53dcbc519e849eafba5189cc928dc139a65&id=" + id;
-		System.out.println("URI: " + uri);
-		PriceCharting response = restTemplate.getForObject(uri, PriceCharting.class);
-		System.out.println("response: " + response);
+		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString("http://www.pricecharting.com/api/product");
+		uriBuilder.queryParam("t", "bf03e53dcbc519e849eafba5189cc928dc139a65");
+		uriBuilder.queryParam("id", id);
+		//System.out.println("URI: " + uriBuilder.build().toUri());
 		
-		return response;
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<?> httpRequest = new HttpEntity<>(null, headers);
+		
+		ResponseEntity<HashMap<String, String>> response = restTemplate.exchange(uriBuilder.build().toUri(), HttpMethod.GET, httpRequest, new ParameterizedTypeReference<HashMap<String, String>>() {});
+		System.out.println("********* TEST: " + response.getBody());
+		
+		return response.getBody();
 	}
 	
-	public Double getAvailablePrice(PriceCharting priceChart) {
-		if (priceChart.getGamestopPrice() != null) {
-			return priceChart.getGamestopPrice() / 100.0;
+	public Double getAvailablePrice(HashMap<String, String> priceChart) {
+		if (priceChart.get("gamestop-price") != null) {
+			return Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
 		}
 		
-		if (priceChart.getRetailCibBuy() != null) {
-			return priceChart.getRetailCibBuy() / 100.0;
+		if (priceChart.get("retail-cib-buy") != null) {
+			return Double.parseDouble(priceChart.get("retail-cib-buy")) / 100.0;
 		}
 		
-		if (priceChart.getRetailNewBuy() != null) {
-			return priceChart.getRetailNewBuy() / 100.0;
+		if (priceChart.get("retail-new-buy") != null) {
+			return Double.parseDouble(priceChart.get("retail-new-buy")) / 100.0;
 		}
 		
 		return null;
@@ -705,66 +721,19 @@ public class GameService extends BaseService<Game> {
 		}
 	}
 	
-	@JsonIgnoreProperties(ignoreUnknown=true)
-	private static class PriceCharting {
-		@Column(name="gamestop-price")
-		private Double gamestopPrice;
-		
-		@Column(name="retail-cib-buy")
-		private Double retailCibBuy;
-		
-		@Column(name="retail-new-buy")
-		private Double retailNewBuy;
-		
-		@Column(name="status")
-		private String status;
-		
-		@Column(name="error_message")
-		private String errorMessage;
-
-		public Double getGamestopPrice() {
-			return gamestopPrice;
+	private static class RestResponseHandler implements ResponseErrorHandler {
+		@Override
+		public boolean hasError(ClientHttpResponse response) throws IOException {
+			if (response.getRawStatusCode() == 404) {
+				return false;
+			}
+			
+			return true;
 		}
 
-		@SuppressWarnings("unused")
-		public void setGamestopPrice(Double gamestopPrice) {
-			this.gamestopPrice = gamestopPrice;
-		}
-
-		public Double getRetailCibBuy() {
-			return retailCibBuy;
-		}
-		
-		@SuppressWarnings("unused")
-		public void setRetailCibBuy(Double retailCibBuy) {
-			this.retailCibBuy = retailCibBuy;
-		}
-
-		public Double getRetailNewBuy() {
-			return retailNewBuy;
-		}
-		
-		@SuppressWarnings("unused")
-		public void setRetailNewBuy(Double retailNewBuy) {
-			this.retailNewBuy = retailNewBuy;
-		}
-
-		public String getStatus() {
-			return status;
-		}
-		
-		@SuppressWarnings("unused")
-		public void setStatus(String status) {
-			this.status = status;
-		}
-
-		public String getErrorMessage() {
-			return errorMessage;
-		}
-		
-		@SuppressWarnings("unused")
-		public void setErrorMessage(String errorMessage) {
-			this.errorMessage = errorMessage;
+		@Override
+		public void handleError(ClientHttpResponse response) throws IOException {
+			
 		}
 	}
 }

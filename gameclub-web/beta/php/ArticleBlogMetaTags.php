@@ -11,6 +11,7 @@
 <html>
 <head>
     <meta property="og:title" content="<?=$meta_tags["title"]?>" />
+    <meta property="og:type" content="article" />
     <meta property="og:description" content="<?=$meta_tags["summary"]?>" />
     <meta property="og:image" content="<?=$meta_tags["banner"]?>" />
 	<meta property="fb:app_id" content="<?=$facebook_id?>" /> 

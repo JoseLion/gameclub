@@ -114,13 +114,13 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 			rest("game/getPriceCharting/:id").get({id: $scope.game.priceChartingId}, function(data) {
 				notif.info("El precio de priceCharting  es: "+ data);
 				$scope.game.uploadPayment = data;	
-				}, function(error) {
-					sweet.close();
-					$scope.game.uploadPayment = undefined;
-					notif.danger("No se encontró precio en Price Charting, ingrese Coins por Cargar juego manualmente");
+			}, function(error) {
+				sweet.close();
+				$scope.game.uploadPayment = undefined;
+				notif.danger(error.data != null ? error.data.message : error);
 			});
 		}else{
-				notif.info("Ingrese Price Charting Id");
+			notif.info("Ingrese Price Charting Id");
 		}		
 	}
 

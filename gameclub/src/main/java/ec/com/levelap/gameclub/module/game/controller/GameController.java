@@ -103,16 +103,22 @@ public class GameController {
 	@RequestMapping(value="getPriceCharting/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> getPriceCharting(@PathVariable Long id) throws ServletException {
 		Double price = null;
-		if(id != null) {
+		if (id != null) {
 			HashMap<String, String> response = gameService.getPriceCharting(id.toString());
-			price = gameService.getAvailablePrice(response);
-			if(price != null){
-				return new ResponseEntity<>(price, HttpStatus.OK);
-			}else {
-				return new ResponseEntity<ErrorControl>(new ErrorControl("No se encontra precio en Price Charting", true), HttpStatus.INTERNAL_SERVER_ERROR);
+			
+			if (response == null) {
+				return new ResponseEntity<ErrorControl>(new ErrorControl("No se pudo conectar con Price Charting", true), HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				price = gameService.getAvailablePrice(response);
+				
+				if (price != null) {
+					return new ResponseEntity<>(price, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<ErrorControl>(new ErrorControl("No se encontró un precio en Price Charting. Por favor ingrese el precio manualmente", true), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
 			}
 		} else {
-			return new ResponseEntity<ErrorControl>(new ErrorControl("Id no encontrado en el sistema", true), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<ErrorControl>(new ErrorControl("ID no encontrado en el sistema", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}		
 	}
 	

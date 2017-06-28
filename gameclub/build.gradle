@@ -67,6 +67,7 @@ dependencies {
 	compile('com.squareup.okhttp3:okhttp:3.6.0')
 	compile('org.apache.poi:poi-ooxml:3.9')
 	compile('org.postgresql:postgresql')
+	compile('org.apache.httpcomponents:httpclient')
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 

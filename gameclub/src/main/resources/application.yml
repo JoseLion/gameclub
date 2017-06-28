@@ -35,7 +35,8 @@ levelap:
                   https://www.gameclub.com.ec,
                   https://www.gameclub.com.ec:8390,
                   https://104.198.238.150,
-                  https://104.198.238.150:8390
+                  https://104.198.238.150:8390,
+                  http://localhost:89
   compressRequest: true
   file:
     environment: GAMECLUB_HOME

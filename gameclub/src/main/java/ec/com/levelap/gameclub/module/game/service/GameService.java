@@ -25,15 +25,19 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.entity.FileData;
@@ -54,6 +58,7 @@ import ec.com.levelap.gameclub.module.game.entity.GameConsole;
 import ec.com.levelap.gameclub.module.game.entity.GameMagazine;
 import ec.com.levelap.gameclub.module.game.repository.GameRepo;
 import ec.com.levelap.gameclub.utils.Code;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Service
 public class GameService extends BaseService<Game> {
@@ -78,7 +83,7 @@ public class GameService extends BaseService<Game> {
 	private static List<String> headers;
 	
 	@Value("${priceCharting-configuration.url}")
-	private String url;
+	private String priceChartingUrl;
 	
 	
 	private static final String[] chars = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
@@ -497,7 +502,7 @@ public class GameService extends BaseService<Game> {
 						}
 					}
 					
-					if (headers.get(i).toLowerCase().contains("costo") || headers.get(i).toLowerCase().contains("coins")) {
+					if (headers.get(i).toLowerCase().contains("price")) {
 						try {
 							if (cell.getRawValue() != null) {
 								Double number = cell.getNumericCellValue();
@@ -505,11 +510,23 @@ public class GameService extends BaseService<Game> {
 								if (number < 0) {
 									rowHasError = true;
 									report.getErrors().put(chars[i] + (j+1), "El valor debe ser mayor o igual a cero");
+								} else {
+									HashMap<String, String> priceChart = getPriceCharting("" + number.intValue());
+									System.out.println("STATUS: " + priceChart.get("status"));
+									
+									if (priceChart.get("status") != null && priceChart.get("status").equals("error")) {
+										if (priceChart.get("error_message").equals("No such product")) {
+											report.getErrors().put(chars[i] + (j+1), "No se pudo encontrar el ID de Price Charting");
+										} else {
+											report.getErrors().put(chars[i] + (j+1), "Error en Price Charting: " + priceChart.get("error_message"));
+										}
+									}
 								}
 							}
 						} catch (Exception e) {
 							rowHasError = true;
 							report.getErrors().put(chars[i] + (j+1), "Formato de celda debe ser de tipo numérico");
+							e.printStackTrace();
 						}
 					}
 				}
@@ -596,9 +613,9 @@ public class GameService extends BaseService<Game> {
 			game.setCategories(gameCategories);
 			m++;
 			
-//			game.setAverageWeekCost((int)row.getCell(m).getNumericCellValue());
-//			m++;
-			game.setUploadPayment((int)row.getCell(m).getNumericCellValue());
+			Double id = row.getCell(m).getNumericCellValue();
+			game.setPriceChartingId(id.longValue());
+			game.setUploadPayment(getAvailablePrice(getPriceCharting("" + id.intValue())));
 			m++;
 			
 			if (row.getCell(m) != null) {
@@ -655,8 +672,7 @@ public class GameService extends BaseService<Game> {
 		
 		headers.add("*Consolas");
 		headers.add("*Categorias");
-		headers.add("*Costo Promedio / Semana");
-		headers.add("*Coins por Cargar");
+		headers.add("*ID Price Charting");
 		headers.add("URL Trailer");
 	}
 
@@ -665,25 +681,61 @@ public class GameService extends BaseService<Game> {
 	}
 	
 	@Transactional
-	public ResponseEntity<?> getPriceCharting(Game game) throws ServletException {
+	public HashMap<String, String> getPriceCharting(String id) throws ServletException {
+		restTemplate.setErrorHandler(new RestResponseHandler());
 		this.checkConfiguration();
-		HttpEntity<?> httpRequest = new HttpEntity<>(null, this.createHeaderRest());
-		ResponseEntity<HashMap> httpResponse = this.restTemplate.exchange(url.concat(game.getPriceChartingId().toString()), HttpMethod.GET, httpRequest, HashMap.class);
+		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(priceChartingUrl);
+		uriBuilder.queryParam("t", Const.PRICE_CHARTING_TOKEN);
+		uriBuilder.queryParam("id", id);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<?> httpRequest = new HttpEntity<>(null, headers);
+		
+		ResponseEntity<HashMap<String, String>> response = restTemplate.exchange(uriBuilder.build().toUri(), HttpMethod.GET, httpRequest, new ParameterizedTypeReference<HashMap<String, String>>() {});
+		return response.getBody();
+	}
+	
+	public Double getAvailablePrice(HashMap<String, String> priceChart) {
+		if (priceChart.get("gamestop-price") != null) {
+			return Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
+		}
+		
+		if (priceChart.get("retail-new-sell") != null) {
+			return Double.parseDouble(priceChart.get("retail-new-sell")) / 100.0;
+		}
+		
+		if (priceChart.get("retail-cib-sell") != null) {
+			return Double.parseDouble(priceChart.get("retail-cib-sell")) / 100.0;
+		}
+		
+		if (priceChart.get("retail-loose-sell") != null) {
+			return Double.parseDouble(priceChart.get("retail-loose-sell")) / 100.0;
+		}
 		
 		return null;
-		
 	}
 	
 	private void checkConfiguration() throws ServletException {
-		if (url == null || url.equals("")) {
+		if (priceChartingUrl == null || priceChartingUrl.equals("")) {
 			throw new ServletException("Make sure you set up Price Charting Url into your application.properties or application.yml");
 		}
 	}
 	
-	private HttpHeaders createHeaderRest() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		return headers;
+	private static class RestResponseHandler implements ResponseErrorHandler {
+		@Override
+		public boolean hasError(ClientHttpResponse response) throws IOException {
+			if (response.getRawStatusCode() == 404) {
+				return false;
+			}
+			
+			return true;
+		}
+
+		@Override
+		public void handleError(ClientHttpResponse response) throws IOException {
+			
+		}
 	}
 }

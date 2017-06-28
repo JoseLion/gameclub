@@ -35,7 +35,8 @@ levelap:
                   https://www.gameclub.com.ec,
                   https://www.gameclub.com.ec:8390,
                   https://104.198.238.150,
-                  https://104.198.238.150:8390
+                  https://104.198.238.150:8390,
+                  http://localhost:89
   compressRequest: true
   file:
     environment: GAMECLUB_HOME
@@ -65,4 +66,4 @@ kushki-configuration:
     path: https://api-uat.kushkipagos.com/v1
     
 priceCharting-configuration:
-  url: https://www.pricecharting.com/api/product?t=bf03e53dcbc519e849eafba5189cc928dc139a65&id=
+  url: http://www.pricecharting.com/api/product

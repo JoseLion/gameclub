@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -29,6 +30,7 @@ import ec.com.levelap.security.LevelapSecurity;
 
 @SpringBootApplication
 @EnableAutoConfiguration
+@EnableScheduling
 @ComponentScan({ Const.PACKAGE_NAMING })
 @EnableJpaRepositories({ Const.PACKAGE_NAMING })
 public class GameClubApplication extends GameClubConfiguration {

@@ -3,6 +3,7 @@ package ec.com.levelap.gameclub.module.game.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.gameclub.module.category.entity.Category;
 import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.game.entity.ExcelReport;
@@ -98,14 +100,27 @@ public class GameController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	/*@RequestMapping(value="getPriceCharting/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Game> getPriceCharting(@PathVariable Long id) throws ServletException {
-		Game game = gameService.getGameRepo().findOne(id);
-		if(game.getPriceChartingId() != null || game.getPriceChartingId()!= 0) {
-			gameService.getPriceCharting(game);
-		}
-		return new ResponseEntity<Game>(game, HttpStatus.OK);
-	}*/
+	@RequestMapping(value="getPriceCharting/{id}", method=RequestMethod.GET)
+	public ResponseEntity<?> getPriceCharting(@PathVariable Long id) throws ServletException {
+		Double price = null;
+		if (id != null) {
+			HashMap<String, String> response = gameService.getPriceCharting(id.toString());
+			
+			if (response == null) {
+				return new ResponseEntity<ErrorControl>(new ErrorControl("No se pudo conectar con Price Charting", true), HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				price = gameService.getAvailablePrice(response);
+				
+				if (price != null) {
+					return new ResponseEntity<>(price, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<ErrorControl>(new ErrorControl("No se encontró un precio en Price Charting. Por favor ingrese el precio manualmente", true), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		} else {
+			return new ResponseEntity<ErrorControl>(new ErrorControl("ID no encontrado en el sistema", true), HttpStatus.INTERNAL_SERVER_ERROR);
+		}		
+	}
 	
 	private static class Search {
 		public String name = "";

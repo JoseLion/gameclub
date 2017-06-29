@@ -110,11 +110,18 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 	}
 
 	$scope.getPriceCharting = function() {
-		rest("game/getPriceCharting/:id").get({id: game.id}, function(data) {
-				
+		if ($scope.game.priceChartingId !== undefined) {
+			rest("game/getPriceCharting/:id").get({id: $scope.game.priceChartingId}, function(data) {
+				notif.info("El precio de priceCharting  es: "+ data);
+				$scope.game.uploadPayment = data;	
 			}, function(error) {
 				sweet.close();
-		});
+				$scope.game.uploadPayment = undefined;
+				notif.danger(error.data != null ? error.data.message : error);
+			});
+		}else{
+			notif.info("Ingrese Price Charting Id");
+		}		
 	}
 
 	

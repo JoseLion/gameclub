@@ -692,26 +692,38 @@ public class GameService extends BaseService<Game> {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<?> httpRequest = new HttpEntity<>(null, headers);
+		ResponseEntity<HashMap<String, String>> response;
 		
-		ResponseEntity<HashMap<String, String>> response = restTemplate.exchange(uriBuilder.build().toUri(), HttpMethod.GET, httpRequest, new ParameterizedTypeReference<HashMap<String, String>>() {});
-		return response.getBody();
+		try {
+			response = restTemplate.exchange(uriBuilder.build().toUri(), HttpMethod.GET, httpRequest, new ParameterizedTypeReference<HashMap<String, String>>() {});
+		} catch(Exception e) {
+			response = null;;
+		}
+		
+		if (response != null) {
+			return response.getBody();
+		} else {
+			return null;
+		}
 	}
 	
 	public Double getAvailablePrice(HashMap<String, String> priceChart) {
-		if (priceChart.get("gamestop-price") != null) {
-			return Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
-		}
-		
-		if (priceChart.get("retail-new-sell") != null) {
-			return Double.parseDouble(priceChart.get("retail-new-sell")) / 100.0;
-		}
-		
-		if (priceChart.get("retail-cib-sell") != null) {
-			return Double.parseDouble(priceChart.get("retail-cib-sell")) / 100.0;
-		}
-		
-		if (priceChart.get("retail-loose-sell") != null) {
-			return Double.parseDouble(priceChart.get("retail-loose-sell")) / 100.0;
+		if (priceChart != null) {
+			if (priceChart.get("gamestop-price") != null) {
+				return Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
+			}
+			
+			if (priceChart.get("retail-new-sell") != null) {
+				return Double.parseDouble(priceChart.get("retail-new-sell")) / 100.0;
+			}
+			
+			if (priceChart.get("retail-cib-sell") != null) {
+				return Double.parseDouble(priceChart.get("retail-cib-sell")) / 100.0;
+			}
+			
+			if (priceChart.get("retail-loose-sell") != null) {
+				return Double.parseDouble(priceChart.get("retail-loose-sell")) / 100.0;
+			}
 		}
 		
 		return null;

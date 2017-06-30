@@ -33,7 +33,7 @@ angular.module('LevelapBlog').directive('articlePreview', function(openRest, $lo
 			});
 
 			$scope.goToDetails = function() {
-				$state.go("levelapBlog.blog.detail", {id: $scope.ngModel.id, title: $scope.ngModel.title});
+				$state.go("levelapBlog.blog.detail", {id: $scope.ngModel.id, title: friendlyUrl($scope.ngModel.title)});
 			}
 
 			$scope.getShareUrl = function() {

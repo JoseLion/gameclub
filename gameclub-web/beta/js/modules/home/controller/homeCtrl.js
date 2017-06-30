@@ -54,12 +54,6 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, provi
 
     function setPageBlogsMostSeen(data) {
         $scope.blogsPreview = data.content;
-        $scope.blogsPreview.forEach(function(preview) {
-            preview.crop = {
-                transform: 'translate(' + preview.squareCrop.a + 'px,' + preview.squareCrop.b + 'px)',
-                zoom: (preview.squareCrop.c * 0.75)
-            };
-        });
         $scope.totalPagesMostSeen = data.totalPages;
     }
 

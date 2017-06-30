@@ -20,23 +20,18 @@ server:
 levelap:
   securityEnabled: true
   allowedOrigins: http://localhost,
-                  http://localhost:8080,
+                  http://local.gameclub,
+                  http://local.admin.gameclub,
+                  http://local.beta.gameclub,
                   http://gameclub.levelaptesting.com,
-                  http://gameclub.levelaptesting.com:8090,
                   http://gameclub-admin.levelaptesting.com,
-                  http://gameclub-admin.levelaptesting.com:8090,
                   http://gameclub-beta.levelaptesting.com,
-                  http://gameclub-beta.levelaptesting.com:8090,
                   http://104.197.235.122,
                   https://admin.gameclub.com.ec,
-                  https://admin.gameclub.com.ec:8390,
                   https://beta.gameclub.com.ec,
-                  https://beta.gameclub.com.ec:8390,
                   https://www.gameclub.com.ec,
                   https://www.gameclub.com.ec:8390,
-                  https://104.198.238.150,
-                  https://104.198.238.150:8390,
-                  http://localhost:89
+                  https://104.198.238.150
   compressRequest: true
   file:
     environment: GAMECLUB_HOME

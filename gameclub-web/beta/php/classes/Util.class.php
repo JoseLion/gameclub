@@ -5,7 +5,8 @@
 class Util
 {
 	
-	private static $FILE_PROPERTIES ="beta/php/properties/gameclub.properties";
+	private static $FILE_PROPERTIES ="/php/properties/gameclub.properties";
+	//private static $FILE_PROPERTIES ="beta/php/properties/gameclub.properties";
 	
 	public static function read_property($property)
 	{	

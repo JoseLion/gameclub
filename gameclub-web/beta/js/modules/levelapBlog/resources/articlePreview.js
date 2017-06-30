@@ -46,10 +46,7 @@ angular.module('LevelapBlog').directive('articlePreview', function(openRest, $lo
 			}
 
 			$scope.shareFacebook = function() {
-				FB.ui({
-					method: 'share',
-					href: $location.$$protocol + "://" + $location.$$host + "/gameclub/blog/detail/" + $scope.ngModel.id + "/" + friendlyUrl($scope.ngModel.title),
-				}, function(response){});
+				window.open("https://www.facebook.com/sharer/sharer.php?u=" + $location.$$protocol + "://" + $location.$$host + "/gameclub/blog/detail/" + $scope.ngModel.id + "/" + friendlyUrl($scope.ngModel.title));
 			}
 
 			if ($scope.isComplete != null) {

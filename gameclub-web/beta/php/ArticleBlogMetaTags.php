@@ -5,7 +5,7 @@
 	$facebook_id = Util::read_property("facebook.id");
 	$id_blog = $_GET["id"];
 	$meta_tags = $blog_call_rest->find_one_blog_meta_tags($id_blog);
-	$url = "http://gameclub-beta.levelaptesting.com/img/gameclub-footer-logo.png";
+	$url = "http://gameclub-beta.levelaptesting.com/img/blog/share.png";
 ?>
 <!DOCTYPE html>
 <html>

@@ -1,7 +1,7 @@
-angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
-
+angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $locationProvider) {
 	$urlRouterProvider.otherwise('/gameclub/home');
 	$ocLazyLoadProvider.config({debug: false});
+	$locationProvider.html5Mode(true);
 
 	$stateProvider
 		.state('gameclub', {
@@ -35,7 +35,6 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 			url: '/gameclub',
 			templateUrl: 'views/content.html'
 		});
-
 }).run(function($rootScope, $state, Const, $location, $anchorScroll, $http, urlRestPath) {
 	$rootScope.$state = $state;
 	$rootScope.Const = Const;

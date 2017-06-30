@@ -1,8 +1,14 @@
 package ec.com.levelap.gameclub.module.game.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,13 +17,16 @@ import org.springframework.stereotype.Component;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.repository.GameRepo;
+import ec.com.levelap.gameclub.module.mail.service.MailService;
+import ec.com.levelap.mail.MailParameters;
 
 @Component
 public class GameScheduledTasks {
 	@Scheduled(cron="0 0 0 15 * ?")
-	public void updateFromPriceCharting() throws ServletException {
+	public void updateFromPriceCharting() throws ServletException, MessagingException {
 		GameRepo gameRepo = ApplicationContextHolder.getContext().getBean(GameRepo.class);
 		GameService gameService = ApplicationContextHolder.getContext().getBean(GameService.class);
+		MailService mailService = ApplicationContextHolder.getContext().getBean(MailService.class);
 		
 		List<Game> games = gameRepo.findAll();
 		for (Game game : games) {
@@ -32,5 +41,13 @@ public class GameScheduledTasks {
 		}
 		
 		gameRepo.save(games);
+		
+		MailParameters mailParameters = new MailParameters();
+		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		Map<String, String> params = new HashMap<>();
+		params.put("date", df.format(new Date()));
+
+		mailService.sendMailWihTemplate(mailParameters, "PCHUDT", params);
 	}
 }

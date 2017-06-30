@@ -5,15 +5,21 @@
 	$facebook_id = Util::read_property("facebook.id");
 	$id_blog = $_GET["id"];
 	$meta_tags = $blog_call_rest->find_one_blog_meta_tags($id_blog);
+	$url = "http://www.designals.net/wp-content/uploads/2015/01/mini-star.jpg";
+        $url2= "http://www.imdb.com/title/tt0117500/";
 ?>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta property="og:title" content="<?=$meta_tags["title"]?>" />
+	<head><title><?php echo $meta_tags['title'];?></title>
+	<meta name="description" content="<?php echo $meta_tags['summary'];?>" />
+    <meta property="og:title" content="<?php echo $meta_tags['title'];?>" />
     <meta property="og:type" content="article" />
-    <meta property="og:description" content="<?=$meta_tags["summary"]?>" />
-    <meta property="og:image" content="" />
-    <meta property="og:url" content="http://www.elcomercio.com/actualidad/maduro-alerta-militares-venezuela-caracas.html" />
-	<meta property="fb:app_id" content="<?=$facebook_id?>" /> 
+    <meta property="og:description" content="<?php echo $meta_tags['summary']?>" />
+    <meta property="og:image" content="<?php echo $url;?>" />
+	<meta property="fb:app_id" content="<?php echo $facebook_id;?>" /> 
+<meta property="og:url" content="" />
 </head>
- </html>
+<body>
+<h1><?=$meta_tags["title"]?></h1>
+</body>
+</html>

@@ -39,5 +39,5 @@ angular.module('GameClub', [
 .service('urlRestPath', function($location) {
 	let port = '8090';
 	
-	return {url: $location.$$protocol + '://' + $location.$$host + ':' + port + '/gameclub'};
+	return {url: 'http://' + $location.$$host + ':' + port + '/gameclub'};
 });

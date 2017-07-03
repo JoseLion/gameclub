@@ -5,7 +5,8 @@
 	$facebook_id = Util::read_property("facebook.id");
 	$id_blog = $_GET["id"];
 	$meta_tags = $blog_call_rest->find_one_blog_meta_tags($id_blog);
-	$url = "http://gameclub-beta.levelaptesting.com/img/blog/share.png";
+	$files_url_base = Util::read_property("files.url");
+	$image_url = $files_url_base . "/" .$meta_tags['banner']->module . "/" .$meta_tags['banner']->name;
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,10 +17,7 @@
 		<meta property="og:title" content="<?php echo $meta_tags['title'];?>" />
 		<meta property="og:type" content="article" />
 		<meta property="og:description" content="<?php echo $meta_tags['summary']?>" />
-		<meta property="og:image" content="<?php echo $url;?>" />
+		<meta property="og:image" content="<?php echo $image_url;?>" />
 		<meta property="fb:app_id" content="<?php echo $facebook_id;?>" /> 
 	</head>
-	<body>
-		<h1><?=$meta_tags["title"]?></h1>
-	</body>
 </html>

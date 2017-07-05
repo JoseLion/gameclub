@@ -118,10 +118,10 @@
                 <div class="col-md-12">
                     <label class="form-cell">Estatus</label>
                     <div class="form-cell">
-                        <ui-select ng-model="gameLoan.status" theme="bootstrap" class="selector status">
-                            <ui-select-match placeholder="Seleccionar...">{{$select.selected}}</ui-select-match>
-                            <ui-select-choices repeat="status in ['DISPONIBLE', 'NO DISPONIBLE']  | filter: $select.search">
-                                <div ng-bind-html="status | highlight: $select.search"></div>
+                        <ui-select ng-model="myGame.status" theme="bootstrap" class="selector status">
+                            <ui-select-match placeholder="Seleccionar...">{{$select.selected ? 'ACTIVO' : 'INACTIVO'}}</ui-select-match>
+                            <ui-select-choices repeat="status in [true, false] | filter: $select.search">
+                                <div ng-bind-html="status ? 'ACTIVO' : 'INACTIVO' | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -148,18 +148,6 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 insured">
-                    <label class="form-cell">Obligacion de asegurar el juego</label>
-                    <div class="form-cell">
-                        <div class="col-md-12 check" ng-class="myGame.isInsured ? 'active' : ''" ng-click="myGame.isInsured = true">
-                            Si <span class="help">(el jugador está obligado a pagar el fee de seguro para poder pedir prestado el juego.)</span>
-                        </div>
-                        <div class="col-md-12 check" ng-class="!myGame.isInsured ? 'active' : ''" ng-click="myGame.isInsured = false">
-                            No <span class="help">(el jugador no está obligado a pagar el fee de seguro para poder pedir prestado el juego.)</span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="col-md-12 help to-validate">
                     <label class="form-cell">Costo prestamo por semana</label>
                     <div class="form-cell">
@@ -171,6 +159,12 @@
                     <span class="form-cell text-left">
                         (Recomendación del juego: {{myGame.game.uploadPayment/4 | number:2}} Coins)
                     </span>
+                </div>
+
+                <div class="col-md-12 relax">
+                    <div class="form-cell">
+                        <span class="game-font game-font-light-red first-text">RELAX</span><span class="second-text">Tu juego está asegurado por nosotros</span><button type="button" class="btn btn-primary full small" ng-click="goToTerms()">Revisa nuestros términos y condiciones</button>
+                    </div>
                 </div>
 
                 <div class="col-md-12">

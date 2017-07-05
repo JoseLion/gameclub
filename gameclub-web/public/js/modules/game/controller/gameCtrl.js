@@ -1,4 +1,4 @@
-angular.module('Game').controller('GameCtrl', function($scope, game, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64) {
+angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif) {
     if (game != null) {
         game.$promise.then(function(data) {
             console.log("game: ", data);
@@ -24,7 +24,21 @@ angular.module('Game').controller('GameCtrl', function($scope, game, $state, Con
     }
 
     $scope.addToLibrary = function() {
-        $state.go("^.account.myGames", {game: $scope.game, consoleSelected: $scope.search.console});
+        if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100) {
+            $state.go("^.account.myGames", {game: $scope.game, consoleSelected: $scope.search.console});
+        } else {
+            if (getInfoPercentage() < 100 && getIdentityPercentage() < 100) {
+                notif.danger("Primero debes completar tu información de contacto y verificar tu identidad para cargar juegos a tu perfil");
+            } else  {
+                if (getInfoPercentage() < 100 && getIdentityPercentage() >= 100) {
+                    notif.danger("Primero debes completar tu información de contacto para cargar juegos a tu perfil");
+                }
+
+                if (getInfoPercentage() >= 100 && getIdentityPercentage() < 100) {
+                    notif.danger("Primero debes verificar tu identidad para cargar juegos a tu perfil");
+                }
+            }
+        }
     }
 
     $scope.login = function() {
@@ -33,38 +47,55 @@ angular.module('Game').controller('GameCtrl', function($scope, game, $state, Con
 
     $scope.consoleSelected = function() {
         console.log('FIND AVAILABLES BY CONSOLE: ', $scope.search);
-    };
+    }
 
-    $scope.mostPlayed = [
-        {
-            id: 1,
-            url: 'img/test/game-1.png',
-            rating: 4
-        },
-        {
-            id: 2,
-            url: 'img/test/game-2.png',
-            rating: 5
-        },
-        {
-            id: 3,
-            url: 'img/test/game-3.png',
-            rating: 4
-        },
-        {
-            id: 4,
-            url: 'img/test/game-4.png',
-            rating: 3
-        }
-    ];
     $scope.getPreviousGame = function() {
         let temp = $scope.mostPlayed.splice(0, 1);
         $scope.mostPlayed[3] = temp[0];
-    };
+    }
+
     $scope.getNextGame = function() {
         let temp = $scope.mostPlayed.splice(-1, 1);
         $scope.mostPlayed.unshift(temp[0]);
-    };
+    }
+
+    function getInfoPercentage() {
+        let percent = 0;
+        let factor = 100 / 6;
+
+        if ($rootScope.currentUser != null) {
+            if ($rootScope.currentUser.document != null) {
+                percent += factor;
+            }
+            if ($rootScope.currentUser.birthDate != null) {
+                percent += factor;
+            }
+            if ($rootScope.currentUser.profession != null) {
+                percent += factor;
+            }
+            if ($rootScope.currentUser.location != null) {
+                percent += factor;
+            }
+            if ($rootScope.currentUser.billingAddress != null) {
+                percent += factor;
+            }
+            if ($rootScope.currentUser.contactPhone != null) {
+                percent += factor;
+            }
+        }
+        
+        percent = Math.round(percent);
+        return percent;
+    }
+
+    function getIdentityPercentage() {
+        let percent = 0;
+        if ($rootScope.currentUser != null) {
+            percent += $rootScope.currentUser.token == null ? 100 : 0;
+            percent = Math.round(percent);
+        }
+        return percent;
+    }
 
     $scope.availables = [
         {

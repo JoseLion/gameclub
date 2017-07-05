@@ -40,9 +40,6 @@ public class PublicUserGame extends BaseEntity {
 	@Column(columnDefinition="VARCHAR")
 	private String observations;
 	
-	@Column(name="is_insured", columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean isInsured = false;
-	
 	@Column(columnDefinition="INTEGER DEFAULT 0")
 	private Integer cost = 0;
 
@@ -84,14 +81,6 @@ public class PublicUserGame extends BaseEntity {
 
 	public void setObservations(String observations) {
 		this.observations = observations;
-	}
-
-	public Boolean getIsInsured() {
-		return isInsured;
-	}
-
-	public void setIsInsured(Boolean isInsured) {
-		this.isInsured = isInsured;
 	}
 
 	public Integer getCost() {

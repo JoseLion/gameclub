@@ -68,6 +68,7 @@ dependencies {
 	compile('org.apache.poi:poi-ooxml:3.9')
 	compile('org.postgresql:postgresql')
 	compile('org.apache.httpcomponents:httpclient')
+	compile("org.springframework.ws:spring-ws-core")
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 

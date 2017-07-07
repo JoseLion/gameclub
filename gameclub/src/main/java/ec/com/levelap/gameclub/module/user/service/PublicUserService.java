@@ -34,9 +34,6 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.kushki.KushkiException;
-import ec.com.levelap.kushki.object.KushkiAmount;
-import ec.com.levelap.kushki.object.KushkiContact;
 import ec.com.levelap.kushki.service.KushkiService;
 import ec.com.levelap.mail.MailParameters;
 
@@ -200,7 +197,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		return username;
 	}
 
-	@Transactional
+	/*@Transactional
 	public Map<String, Object> createUpdateKushkiSubscription(final String token, final String firstName, final String lastName, final String email, final String cardFinale) throws ServletException {
 		PublicUser publicUser = this.publicUserRepo.findByUsernameIgnoreCase(email);
 		if (!publicUser.getKushkiSubscriptionActive()) {
@@ -209,9 +206,9 @@ public class PublicUserService extends BaseService<PublicUser> {
 			KushkiSubscription kushkiSubscription = this.kushkiSubscriptionRepo.findByPublicUser(publicUser);
 			return this.updateKushkiSubscription(token, kushkiSubscription.getSubscriptionId(), publicUser, cardFinale);
 		}
-	}
+	}*/
 
-	@Transactional
+	/*@Transactional
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> createKushkiSubscription(final String token, String firstName, String lastName, String email, PublicUser publicUser, String cardFinale) throws ServletException {
 		try {
@@ -234,9 +231,9 @@ public class PublicUserService extends BaseService<PublicUser> {
 			// TODO Registrar log en archivo.
 			throw new ServletException(ex.getCause());
 		}
-	}
+	}*/
 
-	@Transactional
+	/*@Transactional
 	public Map<String, Object> updateKushkiSubscription(final String token, String subscriptionId, PublicUser publicUser, String cardFinale) throws ServletException {
 		try {
 			this.kushkiService.suscriptionUpdateCard(subscriptionId, token);
@@ -253,22 +250,27 @@ public class PublicUserService extends BaseService<PublicUser> {
 		kushkiResponse.put("publicUser", publicUser);
 		kushkiResponse.put("extraData", kushkiSubscription.getCardFinale());
 		return kushkiResponse;
-	}
+	}*/
 
 	@Transactional
 	@SuppressWarnings("unchecked")
-	public PublicUser removeKushkiSubscription(Long id) throws ServletException {
-		PublicUser publicUser = this.publicUserRepo.findOne(id);
-		try {
-			KushkiSubscription kushkiSubscription = this.kushkiSubscriptionRepo.findByPublicUser(publicUser);
-			this.kushkiService.subscriptionCancel(kushkiSubscription.getSubscriptionId());
-			this.kushkiSubscriptionRepo.delete(kushkiSubscription);
-		} catch (KushkiException ex) {
-			// TODO Registrar log en archivo.
-			throw new ServletException(ex.getCause());
+	public PublicUser removeKushkiSubscription(Long subscriptionId) throws ServletException {
+		PublicUser publicUser = getCurrentUser();
+		
+		for (KushkiSubscription method : publicUser.getPaymentMethods()) {
+			if (method.getId().longValue() == subscriptionId.longValue()) {
+				try {
+					kushkiService.subscriptionCancel(method.getSubscriptionId());
+					publicUser.getPaymentMethods().remove(method);
+					break;
+				} catch (Exception e) {
+					// TODO Registrar log en archivo.
+					throw new ServletException(e.getCause());
+				}
+			}
 		}
-		publicUser.setKushkiSubscriptionActive(Boolean.FALSE);
-		this.publicUserRepo.save(publicUser);
+		
+		publicUserRepo.save(publicUser);
 		return publicUser;
 	}
 	

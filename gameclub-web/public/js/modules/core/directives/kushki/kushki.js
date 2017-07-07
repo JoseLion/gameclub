@@ -71,7 +71,10 @@ angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const,
                                     email: $rootScope.currentUser.username,
                                     extraData: cardData.number.substr(cardData.number.length - 4, 4)
                                 }
-                                rest("publicUser/createUpdateKushkiSubscription").post(kushkiSubscription, function(data) {
+
+                                $rootScope.currentUser.paymentMethods.push(kushkiSubscription);
+
+                                /*rest("publicUser/createUpdateKushkiSubscription").post(kushkiSubscription, function(data) {
                                     $rootScope.currentUser.kushkiSubscriptionActive = data.publicUser.kushkiSubscriptionActive;
                                     $rootScope.extraData = data.extraData;
                                     notif.success(Const.messages.success);
@@ -79,7 +82,7 @@ angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const,
                                     $scope.kushki = {};
                                 }, function(error) {
                                     sweet.close();
-                                });
+                                });*/
                             } else {
                                 notif.danger(Const.messages.kushkiError);
                                 sweet.close();

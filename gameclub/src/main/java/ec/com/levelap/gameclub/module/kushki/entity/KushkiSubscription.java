@@ -7,11 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -23,8 +24,8 @@ import ec.com.levelap.kushki.entity.BaseKushkiSubscription;
 @Table(schema = Const.SCHEMA, name = "kushki_subscription", uniqueConstraints = { @UniqueConstraint(columnNames = "public_user", name = "kushki_subscription_public_user_uk") })
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class KushkiSubscription extends BaseKushkiSubscription {
-
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JsonBackReference("publicUserKushkiSubscription")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "public_user", nullable = false, foreignKey = @ForeignKey(name = "public_user_kushki_subscription_fk"))
 	private PublicUser publicUser;
 

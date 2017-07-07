@@ -34,7 +34,7 @@ button.small,button.small:hover,button.small:visited,button.small:focus,button.s
 .title{font-size:2em;text-transform:uppercase;font-weight:700;}
 form label::after{content:":";}
 form label.control-label{text-align:right;}
-form input,form textarea{background:transparent;border:none;outline:none;box-shadow:none;}
+form input,form textarea{background:transparent;border:none;outline:none;box-shadow:none;width:100%}
 form input.complete,form textarea.complete{width:100%;}
 form .selector{width:100%;padding:5px 0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
 form .selector span{font-size:1em;}
@@ -548,7 +548,8 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #settings section.header .payment::before{content:"\E008";position:absolute;top:1em;left:-2.5em;font-size:0.4em;font-family:gameclub;}
 #account #settings section.header .payment h2.subtitle{font-size:1em;text-transform:uppercase;display:block;font-weight:700;margin-bottom:2%;position:relative;letter-spacing:1px;}
 #account #settings section.header .payment .card-info{padding:0;margin-bottom:1em;}
-#account #settings section.header .payment .card-info input{border:none;outline:none;border-radius:7px;text-align:center;color:@color-primary;padding:0.5em 4em 0.25em;font-size:0.8em;}
+#account #settings section.header .payment .card-info div{padding-left:unset;padding-right:unset;}
+#account #settings section.header .payment .card-info input{width:100%;border:none;outline:none;border-radius:7px;text-align:center;color:@color-primary;padding:0.5em 1em 0.25em;font-size:0.8em;}
 #account #settings section.header .payment .card-info button{text-align:center;padding:0.5em 1.5em 0.25em;font-size:0.7em;margin:auto 0.5em;border-radius:7px;}
 #account #settings section.header .payment .paymen-help{padding:0;text-transform:uppercase;font-weight:700;font-size:0.75em;}
 #account #settings section.header .payment .new-payment{padding:0;}

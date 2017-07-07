@@ -18,10 +18,12 @@ import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.location.Location;
 import ec.com.levelap.gameclub.module.avatar.entity.Avatar;
+import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
@@ -83,9 +85,6 @@ public class PublicUser extends BaseEntity {
 	@Column(name = "facebook_name", columnDefinition = "VARCHAR")
 	private String facebookName;
 
-	@Column(name = "kushki_subscription_active", columnDefinition = "BOOLEAN DEFAULT FALSE")
-	private Boolean kushkiSubscriptionActive = Boolean.FALSE;
-
 	@Column(name = "billing_address", columnDefinition = "VARCHAR")
 	private String billingAddress;
 
@@ -94,6 +93,10 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(name="is_subscriber", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean isSubscriber = false;
+	
+	@JsonManagedReference("publicUserKushkiSubscription")
+	@OneToMany(mappedBy="publicUser", fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<KushkiSubscription> paymentMethods = new ArrayList<>();
 
 	@Transient
 	private Integer numberOfGames;
@@ -234,14 +237,6 @@ public class PublicUser extends BaseEntity {
 		this.facebookName = facebookName;
 	}
 
-	public Boolean getKushkiSubscriptionActive() {
-		return kushkiSubscriptionActive;
-	}
-
-	public void setKushkiSubscriptionActive(Boolean kushkiSubscriptionActive) {
-		this.kushkiSubscriptionActive = kushkiSubscriptionActive;
-	}
-
 	public String getBillingAddress() {
 		return billingAddress;
 	}
@@ -262,8 +257,23 @@ public class PublicUser extends BaseEntity {
 		return this.games.size();
 	}
 
+	public Boolean getIsSubscriber() {
+		return isSubscriber;
+	}
+
+	public void setIsSubscriber(Boolean isSubscriber) {
+		this.isSubscriber = isSubscriber;
+	}
+
+	public List<KushkiSubscription> getPaymentMethods() {
+		return paymentMethods;
+	}
+
+	public void setPaymentMethods(List<KushkiSubscription> paymentMethods) {
+		this.paymentMethods = paymentMethods;
+	}
+
 	public void setNumberOfGames(Integer numberOfGames) {
 		this.numberOfGames = numberOfGames;
 	}
-
 }

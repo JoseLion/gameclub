@@ -165,8 +165,9 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
     }
 
 
-
-
+    /* ----------------------------------------------------- */
+    /* ------------------- TCC TESTS ----------------------- */
+    /* ----------------------------------------------------- */
 
     $scope.testTcc = function() {
         openRest("messaging/pickupStatus/:id/:office").get({id: 564, office: 1}, function(data) {

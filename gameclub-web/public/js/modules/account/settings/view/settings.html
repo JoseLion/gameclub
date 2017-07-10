@@ -35,9 +35,11 @@
                         </div>
                     </div>
                 </div>
-                    
-                <span class="col-md-12 paymen-help">Ingresar forma de pago</span>
-                <kushki class="col-md-7 new-payment" />
+
+                <div ng-if="currentUser.paymentMethods.length < 2">
+                    <span class="col-md-12 paymen-help">Ingresar forma de pago</span>
+                    <kushki class="col-md-7 new-payment" />
+                </div>
             </div>
         </div>
         <div class="clearfix"></div>

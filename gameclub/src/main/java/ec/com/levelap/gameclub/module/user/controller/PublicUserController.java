@@ -24,11 +24,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.base.entity.ErrorControl;
+import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserLite;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.kushki.KushkiException;
 
 @RestController
 @RequestMapping(value = "api/publicUser", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -87,14 +89,14 @@ public class PublicUserController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	/*@RequestMapping(value = "createUpdateKushkiSubscription", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createUpdateKushkiSubscription(@RequestBody Subscription subscription) throws ServletException {
-		Map<String, Object> kushkiResponse = this.publicUserService.createUpdateKushkiSubscription(subscription.token, subscription.name.split(" ")[0].toUpperCase(), subscription.lastName.split(" ")[0].toUpperCase(), subscription.email, subscription.extraData);
-		return new ResponseEntity<>(kushkiResponse, HttpStatus.OK);
-	}*/
+	@RequestMapping(value = "addKushkiSubscription", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PublicUser> addKushkiSubscription(@RequestBody KushkiSubscription subscription) throws ServletException, KushkiException {
+		PublicUser currentUser = publicUserService.addKushkiSubscription(subscription);
+		return new ResponseEntity<PublicUser>(currentUser, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "deletePaymentMethod/{subscriptionId}", method = RequestMethod.GET)
-	public ResponseEntity<PublicUser> removeKushkiSubscription(@PathVariable Long subscriptionId) throws ServletException {
+	public ResponseEntity<PublicUser> removeKushkiSubscription(@PathVariable Long subscriptionId) throws ServletException, KushkiException {
 		PublicUser publicUser = publicUserService.removeKushkiSubscription(subscriptionId);
 		return new ResponseEntity<PublicUser>(publicUser, HttpStatus.OK);
 	}
@@ -136,7 +138,6 @@ public class PublicUserController {
 	}
 
 	private static class Filter {
-
 		public String sort;
 
 		public Long consoleId;
@@ -145,28 +146,12 @@ public class PublicUserController {
 	}
 
 	public static class Password {
-
 		public String current;
 
 		public String change;
 	}
 
-	private static class Subscription {
-
-		public String token;
-
-		public String name;
-
-		public String lastName;
-
-		public String email;
-
-		public String extraData;
-
-	}
-
 	private static class Search {
-
 		public Integer page = 0;
 
 		public String name = "";
@@ -181,13 +166,11 @@ public class PublicUserController {
 	}
 
 	private static class ChangeUsernameObj {
-
 		public String oldUsername;
 
 		public String newUsername;
 
 		public String baseUrl;
-
 	}
 
 }

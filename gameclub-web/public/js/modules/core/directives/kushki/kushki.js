@@ -62,32 +62,31 @@ angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const,
                             expiryMonth: expiry[0],
                             expiryYear: expiry[1]
                         };
+
                         var kushkiCallback = function (response) {
                             if(response.token != null) {
-                                let kushkiSubscription = {
-                                    token: response.token,
-                                    name: $scope.kushki.cardFirstName,
+                                let subscription = {
+                                    subscriptionId: response.token,
+                                    firstName: $scope.kushki.cardFirstName,
                                     lastName: $scope.kushki.cardLastName,
                                     email: $rootScope.currentUser.username,
-                                    extraData: cardData.number.substr(cardData.number.length - 4, 4)
+                                    cardFinale: cardData.number.substr(cardData.number.length - 4, 4)
                                 }
 
-                                $rootScope.currentUser.paymentMethods.push(kushkiSubscription);
-
-                                /*rest("publicUser/createUpdateKushkiSubscription").post(kushkiSubscription, function(data) {
-                                    $rootScope.currentUser.kushkiSubscriptionActive = data.publicUser.kushkiSubscriptionActive;
-                                    $rootScope.extraData = data.extraData;
+                                rest("publicUser/addKushkiSubscription").post(subscription, function(data) {
+                                    $rootScope.currentUser = data;
                                     notif.success(Const.messages.success);
                                     sweet.close();
                                     $scope.kushki = {};
                                 }, function(error) {
                                     sweet.close();
-                                });*/
+                                });
                             } else {
                                 notif.danger(Const.messages.kushkiError);
                                 sweet.close();
                             }
                         };
+                        
                         kushki.requestSubscriptionToken({card: cardData}, kushkiCallback);
                     });
                 }

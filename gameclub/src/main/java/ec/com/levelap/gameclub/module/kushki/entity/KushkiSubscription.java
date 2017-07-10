@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,8 +20,8 @@ import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.kushki.entity.BaseKushkiSubscription;
 
 @Entity
-@Table(schema = Const.SCHEMA, name = "kushki_subscription", uniqueConstraints = { @UniqueConstraint(columnNames = "public_user", name = "kushki_subscription_public_user_uk") })
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@Table(schema = Const.SCHEMA, name = "kushki_subscription")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class KushkiSubscription extends BaseKushkiSubscription {
 	@JsonBackReference("publicUserKushkiSubscription")
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)

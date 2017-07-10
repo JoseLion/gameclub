@@ -61,3 +61,6 @@ kushki-configuration:
     
 priceCharting-configuration:
   url: http://www.pricecharting.com/api/product
+  
+tcc-configuration:
+  key: ECTOMORROW

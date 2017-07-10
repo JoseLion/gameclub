@@ -4,7 +4,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 	$scope.passRegex = '^(?=.*[0-9])(?=.*[A-Z])([0-9-a-zA-Z]+)$';
 
 	$rootScope.$watch("currentUser", function(newValue, oldValue) {
-		if (newValue != null) {
+		if (newValue != null && oldValue == null) {
 			if (redirect == null) {
 				$state.go(Const.mainState);
 			} else {

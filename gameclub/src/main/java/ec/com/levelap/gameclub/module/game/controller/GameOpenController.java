@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
 import ec.com.levelap.gameclub.module.game.service.GameService;
+import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.utils.Const;
 
 @RestController
@@ -61,12 +62,28 @@ public class GameOpenController {
 		return new ResponseEntity<>(this.gameService.getGameRepo().findAutocomplete(name), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="getAvailableGames", method=RequestMethod.POST)
+	public ResponseEntity<Page<PublicUserGame>> getAvailableGames(@RequestBody Filter filter) throws ServletException {
+		
+		Page<PublicUserGame> games = gameService.getPublicUserGameRepo().findAvailableGames(filter.publicUserId, filter.gameId, filter.consoleId, filter.page)
+	}
+	
 	private static class Search {
 		public String name = "";
 		
 		public Long categoryId;
 		
 		public Long consoleId;
+		
+		public Integer page = 0;
+	}
+	
+	private static class Filter {
+		public Long gameId;
+		
+		public Long consoleId;
+		
+		public String sort;
 		
 		public Integer page = 0;
 	}

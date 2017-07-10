@@ -34,8 +34,8 @@ public class PublicUserGame extends BaseEntity {
 	@JoinColumn(name="console", foreignKey=@ForeignKey(name="console_fk"))
 	private Console console;
 	
-	@Column
-	private Integer integrity;
+	@Column(columnDefinition="INTEGER DEFAULT 0")
+	private Integer integrity = 0;
 	
 	@Column(columnDefinition="VARCHAR")
 	private String observations;

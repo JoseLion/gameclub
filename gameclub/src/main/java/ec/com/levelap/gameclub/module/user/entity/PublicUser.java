@@ -97,6 +97,9 @@ public class PublicUser extends BaseEntity {
 	@JsonManagedReference("publicUserKushkiSubscription")
 	@OneToMany(mappedBy="publicUser", fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<KushkiSubscription> paymentMethods = new ArrayList<>();
+	
+	@Column(columnDefinition="INTEGER DEFAULT 0")
+	private Integer rating = 0;
 
 	@Transient
 	private Integer numberOfGames;
@@ -253,10 +256,6 @@ public class PublicUser extends BaseEntity {
 		this.contactPhone = contactPhone;
 	}
 
-	public Integer getNumberOfGames() {
-		return this.games.size();
-	}
-
 	public Boolean getIsSubscriber() {
 		return isSubscriber;
 	}
@@ -271,6 +270,18 @@ public class PublicUser extends BaseEntity {
 
 	public void setPaymentMethods(List<KushkiSubscription> paymentMethods) {
 		this.paymentMethods = paymentMethods;
+	}
+	
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	public Integer getNumberOfGames() {
+		return this.games.size();
 	}
 
 	public void setNumberOfGames(Integer numberOfGames) {

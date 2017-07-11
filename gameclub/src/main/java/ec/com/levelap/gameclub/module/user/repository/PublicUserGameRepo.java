@@ -20,9 +20,9 @@ public interface PublicUserGameRepo extends JpaRepository<PublicUserGame, Long> 
 				"LEFT JOIN pg.console c " +
 				"LEFT JOIN pg.game g " +
 			"WHERE " +
-				"p.id<>:publicUserId AND " +
+				"(:publicUser IS NULL OR p<>:publicUser) AND " +
 				"g.id=:gameId AND " +
 				"c.id=:consoleId " +
 			"ORDER BY pg.status DESC, p.rating DESC, pg.integrity DESC")
-	public Page<PublicUserGame> findAvailableGames(@Param("publicUserId") Long publicUserId, @Param("gameId") Long gameId, @Param("consoleId") Long consoleId, Pageable page);
+	public Page<PublicUserGame> findAvailableGames(@Param("publicUser") PublicUser publicUser, @Param("gameId") Long gameId, @Param("consoleId") Long consoleId, Pageable page);
 }

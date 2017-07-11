@@ -1,7 +1,6 @@
-angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif) {
+angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif) {
     if (game != null) {
         game.$promise.then(function(data) {
-            console.log("game: ", data);
             $scope.game = data;
             openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(data) {
                 $scope.background = {
@@ -15,17 +14,38 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     			});
             });
 
-            if($scope.game.consoles != null) {
-                $scope.search = {console: $scope.game.consoles[0]};
+            $scope.console = {};
+            if (consoleId != null) {
+                forEach($scope.game.consoles, function(cross) {
+                    if (cross.console.id == consoleId) {
+                        $scope.console.selected = cross;
+                        return 'break';
+                    }
+                });
+            } else {
+                $scope.console.selected = $scope.game.consoles[0];
             }
         });
+
+        availableGames.$promise.then(function(data) {
+            setPagedAvailableGames(data);
+        });
+
+        $scope.filters = [
+            {icon: 'gc-send', sort: 'status', desc: true, active: false},
+            {icon: 'gc-address', sort: 'publicUser.location.name', desc: true, active: false},
+            {icon: 'gc-usd', sort: 'cost', desc: true, active: false},
+            {icon: 'gc-rating', sort: 'publicUser.rating', desc: true, active: false},
+            {icon: 'gc-cd', sort: 'integrity', desc: true, active: false},
+            {icon: 'gc-filter', sort: ''}
+        ];
     } else {
         $state.go(Const.mainState);
     }
 
     $scope.addToLibrary = function() {
         if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100) {
-            $state.go("^.account.myGames", {game: $scope.game, consoleSelected: $scope.search.console});
+            $state.go("^.account.myGames", {game: $scope.game, consoleSelected: $scope.console.selected});
         } else {
             if (getInfoPercentage() < 100 && getIdentityPercentage() < 100) {
                 notif.danger("Primero debes completar tu información de contacto y verificar tu identidad para cargar juegos a tu perfil");
@@ -46,7 +66,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.consoleSelected = function() {
-        console.log('FIND AVAILABLES BY CONSOLE: ', $scope.search);
+        console.log('FIND AVAILABLES BY CONSOLE: ', $scope.console.selected);
     }
 
     $scope.getPreviousGame = function() {
@@ -57,6 +77,30 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     $scope.getNextGame = function() {
         let temp = $scope.mostPlayed.splice(-1, 1);
         $scope.mostPlayed.unshift(temp[0]);
+    }
+
+    $scope.goToLoan = function(cross) {
+        if ($rootScope.currentUser != null) {
+            console.log("GO TO LOAN PAGE");
+        } else {
+            $state.go("^.login", {redirect: $location.$$absUrl});
+        }
+    }
+
+    $scope.doFilter = function(filter) {
+        forEach($scope.filters, function(fltr) {
+            if (fltr.icon == filter.icon && fltr.active == true) {
+                filter.desc = !filter.desc;
+            }
+
+            fltr.active = false;
+        });
+
+        if (filter.sort != '') {
+            filter.active = true;
+        }
+        
+        filterAvailibleGames();
     }
 
     function getInfoPercentage() {
@@ -97,36 +141,34 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         return percent;
     }
 
-    $scope.availables = [
-        {
-            available: true,
-            shipping: 2,
-            city: 'Quito',
-            coins: 100,
-            rating: 5,
-            gameStatus: 9
-        }, {
-            available: true,
-            shipping: 2,
-            city: 'Quito',
-            coins: 150,
-            rating: 2,
-            gameStatus: 7
-        }, {
-            available: false,
-            shipping: 5,
-            city: 'Cuenca',
-            coins: 100,
-            rating: 5,
-            gameStatus: 4
-        }, {
-            available: false,
-            shipping: 5,
-            city: 'Guayaquil',
-            coins: 100,
-            rating: 3,
-            gameStatus: 10
-        }
-    ];
+    function setPagedAvailableGames(data) {
+        console.log("data: ", data);
+        $scope.availableGames = data.content;
+        $scope.lastPage = data.last;
+        $scope.currentPage = data.number;
+    }
 
+    function filterAvailibleGames() {
+        let activeFilter;
+        forEach($scope.filters, function(filter) {
+            if (filter.active == true) {
+                activeFilter = filter;
+                return 'break';
+            }
+        });
+
+        let filter = {
+            gameId: $scope.game.id,
+            consoleId: $scope.console.selected.console.id,
+            sort: activeFilter != null ? activeFilter.sort : '',
+            desc: activeFilter != null ? activeFilter.desc : true,
+            page: $scope.currentPage
+        };
+
+        console.log("filter: ", filter);
+
+        openRest("game/getAvailableGames").post(filter, function(data) {
+            setPagedAvailableGames(data);
+        });
+    }
 });

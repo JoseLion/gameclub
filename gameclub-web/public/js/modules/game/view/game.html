@@ -25,12 +25,12 @@
                 <img ng-src="{{game.contentRating.other}}">
             </div>
             <form class="col-md-12 platform">
-                <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
+                <ui-select ng-model="console.selected" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
                     <ui-select-match placeholder="Consola...">
                         <img ng-src="{{$select.selected.console.blackLogoBase64}}" class="gameConsole">
                     </ui-select-match>
-                    <ui-select-choices repeat="cross in game.consoles | filter: $select.search" class="text-center">
-                        <div ng-bind-html="'' | highlight: $select.search"></div>
+                    <ui-select-choices repeat="cross in game.consoles | filter: $select.console" class="text-center">
+                        <div ng-bind-html="'' | highlight: $select.console"></div>
                         <img archive="cross.console.whiteLogo" >
                     </ui-select-choices>
                 </ui-select>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">{{game.releaseDate | date: 'dd-MM-yyyy'}}</span></span>
-            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{(game.uploadPayment / 4.0) | number: 2}} coins</span></span>
+            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{(game.uploadPayment / 4.0) | number: 0}} coins</span></span>
         </div>
         <div class="col-md-3 rating">
             <div class="reviews text-center">
@@ -84,17 +84,9 @@
             <button type="button" class="btn btn-tertiary small dark" ng-click="login()" ng-if="!currentUser">Inicia Sesión</button>
         </div>
         <div class="filters">
-            <li>
-                <a href><i class="gc gc-send"></i></a>
-            </li><li>
-                <a href><i class="gc gc-address"></i></a>
-            </li><li>
-                <a href class="active"><i class="gc gc-usd"></i></a>
-            </li><li>
-                <a href><i class="gc gc-rating"></i></a>
-            </li><li>
-                <a href><i class="gc gc-cd"></i></a>
-            </li><li><a href><i class="gc gc-filter"></i></a></li>
+            <li ng-repeat="filter in filters">
+                <a href ng-class="{'active': filter.active}" ng-click="doFilter(filter)"><i class="gc" ng-class="filter.icon"></i></a>
+            </li>
         </div>
         <div class="games-availables">
             <div class="table-container">
@@ -120,29 +112,30 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="game in availables">
-                            <td ng-class="game.available ? 'blue' : 'red'">{{game.available ? 'Disponible' : 'Prestado'}}</td>
-                            <td>{{game.shipping | currency:'$ ':2}}</td>
-                            <td>{{game.city}}</td>
-                            <td ng-class="game.available ? 'blue' : 'red'">{{game.coins | currency:'+ ':0}}</td>
+                        <tr ng-repeat="cross in availableGames">
+                            <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
+                            <td>{{100 | currency:'$ ':2}}</td>
+                            <td>{{cross.publicUserObj.location.name}}</td>
+                            <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency:'+ ':0}}</td>
                             <td>
-                                <div class="col-md-12 rating-container">
+                                <div class="col-md-12 rating-container" ng-if="cross.publicUserObj.rating > 0">
                                     <i class="gc gc-rating" ng-class="1 <= game.rating ? 'yes' : ''"></i>
                                     <i class="gc gc-rating" ng-class="2 <= game.rating ? 'yes' : ''"></i>
                                     <i class="gc gc-rating" ng-class="3 <= game.rating ? 'yes' : ''"></i>
                                     <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
                                     <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
                                 </div>
+                                <span ng-if="cross.publicUserObj.rating <= 0">Este usuario todavia no tiene calificaciones</span>
                             </td>
-                            <td class="game-status">{{game.gameStatus}}/10</td>
-                            <td><button class="btn btn-primary small dark">Ficha prestamo</button></td>
+                            <td class="game-status">{{cross.integrity}}/10</td>
+                            <td><button class="btn btn-primary small dark" ng-click="goToLoan(cross)">{{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="col-md-12 text-center">
-            <button class="btn btn-secundary small">Ver todas las propuestas</button>
+        <div class="col-md-12 text-center" ng-if="!lastPage">
+            <button class="btn btn-secundary small">Ver más propuestas</button>
         </div>
     </section>
     <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="consoles"/>

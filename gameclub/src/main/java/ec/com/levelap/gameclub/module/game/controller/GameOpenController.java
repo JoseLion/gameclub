@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
 import ec.com.levelap.gameclub.module.game.service.GameService;
+import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
+import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
 
 @RestController
@@ -27,6 +31,9 @@ import ec.com.levelap.gameclub.utils.Const;
 public class GameOpenController {
 	@Autowired
 	private GameService gameService;
+	
+	@Autowired
+	private PublicUserService publicUserService;
 	
 	@RequestMapping(value="findGames", method=RequestMethod.POST)
 	public ResponseEntity<Page<GameOpen>> findGames(@RequestBody(required=false) Search search) throws ServletException {
@@ -64,8 +71,11 @@ public class GameOpenController {
 	
 	@RequestMapping(value="getAvailableGames", method=RequestMethod.POST)
 	public ResponseEntity<Page<PublicUserGame>> getAvailableGames(@RequestBody Filter filter) throws ServletException {
+		PublicUser currentUser = publicUserService.getCurrentUser();
+		PageRequest page = filter.sort.isEmpty() ? new PageRequest(0, 10 * (filter.page + 1)) : new PageRequest(0, 10 * (filter.page + 1), new Sort(filter.desc ? Direction.DESC : Direction.ASC, filter.sort));
+		Page<PublicUserGame> games = gameService.getPublicUserGameRepo().findAvailableGames(currentUser, filter.gameId, filter.consoleId, page);
 		
-		Page<PublicUserGame> games = gameService.getPublicUserGameRepo().findAvailableGames(filter.publicUserId, filter.gameId, filter.consoleId, filter.page)
+		return new ResponseEntity<Page<PublicUserGame>>(games, HttpStatus.OK);
 	}
 	
 	private static class Search {
@@ -83,7 +93,9 @@ public class GameOpenController {
 		
 		public Long consoleId;
 		
-		public String sort;
+		public String sort = "";
+		
+		public Boolean desc = true;
 		
 		public Integer page = 0;
 	}

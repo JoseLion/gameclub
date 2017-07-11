@@ -15,7 +15,7 @@ angular.module('Core').directive('gameItem', function($state, friendlyUrl) {
 		link: function($scope, element, attrs, ctrl) {
 			$scope.viewDetails = function() {
 				if (!$scope.isEditable) {
-					$state.go('gameclub.game', {id: $scope.ngModel.id, name: friendlyUrl($scope.ngModel.name)});
+					$state.go('gameclub.game', {id: $scope.ngModel.id, consoleId: $scope.console.id, name: friendlyUrl($scope.ngModel.name)});
 				} else {
 					if ($scope.onEdit != null) {
 						$scope.onEdit();

@@ -69,7 +69,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
     }
 
     $scope.viewGame = function(game) {
-        $state.go('gameclub.game', {id: game.id, name: friendlyUrl(game.name)});
+        $state.go('gameclub.game', {id: game.id, consoleId: null, name: friendlyUrl(game.name)});
     }
 
     function chooseFirstCategory(counter) {

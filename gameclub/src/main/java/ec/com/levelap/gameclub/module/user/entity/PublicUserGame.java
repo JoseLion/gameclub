@@ -1,5 +1,8 @@
 package ec.com.levelap.gameclub.module.user.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +11,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -42,6 +46,9 @@ public class PublicUserGame extends BaseEntity {
 	
 	@Column(columnDefinition="INTEGER DEFAULT 0")
 	private Integer cost = 0;
+	
+	@Transient
+	private Map<String, Object> publicUserObj = new HashMap<>();
 
 	public PublicUser getPublicUser() {
 		return publicUser;
@@ -89,5 +96,16 @@ public class PublicUserGame extends BaseEntity {
 
 	public void setCost(Integer cost) {
 		this.cost = cost;
+	}
+
+	public Map<String, Object> getPublicUserObj() {
+		publicUserObj.put("location", publicUser.getLocation());
+		publicUserObj.put("rating", publicUser.getRating());
+		
+		return publicUserObj;
+	}
+
+	public void setPublicUserObj(Map<String, Object> publicUserObj) {
+		this.publicUserObj = publicUserObj;
 	}
 }

@@ -25,6 +25,19 @@ angular.module('Game').config(function($stateProvider) {
 
 			consoleId: function($stateParams) {
 				return $stateParams.consoleId;
+			},
+
+			availableGames: function($stateParams, openRest) {
+				let filter = {
+					gameId: $stateParams.id,
+					consoleId: $stateParams.consoleId
+				};
+
+				console.log("ROUTE FILTER: ", filter);
+
+				return openRest("game/getAvailableGames").post(filter, function(data) {
+					return data;
+				});
 			}
 		}
 	});

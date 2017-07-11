@@ -165,8 +165,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             page: $scope.currentPage
         };
 
-        console.log("filter: ", filter);
-
         openRest("game/getAvailableGames").post(filter, function(data) {
             setPagedAvailableGames(data);
         });

@@ -79,9 +79,10 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         $scope.mostPlayed.unshift(temp[0]);
     }
 
-    $scope.goToLoan = function(cross) {
+    $scope.openLoanView = function(cross) {
         if ($rootScope.currentUser != null) {
-            console.log("GO TO LOAN PAGE");
+            $scope.loanGame = cross;
+            $scope.loanViewOpen = true;
         } else {
             $state.go("^.login", {redirect: $location.$$absUrl});
         }

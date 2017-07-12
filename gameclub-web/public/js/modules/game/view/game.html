@@ -141,50 +141,88 @@
         </div>
 
         <div class="loan-view" ng-if="loanViewOpen">
-            <div class="subtitle">
-                Ficha del juego disponible
-                <button type="button" class="btn btn-tertiary small dark" ng-click="closeLoanView()">Volver a propuestas</button>
-            </div>
-
-            <div class="col-md-9">
-                <label>Estatus:</label>
-                <span>{{loanGame.status ? 'Disponible' : 'Prestado'}}</span>
-            </div>
-
-            <div class="col-md-9">
-                <label>Estado del juego:</label>
-                <span>{{loanGame.integrity}}/10</span>
-            </div>
-
-            <div class="col-md-9">
-                <label>Observaciones:</label>
-                <span class="original-text">{{loanGame.observations}}</span>
-            </div>
-
-            <div class="col-md-9">
-                <label>Rating del prestador:</label>
-                <div class="rating-container" ng-if="loanGame.publicUserObj.rating > 0">
-                    <i class="gc gc-rating" ng-class="1 <= game.rating ? 'yes' : ''"></i>
-                    <i class="gc gc-rating" ng-class="2 <= game.rating ? 'yes' : ''"></i>
-                    <i class="gc gc-rating" ng-class="3 <= game.rating ? 'yes' : ''"></i>
-                    <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
-                    <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
+            <form role="form" on-submit="requestLoan()" novalidate>
+                <div class="subtitle">
+                    Ficha del juego disponible
+                    <button type="button" class="btn btn-tertiary small dark" ng-click="closeLoanView()">Volver a propuestas</button>
                 </div>
-                <span ng-if="loanGame.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span>
-                <button type="button" class="btn btn-tertiary small dark" ng-click="viewOwnerRating()" ng-if="loanGame.publicUserObj.rating > 0">Ver Rating</button>
-            </div>
 
-            <div class="col-md-9">
-                <label>Ciudad del juego:</label>
-                <span>{{loanGame.publicUserObj.location.name}}</span>
-            </div>
+                <div class="col-md-9">
+                    <label>Estatus</label>
+                    <span class="value">{{loanGame.status ? 'Disponible' : 'Prestado'}}</span>
+                </div>
 
-            <div class="subtitle">Costo coins</div>
+                <div class="col-md-9">
+                    <label>Estado del juego</label>
+                    <span class="value">{{loanGame.integrity}}/10</span>
+                </div>
 
-            <div class="col-md-9">
-                <label>Costo prestamo:</label>
-                <span class="big">{{loanGame.cost}} coins</span> <span class="black">x</span>
-            </div>
+                <div class="col-md-9">
+                    <label>Observaciones</label>
+                    <span class="value original-text">{{loanGame.observations}}</span>
+                </div>
+
+                <div class="col-md-9">
+                    <label>Rating del prestador</label>
+                    <div class="rating-container" ng-if="loanGame.publicUserObj.rating > 0">
+                        <i class="gc gc-rating" ng-class="1 <= game.rating ? 'yes' : ''"></i>
+                        <i class="gc gc-rating" ng-class="2 <= game.rating ? 'yes' : ''"></i>
+                        <i class="gc gc-rating" ng-class="3 <= game.rating ? 'yes' : ''"></i>
+                        <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
+                        <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
+                    </div>
+                    <span class="value" ng-if="loanGame.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span>
+                    <button type="button" class="btn btn-tertiary small dark" ng-click="viewOwnerRating()" ng-if="loanGame.publicUserObj.rating > 0">Ver Rating</button>
+                </div>
+
+                <div class="col-md-9">
+                    <label>Ciudad del juego</label>
+                    <span class="value">{{loanGame.publicUserObj.location.name}}</span>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="subtitle top-space">Costo coins</div>
+
+                <div class="col-md-9 loan-cost">
+                    <label>Costo prestamo</label>
+                    <span class="value big">{{loanGame.cost}} coins</span> <span class="value black">x</span>
+                    <ui-select ng-model="loan.weeks" theme="bootstrap" class="selector" ng-change="weekSelected()">
+                        <ui-select-match placeholder="Semanas...">{{$select.selected}} {{$select.selected == 1 ? 'Semana' : 'Semanas'}}</ui-select-match>
+                        <ui-select-choices repeat="num in [1, 2, 3] | filter: $select.search">
+                            <div ng-bind-html="num + (num == 1 ? ' semana' : ' semanas') | highlight: $select"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="subtitle top-space">Costo shipping</div>
+
+                <div class="shipping">
+                    <div class="address-title">Dirección de entrega actual:</div>
+
+                    <div class="col-md-9">
+                        <label>Dirección</label>
+                        <input type="text" ng-model="loan.address" required>
+                    </div>
+
+                    <div class="col-md-9">
+                        <label><i class="gc gc-address"></i></label>
+                        <img src="/img/check.svg" ng-if="loan.geoLocation == null">
+                    </div>
+
+                    <div class="col-md-9">
+                        <label>Persona de entrega</label>
+                        <input type="text" ng-model="loan.receiver" required>
+                    </div>
+
+                    <div class="col-md-9">
+                        <div class="box" ng-class="loan.saveChanges ? 'checked' : ''" ng-click="loan.saveChanges = !loan.saveChanges"></div>
+                        <span>Guardar información para siguiente préstamo</span>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </form>
         </div>
     </section>
     <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="consoles"/>

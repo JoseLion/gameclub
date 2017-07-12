@@ -83,6 +83,13 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         if ($rootScope.currentUser != null) {
             $scope.loanGame = cross;
             $scope.loanViewOpen = true;
+
+            $scope.loan = {
+                weeks: 1,
+                address: $rootScope.currentUser.billingAddress,
+                rceiver: $rootScope.currentUser.rceiver
+            };
+            
         } else {
             $state.go("^.login", {redirect: $location.$$absUrl});
         }

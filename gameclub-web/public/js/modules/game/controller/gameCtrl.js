@@ -119,6 +119,17 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             controller: function($scope, $uibModalInstance, NgMap) {
                 NgMap.getMap().then(function(map) {
                     console.log("map: ", map);
+
+                    let marker = new google.maps.Marker({
+                        position: {lat: -0.191915, lng: -78.482857},
+                        map: map,
+                        title: 'Drag me',
+                        draggable: true
+                    });
+
+                    marker.addListener('dragend', function(event) {
+                        console.log("event: ", event.latLng.lat());
+                    });
                 });
             },
             resolve: {

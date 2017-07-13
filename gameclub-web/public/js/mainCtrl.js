@@ -108,11 +108,6 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			name: 'Trabaja con nosotros',
 			route: 'gameclub.workForUs'
 		}
-		,
-		publicProfile : {
-			name: 'Perfil Público',
-			route: 'gameclub.publicProfile'
-		}
 	};
 
 });

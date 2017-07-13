@@ -172,7 +172,7 @@
                             <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
                             <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
                         </div>
-                        <span class="value" ng-if="loanGame.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span>
+                        <span class="value" ng-if="loanGame.publicUserObj.rating <= 0" ng-click="$state.go('gameclub.publicProfile')">Este usuario todavía no tiene calificaciones</span>
                         <button type="button" class="btn btn-tertiary small dark" ng-click="viewOwnerRating()" ng-if="loanGame.publicUserObj.rating > 0">Ver Rating</button>
                     </div>
 

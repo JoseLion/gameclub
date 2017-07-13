@@ -1,4 +1,4 @@
-angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif) {
+angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal) {
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
@@ -89,7 +89,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                 address: $rootScope.currentUser.billingAddress,
                 rceiver: $rootScope.currentUser.rceiver
             };
-            
+
         } else {
             $state.go("^.login", {redirect: $location.$$absUrl});
         }
@@ -109,6 +109,27 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         }
         
         filterAvailibleGames();
+    }
+
+    $scope.openMapsModal = function() {
+        $uibModal.open({
+            size: 'md',
+            backdrop: 'static',
+            templateUrl: 'mapsModal.html',
+            controller: function($scope, $uibModalInstance, NgMap) {
+                NgMap.getMap().then(function(map) {
+                    console.log("map: ", map);
+                });
+            },
+            resolve: {
+                loadPlugin: function($ocLazyLoad) {
+                    return $ocLazyLoad.load([{
+                        name: 'ngMap',
+                        files: ['js/core/plugins/ng-map/ng-map.min.js']
+                    }]);
+                }
+            }
+        });
     }
 
     function getInfoPercentage() {

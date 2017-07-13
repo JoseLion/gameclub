@@ -66,6 +66,11 @@ angular.module('GameClub').constant('Const', {
 		faq: 2,
 		blog: 3,
 		login: 4,
+	},
+
+	google: {
+		maps: "AIzaSyBiUXqwBImDoqoRBlvtAAVgnkP5yjMVwyY",
+		geolocation: "AIzaSyBC8pBwfSjl2ZTdN3dgByX__iOYGu8tlgU"
 	}
 
 });

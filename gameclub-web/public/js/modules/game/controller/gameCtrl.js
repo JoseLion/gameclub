@@ -112,25 +112,72 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.openMapsModal = function() {
-        $uibModal.open({
+        let modal = $uibModal.open({
             size: 'md',
             backdrop: 'static',
             templateUrl: 'mapsModal.html',
-            controller: function($scope, $uibModalInstance, NgMap) {
+            controller: function($scope, $uibModalInstance, NgMap, $http, Const) {
+                $scope.currentPos = {lat: 0, lng: 0};
+
                 NgMap.getMap().then(function(map) {
-                    console.log("map: ", map);
+                    google.maps.event.trigger(map, "resize");
+                    $scope.mapLoaded = true;
 
                     let marker = new google.maps.Marker({
-                        position: {lat: -0.191915, lng: -78.482857},
+                        position: $scope.currentPos,
                         map: map,
                         title: 'Drag me',
                         draggable: true
                     });
 
                     marker.addListener('dragend', function(event) {
-                        console.log("event: ", event.latLng.lat());
+                        $scope.currentPos = {
+                            lat: event.latLng.lat(),
+                            lng: event.latLng.lng()
+                        };
                     });
+
+                    $scope.$watch("currentPos", function(newValue, oldValue) {
+                        if (newValue != null) {
+                            marker.setPosition(newValue);
+                            map.setCenter(newValue);
+                            map.setZoom(14);
+                        }
+                    });
+
+                    $scope.centerInMarker = function() {
+                        map.panTo(marker.getPosition());
+                        marker.setMap(null);
+                    }
                 });
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(pos) {
+                        $scope.currentPos = {
+                            lat: pos.coords.latitude,
+                            lng: pos.coords.longitude
+                        };
+                    }, function(error) {
+                        handleGeolocationError();
+                    });
+                } else {
+                    handleGeolocationError();
+                }
+
+                function handleGeolocationError() {
+                    $http.post("https://www.googleapis.com/geolocation/v1/geolocate?key=" + Const.google.geolocation).then(function(response) {
+                        $scope.currentPos = response.data.location;
+                    });
+                }
+
+                $scope.ok = function() {
+                    $scope.centerInMarker();
+                    $uibModalInstance.close($scope.currentPos);
+                }
+
+                $scope.cancel = function() {
+                    $uibModalInstance.dismiss();
+                }
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
@@ -140,6 +187,11 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                     }]);
                 }
             }
+        });
+
+        modal.result.then(function(pos) {
+            console.log("pos: ", pos);
+            $scope.loan.geoLocation = pos;
         });
     }
 
@@ -182,7 +234,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     function setPagedAvailableGames(data) {
-        console.log("data: ", data);
         $scope.availableGames = data.content;
         $scope.lastPage = data.last;
         $scope.currentPage = data.number;

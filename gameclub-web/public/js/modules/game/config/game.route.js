@@ -33,8 +33,6 @@ angular.module('Game').config(function($stateProvider) {
 					consoleId: $stateParams.consoleId
 				};
 
-				console.log("ROUTE FILTER: ", filter);
-
 				return openRest("game/getAvailableGames").post(filter, function(data) {
 					return data;
 				});

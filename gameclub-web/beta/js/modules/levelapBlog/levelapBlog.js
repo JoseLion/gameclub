@@ -145,7 +145,8 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
     messages: {
         required: 'Debe completar los campos marcados con *',
         emailValidation: 'Debe ingresar un email válido'
-    }
+    },
+    imageBaseUrl: 'img/gameclub/BlogArticle/'
 }).run(function($rootScope, BlogConst) {
     $rootScope.BlogConst = BlogConst;
 });

@@ -2,7 +2,7 @@
 <article id="blog-article">
     <header>
         <div class="image-section">
-            <img id="JL" archive="ngModel.banner" ng-src="{{ngModel.banner.src}}" ng-click="goToDetails()"/>
+            <img id="JL" ng-src="{{BlogConst.imageBaseUrl + ngModel.banner.name}}" ng-click="goToDetails()"/>
             <div class="post-date">
                 <div class="post-date-content">
                     <span>{{ngModel.creationDate | date:'dd'}}</span><span>{{ngModel.creationDate | date:'MMM'}}</span>

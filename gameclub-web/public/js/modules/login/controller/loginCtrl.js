@@ -132,7 +132,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				FB.api('/me', {fields: 'name, email'}, function(me) {
 					if (me.email == null) {
 						FB.logout(function(logoutResponse) {
-							notif.warning("El correo electrónico es necesario para crea una cuenta en Game Club. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
+							notif.warning("El correo electrónico es necesario para crea una cuenta en GameClub. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
 							$scope.isFbLogIn = false;
 						}, response.authResponse.accessToken);
 					} else {

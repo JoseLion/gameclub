@@ -53,7 +53,7 @@
 #blog #navigation .cell:last-child{padding-right:1em;text-align:right;width:25%;}
 
 /** ARTICLE **/
-#blog #blog-article{background:#EEEEEE;color:#6A615A;padding:1em;margin-bottom:2em;}
+#blog #blog-article{background:#EEEEEE;color:#6A615A;padding:1em;margin-bottom:-2em;}
 #blog #blog-article header .image-section{position:relative;width:100%;}
 #blog #blog-article header .image-section img{border-radius:1em;margin-top:5%;width:97.5%;cursor: pointer;}
 #blog #blog-article header .image-section .post-date{background:#FFFFFF;border:2px solid #7BCABC;border-radius:50%;color:#7BCABC;display:table;font-weight:700;height:5em;right:0;top:0;padding:0;position:absolute;text-align:center;text-transform:uppercase;width:5em;z-index:1;}

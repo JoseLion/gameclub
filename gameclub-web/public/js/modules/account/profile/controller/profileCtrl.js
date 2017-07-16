@@ -1,13 +1,18 @@
 angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, ciValidation, $location, $uibModal) {
     $scope.file = {};
     let tempUserInfo;
-    $scope.currentUserTemp = angular.copy($rootScope.currentUser);
-    $scope.newUsername = angular.copy($rootScope.currentUser.username);
 
-    if($scope.currentUserTemp.location != null) {
-        $scope.currentUserTemp.province = $scope.currentUserTemp.location.parent;
-        $scope.currentUserTemp.location = $scope.currentUserTemp.location;
-    }
+    $rootScope.$watch("currentUser", function(newValue, oldValue) {
+        if (newValue != null) {
+            $scope.currentUserTemp = angular.copy($rootScope.currentUser);
+            $scope.newUsername = angular.copy($rootScope.currentUser.username);
+
+            if($scope.currentUserTemp.location != null) {
+                $scope.currentUserTemp.province = $scope.currentUserTemp.location.parent;
+                $scope.currentUserTemp.location = $scope.currentUserTemp.location;
+            }
+        }
+    });
 
     provinces.$promise.then(function(data) {
         $scope.provinces = data;
@@ -130,6 +135,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     $scope.getInfoPercentage = function() {
         let percent = 0;
         let factor = 100 / 7;
+
         if ($rootScope.currentUser != null) {
             if ($rootScope.currentUser.document != null) {
                 percent += factor;
@@ -140,7 +146,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             if ($rootScope.currentUser.profession != null) {
                 percent += factor;
             }
-            if ($rootScope.currentUser.province != null) {
+            if ($scope.currentUserTemp.province != null) {
                 percent += factor;
             }
             if ($rootScope.currentUser.location != null) {
@@ -153,6 +159,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                 percent += factor;
             }
         }
+
         percent = Math.round(percent);
         return percent;
     }

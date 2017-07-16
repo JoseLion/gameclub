@@ -39,7 +39,6 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
 
         openRest("game/findGamesByCategory/:categoryId", true).get({categoryId: categoryId}, function(data) {
             $scope.gamesByCat = data;
-            console.log("gamesByCat", $scope.gamesByCat);
         });
     }
 
@@ -70,7 +69,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
     }
 
     $scope.viewGame = function(game) {
-        $state.go('gameclub.game', {id: game.id, name: friendlyUrl(game.name)});
+        $state.go('gameclub.game', {id: game.id, consoleId: null, name: friendlyUrl(game.name)});
     }
 
     function chooseFirstCategory(counter) {
@@ -165,4 +164,14 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
         $scope.totalPagesMostSeen = data.totalPages;
     }
 
+
+    /* ----------------------------------------------------- */
+    /* ------------------- TCC TESTS ----------------------- */
+    /* ----------------------------------------------------- */
+
+    $scope.testTcc = function() {
+        openRest("messaging/pickupStatus/:id/:office").get({id: 564, office: 1}, function(data) {
+            console.log("data: ", data);
+        });
+    }
 });

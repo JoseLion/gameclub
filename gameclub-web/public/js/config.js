@@ -41,7 +41,9 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 	$rootScope.Const = Const;
 
 	$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, options) {
-		$http.get(urlRestPath.url + "/api/token").then(function() {}, function(error) {
+		$http.get(urlRestPath.url + "/api/token").then(function() {
+			return;
+		}, function(error) {
 			$rootScope.currentUser = null;
 		});
 	});

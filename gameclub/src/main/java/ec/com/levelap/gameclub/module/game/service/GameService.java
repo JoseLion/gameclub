@@ -57,6 +57,7 @@ import ec.com.levelap.gameclub.module.game.entity.GameCategory;
 import ec.com.levelap.gameclub.module.game.entity.GameConsole;
 import ec.com.levelap.gameclub.module.game.entity.GameMagazine;
 import ec.com.levelap.gameclub.module.game.repository.GameRepo;
+import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -73,6 +74,9 @@ public class GameService extends BaseService<Game> {
 	
 	@Autowired
 	private CategoryRepo categoryRepo;
+	
+	@Autowired
+	private PublicUserGameRepo publicUserGameRepo;
 	
 	@Autowired
 	private DocumentService documentService;
@@ -735,6 +739,10 @@ public class GameService extends BaseService<Game> {
 		}
 	}
 	
+	public PublicUserGameRepo getPublicUserGameRepo() {
+		return publicUserGameRepo;
+	}
+
 	private static class RestResponseHandler implements ResponseErrorHandler {
 		@Override
 		public boolean hasError(ClientHttpResponse response) throws IOException {

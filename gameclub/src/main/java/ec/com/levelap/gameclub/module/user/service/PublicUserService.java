@@ -199,76 +199,35 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 		return username;
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Transactional
-	public Map<String, Object> createUpdateKushkiSubscription(final String token, final String firstName, final String lastName, final String email, final String cardFinale) throws ServletException {
-		PublicUser publicUser = this.publicUserRepo.findByUsernameIgnoreCase(email);
-		if (!publicUser.getKushkiSubscriptionActive()) {
-			return this.createKushkiSubscription(token, firstName, lastName, email, publicUser, cardFinale);
-		} else {
-			KushkiSubscription kushkiSubscription = this.kushkiSubscriptionRepo.findByPublicUser(publicUser);
-			return this.updateKushkiSubscription(token, kushkiSubscription.getSubscriptionId(), publicUser, cardFinale);
-		}
+	public PublicUser addKushkiSubscription(KushkiSubscription subscription) throws ServletException, KushkiException {
+		PublicUser currentUser = getCurrentUser();
+		String subscriptionId = kushkiService.subscriptionCreate(subscription.getSubscriptionId(), Const.KUSHKI_PLAN_NAME, Const.KUSHKI_PERIODICITY, new KushkiContact(subscription.getFirstName(), subscription.getLastName(), subscription.getEmail()), new KushkiAmount());
+		
+		subscription.setSubscriptionId(subscriptionId);
+		subscription.setPublicUser(currentUser);
+		kushkiSubscriptionRepo.saveAndFlush(subscription);
+		currentUser = getCurrentUser();
+		
+		return currentUser;
 	}
 
 	@Transactional
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> createKushkiSubscription(final String token, String firstName, String lastName, String email, PublicUser publicUser, String cardFinale) throws ServletException {
-		try {
-			String subscriptionId = this.kushkiService.subscriptionCreate(token, Const.KUSHKI_PLAN_NAME, Const.KUSHKI_PERIODICITY, new KushkiContact(firstName, lastName, email), new KushkiAmount());
-			publicUser.setKushkiSubscriptionActive(true);
-			KushkiSubscription kushkiSubscription = new KushkiSubscription();
-			kushkiSubscription.setFirstName(firstName.toUpperCase());
-			kushkiSubscription.setLastName(lastName.toUpperCase());
-			kushkiSubscription.setEmail(email);
-			kushkiSubscription.setSubscriptionId(subscriptionId);
-			kushkiSubscription.setPublicUser(publicUser);
-			kushkiSubscription.setCardFinale(cardFinale);
-			kushkiSubscription = this.kushkiSubscriptionRepo.save(kushkiSubscription);
-
-			Map<String, Object> kushkiResponse = new HashMap<>();
-			kushkiResponse.put("publicUser", publicUser);
-			kushkiResponse.put("extraData", kushkiSubscription.getCardFinale());
-			return kushkiResponse;
-		} catch (KushkiException ex) {
-			// TODO Registrar log en archivo.
-			throw new ServletException(ex.getCause());
+	public PublicUser removeKushkiSubscription(Long subscriptionId) throws ServletException, KushkiException {
+		PublicUser publicUser = getCurrentUser();
+		
+		for (KushkiSubscription method : publicUser.getPaymentMethods()) {
+			if (method.getId().longValue() == subscriptionId.longValue()) {
+				kushkiService.subscriptionCancel(method.getSubscriptionId());
+				publicUser.getPaymentMethods().remove(method);
+				break;
+			}
 		}
-	}
-
-	@Transactional
-	public Map<String, Object> updateKushkiSubscription(final String token, String subscriptionId, PublicUser publicUser, String cardFinale) throws ServletException {
-		try {
-			this.kushkiService.suscriptionUpdateCard(subscriptionId, token);
-			publicUser.setKushkiSubscriptionActive(Boolean.TRUE);
-		} catch (KushkiException ex) {
-			publicUser.setKushkiSubscriptionActive(Boolean.FALSE);
-			// TODO Registrar log en archivo.
-		}
-		KushkiSubscription kushkiSubscription = this.kushkiSubscriptionRepo.findBySubscriptionId(subscriptionId);
-		kushkiSubscription.setCardFinale(publicUser.getKushkiSubscriptionActive() ? cardFinale : "----");
-		this.kushkiSubscriptionRepo.save(kushkiSubscription);
-
-		Map<String, Object> kushkiResponse = new HashMap<>();
-		kushkiResponse.put("publicUser", publicUser);
-		kushkiResponse.put("extraData", kushkiSubscription.getCardFinale());
-		return kushkiResponse;
-	}
-
-	@Transactional
-	@SuppressWarnings("unchecked")
-	public PublicUser removeKushkiSubscription(Long id) throws ServletException {
-		PublicUser publicUser = this.publicUserRepo.findOne(id);
-		try {
-			KushkiSubscription kushkiSubscription = this.kushkiSubscriptionRepo.findByPublicUser(publicUser);
-			this.kushkiService.subscriptionCancel(kushkiSubscription.getSubscriptionId());
-			this.kushkiSubscriptionRepo.delete(kushkiSubscription);
-		} catch (KushkiException ex) {
-			// TODO Registrar log en archivo.
-			throw new ServletException(ex.getCause());
-		}
-		publicUser.setKushkiSubscriptionActive(Boolean.FALSE);
-		this.publicUserRepo.save(publicUser);
+		
+		publicUserRepo.save(publicUser);
 		return publicUser;
 	}
 	

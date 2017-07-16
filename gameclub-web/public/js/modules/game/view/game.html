@@ -25,12 +25,12 @@
                 <img ng-src="{{game.contentRating.other}}">
             </div>
             <form class="col-md-12 platform">
-                <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
+                <ui-select ng-model="console.selected" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
                     <ui-select-match placeholder="Consola...">
                         <img ng-src="{{$select.selected.console.blackLogoBase64}}" class="gameConsole">
                     </ui-select-match>
-                    <ui-select-choices repeat="cross in game.consoles | filter: $select.search" class="text-center">
-                        <div ng-bind-html="'' | highlight: $select.search"></div>
+                    <ui-select-choices repeat="cross in game.consoles | filter: $select.console" class="text-center">
+                        <div ng-bind-html="'' | highlight: $select.console"></div>
                         <img archive="cross.console.whiteLogo" >
                     </ui-select-choices>
                 </ui-select>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">{{game.releaseDate | date: 'dd-MM-yyyy'}}</span></span>
-            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{(game.uploadPayment / 4.0) | number: 2}} coins</span></span>
+            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{(game.uploadPayment / 4.0) | number: 0}} coins</span></span>
         </div>
         <div class="col-md-3 rating">
             <div class="reviews text-center">
@@ -77,74 +77,199 @@
             </div>
         </div>
     </section>
-    <section class="row games">
-        <div class="subtitle">
-            Juegos disponibles
-            <button type="button" class="btn btn-tertiary small dark" ng-click="addToLibrary()" ng-if="currentUser">Sube tu juego</button>
-            <button type="button" class="btn btn-tertiary small dark" ng-click="login()" ng-if="!currentUser">Inicia Sesión</button>
-        </div>
-        <div class="filters">
-            <li>
-                <a href><i class="gc gc-send"></i></a>
-            </li><li>
-                <a href><i class="gc gc-address"></i></a>
-            </li><li>
-                <a href class="active"><i class="gc gc-usd"></i></a>
-            </li><li>
-                <a href><i class="gc gc-rating"></i></a>
-            </li><li>
-                <a href><i class="gc gc-cd"></i></a>
-            </li><li><a href><i class="gc gc-filter"></i></a></li>
-        </div>
-        <div class="games-availables">
-            <div class="table-container">
-                <table>
-                    <col width="17%">
-                    <col width="15%">
-                    <col width="17%">
-                    <col width="15%">
-                    <col width="16%">
-                    <col width="13%">
-                    <col width="5%">
+    <section class="games">
+        <form role="form" on-submit="requestLoan()" novalidate>
+            <div class="row">
+                <div ng-if="!loanViewOpen">
+                    <div class="subtitle">
+                        Juegos disponibles
+                        <button type="button" class="btn btn-tertiary small dark" ng-click="addToLibrary()" ng-if="currentUser">Sube tu juego</button>
+                        <button type="button" class="btn btn-tertiary small dark" ng-click="login()" ng-if="!currentUser">Inicia Sesión</button>
+                    </div>
+                    <div class="filters">
+                        <li ng-repeat="filter in filters">
+                            <a href ng-class="{'active': filter.active}" ng-click="doFilter(filter)"><i class="gc" ng-class="filter.icon"></i></a>
+                        </li>
+                    </div>
+                    <div class="games-availables">
+                        <div class="table-container">
+                            <table>
+                                <col width="17%">
+                                <col width="15%">
+                                <col width="17%">
+                                <col width="15%">
+                                <col width="16%">
+                                <col width="13%">
+                                <col width="5%">
 
-                    <thead>
-                        <tr>
-                            <th>Disponibilidad</th>
-                            <th>Costo shipping</th>
-                            <th>Ciudad</th>
-                            <th>Costo coins</th>
-                            <th>Rating usuario</th>
-                            <th>Estado juego</th>
-                            <th></th>
-                        </tr>
-                    </thead>
+                                <thead>
+                                    <tr>
+                                        <th>Disponibilidad</th>
+                                        <th>Costo shipping</th>
+                                        <th>Ciudad</th>
+                                        <th>Costo coins</th>
+                                        <th>Rating usuario</th>
+                                        <th>Estado juego</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
 
-                    <tbody>
-                        <tr ng-repeat="game in availables">
-                            <td ng-class="game.available ? 'blue' : 'red'">{{game.available ? 'Disponible' : 'Prestado'}}</td>
-                            <td>{{game.shipping | currency:'$ ':2}}</td>
-                            <td>{{game.city}}</td>
-                            <td ng-class="game.available ? 'blue' : 'red'">{{game.coins | currency:'+ ':0}}</td>
-                            <td>
-                                <div class="col-md-12 rating-container">
-                                    <i class="gc gc-rating" ng-class="1 <= game.rating ? 'yes' : ''"></i>
-                                    <i class="gc gc-rating" ng-class="2 <= game.rating ? 'yes' : ''"></i>
-                                    <i class="gc gc-rating" ng-class="3 <= game.rating ? 'yes' : ''"></i>
-                                    <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
-                                    <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
-                                </div>
-                            </td>
-                            <td class="game-status">{{game.gameStatus}}/10</td>
-                            <td><button class="btn btn-primary small dark">Ficha prestamo</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+                                <tbody>
+                                    <tr ng-repeat="cross in availableGames">
+                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
+                                        <td>{{100 | currency:'$ ':2}}</td>
+                                        <td>{{cross.publicUserObj.location.name}}</td>
+                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency:'+ ':0}}</td>
+                                        <td>
+                                            <div class="col-md-12 rating-container" ng-if="cross.publicUserObj.rating > 0">
+                                                <i class="gc gc-rating" ng-class="1 <= game.rating ? 'yes' : ''"></i>
+                                                <i class="gc gc-rating" ng-class="2 <= game.rating ? 'yes' : ''"></i>
+                                                <i class="gc gc-rating" ng-class="3 <= game.rating ? 'yes' : ''"></i>
+                                                <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
+                                                <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
+                                            </div>
+                                            <span ng-if="cross.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span>
+                                        </td>
+                                        <td class="game-status">{{cross.integrity}}/10</td>
+                                        <td><button class="btn btn-primary small dark" ng-click="openLoanView(cross)">{{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center" ng-if="!lastPage">
+                        <button class="btn btn-secundary small">Ver más propuestas</button>
+                    </div>
+                </div>
+
+                <div class="loan-view" ng-if="loanViewOpen">
+                    <div class="subtitle">
+                        Ficha del juego disponible
+                        <button type="button" class="btn btn-tertiary small dark" ng-click="closeLoanView()">Volver a propuestas</button>
+                    </div>
+
+                    <div class="col-md-9">
+                        <label>Estatus</label>
+                        <span class="value">{{loanGame.status ? 'Disponible' : 'Prestado'}}</span>
+                    </div>
+
+                    <div class="col-md-9">
+                        <label>Estado del juego</label>
+                        <span class="value">{{loanGame.integrity}}/10</span>
+                    </div>
+
+                    <div class="col-md-9">
+                        <label>Observaciones</label>
+                        <span class="value original-text">{{loanGame.observations}}</span>
+                    </div>
+
+                    <div class="col-md-9">
+                        <label>Rating del prestador</label>
+                        <div class="rating-container" ng-if="loanGame.publicUserObj.rating > 0">
+                            <i class="gc gc-rating" ng-class="1 <= game.rating ? 'yes' : ''"></i>
+                            <i class="gc gc-rating" ng-class="2 <= game.rating ? 'yes' : ''"></i>
+                            <i class="gc gc-rating" ng-class="3 <= game.rating ? 'yes' : ''"></i>
+                            <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
+                            <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
+                        </div>
+                        <span class="value" ng-if="loanGame.publicUserObj.rating <= 0" ng-click="$state.go('gameclub.publicProfile')">Este usuario todavía no tiene calificaciones</span>
+                        <button type="button" class="btn btn-tertiary small dark" ng-click="viewOwnerRating()" ng-if="loanGame.publicUserObj.rating > 0">Ver Rating</button>
+                    </div>
+
+                    <div class="col-md-9">
+                        <label>Ciudad del juego</label>
+                        <span class="value">{{loanGame.publicUserObj.location.name}}</span>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="subtitle top-space">Costo coins</div>
+
+                    <div class="col-md-9 loan-cost">
+                        <label>Costo prestamo</label>
+                        <span class="value big">{{loanGame.cost}} coins</span> <span class="value black">x</span>
+                        <ui-select ng-model="loan.weeks" theme="bootstrap" class="selector" ng-change="weekSelected()">
+                            <ui-select-match placeholder="Semanas...">{{$select.selected}} {{$select.selected == 1 ? 'Semana' : 'Semanas'}}</ui-select-match>
+                            <ui-select-choices repeat="num in [1, 2, 3, 4] | filter: $select.search">
+                                <div ng-bind-html="num + (num == 1 ? ' semana' : ' semanas') | highlight: $select"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="subtitle top-space">Costo shipping</div>
+
+                    <div class="shipping">
+                        <div class="address-title">Dirección de entrega actual:</div>
+
+                        <div class="col-md-9 to-validate">
+                            <label>Dirección</label>
+                            <input validation type="text" ng-model="loan.address" required />
+                        </div>
+
+                        <div class="col-md-9">
+                            <label class="icon" ng-click="openMapsModal()"><i class="gc gc-address"></i></label>
+                            <img class="geo-check" src="/img/check.svg" ng-if="loan.geoLocation != null">
+                        </div>
+
+                        <div class="col-md-9">
+                            <label>Persona de entrega</label>
+                            <input type="text" ng-model="loan.receiver" required>
+                        </div>
+
+                        <div class="col-md-9 no-underline">
+                            <div class="box" ng-class="loan.saveChanges ? 'checked' : ''" ng-click="loan.saveChanges = !loan.saveChanges"></div>
+                            <span class="checkbox-label" ng-click="loan.saveChanges = !loan.saveChanges">Guardar información para siguiente préstamo</span>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="final-costs">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-8 left-decoration">
+                            <div class="col-md-12">
+                                <label class="big">Costo coins final</label>
+                                <span class="big-value">{{loanGame.cost * loan.weeks}} coins</span>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <label class="big">Costo shipping final</label>
+                                <span class="big-value bigger">{{7.50 | currency: '$': 2}}</span>
+                            </div>
+
+                            <div class="col-md-12 foot-note">(Costo en base a dirección actual)</div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-12 text-center">
-            <button class="btn btn-secundary small">Ver todas las propuestas</button>
-        </div>
+
+            <div class="loan-footer" ng-if="loanViewOpen">
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-secundary">Continuar con soliciud de préstamo</button>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </form>
     </section>
     <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="consoles"/>
     <section class="final"></section>
 </div>
+
+<script type="text/ng-template" id="mapsModal.html">
+    <div id="maps-modal" class="inmodal">
+        <div class="modal-body">
+            <span class="dismiss" href ng-click="cancel()">X</span>
+
+            <div class="map" map-lazy-load="https://maps.google.com/maps/api/js?key={{Const.google.maps}}" >
+                <ng-map center="0, 0" zoom="1"></ng-map>
+            </div>
+
+            <div class="done text-center">
+                <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="!mapLoaded">Listo</button>
+            </div>
+        </div>
+    </div>
+</script>

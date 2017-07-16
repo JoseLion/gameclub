@@ -14,4 +14,15 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 public interface PublicUserGameRepo extends JpaRepository<PublicUserGame, Long> {
 	@Query(	"SELECT pg FROM PublicUserGame pg LEFT JOIN pg.console c WHERE pg.publicUser=:publicUser AND (:consoleId IS NULL OR c.id=:consoleId)")
 	public Page<PublicUserGame> findMyGames(@Param("publicUser") PublicUser publicUser, @Param("consoleId") Long consoleId, Pageable page);
+	
+	@Query(	"SELECT pg FROM PublicUserGame pg " +
+				"LEFT JOIN pg.publicUser p " +
+				"LEFT JOIN pg.console c " +
+				"LEFT JOIN pg.game g " +
+			"WHERE " +
+				"(:publicUser IS NULL OR p<>:publicUser) AND " +
+				"g.id=:gameId AND " +
+				"c.id=:consoleId " +
+			"ORDER BY pg.status DESC, p.rating DESC, pg.integrity DESC")
+	public Page<PublicUserGame> findAvailableGames(@Param("publicUser") PublicUser publicUser, @Param("gameId") Long gameId, @Param("consoleId") Long consoleId, Pageable page);
 }

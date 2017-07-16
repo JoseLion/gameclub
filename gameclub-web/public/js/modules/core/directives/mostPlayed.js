@@ -1,4 +1,4 @@
-angular.module('Core').directive('mostPlayed', function($state, $rootScope) {
+angular.module('Core').directive('mostPlayed', function($state, $rootScope, friendlyUrl) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/modules/core/directives/mostPlayed.html',
@@ -21,7 +21,7 @@ angular.module('Core').directive('mostPlayed', function($state, $rootScope) {
 			});
 
 			$scope.viewGameDetail = function(game) {
-				$state.go('gameclub.game', {idGame: 0});
+				$state.go('gameclub.game', {id: game.id, consoleId: $scope.gameConsole.selected.id, name: friendlyUrl(game.name)});
 			};
 
 		}

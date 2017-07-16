@@ -20,6 +20,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
             openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
                 gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
             });
+            
             if(consoleSelected == gameConsole){
                 $scope.search = {console: gameConsole};
             }
@@ -88,6 +89,10 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
     $scope.sortGames = function(sort) {
         $scope.filter.sort = sort;
         filter();
+    }
+
+    $scope.goToTerms = function() {
+        $state.go("gameclub.termsConditions");
     }
 
     function setPagedData(data) {

@@ -1,4 +1,4 @@
-angular.module('LevelapBlog').directive('mostSeen', function($state, friendlyUrl) {
+angular.module('LevelapBlog').directive('mostSeen', function($state, friendlyUrl, BlogConst) {
 	let baseSrc;
 
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
@@ -23,6 +23,8 @@ angular.module('LevelapBlog').directive('mostSeen', function($state, friendlyUrl
         },
         replace: true,
         link: function($scope, element, attrs, ctrl) {
+            $scope.BlogConst = BlogConst;
+            
             if ($scope.activePage == null) {
                 $scope.activePage = 0;
             }

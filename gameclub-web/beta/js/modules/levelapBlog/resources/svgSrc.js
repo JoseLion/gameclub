@@ -5,17 +5,17 @@ angular.module("LevelapBlog").directive('svgSrc', function() {
 			svgSrc: '='
 		},
 		link: function($scope, element, attrs) {
-			$scope.$watch('svgSrc', function(newValue, oldValue) {
-				setTimeout(function() {
-					$scope.$apply(function() {
-						if (newValue != null) {
-							attrs.$set('xlink:href', newValue);
-						} else {
-							attrs.$set('xlink:href', '');
-						}
-					});
-				}, 0);
-			});
+			console.log("svgSrc: ", $scope.svgSrc);
+			
+			setTimeout(function() {
+				$scope.$apply(function() {
+					if ($scope.svgSrc != null) {
+						attrs.$set('xlink:href', $scope.svgSrc);
+					} else {
+						attrs.$set('xlink:href', '');
+					}
+				});
+			}, 0);
 		}
 	};
 });

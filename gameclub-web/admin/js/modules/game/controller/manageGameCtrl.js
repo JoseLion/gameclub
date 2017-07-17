@@ -92,7 +92,7 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 			};
 
 			if ($scope.images.diamond != null) {
-				formData.diamond = base64ToFile($scope.images.diamond, "diamond - " + $scope.images.cover.name);
+				formData.diamond = base64ToFile($scope.images.diamond, "diamond-" + $scope.images.cover.name);
 			}
 
 			rest("game/save").multipart(formData, function() {

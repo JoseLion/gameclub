@@ -58,4 +58,10 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
     $scope.goToDetails = function(article) {
         $state.go("levelapBlog.blog.detail", {id: article.id, title: friendlyUrl(article.title)})
     }
+
+    setTimeout(function() {
+        $scope.$apply(function() {
+            document.getElementById("clipped").style.clipPath = "url(#diamond)";
+        });
+    }, 1000);
 });

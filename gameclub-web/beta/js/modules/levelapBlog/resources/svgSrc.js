@@ -5,8 +5,6 @@ angular.module("LevelapBlog").directive('svgSrc', function() {
 			svgSrc: '='
 		},
 		link: function($scope, element, attrs) {
-			console.log("svgSrc: ", $scope.svgSrc);
-			
 			setTimeout(function() {
 				$scope.$apply(function() {
 					if ($scope.svgSrc != null) {

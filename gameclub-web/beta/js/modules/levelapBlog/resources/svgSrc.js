@@ -1,11 +1,11 @@
-angular.module("LevelapBlog").directive('ngXlinkHref', function() {
+angular.module("LevelapBlog").directive('svgSrc', function() {
 	return {
 		restrict: 'A',
 		scope: {
-			ngXlinkHref: '='
+			svgSrc: '='
 		},
 		link: function($scope, element, attrs) {
-			$scope.$watch('ngXlinkHref', function(newValue, oldValue) {
+			$scope.$watch('svgSrc', function(newValue, oldValue) {
 				setTimeout(function() {
 					$scope.$apply(function() {
 						if (newValue != null) {

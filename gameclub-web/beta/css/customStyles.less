@@ -5,6 +5,7 @@ html{background-color:@color-primary;}
 body{background-color:transparent;}
 input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill{transition:all 5000s ease-in-out 0s;}
 h2{margin:0;}
+input::-webkit-contacts-auto-fill-button{visibility: hidden;display:none !important;pointer-events:none;position:absolute;right:0;}
 /*******************************/
 
 /********** GENERAL **********/
@@ -386,6 +387,7 @@ background:-moz-linear-gradient(-60deg,@color-secundary,@color-secundary,@color-
 #home .contact-us form.contact-form textarea[name="message"]{background-image:url("../img/contact-message.svg");background-size:15px auto;background-position-x:97%;background-position-y:2%;background-repeat:no-repeat;}
 #home .contact-us form.contact-form .send-button{margin-top:5%;margin-bottom:6%;}
 #home .contact-us form.contact-form .send-button button{border-radius:5px;}
+#home .contact-us form.contact-form input.ui-select-search{padding-top:0%;padding-bottom:0%;}
 /*******************************/
 
 /********** LOGIN-PAGE **********/

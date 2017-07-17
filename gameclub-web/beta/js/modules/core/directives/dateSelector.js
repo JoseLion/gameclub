@@ -91,7 +91,7 @@ angular.module('Core').directive('dateSelector', function($filter) {
 				} else if(!$scope.disableSelectors && type == 2) {
 					$scope.numberSelector = [];
 					$scope.yearFocused = true;
-					for(let i=(new Date().getFullYear()) ; i>=1980 ; i--) {
+					for(let i=(new Date().getFullYear()) ; i>=1950 ; i--) {
 						$scope.numberSelector.push(i);
 					}
 				}

@@ -160,11 +160,11 @@ angular.module("LevelapBlogAdmin").controller('ManageArticleCtrl', function($sco
 				}
 
 				if ($scope.diamondCropImage != null) {
-					formData.diamond = base64ToFile($scope.diamondCropImage, "diamond - " + $scope.banner.name);
+					formData.diamond = base64ToFile($scope.diamondCropImage, "diamond-" + $scope.banner.name);
 				}
 
 				if ($scope.squareCropImage != null) {
-					formData.square = base64ToFile($scope.squareCropImage, "square - " + $scope.banner.name);
+					formData.square = base64ToFile($scope.squareCropImage, "square-" + $scope.banner.name);
 				}
 
 				rest("levelapBlog/saveArticle").multipart(formData, function() {

@@ -30,19 +30,6 @@
             <hr class="subtitle" />
             <article ng-repeat="article in importantBlogs">
                 <div>
-                    <!-- <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <defs>
-                            <pattern id="border" patternUnits="userSpaceOnUse" width="100" height="100">
-                                <image xlink:href svg-src="diamondBorderImg" width="100" height="100" />
-                            </pattern>
-                            <pattern id="cropped_{{$index}}" patternUnits="userSpaceOnUse" width="100" height="100">
-                                <image xlink:href svg-src="BlogConst.imageBaseUrl + article.diamond.name" width="100" height="100" />
-                            </pattern>
-                        </defs>
-                        <path d="M47 3 L3 47 C3 47 0 50 3 53 L47 97 C47 97 50 100 53 97 L97 53 C97 53 100 50 97 47 L53 3 C53 3 50 0 47 3 z" style="fill: url(#border)"></path>
-                        <path d="M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" style="fill: url(#cropped_{{$index}}); cursor: pointer;" ng-click="goToDetails(article)"></path>
-                    </svg> -->
-
                     <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
                         <defs>
                             <clipPath id="border">
@@ -52,8 +39,8 @@
                                 <path d="M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" fill="rgba(255, 255, 255, 0)"></path>
                             </clipPath>
                         </defs>
-                        <image width="100" height="100" xlink:href svg-src="diamondBorderImg" clip-path="url(#border)"></image>
-                        <image width="100" height="100" xlink:href svg-src="BlogConst.imageBaseUrl + article.diamond.name" clip-path="url(#diamond)">
+                        <image width="100" height="100" xlink:href svg-src="diamondBorderImg" style="clip-path: url(#border); -webkit-clip-path: url(#border)"></image>
+                        <image width="100" height="100" xlink:href svg-src="BlogConst.imageBaseUrl + article.diamond.name" style="clip-path: url(#diamond); -webkit-clip-path: url(#diamond)">
                     </svg>
                 </div>
                 <div class="info" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})">

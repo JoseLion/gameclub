@@ -6,15 +6,15 @@ angular.module("LevelapBlog").directive('ngXlinkHref', function() {
 		},
 		link: function($scope, element, attrs) {
 			$scope.$watch('ngXlinkHref', function(newValue, oldValue) {
-				setTimeout(function() {
-					$scope.$apply(function() {
+				//setTimeout(function() {
+					//$scope.$apply(function() {
 						if (newValue != null) {
 							attrs.$set('xlink:href', newValue);
 						} else {
 							attrs.$set('xlink:href', '');
 						}
-					});
-				}, 0);
+					//});
+				//}, 0);
 			});
 		}
 	};

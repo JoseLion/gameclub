@@ -1,5 +1,4 @@
 angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
-
 	$urlRouterProvider.otherwise('/gameclub/home');
 	$ocLazyLoadProvider.config({debug: false});
 

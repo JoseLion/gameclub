@@ -1,7 +1,7 @@
 angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $locationProvider) {
 	$urlRouterProvider.otherwise('/gameclub/home');
 	$ocLazyLoadProvider.config({debug: false});
-	$locationProvider.html5Mode(true);
+	$locationProvider.html5Mode({enabled: true, requireBase: false});
 
 	$stateProvider
 		.state('gameclub', {

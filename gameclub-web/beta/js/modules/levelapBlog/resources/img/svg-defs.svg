@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="0" height="0">
+    <defs>
+        <clipPath id="border">
+            <path d="M47 3 L3 47 C3 47 0 50 3 53 L47 97 C47 97 50 100 53 97 L97 53 C97 53 100 50 97 47 L53 3 C53 3 50 0 47 3 z" fill="rgba(255, 255, 255, 0)"></path>
+        </clipPath>
+        <clipPath id="diamond">
+            <path d="M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" fill="rgba(255, 255, 255, 0)"></path>
+        </clipPath>
+    </defs>
+</svg>

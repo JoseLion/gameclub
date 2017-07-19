@@ -5,7 +5,7 @@ angular.module("Login").controller('LoginCtrl', function($scope, $rootScope, $co
 		$cookies.remove(Const.cookieToken);
 
 		authenticate($scope.credentials).then(function(response) {
-			if (response.data == Const.ok) {
+			if (response.data != null) {
 				rest("adminUser/getCurrentUser").get(function(data) {
 					$rootScope.currentUser = data;
 					let state = $rootScope.redirect != null && $rootScope.redirect != Const.loginState ? $rootScope.redirect : Const.mainState;

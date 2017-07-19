@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="" ng-attr-content="{{$state.current.data.description != null ? $state.current.data.description : ''}}">
+    <meta name="description" content="gameclub.com.ec" ng-attr-content="{{$state.current.data.description != null ? $state.current.data.description : 'gameclub.com.ec'}}">
 	<meta name="keywords" content="" ng-attr-content="{{$state.current.data.keywords != null ? $state.current.data.keywords : ''}}">
     <meta property="og:url" content="">
     <meta property="og:title" content="">
@@ -13,7 +13,7 @@
     <meta property="og:image" content="">
     <meta property="fb:app_id" content="1819533121697152">
 
-    <!-- <base href="/"> -->
+    <base href="/">
 
     <title>GameClub</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
@@ -139,6 +139,52 @@
             js.src = "//connect.facebook.net/es_LA/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         } (document, 'script', 'facebook-jssdk'));
+
+        (function(document, window) {
+            "use strict";
+
+            /**
+            * Initialize the SVG Fixer after the DOM is ready
+            */
+            document.addEventListener("DOMContentLoaded", function() {
+
+                /**
+                 * Current URL, without the hash
+                 */
+                var baseUrl = window.location.href
+                    .replace(window.location.hash, "");
+
+                /**
+                *  Find all `use` elements with a namespaced `href` attribute, e.g.
+                *  <use xlink:href="#some-id"></use>
+                *
+                *  See: http://stackoverflow.com/a/23047888/796152
+                */
+                [].slice.call(document.querySelectorAll("use[*|href]"))
+
+                    /**
+                    * Filter out all elements whose namespaced `href` attribute doesn't
+                    * start with `#` (i.e. all non-relative IRI's)
+                    *
+                    * Note: we're assuming the `xlink` prefix for the XLink namespace!
+                    */
+                    .filter(function(element) {
+                        return (element.getAttribute("xlink:href").indexOf("#") === 0);
+                    })
+
+                    /**
+                    * Prepend `window.location` to the namespaced `href` attribute value,
+                    * in order to make it an absolute IRI
+                    *
+                    * Note: we're assuming the `xlink` prefix for the XLink namespace!
+                    */
+                    .forEach(function(element) {
+                        element.setAttribute("xlink:href", baseUrl + element.getAttribute("xlink:href"));
+                    });
+
+            }, false);
+
+        }(document, window));
     </script>
 </body>
 </html>

@@ -121,14 +121,15 @@
                                         <td>{{cross.publicUserObj.location.name}}</td>
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency:'+ ':0}}</td>
                                         <td>
-                                            <div class="col-md-12 rating-container" ng-if="cross.publicUserObj.rating > 0">
+                                            <stars ng-model="cross.publicUserObj.rating"></stars>
+                                            <!-- <div class="col-md-12 rating-container" ng-if="cross.publicUserObj.rating > 0">
                                                 <i class="gc gc-rating" ng-class="1 <= game.rating ? 'yes' : ''"></i>
                                                 <i class="gc gc-rating" ng-class="2 <= game.rating ? 'yes' : ''"></i>
                                                 <i class="gc gc-rating" ng-class="3 <= game.rating ? 'yes' : ''"></i>
                                                 <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
                                                 <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
                                             </div>
-                                            <span ng-if="cross.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span>
+                                            <span ng-if="cross.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span> -->
                                         </td>
                                         <td class="game-status">{{cross.integrity}}/10</td>
                                         <td><button class="btn btn-primary small dark" ng-click="openLoanView(cross)">{{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}</button></td>

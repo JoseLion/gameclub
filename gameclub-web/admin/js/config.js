@@ -61,7 +61,7 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 
 		if (fromState.name == "") {
 			authenticate().then(function(response) {
-				if (response.data == Const.ok) {
+				if (response.data != null) {
 					if (toState.name == Const.loginState) {
 						if ($rootScope.redirect != null && $rootScope.redirect != Const.loginState) {
 							$state.go($rootScope.redirect);

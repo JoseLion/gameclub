@@ -219,7 +219,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 		$scope.isLoginIn = true;
 
 		authenticate(credentials).then(function(response) {
-			if (response.data == Const.ok) {
+			if (response.data != null) {
 				rest("publicUser/getCurrentUser").get(function(data) {
 					if (data != null) {
 						if (data.hasTempPassword) {

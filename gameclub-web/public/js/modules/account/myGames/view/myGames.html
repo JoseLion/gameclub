@@ -64,7 +64,7 @@
         </form>
         <div class="list">
             <div ng-repeat="cross in gamesList">
-                <game-item ng-model="cross.game" console="cross.console" inverse="true" is-editable="true" on-edit="editGame(cross)" show-coins="true"></game-item>
+                <game-item ng-model="cross.game" console="cross.console" inverse="true" is-editable="true" on-edit="editGame(cross)" show-coins="true" coins="cross.cost"></game-item>
                 <div class="separator" ng-if="$index+1 < gamesList.length"></div>
             </div>
             <blog-paging pages="totalPages" ng-model="$parent.filter.page" class="paging" ng-change="pageChanged()"></blog-paging>
@@ -80,13 +80,7 @@
             </div>
             <div class="col-md-6 principal">
                 <h2 class="col-md-12 title">{{myGame.game.name}}</h2>
-                <div class="col-md-12 rating-container">
-                    <i class="gc gc-rating rating-1 yes"></i>
-                    <i class="gc gc-rating rating-2 yes"></i>
-                    <i class="gc gc-rating rating-3 yes"></i>
-                    <i class="gc gc-rating rating-4 yes"></i>
-                    <i class="gc gc-rating rating-5"></i>
-                </div>
+                <stars ng-model="myGame.game.rating"></stars>
                 <div class="col-md-12 no-padding-left no-padding-right">
                     <button type="button" class="btn btn-primary small">Editar informaci&oacute;n</button>
                 </div>

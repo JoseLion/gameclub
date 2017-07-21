@@ -37,7 +37,7 @@
                     <h2>Art&iacute;culos <span class="normal">destacados</span></h2>
                     <hr class="subtitle" />
                     <article ng-repeat="article in importantBlogs">
-                        <div>
+                        <div ng-if="showSvg">
                             <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
                                 <clipPath id="diamond">
                                     <path d="M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" fill="rgba(255, 255, 255, 0)"></path>

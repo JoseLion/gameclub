@@ -61,7 +61,7 @@
 #blog #blog-article header .image-section .post-date-content{display:table-cell;text-align:center;vertical-align:middle;}
 
 #blog #blog-article header .image-section .post-date span{display:block;}
-#blog #blog-article header h1,#blog #blog-article h2{font-size:1.75em;margin:2% auto 1%;}
+#blog #blog-article header h1,#blog #blog-article h2{font-size:1.75em;margin:2% auto 1%;word-wrap:break-word;}
 #blog #blog-article header span.datetime{font-size:0.75em;font-weight:400;}
 #blog #blog-article header .tags{display:table;font-weight:700;width:100%;}
 #blog #blog-article header .tags .tags-cell{display:table-cell;padding-right:0.5em;vertical-align:middle;}

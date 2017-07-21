@@ -10,11 +10,7 @@
         <div class="col-md-6 principal">
             <h2 class="col-md-12 title">{{game.name}}</h2>
             <div class="col-md-12 rating-container">
-                <i class="gc gc-rating rating-1 yes"></i>
-                <i class="gc gc-rating rating-2 yes"></i>
-                <i class="gc gc-rating rating-3 yes"></i>
-                <i class="gc gc-rating rating-4 yes"></i>
-                <i class="gc gc-rating rating-5"></i>
+                <stars ng-model=game.rating></stars>
             </div>
             <div class="col-md-12 video">
                 <i class="gc gc-youtube"></i> Video game play
@@ -61,12 +57,8 @@
                         <div class="col-md-12">
                             <img ng-src="{{cross.magazine.other}}">
                         </div>
-                        <div class="col-md-12 rating-container">
-                            <i class="gc gc-rating rating-1 yes"></i>
-                            <i class="gc gc-rating rating-2 yes"></i>
-                            <i class="gc gc-rating rating-3 yes"></i>
-                            <i class="gc gc-rating rating-4 yes"></i>
-                            <i class="gc gc-rating rating-5 yes"></i>
+                        <div class="col-md-12">
+                            <stars ng-model="cross.rating" solid="light"></stars>
                         </div>
                         <div class="col-md-12">
                             <a ng-href="{{cross.url}}" target="_blank">Leer m&aacute;s</a>
@@ -121,17 +113,10 @@
                                         <td>{{cross.publicUserObj.location.name}}</td>
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency:'+ ':0}}</td>
                                         <td>
-                                            <stars ng-model="cross.publicUserObj.rating"></stars>
-                                            <!-- <div class="col-md-12 rating-container" ng-if="cross.publicUserObj.rating > 0">
-                                                <i class="gc gc-rating" ng-class="1 <= game.rating ? 'yes' : ''"></i>
-                                                <i class="gc gc-rating" ng-class="2 <= game.rating ? 'yes' : ''"></i>
-                                                <i class="gc gc-rating" ng-class="3 <= game.rating ? 'yes' : ''"></i>
-                                                <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
-                                                <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
-                                            </div>
-                                            <span ng-if="cross.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span> -->
+                                            <stars ng-model="cross.publicUserObj.rating" ng-if="cross.publicUserObj.rating > 0"></stars>
+                                            <span ng-if="cross.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span>
                                         </td>
-                                        <td class="game-status">{{cross.integrity}}/10</td>
+                                        <td class="game-status">{{cross.integrity.name}}</td>
                                         <td><button class="btn btn-primary small dark" ng-click="openLoanView(cross)">{{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}</button></td>
                                     </tr>
                                 </tbody>
@@ -167,11 +152,7 @@
                     <div class="col-md-9">
                         <label>Rating del prestador</label>
                         <div class="rating-container" ng-if="loanGame.publicUserObj.rating > 0">
-                            <i class="gc gc-rating" ng-class="1 <= game.rating ? 'yes' : ''"></i>
-                            <i class="gc gc-rating" ng-class="2 <= game.rating ? 'yes' : ''"></i>
-                            <i class="gc gc-rating" ng-class="3 <= game.rating ? 'yes' : ''"></i>
-                            <i class="gc gc-rating" ng-class="4 <= game.rating ? 'yes' : ''"></i>
-                            <i class="gc gc-rating" ng-class="5 <= game.rating ? 'yes' : ''"></i>
+                            <stars ng-model="loanGame.publicUserObj.rating" solid="light"></stars>
                         </div>
                         <span class="value" ng-if="loanGame.publicUserObj.rating <= 0" ng-click="$state.go('gameclub.publicProfile')">Este usuario todavía no tiene calificaciones</span>
                         <button type="button" class="btn btn-tertiary small dark" ng-click="viewOwnerRating()" ng-if="loanGame.publicUserObj.rating > 0">Ver Rating</button>

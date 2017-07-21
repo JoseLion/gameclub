@@ -1,0 +1,104 @@
+<div class="col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Buscar</strong>
+		</div>
+
+		<div class="panel-body">
+			<form class="form-horizontal" role="form" on-submit="find()" novalidate>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="col-md-3 control-label">Texto</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control" ng-model="search.text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label">Categoría</label>
+						<div class="col-md-9">
+							<ui-select ng-model="search.category" theme="bootstrap">
+								<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected.name}}</ui-select-match>
+								<ui-select-choices repeat="category in categories | filter: $select.search">
+									<div ng-bind-html="category.name | highlight: $select.search"></div>
+								</ui-select-choices>
+							</ui-select>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="col-md-3 control-label">Estado</label>
+						<div class="col-md-9">
+							<ui-select ng-model="search.status" theme="bootstrap">
+								<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected ? 'Activo' : 'Inactivo'}}</ui-select-match>
+								<ui-select-choices repeat="status in [true, false] | filter: $select.search">
+									<div ng-bind-html="status ? 'Activo' : 'Inactivo' | highlight: $select.search"></div>
+								</ui-select-choices>
+							</ui-select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-12" style="text-align: right;">
+							<button type="submit" class="btn btn-w-m btn-primary">Buscar</button>
+							<button type="button" class="btn btn-w-m btn-default" ng-click="clear()">Limpiar</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="ibox">
+	<div class="ibox-content">
+		<div class="col-md-12 form-group" style="text-align: right;">
+			<button type="button" class="btn btn-w-m btn-primary" ng-click="addFaq()">
+				<i class="fa fa-plus" style="margin-right: 5px"></i>
+				<span>Agregar FAQ</span>
+			</button>
+		</div>
+
+		<div class="col-md-12 form-group">
+			<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover">
+				<col width="20%">
+				<col width="30%">
+				<col width="30%">
+				<col width="10%">
+				<col width="10%">
+
+				<thead>
+					<tr>
+						<th>Categoría</th>
+						<th>Pregunta</th>
+						<th>Respuesta</th>
+						<th>Estado</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-repeat="faq in faqs">
+						<td>{{faq.category.name}}</td>
+						<td>{{faq.question}}</td>
+						<td>{{faq.answer}}</td>
+						<td>{{faq.status ? 'Activo' : 'Inactivo'}}</td>
+						<td style="text-align: center;">
+							<button type="button" class="btn btn-xs btn-warning" ng-click="editFaq(faq)" tooltip="Editar usuario">
+								<i class="fa fa-pencil"></i>
+							</button>
+
+							<button type="button" class="btn btn-xs" ng-class="faq.status ? 'btn-success' : 'btn-primary'" ng-click="changeStatus(faq)" tooltip="Cambiar Estado">
+								<i class="fa fa-power-off"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="clearfix"></div>
+	</div>
+</div>

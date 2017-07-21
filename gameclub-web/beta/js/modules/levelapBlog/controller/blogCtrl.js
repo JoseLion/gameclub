@@ -60,7 +60,7 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
     }
 
     $scope.getClipPath = function(id) {
-        if (navigator.vendor.toLowerCase().indexOf("apple") < 0) {
+        //if (navigator.vendor.toLowerCase().indexOf("apple") < 0) {
             if (id == 'diamond') {
                 return {
                     'clip-path': 'url(#diamond)',
@@ -74,7 +74,7 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
                     '-webkit-clip-path': 'url(#border)'
                 };
             }
-        } else {
+        /*} else {
             if (id == 'diamond') {
                 return {
                     'clip-path': 'polygon(50% 7%, 94% 50%, 50% 94%, 6% 50%)',
@@ -87,8 +87,8 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
                     'clip-path': 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
                     '-webkit-clip-path': 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'
                 };
-            }*/
-        }
+            }
+        }*/
 
         return {};
     }

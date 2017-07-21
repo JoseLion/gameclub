@@ -92,4 +92,10 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
 
         return {};
     }
+
+    setTimeout(function() {
+        $scope.$apply(function() {
+            $scope.showSvg = true;
+        });
+    }, 3000);
 });

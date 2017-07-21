@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="gameclub.com.ec" ng-attr-content="{{$state.current.data.description != null ? $state.current.data.description : 'gameclub.com.ec'}}">
-	<meta name="keywords" content="" ng-attr-content="{{$state.current.data.keywords != null ? $state.current.data.keywords : ''}}">
+    <meta name="description" content="{{$state.current.data.description}}">
+	<meta name="keywords" content="{{$state.current.data.keywords}}">
     <meta property="og:url" content="">
     <meta property="og:title" content="">
     <meta property="og:type" content="">
@@ -15,7 +15,7 @@
 
     <base href="/">
 
-    <title>GameClub</title>
+    <title>Game Club</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -28,12 +28,8 @@
     <link href="css/gameclub-font.css" rel="stylesheet">
     <link href="js/modules/core/directives/loading/loading.css" rel="stylesheet">
     <!-- <link href="css/clockpicker.css" rel="stylesheet"> -->
-</head>
 
-<body ng-controller="MainCtrl as main">
-    <div ui-view></div>
-
-    <!-- MAIN DEPENDENCIES -->
+     <!-- MAIN DEPENDENCIES -->
     <script src="js/core/jquery-2.1.1.min.js"></script>
     <script src="js/core/less.min.js"></script>
     <script src="js/core/angular.min.js"></script>
@@ -43,7 +39,7 @@
     <script src="js/core/angular-ui-router.min.js"></script>
     <script src="js/core/angular-locale_es-ec.js"></script>
     <script src="js/core/ocLazyLoad.min.js"></script>
-	<script src="js/core/select.min.js"></script>
+    <script src="js/core/select.min.js"></script>
     <script src="js/core/plugins/pako/pako.min.js"></script>
     <script src="js/core/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="js/core/plugins/sweetalert/angular-sweetalert.min.js"></script>
@@ -117,7 +113,7 @@
     <script type="text/javascript">
         window.fbAsyncInit = function() {
             FB.init({
-                appId: '1739652696334272',
+                appId: '1819533121697152',
                 status: true,
                 cookie: true,
                 xfbml: true,
@@ -139,52 +135,12 @@
             js.src = "//connect.facebook.net/es_LA/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         } (document, 'script', 'facebook-jssdk'));
-
-        (function(document, window) {
-            "use strict";
-
-            /**
-            * Initialize the SVG Fixer after the DOM is ready
-            */
-            document.addEventListener("DOMContentLoaded", function() {
-
-                /**
-                 * Current URL, without the hash
-                 */
-                var baseUrl = window.location.href
-                    .replace(window.location.hash, "");
-
-                /**
-                *  Find all `use` elements with a namespaced `href` attribute, e.g.
-                *  <use xlink:href="#some-id"></use>
-                *
-                *  See: http://stackoverflow.com/a/23047888/796152
-                */
-                [].slice.call(document.querySelectorAll("use[*|href]"))
-
-                    /**
-                    * Filter out all elements whose namespaced `href` attribute doesn't
-                    * start with `#` (i.e. all non-relative IRI's)
-                    *
-                    * Note: we're assuming the `xlink` prefix for the XLink namespace!
-                    */
-                    .filter(function(element) {
-                        return (element.getAttribute("xlink:href").indexOf("#") === 0);
-                    })
-
-                    /**
-                    * Prepend `window.location` to the namespaced `href` attribute value,
-                    * in order to make it an absolute IRI
-                    *
-                    * Note: we're assuming the `xlink` prefix for the XLink namespace!
-                    */
-                    .forEach(function(element) {
-                        element.setAttribute("xlink:href", baseUrl + element.getAttribute("xlink:href"));
-                    });
-
-            }, false);
-
-        }(document, window));
     </script>
+</head>
+
+<body ng-controller="MainCtrl as main">
+    <div class="container" ui-view></div>
+
+   
 </body>
 </html>

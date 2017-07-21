@@ -17,8 +17,9 @@
 
 /** PANELS **/
 #blog section.blog-panel{background:transparent;margin-bottom:2em;position:relative;}
-#blog section.blog-panel.left{float:left;width:54%;}
-#blog section.blog-panel.right{float:right;width:44%;}
+#blog section.blog-panel.left{float:left;width:100%;}
+#blog section.blog-panel.right{float:right;width:100%;}
+#blog section.blog-panel.responsive{padding-right: 0px;padding-left: 0px;}
 
 /** SEARCH PARAM AND VIEW **/
 #blog .search input{color:#7BCABC;font-size:1.5em;padding-left:0.5em;padding-right:2em;width:100%;}
@@ -53,7 +54,7 @@
 #blog #navigation .cell:last-child{padding-right:1em;text-align:right;width:25%;}
 
 /** ARTICLE **/
-#blog #blog-article{background:#EEEEEE;color:#6A615A;padding:1em;margin-bottom:-2em;}
+#blog #blog-article{background:#EEEEEE;color:#6A615A;padding:1em;margin-bottom:2em;}
 #blog #blog-article header .image-section{position:relative;width:100%;}
 #blog #blog-article header .image-section img{border-radius:1em;margin-top:5%;width:97.5%;cursor: pointer;}
 #blog #blog-article header .image-section .post-date{background:#FFFFFF;border:2px solid #7BCABC;border-radius:50%;color:#7BCABC;display:table;font-weight:700;height:5em;right:0;top:0;padding:0;position:absolute;text-align:center;text-transform:uppercase;width:5em;z-index:1;}
@@ -114,7 +115,7 @@
 #most-seen .blog-preview .picture .post-date span{display:block;line-height:1;}
 #most-seen .blog-preview .picture .image-section{width:100%;height:100%;}
 #most-seen .blog-preview .picture .image-section .image-cropped{border-radius:10px;height:100%;overflow:hidden;width:100%;}
-#most-seen .blog-preview .picture .image-section .image-cropped img{height:100%;width:100%;}
+#most-seen .blog-preview .picture .image-section .image-cropped img{width:100%;}
 #most-seen .pagging{margin-bottom:1em;margin-top:-1em;text-align:center;}
 #most-seen .pagging .page-button{border:2px solid #7BCABC;border-radius:50%;cursor:pointer;display:inline-block;height:20px;margin-left:0.25%;margin-right:0.25%;width:20px;}
 #most-seen .pagging .page-button.page-active{background:#7BCABC;border-color:transparent;}

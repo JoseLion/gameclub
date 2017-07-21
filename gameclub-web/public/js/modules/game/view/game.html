@@ -116,7 +116,7 @@
                                             <stars ng-model="cross.publicUserObj.rating" ng-if="cross.publicUserObj.rating > 0"></stars>
                                             <span ng-if="cross.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span>
                                         </td>
-                                        <td class="game-status">{{cross.integrity}}/10</td>
+                                        <td class="game-status">{{cross.integrity.name}}</td>
                                         <td><button class="btn btn-primary small dark" ng-click="openLoanView(cross)">{{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}</button></td>
                                     </tr>
                                 </tbody>

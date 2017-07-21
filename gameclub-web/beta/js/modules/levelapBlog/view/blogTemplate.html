@@ -43,8 +43,8 @@
             <article ng-repeat="article in importantBlogs">
                 <div>
                     <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <image width="100" height="100" xlink:href ng-href="{{diamondBorderImg}}" ng-style="getClipPath('border')"></image>
-                        <image width="100" height="100" xlink:href archive="article.diamond" ng-style="getClipPath('diamond')">
+                        <image width="100" height="100" xlink:href ng-href="{{diamondBorderImg}}" ng-style="getClipPath('border')" style="cursor: pointer;" ng-click="goToDetails(article)"></image>
+                        <image width="100" height="100" xlink:href archive="article.diamond" ng-style="getClipPath('diamond')" style="cursor: pointer;" ng-click="goToDetails(article)">
                     </svg>
 
                     <!-- <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">

@@ -126,11 +126,14 @@
                     <label class="form-cell">Estado del juego</label>
                     <div class="form-cell">
                         <ui-select validation ng-model="myGame.integrity" theme="bootstrap" class="selector integrity" required>
-                            <ui-select-match placeholder="...">{{$select.selected}}/10</ui-select-match>
-                            <ui-select-choices repeat="item in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] | filter: $select.search">
-                                <div ng-bind-html="item | highlight: $select.search"></div>
+                            <ui-select-match placeholder="Seleccionar...">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item in integrity | filter: $select.search">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
+                    </div>
+                    <div class="form-cell integrity-text">
+                        <span>{{myGame.integrity.other}}</span>
                     </div>
                     <div class="clearfix"></div>
                 </div>

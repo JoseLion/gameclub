@@ -29,6 +29,12 @@ angular.module('MyGames').config(function($stateProvider) {
 
 			consoleSelected: function($stateParams) {
 				return $stateParams.consoleSelected;
+			},
+
+			integrity: function(rest) {
+				return rest("catalog/findChildrenOf/:code", true).get({code: 'ITG'}, function(data) {
+					return data;
+				});
 			}
 		}
 	});

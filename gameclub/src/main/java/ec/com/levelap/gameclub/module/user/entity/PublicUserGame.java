@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
+import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.utils.Const;
@@ -38,8 +39,9 @@ public class PublicUserGame extends BaseEntity {
 	@JoinColumn(name="console", foreignKey=@ForeignKey(name="console_fk"))
 	private Console console;
 	
-	@Column(columnDefinition="INTEGER DEFAULT 0")
-	private Integer integrity = 0;
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="integrity", foreignKey=@ForeignKey(name="integrity_catalog_fk"))
+	private Catalog integrity;
 	
 	@Column(columnDefinition="VARCHAR")
 	private String observations;
@@ -74,11 +76,11 @@ public class PublicUserGame extends BaseEntity {
 		this.console = console;
 	}
 
-	public Integer getIntegrity() {
+	public Catalog getIntegrity() {
 		return integrity;
 	}
 
-	public void setIntegrity(Integer integrity) {
+	public void setIntegrity(Catalog integrity) {
 		this.integrity = integrity;
 	}
 

@@ -6,7 +6,7 @@
 	$id_blog = $_GET["id"];
 	$meta_tags = $blog_call_rest->find_one_blog_meta_tags($id_blog);
 	$files_url_base = Util::read_property("files.url");
-	$image_url = $files_url_base . "/" .$meta_tags['banner']->module . "/" .$meta_tags['banner']->name;
+	$image_url = $files_url_base . "/" .$meta_tags['banner']->module . "/" .rawurlencode($meta_tags['banner']->name);
 ?>
 <!DOCTYPE html>
 <html>

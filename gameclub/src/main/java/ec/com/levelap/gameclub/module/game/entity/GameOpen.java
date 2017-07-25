@@ -12,6 +12,8 @@ public interface GameOpen {
 	
 	public Archive getCover();
 	
+	public Integer getRating();
+	
 	public Catalog getContentRating();
 	
 	public List<GameConsole> getConsoles();

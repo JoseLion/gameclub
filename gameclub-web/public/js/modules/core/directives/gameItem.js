@@ -7,6 +7,7 @@ angular.module('Core').directive('gameItem', function($state, friendlyUrl) {
             ngModel: '=',
             console: '=?',
             showCoins: '=?',
+            coins: '=?',
             inverse: '=?',
             isEditable: '=?',
             onEdit: '&?'

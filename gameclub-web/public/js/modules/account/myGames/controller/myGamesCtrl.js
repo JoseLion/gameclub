@@ -1,10 +1,14 @@
-angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, game, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, consoleSelected, Const) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, game, consoleSelected, integrity, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const) {
     $scope.myGame = {};
     $scope.filter = {};
     $scope.search = {};
 
     gamesList.$promise.then(function(data) {
         setPagedData(data);
+    });
+
+    integrity.$promise.then(function(data) {
+        $scope.integrity = data;
     });
 
     if (game != null) {

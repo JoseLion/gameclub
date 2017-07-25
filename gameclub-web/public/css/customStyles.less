@@ -41,7 +41,7 @@ form .selector span{font-size:1em;}
 form .selector .ui-select-match>span{padding:0px!important;border:none!important;}
 form .selector .ui-select-match>span .caret.pull-right{top:40%!important;right:0px!important;}
 form .selector .ui-select-match.btn-default-focus{color:@color-tertiary;background-color:transparent;border:none;outline:none;box-shadow:none;}
-form .selector .ui-select-search{font-size:1em;padding:0px;height:21px;border:none;box-shadow:none;}
+form .selector .ui-select-search{font-size:1em;padding:0px;height:21px;border:none;box-shadow:none;width:100%;}
 form .selector .glyphicon-remove{color:@color-tertiary;}
 form .selector .ui-select-match>span,form .selector .ui-select-match>span>span,form .selector .ui-select-match .ui-select-placeholder,form .selector input{background:transparent;color:@color-tertiary;border:none;box-shadow:none;}
 form .selector .ui-select-match .ui-select-match-text img.gameConsole{height:100%;position:absolute;}
@@ -905,14 +905,43 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #game section.games .loan-view .shipping div .box{cursor:pointer;position:relative;width:1.5em;height:1.5em;display:inline-block;border:3px solid @color-tertiary;margin-right:2%;color:@color-primary;}
 #game section.games .loan-view .shipping div .box.checked::after{content:"";background:url("../img/check.svg") no-repeat center center;position:absolute;left:1px;bottom:-2px;background-size:100%;width:1.5em;height:1.5em;}
 #game section.games .loan-view .shipping .checkbox-label{display: block;color:#FFFFFF;font-weight:bold;margin-left:2%;cursor:pointer;}
-#game section.games .loan-view .final-costs{margin-top:4%;font-weight:bold;}
+#game section.games .loan-view .final-costs{margin-top:4%;font-weight:bold;margin-bottom:3%;}
 #game section.games .loan-view .final-costs .left-decoration{border-left:3px solid #FFFFFF;padding:0%;}
 #game section.games .loan-view .final-costs label.big{color:#FFFFFF;font-size:2em;}
 #game section.games .loan-view .final-costs span.big-value{color:rgb(7,20,40);font-size:1.6em;text-transform:uppercase;margin-left:3%;}
 #game section.games .loan-view .final-costs span.big-value .bigger{font-size:2.7em;}
 #game section.games .loan-view .final-costs .foot-note{color:#FFFFFF;font-size:1.2em;margin-top:-2.5%;}
 
-#game section.games .loan-footer{background-color:#FFFFFF;margin-top:2%;margin-bottom:-2%;padding:1.5% 0%;}
+#game section.games .payment-view{background-color:@color-primary-alt; padding:2% 0%;display:none;}
+#game section.games .payment-view label{text-transform:uppercase;color:white;}
+#game section.games .payment-view div .box{transform: translate(0%, 7px);cursor:pointer;position:relative;width:1.5em;height:1.5em;display:inline-block;border:3px solid @color-tertiary;margin-right:2%;color:@color-primary;}
+#game section.games .payment-view div .box.checked::after{content:"";background:url("../img/check.svg") no-repeat center center;position:absolute;left:1px;bottom:-2px;background-size:100%;width:1.5em;height:1.5em;}
+#game section.games .payment-view input.card-showcase{background-color: white;padding:5px 2%;border-radius:7px;text-align:center;font-weight:bold;font-size:0.7em;width:64%}
+#game section.games .payment-view button.remove-card{margin-left:1%;transform:translate(0px, -1px);font-size:0.6em;padding-left:2%;padding-right:2%;background-color:black;width:25%;}
+#game section.games .payment-view .left-decoration{border-left:3px solid white;}
+
+#game section.games .payment-view .new-payment{padding:0;}
+#game section.games .payment-view .new-payment .name,#game section.games .payment-view .new-payment .card-number,#game section.games .payment-view .new-payment .expiry,#game section.games .payment-view .new-payment .cvc
+{border-bottom:1px solid @color-tertiary;padding:1% 10% 0;margin:1% 0;}
+#game section.games .payment-view .new-payment input::-webkit-input-placeholder{color:@color-primary-40;}
+#game section.games .payment-view .new-payment input::-moz-placeholder{color:@color-primary-40;}
+#game section.games .payment-view .new-payment input::-ms-input-placeholder{color:@color-primary-40;}
+#game section.games .payment-view .new-payment div.name,#game section.games .payment-view .new-payment div.card-number,#game section.games .payment-view .new-payment div.expiry
+{padding-right:0;}
+#game section.games .payment-view .new-payment div.name::before,#game section.games .payment-view .new-payment div.card-number::before,#game section.games .payment-view .new-payment div.expiry::before,#game section.games .payment-view .new-payment div.cvc::before
+{font-family:gameclub;position:absolute;left:0.5em;bottom:0;color:white;}
+#game section.games .payment-view .new-payment div.cvc::after{font-family:gameclub;position:absolute;right:0.5em;bottom:0;color:white;}
+#game section.games .payment-view .new-payment div.name>div{padding-right:0;}
+#game section.games .payment-view .new-payment div.name>div:first-child{padding-left:0;}
+#game section.games .payment-view .new-payment div.name::before{content:"\E019";}
+#game section.games .payment-view .new-payment div.card-number::before{content:"\E006";}
+#game section.games .payment-view .new-payment div.expiry{margin-right:1em;}
+#game section.games .payment-view .new-payment div.expiry::before{content:"\E005";}
+#game section.games .payment-view .new-payment div.cvc::before{content:"\E014";}
+#game section.games .payment-view .new-payment div.cvc::after{content:"\E011";}
+#game section.games .payment-view .new-payment button{padding:1% 12%;font-size:0.65em;margin:4% auto 1%;}
+
+#game section.games .loan-footer{background-color:#FFFFFF;margin-bottom:-2%;padding:1.5% 0%;}
 #game section.games .loan-footer button.btn-secundary{color:@color-secundary;}
 
 #maps-modal .modal-body span.dismiss{color:#FFFFFF;font-weight:bold;font-size:1.5em;position:absolute;top:0%;right:1%;}

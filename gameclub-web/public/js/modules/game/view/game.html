@@ -141,7 +141,7 @@
 
                     <div class="col-md-9">
                         <label>Estado del juego</label>
-                        <span class="value">{{loanGame.integrity}}/10</span>
+                        <span class="value">{{loanGame.integrity.name}}</span>
                     </div>
 
                     <div class="col-md-9">
@@ -183,9 +183,9 @@
                     <div class="shipping">
                         <div class="address-title">Dirección de entrega actual:</div>
 
-                        <div class="col-md-9 to-validate">
+                        <div class="col-md-9">
                             <label>Dirección</label>
-                            <input validation type="text" ng-model="loan.address" required />
+                            <input type="text" ng-model="loan.address" required />
                         </div>
 
                         <div class="col-md-9">
@@ -227,9 +227,57 @@
                 </div>
             </div>
 
+            <div class="payment-view" ng-if="loanViewOpen">
+                <div class="col-md-2"></div>
+
+                <div class="col-md-8">
+                    <div class="col-md-12 subtitle">Forma de pago</div>
+
+                    <div class="col-md-6">
+                        <div ng-if="currentUser.paymentMethods[0] != null">
+                            <label class="col-md-12">Elige tu tarjeta</label>
+                            <div class="col-md-12">
+                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[0]}" ng-click="loan.payment = currentUser.paymentMethods[0]"></div>
+                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{currentUser.paymentMethods[0].cardFinale}}" readonly>
+                                <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])">Borrar tarjeta</button>
+                            </div>
+                        </div>
+                        
+                        <div ng-if="currentUser.paymentMethods[0] == null">
+                            <label class="col-md-12">Ingresa otra forma de pago</label>
+                            <div class="col-md-12">
+                                <kushki class="new-payment"></kushki>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 left-decoration">
+                        <div ng-if="currentUser.paymentMethods[1] != null">
+                            <label class="col-md-12">Elige tu tarjeta</label>
+                            <div class="col-md-12">
+                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[1]}" ng-click="loan.payment = currentUser.paymentMethods[1]"></div>
+                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{currentUser.paymentMethods[1].cardFinale}}" readonly>
+                                <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[1])">Borrar tarjeta</button>
+                            </div>
+                        </div>
+                        
+                        <div ng-if="currentUser.paymentMethods[1] == null">
+                            <label class="col-md-12">Ingresa otra forma de pago</label>
+                            <div class="col-md-12">
+                                <kushki class="new-payment"></kushki>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2"></div>
+                <div class="clearfix"></div>
+            </div>
+
             <div class="loan-footer" ng-if="loanViewOpen">
                 <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-secundary">Continuar con soliciud de préstamo</button>
+                    <button type="button" class="btn btn-secundary" ng-click="continueRequest()" ng-if="!paymentViewOpen">Continuar con soliciud de préstamo</button>
+                    <button type="submit" class="btn btn-secundary" ng-if="paymentViewOpen">Realizar pedido de prestamo</button>
                 </div>
 
                 <div class="clearfix"></div>

@@ -67,3 +67,4 @@ priceCharting-configuration:
   
 tcc-configuration:
   key: ECTOMORROW
+  url: http://clientes.tcc.com.co/preservicios

@@ -1,4 +1,4 @@
-angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal) {
+angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif) {
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
@@ -190,8 +190,81 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         });
 
         modal.result.then(function(pos) {
-            console.log("pos: ", pos);
             $scope.loan.geoLocation = pos;
+        });
+    }
+
+    $scope.continueRequest = function() {
+        let faildValidation = false;
+
+        if ($scope.loan.weeks == null) {
+            notif.danger("Debe seleccionar el número de semanas");
+            faildValidation = true;
+        }
+
+        if ($scope.loan.address == null || $scope.loan.address == '') {
+            notif.danger("El campo 'Dirección' es obligatorio");
+            faildValidation = true;
+        }
+
+        if ($scope.loan.geoLocation == null) {
+            notif.danger("Debe proporcionar su geolocalización");
+            faildValidation = true;
+        }
+
+        if ($scope.loan.receiver == null || $scope.loan.receiver == '') {
+            notif.danger("El campo 'Persona de entrega' es obligatorio");
+            faildValidation = true;
+        }
+
+        if (!faildValidation) {
+            $scope.paymentViewOpen = true;
+            angular.element(".payment-view").toggle(250);
+        }
+    }
+
+    $scope.requestLoan = function() {
+        let faildValidation = false;
+
+        if ($scope.loan.weeks == null) {
+            notif.danger("Debe seleccionar el número de semanas");
+            faildValidation = true;
+        }
+
+        if ($scope.loan.address == null || $scope.loan.address == '') {
+            notif.danger("El campo 'Dirección' es obligatorio");
+            faildValidation = true;
+        }
+
+        if ($scope.loan.geoLocation == null) {
+            notif.danger("Debe proporcionar su geolocalización");
+            faildValidation = true;
+        }
+
+        if ($scope.loan.receiver == null || $scope.loan.receiver == '') {
+            notif.danger("El campo 'Persona de entrega' es obligatorio");
+            faildValidation = true;
+        }
+
+        if ($scope.loan.payment == null) {
+            notif.danger("Por favor seleccione una forma de pago");
+            faildValidation = true;
+        }
+
+        if (!faildValidation) {
+            console.log("TO DO: Request loan throgh messaging process");
+        }
+    }
+
+    $scope.removeCard = function(method) {
+        sweet.default("Se eliminará la forma de pago permanentemente", function() {
+            rest("publicUser/deletePaymentMethod/:subscriptionId").get({subscriptionId: method.id}, function(data) {
+                $rootScope.currentUser = data;
+                notif.success("Forma de pago eliminada con éxito");
+                sweet.close();
+            }, function(error) {
+                sweet.close();
+            });
         });
     }
 

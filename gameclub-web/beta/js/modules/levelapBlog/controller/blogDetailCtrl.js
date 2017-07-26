@@ -1,8 +1,13 @@
-angular.module('LevelapBlog').controller('BlogDetailCtrl', function($scope, article, comments, $state, $location, friendlyUrl) {
+angular.module('LevelapBlog').controller('BlogDetailCtrl', function($scope, $rootScope, article, comments, $state, $location, friendlyUrl) {
     article.$promise.then(function(data) {
         $scope.article = data;
         $scope.showInfo = true;
         $state.current.data.description = $scope.article.summary;
+
+        $rootScope.metadata = {
+            title: $scope.article.title,
+            description: $scope.article.summary
+        };
     });
 
     comments.$promise.then(function(data) {

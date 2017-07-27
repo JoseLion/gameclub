@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -39,9 +40,6 @@ public class Game extends BaseEntity {
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JoinColumn(name="content_rating", foreignKey=@ForeignKey(name="content_rating_catalog_fk"))
 	private Catalog contentRating;
-	
-	@Column(columnDefinition="INTEGER DEFAULT 0")
-	private Integer rating = 0;
 	
 	@JsonManagedReference("gameMagazine")
 	@OneToMany(mappedBy="game", fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
@@ -75,6 +73,9 @@ public class Game extends BaseEntity {
 	
 	@Column(name="price_charting_id")
 	private Long priceChartingId;
+	
+	@Transient
+	private Integer rating = 0;
 
 	public String getName() {
 		return name;
@@ -106,14 +107,6 @@ public class Game extends BaseEntity {
 
 	public void setContentRating(Catalog contentRating) {
 		this.contentRating = contentRating;
-	}
-
-	public Integer getRating() {
-		return rating;
-	}
-
-	public void setRating(Integer rating) {
-		this.rating = rating;
 	}
 
 	public List<GameMagazine> getMagazineRatings() {
@@ -186,5 +179,19 @@ public class Game extends BaseEntity {
 
 	public void setPriceChartingId(Long priceChartingId) {
 		this.priceChartingId = priceChartingId;
+	}
+
+	public Integer getRating() {
+		for (GameMagazine cross : magazineRatings) {
+			if (cross.getMagazine().getName().equals(Const.RATING_MAGAZINE)) {
+				rating = cross.getRating();
+			}
+		}
+		
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
 }

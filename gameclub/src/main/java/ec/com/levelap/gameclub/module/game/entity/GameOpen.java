@@ -2,6 +2,8 @@ package ec.com.levelap.gameclub.module.game.entity;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
 
@@ -12,6 +14,7 @@ public interface GameOpen {
 	
 	public Archive getCover();
 	
+	@Value("#{target.rating}")
 	public Integer getRating();
 	
 	public Catalog getContentRating();

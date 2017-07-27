@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.faqs.controller;
+package ec.com.levelap.gameclub.module.faq.controller;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.commons.catalog.Catalog;
-import ec.com.levelap.gameclub.module.faqs.entity.Faq;
-import ec.com.levelap.gameclub.module.faqs.service.FaqService;
+import ec.com.levelap.gameclub.module.faq.entity.Faq;
+import ec.com.levelap.gameclub.module.faq.service.FaqService;
 
 @RestController
 @RequestMapping(value="api/faq", produces=MediaType.APPLICATION_JSON_VALUE)

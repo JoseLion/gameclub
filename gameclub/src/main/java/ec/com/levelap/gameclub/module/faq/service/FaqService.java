@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.faqs.service;
+package ec.com.levelap.gameclub.module.faq.service;
 
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.service.BaseService;
-import ec.com.levelap.gameclub.module.faqs.entity.Faq;
-import ec.com.levelap.gameclub.module.faqs.repository.FaqRepo;
+import ec.com.levelap.gameclub.module.faq.entity.Faq;
+import ec.com.levelap.gameclub.module.faq.repository.FaqRepo;
 
 @Service
 public class FaqService extends BaseService<Faq> {

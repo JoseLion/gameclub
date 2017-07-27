@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.faqs.repository;
+package ec.com.levelap.gameclub.module.faq.repository;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import ec.com.levelap.commons.catalog.Catalog;
-import ec.com.levelap.gameclub.module.faqs.entity.Faq;
+import ec.com.levelap.gameclub.module.faq.entity.Faq;
 
 public interface FaqRepo extends JpaRepository<Faq, Long> {
 	@Query(	"SELECT f FROM Faq f WHERE " +

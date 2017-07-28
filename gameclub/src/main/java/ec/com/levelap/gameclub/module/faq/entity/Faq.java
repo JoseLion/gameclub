@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.faqs.entity;
+package ec.com.levelap.gameclub.module.faq.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

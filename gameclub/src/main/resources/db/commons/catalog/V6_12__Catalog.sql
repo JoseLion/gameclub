@@ -10,12 +10,17 @@ INSERT INTO commons.catalog(name, code, other, parent) VALUES
 INSERT INTO commons.catalog(name, code, other, parent) VALUES
 ('Faqs Categories', 'FAQ', NULL, NULL);
 	INSERT INTO commons.catalog(name, code, other, parent) VALUES
-	('Devolución', 'FAQDEV', '', (SELECT id FROM commons.catalog WHERE code='FAQ')),
-	('Estado', 'FAQEST', '', (SELECT id FROM commons.catalog WHERE code='FAQ')),
-	('Retiro', 'FAQRET', '', (SELECT id FROM commons.catalog WHERE code='FAQ')),
-	('Caja perdida', 'FAQCJP', '', (SELECT id FROM commons.catalog WHERE code='FAQ')),
-	('Juego Dañado', 'FAQJDN', '', (SELECT id FROM commons.catalog WHERE code='FAQ')),
-	('Perdida', 'FAQPER', '', (SELECT id FROM commons.catalog WHERE code='FAQ')),
-	('Etiqueta de seguridad', 'FAQEDS', '', (SELECT id FROM commons.catalog WHERE code='FAQ')),
-	('Extraviado', 'FAQEXT', '', (SELECT id FROM commons.catalog WHERE code='FAQ')),
-	('Nunca llegó', 'FAQNLG', '', (SELECT id FROM commons.catalog WHERE code='FAQ'));
+	('GameClub', 'FAQGMC', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Comunidad', 'FAQCOM', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Cuenta', 'FAQCNT', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Pagos', 'FAQPGS', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Juegos', 'FAQJGS', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Dueño', 'FAQDNO', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Jugador', 'FAQJGR', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Entrega y Recepción', 'FAQEYR', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Embalaje de Juegos', 'FAQEDJ', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Juego Dañado/Perdido', 'FAQJDP', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Garantías', 'FAQGRT', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Multas', 'FAQMLT', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Coins', 'FAQCNS', null, (SELECT id FROM commons.catalog WHERE code='FAQ')),
+	('Otros', 'FAQOTR', null, (SELECT id FROM commons.catalog WHERE code='FAQ'));

@@ -15,6 +15,7 @@ import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameLite;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Repository
 public interface GameRepo extends JpaRepository<Game, Long> {
@@ -49,14 +50,16 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 	@Query(	"SELECT DISTINCT " +
 				"g.id AS id, " +
 				"g.name AS name, " +
-				"g.rating AS rating, " +
+				"gm.rating AS rating, " +
 				"g.contentRating AS contentRating, " +
 				"g.cover AS cover, " +
 				"g.diamond AS diamond " +
-			"FROM Game g " +
+			"FROM Game g, GameMagazine gm " +
 				"LEFT JOIN g.consoles cn " +
 				"LEFT JOIN g.categories ct " +
+				"LEFT JOIN gm.magazine m " +
 			"WHERE " +
+				"(gm.game=g AND m.name='" + Const.RATING_MAGAZINE + "') AND " +
 				"UPPER(g.name) LIKE UPPER('%' || :name || '%') AND " +
 				"(:categoryId IS NULL OR ct.category.id=:categoryId) AND " +
 				"cn.console.id=:consoleId " +

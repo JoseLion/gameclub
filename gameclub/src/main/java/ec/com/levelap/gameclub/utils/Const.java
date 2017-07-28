@@ -29,4 +29,6 @@ public interface Const {
 	public final static long POSTGRESQL_MAX_DATE = 253402318800000L;
 	
 	public final static String PRICE_CHARTING_TOKEN = "bf03e53dcbc519e849eafba5189cc928dc139a65";
+	
+	public final static String RATING_MAGAZINE = "Metacritic";
 }

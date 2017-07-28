@@ -1,4 +1,4 @@
-angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, game, consoleSelected, integrity, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const) {
     $scope.myGame = {};
     $scope.filter = {};
     $scope.search = {};
@@ -76,6 +76,10 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, gamesList, 
                 setPagedData(data);
                 $scope.showGame = false;
                 sweet.close();
+
+                rest("publicUser/getCurrentUser").get(function(data) {
+                    $rootScope.currentUser = data;
+                });
             }, function(error) {
                 sweet.close();
             });

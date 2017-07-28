@@ -33,6 +33,13 @@ button.small,button.small:hover,button.small:visited,button.small:focus,button.s
 .row-right{margin-left:0;margin-right:0;padding-right:20%;}
 .title{font-size:2em;text-transform:uppercase;font-weight:700;}
 .cursor-pointer{cursor:pointer;}
+.no-padding{padding:unset;}
+.no-padding-h{padding-left:unset;padding-right:unset}
+.no-padding-v{padding-top:unset;padding-bottom:unset}
+.no-padding-l{padding-left:unset;}
+.no-padding-r{padding-right:unset;}
+.no-padding-t{padding-top:unset;}
+.no-padding-b{padding-bottom:unset;}
 form label::after{content:":";}
 form label.control-label{text-align:right;}
 form input,form textarea{background:transparent;border:none;outline:none;box-shadow:none;}
@@ -874,7 +881,7 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 @blog-padding-section-right-alt: 35.454545455%!important;
 
 /* BLOG FOR GAMECLUB, HOME MOST SEEN */
-#most-seen{background:@color-tertiary-alt!important;box-shadow:5px 10px 25px 5px @color-primary-30!important;padding:1% 20% 0.25em!important;}
+#most-seen{background:@color-tertiary-alt!important;box-shadow:5px 10px 25px 5px @color-primary-30!important;padding:1% 10% 0.25em!important;}
 #most-seen>h2{color:@color-primary-alt!important;font-family:@font-family-jaapokki;font-weight:400!important;}
 #most-seen>hr.subtitle,#blog hr.subtitle{width:8%!important;border-color:@color-primary-alt!important;}
 #blog h1,#blog h2{color:@color-primary-alt!important;}
@@ -903,7 +910,7 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #blog #blog-article footer .cell{padding-bottom:2em!important;}
 #blog #blog-article footer .cell.more button{color:@color-primary-65!important;}
 #blog #blog-article footer .cell.social-media a{color:@color-secundary!important;}
-#blog #navigation{padding-left:@blog-padding-left;padding-top:2em;}
+#blog #navigation{padding-top:2em;}
 #blog #navigation a,#blog #navigation span{color:@color-tertiary!important;}
 #blog #navigation .cell.pages>div>button{background:transparent!important;border-color:@color-tertiary!important;color:@color-tertiary!important;}
 #blog section.blog-panel.right .search{padding:0.5em!important;margin-bottom:1em!important;padding-right:@blog-padding-section-right;}
@@ -988,14 +995,13 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #blog .extra-info input::-moz-placeholder{color:@color-secundary;}
 #blog .extra-info input::-ms-input-placeholder{color:@color-secundary;}
 
-
 /* BETA STYLING: ERASE AFTER BETA PHASE */
 #home section.contact-us::before{background-size:125%;background-position:center top;top:0;}
 #home section.contact-us::after{content:none;}
 #home section.banner{margin-top:5%;}
 #home section.banner::before{background-size:50%;opacity:1;top:42%;}
-#home section.banner h1.title{margin-top:25px;font-size:4em;letter-spacing:20px;text-shadow:0 0 5px @color-tertiary;font-weight:400;}
-#home section.banner .description{font-size:2em;font-weight:400;letter-spacing:5px;text-shadow:0 0 10px @color-primary;}
+#home section.banner h1.title{margin-top:45px;font-size:4vw;letter-spacing:20px;text-shadow:0 0 5px @color-tertiary;font-weight:400;}
+#home section.banner .description{font-size:4vmin;font-weight:400;letter-spacing:5px;text-shadow:0 0 10px @color-primary;}
 #home section.contact-us h2.title.dark{color:@color-primary;letter-spacing:3px;margin:-0.25em 0 1em;}
 #home section.contact-us h2.title.light{letter-spacing:2px;margin:0.25em 0;}
 #home section.contact-us form.contact-form .description{display:inline-block;padding-bottom:1em;}
@@ -1039,9 +1045,9 @@ background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-p
 #home section.user-subscribed::before{background-size:125%;background-position:center top;top:0;}
 #home section.user-subscribed::after{content:none;}
 #home section.user-subscribed div.box{background:@color-primary-alt;box-shadow:5px 10px 25px 5px @color-primary-30;text-align:center;}
-#home section.user-subscribed img{height:16vw;margin-top:2.5vw;}
-#home section.user-subscribed h1{margin-top:3vw;text-transform:uppercase;font-size:1.4vw;font-weight:bold;letter-spacing:0.5vw;color:@color-primary;}
-#home section.user-subscribed h4{font-size: 1.45vw;margin-bottom: 4.3vw;}
+#home section.user-subscribed img{height:20vmax;margin-top:2.5vw;}
+#home section.user-subscribed h1{margin-top:3vw;text-transform:uppercase;font-size:3.4vw;font-weight:bold;letter-spacing:0.5vw;color:@color-primary;}
+#home section.user-subscribed h4{font-size: 3.45vw;margin-bottom: 4.3vw;}
 /*
 background:@color-primary;
 background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);
@@ -1049,3 +1055,8 @@ background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@colo
 background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
 background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
 */
+
+/** RESPONSIVE **/
+@media(max-width: 768px) {
+	#most-seen>hr.subtitle,#blog hr.subtitle{width:22%!important;}
+}

@@ -20,7 +20,7 @@
             <li ng-repeat="number in numberSelector" ng-click="yearSelected(number)">{{number}}</li>
         </ul>
     </div>
-    <div class="calendar-icon" ng-class="disableSelectors ? 'disabled' : ''" ng-click="calendarSelected()">
+    <div class="calendar-icon" ng-class="disableSelectors ? 'disabled' : ''" ng-click="calendarSelected()" style="display:none;">
         <i class="gc gc-calendar"></i>
         <table ng-if="calendarFocused">
             <col>
@@ -32,7 +32,6 @@
             <col width="2em">
             <col width="2em">
             <col>
-
             <thead>
                 <tr>
                     <th colspan="2" ng-click="changeMonth(-1)"><i class="fa fa-long-arrow-left"></i></th>

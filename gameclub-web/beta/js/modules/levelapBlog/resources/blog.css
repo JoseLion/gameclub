@@ -1,3 +1,18 @@
+/** RESPONSIVE **/
+@media(max-width: 768px) {
+	#blog .xs-panel{padding-left:unset;padding-right:unset;}
+	#blog section.blog-panel.right .search{padding-right: 2% !important;}
+	#blog section.blog-panel.right .search .search-icon{right:4% !important;top:10% !important;}
+	#blog .important > h2{text-align: center;}
+	#blog .important hr.subtitle{margin: 0 13.5% 1.5em!important;}
+	#most-seen .blog-preview .info h2{font-size:1.4em;}
+	#most-seen .blog-preview .info p{padding-top:unset !important;font-size:0.9em;margin-bottom:1%;margin-top:-10%;}
+	#most-seen .blog-preview .picture{height:90%;}
+	#blog .tags-section{margin-left:15%;}
+	#blog .extra-info{margin-left:15%;}
+	#blog .extra-info input{width:70%;}
+}
+
 /** COMMON **/
 #blog{background:#FFFFFF;}
 #blog h1,#blog h2{color:#7BCABC;font-weight:700;text-transform:uppercase;}
@@ -5,6 +20,8 @@
 #blog hr.subtitle{border-top:3px solid #7BCABC;margin:0.5em 0 0;width:10%;}
 #blog .search,#blog .important,#blog .categories,#blog .tags-section,#blog section.most-seen{background:#EEEEEE;margin-bottom:2em;padding:1em;position:relative;}
 #blog .cursor-pointer{cursor:pointer;}
+#blog .left-panel{padding-left:unset;}
+#blog .right-panel{padding-right:unset;}
 
 /** BANNER **/
 #blog section.banner{padding-top:10em;padding-bottom:5em;text-align:center;display:block;position:relative;}
@@ -32,7 +49,7 @@
 #blog .search div.no-data h2{font-size:1em;margin-left:-50%;text-transform:none;font-weight:400;font-size:1.5em;}
 
 /** IMPORTANT **/
-#blog .important article,#blog .search article{display:table;margin-bottom:2em;width:100%;}
+#blog .important article,#blog .search article{margin-bottom:2em;width:100%;}
 #blog .important article .image-preview,#blog .search article .image-preview{display:table-cell;padding-bottom:1em;padding-top:1.5em;text-align:center;vertical-align:middle;width:25%;}
 #blog .important article .image-preview>div,#blog .search article .image-preview>div{height:6em;margin:-2px auto auto;overflow:hidden;transform:rotate(45deg);width:6em;}
 #blog .important article .image-preview>div>div,#blog .search article .image-preview>div>div{transform:rotate(-45deg);}
@@ -47,11 +64,11 @@
 #blog #navigation{display:table;font-weight:700;width:100%;}
 #blog #navigation .cell{display:table-cell;text-transform:uppercase;}
 #blog #navigation .cell a[disabled]{cursor:not-allowed;text-decoration:none;}
-#blog #navigation .cell:first-child{padding-left:1em;text-align:left;width:25%;}
-#blog #navigation .cell.pages{text-align:center;width:50%;}
+#blog #navigation .cell:first-child{padding-left:1em;text-align:left;min-width:25%;}
+#blog #navigation .cell.pages{text-align:center;max-width:50%;}
 #blog #navigation .cell.pages>div{display:inline-block;}
 #blog #navigation .cell.pages>div>button{background:#FFFFFF;border:2px solid #7BCABC;border-radius:5px;color:#7BCABC;margin:auto 0.25em;outline:none;width:2em;}
-#blog #navigation .cell:last-child{padding-right:1em;text-align:right;width:25%;}
+#blog #navigation .cell:last-child{padding-right:1em;text-align:right;min-width:25%;}
 
 /** ARTICLE **/
 #blog #blog-article{background:#EEEEEE;color:#6A615A;padding:1em;margin-bottom:2em;}
@@ -61,7 +78,7 @@
 #blog #blog-article header .image-section .post-date-content{display:table-cell;text-align:center;vertical-align:middle;}
 
 #blog #blog-article header .image-section .post-date span{display:block;}
-#blog #blog-article header h1,#blog #blog-article h2{font-size:1.75em;margin:2% auto 1%;word-wrap:break-word;}
+#blog #blog-article header h1,#blog #blog-article h2{font-size:1.75em;margin:2% auto 1%;}
 #blog #blog-article header span.datetime{font-size:0.75em;font-weight:400;}
 #blog #blog-article header .tags{display:table;font-weight:700;width:100%;}
 #blog #blog-article header .tags .tags-cell{display:table-cell;padding-right:0.5em;vertical-align:middle;}
@@ -109,7 +126,7 @@
 #most-seen .blog-preview .info h2{font-size:1.6em;}
 #most-seen .blog-preview .info a{color:#7BCABC;position:relative;text-transform:uppercase;}
 #most-seen .blog-preview .info p{padding-top:1em;}
-#most-seen .blog-preview .picture{background:#FFFFFF;border-radius:5%;bottom:5%;left:57%;padding:0;position:absolute;right:0;top:0;}
+#most-seen .blog-preview .picture{background:#FFFFFF;border-radius:5%;bottom:0%;left:57%;padding:0;position:absolute;right:0;top:0;}
 #most-seen .blog-preview .picture .post-date{background:#FFFFFF;border:2px solid #7BCABC;border-radius:50%;color:#7BCABC;display:table;font-weight:700;height:5em;left:-2em;padding:0;position:absolute;text-align:center;text-transform:uppercase;top:-1em;width:5em;z-index:1;}
 #most-seen .blog-preview .picture .post-date .post-date-content{display:table-cell;text-align:center;vertical-align:middle;}
 #most-seen .blog-preview .picture .post-date span{display:block;line-height:1;}

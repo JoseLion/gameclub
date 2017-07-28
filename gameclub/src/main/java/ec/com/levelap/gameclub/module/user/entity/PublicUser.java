@@ -30,7 +30,6 @@ import ec.com.levelap.gameclub.utils.Const;
 @Table(schema = Const.SCHEMA, name = "public_user", uniqueConstraints = @UniqueConstraint(columnNames = "username", name = "public_username_uk"))
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class PublicUser extends BaseEntity {
-
 	@Column(columnDefinition="VARCHAR", nullable=false)
 	private String username;
 
@@ -100,6 +99,9 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(columnDefinition="INTEGER DEFAULT 0")
 	private Integer rating = 0;
+	
+	@Column(name="games_limit", columnDefinition="INTEGER DEFAULT 5")
+	private Integer gamesLimit = 5;
 
 	@Transient
 	private Integer numberOfGames;
@@ -278,6 +280,14 @@ public class PublicUser extends BaseEntity {
 
 	public void setRating(Integer rating) {
 		this.rating = rating;
+	}
+
+	public Integer getGamesLimit() {
+		return gamesLimit;
+	}
+
+	public void setGamesLimit(Integer gamesLimit) {
+		this.gamesLimit = gamesLimit;
 	}
 
 	public Integer getNumberOfGames() {

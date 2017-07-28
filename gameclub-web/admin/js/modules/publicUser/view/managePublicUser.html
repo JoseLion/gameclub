@@ -84,6 +84,13 @@
 					</div>
 				</div>
 
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Límite de Juegos</label>
+					<div class="col-md-2">
+						<input validation type="number" class="form-control" ng-model="publicUser.gamesLimit" min="1" step="1" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+					</div>
+				</div>
+
 				<div class="form-group">
 					<div class="col-md-12" style="text-align: right;">
 						<button type="submit" class="btn btn-w-m btn-primary">Guardar</button>

@@ -1,4 +1,4 @@
-angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif) {
+angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert) {
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
@@ -45,7 +45,12 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
     $scope.addToLibrary = function() {
         if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100) {
-            $state.go("^.account.myGames", {game: $scope.game, consoleSelected: $scope.console.selected});
+            console.log("currentUser: ", $rootScope.currentUser);
+            if ($rootScope.currentUser.numberOfGames < $rootScope.currentUser.gamesLimit) {
+                $state.go("^.account.myGames", {game: $scope.game, consoleSelected: $scope.console.selected});
+            } else {
+                SweetAlert.swal("Lo sentimos...", "Solamente puedes subir " + $rootScope.currentUser.gamesLimit + " juegos, si deseas subir más, contactanos", "warning");
+            }
         } else {
             if (getInfoPercentage() < 100 && getIdentityPercentage() < 100) {
                 notif.danger("Primero debes completar tu información de contacto y verificar tu identidad para cargar juegos a tu perfil");

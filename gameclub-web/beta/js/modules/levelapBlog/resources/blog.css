@@ -1,6 +1,16 @@
 /** RESPONSIVE **/
 @media(max-width: 768px) {
 	#blog .xs-panel{padding-left:unset;padding-right:unset;}
+	#blog section.blog-panel.right .search{padding-right: 2% !important;}
+	#blog section.blog-panel.right .search .search-icon{right:4% !important;top:10% !important;}
+	#blog .important > h2{text-align: center;}
+	#blog .important hr.subtitle{margin: 0 13.5% 1.5em!important;}
+	#most-seen .blog-preview .info h2{font-size:1.4em;}
+	#most-seen .blog-preview .info p{padding-top:unset !important;font-size:0.9em;margin-bottom:1%;margin-top:-10%;}
+	#most-seen .blog-preview .picture{height:90%;}
+	#blog .tags-section{margin-left:15%;}
+	#blog .extra-info{margin-left:15%;}
+	#blog .extra-info input{width:70%;}
 }
 
 /** COMMON **/
@@ -39,7 +49,7 @@
 #blog .search div.no-data h2{font-size:1em;margin-left:-50%;text-transform:none;font-weight:400;font-size:1.5em;}
 
 /** IMPORTANT **/
-#blog .important article,#blog .search article{display:table;margin-bottom:2em;width:100%;}
+#blog .important article,#blog .search article{margin-bottom:2em;width:100%;}
 #blog .important article .image-preview,#blog .search article .image-preview{display:table-cell;padding-bottom:1em;padding-top:1.5em;text-align:center;vertical-align:middle;width:25%;}
 #blog .important article .image-preview>div,#blog .search article .image-preview>div{height:6em;margin:-2px auto auto;overflow:hidden;transform:rotate(45deg);width:6em;}
 #blog .important article .image-preview>div>div,#blog .search article .image-preview>div>div{transform:rotate(-45deg);}

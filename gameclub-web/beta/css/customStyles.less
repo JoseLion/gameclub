@@ -1,4 +1,4 @@
- @import url("variables.less");
+@import url("variables.less");
 
 /********** PRINCIPAL **********/
 html{background-color:@color-primary;}
@@ -1049,13 +1049,6 @@ background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-p
 #home section.user-subscribed img{height:20vmax;margin-top:2.5vw;}
 #home section.user-subscribed h1{margin-top:3vw;text-transform:uppercase;font-size:3.4vw;font-weight:bold;letter-spacing:0.5vw;color:@color-primary;}
 #home section.user-subscribed h4{font-size: 3.45vw;margin-bottom: 4.3vw;}
-/*
-background:@color-primary;
-background:linear-gradient(45deg,@color-secundary,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt,@color-primary-alt);
-background:-webkit-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
-background:-o-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
-background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
-*/
 
 /** RESPONSIVE **/
 @media(max-width: 768px) {
@@ -1063,6 +1056,7 @@ background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-p
 
 	header#main-header .shortcut-links img{width:100%;}
 	header#main-header .shortcut-links .links{padding:2.5% 0%;}
+	.navbar-nav{margin:auto;}
 	.navbar-default .navbar-toggle{border-color:transparent;}
 	.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{background-color:transparent;}
 	.navbar-default .navbar-toggle .icon-bar{background-color:white;}
@@ -1093,7 +1087,7 @@ background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-p
 	#home section.how-it-works .right-blue-box i, #home section.how-it-works .left-blue-box i{padding-right:4%;}
 	#home .how-it-works .path-left.path-4h.responsive-path-2, #home .how-it-works .path-right.path-4h.responsive-path-2{padding-top:43%;}
 	#home .how-it-works .step.second-step::before{top:-185%;right:4%;width:60%;padding-top:60%;}
-	#home section.how-it-works .left-blue-box{padding:3% 1% 3% 9.5%;font-size:1em;}
+	#home section.how-it-works .left-blue-box{padding:3% 1% 3% 6.5%;font-size:1em;}
 	#home .how-it-works .rectangle-box.third{width:3.5em;height:2.5em;margin-top:-60%;left:-95%;}
 	#home .how-it-works .path-left.path-2h.responsive-path-3, #home .how-it-works .path-right.path-2h.responsive-path-3{padding-top:5%;}
 	#home section.how-it-works .step .title{font-size:1.6em;padding:initial;}

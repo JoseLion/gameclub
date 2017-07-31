@@ -10,7 +10,7 @@ angular.module('Core').directive('dateSelector', function($filter) {
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
-			$scope.showCalendar = $scope.showCalendar != null = $scope.showCalendar : true;
+			$scope.showCalendar = $scope.showCalendar != null ? $scope.showCalendar : true;
 			$scope.dayFocused = false;
 			$scope.monthFocused = false;
 			$scope.yearFocused = false;

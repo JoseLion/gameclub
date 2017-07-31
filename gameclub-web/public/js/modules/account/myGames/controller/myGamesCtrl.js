@@ -100,7 +100,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     }
 
     $scope.goToTerms = function() {
-        $state.go("gameclub.termsConditions");
+        window.open($state.href('gameclub.termsConditions'), '_blank');
     }
 
     function setPagedData(data) {

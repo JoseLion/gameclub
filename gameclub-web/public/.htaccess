@@ -1,0 +1,9 @@
+RewriteEngine On
+
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet|Googlebot)
+RewriteRule ^gameclub/blog/detail/([0-9])/. /php/ArticleBlogMetaTags.php?id=$1 [L]
+
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.html

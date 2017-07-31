@@ -5,11 +5,12 @@ angular.module('Core').directive('dateSelector', function($filter) {
 		required: 'ngModel',
 		scope: {
 			ngModel: '=',
-			ngDisabled: '='
+			ngDisabled: '=',
+			showCalendar: '=?'
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
-
+			$scope.showCalendar = $scope.showCalendar != null = $scope.showCalendar : true;
 			$scope.dayFocused = false;
 			$scope.monthFocused = false;
 			$scope.yearFocused = false;
@@ -91,7 +92,7 @@ angular.module('Core').directive('dateSelector', function($filter) {
 				} else if(!$scope.disableSelectors && type == 2) {
 					$scope.numberSelector = [];
 					$scope.yearFocused = true;
-					for(let i=(new Date().getFullYear()) ; i>=1980 ; i--) {
+					for(let i=(new Date().getFullYear()) ; i>=1950 ; i--) {
 						$scope.numberSelector.push(i);
 					}
 				}

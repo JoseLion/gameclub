@@ -91,12 +91,12 @@ background:@color-primary-85;background:linear-gradient(@color-primary 5%,@color
 header#main-header .shortcut-links img{cursor:pointer;}
 header#main-header .shortcut-links .links{padding:1.5em 0;}
 header#main-header .shortcut-links .spacing{letter-spacing:1.5px;text-transform:lowercase;}
-header#main-header .shortcut-links .links nav>li{display:inline;border-left:1px solid @color-secundary;padding:6px 5px 6px 10px;}
-header#main-header .shortcut-links .links nav>li:first-child{border-left:none;}
-header#main-header .shortcut-links .links nav>li.account span.name{text-transform:capitalize;}
-header#main-header .shortcut-links .links nav>li.account span.last-name{text-transform:uppercase;}
-header#main-header .shortcut-links .links nav>li.account img.avatar{height:3em;}
-header#main-header .shortcut-links .links nav>li.account img.avatar{height:3em;}
+header#main-header .shortcut-links .links nav li{display:inline;border-left:1px solid @color-secundary;padding:6px 5px 6px 10px;}
+header#main-header .shortcut-links .links nav li:first-child{border-left:none;}
+header#main-header .shortcut-links .links nav li.account span.name{text-transform:capitalize;}
+header#main-header .shortcut-links .links nav li.account span.last-name{text-transform:uppercase;}
+header#main-header .shortcut-links .links nav li.account img.avatar{height:3em;}
+header#main-header .shortcut-links .links nav li.account img.avatar{height:3em;}
 header#main-header .shortcut-links .links nav button.btn{border-radius:7px;text-transform:none;padding:1% 2% 0.5%;font-size:0.6em;}
 header#main-header .shortcut-links .links nav button.btn-primary{color:@color-tertiary;border-color:transparent;}
 header#main-header .shortcut-links .links nav button.btn-primary:hover{border-color:@color-secundary;}
@@ -1059,4 +1059,7 @@ background:-moz-linear-gradient(45deg,@color-secundary,@color-secundary,@color-p
 /** RESPONSIVE **/
 @media(max-width: 768px) {
 	#most-seen>hr.subtitle,#blog hr.subtitle{width:22%!important;}
+	header#main-header .shortcut-links img{width:100%;}
+	header#main-header .shortcut-links .links{padding:3.5% 0%;}
+	header#main-header .shortcut-links .links nav{transform:scale(0.7);}
 }

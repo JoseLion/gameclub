@@ -5,12 +5,14 @@
     <div class="article-row">
         <div class="col-md-6" ng-repeat="preview in ngModel">
             <article class="blog-preview">
-                <div class="col-md-7 info">
-                    <h2 title="{{preview.title}}">{{preview.title | limitTo: 18}}{{preview.title.length > 18 ? '...' : ''}}</h2>
-                    <p>{{preview.summary | limitTo:filterSize}}{{preview.summary.length > filterSize ? '...' : ''}}</p>
+                <div class="col-md-7 col-xs-7 info">
+                    <h2 class="hidden-xs" title="{{preview.title}}">{{preview.title | limitTo: 20}}{{preview.title.length > 20 ? '...' : ''}}</h2>
+                    <h2 class="visible-xs" title="{{preview.title}}">{{preview.title | limitTo:12}}{{preview.title.length > 12 ? '...' : ''}}</h2>
+                    <p class="hidden-xs">{{preview.summary | limitTo:filterSize}}{{preview.summary.length > filterSize ? '...' : ''}}</p>
+                    <p class="visible-xs">{{preview.summary | limitTo:filterSize*0.8}}{{preview.summary.length > filterSize*0.8 ? '...' : ''}}</p>
                     <a href ng-click="goToArticle(preview)">Leer m&aacute;s</a>
                 </div>
-                <div class="col-md-5 picture">
+                <div class="col-md-5 col-xs-5 picture">
                     <div class="image-section">
                         <div class="post-date">
                             <div class="post-date-content">
@@ -22,6 +24,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="clearfix"></div>
             </article>
         </div>
     </div>

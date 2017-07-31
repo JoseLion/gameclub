@@ -1,7 +1,7 @@
 <!-- BLOG NAVITATION DIRECTIVE START -->
 <div id="navigation">
     <div class="cell">
-        <a href ng-click="previousPage()" ng-disabled="activePage == 0"><i class="fa fa-angle-left"></i> Anterior</a>
+        <a href ng-click="previousPage()" ng-disabled="activePage == 0" style="font-size: 100%"><i class="fa fa-angle-left"></i> Anterior</a>
     </div>
     <div class="cell pages">
         <div ng-repeat="page in pageList" ng-if="!hidePages">
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="cell">
-        <a href ng-click="nextPage()" ng-disabled="activePage == pages - 1">Siguiente <i class="fa fa-angle-right"></i></a>
+        <a href ng-click="nextPage()" ng-disabled="activePage == pages - 1" style="font-size: 100%">Siguiente <i class="fa fa-angle-right"></i></a>
     </div>
 </div>
 <!-- BLOG NAVITATION DIRECTIVE END -->

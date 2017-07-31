@@ -36,7 +36,8 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                         baseSrc.concat('resources/articleCommentsForm.js'),
                         baseSrc.concat('resources/articlePreview.js'),
                         baseSrc.concat('resources/mostSeen.js'),
-                        baseSrc.concat('resources/blogNavigation.js')
+                        baseSrc.concat('resources/blogNavigation.js'),
+                        baseSrc.concat('resources/svgSrc.js')
                     ]
                 }]);
             },
@@ -145,7 +146,8 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
     messages: {
         required: 'Debe completar los campos marcados con *',
         emailValidation: 'Debe ingresar un email válido'
-    }
+    },
+    imageBaseUrl: 'img/gameclub/BlogArticle/'
 }).run(function($rootScope, BlogConst) {
     $rootScope.BlogConst = BlogConst;
 });

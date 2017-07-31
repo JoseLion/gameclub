@@ -1,4 +1,4 @@
-angular.module('LevelapBlog').directive('articlePreview', function(openRest, $location, $state, friendlyUrl) {
+angular.module('LevelapBlog').directive('articlePreview', function(openRest, $location, $state, friendlyUrl, BlogConst) {
 	let baseSrc;
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
         let script = angular.element(document.getElementsByTagName("script")[i]);
@@ -18,6 +18,7 @@ angular.module('LevelapBlog').directive('articlePreview', function(openRest, $lo
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
+			$scope.BlogConst = BlogConst;
 			$scope.socialShareUrl = $location.$$absUrl;
 			$scope.socialShareUrlDomain = $location.$$protocol + "://" + $location.$$host;
 
@@ -33,12 +34,12 @@ angular.module('LevelapBlog').directive('articlePreview', function(openRest, $lo
 			});
 
 			$scope.goToDetails = function() {
-				$state.go("levelapBlog.blog.detail", {id: $scope.ngModel.id, title: $scope.ngModel.title});
+				$state.go("levelapBlog.blog.detail", {id: $scope.ngModel.id, title: friendlyUrl($scope.ngModel.title)});
 			}
 
 			$scope.getShareUrl = function() {
 				if ($scope.ngModel != null) {
-					return $location.$$absUrl.split("#")[0] + "#!/gameclub/blog/detail/" + $scope.ngModel.id + "/" + friendlyUrl($scope.ngModel.title);
+					return $location.$$protocol + "://" + $location.$$host + "/gameclub/blog/detail/" + $scope.ngModel.id + "/" + friendlyUrl($scope.ngModel.title);
 				} else {
 					return "";
 				}
@@ -46,18 +47,7 @@ angular.module('LevelapBlog').directive('articlePreview', function(openRest, $lo
 			}
 
 			$scope.shareFacebook = function() {
-				let fb = FB.ui({
-					method: 'feed',
-					name: $scope.ngModel.title,
-					link: 'http://gameclub-beta.levelaptesting.com/#!/gameclub/blog/detail/1/Fallout%204'/*,
-					redirect_uri: ($location.$$absUrl.split("#")[0] + "#!/gameclub/blog/detail/" + $scope.ngModel.id + "/" + friendlyUrl($scope.ngModel.title)),
-					picture: $scope.ngModel.banner.src,
-					caption: 'gameclub.com.ec',
-					description: $scope.ngModel.summary,
-					message: ''*/
-				});
-
-				console.log("fb: ", fb);
+				window.open("https://www.facebook.com/sharer/sharer.php?u=" + $location.$$protocol + "://" + $location.$$host + "/gameclub/blog/detail/" + $scope.ngModel.id + "/" + friendlyUrl($scope.ngModel.title), "Compartelo en Facebbok", "width=500,height=500");
 			}
 
 			if ($scope.isComplete != null) {

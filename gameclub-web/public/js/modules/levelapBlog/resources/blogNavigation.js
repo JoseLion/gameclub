@@ -3,7 +3,7 @@
  * http://www.levelapsoftware.com
  * License: MIT
  */
-angular.module('LevelapBlog').directive('blogNavigation', function() {
+angular.module('LevelapBlog').directive('blogNavigation', function($window) {
 	let baseSrc;
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
         let script = angular.element(document.getElementsByTagName("script")[i]);
@@ -65,11 +65,12 @@ angular.module('LevelapBlog').directive('blogNavigation', function() {
 				}
 			});
 			function updatePageVisible(page) {
-				if(beforeIdx != null && afterIdx != null) {
+				if (beforeIdx != null && afterIdx != null) {
 					$scope.pageList[beforeIdx].visible = false;
 					$scope.pageList[afterIdx].visible = false;
 				}
-				if($scope.activePage != 0 && $scope.activePage < ($scope.pages - 2)) {
+
+				if ($scope.activePage != 0 && $scope.activePage < ($scope.pages - 2)) {
 					beforeIdx = $scope.activePage - 1;
 					afterIdx = $scope.activePage + 1;
 					$scope.pageList[beforeIdx].visible = true;
@@ -89,6 +90,8 @@ angular.module('LevelapBlog').directive('blogNavigation', function() {
 						}
 					}
 				}
+
+				$window.scrollTo(0, 0);
 			}
 		}
 	};

@@ -45,7 +45,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
     $scope.addToLibrary = function() {
         if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100) {
-            console.log("currentUser: ", $rootScope.currentUser);
             if ($rootScope.currentUser.numberOfGames < $rootScope.currentUser.gamesLimit) {
                 $state.go("^.account.myGames", {game: $scope.game, consoleSelected: $scope.console.selected});
             } else {
@@ -85,19 +84,39 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.openLoanView = function(cross) {
-        if ($rootScope.currentUser != null) {
-            $scope.loanGame = cross;
-            $scope.loanViewOpen = true;
+        if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100) {
+            if ($rootScope.currentUser != null) {
+                $scope.loanGame = cross;
+                $scope.loanViewOpen = true;
 
-            $scope.loan = {
-                weeks: 1,
-                address: $rootScope.currentUser.billingAddress,
-                rceiver: $rootScope.currentUser.rceiver
-            };
-
+                $scope.loan = {
+                    weeks: 1,
+                    address: $rootScope.currentUser.billingAddress,
+                    rceiver: $rootScope.currentUser.rceiver
+                };
+            } else {
+                $state.go("^.login", {redirect: $location.$$absUrl});
+            }
         } else {
-            $state.go("^.login", {redirect: $location.$$absUrl});
+            if (getInfoPercentage() < 100 && getIdentityPercentage() < 100) {
+                notif.danger("Primero debes completar tu información de contacto y verificar tu identidad para solicitar juegos");
+            } else  {
+                if (getInfoPercentage() < 100 && getIdentityPercentage() >= 100) {
+                    notif.danger("Primero debes completar tu información de contacto para solicitar juegos");
+                }
+
+                if (getInfoPercentage() >= 100 && getIdentityPercentage() < 100) {
+                    notif.danger("Primero debes verificar tu identidad para solicitar juegos");
+                }
+            }
         }
+    }
+
+    $scope.closeLoanView = function() {
+        $scope.loanGame = null;
+        $scope.loanViewOpen = false;
+
+        $scope.loan = {};
     }
 
     $scope.doFilter = function(filter) {

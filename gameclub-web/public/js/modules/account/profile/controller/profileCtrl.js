@@ -56,6 +56,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                         $scope.currentUserTemp.location = $scope.currentUserTemp.location;
                     }
                     sweet.success();
+                    $scope.isEditable = false;
                     sweet.close();
                 }, function(error) {
                     sweet.close();

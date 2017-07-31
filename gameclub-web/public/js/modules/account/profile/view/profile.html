@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-md-12 to-validate">
                     <label>Fecha de nacimiento</label>
-                    <date-selector ng-model="currentUserTemp.birthDate" ng-disabled="!isEditable">
+                    <date-selector ng-model="currentUserTemp.birthDate" ng-disabled="!isEditable" show-calendar="false">
                 </div>
                 <div class="col-md-12 to-validate">
                     <label>Ocupaci&oacute;n</label>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-12 to-validate billing">
-                    <label class="col-xs-12 col-md-4">Direcci&oacute;n de factuaci&oacute;n</label>
+                    <label class="col-xs-12 col-md-4">Dirección de domicilio</label>
                     <div class="col-xs-12 col-md-12 billing-address">
                         <textarea type="address" ng-disabled="!isEditable" ng-model="currentUserTemp.billingAddress" rows="2" maxlength="150"></textarea>
                     </div>

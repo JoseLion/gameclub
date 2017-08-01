@@ -5,9 +5,10 @@
 	#blog section.blog-panel.right .search .search-icon{right:4% !important;top:10% !important;}
 	#blog .important > h2{text-align: center;}
 	#blog .important hr.subtitle{margin: 0 13.5% 1.5em!important;}
-	#most-seen .blog-preview .info h2{font-size:1.4em;}
-	#most-seen .blog-preview .info p{padding-top:0px;font-size:0.9em;margin-bottom:1%;margin-top:-10%;}
-	#most-seen .blog-preview .picture{height:90%;}
+	#most-seen > h2{margin-top:5%;}
+	#most-seen .blog-preview .info h2{font-size:1.4em;max-height:19px;}
+	#most-seen .blog-preview .info p{padding-top:unset !important;font-size:0.9em;margin-bottom:1%;}
+	#most-seen .blog-preview .picture{height:94%;}
 	#blog .tags-section{margin-left:15%;}
 	#blog .extra-info{margin-left:15%;}
 	#blog .extra-info input{width:70%;}

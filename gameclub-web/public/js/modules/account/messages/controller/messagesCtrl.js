@@ -4,7 +4,8 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, forEach) 
 	for (let i = 0; i < 30; i++) {
 		$scope.messages.push({
 			read: i == 0 ? false : true,
-			selected: false
+			selected: false,
+			isPromo: i == 0 ? true : false
 		});
 	}
 

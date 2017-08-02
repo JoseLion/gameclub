@@ -802,7 +802,10 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account #messages section.messages .inbox .list .scrollable::-webkit-scrollbar-thumb{background:white;border-radius:20px;box-shadow:inset 0 0 5px rgba(0,0,0,0.5);-webkit-box-shadow:inset 0 0 5px rgba(0,0,0,0.5);border:0.5px solid black;}
 #account #messages section.messages .inbox .list .scrollable::-webkit-scrollbar-thumb:hover{box-shadow:inset 0 0 6px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.75);}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell{cursor:pointer;background-color:white;border-top:2px solid black;display:flex;align-items:center;}
-#account #messages section.messages .inbox .list .scrollable .inbox-cell .image{padding:1%;}
+#account #messages section.messages .inbox .list .scrollable .inbox-cell .image{padding:1%;text-align:center;}
+#account #messages section.messages .inbox .list .scrollable .inbox-cell .image img.avatar{border:4px solid black;padding:5%;border-radius:50%;width:69%;}
+#account #messages section.messages .inbox .list .scrollable .inbox-cell.unread .image img.avatar{border-color:white;}
+#account #messages section.messages .inbox .list .scrollable .inbox-cell.selected .image img.avatar{border-color:white;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell .labels{color:black;font-weight:bold;font-size:1em;padding:1% 2%;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell .labels #from{color:#949495;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell .date{color:#949495;padding:2% 4% 2% 1%;text-align:right;font-weight:bold;}
@@ -813,6 +816,13 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account #messages section.messages .inbox .list .scrollable .inbox-cell.selected .labels #from{color:white;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell.selected .date{color:white;}
 #account #messages section.messages .inbox .detail{padding-left:0.5%;padding-right:unset;}
+#account #messages section.messages .inbox .detail .head{width:100%;background-color:black;text-align:left;padding:1.5% 4%;margin-bottom:1%;text-transform:uppercase;font-weight:bold;font-size:1em;}
+#account #messages section.messages .inbox .detail .canvas{width:100%;background-color:white;height:32vw;overflow-y:scroll;}
+#account #messages section.messages .inbox .detail .canvas::-webkit-scrollbar{width:10px;}
+#account #messages section.messages .inbox .detail .canvas::-webkit-scrollbar-track{background-color:black;border-radius: 20px;border-left:3px solid white;}
+#account #messages section.messages .inbox .detail .canvas::-webkit-scrollbar-thumb{background:white;border-radius:20px;box-shadow:inset 0 0 5px rgba(0,0,0,0.5);-webkit-box-shadow:inset 0 0 5px rgba(0,0,0,0.5);border:0.5px solid black;}
+#account #messages section.messages .inbox .detail .canvas::-webkit-scrollbar-thumb:hover{box-shadow:inset 0 0 6px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.75);}
+#account #messages section.messages .inbox .detail .canvas .no-content{color:#949495;font-weight:bold;font-size:1.6em;position:absolute;transform:translate(-50%,-55%);left:50%;top:50%;}
 
 /********************************/
 

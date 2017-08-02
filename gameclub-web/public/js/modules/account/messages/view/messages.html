@@ -50,7 +50,8 @@
 				<div class="scrollable">
 					<div class="inbox-cell" ng-class="{'unread': !message.read, 'selected': message.selected}" ng-repeat="message in messages" ng-click="messageSelected(message)">
 						<div class="image col-md-3">
-							<img src="img/messages/gameclub-icon.svg">
+							<img src="img/messages/gameclub-icon.svg" ng-if="message.isPromo">
+							<img class="avatar" archive="message.sender.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="!message.isPromo">
 						</div>
 
 						<div class="labels col-md-6">
@@ -70,6 +71,10 @@
 
 			<div class="detail col-md-8">
 				<div class="head">Detalle del mensaje</div>
+
+				<div class="canvas">
+					<span class="no-content">Selecciona un mensaje</span>
+				</div>
 			</div>
 
 			<div class="clearfix"></div>

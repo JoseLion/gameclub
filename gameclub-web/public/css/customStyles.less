@@ -763,6 +763,52 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account section.security button{padding:5px 0 2px;width:18em;}
 /********************************/
 
+/********** MESSAGES-PAGE **********/
+#account #messages{padding-top:9em;}
+
+#account #messages section.header{color:@color-tertiary;padding-bottom:6%;}
+#account #messages section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
+#account #messages section.header .name h1.title{font-size:1.8em;margin-bottom:0;}
+#account #messages section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
+#account #messages section.header .name .connection span{color:@color-primary-alt;}
+#account #messages section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
+#account #messages section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
+#account #messages section.header .coins::before{content:"\E008";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
+#account #messages section.header .coins span.dark{font-family:@font-family-josefinsans;color:@color-primary;font-weight:700;letter-spacing:2px;}
+#account #messages section.header .coins button>span.light{color:@color-tertiary;}
+#account #messages section.header .coins button{position:relative;padding:4px 25% 1px;border-width:1px;font-size:0.7em;}
+#account #messages section.header .coins button::before,#account #messages section.header .coins button::after{color:@color-tertiary;position:absolute;font-family:gameclub;}
+#account #messages section.header .coins button::before{content:"\E024";left:5px;}
+#account #messages section.header .coins button::after{content:"\E024";right:5px;}
+#account #messages section.header .total{margin-top:2%;padding:0;}
+#account #messages section.header .total .subtitle{font-size:1.2em;text-transform:uppercase;display:block;font-weight:700;margin-bottom:2%;position:relative;letter-spacing:1px;}
+#account #messages section.header .total::before{content:"\E008";position:absolute;top:1.2em;left:-2.5em;font-size:0.4em;font-family:gameclub;}
+#account #messages section.header .total .description{font-size:1em;text-transform:uppercase;font-weight:700;line-height:1;margin-bottom:1%;letter-spacing:1px}
+#account #messages section.header .total .description span.dark{color:@color-primary;font-size:1.5em;margin-left:4%;}
+#account #messages section.header .total .description .updated{padding:4px 3% 2px;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;text-transform:none;}
+#account #messages section.header .total .description .updated span{color:@color-primary-alt;}
+
+#account #messages section.messages{background:linear-gradient(@color-secundary 50%,@color-tertiary-alt 50%);background:-webkit-linear-gradient(@color-secundary 50%,@color-tertiary-alt 50%);padding-bottom:3%;}
+#account #messages section.messages .inbox{background-color:#2cb4bf;padding:0.75%;min-height:30vw;}
+#account #messages section.messages .inbox .list{padding-left:unset;padding-right:0.5%;}
+#account #messages section.messages .inbox .list .head{width:100%;background-color:black;text-align:center;padding:3% 0%;margin-bottom:1%;text-transform:uppercase;font-weight:bold;font-size:1em;}
+#account #messages section.messages .inbox .list .search{width:100%;background-color:white;padding:3% 6% 3% 1%;}
+#account #messages section.messages .inbox .list .search::before{content:"\f002";color:black;position:absolute;font-size:1.4em;top:9.5%;left:5%;};
+#account #messages section.messages .inbox .list .search input{width:100%;background-color:#949495;color:white;padding:2% 3% 2% 15%;border:none;font-weight:bold;font-size:0.9em;}
+#account #messages section.messages .inbox .list .search input::placeholder{color: #5a5a5a;}
+#account #messages section.messages .inbox .list .scrollable{background-color: white;height:-webkit-fill-available;overflow-y:scroll;}
+#account #messages section.messages .inbox .list .scrollable::-webkit-scrollbar{width:10px;}
+#account #messages section.messages .inbox .list .scrollable::-webkit-scrollbar-track{background-color:black;border-radius: 20px;border-left:3px solid white;}
+#account #messages section.messages .inbox .list .scrollable::-webkit-scrollbar-thumb{background:white;border-radius:20px;box-shadow:inset 0 0 5px rgba(0,0,0,0.5);-webkit-box-shadow:inset 0 0 5px rgba(0,0,0,0.5);border:0.5px solid black;}
+#account #messages section.messages .inbox .list .scrollable::-webkit-scrollbar-thumb:hover{box-shadow:inset 0 0 6px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.75);}
+#account #messages section.messages .inbox .list .scrollable .read{cursor:pointer;background-color:white;border-top:2px solid black;border-bottom:2px solid black;display:flex;align-items:center;}
+#account #messages section.messages .inbox .list .scrollable .read .image{padding:1%;}
+#account #messages section.messages .inbox .list .scrollable .read .labels{color:black;font-weight:bold;font-size:1em;padding:1% 2%;}
+#account #messages section.messages .inbox .list .scrollable .read .labels #from{color:#949495;}
+#account #messages section.messages .inbox .list .scrollable .read .date{color:#949495;padding:2% 4% 2% 1%;text-align:right;font-weight:bold;}
+
+/********************************/
+
 /********** SEARCH-PAGE **********/
 #search{color:@color-tertiary;display:block;position:relative;padding-top:9em;}
 #search::before{content:"";background:url("../img/search/complete-bg.jpg") repeat-y center top;background-size:100%;position:absolute;top:-5%;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;}

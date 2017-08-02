@@ -21,6 +21,7 @@ angular.module('GameClub', [
 	'LevelapBlog',
 	'WorkForUs',
 	'PublicProfile',
+	'Messages'
 ])
 .config(['$locationProvider' ,'$httpProvider', function($locationProvider, $httpProvider, $http) {
 	$httpProvider.defaults.withCredentials = true;

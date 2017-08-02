@@ -1,0 +1,78 @@
+<div id="messages">
+	<section class="row header">
+		<div class="col-md-4"></div>
+		<div class="col-md-8 no-padding-left no-padding-right">
+			<div class="col-md-10 name">
+				<div class="col-md-3 no-padding-left no-padding-right">
+					<img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+				</div>
+				<div class="col-md-9">
+					<h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
+					<div class="col-md-12 no-padding-left no-padding-right">
+						<div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="col-md-10 coins">
+				<div class="col-md-6 no-padding-left">
+					<span class="subtitle">Coins: <span class="dark">{{currentUser.coins}}</span> <i class="gc gc-usd-o"></i></span>
+				</div>
+				<div class="col-md-6 text-center">
+					<button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="col-md-12 total">
+				<span class="subtitle">Resumen de estatus de juegos</span>
+				<div class="col-md-8 description">
+					<span>Juegos actualmente prestados: <span class="dark">0</span></span>
+					<div class="updated">&uacute;ltima actualizaci&oacute;n: <span>01-04-2017</span></div>
+				</div>
+				<div class="col-md-8 description">
+					<span>Juegos por devolver: <span class="dark">0</span></span>
+					<div class="updated">&uacute;ltima actualizaci&oacute;n: <span>01-04-2017</span></div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</section>
+
+	<section class="row messages">
+		<div class="inbox col-md-12">
+			<div class="list col-md-4">
+				<div class="head">Mensajes</div>
+
+				<div class="search">
+					<input type="text" placeholder="Buscar en mensajes" ng-model="search">
+				</div>
+
+				<div class="scrollable">
+					<div class="read" ng-repeat="item in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]">
+						<div class="image col-md-3">
+							<img src="img/messages/gameclub-icon.svg">
+						</div>
+
+						<div class="labels col-md-6">
+							<span id="from">Game Club</span>
+							<br/>
+							<span>Coins gratis</span>
+						</div>
+
+						<div class="date col-md-3">
+							<span>Lun</span>
+						</div>
+
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="detail col-md-8">
+				sdfsdf
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+	</section>
+</div>

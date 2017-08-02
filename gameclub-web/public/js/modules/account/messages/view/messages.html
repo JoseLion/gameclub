@@ -48,7 +48,7 @@
 				</div>
 
 				<div class="scrollable">
-					<div class="read" ng-repeat="item in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]">
+					<div class="inbox-cell" ng-class="{'unread': !message.read, 'selected': message.selected}" ng-repeat="message in messages" ng-click="messageSelected(message)">
 						<div class="image col-md-3">
 							<img src="img/messages/gameclub-icon.svg">
 						</div>
@@ -69,7 +69,7 @@
 			</div>
 
 			<div class="detail col-md-8">
-				sdfsdf
+				<div class="head">Detalle del mensaje</div>
 			</div>
 
 			<div class="clearfix"></div>

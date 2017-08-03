@@ -55,13 +55,13 @@
 						</div>
 
 						<div class="labels col-md-6">
-							<span id="from">Game Club</span>
+							<span id="from">{{message.isPromo ? 'GAME CLUB' : (message.sender.name) + ' ' + (message.sender.lastname | limitTo: 1) + '.'}}</span>
 							<br/>
 							<span>Coins gratis</span>
 						</div>
 
 						<div class="date col-md-3">
-							<span>Lun</span>
+							<span>{{getMessageDate(message.creationDate)}}</span>
 						</div>
 
 						<div class="clearfix"></div>

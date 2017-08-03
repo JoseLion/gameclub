@@ -27,6 +27,7 @@ import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.kushki.repository.KushkiSubscriptionRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
+import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserController.Password;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserOpenController.ContactUs;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -52,14 +53,14 @@ public class PublicUserService extends BaseService<PublicUser> {
 	@Autowired
 	private MailService mailService;
 
-	// @Autowired
-	// private DocumentService documentService;
-
 	@Autowired
 	private KushkiSubscriptionRepo kushkiSubscriptionRepo;
 
 	@Autowired
 	private KushkiService kushkiService;
+	
+	@Autowired
+	private MessageService messageService;
 
 	public PublicUserService() {
 		super(PublicUser.class);
@@ -151,6 +152,10 @@ public class PublicUserService extends BaseService<PublicUser> {
 		PublicUser user = this.getCurrentUser();
 		myGame.setPublicUser(user);
 		publicUserGameRepo.saveAndFlush(myGame);
+		
+		if (user.getGames().size() == 1) {
+			messageService.requestWelcomeKit(user, null);
+		}
 
 		Page<PublicUserGame> gameList = publicUserGameRepo.findMyGames(user, null, new PageRequest(0, Const.TABLE_SIZE, new Sort("game.name")));
 		return gameList;

@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.message.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,17 +22,32 @@ import ec.com.levelap.gameclub.utils.Const;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Message extends BaseEntity {
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="owner", foreignKey=@ForeignKey(name="owner_public_user_fk"))
+	private PublicUser owner;
+	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JoinColumn(name="sender", foreignKey=@ForeignKey(name="sender_public_user_fk"))
 	private PublicUser sender;
 	
 	@Column(columnDefinition="VARCHAR")
 	private String subject;
 	
+	@Column(name="date", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private Date date = new Date();
+	
 	@Column(columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean read = false;
 	
 	@Column(name="is_promo", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean isPromo = false;
+
+	public PublicUser getOwner() {
+		return owner;
+	}
+
+	public void setOwner(PublicUser owner) {
+		this.owner = owner;
+	}
 
 	public PublicUser getSender() {
 		return sender;
@@ -46,6 +63,14 @@ public class Message extends BaseEntity {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public Boolean getRead() {

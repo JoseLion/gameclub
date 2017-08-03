@@ -1,12 +1,22 @@
-angular.module("Messages").controller('MessagesCtrl', function($scope, forEach, $filter) {
-	$scope.messages = [];
+angular.module("Messages").controller('MessagesCtrl', function($scope, messages, forEach, $filter, rest) {
+	let page = 0;
+	messages.$promise.then(function(data) {
+		$scope.messages = data.content;
+	});
 
-	for (let i = 0; i < 30; i++) {
-		$scope.messages.push({
-			read: i == 0 ? false : true,
-			selected: false,
-			isPromo: i == 0 ? true : false
-		});
+	$scope.getMessageDate = function(millis) {
+		let date = new Date(millis);
+		let today = new Date();
+
+		if (angular.copy(date).setHours(0, 0, 0, 0) == angular.copy(today).setHours(0, 0, 0, 0)) {
+			return $filter('date')(date, 'HH:mm');
+		}
+
+		if ($filter('date')(date, 'w') == $filter('date')(today, 'w')) {
+			return $filter('date')(date, 'EEE');
+		}
+
+		return $filter('date')(date, " d 'de' LLLL");
 	}
 
 	$scope.messageSelected = function(message) {
@@ -19,19 +29,9 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, forEach, 
 
 		message.read = true;
 		message.selected = true;
-	}
 
-	$scope.getMessageDate = function(date) {
-		let today = new Date();
-
-		if (angular.copy(date).setHours(0, 0, 0, 0) == angular.copy(today).setHours(0, 0, 0, 0)) {
-			return $filter('date')(date, 'HH:mm');
-		}
-
-		if ($filter('date')(date, 'w') == $filter('date')(today, 'w')) {
-			return $filter('date')(date, 'EEE');
-		}
-
-		return $filter('date')(date, " d 'de' LLLL");
+		rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
+			console.log("data: ", data);
+		});
 	}
 });

@@ -14,6 +14,12 @@ angular.module('Messages').config(function($stateProvider) {
 					name: 'Messages',
 					files: ['js/modules/account/messages/controller/messagesCtrl.js']
 				}]);
+			},
+
+			messages: function(rest) {
+				return rest("message/findMessages").post(function(data) {
+					return data;
+				});
 			}
 		}
 	});

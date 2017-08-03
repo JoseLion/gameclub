@@ -48,6 +48,7 @@
 				</div>
 
 				<div class="scrollable">
+					<span class="no-messages" ng-if="messages.length == 0">No tienes ningún mensaje</span>
 					<div class="inbox-cell" ng-class="{'unread': !message.read, 'selected': message.selected}" ng-repeat="message in messages" ng-click="messageSelected(message)">
 						<div class="image col-md-3">
 							<img src="img/messages/gameclub-icon.svg" ng-if="message.isPromo">
@@ -57,11 +58,11 @@
 						<div class="labels col-md-6">
 							<span id="from">{{message.isPromo ? 'GAME CLUB' : (message.sender.name) + ' ' + (message.sender.lastName | limitTo: 1) + '.'}}</span>
 							<br/>
-							<span>Coins gratis</span>
+							<span>{{message.subject}}</span>
 						</div>
 
 						<div class="date col-md-3">
-							<span>{{getMessageDate(message.creationDate)}}</span>
+							<span>{{getMessageDate(message.date)}}</span>
 						</div>
 
 						<div class="clearfix"></div>

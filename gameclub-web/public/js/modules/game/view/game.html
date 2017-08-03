@@ -111,7 +111,7 @@
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
                                         <td>{{100 | currency:'$ ':2}}</td>
                                         <td>{{cross.publicUserObj.location.name}}</td>
-                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency:'+ ':0}}</td>
+                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | number: 0}}</td>
                                         <td>
                                             <stars ng-model="cross.publicUserObj.rating" ng-if="cross.publicUserObj.rating > 0"></stars>
                                             <span ng-if="cross.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span>

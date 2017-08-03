@@ -4,7 +4,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, messages,
 		$scope.messages = data.content;
 	});
 
-	$scope.getMessageDate = function(millis) {
+	$scope.getFormattedDate = function(millis) {
 		let date = new Date(millis);
 		let today = new Date();
 
@@ -26,12 +26,24 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, messages,
 				return 'break';
 			}
 		});
-
-		message.read = true;
 		message.selected = true;
 
 		rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
-			console.log("data: ", data);
+			$scope.welcomeKits = data;
+			message.read = true;
 		});
+	}
+
+	$scope.noSelected = function() {
+		let selected = true;
+
+		forEach($scope.messages, function(msg) {
+			if (msg.selected) {
+				selected = false;
+				return 'break';
+			}
+		});
+
+		return selected;
 	}
 });

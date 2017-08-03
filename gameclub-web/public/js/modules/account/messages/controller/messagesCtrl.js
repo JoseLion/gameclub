@@ -22,16 +22,16 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, forEach, 
 	}
 
 	$scope.getMessageDate = function(date) {
-		date = new Date("08/03/2017 09:33:00");
-
 		let today = new Date();
 
 		if (angular.copy(date).setHours(0, 0, 0, 0) == angular.copy(today).setHours(0, 0, 0, 0)) {
 			return $filter('date')(date, 'HH:mm');
 		}
 
-		
+		if ($filter('date')(date, 'w') == $filter('date')(today, 'w')) {
+			return $filter('date')(date, 'EEE');
+		}
 
-		return '';
+		return $filter('date')(date, " d 'de' LLLL");
 	}
 });

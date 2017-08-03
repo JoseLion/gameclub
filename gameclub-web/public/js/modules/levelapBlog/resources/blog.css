@@ -50,7 +50,7 @@
 #blog .search div.no-data h2{font-size:1em;text-transform:none;font-weight:400;font-size:1.5em;}
 
 /** IMPORTANT **/
-#blog .important article,#blog .search article{margin-bottom:2em;width:100%;display:flex;align-items:center;}
+#blog .important article,#blog .search article{display:block;}
 #blog .important article .rhombus,#blog .search article .rhombus{padding:0% 4%;}
 #blog .important article .image-preview,#blog .search article .image-preview{display:table-cell;padding-bottom:1em;padding-top:1.5em;text-align:center;vertical-align:middle;width:25%;}
 #blog .important article .image-preview>div,#blog .search article .image-preview>div{height:6em;margin:-2px auto auto;overflow:hidden;transform:rotate(45deg);width:6em;}

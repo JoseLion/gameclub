@@ -31,7 +31,8 @@
 
                     <!-- SEARCH POST -->
                     <div class="search">
-                        <input placeholder="Buscar..." ng-model="search.value" ng-keyup="$event.keyCode == 13 && searchArticles()"/><span class="fa fa-search search-icon" ng-click="searchArticles()"></span>
+                        <input placeholder="Buscar..." ng-model="search.value" ng-keyup="$event.keyCode == 13 && searchInBlog(search.value)"/>
+                        <span class="fa fa-search search-icon" ng-click="searchInBlog(search.value)"></span>
                     </div>
 
                     <!-- SHOW IMPORTANT BLOGS -->
@@ -65,7 +66,7 @@
                                 </svg> -->
                             </div>
 
-                            <div class="col-md-8 info" ui-sref="levelapBlog.blog.detail({id:article.id, title: article.title})">
+                            <div class="col-md-8 info" ng-click="goToDetails(article)">
                                 <h2 title="{{article.title}}">{{article.title | limitTo: 18}}{{article.title.length > 18 ? '...' : ''}}</h2>
                                 <div class="description">
                                     <p>{{article.summary | limitTo:200}}{{article.summary.length > 200 ? '...' : ''}}</p>
@@ -86,7 +87,7 @@
                     <div class="tags-section" ng-if="tags.length > 0">
                         <h2>Etiquetas</h2>
                         <hr class="subtitle" />
-                        <div class="tag" ng-repeat="tag in tags" ui-sref="levelapBlog.blog.search({text:tag.text})"><span>{{tag.text}}</span></div>
+                        <div class="tag" ng-repeat="tag in tags" ng-click="searchInBlog(tag.text)"><span>{{tag.text}}</span></div>
                     </div>
 
                     <!-- HERE TO PUT EXTRA INFORMATION -->

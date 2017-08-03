@@ -14,7 +14,7 @@ public interface MessageRepo extends JpaRepository<Message, Long> {
 	@Query(	"SELECT m FROM Message m " +
 				"LEFT JOIN m.sender s " +
 			" WHERE " +
-				"(m.sender IN NOT NULL AND UPPER(s.name || ' ' || s.lastname) LIKE UPPER('%' || :text || '%')) OR " +
+				"(m.sender IS NOT NULL AND UPPER(s.name || ' ' || s.lastName) LIKE UPPER('%' || :text || '%')) OR " +
 				"UPPER(m.subject) LIKE UPPER('%' || :text || '%') OR " +
 				"(m.sender IS NULL AND UPPER('Game Club') LIKE UPPER('%' || :text || '%')) " +
 			"ORDER BY m.creationDate DESC")

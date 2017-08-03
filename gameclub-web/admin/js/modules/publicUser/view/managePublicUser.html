@@ -87,7 +87,7 @@
 				<div class="form-group to-validate">
 					<label class="col-md-3 control-label">Límite de Juegos</label>
 					<div class="col-md-2">
-						<input validation type="number" class="form-control" ng-model="publicUser.gamesLimit" min="1" step="1" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+						<input validation type="number" class="form-control" ng-model="publicUser.gamesLimit" min="1" step="1" required onkeypress="return !isNaN(String.fromCharCode(event.charCode))">
 					</div>
 				</div>
 

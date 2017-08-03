@@ -23,10 +23,6 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
         setPageMostSeen(data);
     });
 
-    $scope.searchArticles = function() {
-        $state.go('levelapBlog.blog.search', {text: $scope.search == null ? '' : $scope.search.value});
-    };
-
     $scope.$watch('currentPageMostSeen', function(newValue, oldValue) {
         if(newValue != null && newValue != oldValue) {
             openRest("levelapBlog/findArticles").post({isMostSeen: true, page: newValue}, function(data) {
@@ -57,6 +53,14 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
 
     $scope.goToDetails = function(article) {
         $state.go("levelapBlog.blog.detail", {id: article.id, title: friendlyUrl(article.title)})
+    }
+
+    $scope.searchInBlog = function(text) {
+        if (text == null) {
+            text = '';
+        }
+
+        $state.go("levelapBlog.blog.search", {text: text});
     }
 
     $scope.getClipPath = function(id) {

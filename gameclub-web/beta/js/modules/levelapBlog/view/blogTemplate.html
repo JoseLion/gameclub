@@ -55,10 +55,10 @@
 
                             <div class="col-md-8 info" ng-click="goToDetails(article)">
                                 <h2 class="hidden-xs" title="{{article.title}}">{{article.title | limitTo: 40}}{{article.title.length > 40 ? '...' : ''}}</h2>
-                                <h2 class="vissible-xs" title="{{article.title}}">{{article.title | limitTo: 18}}{{article.title.length > 18 ? '...' : ''}}</h2>
+                                <h2 class="visible-xs" title="{{article.title}}">{{article.title | limitTo: 18}}{{article.title.length > 18 ? '...' : ''}}</h2>
                                 <div class="description">
                                     <p class="hidden-xs">{{article.summary | limitTo:200}}{{article.summary.length > 200 ? '...' : ''}}</p>
-                                    <p class="vissible-xs">{{article.summary | limitTo:150}}{{article.summary.length > 150 ? '...' : ''}}</p>
+                                    <p class="visible-xs">{{article.summary | limitTo:150}}{{article.summary.length > 150 ? '...' : ''}}</p>
                                 </div>
                             </div>
                             <div class="clearfix"></div>

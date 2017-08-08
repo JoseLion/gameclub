@@ -37,6 +37,9 @@ public class WelcomeKit extends BaseEntity {
 	
 	@Column(name="was_confirmed", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean wasConfirmed = false;
+	
+	@Column(name="delivery_number", columnDefinition="VARCHAR")
+	private String deliveryNumber;
 
 	public Message getMessage() {
 		return message;
@@ -76,5 +79,13 @@ public class WelcomeKit extends BaseEntity {
 
 	public void setWasConfirmed(Boolean wasConfirmed) {
 		this.wasConfirmed = wasConfirmed;
+	}
+
+	public String getDeliveryNumber() {
+		return deliveryNumber;
+	}
+
+	public void setDeliveryNumber(String deliveryNumber) {
+		this.deliveryNumber = deliveryNumber;
 	}
 }

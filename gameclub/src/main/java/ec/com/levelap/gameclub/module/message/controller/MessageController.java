@@ -22,6 +22,7 @@ import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.tcc.entity.wsDespachos.GrabarDespacho4Response;
 
 @RestController
 @RequestMapping(value="api/message", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -46,12 +47,40 @@ public class MessageController {
 	@RequestMapping(value="getWelcomeKitMessages/{messageId}", method=RequestMethod.GET)
 	public ResponseEntity<List<WelcomeKit>> getWelcomeKitMessages(@PathVariable Long messageId) throws ServletException {
 		List<WelcomeKit> welcomeKits = messageService.getWelcomeKitRepo().findByMessageIdOrderByCreationDateDesc(messageId);
+		Message message = messageService.getMessageRepo().findOne(messageId);
+		message.setRead(true);
+		messageService.getMessageRepo().save(message);
 		return new ResponseEntity<List<WelcomeKit>>(welcomeKits, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="confirmWelcomeKit", method=RequestMethod.POST)
+	public ResponseEntity<GrabarDespacho4Response> confirmWelcomeKit(@RequestBody ConfirmObj confirmObj) throws ServletException {
+		System.out.println("ConfirmObj: " + confirmObj);
+		GrabarDespacho4Response response = messageService.confirmWelcomeKit(confirmObj);
+		return new ResponseEntity<GrabarDespacho4Response>(response, HttpStatus.OK);
 	}
 	
 	private static class Search {
 		public String text = "";
 		
 		public Integer page = 0;
+	}
+	
+	public static class ConfirmObj {
+		public Long kitId;
+		
+		public String address;
+		
+		public String phone;
+		
+		public String city;
+		
+		public String receiver;
+
+		@Override
+		public String toString() {
+			return "ConfirmObj [kitId=" + kitId + ", address=" + address + ", phone=" + phone + ", city=" + city
+					+ ", receiver=" + receiver + "]";
+		}
 	}
 }

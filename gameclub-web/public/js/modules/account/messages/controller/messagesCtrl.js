@@ -1,4 +1,4 @@
-angular.module("Messages").controller('MessagesCtrl', function($scope, messages, forEach, $filter, rest) {
+angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScope, messages, forEach, $filter, rest, geolocation, notif, sweet) {
 	let page = 0;
 	messages.$promise.then(function(data) {
 		$scope.messages = data.content;
@@ -45,5 +45,50 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, messages,
 		});
 
 		return selected;
+	}
+
+	$scope.openMap = function(obj) {
+		geolocation().result.then(function(pos) {
+			obj.geolocation = pos;
+		});
+	}
+
+	$scope.confirmWelcomeKit = function(kit) {
+		let isValid = true;
+
+		if (kit.address == null || kit.address == '') {
+			notif.danger("El campo dirrección es obligatorio");
+			isValid = false;
+		}
+
+		if (kit.phone == null || kit.phone == '') {
+			notif.danger("El campo teléfono es obligatorio");
+			isValid = false;
+		}
+
+		if (kit.receiver == null || kit.receiver == '') {
+			notif.danger("El campo persona de entrega es obligatorio");
+			isValid = false;
+		}
+
+		if (isValid) {
+			sweet.default("Se confirmará el envío de tu Welcome Kit", function() {
+				let confirmObj = {
+					kitId: kit.id,
+					address: kit.address,
+					phone: kit.phone,
+					city: $rootScope.currentUser.location.other,
+					receiver: kit.receiver
+				};
+
+				rest("message/confirmWelcomeKit").post(confirmObj, function(data) {
+					console.log("data: ", data);
+					sweet.close();
+				}, function(error) {
+					sweet.close();
+				});
+			});
+			
+		}
 	}
 });

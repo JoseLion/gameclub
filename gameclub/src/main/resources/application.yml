@@ -68,3 +68,5 @@ priceCharting-configuration:
 tcc-configuration:
   key: ECTOMORROW
   url: http://clientes.tcc.com.co/preservicios
+  account: 6019000
+  nit: 1792738865001

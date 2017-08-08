@@ -22,7 +22,7 @@ import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.tcc.entity.wsDespachos.GrabarDespacho4Response;
+import ec.com.levelap.tcc.wsdl.clientes.GrabarDespacho4Response;
 
 @RestController
 @RequestMapping(value="api/message", produces=MediaType.APPLICATION_JSON_VALUE)

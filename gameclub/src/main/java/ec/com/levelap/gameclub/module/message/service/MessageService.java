@@ -20,12 +20,12 @@ import ec.com.levelap.gameclub.module.message.repository.WelcomeKitRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.tcc.entity.wsDespachos.GrabarDespacho4;
-import ec.com.levelap.tcc.entity.wsDespachos.GrabarDespacho4Response;
-import ec.com.levelap.tcc.entity.wsDespachos.TpDocumentoReferencia;
-import ec.com.levelap.tcc.entity.wsDespachos.TpGrabarRemesaCompleta;
-import ec.com.levelap.tcc.entity.wsDespachos.TpUnidad;
 import ec.com.levelap.tcc.service.TccService;
+import ec.com.levelap.tcc.wsdl.clientes.GrabarDespacho4;
+import ec.com.levelap.tcc.wsdl.clientes.GrabarDespacho4Response;
+import ec.com.levelap.tcc.wsdl.xsd.TpDocumentoReferencia;
+import ec.com.levelap.tcc.wsdl.xsd.TpGrabarRemesaCompleta;
+import ec.com.levelap.tcc.wsdl.xsd.TpUnidad;
 
 @Service
 public class MessageService extends BaseService<Message> {
@@ -74,75 +74,84 @@ public class MessageService extends BaseService<Message> {
 	@Transactional
 	public GrabarDespacho4Response confirmWelcomeKit(ConfirmObj confirmObj) throws ServletException {
 		GrabarDespacho4 request = new GrabarDespacho4();
-		request.setRemesa("N/A");
-		request.setRespuesta(0);
-		request.setMensaje("N/A");
-		request.setURLRelacionEnvio("N/A");
-		request.setURLRotulos("N/A");
-		
 		TpGrabarRemesaCompleta delivery = new TpGrabarRemesaCompleta();
-		delivery.setClave(tccKey);
+		
+		delivery.setClave("BOGLINIO");
+		delivery.setCodigolote("");
+		delivery.setFechahoralote("");
+		delivery.setNumeroremesa("");
+		delivery.setNumeroDepacho("");
 		delivery.setUnidadnegocio("1");
-		Date today = new Date();
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		delivery.setFechadespacho(df.format(today)); // PREGUNTAR
-		delivery.setCuentaremitente(tccAccount);
-		delivery.setSederemitente("1"); // PREGUNTAR
-		delivery.setRazonsocialremitente("Tomorrowlabs"); // PREGUNTAR
+		delivery.setFechadespacho("2017-08-08");
+		delivery.setCuentaremitente("1118100");
+		delivery.setSederemitente("");
+		delivery.setPrimernombreremitente("PRUEBAS CLIENTES");
+		delivery.setSegundonombreremitente("");
+		delivery.setPrimerapellidoremitente("");
+		delivery.setSegundoapellidoremitente("");
+		delivery.setRazonsocialremitente("PRUEBAS CLIENTES");
 		delivery.setNaturalezaremitente("J");
 		delivery.setTipoidentificacionremitente("NIT");
-		delivery.setIdentificacionremitente(tccNit);
-		delivery.setTelefonoremitente("0967995408");
-		delivery.setDireccionremitente("DIRECCION GAME CLUB"); // PREGUNTAR
-		delivery.setCiudadorigen("17001050");
-		delivery.setNumeroReferenciaCliente("N/A");
-		delivery.setGenerarDocumentos(false);
+		delivery.setIdentificacionremitente("900499362");
+		delivery.setTelefonoremitente("1111111");
+		delivery.setDireccionremitente("ZONA FRANCA BODEGAS 13 Y 14");
+		delivery.setCiudadorigen("11001000");
 		
-		PublicUser currentUser = publicUserService.getCurrentUser();
-		
-		delivery.setTipoidentificaciondestinatario("N");
-		delivery.setIdentificaciondestinatario(currentUser.getDocument()); // **************** DEL OBJ **************
-		delivery.setPrimernombredestinatario(currentUser.getName()); // **************** DEL OBJ **************
-		delivery.setSegundonombredestinatario("N/A");
-		delivery.setPrimerapellidodestinatario(currentUser.getLastName()); // **************** DEL OBJ **************
-		delivery.setSegundoapellidodestinatario("N/A");
-		delivery.setRazonsocialdestinatario(currentUser.getName() + " " + currentUser.getLastName()); // **************** DEL OBJ **************
+		delivery.setTipoidentificaciondestinatario("CC");
+		delivery.setIdentificaciondestinatario("80186994");
+		delivery.setSededestinatario("");
+		delivery.setPrimernombredestinatario("HECTOR");
+		delivery.setSegundonombredestinatario("");
+		delivery.setPrimerapellidodestinatario("CANO");
+		delivery.setSegundoapellidodestinatario("");
+		delivery.setRazonsocialdestinatario("");
 		delivery.setNaturalezadestinatario("N");
-		delivery.setDirecciondestinatario(confirmObj.address); // **************** DEL OBJ **************
-		delivery.setTelefonodestinatario(confirmObj.phone); // **************** DEL OBJ **************
-		delivery.setCiudaddestinatario(confirmObj.city); // **************** DEL OBJ **************
-		delivery.setObservaciones("El paquede debe ser entregado a " + confirmObj.receiver);
+		delivery.setDirecciondestinatario("carrera 112A # 79 B-07");
+		delivery.setTelefonodestinatario("3104835685");
+		delivery.setCiudaddestinatario("11001000");
+		delivery.setBarriodestinatario("");
 		
-		delivery.setLlevabodega("NO"); // PREGUNTAR
-		delivery.setRecogebodega("NO"); // PREGUNTAR
+		delivery.setTotalpeso("");
+		delivery.setTotalpesovolumen("");
+		delivery.setTotalvalormercancia("");
+		delivery.setFormapago("");
+		delivery.setObservaciones("PEDIDO BP 18664");
+		delivery.setLlevabodega("");
+		delivery.setRecogebodega("");
+		delivery.setCentrocostos("");
+		delivery.setTotalvalorproducto("");
 		
 		TpUnidad unit = new TpUnidad();
 		unit.setTipounidad("TIPO_UND_PAQ");
-		unit.setClaseempaque("CLEM_CAJA"); // PREGUNTAR
-		unit.setTipoempaque("N/A"); //PREGUNTAR
-		unit.setDicecontener("Game Club Welcome Kit"); // PREGUNTAR
+		unit.setTipoempaque("");
+		unit.setClaseempaque("CLEM_CAJA");
+		unit.setDicecontener("");
 		unit.setCantidadunidades("1");
-		unit.setKilosreales("0.5"); // PREGUNTAR
-		unit.setLargo("20"); // PREGUNTAR
-		unit.setAlto("20"); // PREGUNTAR
-		unit.setAncho("20"); // PREGUNTAR
-		unit.setCodigobarras("N/A"); // PREGUNTAR
-		unit.setNumerobolsa("N/A"); // PREGUNTAR
-		unit.setReferencias("N/A"); // PREGUNTAR
-		unit.setUnidadesinternas("N/A"); // PREGUNTAR
+		unit.setKilosreales("3");
+		unit.setLargo("0");
+		unit.setAlto("0");
+		unit.setAncho("0");
+		unit.setPesovolumen("3");
+		unit.setValormercancia("63900");
+		unit.setCodigobarras("");
+		unit.setNumerobolsa("");
+		unit.setReferencias("");
 		
 		delivery.getUnidad().add(unit);
-		/*TpDocumentoReferencia doc = new TpDocumentoReferencia();
-		doc.setNumerodocumento("N/A");
-		delivery.getDocumentoreferencia().add(doc); // PREGUNTAR*/
+		delivery.setNumeroReferenciaCliente("");
+		delivery.setFuente("");
+		delivery.setGenerarDocumentos(false);
 		
 		request.setObjDespacho(delivery);
+		request.setRemesa("0");
+		request.setRespuesta(0);
+		request.setMensaje("0");
 		GrabarDespacho4Response response = tccService.saveDelivery(request);
 		
-		WelcomeKit welcomeKit = welcomeKitRepo.findOne(confirmObj.kitId);
+		/*WelcomeKit welcomeKit = welcomeKitRepo.findOne(confirmObj.kitId);
 		welcomeKit.setWasConfirmed(true);
 		welcomeKit.setDeliveryNumber(response.getRemesa());
-		welcomeKitRepo.save(welcomeKit);
+		welcomeKitRepo.save(welcomeKit);*/
 		
 		return response;
 	}

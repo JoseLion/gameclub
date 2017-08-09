@@ -23,7 +23,6 @@ import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.tcc.service.TccService;
 import ec.com.levelap.tcc.wsdl.clientes.GrabarDespacho4;
 import ec.com.levelap.tcc.wsdl.clientes.GrabarDespacho4Response;
-import ec.com.levelap.tcc.wsdl.xsd.TpDocumentoReferencia;
 import ec.com.levelap.tcc.wsdl.xsd.TpGrabarRemesaCompleta;
 import ec.com.levelap.tcc.wsdl.xsd.TpUnidad;
 
@@ -75,83 +74,54 @@ public class MessageService extends BaseService<Message> {
 	public GrabarDespacho4Response confirmWelcomeKit(ConfirmObj confirmObj) throws ServletException {
 		GrabarDespacho4 request = new GrabarDespacho4();
 		TpGrabarRemesaCompleta delivery = new TpGrabarRemesaCompleta();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		PublicUser currentUser = publicUserService.getCurrentUser();
 		
-		delivery.setClave("BOGLINIO");
-		delivery.setCodigolote("");
-		delivery.setFechahoralote("");
-		delivery.setNumeroremesa("");
-		delivery.setNumeroDepacho("");
+		delivery.setClave(tccKey);
 		delivery.setUnidadnegocio("1");
-		delivery.setFechadespacho("2017-08-08");
-		delivery.setCuentaremitente("1118100");
-		delivery.setSederemitente("");
-		delivery.setPrimernombreremitente("PRUEBAS CLIENTES");
-		delivery.setSegundonombreremitente("");
-		delivery.setPrimerapellidoremitente("");
-		delivery.setSegundoapellidoremitente("");
-		delivery.setRazonsocialremitente("PRUEBAS CLIENTES");
+		delivery.setFechadespacho(df.format(new Date()));
+		delivery.setCuentaremitente(tccAccount);
+		delivery.setRazonsocialremitente("Tomorrowlabs"); //PREGUNTAR
 		delivery.setNaturalezaremitente("J");
 		delivery.setTipoidentificacionremitente("NIT");
-		delivery.setIdentificacionremitente("900499362");
-		delivery.setTelefonoremitente("1111111");
-		delivery.setDireccionremitente("ZONA FRANCA BODEGAS 13 Y 14");
-		delivery.setCiudadorigen("11001000");
+		delivery.setIdentificacionremitente(tccNit);
+		delivery.setTelefonoremitente("0967995408"); //PREGUNTAR
+		delivery.setDireccionremitente("Tomorrowlabs EC - Cumbaya"); //PREGUNTAR
+		delivery.setCiudadorigen("17001057"); //PREGUNTAR
 		
 		delivery.setTipoidentificaciondestinatario("CC");
-		delivery.setIdentificaciondestinatario("80186994");
-		delivery.setSededestinatario("");
-		delivery.setPrimernombredestinatario("HECTOR");
+		delivery.setIdentificaciondestinatario(currentUser.getDocument());
+		delivery.setPrimernombredestinatario(currentUser.getName());
 		delivery.setSegundonombredestinatario("");
-		delivery.setPrimerapellidodestinatario("CANO");
+		delivery.setPrimerapellidodestinatario(currentUser.getLastName());
 		delivery.setSegundoapellidodestinatario("");
 		delivery.setRazonsocialdestinatario("");
 		delivery.setNaturalezadestinatario("N");
-		delivery.setDirecciondestinatario("carrera 112A # 79 B-07");
-		delivery.setTelefonodestinatario("3104835685");
-		delivery.setCiudaddestinatario("11001000");
-		delivery.setBarriodestinatario("");
-		
-		delivery.setTotalpeso("");
-		delivery.setTotalpesovolumen("");
-		delivery.setTotalvalormercancia("");
-		delivery.setFormapago("");
-		delivery.setObservaciones("PEDIDO BP 18664");
-		delivery.setLlevabodega("");
-		delivery.setRecogebodega("");
-		delivery.setCentrocostos("");
-		delivery.setTotalvalorproducto("");
+		delivery.setDirecciondestinatario(confirmObj.address);
+		delivery.setTelefonodestinatario(confirmObj.phone);
+		delivery.setCiudaddestinatario(confirmObj.city);
+		delivery.setObservaciones("Entregar a " + confirmObj.receiver);
 		
 		TpUnidad unit = new TpUnidad();
 		unit.setTipounidad("TIPO_UND_PAQ");
-		unit.setTipoempaque("");
 		unit.setClaseempaque("CLEM_CAJA");
-		unit.setDicecontener("");
 		unit.setCantidadunidades("1");
-		unit.setKilosreales("3");
-		unit.setLargo("0");
-		unit.setAlto("0");
-		unit.setAncho("0");
-		unit.setPesovolumen("3");
-		unit.setValormercancia("63900");
-		unit.setCodigobarras("");
-		unit.setNumerobolsa("");
-		unit.setReferencias("");
+		unit.setKilosreales("1"); //PREGUNTAR
+		unit.setPesovolumen("1"); //PREGUNTAR
+		unit.setValormercancia("20"); //PREGUNTAR
 		
 		delivery.getUnidad().add(unit);
-		delivery.setNumeroReferenciaCliente("");
-		delivery.setFuente("");
 		delivery.setGenerarDocumentos(false);
 		
 		request.setObjDespacho(delivery);
-		request.setRemesa("0");
-		request.setRespuesta(0);
-		request.setMensaje("0");
 		GrabarDespacho4Response response = tccService.saveDelivery(request);
 		
-		/*WelcomeKit welcomeKit = welcomeKitRepo.findOne(confirmObj.kitId);
-		welcomeKit.setWasConfirmed(true);
-		welcomeKit.setDeliveryNumber(response.getRemesa());
-		welcomeKitRepo.save(welcomeKit);*/
+		if (response.getRespuesta() == 0) {
+			WelcomeKit welcomeKit = welcomeKitRepo.findOne(confirmObj.kitId);
+			welcomeKit.setWasConfirmed(true);
+			welcomeKit.setDeliveryNumber(response.getRemesa());
+			welcomeKitRepo.save(welcomeKit);
+		}
 		
 		return response;
 	}

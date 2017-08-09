@@ -20,18 +20,21 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	}
 
 	$scope.messageSelected = function(message) {
-		forEach($scope.messages, function(msg) {
-			if (msg.selected) {
-				msg.selected = false;
-				return 'break';
-			}
-		});
-		message.selected = true;
+		if (!message.selected) {
+			forEach($scope.messages, function(msg) {
+				if (msg.selected) {
+					msg.selected = false;
+					return 'break';
+				}
+			});
+			message.selected = true;
 
-		rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
-			$scope.welcomeKits = data;
-			message.read = true;
-		});
+			rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
+				console.log("data: ", data);
+				$scope.welcomeKits = data;
+				message.read = true;
+			});
+		}
 	}
 
 	$scope.noSelected = function() {
@@ -85,6 +88,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					console.log("data: ", data);
 					sweet.close();
 				}, function(error) {
+					notif.danger("Error en servicio de TCC: " + error.data.message);
 					sweet.close();
 				});
 			});

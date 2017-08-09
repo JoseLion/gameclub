@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.entity.WelcomeKit;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
@@ -54,10 +55,14 @@ public class MessageController {
 	}
 	
 	@RequestMapping(value="confirmWelcomeKit", method=RequestMethod.POST)
-	public ResponseEntity<GrabarDespacho4Response> confirmWelcomeKit(@RequestBody ConfirmObj confirmObj) throws ServletException {
-		System.out.println("ConfirmObj: " + confirmObj);
+	public ResponseEntity<?> confirmWelcomeKit(@RequestBody ConfirmObj confirmObj) throws ServletException {
 		GrabarDespacho4Response response = messageService.confirmWelcomeKit(confirmObj);
-		return new ResponseEntity<GrabarDespacho4Response>(response, HttpStatus.OK);
+		
+		if (response.getRespuesta() == 0) {
+			return new ResponseEntity<GrabarDespacho4Response>(response, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ErrorControl>(new ErrorControl(response.getMensaje(), true), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	private static class Search {

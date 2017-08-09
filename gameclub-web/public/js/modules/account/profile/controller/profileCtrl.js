@@ -77,7 +77,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         }
         if(isValid) {
             sweet.save(function() {
-                rest('publicUser/changeMail').post({oldUsername: $rootScope.currentUser.username, newUsername: $scope.newUsername, baseUrl: $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2)}, function(data) {
+                rest('publicUser/changeMail').post({oldUsername: $rootScope.currentUser.username, newUsername: $scope.newUsername, baseUrl: $location.$$protocol + "://" + $location.$$host}, function(data) {
                     $rootScope.currentUser = data;
                     $scope.currentUserTemp = data;
                     sweet.success();

@@ -32,7 +32,11 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
 				console.log("data: ", data);
 				$scope.welcomeKits = data;
-				message.read = true;
+				
+				if (!message.read) {
+					message.read = true;
+					$rootScope.currentUser.unreadMessages--;
+				}
 			});
 		}
 	}
@@ -84,7 +88,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					receiver: kit.receiver
 				};
 
-				rest("message/confirmWelcomeKit").post(confirmObj, function(data) {
+				rest("welcomeKit/confirmWelcomeKit").post(confirmObj, function(data) {
 					console.log("data: ", data);
 					sweet.close();
 				}, function(error) {

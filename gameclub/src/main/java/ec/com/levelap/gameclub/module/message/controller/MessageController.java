@@ -16,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.gameclub.module.message.entity.Message;
-import ec.com.levelap.gameclub.module.message.entity.WelcomeKit;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
+import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.tcc.wsdl.clientes.GrabarDespacho4Response;
 
 @RestController
 @RequestMapping(value="api/message", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -54,38 +52,9 @@ public class MessageController {
 		return new ResponseEntity<List<WelcomeKit>>(welcomeKits, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="confirmWelcomeKit", method=RequestMethod.POST)
-	public ResponseEntity<?> confirmWelcomeKit(@RequestBody ConfirmObj confirmObj) throws ServletException {
-		GrabarDespacho4Response response = messageService.confirmWelcomeKit(confirmObj);
-		
-		if (response.getRespuesta() == 0) {
-			return new ResponseEntity<GrabarDespacho4Response>(response, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<ErrorControl>(new ErrorControl(response.getMensaje(), true), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
 	private static class Search {
 		public String text = "";
 		
 		public Integer page = 0;
-	}
-	
-	public static class ConfirmObj {
-		public Long kitId;
-		
-		public String address;
-		
-		public String phone;
-		
-		public String city;
-		
-		public String receiver;
-
-		@Override
-		public String toString() {
-			return "ConfirmObj [kitId=" + kitId + ", address=" + address + ", phone=" + phone + ", city=" + city
-					+ ", receiver=" + receiver + "]";
-		}
 	}
 }

@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.message.entity;
+package ec.com.levelap.gameclub.module.welcomeKit.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +14,8 @@ import org.postgresql.geometric.PGpoint;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
+import ec.com.levelap.commons.catalog.Catalog;
+import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -32,8 +34,9 @@ public class WelcomeKit extends BaseEntity {
 	@Column(name="geolocation")
 	private PGpoint geolocation;
 	
-	@Column(name="shipping_status", columnDefinition="VARCHAR")
-	private String shippingStatus;
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="shipping_status", foreignKey=@ForeignKey(name="shipping_status_catalog_fk"))
+	private Catalog shippingStatus;
 	
 	@Column(name="was_confirmed", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean wasConfirmed = false;
@@ -65,11 +68,11 @@ public class WelcomeKit extends BaseEntity {
 		this.geolocation = geolocation;
 	}
 
-	public String getShippingStatus() {
+	public Catalog getShippingStatus() {
 		return shippingStatus;
 	}
 
-	public void setShippingStatus(String shippingStatus) {
+	public void setShippingStatus(Catalog shippingStatus) {
 		this.shippingStatus = shippingStatus;
 	}
 

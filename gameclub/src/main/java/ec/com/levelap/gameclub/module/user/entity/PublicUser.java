@@ -24,6 +24,7 @@ import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.location.Location;
 import ec.com.levelap.gameclub.module.avatar.entity.Avatar;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
+import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
@@ -102,9 +103,16 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(name="games_limit", columnDefinition="INTEGER DEFAULT 5")
 	private Integer gamesLimit = 5;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="owner", fetch=FetchType.LAZY)
+	private List<Message> messages = new ArrayList<>();
 
 	@Transient
 	private Integer numberOfGames;
+	
+	@Transient
+	private Integer unreadMessages = 0;
 
 	public String getUsername() {
 		return username;
@@ -296,5 +304,29 @@ public class PublicUser extends BaseEntity {
 
 	public void setNumberOfGames(Integer numberOfGames) {
 		this.numberOfGames = numberOfGames;
+	}
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+
+	public Integer getUnreadMessages() {
+		unreadMessages = 0;
+		
+		for (Message message : messages) {
+			if (!message.getRead()) {
+				unreadMessages++;
+			}
+		}
+		
+		return unreadMessages;
+	}
+
+	public void setUnreadMessages(Integer unreadMessages) {
+		this.unreadMessages = unreadMessages;
 	}
 }

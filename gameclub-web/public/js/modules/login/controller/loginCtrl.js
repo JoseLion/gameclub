@@ -26,7 +26,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 					if ($scope.user.terms) {
 						$scope.isSaving = true;
 						let signObj = {
-							baseUrl: $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2),
+							baseUrl: $location.$$protocol + "://" + $location.$$host,
 							publicUser: user
 						};
 
@@ -202,7 +202,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 
 	function signIn(user) {
 		let signObj = {
-			baseUrl: $location.$$absUrl.substring(0, $location.$$absUrl.indexOf("#!") + 2),
+			baseUrl: $location.$$protocol + "://" + $location.$$host,
 			publicUser: user
 		};
 

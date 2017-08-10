@@ -1,4 +1,4 @@
-angular.module("WelcomeKit").controller('ViewWelcomeKitsCtrl', function($scope, welcomeKits, shippingCatalog, locations, getDTOptions, Const, rest) {
+angular.module("WelcomeKit").controller('ViewWelcomeKitsCtrl', function($scope, welcomeKits, shippingCatalog, locations, getDTOptions, Const, rest, $uibModal) {
 	$scope.search = {};
 	$scope.totalElements;
 	$scope.beginning;
@@ -36,6 +36,29 @@ angular.module("WelcomeKit").controller('ViewWelcomeKitsCtrl', function($scope, 
 	$scope.pageChanged = function() {
 		$scope.search.page = $scope.currentPage - 1;
 		$scope.find();
+	}
+
+	$scope.viewWelcomeKit = function(kit) {
+		$uibModal.open({
+			size: 'md',
+			backdrop: true,
+			templateUrl: "js/modules/welcomeKit/view/detailsWelcomeKit.html",
+			controller: "DetailsWelcomeKitCtrl",
+			resolve: {
+				loadPlugin: function($ocLazyLoad) {
+					return $ocLazyLoad.load([{
+						name: 'WelcomeKit',
+						files: ['js/modules/welcomeKit/controller/detailsWelcomeKitCtrl.js']
+					}]);
+				},
+
+				kit: function(rest) {
+					return rest("welcomeKit/findOne/:id").get({id: kit.id}, function(data) {
+						return data;
+					});
+				}
+			}
+		});
 	}
 
 	$scope.$watch("search.province", function(newValue, oldValue) {

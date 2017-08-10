@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.location.Location;
+import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKitLite;
 import ec.com.levelap.gameclub.module.welcomeKit.service.WelcomeKitService;
 import ec.com.levelap.gameclub.utils.Const;
@@ -37,6 +39,12 @@ public class WelcomeKitController {
 		
 		Page<WelcomeKitLite> welcomeKits = welcomeKitService.getWelcomeKitRepo().findWelcomeKits(search.name, search.startDate, search.endDate, search.province, search.city, search.wasConfirmed, search.shippingStatus, new PageRequest(search.page, Const.TABLE_SIZE));
 		return new ResponseEntity<Page<WelcomeKitLite>>(welcomeKits, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="findOne/{id}", method=RequestMethod.GET)
+	public ResponseEntity<WelcomeKit> findOne(@PathVariable Long id) throws ServletException {
+		WelcomeKit kit = welcomeKitService.getWelcomeKitRepo().findOne(id);
+		return new ResponseEntity<WelcomeKit>(kit, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="confirmWelcomeKit", method=RequestMethod.POST)

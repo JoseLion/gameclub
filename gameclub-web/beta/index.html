@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html ng-app="GameClub">
+<html ng-app="GameClub" amp>
 <head>
-    <title ng-bind="MetaTags.title">Game Club</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title ng-bind="MetaTags.title">Game Club</title>
     <meta name="description" content="{{MetaTags.description}}">
 	<meta name="keywords" content="{{MetaTags.keywords}}">
     <meta name="prerender-status-code" content="{{MetaTags.prerender.statusCode}}">
@@ -15,9 +15,19 @@
     <meta property="og:description" content="">
     <meta property="og:image" content="">
     <meta property="fb:app_id" content="1819533121697152">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <style amp-boilerplate>
+        body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+    </style>
+    <noscript>
+        <style amp-boilerplate>
+            body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
+        </style>
+    </noscript>
 
     <base href="/">
 
+    <link rel="canonical" href="#">
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">

@@ -103,6 +103,16 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                 'og:title': function(article) {
                     return article.title;
                 }
+            },
+
+            prerender: {
+                statusCode: function(article) {
+                    return article != null ? 200 : 302;
+                },
+
+                header: function(article, friendlyUrl, $location) {
+                    return article != null ? null : 'Location: ' + $location.$$protocol + "://" + $location.$$host + "/gameclub/blog/detail/" + article.id + "/" + friendlyUrl(article.title);
+                }
             }
         },
         controller: 'BlogDetailCtrl',

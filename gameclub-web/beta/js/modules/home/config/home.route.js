@@ -9,7 +9,7 @@ angular.module('Home').config(function($stateProvider) {
 			anchor: null
 		},
 		templateUrl: 'js/modules/home/view/home.html',
-		data: {displayName: 'GameClub', description: null, keywords: ''},
+		data: {displayName: 'GameClub', title: 'Home', description: "", keywords: ""},
 		controller: 'HomeCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {

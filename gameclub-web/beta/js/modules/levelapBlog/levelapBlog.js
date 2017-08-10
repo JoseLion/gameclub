@@ -66,7 +66,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
     .state(prefix + 'blog.home', {
         url: '/home',
         templateUrl: baseSrc.concat('view/blogHome.html'),
-        data: {displayName: 'Blog', description: '', keywords: ''},
+        data: {displayName: 'Blog', title: "Blog", description: '', keywords: ''},
         controller: 'BlogHomeCtrl',
         resolve: {
             loadPlugin: function($ocLazyLoad) {
@@ -91,7 +91,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
             title: null
         },
         templateUrl: baseSrc.concat('view/blogDetail.html'),
-        data: {displayName: 'Blog', description: '', keywords: ''},
+        data: {displayName: 'Blog', title: "", description: '', keywords: ''},
         controller: 'BlogDetailCtrl',
         resolve: {
             loadPlugin: function($ocLazyLoad) {
@@ -120,7 +120,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
             text: null
         },
         templateUrl: baseSrc.concat('view/blogSearch.html'),
-        data: {displayName: 'Blog', description: '', keywords: ''},
+        data: {displayName: 'Blog', title: "Blog", description: '', keywords: ''},
         controller: 'BlogSearchCtrl',
         resolve: {
             loadPlugin: function($ocLazyLoad) {

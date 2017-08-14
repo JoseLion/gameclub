@@ -92,7 +92,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
             },
 
             description: function(article, $filter) {
-                return $filter('maxwords')(article.summary.replace(/\r?\n|\r/g, ' '), 150);
+                return $filter('maxwords')(article.summary.replace(/\r?\n|\r/g, ' ').replace(/"/g, "'"), 150);
             },
 
             keywords: function(article) {

@@ -7,6 +7,8 @@
 	$meta_tags = $blog_call_rest->find_one_blog_meta_tags($id_blog);
 	$files_url_base = Util::read_property("files.url");
 	$image_url = $files_url_base . "/" .$meta_tags['banner']->module . "/" .rawurlencode($meta_tags['banner']->name);
+	$description = preg_replace('/\r?\n|\r/', " ", $meta_tags['summary']);
+	$description = preg_replace('/"/', "'", $description);
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,7 +18,7 @@
 		<meta property="og:url" content="" />
 		<meta property="og:title" content="<?php echo $meta_tags['title'];?>" />
 		<meta property="og:type" content="article" />
-		<meta property="og:description" content="<?php echo $meta_tags['summary']?>" />
+		<meta property="og:description" content="<?php echo $description;?>" />
 		<meta property="og:image" content="<?php echo $image_url;?>" />
 		<meta property="fb:app_id" content="<?php echo $facebook_id;?>" /> 
 	</head>

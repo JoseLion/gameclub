@@ -92,7 +92,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                 $scope.loan = {
                     weeks: 1,
                     address: $rootScope.currentUser.billingAddress,
-                    rceiver: $rootScope.currentUser.rceiver
+                    receiver: ($rootScope.currentUser.name + ' ' + $rootScope.currentUser.lastName)
                 };
             } else {
                 $state.go("^.login", {redirect: $location.$$absUrl});

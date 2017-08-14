@@ -26,8 +26,12 @@ public class Message extends BaseEntity {
 	private PublicUser owner;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="sender", foreignKey=@ForeignKey(name="sender_public_user_fk"))
-	private PublicUser sender;
+	@JoinColumn(name="from", foreignKey=@ForeignKey(name="from_public_user_fk"))
+	private PublicUser from;
+	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="to", foreignKey=@ForeignKey(name="to_public_user_fk"))
+	private PublicUser to;
 	
 	@Column(columnDefinition="VARCHAR")
 	private String subject;
@@ -38,8 +42,8 @@ public class Message extends BaseEntity {
 	@Column(columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean read = false;
 	
-	@Column(name="is_promo", columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean isPromo = false;
+	@Column(name="is_loan", columnDefinition="BOOLEAN DEFAULT NULL")
+	private Boolean isLoan;
 
 	public PublicUser getOwner() {
 		return owner;
@@ -49,12 +53,20 @@ public class Message extends BaseEntity {
 		this.owner = owner;
 	}
 
-	public PublicUser getSender() {
-		return sender;
+	public PublicUser getFrom() {
+		return from;
 	}
 
-	public void setSender(PublicUser sender) {
-		this.sender = sender;
+	public void setFrom(PublicUser from) {
+		this.from = from;
+	}
+
+	public PublicUser getTo() {
+		return to;
+	}
+
+	public void setTo(PublicUser to) {
+		this.to = to;
 	}
 
 	public String getSubject() {
@@ -81,11 +93,11 @@ public class Message extends BaseEntity {
 		this.read = read;
 	}
 
-	public Boolean getIsPromo() {
-		return isPromo;
+	public Boolean getIsLoan() {
+		return isLoan;
 	}
 
-	public void setIsPromo(Boolean isPromo) {
-		this.isPromo = isPromo;
+	public void setIsLoan(Boolean isLoan) {
+		this.isLoan = isLoan;
 	}
 }

@@ -76,7 +76,7 @@ public class PublicUser extends BaseEntity {
 	private Location location;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "publicUser", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="publicUser", fetch = FetchType.LAZY)
 	private List<PublicUserGame> games = new ArrayList<>();
 
 	@Column(name = "facebook_token", columnDefinition = "VARCHAR")

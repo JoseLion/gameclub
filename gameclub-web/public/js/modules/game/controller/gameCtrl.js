@@ -28,6 +28,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         });
 
         availableGames.$promise.then(function(data) {
+            console.log("availableGames: ", data.content);
             setPagedAvailableGames(data);
         });
 

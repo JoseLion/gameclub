@@ -91,7 +91,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                 return article.title;
             },
 
-            description: function(article, $filter) {
+            description: function(article) {
                 let maxWords = function(value, max) {
                     if (!value) {
                         return '';
@@ -128,11 +128,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
             properties: {
                 'og:title': function(article) {
                     return article.title;
-                }/*,
-
-                'og:description': function(article, $filter) {
-                    return $filter('maxwords')(article.summary.replace(/\r?\n|\r/g, ' ').replace(/"/g, "'"), 150);
-                }*/
+                }
             },
 
             prerender: {

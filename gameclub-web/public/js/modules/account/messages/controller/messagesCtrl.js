@@ -29,15 +29,28 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			});
 			message.selected = true;
 
-			rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
-				console.log("data: ", data);
-				$scope.welcomeKits = data;
-				
-				if (!message.read) {
-					message.read = true;
-					$rootScope.currentUser.unreadMessages--;
-				}
-			});
+			if (message.isLoan == false) {
+				rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
+					$scope.welcomeKits = data;
+					
+					if (!message.read) {
+						message.read = true;
+						$rootScope.currentUser.unreadMessages--;
+					}
+				});
+			}
+		}
+	}
+
+	$scope.getFromTo = function(message) {
+		if (!message.isLoan) {
+			return 'GAME CLUB';
+		} else {
+			if (message.sender) {
+				return message.sender.name + ' ' + $filter('limitTo')(message.sender.lastName, 1) + '.';
+			} else {
+				return message.receiver.name + ' ' + $filter('limitTo')(message.receiver.lastName, 1) + '.';
+			}
 		}
 	}
 

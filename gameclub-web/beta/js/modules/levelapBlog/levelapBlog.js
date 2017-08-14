@@ -92,7 +92,33 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
             },
 
             description: function(article, $filter) {
-                return $filter('maxwords')(article.summary.replace(/\r?\n|\r/g, ' ').replace(/"/g, "'"), 150);
+                let maxWords = function(value, max) {
+                    if (!value) {
+                        return '';
+                    }
+
+                    if (!max) {
+                        return value;
+                    }
+
+                    let split = value.split(" ");
+
+                    if (split.length > max) {
+                        let result = "";
+
+                        for (let i = 0; i < max; i++) {
+                            result += split[i] + " ";
+                        }
+
+                        result = result.trim() + "...";
+
+                        return result;
+                    }
+
+                    return value;
+                }
+
+                return maxWords(article.summary.replace(/\r?\n|\r/g, ' ').replace(/"/g, "'"), 150);
             },
 
             keywords: function(article) {
@@ -102,11 +128,11 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
             properties: {
                 'og:title': function(article) {
                     return article.title;
-                },
+                }/*,
 
                 'og:description': function(article, $filter) {
                     return $filter('maxwords')(article.summary.replace(/\r?\n|\r/g, ' ').replace(/"/g, "'"), 150);
-                }
+                }*/
             },
 
             prerender: {

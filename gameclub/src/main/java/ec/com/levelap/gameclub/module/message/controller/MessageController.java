@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.com.levelap.gameclub.module.loan.entity.Loan;
+import ec.com.levelap.gameclub.module.loan.service.LoanService;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -31,6 +33,9 @@ public class MessageController {
 	
 	@Autowired
 	private PublicUserService publicUserService;
+	
+	@Autowired
+	private LoanService loanService;
 	
 	@RequestMapping(value="findMessages", method=RequestMethod.POST)
 	public ResponseEntity<Page<Message>> findMessages(@RequestBody(required=false) Search search) throws ServletException {
@@ -50,6 +55,15 @@ public class MessageController {
 		message.setRead(true);
 		messageService.getMessageRepo().save(message);
 		return new ResponseEntity<List<WelcomeKit>>(welcomeKits, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="getLoanMessage/{messageId}", method=RequestMethod.GET)
+	public ResponseEntity<Loan> getLoanMessage(@PathVariable Long messageId) throws ServletException {
+		Loan loan = loanService.getLoanRepo().findByGamerMessageIdOrLenderMessageId(messageId, messageId);
+		Message message = messageService.getMessageRepo().findOne(messageId);
+		message.setRead(true);
+		messageService.getMessageRepo().save(message);
+		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	
 	private static class Search {

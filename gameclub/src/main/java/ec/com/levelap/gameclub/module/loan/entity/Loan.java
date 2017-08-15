@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
+import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.utils.Const;
@@ -23,6 +24,14 @@ import ec.com.levelap.gameclub.utils.Const;
 @Table(schema=Const.SCHEMA, name="loan")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Loan extends BaseEntity {
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="gamer_message", foreignKey=@ForeignKey(name="gamer_message_fk"))
+	private Message gamerMessage;
+	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="lender_message", foreignKey=@ForeignKey(name="lender_message_fk"))
+	private Message lenderMessage;
+	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JoinColumn(name="public_user_game", foreignKey=@ForeignKey(name="public_user_game_fk"))
 	private PublicUserGame publicUserGame;
@@ -61,6 +70,22 @@ public class Loan extends BaseEntity {
 	
 	@Column(name="was_accepted", columnDefinition="BOOLEAN DEFAULT NULL")
 	private Boolean wasAccepted;
+
+	public Message getGamerMessage() {
+		return gamerMessage;
+	}
+
+	public void setGamerMessage(Message gamerMessage) {
+		this.gamerMessage = gamerMessage;
+	}
+
+	public Message getLenderMessage() {
+		return lenderMessage;
+	}
+
+	public void setLenderMessage(Message lenderMessage) {
+		this.lenderMessage = lenderMessage;
+	}
 
 	public PublicUserGame getPublicUserGame() {
 		return publicUserGame;

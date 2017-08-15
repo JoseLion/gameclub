@@ -7,5 +7,5 @@ import ec.com.levelap.gameclub.module.loan.entity.Loan;
 
 @Repository
 public interface LoanRepo extends JpaRepository<Loan, Long> {
-	
+	Loan findByGamerMessageIdOrLenderMessageId(Long gamerMessageId, Long lenderMessageId);
 }

@@ -87,7 +87,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 		},
 		faq : {
 			name: 'Preguntas',
-			route: ''
+			route: 'gameclub.faqs'
 		},
 		blog : {
 			name: 'Blog',

@@ -85,29 +85,30 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.openLoanView = function(cross) {
-        if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100) {
-            if ($rootScope.currentUser != null) {
+        if ($rootScope.currentUser == null) {
+            $state.go("^.login", {redirect: $location.$$absUrl});
+        } else {
+            if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100) {
                 $scope.loanGame = cross;
                 $scope.loanViewOpen = true;
 
                 $scope.loan = {
+                    publicUserGame: cross,
                     weeks: 1,
-                    address: $rootScope.currentUser.billingAddress,
-                    receiver: ($rootScope.currentUser.name + ' ' + $rootScope.currentUser.lastName)
+                    gamerAddress: $rootScope.currentUser.billingAddress,
+                    gamerReceiver: ($rootScope.currentUser.name + ' ' + $rootScope.currentUser.lastName)
                 };
             } else {
-                $state.go("^.login", {redirect: $location.$$absUrl});
-            }
-        } else {
-            if (getInfoPercentage() < 100 && getIdentityPercentage() < 100) {
-                notif.danger("Primero debes completar tu información de contacto y verificar tu identidad para solicitar juegos");
-            } else  {
-                if (getInfoPercentage() < 100 && getIdentityPercentage() >= 100) {
-                    notif.danger("Primero debes completar tu información de contacto para solicitar juegos");
-                }
+                if (getInfoPercentage() < 100 && getIdentityPercentage() < 100) {
+                    notif.danger("Primero debes completar tu información de contacto y verificar tu identidad para solicitar juegos");
+                } else  {
+                    if (getInfoPercentage() < 100 && getIdentityPercentage() >= 100) {
+                        notif.danger("Primero debes completar tu información de contacto para solicitar juegos");
+                    }
 
-                if (getInfoPercentage() >= 100 && getIdentityPercentage() < 100) {
-                    notif.danger("Primero debes verificar tu identidad para solicitar juegos");
+                    if (getInfoPercentage() >= 100 && getIdentityPercentage() < 100) {
+                        notif.danger("Primero debes verificar tu identidad para solicitar juegos");
+                    }
                 }
             }
         }
@@ -138,7 +139,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
     $scope.openMapsModal = function() {
         geolocation().result.then(function(pos) {
-            $scope.loan.geoLocation = pos;
+            $scope.loan.gamerGeolocation = pos;
         });
     }
 
@@ -150,17 +151,17 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             faildValidation = true;
         }
 
-        if ($scope.loan.address == null || $scope.loan.address == '') {
+        if ($scope.loan.gamerAddress == null || $scope.loan.gamerAddress == '') {
             notif.danger("El campo 'Dirección' es obligatorio");
             faildValidation = true;
         }
 
-        if ($scope.loan.geoLocation == null) {
+        if ($scope.loan.gamerGeolocation == null) {
             notif.danger("Debe proporcionar su geolocalización");
             faildValidation = true;
         }
 
-        if ($scope.loan.receiver == null || $scope.loan.receiver == '') {
+        if ($scope.loan.gamerReceiver == null || $scope.loan.gamerReceiver == '') {
             notif.danger("El campo 'Persona de entrega' es obligatorio");
             faildValidation = true;
         }
@@ -179,17 +180,17 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             faildValidation = true;
         }
 
-        if ($scope.loan.address == null || $scope.loan.address == '') {
+        if ($scope.loan.gamerAddress == null || $scope.loan.gamerAddress == '') {
             notif.danger("El campo 'Dirección' es obligatorio");
             faildValidation = true;
         }
 
-        if ($scope.loan.geoLocation == null) {
+        if ($scope.loan.gamerGeolocation == null) {
             notif.danger("Debe proporcionar su geolocalización");
             faildValidation = true;
         }
 
-        if ($scope.loan.receiver == null || $scope.loan.receiver == '') {
+        if ($scope.loan.gamerReceiver == null || $scope.loan.gamerReceiver == '') {
             notif.danger("El campo 'Persona de entrega' es obligatorio");
             faildValidation = true;
         }
@@ -200,7 +201,14 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         }
 
         if (!faildValidation) {
-            console.log("TO DO: Request loan throgh messaging process");
+            sweet.default("Se enviará una solicitud de prestamo al propietario del juego", function() {
+                rest("loan/requestGame").post($scope.loan, function() {
+                    notif.success("Solicitud enviada con éxito. Ve a tus mensajes para revisarla");
+                    sweet.close();
+                }, function(error) {
+                    sweet.close();
+                });
+            });
         }
     }
 

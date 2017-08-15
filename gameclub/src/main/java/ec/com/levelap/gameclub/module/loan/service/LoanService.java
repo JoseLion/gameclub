@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.loan.service;
 
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
@@ -9,9 +11,11 @@ import org.springframework.stereotype.Service;
 import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
+import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Service
 public class LoanService extends BaseService<Loan> {
@@ -30,9 +34,11 @@ public class LoanService extends BaseService<Loan> {
 	
 	@Transactional
 	public void requestGame(Loan loan) throws ServletException {
-		messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
+		Map<String, Message> messages = messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
 		PublicUser gamer = publicUserService.getCurrentUser();
 		loan.setGamer(gamer);
+		loan.setGamerMessage(messages.get(Const.GAMER));
+		loan.setLenderMessage(messages.get(Const.LENDER));
 		loanRepo.save(loan);
 	}
 	

@@ -21,4 +21,6 @@ public interface FaqRepo extends JpaRepository<Faq, Long> {
 	public Faq findByQuestionIgnoreCase(String question);
 	
 	public Faq findByQuestionIgnoreCaseAndQuestionIsNotIgnoreCase(String question, String notQuestion);
+	
+	public List<Faq> findByCategoryIdOrderByCreationDate(Long categoryId);
 }

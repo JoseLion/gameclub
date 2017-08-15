@@ -52,7 +52,7 @@
 					<div class="inbox-cell" ng-class="{'unread': !message.read, 'selected': message.selected}" ng-repeat="message in messages" ng-click="messageSelected(message)">
 						<div class="image col-md-3">
 							<img src="img/messages/gameclub-icon.svg" ng-if="!message.isLoan">
-							<img class="avatar" archive="message.sender ? message.sender.avatar.image : message.receiver.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="message.isLoan">
+							<img class="avatar" archive="message.fromUser ? message.fromUser.avatar.image : message.toUser.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="message.isLoan">
 						</div>
 
 						<div class="labels col-md-6">

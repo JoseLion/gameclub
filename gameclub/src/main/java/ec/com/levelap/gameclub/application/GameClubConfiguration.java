@@ -11,7 +11,9 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import org.springframework.boot.web.support.ErrorPageFilter;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -99,5 +101,18 @@ public class GameClubConfiguration extends SpringBootServletInitializer {
 		factory.setMaxFileSize("1024MB");
 		factory.setMaxRequestSize("1024MB");
 		return factory.createMultipartConfig();
+	}
+	
+	@Bean
+	public ErrorPageFilter errorPageFilter() {
+		return new ErrorPageFilter();
+	}
+	
+	@Bean
+	public FilterRegistrationBean disableSpringBootErrorFilter(ErrorPageFilter filter) {
+		FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+		filterRegistrationBean.setFilter(filter);
+		filterRegistrationBean.setEnabled(false);
+		return filterRegistrationBean;
 	}
 }

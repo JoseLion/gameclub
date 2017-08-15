@@ -26,12 +26,12 @@ public class Message extends BaseEntity {
 	private PublicUser owner;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="from", foreignKey=@ForeignKey(name="from_public_user_fk"))
-	private PublicUser from;
+	@JoinColumn(name="from_user", foreignKey=@ForeignKey(name="from_user_public_user_fk"))
+	private PublicUser fromUser;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="to", foreignKey=@ForeignKey(name="to_public_user_fk"))
-	private PublicUser to;
+	@JoinColumn(name="to_user", foreignKey=@ForeignKey(name="to_user_public_user_fk"))
+	private PublicUser toUser;
 	
 	@Column(columnDefinition="VARCHAR")
 	private String subject;
@@ -53,20 +53,20 @@ public class Message extends BaseEntity {
 		this.owner = owner;
 	}
 
-	public PublicUser getFrom() {
-		return from;
+	public PublicUser getFromUser() {
+		return fromUser;
 	}
 
-	public void setFrom(PublicUser from) {
-		this.from = from;
+	public void setFromUser(PublicUser fromUser) {
+		this.fromUser = fromUser;
 	}
 
-	public PublicUser getTo() {
-		return to;
+	public PublicUser getToUser() {
+		return toUser;
 	}
 
-	public void setTo(PublicUser to) {
-		this.to = to;
+	public void setToUser(PublicUser toUser) {
+		this.toUser = toUser;
 	}
 
 	public String getSubject() {

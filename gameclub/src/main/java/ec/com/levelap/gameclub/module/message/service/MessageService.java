@@ -1,5 +1,8 @@
 package ec.com.levelap.gameclub.module.message.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
@@ -48,22 +51,27 @@ public class MessageService extends BaseService<Message> {
 	}
 	
 	@Transactional
-	public void createLoanMessages(PublicUser lender) throws ServletException {
+	public Map<String, Message> createLoanMessages(PublicUser lender) throws ServletException {
+		Map<String, Message> response = new HashMap<>();
 		PublicUser gamer = publicUserService.getCurrentUser();
 		
 		Message gamerMessage = new Message();
 		gamerMessage.setOwner(gamer);
-		gamerMessage.setTo(lender);
+		gamerMessage.setToUser(lender);
 		gamerMessage.setSubject(Const.SBJ_GAME_REQUEST);
 		gamerMessage.setIsLoan(true);
 		messageRepo.save(gamerMessage);
+		response.put(Const.GAMER, gamerMessage);
 		
 		Message lenderMessage = new Message();
 		lenderMessage.setOwner(lender);
-		lenderMessage.setFrom(gamer);
+		lenderMessage.setFromUser(gamer);
 		lenderMessage.setSubject(Const.SBJ_LOAN_REQUEST);
 		lenderMessage.setIsLoan(true);
 		messageRepo.save(lenderMessage);
+		response.put(Const.LENDER, lenderMessage);
+		
+		return response;
 	}
 	
 	public MessageRepo getMessageRepo() {

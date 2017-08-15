@@ -39,6 +39,17 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					}
 				});
 			}
+
+			if (message.isLoan == true) {
+				rest("message/getLoanMessage/:messageId").get({messageId: message.id}, function(data) {
+					console.log("data: ", data);
+
+					if (!message.read) {
+						message.read = true;
+						$rootScope.currentUser.unreadMessages--;
+					}
+				});
+			}
 		}
 	}
 
@@ -46,10 +57,10 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		if (!message.isLoan) {
 			return 'GAME CLUB';
 		} else {
-			if (message.sender) {
-				return message.sender.name + ' ' + $filter('limitTo')(message.sender.lastName, 1) + '.';
+			if (message.fromUser) {
+				return message.fromUser.name + ' ' + $filter('limitTo')(message.fromUser.lastName, 1) + '.';
 			} else {
-				return message.receiver.name + ' ' + $filter('limitTo')(message.receiver.lastName, 1) + '.';
+				return message.toUser.name + ' ' + $filter('limitTo')(message.toUser.lastName, 1) + '.';
 			}
 		}
 	}

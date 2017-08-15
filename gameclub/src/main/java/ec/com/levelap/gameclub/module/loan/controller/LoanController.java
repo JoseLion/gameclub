@@ -15,7 +15,7 @@ import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.service.LoanService;
 
 @RestController
-@RequestMapping(value="api/message", produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="api/loan", produces=MediaType.APPLICATION_JSON_VALUE)
 public class LoanController {
 	@Autowired
 	private LoanService loanService;

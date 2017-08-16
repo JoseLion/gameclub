@@ -31,20 +31,21 @@
 					<div class="questions col-md-8 col-xs-12">
 						<img class="question-gamepad" src="img/faqs/question-gamepad.svg">
 
-						<ul class="list">
-							<li ng-repeat="faq in currentCategory.faqs" ng-if="!category.isLoading">
+						<ul class="list" ng-if="!questionSelected && !isLoading">
+							<li class="item" ng-repeat="faq in currentCategory.faqs" ng-if="!category.isLoading" ng-click="setQuestion(faq)">
 								<img class="document-icon" src="img/faqs/document-icon.svg">
 								<span>{{faq.question}}</span>
 							</li>
 						</ul>
 
-						<div ng-if="category.isLoading">
-							<loading showing="category.isLoading"></loading>
+						<div class="loading" ng-if="isLoading">
+							<loading showing="isLoading" width="2.5em"></loading>
 						</div>
 
-						<div class="answer" ng-if="questionSelected">
-							<h3>{{faq.question}}</h3>
-							<p>{{faq.answer}}</p>
+						<div class="answer" ng-if="questionSelected && !isLoading">
+							<span class="head">{{questionSelected.question}}</span>
+							<br/>
+							<span class="body">{{questionSelected.answer}}</span>
 						</div>
 					</div>
 

@@ -14,18 +14,24 @@ angular.module("Faq").controller('FaqsCtrl', function($scope, categories, openRe
 			category.selected = true;
 
 			if (category.faqs == null) {
-				category.isLoading = true;
+				$scope.isLoading = true;
 
 				openRest("faq/getFaqsFromCategory/:categoryId", true).get({categoryId: category.id}, function(data) {
 					category.faqs = data;
 					$scope.currentCategory = category;
-					category.isLoading = false;
+					$scope.isLoading = false;
 				}, function(error) {
-					category.isLoading = false;
+					$scope.isLoading = false;
 				});
 			} else {
 				$scope.currentCategory = category;
 			}
+		} else {
+			$scope.questionSelected = null;
 		}
+	}
+
+	$scope.setQuestion = function(faq) {
+		$scope.questionSelected = faq;
 	}
 });

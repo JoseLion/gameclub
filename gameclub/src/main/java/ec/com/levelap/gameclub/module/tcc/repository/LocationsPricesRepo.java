@@ -11,26 +11,5 @@ import ec.com.levelap.gameclub.module.tcc.entity.LocationsPrices;
  */
 @Repository
 public interface LocationsPricesRepo extends JpaRepository<LocationsPrices, Long> {
-	
-	/**
-	 * Find cost shipping.
-	 *
-	 * @param userOrigin the user origin
-	 * @param userDestination the user destination
-	 * @return the int
-	 */
-	@Query(	"SELECT " +
-			"g.origin AS origin, " +
-			"g.destin AS destination, " +
-			"g.cost AS costShipping"+
-		"FROM LocationsPrices g " +
-		"WHERE " +
-			"(g.origin = :userOrigin) AND " +
-			"(g.destin = :userDestination)")
-	public int findCostShipping(
-			@Param("userOrigin") Long userOrigin,
-			@Param("userDestination") Long userDestination);
-			
-		
-
+	public LocationsPrices findByOriginIdAndDestinationId(@Param("userOrigin") Long userOrigin, @Param("userDestination") Long userDestination);
 }

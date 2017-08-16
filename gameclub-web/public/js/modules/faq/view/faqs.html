@@ -1,46 +1,63 @@
 <div id="faqs">
-	<div class="col-md-2"></div>
-
-	<div class="col-md-8 col-xs-12">
+	<div class="col-md-12 no-padding-h">
 		<section class="faqs-title col-md-12">
-			<span class="line1">Preguntas</span>
-			<br/>
-			<span class="line2">Frecuentas</span>
+			<div class="col-md-2"></div>
+
+			<div class="col-md-8 col-xs-12">
+				<span class="line-1">Preguntas</span>
+				<br/>
+				<span class="line-2">Frecuentas</span>
+			</div>
+
+			<div class="col-md-2"></div>
+			<div class="clearfix"></div>
 		</section>
+	</div>
 
+	<div class="col-md-12 no-padding-h">
 		<section class="body">
-			<div class="subtitle col-md-12">Recomendaciones para ti</div>
+			<div class="col-md-2"></div>
 
-			<div class="col-md-12">
-				<div class="categories col-md-4 col-xs-12">
-					<ul class="list">
-						<li ng-repeat="category in categories" ng-click="categorySelected(category)">{{category.name}}</li>
-					</ul>
-				</div>
+			<div class="col-md-8 col-xs-12">
+				<div class="subtitle col-md-12">Recomendaciones para ti</div>
 
-				<div class="questions col-md-8 col-xs-12">
-					<img class="question-gamepad" src="img/faqs/question-gamepad.svg">
-
-					<ul class="list" ng-if="!questionSelected">
-						<li ng-repeat="faq in category.faqs">
-							<img class="document-icon" src="img/faqs/document-icon.svg">
-							<span>{{faq.question}}</span>
-						</li>
-					</ul>
-
-					<div class="answer" ng-if="questionSelected">
-						<h3>{{faq.question}}</h3>
-						<p>{{faq.answer}}</p>
+				<div class="col-md-12">
+					<div class="categories col-md-4 col-xs-12">
+						<ul class="list">
+							<li class="item" ng-class="{'active': category.selected == true}" ng-repeat="category in categories" ng-click="categorySelected(category)">{{category.name}}</li>
+						</ul>
 					</div>
+
+					<div class="questions col-md-8 col-xs-12">
+						<img class="question-gamepad" src="img/faqs/question-gamepad.svg">
+
+						<ul class="list">
+							<li ng-repeat="faq in currentCategory.faqs" ng-if="!category.isLoading">
+								<img class="document-icon" src="img/faqs/document-icon.svg">
+								<span>{{faq.question}}</span>
+							</li>
+						</ul>
+
+						<div ng-if="category.isLoading">
+							<loading showing="category.isLoading"></loading>
+						</div>
+
+						<div class="answer" ng-if="questionSelected">
+							<h3>{{faq.question}}</h3>
+							<p>{{faq.answer}}</p>
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
 				</div>
 
 				<div class="clearfix"></div>
 			</div>
 
+			<div class="col-md-2"></div>
 			<div class="clearfix"></div>
 		</section>
 	</div>
 
-	<div class="col-md-2"></div>
 	<div class="clearfix"></div>
 </div>

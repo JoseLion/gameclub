@@ -4,11 +4,11 @@ angular.module('Core').directive('loading', function() {
 		template: '<div id="loading" ng-if="showing" ng-style="$parent.style"></div>',
         required: 'showing',
 		scope: {
-			showing: '=',
-			top: '@',
-			bottom: '@',
-			inline: '@',
-			width: '@'
+			showing: '=?',
+			top: '@?',
+			bottom: '@?',
+			inline: '@?',
+			width: '@?'
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {

@@ -1,0 +1,2 @@
+INSERT INTO gameclub.navigation(name, route, is_abstract, icon, level, parent)
+VALUES ('Welcome Kits', 'portal.viewWelcomeKits', false, NULL, 1, (SELECT id FROM gameclub.navigation WHERE route='portal'));

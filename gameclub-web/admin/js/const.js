@@ -57,7 +57,9 @@ angular.module("Gameclub").constant('Const', {
 	},
 
 	code: {
+		locationEC: 'EC',
 		contentRatings: "CRT",
-		magazines: "MGZ"
+		magazines: "MGZ",
+		shippingCatalog: "SHP"
 	}
 });

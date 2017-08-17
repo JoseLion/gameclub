@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
@@ -26,7 +25,6 @@ import ec.com.levelap.gameclub.utils.Const;
 @Table(schema=Const.SCHEMA, name="public_user_game")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PublicUserGame extends BaseEntity {
-	@JsonBackReference
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JoinColumn(name="public_user", foreignKey=@ForeignKey(name="public_user_fk"))
 	private PublicUser publicUser;

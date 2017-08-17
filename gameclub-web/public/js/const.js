@@ -56,6 +56,10 @@ angular.module('GameClub').constant('Const', {
 		acceptTerms: 'Debes aceptar los términos y condiciones para continuar'
 	},
 
+	code: {
+		faq: "FAQ"
+	},
+
 	tooltips: {
 		password: 'La contraseña debe tener únicamente letras y números, mínimo 6 caracteres, con al menos una mayúscula y un número'
 	},

@@ -43,8 +43,8 @@ angular.module("PublicUser").config(function($stateProvider) {
 				});
 			},
 
-			locations: function(rest) {
-				return rest("location/findChildrenOf/:code", true).get({code: 'EC'}, function(data) {
+			locations: function(rest, Const) {
+				return rest("location/findChildrenOf/:code", true).get({code: Const.code.locationEC}, function(data) {
 					return data;
 				});
 			}

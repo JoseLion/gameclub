@@ -117,7 +117,11 @@
                                             <span ng-if="cross.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span>
                                         </td>
                                         <td class="game-status">{{cross.integrity.name}}</td>
-                                        <td><button class="btn btn-primary small dark" ng-click="openLoanView(cross)">{{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}</button></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary small dark" ng-click="openLoanView(cross)">
+                                                {{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -185,17 +189,17 @@
 
                         <div class="col-md-9">
                             <label>Dirección</label>
-                            <input type="text" ng-model="loan.address" required />
+                            <input type="text" ng-model="loan.gamerAddress" required />
                         </div>
 
                         <div class="col-md-9">
                             <label class="icon" ng-click="openMapsModal()"><i class="gc gc-address"></i></label>
-                            <img class="geo-check" src="/img/check.svg" ng-if="loan.geoLocation != null">
+                            <img class="geo-check" src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
                         </div>
 
                         <div class="col-md-9">
                             <label>Persona de entrega</label>
-                            <input type="text" ng-model="loan.receiver" required>
+                            <input type="text" ng-model="loan.gamerReceiver" required>
                         </div>
 
                         <div class="col-md-9 no-underline">
@@ -216,7 +220,7 @@
                             
                             <div class="col-md-12">
                                 <label class="big">Costo shipping final</label>
-                                <span class="big-value bigger">{{7.50 | currency: '$': 2}}</span>
+                                <span class="big-value bigger">{{(loan.cost = 7.50) | currency: '$': 2}}</span>
                             </div>
 
                             <div class="col-md-12 foot-note">(Costo en base a dirección actual)</div>
@@ -287,19 +291,3 @@
     <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="consoles"/>
     <section class="final"></section>
 </div>
-
-<script type="text/ng-template" id="mapsModal.html">
-    <div id="maps-modal" class="inmodal">
-        <div class="modal-body">
-            <span class="dismiss" href ng-click="cancel()">X</span>
-
-            <div class="map" map-lazy-load="https://maps.google.com/maps/api/js?key={{Const.google.maps}}" >
-                <ng-map center="0, 0" zoom="1"></ng-map>
-            </div>
-
-            <div class="done text-center">
-                <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="!mapLoaded">Listo</button>
-            </div>
-        </div>
-    </div>
-</script>

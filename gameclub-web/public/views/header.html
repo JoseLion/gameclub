@@ -21,7 +21,7 @@
         <div class="col-md-8 text-right links" ng-style="paddingLogged">
             <nav>
                 <li><button class="btn btn-primary" ui-sref="{{link.shareAndPlay.route}}" ui-sref-active="active"><span class="spacing">{{link.shareAndPlay.name}}</span></button></li>
-                <li><button class="btn btn-primary" ><span class="upper-case">{{link.faq.name}}</span></button></li>
+                <li><button class="btn btn-primary" ui-sref="{{link.faq.route}}"><span class="upper-case">{{link.faq.name}}</span></button></li>
                 <li>
                     <button class="btn btn-primary" ui-sref="{{link.blog.route}}" ui-sref-active="active">
                         <span class="upper-case">{{link.blog.name}}</span>
@@ -36,6 +36,7 @@
                             <span class="name">{{currentUser.name}}</span> <span class="last-name">{{currentUser.lastName}}</span>
                         </span>
                         <img archive="currentUser.avatar.image" placeholder="img/contact-person.svg" class="avatar">
+                        <span class="label label-default notification" ng-if="currentUser.unreadMessages > 0">{{currentUser.unreadMessages}}</span>
                     </button>
                 </li>
             </nav>

@@ -96,7 +96,7 @@ header#main-header .shortcut-links .links nav>li:first-child{border-left:none;}
 header#main-header .shortcut-links .links nav>li.account span.name{text-transform:capitalize;}
 header#main-header .shortcut-links .links nav>li.account span.last-name{text-transform:uppercase;}
 header#main-header .shortcut-links .links nav>li.account img.avatar{height:3em;}
-header#main-header .shortcut-links .links nav>li.account img.avatar{height:3em;}
+header#main-header .shortcut-links .links nav>li.account span.notification{background-color:@color-secundary;color: white;font-weight:bold;font-size:1em;border-radius:15px;padding:5px 8px;position:absolute;transform:translate(50%,-50%);top:32%;right:3.5%;}
 header#main-header .shortcut-links .links nav button.btn{border-radius:7px;text-transform:none;padding:1% 2% 0.5%;font-size:0.6em;}
 header#main-header .shortcut-links .links nav button.btn-primary{color:@color-tertiary;border-color:transparent;}
 header#main-header .shortcut-links .links nav button.btn-primary:hover{border-color:@color-secundary;}
@@ -817,13 +817,30 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account #messages section.messages .inbox .list .scrollable .inbox-cell.selected .labels #from{color:white;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell.selected .date{color:white;}
 #account #messages section.messages .inbox .detail{padding-left:0.5%;padding-right:unset;}
-#account #messages section.messages .inbox .detail .head{width:100%;background-color:black;text-align:left;padding:1.5% 4%;margin-bottom:1%;text-transform:uppercase;font-weight:bold;font-size:1em;}
-#account #messages section.messages .inbox .detail .canvas{width:100%;background-color:white;height:32vw;overflow-y:scroll;}
+#account #messages section.messages .inbox .detail .head{width:100%;background-color:black;text-align:left;padding:1.5% 4%;margin-bottom:0.5%;text-transform:uppercase;font-weight:bold;font-size:1em;}
+#account #messages section.messages .inbox .detail .canvas{width:100%;background-color:white;height:31.8vw;overflow-y:scroll;}
 #account #messages section.messages .inbox .detail .canvas::-webkit-scrollbar{width:10px;}
 #account #messages section.messages .inbox .detail .canvas::-webkit-scrollbar-track{background-color:black;border-radius: 20px;border-left:3px solid white;}
 #account #messages section.messages .inbox .detail .canvas::-webkit-scrollbar-thumb{background:white;border-radius:20px;box-shadow:inset 0 0 5px rgba(0,0,0,0.5);-webkit-box-shadow:inset 0 0 5px rgba(0,0,0,0.5);border:0.5px solid black;}
 #account #messages section.messages .inbox .detail .canvas::-webkit-scrollbar-thumb:hover{box-shadow:inset 0 0 6px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.75);}
 #account #messages section.messages .inbox .detail .canvas .no-content{color:#949495;font-weight:bold;font-size:1.6em;position:absolute;transform:translate(-50%,-55%);left:50%;top:50%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit{padding:4%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .date{color:#949495;font-weight:bold;font-size:1.3em;text-align:center;margin-bottom:2%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation{background-color:@color-secundary;margin:0% 6% 0% 3%;padding:3% 3%;border-radius:8px;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation::after{content:"";position:absolute;width:40px;height:40px;background-color:#e43345;border-radius:5px;transform:translate(-50%,-50%);top:94%;left:8%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .body{font-weight:bold;font-size:1.1em;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row{display:table;margin:1% 0%;font-weight:bold;font-size:1.1em;color:black;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .control-label{padding:unset;width:auto;text-align:left;color:white;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .address{width:120%;resize:none;line-height:145%;background-image:-webkit-linear-gradient(top,transparent,transparent 92%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 92%,white 0);background-size:100% 33.33%;-webkit-background-size:100% 33.33%;-moz-background-size:100% 33.33%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .address::-webkit-scrollbar{width:10px;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .address::-webkit-scrollbar-track{background-color:black;border-radius: 20px;border-left:3px solid @color-secundary;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .address::-webkit-scrollbar-thumb{background:white;border-radius:20px;box-shadow:inset 0 0 5px rgba(0,0,0,0.5);-webkit-box-shadow:inset 0 0 5px rgba(0,0,0,0.5);border:0.5px solid black;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .address::-webkit-scrollbar-thumb:hover{box-shadow:inset 0 0 6px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.75);}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .phone{width:121%;background-image:-webkit-linear-gradient(top,transparent,transparent 93%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 93%,white 0);background-size:100% 100%;-webkit-background-size:100% 100%;-moz-background-size:100% 100%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .receiver{width:125%;background-image:-webkit-linear-gradient(top,transparent,transparent 93%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 93%,white 0);background-size:100% 100%;-webkit-background-size:100% 100%;-moz-background-size:100% 100%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .gc-address{font-weight:bold;font-size:1.7em;cursor:pointer;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .geo-check{width:30px;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .btn-xs{font-size:0.5em;padding:0.6% 3%;border-radius:5px;margin-right:2%;}
 
 /********************************/
 
@@ -856,6 +873,7 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 background:linear-gradient(45deg,@color-tertiary -10%,transparent 80%);background:-webkit-linear-gradient(45deg,@color-tertiary -10%,transparent 80%);background:-o-linear-gradient(45deg,@color-tertiary -10%,transparent 80%);background:-moz-linear-gradient(45deg,@color-tertiary -10%,transparent 80%);}
 #search section.no-result{padding-top:5%;padding-bottom:6%;}
 #search section.no-result h2{text-transform:uppercase;font-size:2.4em;font-family:@font-family-jaapokki;color:@color-secundary;}
+#search section.no-result a{color:@color-secundary;font-weight:bold;}
 #search section.no-result div.separator{margin-bottom:0;margin-top:4%;}
 #search section.result{padding-top:3%;}
 #search section.result .rating .types img{border-color:@color-tertiary;}
@@ -1070,6 +1088,34 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #work-for-us .contact-form form.contact-form .send-button{margin-top:5%;margin-bottom:6%;}
 #work-for-us .contact-form form.contact-form .send-button button{border-radius:5px;border-width:3px;}
 #work-for-us #most-seen{padding-top:4%!important;}
+/**************************************/
+
+/**************** FAQS ****************/
+#faqs{background:url(http://local.gameclub/img/blog/blog-bg.png) repeat-y center top !important;background-size:100% !important;}
+#faqs section.faqs-title{margin-top:15%;text-align:center;text-transform:uppercase;color:white;font-weight:bold;font-size:3em;line-height:105%;}
+#faqs section.faqs-title .line-1{margin-left:-10%;color:@color-primary-alt;}
+#faqs section.faqs-title .line-1::before{content:"";position:absolute;width:10%;top:23.5%;left:20.5%;border-top:2px solid white;}
+#faqs section.faqs-title .line-1::after{content:"";position:absolute;width:8%;top:38.5%;left:21.5%;border-top:2px solid white;}
+#faqs section.faqs-title .line-2{margin-right:-10%;color:@color-secundary;}
+#faqs section.faqs-title .line-2::before{content:"";position:absolute;width:8%;bottom:23.5%;right:20.5%;border-top:2px solid white;}
+#faqs section.faqs-title .line-2::after{content:"";position:absolute;width:10%;bottom:8.5%;right:19.5%;border-top:2px solid white;}
+#faqs section.body{background-color:@color-tertiary-alt;margin-top:3%;font-size:1.1em;padding:2% 0%;}
+#faqs section.body .subtitle{font-size:2em;margin-bottom:4%;margin-left:6%;}
+#faqs section.body .categories{padding-left:5%;}
+#faqs section.body .categories .list{list-style:none;text-transform:uppercase;font-size:0.75em;line-height:150%;}
+#faqs section.body .categories .list .item{padding:1% 4%;margin:2% 0%;width:fit-content;cursor:pointer;}
+#faqs section.body .categories .list .item:hover{box-shadow:0px 0px 30px 2px @color-secundary;}
+#faqs section.body .categories .list .item.active{background-color:@color-secundary;color:white;}
+#faqs section.body .questions{font-size:1.2em;padding-left:4%;min-height:-webkit-fill-available;border-left-width:4px;border-left-style:solid;-webkit-border-image:-webkit-gradient(linear, 0 35%, 0 65%, from(@color-secundary), to(@color-primary-alt)) 1 100%;-webkit-border-image:-webkit-linear-gradient(@color-secundary 35%, @color-primary-alt 65%) 1 100%;-moz-border-image: -moz-linear-gradient(@color-secundary 35%, @color-primary-alt 65%) 1 100%;border-image: linear-gradient(to bottom, @color-secundary 35%, @color-primary-alt 65%) 1 100%;}
+#faqs section.body .questions img.question-gamepad{width:15%;margin:5% 42.5%;}
+#faqs section.body .questions .loading{position:absolute;top:85%;left:46%;}
+#faqs section.body .questions .list{list-style:none;padding-left:0%;}
+#faqs section.body .questions .list .item{cursor:pointer;}
+#faqs section.body .questions .list .item:hover{box-shadow:0px 0px 30px 2px @color-secundary;}
+#faqs section.body .questions .list .item img.document-icon{width:4%;margin-right:3%;}
+#faqs section.body .answer{font-size:0.8em;line-height:125%;display:grid;}
+#faqs section.body .answer .head{font-weight:bold;text-transform:uppercase;text-align:center;}
+#faqs section.body .answer .body{white-space:pre-wrap;}
 /**************************************/
 
 /* BLOG VARIABLES */

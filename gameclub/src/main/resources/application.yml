@@ -66,5 +66,7 @@ priceCharting-configuration:
   url: http://www.pricecharting.com/api/product
   
 tcc-configuration:
-  key: ECTOMORROW
+  key: PRECLIENTESPRUEBA
   url: http://clientes.tcc.com.co/preservicios
+  account: 6019000
+  nit: 1792738865001

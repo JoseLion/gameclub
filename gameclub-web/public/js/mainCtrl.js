@@ -10,6 +10,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 					$rootScope.logout();
 				} else {
 					if (data != null) {
+						console.log("data: ", data);
 						$rootScope.currentUser = data;
 
 						/*if ($rootScope.currentUser.isTempPassword) {
@@ -86,7 +87,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 		},
 		faq : {
 			name: 'Preguntas',
-			route: ''
+			route: 'gameclub.faqs'
 		},
 		blog : {
 			name: 'Blog',

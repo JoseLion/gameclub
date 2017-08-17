@@ -9,7 +9,8 @@ angular.module('Home').config(function($stateProvider) {
 			anchor: null
 		},
 		templateUrl: 'js/modules/home/view/home.html',
-		data: {displayName: 'GameClub', description: null, keywords: ''},
+		data: {displayName: 'GameClub'},
+		metaTags: {title: 'Home', description: 'Descripción del home', keywords: 'keywords,del,home', properties: {'og:title': 'Home'}},
 		controller: 'HomeCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {

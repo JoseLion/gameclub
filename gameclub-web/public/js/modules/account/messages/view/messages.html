@@ -51,18 +51,18 @@
 					<span class="no-messages" ng-if="messages.length == 0">No tienes ningún mensaje</span>
 					<div class="inbox-cell" ng-class="{'unread': !message.read, 'selected': message.selected}" ng-repeat="message in messages" ng-click="messageSelected(message)">
 						<div class="image col-md-3">
-							<img src="img/messages/gameclub-icon.svg" ng-if="message.isPromo">
-							<img class="avatar" archive="message.sender.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="!message.isPromo">
+							<img src="img/messages/gameclub-icon.svg" ng-if="!message.isLoan">
+							<img class="avatar" archive="message.fromUser ? message.fromUser.avatar.image : message.toUser.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="message.isLoan">
 						</div>
 
 						<div class="labels col-md-6">
-							<span id="from">{{message.isPromo ? 'GAME CLUB' : (message.sender.name) + ' ' + (message.sender.lastName | limitTo: 1) + '.'}}</span>
+							<span id="from">{{getFromTo(message)}}</span>
 							<br/>
 							<span>{{message.subject}}</span>
 						</div>
 
 						<div class="date col-md-3">
-							<span>{{getMessageDate(message.date)}}</span>
+							<span>{{getFormattedDate(message.date)}}</span>
 						</div>
 
 						<div class="clearfix"></div>
@@ -74,7 +74,61 @@
 				<div class="head">Detalle del mensaje</div>
 
 				<div class="canvas">
-					<span class="no-content">Selecciona un mensaje</span>
+					<span class="no-content" ng-if="noSelected()">Selecciona un mensaje</span>
+
+					<div class="welcome-kit col-md-12" ng-repeat="kit in welcomeKits">
+						<div class="date">{{kit.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
+						<div class="confirmation">
+							<form class="form-horizontal" role="form" novalidate>
+								<span class="body">Hola {{kit.publicUser.name}},</span>
+								<br><br>
+								<span class="body">GAME CLUB te da la bienvenida, te enviaremos un Welcome Kit para que puedas pedir y prestar juegos, por favor confirma tu información de recepción.</span>
+								<br>
+
+								<div class="form-row col-md-12">
+									<label class="col-md-3 control-label">Ciudad</label>
+									<div class="col-md-9">
+										<span>{{currentUser.location.name}}</span>
+									</div>
+								</div>
+
+								<div class="form-row col-md-12">
+									<label class="col-md-3 control-label">Dirección</label>
+									<div class="col-md-9">
+										<textarea type="text" class="address" ng-model="kit.address" required ng-init="kit.address = currentUser.billingAddress" rows="3"></textarea>
+									</div>
+								</div>
+
+								<div class="form-row col-md-12">
+									<label class="col-md-3 control-label">Teléfono</label>
+									<div class="col-md-9">
+										<input type="text" class="phone" ng-model="kit.phone" required ng-init="kit.phone = currentUser.contactPhone" onkeypress="return !isNaN(String.fromCharCode(event.charCode))">
+									</div>
+								</div>
+
+								<div class="form-row col-md-12">
+									<label class="col-md-5 control-label">Persona de entrega</label>
+									<div class="col-md-7">
+										<input type="text" class="receiver" ng-model="kit.receiver" required ng-init="kit.receiver = currentUser.name + ' ' + currentUser.lastName">
+									</div>
+								</div>
+
+								<div class="form-row col-md-12">
+									<label class="col-md-3 control-label"><i class="gc gc-address" ng-click="openMap(kit)"></i></label>
+									<div class="col-md-9">
+										<img class="geo-check" src="/img/check.svg" ng-if="kit.geolocation != null">
+									</div>
+								</div>
+
+								<div class="form-row col-md-12">
+									<button type="button" class="btn btn-tertiary full btn-xs" ng-click="confirmWelcomeKit(kit)">Confirmar envío</button>
+								</div>
+
+								<div class="clearfix"></div>
+							</form>
+						</div>
+					</div>
+					<div class="clearfix"></div>
 				</div>
 			</div>
 

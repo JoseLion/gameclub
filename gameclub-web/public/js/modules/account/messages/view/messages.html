@@ -57,7 +57,7 @@
 
 						<div class="labels col-md-6">
 							<span id="from">{{getFromTo(message)}}</span>
-							<br/>
+							<br>
 							<span>{{message.subject}}</span>
 						</div>
 
@@ -76,9 +76,9 @@
 				<div class="canvas">
 					<span class="no-content" ng-if="noSelected()">Selecciona un mensaje</span>
 
-					<div class="welcome-kit col-md-12" ng-repeat="kit in welcomeKits">
+					<div class="welcome-kit col-md-12" ng-repeat="kit in welcomeKits" ng-if="welcomeKits">
 						<div class="date">{{kit.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
-						<div class="confirmation">
+						<div class="red-box">
 							<form class="form-horizontal" role="form" novalidate>
 								<span class="body">Hola {{kit.publicUser.name}},</span>
 								<br><br>
@@ -128,6 +128,39 @@
 							</form>
 						</div>
 					</div>
+
+					<div class="loan col-md-12" ng-if="loan">
+						<div class="date">{{loan.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
+						<div class="red-box" ng-if="currentUser.id == loan.gamer.id">
+							<span>Hola {{currentUser.name}},</span>
+							<br>
+							<br>
+							<span class="text-black">Has pedido a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.name | limitTo: 1}}</span>
+							<button type="button" class="btn btn-xs btn-tertiary-alt full">Ver ficha del usuario</button>
+							<br>
+							<span>el siguiente juego:</span>
+							<br>
+							<span class="game-title">{{loan.publicUserGame.game.name}}</span>
+							<button type="button" class="btn btn-xs btn-tertiary-alt full">Ver ficha del juego</button>
+							<br>
+							<br>
+							<span>Durante <span class="text-black">{{loan.weeks}} semanas</span> desde la entrega del juego.</span>
+							<br>
+							<span>Pagarás un total de <span class="text-black">{{loan.publicUserGame.cost}} COINS</span> por este préstamo.</span>
+							<br>
+							<span>Si el préstamo es rechazado volverán a acreditarse a tu cuenta.</span>
+							<br>
+							<br>
+							<span>Una vez aceptado el préstamo, se te notificará la fecha exacta que llegará el juego.</span>
+							<br>
+							<br>
+							<span class="text-black">Solicitud de prestamo #XX XX XX XX</span>
+							<br>
+							<br>
+							<button type="button" class="btn btn-xs btn-tertiary">Cancelar pedido</button>
+						</div>
+					</div>
+
 					<div class="clearfix"></div>
 				</div>
 			</div>

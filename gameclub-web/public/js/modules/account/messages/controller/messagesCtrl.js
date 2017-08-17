@@ -27,7 +27,9 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					return 'break';
 				}
 			});
+
 			message.selected = true;
+			clearCanvas();
 
 			if (message.isLoan == false) {
 				rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
@@ -43,6 +45,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			if (message.isLoan == true) {
 				rest("message/getLoanMessage/:messageId").get({messageId: message.id}, function(data) {
 					console.log("data: ", data);
+					$scope.loan = data;
 
 					if (!message.read) {
 						message.read = true;
@@ -122,5 +125,10 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			});
 			
 		}
+	}
+
+	function clearCanvas() {
+		$scope.welcomeKits = null;
+		$scope.loan = null;
 	}
 });

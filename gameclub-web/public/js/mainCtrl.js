@@ -81,23 +81,23 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 	}
 
 	$rootScope.link = {
-		shareAndPlay : {
+		shareAndPlay: {
 			name: 'Share & Play',
 			route: 'gameclub.home({anchor:"how-it-works"})'
 		},
-		faq : {
+		faq: {
 			name: 'Preguntas',
 			route: 'gameclub.faqs'
 		},
-		blog : {
+		blog: {
 			name: 'Blog',
 			route: 'levelapBlog.blog.home'
 		},
-		login : {
+		login: {
 			name: 'Inicia sesión',
 			route: 'gameclub.login'
 		},
-		account : {
+		account: {
 			name: '',
 			route: 'gameclub.account'
 		},
@@ -105,9 +105,13 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			name: 'Términos y Condiciones',
 			route: 'gameclub.termsConditions({user:user, isFacebook:isFacebook})'
 		},
-		workForUs : {
+		workForUs: {
 			name: 'Trabaja con nosotros',
 			route: 'gameclub.workForUs'
+		},
+		contactUs: {
+			name: 'Contáctanos',
+			route: 'gameclub.contactUs'
 		}
 	};
 

@@ -27,6 +27,8 @@ h2{margin:0;}
 .btn-secundary.full,.btn-secundary.full:hover,.btn-secundary.full:visited,.btn-secundary.full:focus,.btn-secundary.full:active,.btn-secundary.full:active:focus,.btn-secundary.full:active:hover{color:@color-tertiary;background:@color-primary;}
 .btn-tertiary,.btn-tertiary:hover,.btn-tertiary:visited,.btn-tertiary:focus,.btn-tertiary:active,.btn-tertiary:active:focus,.btn-tertiary:active:hover{color:@color-primary;border-color:@color-tertiary;}
 .btn-tertiary.full,.btn-tertiary.full:hover,.btn-tertiary.full:visited,.btn-tertiary.full:focus,.btn-tertiary.full:active,.btn-tertiary.full:active:focus,.btn-tertiary.full:active:hover{color:@color-primary;background:@color-tertiary;}
+.btn-tertiary-alt,.btn-tertiary-alt:hover,.btn-tertiary-alt:visited,.btn-tertiary-alt:focus,.btn-tertiary-alt:active,.btn-tertiary-alt:active:focus,.btn-tertiary-alt:active:hover{color:@color-primary;border-color:black;}
+.btn-tertiary-alt.full,.btn-tertiary-alt.full:hover,.btn-tertiary-alt.full:visited,.btn-tertiary-alt.full:focus,.btn-tertiary-alt.full:active,.btn-tertiary-alt.full:active:focus,.btn-tertiary-alt.full:active:hover{color:@color-primary;background:@color-tertiary;border-color:black;}
 button.small,button.small:hover,button.small:visited,button.small:focus,button.small:active,button.small:active:focus,button.small:active:hover{border-radius:5px;padding:3px 6% 0;font-size:0.7em;margin-top:1%;}
 .ui-select-toggle .btn,.ui-select-toggle .btn:hover,.ui-select-toggle .btn:visited,.ui-select-toggle .btn:focus,.ui-select-toggle .btn:active,.ui-select-toggle .btn:active:focus,.ui-select-toggle .btn:active:hover{padding:0;}
 .row-left{margin-left:0;margin-right:0;padding-left:20%;}
@@ -824,23 +826,29 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account #messages section.messages .inbox .detail .canvas::-webkit-scrollbar-thumb{background:white;border-radius:20px;box-shadow:inset 0 0 5px rgba(0,0,0,0.5);-webkit-box-shadow:inset 0 0 5px rgba(0,0,0,0.5);border:0.5px solid black;}
 #account #messages section.messages .inbox .detail .canvas::-webkit-scrollbar-thumb:hover{box-shadow:inset 0 0 6px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.75);}
 #account #messages section.messages .inbox .detail .canvas .no-content{color:#949495;font-weight:bold;font-size:1.6em;position:absolute;transform:translate(-50%,-55%);left:50%;top:50%;}
+
+#account #messages section.messages .inbox .detail .canvas .text-black{color:black;}
+#account #messages section.messages .inbox .detail .canvas .red-box{z-index:0;position:relative;background-color:@color-secundary;margin:0% 6% 0% 3%;padding:3% 3%;border-radius:8px;color:white;font-weight:bold;line-height:120%;}
+#account #messages section.messages .inbox .detail .canvas .red-box::before{content:"";position:absolute;width:35px;height:35px;background-color:#e43345;border-radius:5px;transform:translate(-50%,-50%);top:100%;left:0%;z-index:-1;}
+#account #messages section.messages .inbox .detail .canvas .date{color:#949495;font-weight:bold;font-size:1.1em;text-align:center;margin-bottom:2%;}
+#account #messages section.messages .inbox .detail .canvas .btn-xs{font-size:0.54em;padding:0.15% 2%;border-radius:5px;margin-right:2%;}
+
 #account #messages section.messages .inbox .detail .canvas .welcome-kit{padding:4%;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .date{color:#949495;font-weight:bold;font-size:1.3em;text-align:center;margin-bottom:2%;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation{background-color:@color-secundary;margin:0% 6% 0% 3%;padding:3% 3%;border-radius:8px;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation::after{content:"";position:absolute;width:40px;height:40px;background-color:#e43345;border-radius:5px;transform:translate(-50%,-50%);top:94%;left:8%;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .body{font-weight:bold;font-size:1.1em;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row{display:table;margin:1% 0%;font-weight:bold;font-size:1.1em;color:black;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .control-label{padding:unset;width:auto;text-align:left;color:white;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .address{width:120%;resize:none;line-height:145%;background-image:-webkit-linear-gradient(top,transparent,transparent 92%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 92%,white 0);background-size:100% 33.33%;-webkit-background-size:100% 33.33%;-moz-background-size:100% 33.33%;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .address::-webkit-scrollbar{width:10px;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .address::-webkit-scrollbar-track{background-color:black;border-radius: 20px;border-left:3px solid @color-secundary;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .address::-webkit-scrollbar-thumb{background:white;border-radius:20px;box-shadow:inset 0 0 5px rgba(0,0,0,0.5);-webkit-box-shadow:inset 0 0 5px rgba(0,0,0,0.5);border:0.5px solid black;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .address::-webkit-scrollbar-thumb:hover{box-shadow:inset 0 0 6px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.75);}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .phone{width:121%;background-image:-webkit-linear-gradient(top,transparent,transparent 93%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 93%,white 0);background-size:100% 100%;-webkit-background-size:100% 100%;-moz-background-size:100% 100%;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .receiver{width:125%;background-image:-webkit-linear-gradient(top,transparent,transparent 93%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 93%,white 0);background-size:100% 100%;-webkit-background-size:100% 100%;-moz-background-size:100% 100%;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .gc-address{font-weight:bold;font-size:1.7em;cursor:pointer;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .geo-check{width:30px;}
-#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmation .form-row .btn-xs{font-size:0.5em;padding:0.6% 3%;border-radius:5px;margin-right:2%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .body{font-weight:bold;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row{display:table;margin:1% 0%;font-weight:bold;color:black;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .control-label{padding:unset;width:auto;text-align:left;color:white;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .address{width:120%;resize:none;line-height:145%;background-image:-webkit-linear-gradient(top,transparent,transparent 93%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 93%,white 0);background-size:100% 33.33%;-webkit-background-size:100% 33.33%;-moz-background-size:100% 33.33%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .address::-webkit-scrollbar{width:10px;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .address::-webkit-scrollbar-track{background-color:black;border-radius: 20px;border-left:3px solid @color-secundary;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .address::-webkit-scrollbar-thumb{background:white;border-radius:20px;box-shadow:inset 0 0 5px rgba(0,0,0,0.5);-webkit-box-shadow:inset 0 0 5px rgba(0,0,0,0.5);border:0.5px solid black;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .address::-webkit-scrollbar-thumb:hover{box-shadow:inset 0 0 6px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.75);}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .phone{width:121%;background-image:-webkit-linear-gradient(top,transparent,transparent 93%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 93%,white 0);background-size:100% 100%;-webkit-background-size:100% 100%;-moz-background-size:100% 100%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .receiver{width:125%;background-image:-webkit-linear-gradient(top,transparent,transparent 93%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 93%,white 0);background-size:100% 100%;-webkit-background-size:100% 100%;-moz-background-size:100% 100%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .gc-address{font-weight:bold;font-size:1.7em;cursor:pointer;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .geo-check{width:30px;}
+
+#account #messages section.messages .inbox .detail .canvas .loan{padding:4%;}
+#account #messages section.messages .inbox .detail .canvas .loan .game-title{color:black;font-size:1.25em;line-height:155%;}
 
 /********************************/
 
@@ -1117,6 +1125,24 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #faqs section.body .answer .head{font-weight:bold;text-transform:uppercase;text-align:center;}
 #faqs section.body .answer .body{white-space:pre-wrap;}
 /**************************************/
+
+/**************** CONTACT US PAGE ****************/
+#contact-us-page .contact-us{position:relative;}
+#contact-us-page .contact-us::before{content:"";position:absolute;top:-20%;right:0;bottom:0;left:0;z-index:-3;background:@color-primary-alt;background-image:url("../img/home/contact-us-bg.svg");background-position:center top;background-size:107% 135%;}
+#contact-us-page .contact-us form.contact-form{background:@color-primary-alt;box-shadow:5px 10px 25px 5px @color-primary-30;text-align:center;padding-top:20%;margin-bottom:2%;color:white;}
+#contact-us-page .contact-us form.contact-form h2.title{font-size:1.5em;font-weight:700;text-transform:uppercase;}
+#contact-us-page .contact-us form.contact-form h2 .red-club{color:@color-secundary;font-weight:normal;}
+#contact-us-page .contact-us form.contact-form .description{font-size:1.2em;}
+#contact-us-page .contact-us form.contact-form input,#home .contact-us form.contact-form textarea{width:100%;margin:1%;border:2px solid @color-primary;border-radius:5px;padding:1% 7% 1% 3%;background:transparent;}
+#contact-us-page .contact-us form.contact-form textarea{background:@color-tertiary;border-color:transparent;color:@color-primary;border-radius:0;resize:none;}
+#contact-us-page .contact-us form.contact-form input:focus,#home .contact-us form.contact-form textarea:focus{box-shadow:none;outline:none;}
+#contact-us-page .contact-us form.contact-form input[name="name"]{background:url("../img/contact-person.svg") no-repeat right center;background-size:15px auto;background-position-x:97%;}
+#contact-us-page .contact-us form.contact-form input[name="email"]{background:url("../img/contact-email.svg") no-repeat right center;background-size:15px auto;background-position-x:97%;}
+#contact-us-page .contact-us form.contact-form input[name="phone"]{background:url("../img/contact-phone.svg") no-repeat right center;background-size:15px auto;background-position-x:97%;}
+#contact-us-page .contact-us form.contact-form textarea[name="message"]{background-image:url("../img/contact-message.svg");background-size:15px auto;background-position-x:97%;background-position-y:2%;background-repeat:no-repeat;width:100%;margin-left:1%;}
+#contact-us-page .contact-us form.contact-form .send-button{margin-top:3%;margin-bottom:4%;}
+#contact-us-page .contact-us form.contact-form .send-button button{border-radius:5px;}
+/************************************************/
 
 /* BLOG VARIABLES */
 @blog-padding-left: 37.037037037%!important;

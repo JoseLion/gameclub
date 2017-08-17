@@ -1,40 +1,35 @@
-<div id="work-for-us">
-    <section class="contact-form">
+<div id="contact-us-page">
+    <section class="contact-us">
         <div class="row">
-            <form class="col-md-12 contact-form" role="form">
-                <h2 class="title">&iquest;Quieres trabajar con <span class="game-font game-font-white">Game</span><span class="game-font-dark-blue">Club</span>?</h2>
-                <h2 class="title">&iquest;Quieres crecer con nosotros?</h2>
-                <h2 class="title">&iquest;Quieres crear una alianza?</h2>
-                <span class="description">D&eacute;janos tu informaci&oacute;n y nosotros te contactaremos</span>
+            <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()">
+                <h2 class="title">&iquest;Quieres saber m&aacute;s de <span class="game-font game-font-white">Game</span><span class="red-club">Club</span>?</h2>
+                <span class="description">D&eacute;janos tu mail y nosotros te contactamos</span>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
                 <div class="col-md-6 to-validate">
-                    <input name="name" placeholder="Nombre..." />
+                    <input validation name="name" placeholder="Nombre..." ng-model="contactUs.name" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
                 <div class="col-md-6 to-validate">
-                    <input name="email" placeholder="E-mail..." />
+                    <input validation name="email" placeholder="E-mail..." ng-model="contactUs.email" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
                 <div class="col-md-6 to-validate">
-                    <textarea name="message" placeholder="Mensaje..." rows="6"></textarea>
+                    <input name="phone" placeholder="Teléfono..." ng-model="contactUs.phone">
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
                 <div class="col-md-6 to-validate">
-                    <div class="file-upload" name="file">
-                        <button class="btn btn-secundary small full">Choose file</button>
-                        <span>No file choosen</span>
-                    </div>
+                    <textarea validation name="message" placeholder="Mensaje..." rows="6" ng-model="contactUs.message" required></textarea>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
@@ -44,7 +39,6 @@
                     <button type="submit" class="btn btn-secundary">Enviar</button>
                 </div>
                 <div class="col-md-4"></div>
-
             </form>
         </div>
     </section>

@@ -109,7 +109,7 @@
                                 <tbody>
                                     <tr ng-repeat="cross in availableGames">
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
-                                        <td>{{cross.shippingCost | currency:'$ ':2}}</td>
+                                        <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
                                         <td>{{cross.publicUserObj.location.name}}</td>
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | number: 0}}</td>
                                         <td>

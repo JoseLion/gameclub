@@ -1,5 +1,5 @@
 
-INSERT INTO gameclub.locations_prices(origin, destination, cost) VALUES
+INSERT INTO gameclub.location_price(origin, destination, cost) VALUES
 /*Ciudad Cuenca*/
 /*Azuay*/
 ((SELECT id FROM commons.location where code = 'ECAZ'),(SELECT id FROM commons.location where code = 'ECAZCU'),(10)),

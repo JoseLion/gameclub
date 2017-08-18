@@ -33,7 +33,7 @@ public class LocationPrice extends BaseEntity{
 	@JoinColumn(name="destination", foreignKey=@ForeignKey(name="destination_location_fk"))
 	private Location destination;
 	
-	@Column(columnDefinition="DECIMAL(4, 8) DEFAULT 0.0")
+	@Column(columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
 	private Double cost = 0.0;
 	
 	public Location getOrigin() {

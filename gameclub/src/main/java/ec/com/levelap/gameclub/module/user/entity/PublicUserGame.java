@@ -51,7 +51,7 @@ public class PublicUserGame extends BaseEntity {
 	private Map<String, Object> publicUserObj = new HashMap<>();
 	
 	@Transient
-	private Integer shippingCost;
+	private Double shippingCost;
 
 	public PublicUser getPublicUser() {
 		return publicUser;
@@ -112,11 +112,11 @@ public class PublicUserGame extends BaseEntity {
 		this.publicUserObj = publicUserObj;
 	}
 
-	public Integer getShippingCost() {
+	public Double getShippingCost() {
 		return shippingCost;
 	}
 
-	public void setShippingCost(Integer shippingCost) {
+	public void setShippingCost(Double shippingCost) {
 		this.shippingCost = shippingCost;
 	}
 }

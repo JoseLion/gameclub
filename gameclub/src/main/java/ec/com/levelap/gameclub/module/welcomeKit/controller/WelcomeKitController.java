@@ -16,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.location.Location;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKitLite;
 import ec.com.levelap.gameclub.module.welcomeKit.service.WelcomeKitService;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.tcc.wsdl.clientes.GrabarDespacho4Response;
 
 @RestController
 @RequestMapping(value="api/welcomeKit", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -48,14 +46,9 @@ public class WelcomeKitController {
 	}
 	
 	@RequestMapping(value="confirmWelcomeKit", method=RequestMethod.POST)
-	public ResponseEntity<?> confirmWelcomeKit(@RequestBody ConfirmObj confirmObj) throws ServletException {
-		GrabarDespacho4Response response = welcomeKitService.confirmWelcomeKit(confirmObj);
-		
-		if (response.getRespuesta() == 0) {
-			return new ResponseEntity<GrabarDespacho4Response>(response, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<ErrorControl>(new ErrorControl(response.getMensaje(), true), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	public ResponseEntity<WelcomeKit> confirmWelcomeKit(@RequestBody WelcomeKit welcomeKit) throws ServletException {
+		welcomeKit = welcomeKitService.confirmWelcomeKit(welcomeKit);
+		return new ResponseEntity<WelcomeKit>(welcomeKit, HttpStatus.OK);
 	}
 	
 	private static class Search {
@@ -74,17 +67,5 @@ public class WelcomeKitController {
 		public Catalog shippingStatus;
 		
 		public Integer page = 0;
-	}
-	
-	public static class ConfirmObj {
-		public Long kitId;
-		
-		public String address;
-		
-		public String phone;
-		
-		public String city;
-		
-		public String receiver;
 	}
 }

@@ -31,6 +31,15 @@ public class WelcomeKit extends BaseEntity {
 	@JoinColumn(name="public_user", foreignKey=@ForeignKey(name="public_user_fk"))
 	private PublicUser publicUser;
 	
+	@Column(columnDefinition="VARCHAR")
+	private String address;
+	
+	@Column(columnDefinition="VARCHAR")
+	private String phone;
+	
+	@Column(columnDefinition="VARCHAR")
+	private String receiver;
+	
 	@Column(name="geolocation")
 	private PGpoint geolocation;
 	
@@ -58,6 +67,30 @@ public class WelcomeKit extends BaseEntity {
 
 	public void setPublicUser(PublicUser publicUser) {
 		this.publicUser = publicUser;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
 	}
 
 	public PGpoint getGeolocation() {

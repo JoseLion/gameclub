@@ -1,6 +1,5 @@
 package ec.com.levelap.gameclub.module.game.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -22,10 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
 import ec.com.levelap.gameclub.module.game.service.GameService;
-import ec.com.levelap.gameclub.module.tcc.entity.LocationPrice;
-import ec.com.levelap.gameclub.module.tcc.service.LocationPriceService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
-import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
+import ec.com.levelap.gameclub.module.user.entity.PublicUserGameOpen;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -37,9 +34,6 @@ public class GameOpenController {
 	
 	@Autowired
 	private PublicUserService publicUserService;
-	
-	@Autowired
-	private LocationPriceService locationPriceService;
 	
 	@RequestMapping(value="findGames", method=RequestMethod.POST)
 	public ResponseEntity<Page<GameOpen>> findGames(@RequestBody(required=false) Search search) throws ServletException {
@@ -76,24 +70,18 @@ public class GameOpenController {
 	}
 	
 	@RequestMapping(value="getAvailableGames", method=RequestMethod.POST)
-	public ResponseEntity<Page<PublicUserGame>> getAvailableGames(@RequestBody Filter filter) throws ServletException {
+	public ResponseEntity<Page<PublicUserGameOpen>> getAvailableGames(@RequestBody Filter filter) throws ServletException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
-		PageRequest page = filter.sort.isEmpty() ? new PageRequest(0, 10 * (filter.page + 1)) : new PageRequest(0, 10 * (filter.page + 1), new Sort(filter.desc ? Direction.DESC : Direction.ASC, filter.sort));
-		Page<PublicUserGame> games = gameService.getPublicUserGameRepo().findAvailableGames(currentUser, filter.gameId, filter.consoleId, page);
+		PageRequest page = filter.sort.isEmpty() ? new PageRequest(filter.page, Const.TABLE_SIZE) : new PageRequest(filter.page, Const.TABLE_SIZE, new Sort(filter.desc ? Direction.DESC : Direction.ASC, filter.sort));
+		Page<PublicUserGameOpen> games;
 		
-		if (currentUser != null && currentUser.getLocation() != null) {
-			List<Long> destinationIds = new ArrayList<>();
-			for (PublicUserGame cross : games.getContent()) {
-				destinationIds.add(cross.getPublicUser().getLocation().getId());
-			}
-			
-			List<LocationPrice> shippingCosts = locationPriceService.getLocationPriceRepo().findByOriginIdAndDestinationIdIn(currentUser.getLocation().getId(), destinationIds);
-			for (int i = 0; i < games.getContent().size(); i++) {
-				games.getContent().get(i).setShippingCost(shippingCosts.get(i).getCost());
-			}
+		if (currentUser != null) {
+			games = gameService.getPublicUserGameRepo().findAvailableGames(currentUser, currentUser != null ? currentUser.getLocation() : null, filter.gameId, filter.consoleId, page);
+		} else {
+			games = gameService.getPublicUserGameRepo().findAvailableGamesOpen(filter.gameId, filter.consoleId, page);
 		}
 		
-		return new ResponseEntity<Page<PublicUserGame>>(games, HttpStatus.OK);
+		return new ResponseEntity<Page<PublicUserGameOpen>>(games, HttpStatus.OK);
 	}
 	
 	private static class Search {

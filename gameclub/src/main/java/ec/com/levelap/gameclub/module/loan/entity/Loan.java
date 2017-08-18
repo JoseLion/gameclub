@@ -70,6 +70,9 @@ public class Loan extends BaseEntity {
 	
 	@Column(name="was_accepted", columnDefinition="BOOLEAN DEFAULT NULL")
 	private Boolean wasAccepted;
+	
+	@Column(name="delivery_number", columnDefinition="VARCHAR")
+	private String deliveryNumber;
 
 	public Message getGamerMessage() {
 		return gamerMessage;
@@ -181,5 +184,13 @@ public class Loan extends BaseEntity {
 
 	public void setWasAccepted(Boolean wasAccepted) {
 		this.wasAccepted = wasAccepted;
+	}
+
+	public String getDeliveryNumber() {
+		return deliveryNumber;
+	}
+
+	public void setDeliveryNumber(String deliveryNumber) {
+		this.deliveryNumber = deliveryNumber;
 	}
 }

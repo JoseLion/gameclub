@@ -110,11 +110,11 @@
                                     <tr ng-repeat="cross in availableGames">
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
                                         <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
-                                        <td>{{cross.publicUserObj.location.name}}</td>
+                                        <td>{{cross.publicUser.location.name}}</td>
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | number: 0}}</td>
                                         <td>
-                                            <stars ng-model="cross.publicUserObj.rating" ng-if="cross.publicUserObj.rating > 0"></stars>
-                                            <span ng-if="cross.publicUserObj.rating <= 0">Este usuario todavía no tiene calificaciones</span>
+                                            <stars ng-model="cross.publicUser.rating" ng-if="cross.publicUser.rating > 0"></stars>
+                                            <span ng-if="cross.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>
                                         </td>
                                         <td class="game-status">{{cross.integrity.name}}</td>
                                         <td>
@@ -128,7 +128,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 text-center" ng-if="!lastPage">
-                        <button class="btn btn-secundary small">Ver más propuestas</button>
+                        <button type="button" class="btn btn-secundary small" ng-click="loadMoreGames()" ng-if="!lastPage">Ver más propuestas</button>
                     </div>
                 </div>
 
@@ -155,16 +155,16 @@
 
                     <div class="col-md-9">
                         <label>Rating del prestador</label>
-                        <div class="rating-container" ng-if="loanGame.publicUserObj.rating > 0">
-                            <stars ng-model="loanGame.publicUserObj.rating" solid="light"></stars>
+                        <div class="rating-container" ng-if="loanGame.publicUser.rating > 0">
+                            <stars ng-model="loanGame.publicUser.rating" solid="light"></stars>
                         </div>
-                        <span class="value" ng-if="loanGame.publicUserObj.rating <= 0" ng-click="$state.go('gameclub.publicProfile')">Este usuario todavía no tiene calificaciones</span>
-                        <button type="button" class="btn btn-tertiary small dark" ng-click="viewOwnerRating()" ng-if="loanGame.publicUserObj.rating > 0">Ver Rating</button>
+                        <span class="value" ng-if="loanGame.publicUser.rating <= 0" ng-click="$state.go('gameclub.publicProfile')">Este usuario todavía no tiene calificaciones</span>
+                        <button type="button" class="btn btn-tertiary small dark" ng-click="viewOwnerRating()" ng-if="loanGame.publicUser.rating > 0">Ver Rating</button>
                     </div>
 
                     <div class="col-md-9">
                         <label>Ciudad del juego</label>
-                        <span class="value">{{loanGame.publicUserObj.location.name}}</span>
+                        <span class="value">{{loanGame.publicUser.location.name}}</span>
                     </div>
 
                     <div class="clearfix"></div>

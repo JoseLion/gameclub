@@ -1,5 +1,6 @@
 package ec.com.levelap.gameclub.module.tcc.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
@@ -32,7 +33,8 @@ public class LocationPrice extends BaseEntity{
 	@JoinColumn(name="destination", foreignKey=@ForeignKey(name="destination_location_fk"))
 	private Location destination;
 	
-	private Integer cost;
+	@Column(columnDefinition="DECIMAL(4, 8) DEFAULT 0.0")
+	private Double cost = 0.0;
 	
 	public Location getOrigin() {
 		return origin;
@@ -49,12 +51,12 @@ public class LocationPrice extends BaseEntity{
 	public void setDestination(Location destination) {
 		this.destination = destination;
 	}
-	
-	public Integer getCost() {
+
+	public Double getCost() {
 		return cost;
 	}
-	
-	public void setCost(Integer cost) {
+
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 }

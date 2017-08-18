@@ -1,4 +1,6 @@
 angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation) {
+    let currentPage = 0;
+
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
@@ -28,7 +30,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         });
 
         availableGames.$promise.then(function(data) {
-            console.log("availableGames: ", data.content);
             setPagedAvailableGames(data);
         });
 
@@ -122,6 +123,8 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.doFilter = function(filter) {
+        currentPage = 0;
+
         forEach($scope.filters, function(fltr) {
             if (fltr.icon == filter.icon && fltr.active == true) {
                 filter.desc = !filter.desc;
@@ -224,6 +227,11 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         });
     }
 
+    $scope.loadMoreGames = function() {
+        currentPage++;
+        filterAvailibleGames();
+    }
+
     function getInfoPercentage() {
         let percent = 0;
         let factor = 100 / 6;
@@ -263,9 +271,16 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     function setPagedAvailableGames(data) {
-        $scope.availableGames = data.content;
+        console.log("availableGames: ", data);
+        if ($scope.availableGames == null) {
+            $scope.availableGames = [];
+        }
+
+        //angular.extend($scope.availableGames, data.content);
+        Array.prototype.push.apply($scope.availableGames, data.content);
         $scope.lastPage = data.last;
-        $scope.currentPage = data.number;
+        currentPage = data.number;
+        console.log("size: ", $scope.availableGames.length);
     }
 
     function filterAvailibleGames() {
@@ -282,7 +297,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             consoleId: $scope.console.selected.console.id,
             sort: activeFilter != null ? activeFilter.sort : '',
             desc: activeFilter != null ? activeFilter.desc : true,
-            page: $scope.currentPage
+            page: currentPage
         };
 
         openRest("game/getAvailableGames").post(filter, function(data) {

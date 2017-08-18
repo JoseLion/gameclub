@@ -29,13 +29,6 @@
 		<link href="css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
 		<link href="css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
 		<link href="css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
-	</head>
-
-	<!-- ControllerAs syntax -->
-	<!-- Main controller with serveral data used in Inspinia theme on diferent view -->
-	<body ng-controller="MainCtrl as main" class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top">
-		<!-- Main view  -->
-		<div ui-view></div>
 
 		<!-- jQuery and Bootstrap -->
 		<script src="js/jquery/jquery-2.1.1.min.js"></script>
@@ -106,8 +99,6 @@
 		<script src="js/modules/avatar/config/avatar.route.js"></script>
 		<script src="js/modules/faq/faq.module.js"></script>
 		<script src="js/modules/faq/config/faq.route.js"></script>
-		<script src="js/modules/welcomeKit/welcomeKit.module.js"></script>
-		<script src="js/modules/welcomeKit/config/welcomeKit.route.js"></script>
 
 		<!-- Directives -->
 		<script src="js/modules/core/directives/checkbox.js"></script>
@@ -137,5 +128,9 @@
 		<script src="js/modules/core/services/getImageBase64.js"></script>
 		<script src="js/modules/core/services/excelReader.js"></script>
 		<script src="js/modules/core/services/cropImage.js"></script>
+	</head>
+
+	<body ng-controller="MainCtrl as main" class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top">
+		<div ui-view></div>
 	</body>
 </html>

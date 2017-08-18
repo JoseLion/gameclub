@@ -55,8 +55,8 @@ public class WelcomeKit extends BaseEntity {
 	@Column(name="confirmation_date")
 	private Date confirmationDate;
 	
-	@Column(name="delivery_number", columnDefinition="VARCHAR")
-	private String deliveryNumber;
+	@Column(columnDefinition="VARCHAR")
+	private String tracking;
 
 	public Message getMessage() {
 		return message;
@@ -130,11 +130,11 @@ public class WelcomeKit extends BaseEntity {
 		this.confirmationDate = confirmationDate;
 	}
 
-	public String getDeliveryNumber() {
-		return deliveryNumber;
+	public String getTracking() {
+		return tracking;
 	}
 
-	public void setDeliveryNumber(String deliveryNumber) {
-		this.deliveryNumber = deliveryNumber;
+	public void setTracking(String tracking) {
+		this.tracking = tracking;
 	}
 }

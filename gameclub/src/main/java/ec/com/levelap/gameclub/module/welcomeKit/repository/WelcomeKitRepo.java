@@ -22,14 +22,14 @@ public interface WelcomeKitRepo extends JpaRepository<WelcomeKit, Long> {
 				"w.confirmationDate AS confirmationDate, " +
 				"p AS publicUser, " +
 				"s AS shippingStatus, " +
-				"w.deliveryNumber AS deliveryNumber " +
+				"w.tracking AS tracking " +
 			"FROM WelcomeKit w " +
 				"LEFT JOIN w.publicUser p " +
 				"LEFT JOIN w.shippingStatus s " +
 			"WHERE " +
-				"w.wasComfirmed=TRUE AND " +
+				"w.wasConfirmed=TRUE AND " +
 				"(UPPER(p.name) LIKE UPPER('%' || :name || '%') OR UPPER(p.lastName) LIKE UPPER('%' || :name || '%') OR UPPER(p.name || ' ' || p.lastName) LIKE UPPER('%' || :name || '%')) AND " +
-				"UPPER(w.deliveryNumber) LIKE UPPER('%' || :deliveryNumber || '%') AND " +
+				"(w.tracking IS NULL OR UPPER(w.tracking) LIKE UPPER('%' || :tracking || '%')) AND " +
 				"(DATE(w.confirmationDate) BETWEEN DATE(:startDate) AND DATE(:endDate)) AND " +
 				"(:province IS NULL OR p.location.parent=:province) AND " +
 				"(:city IS NULL OR p.location=:city) AND " +
@@ -40,7 +40,7 @@ public interface WelcomeKitRepo extends JpaRepository<WelcomeKit, Long> {
 										@Param("endDate") Date endDate,
 										@Param("province") Location province,
 										@Param("city") Location city,
-										@Param("deliveryNumber") String deliveryNumber,
+										@Param("tracking") String tracking,
 										@Param("shippingStatus") Catalog shippingStatus,
 										Pageable page);
 	

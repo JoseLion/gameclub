@@ -18,5 +18,5 @@ public interface WelcomeKitLite {
 	@Value("#{target.shippingStatus}")
 	public Catalog getShippingStatus();
 	
-	public String getDeliveryNumber();
+	public String getTracking();
 }

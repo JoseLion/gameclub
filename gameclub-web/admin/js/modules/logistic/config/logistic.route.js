@@ -13,6 +13,12 @@ angular.module("Logistic").config(function($stateProvider) {
 					name: 'Logistic',
 					files: ['js/modules/logistic/controller/viewLogisticsCtrl.js']
 				}]);
+			},
+
+			welcomeKits: function(rest) {
+				return rest("welcomeKit/findWelcomeKits").post(function(data) {
+					return data;
+				});
 			}
 		}
 	});

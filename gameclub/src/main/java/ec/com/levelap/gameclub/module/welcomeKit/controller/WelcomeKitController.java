@@ -35,7 +35,7 @@ public class WelcomeKitController {
 			search = new Search();
 		}
 		
-		Page<WelcomeKitLite> welcomeKits = welcomeKitService.getWelcomeKitRepo().findWelcomeKits(search.name, search.startDate, search.endDate, search.province, search.city, search.deliveryNumber, search.shippingStatus, new PageRequest(search.page, Const.TABLE_SIZE));
+		Page<WelcomeKitLite> welcomeKits = welcomeKitService.getWelcomeKitRepo().findWelcomeKits(search.name, search.startDate, search.endDate, search.province, search.city, search.tracking, search.shippingStatus, new PageRequest(search.page, Const.TABLE_SIZE));
 		return new ResponseEntity<Page<WelcomeKitLite>>(welcomeKits, HttpStatus.OK);
 	}
 	
@@ -62,7 +62,7 @@ public class WelcomeKitController {
 		
 		public Location city;
 		
-		public String deliveryNumber;
+		public String tracking = "";
 		
 		public Catalog shippingStatus;
 		

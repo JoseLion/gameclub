@@ -95,21 +95,21 @@
 								<div class="form-row col-md-12">
 									<label class="col-md-3 control-label">Dirección</label>
 									<div class="col-md-9">
-										<textarea type="text" class="address" ng-model="kit.address" required ng-init="kit.address = currentUser.billingAddress" rows="3"></textarea>
+										<textarea type="text" class="address" ng-model="kit.address" required ng-init="kit.address = currentUser.billingAddress" rows="3" ng-disabled="kit.wasConfirmed"></textarea>
 									</div>
 								</div>
 
 								<div class="form-row col-md-12">
 									<label class="col-md-3 control-label">Teléfono</label>
 									<div class="col-md-9">
-										<input type="text" class="phone" ng-model="kit.phone" required ng-init="kit.phone = currentUser.contactPhone" onkeypress="return !isNaN(String.fromCharCode(event.charCode))">
+										<input type="text" class="phone" ng-model="kit.phone" required ng-init="kit.phone = currentUser.contactPhone" onkeypress="return !isNaN(String.fromCharCode(event.charCode))" ng-disabled="kit.wasConfirmed">
 									</div>
 								</div>
 
 								<div class="form-row col-md-12">
 									<label class="col-md-5 control-label">Persona de entrega</label>
 									<div class="col-md-7">
-										<input type="text" class="receiver" ng-model="kit.receiver" required ng-init="kit.receiver = currentUser.name + ' ' + currentUser.lastName">
+										<input type="text" class="receiver" ng-model="kit.receiver" required ng-init="kit.receiver = currentUser.name + ' ' + currentUser.lastName" ng-disabled="kit.wasConfirmed">
 									</div>
 								</div>
 
@@ -121,11 +121,20 @@
 								</div>
 
 								<div class="form-row col-md-12">
-									<button type="button" class="btn btn-tertiary full btn-xs" ng-click="confirmWelcomeKit(kit)">Confirmar envío</button>
+									<button type="button" class="btn btn-tertiary full btn-xs" ng-click="confirmWelcomeKit(kit)" ng-if="!kit.wasConfirmed">Confirmar envío</button>
 								</div>
 
 								<div class="clearfix"></div>
 							</form>
+						</div>
+
+						<div class="date">{{kit.confirmationDate | date: 'dd/MM/yy - HH:mm'}}</div>
+						<div class="blue-box small text-center" ng-if="kit.wasConfirmed">
+							<div class="confirmed col-md-12">
+								<span>Confirmado</span>
+							</div>
+							
+							<div class="clearfix"></div>
 						</div>
 					</div>
 

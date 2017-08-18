@@ -19,19 +19,20 @@ import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKitLite;
 public interface WelcomeKitRepo extends JpaRepository<WelcomeKit, Long> {
 	@Query(	"SELECT " +
 				"w.id AS id, " +
-				"w.creationDate AS creationDate, " +
+				"w.confirmationDate AS confirmationDate, " +
 				"p AS publicUser, " +
 				"s AS shippingStatus, " +
-				"w.wasConfirmed AS wasConfirmed " +
+				"w.deliveryNumber AS deliveryNumber " +
 			"FROM WelcomeKit w " +
 				"LEFT JOIN w.publicUser p " +
 				"LEFT JOIN w.shippingStatus s " +
 			"WHERE " +
+				"w.wasComfirmed=TRUE AND " +
 				"(UPPER(p.name) LIKE UPPER('%' || :name || '%') OR UPPER(p.lastName) LIKE UPPER('%' || :name || '%') OR UPPER(p.name || ' ' || p.lastName) LIKE UPPER('%' || :name || '%')) AND " +
-				"(DATE(w.creationDate) BETWEEN DATE(:startDate) AND DATE(:endDate)) AND " +
+				"UPPER(w.deliveryNumber) LIKE UPPER('%' || :deliveryNumber || '%') AND " +
+				"(DATE(w.confirmationDate) BETWEEN DATE(:startDate) AND DATE(:endDate)) AND " +
 				"(:province IS NULL OR p.location.parent=:province) AND " +
 				"(:city IS NULL OR p.location=:city) AND " +
-				"(:wasConfirmed IS NULL OR w.wasConfirmed=:wasConfirmed) AND " +
 				"(:shippingStatus IS NULL OR w.shippingStatus=:shippingStatus) " +
 			"ORDER BY w.creationDate DESC")
 	Page<WelcomeKitLite> findWelcomeKits(@Param("name") String name,
@@ -39,7 +40,7 @@ public interface WelcomeKitRepo extends JpaRepository<WelcomeKit, Long> {
 										@Param("endDate") Date endDate,
 										@Param("province") Location province,
 										@Param("city") Location city,
-										@Param("wasConfirmed") Boolean wasConfirmed,
+										@Param("deliveryNumber") String deliveryNumber,
 										@Param("shippingStatus") Catalog shippingStatus,
 										Pageable page);
 	

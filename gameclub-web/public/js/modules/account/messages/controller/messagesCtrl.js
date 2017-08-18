@@ -33,6 +33,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 			if (message.isLoan == false) {
 				rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
+					console.log("data: ", data);
 					$scope.welcomeKits = data;
 					
 					if (!message.read) {
@@ -44,7 +45,6 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 			if (message.isLoan == true) {
 				rest("message/getLoanMessage/:messageId").get({messageId: message.id}, function(data) {
-					console.log("data: ", data);
 					$scope.loan = data;
 
 					if (!message.read) {
@@ -83,7 +83,10 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 	$scope.openMap = function(obj) {
 		geolocation().result.then(function(pos) {
-			obj.geolocation = pos;
+			obj.geolocation = {
+				x: pos.lat,
+				y: pos.lng
+			};
 		});
 	}
 
@@ -107,19 +110,11 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 		if (isValid) {
 			sweet.default("Se confirmará el envío de tu Welcome Kit", function() {
-				let confirmObj = {
-					kitId: kit.id,
-					address: kit.address,
-					phone: kit.phone,
-					city: $rootScope.currentUser.location.other,
-					receiver: kit.receiver
-				};
-
-				rest("welcomeKit/confirmWelcomeKit").post(confirmObj, function(data) {
-					console.log("data: ", data);
+				rest("welcomeKit/confirmWelcomeKit").post(kit, function(data) {
+					let index = $scope.welcomeKits.indexOf(kit);
+					$scope.welcomeKits[index] = data;
 					sweet.close();
 				}, function(error) {
-					notif.danger("Error en servicio de TCC: " + error.data.message);
 					sweet.close();
 				});
 			});

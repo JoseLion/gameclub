@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.welcomeKit.service;
 
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
@@ -32,6 +34,7 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 	@Transactional
 	public WelcomeKit confirmWelcomeKit(WelcomeKit welcomeKit) throws ServletException {
 		welcomeKit.setWasConfirmed(true);
+		welcomeKit.setConfirmationDate(new Date());
 		welcomeKit = welcomeKitRepo.save(welcomeKit);
 		return welcomeKit;
 	}

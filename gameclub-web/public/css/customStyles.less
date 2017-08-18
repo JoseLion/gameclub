@@ -829,10 +829,14 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account #messages section.messages .inbox .detail .canvas .no-content{color:#949495;font-weight:bold;font-size:1.6em;position:absolute;transform:translate(-50%,-55%);left:50%;top:50%;}
 
 #account #messages section.messages .inbox .detail .canvas .text-black{color:black;}
+#account #messages section.messages .inbox .detail .canvas .text-center{text-align:center !important;}
 #account #messages section.messages .inbox .detail .canvas .red-box{z-index:0;position:relative;background-color:@color-secundary;margin:0% 6% 0% 3%;padding:3% 3%;border-radius:8px;color:white;font-weight:bold;line-height:120%;}
-#account #messages section.messages .inbox .detail .canvas .red-box::before{content:"";position:absolute;width:35px;height:35px;background-color:#e43345;border-radius:5px;transform:translate(-50%,-50%);top:100%;left:0%;z-index:-1;}
-#account #messages section.messages .inbox .detail .canvas .date{color:#949495;font-weight:bold;font-size:1.1em;text-align:center;margin-bottom:2%;}
+#account #messages section.messages .inbox .detail .canvas .red-box::before{content:"";position:absolute;width:35px;height:35px;background-color:@color-secundary;border-radius:5px;transform:translate(-50%,-50%);top:100%;left:0%;z-index:-1;}
+#account #messages section.messages .inbox .detail .canvas .date{color:#949495;font-weight:bold;font-size:1.1em;text-align:center;margin:2% 0%;}
 #account #messages section.messages .inbox .detail .canvas .btn-xs{font-size:0.54em;padding:0.15% 2%;border-radius:5px;margin-right:2%;}
+#account #messages section.messages .inbox .detail .canvas .blue-box{text-align:right;z-index:0;position:relative;background-color:@color-primary-alt;margin:0% 3% 0% 6%;padding:3% 3%;border-radius:8px;color:white;font-weight:bold;line-height:120%;}
+#account #messages section.messages .inbox .detail .canvas .blue-box::before{content:"";position:absolute;width:35px;height:35px;background-color:@color-primary-alt;border-radius:5px;transform:translate(50%,-50%);top:100%;right:0%;z-index:-1;}
+#account #messages section.messages .inbox .detail .canvas .blue-box.small{margin-left:55%;}
 
 #account #messages section.messages .inbox .detail .canvas .welcome-kit{padding:4%;}
 #account #messages section.messages .inbox .detail .canvas .welcome-kit .body{font-weight:bold;}
@@ -847,6 +851,8 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .receiver{width:125%;background-image:-webkit-linear-gradient(top,transparent,transparent 93%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 93%,white 0);background-size:100% 100%;-webkit-background-size:100% 100%;-moz-background-size:100% 100%;}
 #account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .gc-address{font-weight:bold;font-size:1.7em;cursor:pointer;}
 #account #messages section.messages .inbox .detail .canvas .welcome-kit .form-row .geo-check{width:30px;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmed{margin: 3% 0%;}
+#account #messages section.messages .inbox .detail .canvas .welcome-kit .confirmed span{border:2px solid white;padding:2% 15%;border-radius:5px;}
 
 #account #messages section.messages .inbox .detail .canvas .loan{padding:4%;}
 #account #messages section.messages .inbox .detail .canvas .loan .game-title{color:black;font-size:1.25em;line-height:155%;}

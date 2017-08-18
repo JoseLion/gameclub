@@ -124,6 +124,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
     $scope.doFilter = function(filter) {
         currentPage = 0;
+        $scope.availableGames = [];
 
         forEach($scope.filters, function(fltr) {
             if (fltr.icon == filter.icon && fltr.active == true) {

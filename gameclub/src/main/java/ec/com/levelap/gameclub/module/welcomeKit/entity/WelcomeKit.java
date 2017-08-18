@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.welcomeKit.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,6 +51,9 @@ public class WelcomeKit extends BaseEntity {
 	
 	@Column(name="was_confirmed", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean wasConfirmed = false;
+	
+	@Column(name="confirmation_date")
+	private Date confirmationDate;
 	
 	@Column(name="delivery_number", columnDefinition="VARCHAR")
 	private String deliveryNumber;
@@ -115,6 +120,14 @@ public class WelcomeKit extends BaseEntity {
 
 	public void setWasConfirmed(Boolean wasConfirmed) {
 		this.wasConfirmed = wasConfirmed;
+	}
+
+	public Date getConfirmationDate() {
+		return confirmationDate;
+	}
+
+	public void setConfirmationDate(Date confirmationDate) {
+		this.confirmationDate = confirmationDate;
 	}
 
 	public String getDeliveryNumber() {

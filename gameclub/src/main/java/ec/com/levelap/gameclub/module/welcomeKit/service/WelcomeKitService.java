@@ -6,12 +6,16 @@ import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import ec.com.levelap.base.service.BaseService;
+import ec.com.levelap.commons.catalog.Catalog;
+import ec.com.levelap.commons.catalog.CatalogRepo;
+import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
+import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKitLite;
 import ec.com.levelap.gameclub.module.welcomeKit.repository.WelcomeKitRepo;
+import ec.com.levelap.gameclub.utils.Code;
 
 @Service
 public class WelcomeKitService extends BaseService<WelcomeKit> {
@@ -22,21 +26,29 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 	@Autowired
 	private WelcomeKitRepo welcomeKitRepo;
 	
-	@Value("${tcc-configuration.key}")
-	private String tccKey;
+	@Autowired
+	private CatalogRepo catalogRepo;
 	
-	@Value("${tcc-configuration.account}")
-	private String tccAccount;
-	
-	@Value("${tcc-configuration.nit}")
-	private String tccNit;
+	@Autowired
+	private MessageRepo messageRepo;
 	
 	@Transactional
 	public WelcomeKit confirmWelcomeKit(WelcomeKit welcomeKit) throws ServletException {
+		Catalog shippingStatus = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
+		welcomeKit.setShippingStatus(shippingStatus);
 		welcomeKit.setWasConfirmed(true);
 		welcomeKit.setConfirmationDate(new Date());
 		welcomeKit = welcomeKitRepo.save(welcomeKit);
 		return welcomeKit;
+	}
+	
+	@Transactional
+	public WelcomeKitLite save(WelcomeKit kit) throws ServletException {
+		kit.getMessage().setRead(false);
+		kit.setMessage(messageRepo.saveAndFlush(kit.getMessage()));
+		kit = welcomeKitRepo.saveAndFlush(kit);
+		WelcomeKitLite kitLite = welcomeKitRepo.findById(kit.getId());
+		return kitLite;
 	}
 
 	public WelcomeKitRepo getWelcomeKitRepo() {

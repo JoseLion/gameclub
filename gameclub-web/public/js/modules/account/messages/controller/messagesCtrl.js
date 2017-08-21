@@ -1,4 +1,4 @@
-angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScope, messages, forEach, $filter, rest, geolocation, notif, sweet) {
+angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScope, messages, forEach, $filter, rest, geolocation, notif, sweet, $state, friendlyUrl) {
 	let page = 0;
 	messages.$promise.then(function(data) {
 		$scope.messages = data.content;
@@ -33,7 +33,6 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 			if (message.isLoan == false) {
 				rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
-					console.log("data: ", data);
 					$scope.welcomeKits = data;
 					
 					if (!message.read) {
@@ -120,6 +119,50 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			});
 			
 		}
+	}
+
+	$scope.goToGame = function(publicUserGame) {
+		$state.go('gameclub.game', {id: publicUserGame.game.id, consoleId: publicUserGame.console.id, name: friendlyUrl(publicUserGame.game.name)});
+	}
+
+	$scope.goTouser = function(user) {
+		$state.go('gameclub.publicProfile', {id: user.id, alias: friendlyUrl(user.name + ' ' + $filter('limitTo')(user.lastName, 1) + '.')});
+	}
+
+	$scope.cancelLoanRequest = function() {
+		sweet.default("Se cancelara tu solicitud de préstamo", function() {
+			rest("loan/cancelLoan/:id").get({id: $scope.loan.id}, function(data) {
+				notif.success("solicitud de préstamo cancelada");
+				$scope.loan = data;
+				sweet.close();
+			}, function(error) {
+				sweet.close();
+			});
+		});
+	}
+
+	$scope.acceptLoan = function() {
+		sweet.default("Aceptarás el prestamo de este juego", function() {
+			rest("loan/acceptLoan/:id").get({id: $scope.loan.id}, function(data) {
+				notif.success("Préstamo aceptado");
+				$scope.loan = data;
+				sweet.close();
+			}, function(error) {
+				sweet.close();
+			});
+		});
+	}
+
+	$scope.rejectLoan = function() {
+		sweet.default("Rechazarás el prestamo de este juego", function() {
+			rest("loan/rejectLoan/:id").get({id: $scope.loan.id}, function(data) {
+				notif.success("Préstamo rechazado");
+				$scope.loan = data;
+				sweet.close();
+			}, function(error) {
+				sweet.close();
+			});
+		});
 	}
 
 	function clearCanvas() {

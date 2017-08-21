@@ -51,6 +51,12 @@ public class WelcomeKitController {
 		return new ResponseEntity<WelcomeKit>(kit, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="save", method=RequestMethod.POST)
+	public ResponseEntity<WelcomeKitLite> save(@RequestBody WelcomeKit kit) throws ServletException {
+		WelcomeKitLite kitLite = welcomeKitService.save(kit);
+		return new ResponseEntity<WelcomeKitLite>(kitLite, HttpStatus.OK);
+	}
+	
 	private static class Search {
 		public String name = "";
 		

@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.loan.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,6 +72,9 @@ public class Loan extends BaseEntity {
 	
 	@Column(name="was_accepted", columnDefinition="BOOLEAN DEFAULT NULL")
 	private Boolean wasAccepted;
+	
+	@Column(name="accepted_date")
+	private Date acceptedDate;
 	
 	@Column(name="delivery_number", columnDefinition="VARCHAR")
 	private String deliveryNumber;
@@ -184,6 +189,14 @@ public class Loan extends BaseEntity {
 
 	public void setWasAccepted(Boolean wasAccepted) {
 		this.wasAccepted = wasAccepted;
+	}
+
+	public Date getAcceptedDate() {
+		return acceptedDate;
+	}
+
+	public void setAcceptedDate(Date acceptedDate) {
+		this.acceptedDate = acceptedDate;
 	}
 
 	public String getDeliveryNumber() {

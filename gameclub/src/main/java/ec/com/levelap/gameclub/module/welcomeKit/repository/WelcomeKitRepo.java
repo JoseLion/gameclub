@@ -35,7 +35,7 @@ public interface WelcomeKitRepo extends JpaRepository<WelcomeKit, Long> {
 				"(:city IS NULL OR p.location=:city) AND " +
 				"(:shippingStatus IS NULL OR w.shippingStatus=:shippingStatus) " +
 			"ORDER BY w.creationDate DESC")
-	Page<WelcomeKitLite> findWelcomeKits(@Param("name") String name,
+	public Page<WelcomeKitLite> findWelcomeKits(@Param("name") String name,
 										@Param("startDate") Date startDate,
 										@Param("endDate") Date endDate,
 										@Param("province") Location province,
@@ -44,5 +44,7 @@ public interface WelcomeKitRepo extends JpaRepository<WelcomeKit, Long> {
 										@Param("shippingStatus") Catalog shippingStatus,
 										Pageable page);
 	
-	List<WelcomeKit> findByMessageIdOrderByCreationDateDesc(Long messageId);
+	public List<WelcomeKit> findByMessageIdOrderByCreationDateDesc(Long messageId);
+	
+	public WelcomeKitLite findById(Long id);
 }

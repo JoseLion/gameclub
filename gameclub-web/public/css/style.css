@@ -9,8 +9,8 @@
 .row{margin-left:0;margin-right:0;padding:0 20%;}
 .no-padding-left{padding-left:0;}
 .no-padding-right{padding-right:0;}
-.text-center{text-align:center;}
-.text-right{text-align:right;}
-.text-left{text-align:left;}
+.text-center{text-align:center !important;}
+.text-right{text-align:right !important;}
+.text-left{text-align:left !important;}
 .upper-case{text-transform:uppercase;}
 button{outline:0!important;}

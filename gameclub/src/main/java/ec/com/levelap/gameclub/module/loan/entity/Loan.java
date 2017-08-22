@@ -16,6 +16,7 @@ import org.postgresql.geometric.PGpoint;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
+import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -76,8 +77,27 @@ public class Loan extends BaseEntity {
 	@Column(name="accepted_date")
 	private Date acceptedDate;
 	
-	@Column(name="delivery_number", columnDefinition="VARCHAR")
-	private String deliveryNumber;
+	@Column(name="box_number", columnDefinition="VARCHAR")
+	private String boxNumber;
+	
+	@Column(name="lender_confirmed", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean lenderConfirmed = false;
+	
+	@Column(name="gamer_confirmed", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean gamerConfirmed = false;
+	
+	@Column(name="lender_status_date")
+	private Date lenderStatusDate;
+	
+	@Column(name="gamer_status_date")
+	private Date gamerStatusDate;
+	
+	@Column(columnDefinition="VARCHAR")
+	private String tracking;
+	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="shipping_status", foreignKey=@ForeignKey(name="shipping_status_catalog_fk"))
+	private Catalog shipppingStatus;
 
 	public Message getGamerMessage() {
 		return gamerMessage;
@@ -199,11 +219,59 @@ public class Loan extends BaseEntity {
 		this.acceptedDate = acceptedDate;
 	}
 
-	public String getDeliveryNumber() {
-		return deliveryNumber;
+	public String getBoxNumber() {
+		return boxNumber;
 	}
 
-	public void setDeliveryNumber(String deliveryNumber) {
-		this.deliveryNumber = deliveryNumber;
+	public void setBoxNumber(String boxNumber) {
+		this.boxNumber = boxNumber;
+	}
+
+	public Boolean getLenderConfirmed() {
+		return lenderConfirmed;
+	}
+
+	public void setLenderConfirmed(Boolean lenderConfirmed) {
+		this.lenderConfirmed = lenderConfirmed;
+	}
+
+	public Boolean getGamerConfirmed() {
+		return gamerConfirmed;
+	}
+
+	public void setGamerConfirmed(Boolean gamerConfirmed) {
+		this.gamerConfirmed = gamerConfirmed;
+	}
+
+	public Date getLenderStatusDate() {
+		return lenderStatusDate;
+	}
+
+	public void setLenderStatusDate(Date lenderStatusDate) {
+		this.lenderStatusDate = lenderStatusDate;
+	}
+
+	public Date getGamerStatusDate() {
+		return gamerStatusDate;
+	}
+
+	public void setGamerStatusDate(Date gamerStatusDate) {
+		this.gamerStatusDate = gamerStatusDate;
+	}
+
+	public String getTracking() {
+		return tracking;
+	}
+
+	public void setTracking(String tracking) {
+		this.tracking = tracking;
+	}
+
+	public Catalog getShipppingStatus() {
+		return shipppingStatus;
+	}
+
+	public void setShipppingStatus(Catalog shipppingStatus) {
+		this.shipppingStatus = shipppingStatus;
 	}
 }

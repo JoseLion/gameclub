@@ -62,4 +62,16 @@ public class LoanController {
 		
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="confirmLender", method=RequestMethod.POST)
+	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan) throws ServletException {
+		loan = loanService.confirmLoan(loan, false);
+		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="confirmGamer", method=RequestMethod.POST)
+	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan) throws ServletException {
+		loan = loanService.confirmLoan(loan, true);
+		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
+	}
 }

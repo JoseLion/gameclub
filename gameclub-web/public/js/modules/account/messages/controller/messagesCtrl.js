@@ -46,6 +46,12 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				rest("message/getLoanMessage/:messageId").get({messageId: message.id}, function(data) {
 					$scope.loan = data;
 
+					if ($rootScope.currentUser.id != $scope.loan.gamer.id) {
+						$scope.loan.lenderAddress = $scope.loan.lenderAddress != null ? $scope.loan.lenderAddress : $rootScope.currentUser.billingAddress;
+						$scope.loan.lenderGeolocation = $scope.loan.lenderGeolocation != null ? $scope.loan.lenderGeolocation : $rootScope.currentUser.geolocation;
+						$scope.loan.lenderReceiver = $scope.loan.lenderReceiver != null ? $scope.loan.lenderReceiver : $rootScope.currentUser.receiver;
+					}
+
 					if (!message.read) {
 						message.read = true;
 						$rootScope.currentUser.unreadMessages--;
@@ -80,12 +86,19 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		return selected;
 	}
 
-	$scope.openMap = function(obj) {
+	$scope.openMap = function(obj, property) {
 		geolocation().result.then(function(pos) {
-			obj.geolocation = {
-				x: pos.lat,
-				y: pos.lng
-			};
+			if (property == null) {
+				obj.geolocation = {
+					x: pos.lat,
+					y: pos.lng
+				};
+			} else {
+				obj[property] = {
+					x: pos.lat,
+					y: pos.lng
+				};
+			}
 		});
 	}
 
@@ -132,7 +145,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	$scope.cancelLoanRequest = function() {
 		sweet.default("Se cancelara tu solicitud de préstamo", function() {
 			rest("loan/cancelLoan/:id").get({id: $scope.loan.id}, function(data) {
-				notif.success("solicitud de préstamo cancelada");
+				notif.success("Préstamo cancelado");
 				$scope.loan = data;
 				sweet.close();
 			}, function(error) {
@@ -142,7 +155,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	}
 
 	$scope.acceptLoan = function() {
-		sweet.default("Aceptarás el prestamo de este juego", function() {
+		sweet.default("Aceptarás el préstamo de este juego", function() {
 			rest("loan/acceptLoan/:id").get({id: $scope.loan.id}, function(data) {
 				notif.success("Préstamo aceptado");
 				$scope.loan = data;
@@ -154,7 +167,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	}
 
 	$scope.rejectLoan = function() {
-		sweet.default("Rechazarás el prestamo de este juego", function() {
+		sweet.default("Rechazarás el préstamo de este juego", function() {
 			rest("loan/rejectLoan/:id").get({id: $scope.loan.id}, function(data) {
 				notif.success("Préstamo rechazado");
 				$scope.loan = data;
@@ -163,6 +176,52 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				sweet.close();
 			});
 		});
+	}
+
+	$scope.confirmLender = function() {
+		let isValid = true;
+
+		if ($scope.loan.lenderAddress == null || $scope.loan.lenderAddress == '') {
+			notif.danger("El campo dirección es requerido para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.lenderGeolocation == null) {
+			notif.danger("La geolocalización es requerida para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.lenderReceiver == null || $scope.loan.lenderReceiver == '') {
+			notif.danger("El campo Persona de Entrega es requerido para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.boxNumber == null || $scope.loan.boxNumber == '') {
+			notif.danger("El número de caja es requerido para continuar");
+			isValid = false;
+		}
+
+		if (isValid) {
+			sweet.default("Confirmaras el préstamo de forma definitiva", function() {
+				$scope.loan.isDisabled = true;
+
+				rest("loan/confirmLender").post($scope.loan, function(data) {
+					$scope.loan = data;
+					notif.success("Préstamo confirmado");
+					sweet.close();
+				});
+
+				if ($scope.loan.saveChanges == true) {
+					$rootScope.currentUser.billingAddress = $scope.loan.lenderAddress;
+					$rootScope.currentUser.geolocation = $scope.loan.lenderGeolocation;
+					$rootScope.currentUser.receiver = $scope.loan.lenderReceiver;
+
+					rest("publicUser/save").post($rootScope.currentUser, function(data) {
+						$rootScope.currentUser = data;
+					});
+				}
+			});
+		}
 	}
 
 	function clearCanvas() {

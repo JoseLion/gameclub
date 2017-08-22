@@ -50,9 +50,26 @@ public class LoanService extends BaseService<Loan> {
 	}
 	
 	@Transactional
+	public Loan acceptOrRejectLoan(Long id, boolean wasAccepted) {
+		Loan loan = loanRepo.findOne(id);
+		loan.setWasAccepted(wasAccepted);
+		
+		if (wasAccepted) {
+			loan.setAcceptedDate(new Date());
+		}
+		
+		loan = loanRepo.save(loan);
+		
+		loan.getGamerMessage().setRead(false);
+		messageService.getMessageRepo().save(loan.getGamerMessage());
+		
+		return loan;
+	}
+	
+	@Transactional
 	public Loan confirmLoan(Loan loan, boolean isGamer) throws ServletException {
 		Catalog noTracking = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
-		loan.setShipppingStatus(noTracking);
+		loan.setShippingStatus(noTracking);
 		
 		if (!isGamer) {
 			loan.setLenderConfirmed(true);

@@ -45,11 +45,18 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			if (message.isLoan == true) {
 				rest("message/getLoanMessage/:messageId").get({messageId: message.id}, function(data) {
 					$scope.loan = data;
+					console.log("$scope.loan: ", $scope.loan);
 
 					if ($rootScope.currentUser.id != $scope.loan.gamer.id) {
 						$scope.loan.lenderAddress = $scope.loan.lenderAddress != null ? $scope.loan.lenderAddress : $rootScope.currentUser.billingAddress;
 						$scope.loan.lenderGeolocation = $scope.loan.lenderGeolocation != null ? $scope.loan.lenderGeolocation : $rootScope.currentUser.geolocation;
 						$scope.loan.lenderReceiver = $scope.loan.lenderReceiver != null ? $scope.loan.lenderReceiver : $rootScope.currentUser.receiver;
+					}
+
+					if ($rootScope.currentUser.id == $scope.loan.gamer.id) {
+						//$scope.loan.lenderAddress = $scope.loan.lenderAddress != null ? $scope.loan.lenderAddress : $rootScope.currentUser.billingAddress;
+						$scope.loan.gamerGeolocation = $scope.loan.gamerGeolocation != null ? $scope.loan.gamerGeolocation : $rootScope.currentUser.geolocation;
+						//$scope.loan.lenderReceiver = $scope.loan.lenderReceiver != null ? $scope.loan.lenderReceiver : $rootScope.currentUser.receiver;
 					}
 
 					if (!message.read) {

@@ -1,7 +1,5 @@
 package ec.com.levelap.gameclub.module.loan.controller;
 
-import java.util.Date;
-
 import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,20 +44,13 @@ public class LoanController {
 	
 	@RequestMapping(value="acceptLoan/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Loan> acceptLoan(@PathVariable Long id) throws ServletException {
-		Loan loan = loanService.getLoanRepo().findOne(id);
-		loan.setWasAccepted(true);
-		loan.setAcceptedDate(new Date());
-		loan = loanService.getLoanRepo().save(loan);
-		
+		Loan loan = loanService.acceptOrRejectLoan(id, true);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="rejectLoan/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Loan> rejectLoan(@PathVariable Long id) throws ServletException {
-		Loan loan = loanService.getLoanRepo().findOne(id);
-		loan.setWasAccepted(false);
-		loan = loanService.getLoanRepo().save(loan);
-		
+		Loan loan = loanService.acceptOrRejectLoan(id, false);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	

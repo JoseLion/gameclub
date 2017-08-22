@@ -180,6 +180,57 @@
 							</div>
 
 							<div ng-include="'firstLoanAnswer.html'" scope="this"></div>
+
+							<div class="date" ng-if="loan.wasAccepted == true">{{loan.acceptedDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box" ng-if="loan.wasAccepted == true">
+								<span>Hola {{currentUser.name}},</span>
+								<br>
+								<br>
+								<form ng-init="loan.isDisabled = true">
+									<div class="decorator" ng-class="{'disabled': loan.isDisabled}">
+										<div class="form-group">
+											<span>Dirección de retiro actual: </span><span class="text-sm">edita tu información si es necesario</span>
+										</div>
+
+										<div class="form-group address" ng-class="{'disabled': loan.isDisabled}">
+											<label>Dirección</label>
+											<textarea type="text" ng-model="loan.gamerAddress" rows="3" ng-disabled="loan.isDisabled"></textarea>
+										</div>
+
+										<div class="form-group geolocation" ng-class="{'disabled': loan.isDisabled}">
+											<label><i class="gc gc-address" ng-click="!loan.isDisabled ? openMap(loan, 'gamerGeolocation') : null"></i></label>
+											<img src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
+										</div>
+
+										<div class="form-group receiver" ng-class="{'disabled': loan.isDisabled}">
+											<label>Persona de entrega</label>
+											<input type="text" ng-model="loan.gamerReceiver" ng-disabled="loan.isDisabled">
+										</div>
+
+										<div class="form-group check" ng-class="{'disabled': loan.isDisabled}">
+											<div class="box" ng-class="loan.saveChanges ? 'checked' : ''" ng-click="!loan.isDisabled ? (loan.saveChanges = !loan.saveChanges) : null"></div>
+											<span class="text-black text-sm">Guardar información para siguiente préstamo</span>
+										</div>
+									</div>
+									<br>
+									<br>
+									<div class="alert-icon">
+										<img src="img/messages/alert.svg">
+									</div>
+									<div class="alert-text">
+										<span>Completa correctamente la información de retiro.</span>
+										<br>
+										<span>Si no es correcta no podremos recoger el juego.</span>
+									</div>
+									<br>
+									<br>
+									<span>Te notificaremos cuando el envío se haya generado.</span>
+									<br>
+									<br>
+									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmGamer()" ng-if="!loan.gamerConfirmed && loan.status">Continuar préstamo</button>
+									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.gamerConfirmed && loan.status">Editar información destino</button>
+								</form>
+							</div>
 						</div>
 
 
@@ -265,18 +316,8 @@
 									<br>
 									<br>
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmLender()" ng-if="!loan.lenderConfirmed && loan.status">Continuar préstamo</button>
-									<button type="button" class="btn btn-xs btn-tertiary" ng-click="cancelLoanRequest()" ng-if="!loan.lenderConfirmed && loan.status">Cancelar préstamo</button>
 									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.lenderConfirmed && loan.status">Editar información destino</button>
 								</form>
-							</div>
-
-							<div class="date" ng-if="!loan.status">{{loan.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
-							<div class="blue-box small-box text-center" ng-if="!loan.status">
-								<div class="box-label col-md-12">
-									<span>Préstamo Cancelado</span>
-								</div>
-								
-								<div class="clearfix"></div>
 							</div>
 
 							<div class="date" ng-if="loan.lenderConfirmed">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
@@ -315,7 +356,7 @@
 										</div>
 
 										<div class="form-group">
-											<span>Estado del envío: </span><span class="text-black">{{loan.shippingStatus}}</span>
+											<span>Estado del envío: </span><span class="text-black">{{loan.shippingStatus.name}}</span>
 										</div>
 									</div>
 								</form>

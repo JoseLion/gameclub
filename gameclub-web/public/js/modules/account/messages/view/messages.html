@@ -176,7 +176,7 @@
 								<span>Una vez aceptado el préstamo, se te notificará la fecha exacta que llegará el juego.</span>
 								<br>
 								<br>
-								<button type="button" class="btn btn-xs btn-tertiary" ng-click="cancelLoanRequest(loan)" ng-if="loan.status">Cancelar pedido</button>
+								<button type="button" class="btn btn-xs btn-tertiary" ng-click="cancelLoanRequest(loan)" ng-if="loan.status && !loan.wasAccepted">Cancelar pedido</button>
 							</div>
 
 							<div ng-include="'firstLoanAnswer.html'" scope="this"></div>
@@ -227,7 +227,7 @@
 									<span>Te notificaremos cuando el envío se haya generado.</span>
 									<br>
 									<br>
-									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmGamer()" ng-if="!loan.gamerConfirmed && loan.status">Continuar préstamo</button>
+									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="continueToPayment()" ng-if="!loan.gamerConfirmed && loan.status">Continuar préstamo</button>
 									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.gamerConfirmed && loan.status">Editar información destino</button>
 								</form>
 							</div>

@@ -34,6 +34,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			if (message.isLoan == false) {
 				rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
 					$scope.welcomeKits = data;
+					canvasToBottom();
 					
 					if (!message.read) {
 						message.read = true;
@@ -45,7 +46,6 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			if (message.isLoan == true) {
 				rest("message/getLoanMessage/:messageId").get({messageId: message.id}, function(data) {
 					$scope.loan = data;
-					console.log("$scope.loan: ", $scope.loan);
 
 					if ($rootScope.currentUser.id != $scope.loan.gamer.id) {
 						$scope.loan.lenderAddress = $scope.loan.lenderAddress != null ? $scope.loan.lenderAddress : $rootScope.currentUser.billingAddress;
@@ -54,10 +54,10 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					}
 
 					if ($rootScope.currentUser.id == $scope.loan.gamer.id) {
-						//$scope.loan.lenderAddress = $scope.loan.lenderAddress != null ? $scope.loan.lenderAddress : $rootScope.currentUser.billingAddress;
 						$scope.loan.gamerGeolocation = $scope.loan.gamerGeolocation != null ? $scope.loan.gamerGeolocation : $rootScope.currentUser.geolocation;
-						//$scope.loan.lenderReceiver = $scope.loan.lenderReceiver != null ? $scope.loan.lenderReceiver : $rootScope.currentUser.receiver;
 					}
+
+					canvasToBottom();
 
 					if (!message.read) {
 						message.read = true;
@@ -155,6 +155,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				notif.success("Préstamo cancelado");
 				$scope.loan = data;
 				sweet.close();
+				canvasToBottom();
 			}, function(error) {
 				sweet.close();
 			});
@@ -167,6 +168,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				notif.success("Préstamo aceptado");
 				$scope.loan = data;
 				sweet.close();
+				canvasToBottom();
 			}, function(error) {
 				sweet.close();
 			});
@@ -179,6 +181,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				notif.success("Préstamo rechazado");
 				$scope.loan = data;
 				sweet.close();
+				canvasToBottom();
 			}, function(error) {
 				sweet.close();
 			});
@@ -216,6 +219,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					$scope.loan = data;
 					notif.success("Préstamo confirmado");
 					sweet.close();
+					canvasToBottom();
 				});
 
 				if ($scope.loan.saveChanges == true) {
@@ -234,5 +238,25 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	function clearCanvas() {
 		$scope.welcomeKits = null;
 		$scope.loan = null;
+	}
+
+	function canvasToBottom(canvas, i) {
+		if (i == null) {
+			setTimeout(function() {
+				canvasToBottom(null, 10);
+			}, 10);
+		} else {
+			canvas = canvas != null ? canvas : angular.element(".canvas");
+			let height = canvas[0].scrollHeight - canvas[0].offsetHeight;
+			let time = 3000;
+
+			setTimeout(function() {
+				if (i < height) {
+					canvas[0].scrollTop = i;
+					i += 10;
+					canvasToBottom(canvas, i);
+				}
+			}, Math.round(10*time/height));
+		}
 	}
 });

@@ -21,6 +21,12 @@ angular.module("Logistic").config(function($stateProvider) {
 				});
 			},
 
+			loans: function(rest) {
+				return rest("loan/findLoans").post(function(data) {
+					return data;
+				});
+			},
+
 			shippingCatalog: function(rest, Const) {
 				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.shippingCatalog}, function(data) {
 					return data;

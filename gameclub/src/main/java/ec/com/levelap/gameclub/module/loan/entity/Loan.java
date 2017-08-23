@@ -98,6 +98,9 @@ public class Loan extends BaseEntity {
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JoinColumn(name="shipping_status", foreignKey=@ForeignKey(name="shipping_status_catalog_fk"))
 	private Catalog shippingStatus;
+	
+	@Column(name="transaction_ticket", columnDefinition="VARCHAR")
+	private String transactionTicket;
 
 	public Message getGamerMessage() {
 		return gamerMessage;
@@ -273,5 +276,13 @@ public class Loan extends BaseEntity {
 
 	public void setShippingStatus(Catalog shippingStatus) {
 		this.shippingStatus = shippingStatus;
+	}
+
+	public String getTransactionTicket() {
+		return transactionTicket;
+	}
+
+	public void setTransactionTicket(String transactionTicket) {
+		this.transactionTicket = transactionTicket;
 	}
 }

@@ -1,6 +1,7 @@
 package ec.com.levelap.gameclub.module.loan.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -20,6 +21,9 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.kushki.KushkiException;
+import ec.com.levelap.kushki.object.KushkiAmount;
+import ec.com.levelap.kushki.service.KushkiService;
 
 @Service
 public class LoanService extends BaseService<Loan> {
@@ -38,6 +42,9 @@ public class LoanService extends BaseService<Loan> {
 	
 	@Autowired
 	private CatalogRepo catalogRepo;
+	
+	@Autowired
+	private KushkiService kushkiService;
 	
 	@Transactional
 	public void requestGame(Loan loan) throws ServletException {
@@ -66,14 +73,21 @@ public class LoanService extends BaseService<Loan> {
 		return loan;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Transactional
-	public Loan confirmLoan(Loan loan, boolean isGamer) throws ServletException {
+	public Loan confirmLoan(Loan loan, boolean isGamer) throws ServletException, KushkiException {
 		Catalog noTracking = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
 		loan.setShippingStatus(noTracking);
 		
 		if (!isGamer) {
 			loan.setLenderConfirmed(true);
 			loan.setLenderStatusDate(new Date());
+			
+			Map<String, Object> optionals = new HashMap<>();
+			optionals.put("amount", new KushkiAmount(loan.getCost()));
+			String ticket = kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), optionals);
+			
+			loan.setTransactionTicket(ticket);
 		} else {
 			loan.setGamerConfirmed(true);
 			loan.setGamerStatusDate(new Date());

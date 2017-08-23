@@ -186,7 +186,7 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<form ng-init="loan.isDisabled = true">
+								<form>
 									<div class="decorator" ng-class="{'disabled': loan.isDisabled}">
 										<div class="form-group">
 											<span>Dirección de retiro actual: </span><span class="text-sm">edita tu información si es necesario</span>
@@ -213,6 +213,12 @@
 										</div>
 									</div>
 									<br>
+									<div class="final-cost">
+										<span class="text-lg upper-case">Costo shipping final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
+									</div>
+									<br>
+									<span class="upper-case">Forma de pago: </span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span>
+									<br>
 									<br>
 									<div class="alert-icon">
 										<img src="img/messages/alert.svg">
@@ -224,10 +230,10 @@
 									</div>
 									<br>
 									<br>
-									<span>Te notificaremos cuando el envío se haya generado.</span>
+									<span>Te notificaremos cuando tu prestamo sea aceptado.</span>
 									<br>
 									<br>
-									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="continueToPayment()" ng-if="!loan.gamerConfirmed && loan.status">Continuar préstamo</button>
+									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmGamer()" ng-if="!loan.gamerConfirmed && loan.status">Continuar préstamo</button>
 									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.gamerConfirmed && loan.status">Editar información destino</button>
 								</form>
 							</div>
@@ -272,7 +278,7 @@
 								<span>Hora de retiro: </span><span class="text-black">XXhXX</span><span> - </span><span class="text-black">XXhXX</span>
 								<br>
 								<br>
-								<form ng-init="loan.isDisabled = true">
+								<form>
 									<div class="decorator" ng-class="{'disabled': loan.isDisabled}">
 										<div class="form-group">
 											<span>Dirección de retiro actual: </span><span class="text-sm">edita tu información si es necesario</span>

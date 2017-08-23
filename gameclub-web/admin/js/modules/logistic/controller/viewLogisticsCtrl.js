@@ -1,4 +1,4 @@
-angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, welcomeKits, shippingCatalog, getDTOptions, Const, $uibModal) {
+angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, welcomeKits, loans, shippingCatalog, getDTOptions, Const, $uibModal) {
 	$scope.searchW = {};
 	$scope.totalElementsW;
 	$scope.beginningW;
@@ -10,8 +10,26 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, welc
 
 	$scope.dtColumnDefsW = getDTOptions.notSortableAll(6);
 
+	$scope.searchL = {};
+	$scope.totalElementsL;
+	$scope.beginningL;
+	$scope.endL;
+
+	$scope.dtOptionsL = getDTOptions.paged().withOption('infoCallback', function(settings, start, end, max, total, pre) {
+		return getDTOptions.infoCallback($scope.totalElementsL, $scope.beginningL, $scope.endL);
+	});
+
+	$scope.dtColumnDefsL = getDTOptions.notSortableAll(8);
+
+	//-------------------------------------------------------------------------------------------------------------------------------------
+
 	welcomeKits.$promise.then(function(data) {
 		setPagedWelcomeKits(data);
+	});
+
+	loans.$promise.then(function(data) {
+		console.log("loans: ", data);
+		setPagedLoans(data);
 	});
 
 	shippingCatalog.$promise.then(function(data) {
@@ -19,8 +37,14 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, welc
 	});
 
 	$scope.findWelcomeKits = function() {
-		rest("game/findGames").post($scope.search, function(data) {
+		rest("welcomeKit/findWelcomeKits").post($scope.search, function(data) {
 			setPagedWelcomeKits(data);
+		});
+	}
+
+	$scope.findLoans = function() {
+		rest("loan/findLoans").post($scope.search, function(data) {
+			setPagedLoans(data);
 		});
 	}
 
@@ -29,10 +53,22 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, welc
 		$scope.findWelcomeKits();
 	}
 
+	$scope.clearLoans = function() {
+		$scope.searchL = {};
+		$scope.findLoans();
+	}
+
 	$scope.welcomeKitsPageChanged = function() {
 		$scope.searchW.page = $scope.currentPageW - 1;
 		$scope.findWelcomeKits();
 	}
+
+	$scope.LoansPageChanged = function() {
+		$scope.searchL.page = $scope.currentPageL - 1;
+		$scope.findLoans();
+	}
+
+	//-------------------------------------------------------------------------------------------------------------------------------------
 
 	$scope.viewWelcomeKit = function(kit) {
 		$uibModal.open({
@@ -57,7 +93,7 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, welc
 		});
 	}
 
-	$scope.setTracking = function(kit) {
+	$scope.setWelcomeKitTracking = function(kit) {
 		let modal = $uibModal.open({
 			size: 'md',
 			backdrop: 'static',
@@ -91,11 +127,21 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, welc
 		});
 	}
 
+	//-------------------------------------------------------------------------------------------------------------------------------------
+
 	function setPagedWelcomeKits(data) {
 		$scope.welcomeKits = data.content;
 		$scope.totalElementsW = data.totalElements;
 		$scope.beginningW = (Const.tableSize * data.number) + 1;
 		$scope.endW = $scope.beginningW + data.numberOfElements - 1;
 		$scope.totalPagesW = data.totalPages;
+	}
+
+	function setPagedLoans(data) {
+		$scope.loans = data.content;
+		$scope.totalElementsL = data.totalElements;
+		$scope.beginningL = (Const.tableSize * data.number) + 1;
+		$scope.endL = $scope.beginningL + data.numberOfElements - 1;
+		$scope.totalPagesL = data.totalPages;
 	}
 });

@@ -1,8 +1,12 @@
 package ec.com.levelap.gameclub.module.loan.controller;
 
+import java.util.Date;
+
 import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.com.levelap.commons.catalog.Catalog;
+import ec.com.levelap.commons.location.Location;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
+import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 import ec.com.levelap.gameclub.module.loan.service.LoanService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
+import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.kushki.KushkiException;
 
 @RestController
 @RequestMapping(value="api/loan", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -25,6 +34,16 @@ public class LoanController {
 	
 	@Autowired
 	private PublicUserService publicUserService;
+	
+	@RequestMapping(value="findLoans", method=RequestMethod.POST)
+	public ResponseEntity<Page<LoanLite>> findLoans(@RequestBody(required=false) Search search) throws ServletException {
+		if (search == null) {
+			search = new Search();
+		}
+		
+		Page<LoanLite> loans = loanService.getLoanRepo().findLoans(search.lender, search.gamer, search.lenderProvince, search.lenderCity, search.gamerProvice, search.gamerCity, search.shippingStatus, search.tracking, search.startDate, search.endDate, new PageRequest(search.page, Const.TABLE_SIZE));
+		return new ResponseEntity<Page<LoanLite>>(loans, HttpStatus.OK);
+	}
 	
 	@RequestMapping(value="requestGame", method=RequestMethod.POST)
 	public ResponseEntity<PublicUser> requestGame(@RequestBody Loan loan) throws ServletException {
@@ -55,14 +74,38 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="confirmLender", method=RequestMethod.POST)
-	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan) throws ServletException {
+	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan) throws ServletException, KushkiException {
 		loan = loanService.confirmLoan(loan, false);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="confirmGamer", method=RequestMethod.POST)
-	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan) throws ServletException {
+	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan) throws ServletException, KushkiException {
 		loan = loanService.confirmLoan(loan, true);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
+	}
+	
+	private static class Search {
+		public String lender = "";
+		
+		public String gamer = "";
+		
+		public Location lenderProvince;
+		
+		public Location lenderCity;
+		
+		public Location gamerProvice;
+		
+		public Location gamerCity;
+		
+		public Catalog shippingStatus;
+		
+		public String tracking = "";
+		
+		public Date startDate = new Date(0);
+		
+		public Date endDate = new Date();
+		
+		public Integer page = 0;
 	}
 }

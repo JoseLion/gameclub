@@ -46,6 +46,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			if (message.isLoan == true) {
 				rest("message/getLoanMessage/:messageId").get({messageId: message.id}, function(data) {
 					$scope.loan = data;
+					$scope.loan.isDisabled = true;
 
 					if ($rootScope.currentUser.id != $scope.loan.gamer.id) {
 						$scope.loan.lenderAddress = $scope.loan.lenderAddress != null ? $scope.loan.lenderAddress : $rootScope.currentUser.billingAddress;
@@ -235,28 +236,71 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		}
 	}
 
+	$scope.confirmGamer = function() {
+		let isValid = true;
+
+		if ($scope.loan.gamerAddress == null || $scope.loan.gamerAddress == '') {
+			notif.danger("El campo dirección es requerido para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.gamerGeolocation == null) {
+			notif.danger("La geolocalización es requerida para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.gamerReceiver == null || $scope.loan.gamerReceiver == '') {
+			notif.danger("El campo Persona de Entrega es requerido para continuar");
+			isValid = false;
+		}
+
+		if (isValid) {
+			sweet.default("Se realizará el pago del préstamo", function() {
+				$scope.loan.isDisabled = true;
+
+				rest("loan/confirmGamer").post($scope.loan, function(data) {
+					$scope.loan = data;
+					notif.success("Pago realizado con éxito");
+					sweet.close();
+					canvasToBottom();
+				});
+
+				if ($scope.loan.saveChanges == true) {
+					$rootScope.currentUser.billingAddress = $scope.loan.gamerAddress;
+					$rootScope.currentUser.geolocation = $scope.loan.gamerGeolocation;
+					$rootScope.currentUser.receiver = $scope.loan.gamerReceiver;
+
+					rest("publicUser/save").post($rootScope.currentUser, function(data) {
+						$rootScope.currentUser = data;
+					});
+				}
+			});
+		}
+	}
+
 	function clearCanvas() {
 		$scope.welcomeKits = null;
 		$scope.loan = null;
 	}
 
 	function canvasToBottom(canvas, i) {
+		canvas = canvas != null ? canvas : angular.element(".canvas");
+		let height = canvas[0].scrollHeight - canvas[0].offsetHeight;
+		let pixels = 10;
+		let time = 500;
+
 		if (i == null) {
 			setTimeout(function() {
-				canvasToBottom(null, 10);
+				canvasToBottom(null, pixels);
 			}, 10);
 		} else {
-			canvas = canvas != null ? canvas : angular.element(".canvas");
-			let height = canvas[0].scrollHeight - canvas[0].offsetHeight;
-			let time = 3000;
-
 			setTimeout(function() {
 				if (i < height) {
 					canvas[0].scrollTop = i;
-					i += 10;
+					i += pixels;
 					canvasToBottom(canvas, i);
 				}
-			}, Math.round(10*time/height));
+			}, Math.round(pixels*time/height));
 		}
 	}
 });

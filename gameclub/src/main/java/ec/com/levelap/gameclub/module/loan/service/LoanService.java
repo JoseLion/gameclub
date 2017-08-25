@@ -1,10 +1,14 @@
 package ec.com.levelap.gameclub.module.loan.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
@@ -16,6 +20,7 @@ import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
+import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
@@ -27,6 +32,7 @@ import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.kushki.KushkiException;
 import ec.com.levelap.kushki.object.KushkiAmount;
 import ec.com.levelap.kushki.service.KushkiService;
+import ec.com.levelap.mail.MailParameters;
 import ec.com.levelap.taskScheduler.LevelapTaskScheduler;
 
 @Service
@@ -56,14 +62,27 @@ public class LoanService extends BaseService<Loan> {
 	@Autowired
 	private LevelapTaskScheduler levelapTaskScheduler;
 	
+	@Autowired
+	private MailService mailService;
+	
 	@Transactional
-	public void requestGame(Loan loan) throws ServletException {
+	public void requestGame(Loan loan) throws ServletException, MessagingException {
 		Map<String, Message> messages = messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
 		PublicUser gamer = publicUserService.getCurrentUser();
 		loan.setGamer(gamer);
 		loan.setGamerMessage(messages.get(Const.GAMER));
 		loan.setLenderMessage(messages.get(Const.LENDER));
 		loanRepo.save(loan);
+		
+		MailParameters mailParameters = new MailParameters();
+		mailParameters.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
+		Map<String, String> params = new HashMap<>();
+		params.put("user", loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
+		params.put("game", loan.getPublicUserGame().getGame().getName());
+		params.put("console", loan.getPublicUserGame().getConsole().getName());
+		params.put("cost", "" + loan.getPublicUserGame().getCost().intValue());
+
+		mailService.sendMailWihTemplate(mailParameters, "MSGREQ", params);
 	}
 	
 	@Transactional
@@ -139,13 +158,30 @@ public class LoanService extends BaseService<Loan> {
 					
 					restoreRepo.save(restore);
 					
-					// TODO SEND REMINDING MAILS TO ADMIN AND BOTH USERS
+					try {
+						sendRemindingMails(taskLoan);
+					} catch (MessagingException e) {
+						e.printStackTrace();
+					}
 				}
 			});
 		}
 		
 		loan = loanRepo.save(loan);
 		return loan;
+	}
+	
+	private void sendRemindingMails(Loan loan) throws MessagingException {
+		MailParameters mailParameters = new MailParameters();
+		mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		Map<String, String> params = new HashMap<>();
+		params.put("lender", loan.getPublicUserGame().getPublicUser().getName()  + " " + loan.getPublicUserGame().getPublicUser().getLastName());
+		params.put("gamer", loan.getGamer().getName() + " " + loan.getGamer().getLastName());
+		params.put("game", loan.getPublicUserGame().getGame().getName());
+		params.put("console", loan.getPublicUserGame().getConsole().getName());
+		params.put("returnDate", df.format(loan.getReturnDate()));
+		mailService.sendMailWihTemplate(mailParameters, "MSGARM", params);
 	}
 	
 	public LoanRepo getLoanRepo() {

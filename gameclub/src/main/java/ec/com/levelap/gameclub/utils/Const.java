@@ -41,4 +41,6 @@ public interface Const {
 	public static final String GAMER = "GAMER";
 	
 	public static final String LENDER = "LENDER";
+	
+	public static final String SYSTEM_ADMIN_EMAIL = "joseluis.levelap@gmail.com";
 }

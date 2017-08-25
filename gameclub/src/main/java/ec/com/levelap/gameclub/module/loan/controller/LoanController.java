@@ -41,8 +41,20 @@ public class LoanController {
 			search = new Search();
 		}
 		
-		Page<LoanLite> loans = loanService.getLoanRepo().findLoans(search.lender, search.gamer, search.lenderProvince, search.lenderCity, search.gamerProvice, search.gamerCity, search.shippingStatus, search.tracking, search.startDate, search.endDate, new PageRequest(search.page, Const.TABLE_SIZE));
+		Page<LoanLite> loans = loanService.getLoanRepo().findLoans(search.lender, search.gamer, search.lenderProvince, search.lenderCity, search.gamerProvince, search.gamerCity, search.shippingStatus, search.tracking, search.startDate, search.endDate, new PageRequest(search.page, Const.TABLE_SIZE));
 		return new ResponseEntity<Page<LoanLite>>(loans, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="findOne/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Loan> findOne(@PathVariable Long id) throws ServletException {
+		Loan loan = loanService.getLoanRepo().findOne(id);
+		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="save", method=RequestMethod.POST)
+	public ResponseEntity<Loan> save(@RequestBody Loan loan) throws ServletException {
+		loan = loanService.save(loan);
+		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="requestGame", method=RequestMethod.POST)
@@ -94,7 +106,7 @@ public class LoanController {
 		
 		public Location lenderCity;
 		
-		public Location gamerProvice;
+		public Location gamerProvince;
 		
 		public Location gamerCity;
 		

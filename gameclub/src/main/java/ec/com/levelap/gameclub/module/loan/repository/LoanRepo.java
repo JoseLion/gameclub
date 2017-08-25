@@ -18,8 +18,7 @@ import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 public interface LoanRepo extends JpaRepository<Loan, Long> {
 	@Query(	"SELECT " +
 				"l.id AS id, " +
-				"l.creationDate AS lenderStatusDate, " +
-				"l.gamerStatusDate AS gamerStatusDate, " +
+				"l.creationDate AS creationDate, " +
 				"l.publicUserGame AS publicUserGame, " +
 				"l.gamer AS gamer, " +
 				"l.tracking AS tracking, " +
@@ -29,7 +28,8 @@ public interface LoanRepo extends JpaRepository<Loan, Long> {
 				"LEFT JOIN pg.publicUser p " +
 				"LEFT JOIN l.gamer g " +
 			"WHERE " +
-				"(l.lenderConfirmed=TRUE AND l.gamerConfirmed=TRUE) AND " +
+				"l.lenderConfirmed=TRUE AND " +
+				"l.gamerConfirmed=TRUE AND " +
 				"(UPPER(p.name) LIKE UPPER('%' || :lender || '%') OR UPPER(p.lastName) LIKE UPPER('%' || :lender || '%') OR UPPER(p.name || ' ' || p.lastName) LIKE ('%' || :lender || '%')) AND " +
 				"(UPPER(g.name) LIKE UPPER('%' || :gamer || '%') OR UPPER(g.lastName) LIKE UPPER('%' || :gamer || '%') OR UPPER(g.name || ' ' || g.lastName) LIKE ('%' || :gamer || '%')) AND " +
 				"(:lenderProvince IS NULL OR p.location.parent=:lenderProvince) AND " +
@@ -37,7 +37,7 @@ public interface LoanRepo extends JpaRepository<Loan, Long> {
 				"(:gamerProvice IS NULL OR g.location.parent=:gamerProvice) AND " +
 				"(:gamerCity IS NULL OR g.location=:gamerCity) AND " +
 				"(:shippingStatus IS NULL OR l.shippingStatus=:shippingStatus) AND " +
-				"UPPER(l.tracking) LIKE UPPER('%' || :tracking || '%') AND " +
+				"(l.tracking IS NULL OR UPPER(l.tracking) LIKE UPPER('%' || :tracking || '%')) AND " +
 				"DATE(l.creationDate) BETWEEN DATE(:startDate) AND DATE(:endDate) " +
 			"ORDER BY l.creationDate DESC")
 	public Page<LoanLite> findLoans(@Param("lender") String lender,

@@ -1,9 +1,17 @@
-angular.module("Logistic").controller('TrackingModalCtrl', function($scope, $uibModalInstance, kit, shippingCatalog, sweet, rest) {
-	$scope.kit = {};
+angular.module("Logistic").controller('TrackingModalCtrl', function($scope, $uibModalInstance, loan, kit, shippingCatalog, sweet, rest) {
+	$scope.obj = {};
 
-	kit.$promise.then(function(data) {
-		$scope.kit = data;
-	});
+	if (loan != null) {
+		loan.$promise.then(function(data) {
+			$scope.obj = data;
+		});
+	}
+
+	if (kit != null) {
+		kit.$promise.then(function(data) {
+			$scope.obj = data;
+		});
+	}
 
 	shippingCatalog.$promise.then(function(data) {
 		$scope.shippingCatalog = data;
@@ -11,7 +19,17 @@ angular.module("Logistic").controller('TrackingModalCtrl', function($scope, $uib
 
 	$scope.save = function() {
 		sweet.save(function() {
-			rest("welcomeKit/save").post($scope.kit, function(data) {
+			let module = "";
+
+			if (loan != null) {
+				module = "loan";
+			}
+
+			if (kit != null) {
+				module = "welcomeKit";
+			}
+
+			rest(module + "/save").post($scope.obj, function(data) {
 				sweet.success();
 				sweet.close();
 				$uibModalInstance.close(data);

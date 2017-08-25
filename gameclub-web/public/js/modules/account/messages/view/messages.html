@@ -147,6 +147,9 @@
 							<br>
 							<br>
 							<span class="body">Estado del envío:</span> <span class="body text-black">{{kit.shippingStatus.name}}</span>
+							<div ng-if="kit.shippingNote != null && kit.shippingNote != ''">
+								<span>Observaciones: </span><span class="text-black">{{kit.shippingNote}}</span>
+							</div>
 						</div>
 					</div>
 
@@ -235,6 +238,47 @@
 									<br>
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmGamer()" ng-if="!loan.gamerConfirmed && loan.status">Continuar préstamo</button>
 									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.gamerConfirmed && loan.status">Editar información destino</button>
+								</form>
+							</div>
+
+							<div class="date" ng-if="loan.gamerConfirmed == true">{{loan.gamerStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box text-left" ng-if="loan.gamerConfirmed == true">
+								<span class="text-black text-lg upper-case">Préstamo en curso</span>
+								<br>
+								<br>
+								<form>
+									<div class="decorator">
+										<div class="form-group">
+											<span>Dirección de entrega:</span>
+										</div>
+
+										<div class="form-group address">
+											<label>Dirección</label>
+											<textarea type="text" ng-model="loan.gamerAddress" rows="3" readonly></textarea>
+										</div>
+
+										<div class="form-group geolocation">
+											<label class="cursor-no-drop"><i class="gc gc-address"></i></label>
+											<img src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
+										</div>
+
+										<div class="form-group receiver">
+											<label>Persona de entrega</label>
+											<input type="text" ng-model="loan.gamerReceiver" readonly>
+										</div>
+									</div>
+									<br>
+									<div class="final-cost">
+										<span class="text-lg upper-case">Costo shipping final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
+									</div>
+									<br>
+									<span class="upper-case">Forma de pago: </span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span>
+									<br>
+									<br>
+									<span>Estado del envío: </span><span class="text-black">{{loan.shippingStatus.name}}</span>
+									<div ng-if="loan.shippingNote != null && loan.shippingNote != ''">
+										<span>Observaciones: </span><span class="text-black">{{loan.shippingNote}}</span>
+									</div>
 								</form>
 							</div>
 						</div>
@@ -363,6 +407,9 @@
 
 										<div class="form-group">
 											<span>Estado del envío: </span><span class="text-black">{{loan.shippingStatus.name}}</span>
+											<div ng-if="loan.shippingNote != null && loan.shippingNote != ''">
+												<span>Observaciones: </span><span class="text-black">{{loan.shippingNote}}</span>
+											</div>
 										</div>
 									</div>
 								</form>

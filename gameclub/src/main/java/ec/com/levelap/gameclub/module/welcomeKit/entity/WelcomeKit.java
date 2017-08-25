@@ -57,6 +57,9 @@ public class WelcomeKit extends BaseEntity {
 	
 	@Column(columnDefinition="VARCHAR")
 	private String tracking;
+	
+	@Column(name="shipping_note", columnDefinition="VARCHAR")
+	private String shippingNote;
 
 	public Message getMessage() {
 		return message;
@@ -136,5 +139,13 @@ public class WelcomeKit extends BaseEntity {
 
 	public void setTracking(String tracking) {
 		this.tracking = tracking;
+	}
+
+	public String getShippingNote() {
+		return shippingNote;
+	}
+
+	public void setShippingNote(String shippingNote) {
+		this.shippingNote = shippingNote;
 	}
 }

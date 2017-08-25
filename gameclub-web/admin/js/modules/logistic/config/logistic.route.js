@@ -31,6 +31,12 @@ angular.module("Logistic").config(function($stateProvider) {
 				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.shippingCatalog}, function(data) {
 					return data;
 				});
+			},
+
+			provinces: function(rest, Const) {
+				return rest("location/findChildrenOf/:code", true).get({code: Const.code.locationEC}, function(data) {
+					return data;
+				});
 			}
 		}
 	});

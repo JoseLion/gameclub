@@ -1,5 +1,6 @@
 package ec.com.levelap.gameclub.module.loan.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,8 @@ import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
+import ec.com.levelap.gameclub.module.restore.entity.Restore;
+import ec.com.levelap.gameclub.module.restore.repository.RestoreRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
@@ -24,6 +27,7 @@ import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.kushki.KushkiException;
 import ec.com.levelap.kushki.object.KushkiAmount;
 import ec.com.levelap.kushki.service.KushkiService;
+import ec.com.levelap.taskScheduler.LevelapTaskScheduler;
 
 @Service
 public class LoanService extends BaseService<Loan> {
@@ -44,7 +48,13 @@ public class LoanService extends BaseService<Loan> {
 	private CatalogRepo catalogRepo;
 	
 	@Autowired
+	private RestoreRepo restoreRepo;
+	
+	@Autowired
 	private KushkiService kushkiService;
+	
+	@Autowired
+	private LevelapTaskScheduler levelapTaskScheduler;
 	
 	@Transactional
 	public void requestGame(Loan loan) throws ServletException {
@@ -91,6 +101,47 @@ public class LoanService extends BaseService<Loan> {
 		} else {
 			loan.setGamerConfirmed(true);
 			loan.setGamerStatusDate(new Date());
+		}
+		
+		loan = loanRepo.save(loan);
+		return loan;
+	}
+	
+	@Transactional
+	public Loan save(Loan loan) throws ServletException {
+		Loan previous = loanRepo.findOne(loan.getId());
+		
+		if (!loan.getShippingStatus().equals(previous.getShippingStatus()) || (loan.getShippingNote() != null && !loan.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
+			loan.setLenderStatusDate(new Date());
+			loan.setGamerStatusDate(new Date());
+			
+			loan.getLenderMessage().setRead(false);
+			loan.getGamerMessage().setRead(false);
+			messageService.getMessageRepo().save(loan.getLenderMessage());
+			messageService.getMessageRepo().save(loan.getGamerMessage());
+		}
+		
+		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
+			loan.setDeliveryDate(new Date());
+			
+			final Loan taskLoan = loan;
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(loan.getReturnDate());
+			calendar.add(Calendar.DATE, -3);
+			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(), Loan.class.getSimpleName() + "-R1-" + loan.getId(), new Runnable() {
+				@Override
+				public void run() {
+					Restore restore = new Restore();
+					restore.setLenderMessage(taskLoan.getLenderMessage());
+					restore.setGamerMessage(taskLoan.getGamerMessage());
+					restore.setPublicUserGame(taskLoan.getPublicUserGame());
+					restore.setGamer(taskLoan.getGamer());
+					
+					restoreRepo.save(restore);
+					
+					// TODO SEND REMINDING MAILS TO ADMIN AND BOTH USERS
+				}
+			});
 		}
 		
 		loan = loanRepo.save(loan);

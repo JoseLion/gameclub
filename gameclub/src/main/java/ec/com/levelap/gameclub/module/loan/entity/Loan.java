@@ -1,5 +1,6 @@
 package ec.com.levelap.gameclub.module.loan.entity;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -10,6 +11,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.postgresql.geometric.PGpoint;
 
@@ -95,12 +97,21 @@ public class Loan extends BaseEntity {
 	@Column(columnDefinition="VARCHAR")
 	private String tracking;
 	
+	@Column(name="shipping_note", columnDefinition="VARCHAR")
+	private String shippingNote;
+	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JoinColumn(name="shipping_status", foreignKey=@ForeignKey(name="shipping_status_catalog_fk"))
 	private Catalog shippingStatus;
 	
 	@Column(name="transaction_ticket", columnDefinition="VARCHAR")
 	private String transactionTicket;
+	
+	@Column(name="delivery_date")
+	private Date deliveryDate;
+	
+	@Transient
+	private Date returnDate;
 
 	public Message getGamerMessage() {
 		return gamerMessage;
@@ -270,6 +281,14 @@ public class Loan extends BaseEntity {
 		this.tracking = tracking;
 	}
 
+	public String getShippingNote() {
+		return shippingNote;
+	}
+
+	public void setShippingNote(String shippingNote) {
+		this.shippingNote = shippingNote;
+	}
+
 	public Catalog getShippingStatus() {
 		return shippingStatus;
 	}
@@ -284,5 +303,26 @@ public class Loan extends BaseEntity {
 
 	public void setTransactionTicket(String transactionTicket) {
 		this.transactionTicket = transactionTicket;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public Date getReturnDate() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(deliveryDate);
+		calendar.add(Calendar.DATE, 7*weeks);
+		returnDate = calendar.getTime();
+		
+		return returnDate;
+	}
+
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
 	}
 }

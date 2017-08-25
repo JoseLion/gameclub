@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
+import ec.com.levelap.gameclub.application.GameClubMailTasklet;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
@@ -64,6 +65,9 @@ public class LoanService extends BaseService<Loan> {
 	
 	@Autowired
 	private MailService mailService;
+	
+	@Autowired
+	private GameClubMailTasklet mailTasklet;
 	
 	@Transactional
 	public void requestGame(Loan loan) throws ServletException, MessagingException {
@@ -145,8 +149,10 @@ public class LoanService extends BaseService<Loan> {
 			
 			final Loan taskLoan = loan;
 			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(loan.getReturnDate());
-			calendar.add(Calendar.DATE, -3);
+			/*calendar.setTime(loan.getReturnDate());
+			calendar.add(Calendar.DATE, -3);*/
+			calendar.setTime(new Date());
+			calendar.add(Calendar.MINUTE, 1);
 			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(), Loan.class.getSimpleName() + "-R1-" + loan.getId(), new Runnable() {
 				@Override
 				public void run() {
@@ -160,7 +166,7 @@ public class LoanService extends BaseService<Loan> {
 					
 					try {
 						sendRemindingMails(taskLoan);
-					} catch (MessagingException e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
@@ -171,7 +177,7 @@ public class LoanService extends BaseService<Loan> {
 		return loan;
 	}
 	
-	private void sendRemindingMails(Loan loan) throws MessagingException {
+	private void sendRemindingMails(Loan loan) throws Exception {
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -181,7 +187,15 @@ public class LoanService extends BaseService<Loan> {
 		params.put("game", loan.getPublicUserGame().getGame().getName());
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
 		params.put("returnDate", df.format(loan.getReturnDate()));
-		mailService.sendMailWihTemplate(mailParameters, "MSGARM", params);
+		
+		mailTasklet.setMailParameters(mailParameters);
+		mailTasklet.setTemplate("MSGARM");
+		mailTasklet.setParams(params);
+		mailTasklet.sendMail();
+	}
+	
+	public void rescheduleTasks() {
+		
 	}
 	
 	public LoanRepo getLoanRepo() {

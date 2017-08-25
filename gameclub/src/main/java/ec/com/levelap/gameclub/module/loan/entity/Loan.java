@@ -314,10 +314,12 @@ public class Loan extends BaseEntity {
 	}
 
 	public Date getReturnDate() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(deliveryDate);
-		calendar.add(Calendar.DATE, 7*weeks);
-		returnDate = calendar.getTime();
+		if (deliveryDate != null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(deliveryDate);
+			calendar.add(Calendar.DATE, 7*weeks);
+			returnDate = calendar.getTime();
+		}
 		
 		return returnDate;
 	}

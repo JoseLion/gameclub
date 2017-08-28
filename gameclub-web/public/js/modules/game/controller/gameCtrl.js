@@ -206,7 +206,9 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
         if (!failedValidation) {
             sweet.default("Se enviará una solicitud de prestamo al propietario del juego", function() {
-                rest("loan/requestGame").post($scope.loan, function() {
+                console.log("loan: ", $scope.loan);
+
+                rest("loan/requestGame").post($scope.loan, function(data) {
                     notif.success("Solicitud enviada con éxito. Ve a tus mensajes para revisarla");
                     $rootScope.currentUser = data;
                     sweet.close();

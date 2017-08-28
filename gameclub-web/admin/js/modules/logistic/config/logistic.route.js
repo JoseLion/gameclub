@@ -15,14 +15,20 @@ angular.module("Logistic").config(function($stateProvider) {
 				}]);
 			},
 
-			welcomeKits: function(rest) {
-				return rest("welcomeKit/findWelcomeKits").post(function(data) {
+			loans: function(rest) {
+				return rest("loan/findLoans").post(function(data) {
 					return data;
 				});
 			},
 
-			loans: function(rest) {
-				return rest("loan/findLoans").post(function(data) {
+			restores: function(rest) {
+				return rest("restore/findRestores").post(function(data) {
+					return data;
+				});
+			},
+
+			welcomeKits: function(rest) {
+				return rest("welcomeKit/findWelcomeKits").post(function(data) {
 					return data;
 				});
 			},

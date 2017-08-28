@@ -1,8 +1,14 @@
-angular.module("Logistic").controller('TrackingModalCtrl', function($scope, $uibModalInstance, loan, kit, shippingCatalog, sweet, rest) {
+angular.module("Logistic").controller('TrackingModalCtrl', function($scope, $uibModalInstance, loan, restore, kit, shippingCatalog, sweet, rest) {
 	$scope.obj = {};
 
 	if (loan != null) {
 		loan.$promise.then(function(data) {
+			$scope.obj = data;
+		});
+	}
+
+	if (restore != null) {
+		restore.$promise.then(function(data) {
 			$scope.obj = data;
 		});
 	}
@@ -23,6 +29,10 @@ angular.module("Logistic").controller('TrackingModalCtrl', function($scope, $uib
 
 			if (loan != null) {
 				module = "loan";
+			}
+
+			if (restore != null) {
+				module = "restore";
 			}
 
 			if (kit != null) {

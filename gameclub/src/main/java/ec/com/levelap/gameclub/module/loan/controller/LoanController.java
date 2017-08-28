@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.commons.catalog.Catalog;
-import ec.com.levelap.commons.location.Location;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 import ec.com.levelap.gameclub.module.loan.service.LoanService;
@@ -42,7 +41,7 @@ public class LoanController {
 			search = new Search();
 		}
 		
-		Page<LoanLite> loans = loanService.getLoanRepo().findLoans(search.lender, search.gamer, search.lenderProvince, search.lenderCity, search.gamerProvince, search.gamerCity, search.shippingStatus, search.tracking, search.startDate, search.endDate, new PageRequest(search.page, Const.TABLE_SIZE));
+		Page<LoanLite> loans = loanService.getLoanRepo().findLoans(search.lender, search.gamer, search.shippingStatus, search.tracking, search.startDate, search.endDate, new PageRequest(search.page, Const.TABLE_SIZE));
 		return new ResponseEntity<Page<LoanLite>>(loans, HttpStatus.OK);
 	}
 	
@@ -53,9 +52,9 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<Loan> save(@RequestBody Loan loan) throws ServletException {
-		loan = loanService.save(loan);
-		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
+	public ResponseEntity<LoanLite> save(@RequestBody Loan loan) throws ServletException {
+		LoanLite loanLite = loanService.save(loan);
+		return new ResponseEntity<LoanLite>(loanLite, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="requestGame", method=RequestMethod.POST)
@@ -102,14 +101,6 @@ public class LoanController {
 		public String lender = "";
 		
 		public String gamer = "";
-		
-		public Location lenderProvince;
-		
-		public Location lenderCity;
-		
-		public Location gamerProvince;
-		
-		public Location gamerCity;
 		
 		public Catalog shippingStatus;
 		

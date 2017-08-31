@@ -215,7 +215,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 		});
 	}
 
-	function logIn(credentials) { 
+	function logIn(credentials) {
 		$scope.isLoginIn = true;
 
 		authenticate(credentials).then(function(response) {

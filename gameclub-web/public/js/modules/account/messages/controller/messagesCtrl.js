@@ -1,4 +1,4 @@
-angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScope, messages, forEach, $filter, rest, geolocation, notif, sweet) {
+angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScope, messages, forEach, $filter, rest, geolocation, notif, sweet, $state, friendlyUrl) {
 	let page = 0;
 	messages.$promise.then(function(data) {
 		$scope.messages = data.content;
@@ -34,6 +34,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			if (message.isLoan == false) {
 				rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
 					$scope.welcomeKits = data;
+					canvasToBottom();
 					
 					if (!message.read) {
 						message.read = true;
@@ -44,8 +45,20 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 			if (message.isLoan == true) {
 				rest("message/getLoanMessage/:messageId").get({messageId: message.id}, function(data) {
-					console.log("data: ", data);
 					$scope.loan = data;
+					$scope.loan.isDisabled = true;
+
+					if ($rootScope.currentUser.id != $scope.loan.gamer.id) {
+						$scope.loan.lenderAddress = $scope.loan.lenderAddress != null ? $scope.loan.lenderAddress : $rootScope.currentUser.billingAddress;
+						$scope.loan.lenderGeolocation = $scope.loan.lenderGeolocation != null ? $scope.loan.lenderGeolocation : $rootScope.currentUser.geolocation;
+						$scope.loan.lenderReceiver = $scope.loan.lenderReceiver != null ? $scope.loan.lenderReceiver : $rootScope.currentUser.receiver;
+					}
+
+					if ($rootScope.currentUser.id == $scope.loan.gamer.id) {
+						$scope.loan.gamerGeolocation = $scope.loan.gamerGeolocation != null ? $scope.loan.gamerGeolocation : $rootScope.currentUser.geolocation;
+					}
+
+					canvasToBottom();
 
 					if (!message.read) {
 						message.read = true;
@@ -81,9 +94,19 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		return selected;
 	}
 
-	$scope.openMap = function(obj) {
+	$scope.openMap = function(obj, property) {
 		geolocation().result.then(function(pos) {
-			obj.geolocation = pos;
+			if (property == null) {
+				obj.geolocation = {
+					x: pos.lat,
+					y: pos.lng
+				};
+			} else {
+				obj[property] = {
+					x: pos.lat,
+					y: pos.lng
+				};
+			}
 		});
 	}
 
@@ -107,19 +130,11 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 		if (isValid) {
 			sweet.default("Se confirmará el envío de tu Welcome Kit", function() {
-				let confirmObj = {
-					kitId: kit.id,
-					address: kit.address,
-					phone: kit.phone,
-					city: $rootScope.currentUser.location.other,
-					receiver: kit.receiver
-				};
-
-				rest("welcomeKit/confirmWelcomeKit").post(confirmObj, function(data) {
-					console.log("data: ", data);
+				rest("welcomeKit/confirmWelcomeKit").post(kit, function(data) {
+					let index = $scope.welcomeKits.indexOf(kit);
+					$scope.welcomeKits[index] = data;
 					sweet.close();
 				}, function(error) {
-					notif.danger("Error en servicio de TCC: " + error.data.message);
 					sweet.close();
 				});
 			});
@@ -127,8 +142,165 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		}
 	}
 
+	$scope.goToGame = function(publicUserGame) {
+		$state.go('gameclub.game', {id: publicUserGame.game.id, consoleId: publicUserGame.console.id, name: friendlyUrl(publicUserGame.game.name)});
+	}
+
+	$scope.goTouser = function(user) {
+		$state.go('gameclub.publicProfile', {id: user.id, alias: friendlyUrl(user.name + ' ' + $filter('limitTo')(user.lastName, 1) + '.')});
+	}
+
+	$scope.cancelLoanRequest = function() {
+		sweet.default("Se cancelara tu solicitud de préstamo", function() {
+			rest("loan/cancelLoan/:id").get({id: $scope.loan.id}, function(data) {
+				notif.success("Préstamo cancelado");
+				$scope.loan = data;
+				sweet.close();
+				canvasToBottom();
+			}, function(error) {
+				sweet.close();
+			});
+		});
+	}
+
+	$scope.acceptLoan = function() {
+		sweet.default("Aceptarás el préstamo de este juego", function() {
+			rest("loan/acceptLoan/:id").get({id: $scope.loan.id}, function(data) {
+				notif.success("Préstamo aceptado");
+				$scope.loan = data;
+				sweet.close();
+				canvasToBottom();
+			}, function(error) {
+				sweet.close();
+			});
+		});
+	}
+
+	$scope.rejectLoan = function() {
+		sweet.default("Rechazarás el préstamo de este juego", function() {
+			rest("loan/rejectLoan/:id").get({id: $scope.loan.id}, function(data) {
+				notif.success("Préstamo rechazado");
+				$scope.loan = data;
+				sweet.close();
+				canvasToBottom();
+			}, function(error) {
+				sweet.close();
+			});
+		});
+	}
+
+	$scope.confirmLender = function() {
+		let isValid = true;
+
+		if ($scope.loan.lenderAddress == null || $scope.loan.lenderAddress == '') {
+			notif.danger("El campo dirección es requerido para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.lenderGeolocation == null) {
+			notif.danger("La geolocalización es requerida para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.lenderReceiver == null || $scope.loan.lenderReceiver == '') {
+			notif.danger("El campo Persona de Entrega es requerido para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.boxNumber == null || $scope.loan.boxNumber == '') {
+			notif.danger("El número de caja es requerido para continuar");
+			isValid = false;
+		}
+
+		if (isValid) {
+			sweet.default("Confirmaras el préstamo de forma definitiva", function() {
+				$scope.loan.isDisabled = true;
+
+				rest("loan/confirmLender").post($scope.loan, function(data) {
+					$scope.loan = data;
+					notif.success("Préstamo confirmado");
+					sweet.close();
+					canvasToBottom();
+				});
+
+				if ($scope.loan.saveChanges == true) {
+					$rootScope.currentUser.billingAddress = $scope.loan.lenderAddress;
+					$rootScope.currentUser.geolocation = $scope.loan.lenderGeolocation;
+					$rootScope.currentUser.receiver = $scope.loan.lenderReceiver;
+
+					rest("publicUser/save").post($rootScope.currentUser, function(data) {
+						$rootScope.currentUser = data;
+					});
+				}
+			});
+		}
+	}
+
+	$scope.confirmGamer = function() {
+		let isValid = true;
+
+		if ($scope.loan.gamerAddress == null || $scope.loan.gamerAddress == '') {
+			notif.danger("El campo dirección es requerido para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.gamerGeolocation == null) {
+			notif.danger("La geolocalización es requerida para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.gamerReceiver == null || $scope.loan.gamerReceiver == '') {
+			notif.danger("El campo Persona de Entrega es requerido para continuar");
+			isValid = false;
+		}
+
+		if (isValid) {
+			sweet.default("Se realizará el pago del préstamo", function() {
+				$scope.loan.isDisabled = true;
+
+				rest("loan/confirmGamer").post($scope.loan, function(data) {
+					$scope.loan = data;
+					notif.success("Pago realizado con éxito");
+					sweet.close();
+					canvasToBottom();
+				});
+
+				if ($scope.loan.saveChanges == true) {
+					$rootScope.currentUser.billingAddress = $scope.loan.gamerAddress;
+					$rootScope.currentUser.geolocation = $scope.loan.gamerGeolocation;
+					$rootScope.currentUser.receiver = $scope.loan.gamerReceiver;
+
+					rest("publicUser/save").post($rootScope.currentUser, function(data) {
+						$rootScope.currentUser = data;
+					});
+				}
+			});
+		}
+	}
+
 	function clearCanvas() {
 		$scope.welcomeKits = null;
 		$scope.loan = null;
+	}
+
+	function canvasToBottom(canvas, i) {
+		canvas = canvas != null ? canvas : angular.element(".canvas");
+		let height = canvas[0].scrollHeight - canvas[0].offsetHeight;
+		let pixels = 10;
+		let time = 500;
+
+		if (i == null) {
+			setTimeout(function() {
+				canvasToBottom(null, pixels);
+			}, 10);
+		} else {
+			setTimeout(function() {
+				if (i < height) {
+					canvas[0].scrollTop = i;
+					i += pixels;
+					canvasToBottom(canvas, i);
+				}
+			}, Math.round(pixels*time/height));
+		}
 	}
 });

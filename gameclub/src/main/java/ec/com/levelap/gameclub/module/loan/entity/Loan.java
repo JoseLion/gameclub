@@ -1,5 +1,8 @@
 package ec.com.levelap.gameclub.module.loan.entity;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,12 +11,14 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.postgresql.geometric.PGpoint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
+import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -71,8 +76,42 @@ public class Loan extends BaseEntity {
 	@Column(name="was_accepted", columnDefinition="BOOLEAN DEFAULT NULL")
 	private Boolean wasAccepted;
 	
-	@Column(name="delivery_number", columnDefinition="VARCHAR")
-	private String deliveryNumber;
+	@Column(name="accepted_date")
+	private Date acceptedDate;
+	
+	@Column(name="box_number", columnDefinition="VARCHAR")
+	private String boxNumber;
+	
+	@Column(name="lender_confirmed", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean lenderConfirmed = false;
+	
+	@Column(name="gamer_confirmed", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean gamerConfirmed = false;
+	
+	@Column(name="lender_status_date")
+	private Date lenderStatusDate;
+	
+	@Column(name="gamer_status_date")
+	private Date gamerStatusDate;
+	
+	@Column(columnDefinition="VARCHAR")
+	private String tracking;
+	
+	@Column(name="shipping_note", columnDefinition="VARCHAR")
+	private String shippingNote;
+	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="shipping_status", foreignKey=@ForeignKey(name="shipping_status_catalog_fk"))
+	private Catalog shippingStatus;
+	
+	@Column(name="transaction_ticket", columnDefinition="VARCHAR")
+	private String transactionTicket;
+	
+	@Column(name="delivery_date")
+	private Date deliveryDate;
+	
+	@Transient
+	private Date returnDate;
 
 	public Message getGamerMessage() {
 		return gamerMessage;
@@ -186,11 +225,106 @@ public class Loan extends BaseEntity {
 		this.wasAccepted = wasAccepted;
 	}
 
-	public String getDeliveryNumber() {
-		return deliveryNumber;
+	public Date getAcceptedDate() {
+		return acceptedDate;
 	}
 
-	public void setDeliveryNumber(String deliveryNumber) {
-		this.deliveryNumber = deliveryNumber;
+	public void setAcceptedDate(Date acceptedDate) {
+		this.acceptedDate = acceptedDate;
+	}
+
+	public String getBoxNumber() {
+		return boxNumber;
+	}
+
+	public void setBoxNumber(String boxNumber) {
+		this.boxNumber = boxNumber;
+	}
+
+	public Boolean getLenderConfirmed() {
+		return lenderConfirmed;
+	}
+
+	public void setLenderConfirmed(Boolean lenderConfirmed) {
+		this.lenderConfirmed = lenderConfirmed;
+	}
+
+	public Boolean getGamerConfirmed() {
+		return gamerConfirmed;
+	}
+
+	public void setGamerConfirmed(Boolean gamerConfirmed) {
+		this.gamerConfirmed = gamerConfirmed;
+	}
+
+	public Date getLenderStatusDate() {
+		return lenderStatusDate;
+	}
+
+	public void setLenderStatusDate(Date lenderStatusDate) {
+		this.lenderStatusDate = lenderStatusDate;
+	}
+
+	public Date getGamerStatusDate() {
+		return gamerStatusDate;
+	}
+
+	public void setGamerStatusDate(Date gamerStatusDate) {
+		this.gamerStatusDate = gamerStatusDate;
+	}
+
+	public String getTracking() {
+		return tracking;
+	}
+
+	public void setTracking(String tracking) {
+		this.tracking = tracking;
+	}
+
+	public String getShippingNote() {
+		return shippingNote;
+	}
+
+	public void setShippingNote(String shippingNote) {
+		this.shippingNote = shippingNote;
+	}
+
+	public Catalog getShippingStatus() {
+		return shippingStatus;
+	}
+
+	public void setShippingStatus(Catalog shippingStatus) {
+		this.shippingStatus = shippingStatus;
+	}
+
+	public String getTransactionTicket() {
+		return transactionTicket;
+	}
+
+	public void setTransactionTicket(String transactionTicket) {
+		this.transactionTicket = transactionTicket;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public Date getReturnDate() {
+		if (deliveryDate != null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(deliveryDate);
+			calendar.add(Calendar.DATE, 7*weeks);
+			returnDate = calendar.getTime();
+		}
+		
+		return returnDate;
+	}
+
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
 	}
 }

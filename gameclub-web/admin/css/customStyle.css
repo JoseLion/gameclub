@@ -24,6 +24,10 @@ label.control-label:after {
 	content: "*";
 }
 
+.control-info {
+	padding-top: 7px;
+}
+
 table thead tr th {
 	text-align: center !important;
 	vertical-align: middle !important;

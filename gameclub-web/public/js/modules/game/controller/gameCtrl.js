@@ -124,6 +124,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
     $scope.doFilter = function(filter) {
         currentPage = 0;
+        $scope.availableGames = [];
 
         forEach($scope.filters, function(fltr) {
             if (fltr.icon == filter.icon && fltr.active == true) {
@@ -147,66 +148,69 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.continueRequest = function() {
-        let faildValidation = false;
+        let failedValidation = false;
 
         if ($scope.loan.weeks == null) {
             notif.danger("Debe seleccionar el número de semanas");
-            faildValidation = true;
+            failedValidation = true;
         }
 
         if ($scope.loan.gamerAddress == null || $scope.loan.gamerAddress == '') {
             notif.danger("El campo 'Dirección' es obligatorio");
-            faildValidation = true;
+            failedValidation = true;
         }
 
         if ($scope.loan.gamerGeolocation == null) {
             notif.danger("Debe proporcionar su geolocalización");
-            faildValidation = true;
+            failedValidation = true;
         }
 
         if ($scope.loan.gamerReceiver == null || $scope.loan.gamerReceiver == '') {
             notif.danger("El campo 'Persona de entrega' es obligatorio");
-            faildValidation = true;
+            failedValidation = true;
         }
 
-        if (!faildValidation) {
+        if (!failedValidation) {
             $scope.paymentViewOpen = true;
             angular.element(".payment-view").toggle(250);
         }
     }
 
     $scope.requestLoan = function() {
-        let faildValidation = false;
+        let failedValidation = false;
 
         if ($scope.loan.weeks == null) {
             notif.danger("Debe seleccionar el número de semanas");
-            faildValidation = true;
+            failedValidation = true;
         }
 
         if ($scope.loan.gamerAddress == null || $scope.loan.gamerAddress == '') {
             notif.danger("El campo 'Dirección' es obligatorio");
-            faildValidation = true;
+            failedValidation = true;
         }
 
         if ($scope.loan.gamerGeolocation == null) {
             notif.danger("Debe proporcionar su geolocalización");
-            faildValidation = true;
+            failedValidation = true;
         }
 
         if ($scope.loan.gamerReceiver == null || $scope.loan.gamerReceiver == '') {
             notif.danger("El campo 'Persona de entrega' es obligatorio");
-            faildValidation = true;
+            failedValidation = true;
         }
 
         if ($scope.loan.payment == null) {
             notif.danger("Por favor seleccione una forma de pago");
-            faildValidation = true;
+            failedValidation = true;
         }
 
-        if (!faildValidation) {
+        if (!failedValidation) {
             sweet.default("Se enviará una solicitud de prestamo al propietario del juego", function() {
-                rest("loan/requestGame").post($scope.loan, function() {
+                console.log("loan: ", $scope.loan);
+
+                rest("loan/requestGame").post($scope.loan, function(data) {
                     notif.success("Solicitud enviada con éxito. Ve a tus mensajes para revisarla");
+                    $rootScope.currentUser = data;
                     sweet.close();
                 }, function(error) {
                     sweet.close();

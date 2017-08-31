@@ -10,7 +10,7 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 public interface WelcomeKitLite {
 	public Long getId();
 	
-	public Date getCreationDate();
+	public Date getConfirmationDate();
 	
 	@Value("#{target.publicUser}")
 	public PublicUser getPublicUser();
@@ -18,5 +18,5 @@ public interface WelcomeKitLite {
 	@Value("#{target.shippingStatus}")
 	public Catalog getShippingStatus();
 	
-	public Boolean getWasConfirmed();
+	public String getTracking();
 }

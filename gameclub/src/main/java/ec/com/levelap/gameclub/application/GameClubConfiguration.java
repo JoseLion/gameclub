@@ -14,7 +14,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.support.ErrorPageFilter;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -31,7 +30,7 @@ import ec.com.levelap.gameclub.utils.Const;
 
 @Configuration
 @EnableConfigurationProperties
-public class GameClubConfiguration extends SpringBootServletInitializer {
+public class GameClubConfiguration {
 
 	@Value("${spring.jpa.generate-ddl}")
 	private Boolean generateDll;

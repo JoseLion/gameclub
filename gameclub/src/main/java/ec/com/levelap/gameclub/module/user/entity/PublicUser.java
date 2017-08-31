@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.postgresql.geometric.PGpoint;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -90,6 +92,12 @@ public class PublicUser extends BaseEntity {
 
 	@Column(name = "contact_phone", columnDefinition = "VARCHAR")
 	private String contactPhone;
+	
+	@Column
+	private PGpoint geolocation;
+	
+	@Column(columnDefinition="VARCHAR")
+	private String receiver;
 	
 	@Column(name="is_subscriber", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean isSubscriber = false;
@@ -264,6 +272,26 @@ public class PublicUser extends BaseEntity {
 
 	public void setContactPhone(String contactPhone) {
 		this.contactPhone = contactPhone;
+	}
+
+	public PGpoint getGeolocation() {
+		return geolocation;
+	}
+
+	public void setGeolocation(PGpoint geolocation) {
+		this.geolocation = geolocation;
+	}
+
+	public String getReceiver() {
+		if (receiver == null) {
+			return name + " " + lastName;
+		} else {
+			return receiver;
+		}
+	}
+
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
 	}
 
 	public Boolean getIsSubscriber() {

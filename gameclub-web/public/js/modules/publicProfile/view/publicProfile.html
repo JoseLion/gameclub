@@ -2,16 +2,16 @@
     <section class="banner">
         <div class="col-md-4"></div>
         <div class="col-md-8">
-                <div class="col-md-3 name">
-                    <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+            <div class="col-md-3 name">
+                <img id="avatar_img" archive="user.avatar.image" placeholder="img/contact-person.svg">
+            </div>
+
+            <div class="col-md-9 name2" >
+                <h2 class="title">{{user.name + ' ' + (user.lastName | limitTo: 1) + '.'}}</h2>
+                <div class="col-md-12 no-padding-left no-padding-right">
+                    <div class="connection">&uacute;ltima vez conectado: <span>{{user.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
-                <div class="col-md-9 name2" >
-                    <h2 class="title">Pablo P.</h2>
-                    <div class="col-md-12 no-padding-left no-padding-right">
-                        <div class="connection">&uacute;ltima vez conectado: <span>{{11-05-2017 | date: 'dd-MM-yyyy'}}</span></div>
-                    </div>
-                </div>
-            
+            </div>
         </div>
     </section>
 

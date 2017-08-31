@@ -1,6 +1,7 @@
 INSERT INTO commons.catalog(name, code, other, parent) VALUES
 ('Shipping Status', 'SHP', NULL, NULL);
 	INSERT INTO commons.catalog(name, code, other, parent) VALUES
+	('Sin Tracking', 'SHPSTK', '0', (SELECT id FROM commons.catalog WHERE code='SHP')),
 	('Sin Recibir', 'SHPSRC', '1', (SELECT id FROM commons.catalog WHERE code='SHP')),
 	('Recibido en Origen', 'SHPRCO', '2', (SELECT id FROM commons.catalog WHERE code='SHP')),
 	('En Unidad Contenedora', 'SHPEUC', '3', (SELECT id FROM commons.catalog WHERE code='SHP')),

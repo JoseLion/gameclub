@@ -35,7 +35,7 @@ public class WelcomeKitController {
 			search = new Search();
 		}
 		
-		Page<WelcomeKitLite> welcomeKits = welcomeKitService.getWelcomeKitRepo().findWelcomeKits(search.name, search.startDate, search.endDate, search.province, search.city, search.wasConfirmed, search.shippingStatus, new PageRequest(search.page, Const.TABLE_SIZE));
+		Page<WelcomeKitLite> welcomeKits = welcomeKitService.getWelcomeKitRepo().findWelcomeKits(search.name, search.startDate, search.endDate, search.province, search.city, search.tracking, search.shippingStatus, new PageRequest(search.page, Const.TABLE_SIZE));
 		return new ResponseEntity<Page<WelcomeKitLite>>(welcomeKits, HttpStatus.OK);
 	}
 	
@@ -46,9 +46,15 @@ public class WelcomeKitController {
 	}
 	
 	@RequestMapping(value="confirmWelcomeKit", method=RequestMethod.POST)
-	public ResponseEntity<WelcomeKit> confirmWelcomeKit(@RequestBody WelcomeKit welcomeKit) throws ServletException {
-		welcomeKit = welcomeKitService.confirmWelcomeKit(welcomeKit);
-		return new ResponseEntity<WelcomeKit>(welcomeKit, HttpStatus.OK);
+	public ResponseEntity<WelcomeKit> confirmWelcomeKit(@RequestBody WelcomeKit kit) throws ServletException {
+		kit = welcomeKitService.confirmWelcomeKit(kit);
+		return new ResponseEntity<WelcomeKit>(kit, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="save", method=RequestMethod.POST)
+	public ResponseEntity<WelcomeKitLite> save(@RequestBody WelcomeKit kit) throws ServletException {
+		WelcomeKitLite kitLite = welcomeKitService.save(kit);
+		return new ResponseEntity<WelcomeKitLite>(kitLite, HttpStatus.OK);
 	}
 	
 	private static class Search {
@@ -62,7 +68,7 @@ public class WelcomeKitController {
 		
 		public Location city;
 		
-		public Boolean wasConfirmed;
+		public String tracking = "";
 		
 		public Catalog shippingStatus;
 		

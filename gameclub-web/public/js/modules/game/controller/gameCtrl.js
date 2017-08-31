@@ -4,6 +4,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
+            // console.log("Break point Ctrl: " + data.trailerUrl);
             openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(data) {
                 $scope.background = {
                     background: "url('" + getImageBase64(data, $scope.game.banner.type) + "') center bottom / 100% no-repeat"

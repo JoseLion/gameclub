@@ -50,6 +50,7 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 	@Query(	"SELECT DISTINCT " +
 				"g.id AS id, " +
 				"g.name AS name, " +
+				"g.trailerUrl AS trailerUrl, " +
 				"gm.rating AS rating, " +
 				"g.contentRating AS contentRating, " +
 				"g.cover AS cover, " +

@@ -26,11 +26,11 @@
         </div>
 		<div class="modal-footer">
 			<div class="col-md-12 text-center">
+                <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
                 <button type="submit" class="btn save" ng-disabled="isSaving">
                     <span ng-if="!isSaving">Guardar</span>
                     <loading showing="isSaving" inline width="1em">
                 </button>
-				<button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
 			</div>
 		</div>
 	</div>

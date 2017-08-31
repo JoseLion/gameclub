@@ -39,7 +39,8 @@
             <div class="col-md-10 to-validate">
                 <input validation name="password" type="password" placeholder="Contraseña..." class="input-form" ng-model="user.password" required ng-minlength="6" ng-pattern="passRegex">
             </div>
-            <div class="col-md-1 image"><img src="img/contact-password.svg"/></div>
+            <div class="col-md-1 image"><img src="img/contact-password.svg" 
+                title="La contrase&ntilde;a debe contener&#58; m&iacute;nimo 6 caracteres por lo menos una MAY&Uacute;SCULA (A-Z)&#44; min&uacute;sculas (a-z) y por lo menos un n&uacute;mero (0-9)"/></div>
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
@@ -110,17 +111,17 @@
         <div class="modal-body">
             <form role="form" on-submit="ok()" class="terms-form form-horizontal" novalidate>
                 <div class="form-group text-center">
-                    <input type="checkbox" ng-model="terms.status"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" ng-click="cancel()">{{link.termsConditions.name}}</a></span>
+                    <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" target="_blank">{{link.termsConditions.name}}</a></span>
                 </div>
                 <div class="form-group text-center">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
+                    </div>
+                    <div class="col-md-8">
                         <button type="submit" class="btn save" ng-disabled="isSaving">
                             <span ng-if="!isSaving">OK</span>
                             <loading showing="isSaving" inline width="1em">
                         </button>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
                     </div>
                 </div>
             </form>
@@ -154,11 +155,10 @@
 
                 <div class="form-group">
                     <div class="col-md-6 text-center">
-                        <button type="submit" class="btn save">Enviar</button>
-                    </div>
-
-                    <div class="col-md-6 text-center">
                         <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <button type="submit" class="btn save">Enviar</button>
                     </div>
                 </div>
             </form>
@@ -175,7 +175,7 @@
         <div class="modal-body">
             <form role="form" on-submit="ok()" class="terms-form form-horizontal" novalidate>
                 <div class="form-group text-center">
-                    <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" ng-click="cancel()">{{link.termsConditions.name}}</a></span>
+                    <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" target="_blank">{{link.termsConditions.name}}</a></span>
                 </div>
                 <div class="form-group text-center">
                     <button type="submit" class="btn cancel" ng-disabled="isSaving">
@@ -187,3 +187,5 @@
         </div>
     </div>
 </script>
+
+

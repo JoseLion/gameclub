@@ -665,6 +665,7 @@ public class GameService extends BaseService<Game> {
 		headers = new ArrayList<>();
 		
 		headers.add("*Nombre");
+		headers.add("*Trailer Url");
 		headers.add("*Descripcion");
 		headers.add("*Fecha Lanzamiento");
 		headers.add("Restriccion Contenido");

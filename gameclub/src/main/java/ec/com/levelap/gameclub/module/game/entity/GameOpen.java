@@ -12,6 +12,8 @@ public interface GameOpen {
 	
 	public String getName();
 	
+	public String getTrailerUrl();
+	
 	public Archive getCover();
 	
 	@Value("#{target.rating}")

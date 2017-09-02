@@ -87,8 +87,6 @@ public class GameOpenController {
 	private static class Search {
 		public String name = "";
 		
-		public String trailerUrl = "";
-		
 		public Long categoryId;
 		
 		public Long consoleId;

@@ -115,6 +115,9 @@ public class PublicUser extends BaseEntity {
 	@JsonIgnore
 	@OneToMany(mappedBy="owner", fetch=FetchType.LAZY)
 	private List<Message> messages = new ArrayList<>();
+	
+	@Column(name="is_ready", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean isReady = false;
 
 	@Transient
 	private Integer numberOfGames;
@@ -325,6 +328,22 @@ public class PublicUser extends BaseEntity {
 	public void setGamesLimit(Integer gamesLimit) {
 		this.gamesLimit = gamesLimit;
 	}
+	
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+
+	public Boolean getIsReady() {
+		return isReady;
+	}
+
+	public void setIsReady(Boolean isReady) {
+		this.isReady = isReady;
+	}
 
 	public Integer getNumberOfGames() {
 		return this.games.size();
@@ -332,14 +351,6 @@ public class PublicUser extends BaseEntity {
 
 	public void setNumberOfGames(Integer numberOfGames) {
 		this.numberOfGames = numberOfGames;
-	}
-
-	public List<Message> getMessages() {
-		return messages;
-	}
-
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
 	}
 
 	public Integer getUnreadMessages() {

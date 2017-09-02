@@ -151,9 +151,19 @@
 								<span>Observaciones: </span><span class="text-black">{{kit.shippingNote}}</span>
 							</div>
 						</div>
+
+						<div class="date" ng-if="kit.shippingStatus.code == Const.code.shippingDelivered">{{kit.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
+						<div class="blue-box small-box text-center" ng-if="kit.shippingStatus.code == Const.code.shippingDelivered">
+							<div class="box-label col-md-12">
+								<span>Entregado</span>
+							</div>
+							
+							<div class="clearfix"></div>
+						</div>
 					</div>
 
 					<div class="loan col-md-12" ng-if="loan">
+						<!-- ************************ BEGIN - GAMER MESSAGE FLOW ************************ -->
 						<div ng-if="currentUser.id == loan.gamer.id">
 							<div class="date">{{loan.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="red-box">
@@ -281,16 +291,46 @@
 									</div>
 								</form>
 							</div>
+
+							<div class="date" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">{{loan.gamerStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">
+								<span>Hola {{currentUser.name}},</span>
+								<br>
+								<br>
+								<span>Tu préstamo llegó exitosamente el día: </span><span class="text-black upper-case">{{loan.gamerStatusDate | date: 'EEEE d'}} </span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.gamerStatusDate | date: 'LLLL'}}</span>
+								<br>
+								<span>El préstamo durará: </span><span class="text-black">{{loan.weeks}} {{loan.weeks == 1 ? 'semana' : 'semanas'}}</span>
+								<br>
+								<span>Pasaremos a retirarlo: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
+								<br>
+								<br>
+								<span>En el caso de no haber recibido el juego, solicita ayuda a <a href>nuestro servicio al cliente</a>.</span>
+								<br>
+								<br>
+								<span class="text-lg">Timepo restante: </span>
+								<span class="text-black text-lg">
+									{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}} 
+									{{timer.hours < 10 ? '0' : ''}}{{timer.hours}} {{timer.hours == 1 ? 'hora' : 'horas'}} 
+									{{timer.mins < 10 ? '0' : ''}}{{timer.mins}} min 
+									{{timer.secs < 10 ? '0' : ''}}{{timer.secs}} seg 
+								</span>
+							</div>
+
+							<div class="date" ng-if="loan.restore != null">{{loan.restore.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box" ng-if="loan.restore != null">
+								RESTORATION FLOW BEGINS
+							</div>
 						</div>
+						<!-- ************************ END - GAMER MESSAGE FLOW ************************ -->
 
-
+						<!-- ************************ BEGIN - LENDER MESSAGE FLOW ************************ -->
 						<div ng-if="currentUser.id != loan.gamer.id">
 							<div class="date">{{loan.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="red-box">
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span class="text-black">{{loan.gamer.name}} {{loan.gamer.name | limitTo: 1}}</span>
+								<span class="text-black">{{loan.gamer.name}} {{loan.gamer.lastName | limitTo: 1}}. </span>
 								<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goTouser(loan.gamer)">Ver ficha del usuario</button>
 								<br>
 								<span>desea pedir prestado el siguiente juego:</span>
@@ -414,7 +454,37 @@
 									</div>
 								</form>
 							</div>
+
+							<div class="date" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">
+								<span>Hola {{currentUser.name}},</span>
+								<br>
+								<br>
+								<span>Tu juego llegó exitosamente el día: </span><span class="text-black upper-case">{{loan.lenderStatusDate | date: 'EEEE d'}} </span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.lenderStatusDate | date: 'LLLL'}}</span>
+								<br>
+								<span>El préstamo durará: </span><span class="text-black">{{loan.weeks}} {{loan.weeks == 1 ? 'semana' : 'semanas'}}</span>
+								<br>
+								<span>Tu juego estará de vuelta el día: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
+								<br>
+								<br>
+								<span>Se acaban de acreditar a tu cuenta: </span><span class="text-black upper-case">{{loan.publicUserGame.cost}} coins</span>
+								<br>
+								<br>
+								<span class="text-lg">Timepo restante: </span>
+								<span class="text-black text-lg">
+									{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}} 
+									{{timer.hours < 10 ? '0' : ''}}{{timer.hours}} {{timer.hours == 1 ? 'hora' : 'horas'}} 
+									{{timer.mins < 10 ? '0' : ''}}{{timer.mins}} min 
+									{{timer.secs < 10 ? '0' : ''}}{{timer.secs}} seg 
+								</span>
+							</div>
+
+							<div class="date" ng-if="loan.restore != null">{{loan.restore.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box" ng-if="loan.restore != null">
+								RESTORATION FLOW BEGINS
+							</div>
 						</div>
+						<!-- ************************ END - LENDER MESSAGE FLOW ************************ -->
 					</div>
 
 					<div class="clearfix"></div>

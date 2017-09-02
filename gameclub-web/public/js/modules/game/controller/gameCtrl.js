@@ -114,7 +114,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                 }
 
                 if (!$rootScope.currentUser.isReady) {
-                    notif.danger("Para poder solicitar un juego primero debes haber recibido tu Welcome Kit");
+                    notif.danger("Para poder solicitar un juego primero debes haber recibido tu Welcome Kit. Sube tu primer juego y te enviaremos uno gratis");
                 }
             }
         }

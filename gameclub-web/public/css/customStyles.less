@@ -833,6 +833,8 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account #messages section.messages .inbox .detail .canvas .text-lg{font-size:1.4em;}
 #account #messages section.messages .inbox .detail .canvas .text-bg{font-size:2em;}
 #account #messages section.messages .inbox .detail .canvas .text-center{text-align:center !important;}
+#account #messages section.messages .inbox .detail .canvas a{color:white;text-decoration:underline;}
+#account #messages section.messages .inbox .detail .canvas a:hover{color:rgba(255,255,255,0.5);}
 #account #messages section.messages .inbox .detail .canvas .red-box{z-index:0;position:relative;background-color:@color-secundary;margin:0% 6% 0% 3%;padding:3% 3% 5% 3%;border-radius:8px;color:white;font-weight:bold;line-height:120%;}
 #account #messages section.messages .inbox .detail .canvas .red-box::before{content:"";position:absolute;width:35px;height:35px;background-color:@color-secundary;border-radius:5px;transform:translate(-50%,-50%);top:100%;left:0%;z-index:-1;}
 #account #messages section.messages .inbox .detail .canvas .date{color:#949495;font-weight:bold;font-size:1.1em;text-align:center;margin:2% 0%;}
@@ -882,7 +884,7 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account #messages section.messages .inbox .detail .canvas .loan .decorator .check .box{transform: translate(0%, 5px);cursor:pointer;position:relative;width:1.5em;height:1.5em;display:inline-block;border:3px solid @color-tertiary;margin-right:2%;color:@color-primary;}
 #account #messages section.messages .inbox .detail .canvas .loan .decorator .check .box.checked::after{content:"";background:url("../img/check.svg") no-repeat center center;position:absolute;left:1px;bottom:-2px;background-size:100%;width:1.5em;height:1.5em;}
 #account #messages section.messages .inbox .detail .canvas .loan .decorator .check.disabled .box{border-color:black;cursor:no-drop;}
-#account #messages section.messages .inbox .detail .canvas .loan input.box-number{color:black;width:36%;font-size:0.8em;background-image:-webkit-linear-gradient(top,transparent,transparent 93%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 93%,white 0);background-size:100% 100%;-webkit-background-size:100% 100%;-moz-background-size:100% 100%;}
+#account #messages section.messages .inbox .detail .canvas .loan input.box-number{color:black;width:36%;font-size:0.8em;background-image:-webkit-linear-gradient(top,transparent,transparent 93%,white 0);background-image:-moz-linear-gradient(top,transparent,transparent 93%,white 0);background-size:100% 100%;-webkit-background-size:100% 100%;-moz-background-size:100% 100%;text-transform:uppercase;}
 #account #messages section.messages .inbox .detail .canvas .loan input.box-number::placeholder{color:rgba(0,0,0,0.5);}
 #account #messages section.messages .inbox .detail .canvas .loan .alert-icon{width:10%;display:inline-block;margin-right:2%;}
 #account #messages section.messages .inbox .detail .canvas .loan .alert-text{display:inline-block;vertical-align:middle;}

@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import ec.com.levelap.base.service.BaseService;
@@ -76,6 +77,9 @@ public class LoanService extends BaseService<Loan> {
 	
 	@Autowired
 	private GameClubMailTasklet mailTasklet;
+	
+	@Value("${game-club.real-times}")
+	private boolean realTimes;
 	
 	@Transactional
 	public void requestGame(Loan loan) throws ServletException, MessagingException {
@@ -159,8 +163,14 @@ public class LoanService extends BaseService<Loan> {
 			final Loan taskLoan = loan;
 			Calendar calendar = Calendar.getInstance();
 			
-			calendar.setTime(loan.getReturnDate());
-			calendar.add(Calendar.DATE, -3);
+			if (realTimes) {
+				calendar.setTime(loan.getReturnDate());
+				calendar.add(Calendar.DATE, -3);
+			} else {
+				calendar.setTime(loan.getDeliveryDate());
+				calendar.add(Calendar.MINUTE, 1);
+			}
+			
 			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(), Loan.class.getSimpleName() + "-R1-" + loan.getId(), new Runnable() {
 				@Override
 				public void run() {
@@ -180,8 +190,14 @@ public class LoanService extends BaseService<Loan> {
 				}
 			});
 			
-			calendar.setTime(loan.getReturnDate());
-			calendar.add(Calendar.DATE, -1);
+			if (realTimes) {
+				calendar.setTime(loan.getReturnDate());
+				calendar.add(Calendar.DATE, -1);
+			} else {
+				calendar.setTime(loan.getDeliveryDate());
+				calendar.add(Calendar.MINUTE, 2);
+			}
+			
 			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(), Loan.class.getSimpleName() + "-R2-" + loan.getId(), new Runnable() {
 				@Override
 				public void run() {

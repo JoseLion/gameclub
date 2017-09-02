@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.postgresql.geometric.PGpoint;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
@@ -31,7 +31,7 @@ import ec.com.levelap.gameclub.utils.Const;
 @Table(schema=Const.SCHEMA, name="restore", uniqueConstraints=@UniqueConstraint(columnNames="loan", name="loan_uk"))
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Restore extends BaseEntity {
-	@JsonIgnore
+	@JsonBackReference("LoanRestore")
 	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JoinColumn(name="loan", foreignKey=@ForeignKey(name="loan_fk"))
 	private Loan loan;
@@ -91,6 +91,10 @@ public class Restore extends BaseEntity {
 	
 	@Transient
 	private Boolean gamerConfirmed;
+	
+	public Restore() {
+		super();
+	}
 
 	public Restore(Loan loan) {
 		super();

@@ -30,6 +30,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 			message.selected = true;
 			clearCanvas();
+			killTimer();
 
 			if (message.isLoan == false) {
 				rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
@@ -59,6 +60,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					}
 
 					canvasToBottom();
+					startTimer(new Date($scope.loan.returnDate));
 
 					if (!message.read) {
 						message.read = true;
@@ -168,6 +170,9 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			rest("loan/acceptLoan/:id").get({id: $scope.loan.id}, function(data) {
 				notif.success("Préstamo aceptado");
 				$scope.loan = data;
+				$scope.loan.lenderAddress = $rootScope.currentUser.billingAddress;
+				$scope.loan.lenderGeolocation = $rootScope.currentUser.geolocation;
+				$scope.loan.lenderReceiver = $rootScope.currentUser.receiver;
 				sweet.close();
 				canvasToBottom();
 			}, function(error) {
@@ -301,6 +306,77 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					canvasToBottom(canvas, i);
 				}
 			}, Math.round(pixels*time/height));
+		}
+	}
+
+	function startTimer(finish) {
+		$scope.timer = {};
+		let today = new Date();
+		let diff = finish.getTime() - today.getTime();
+
+		let days = diff / 1000 / 60 / 60 / 24;
+		$scope.timer.days = Math.floor(days);
+
+		if (days % 1 > 0) {
+			let hours = (days % 1) * 24;
+			$scope.timer.hours = Math.floor(hours);
+
+			if (hours % 1 > 0) {
+				let minutes = (hours % 1) * 60;
+				$scope.timer.mins = Math.floor(minutes);
+
+				if (minutes % 1 > 0) {
+					let seconds = (minutes % 1) * 60;
+					$scope.timer.secs = Math.round(seconds);
+				} else {
+					$scope.timer.secs = 0;
+				}
+			} else {
+				$scope.timer.mins = 0;
+				$scope.timer.secs = 0;
+			}
+		} else {
+			$scope.timer.hours = 0;
+			$scope.timer.mins = 0;
+			$scope.timer.secs = 0;
+		}
+
+		$scope.timerInterval = setInterval(function() {
+			$scope.$apply(function() {
+				if ($scope.timer.secs > 0) {
+					$scope.timer.secs--;
+				} else {
+					if ($scope.timer.mins > 0) {
+						$scope.timer.mins--;
+						$scope.timer.secs = 59;
+					} else {
+						if ($scope.timer.hours > 0) {
+							$scope.timer.hours--;
+							$scope.timer.mins = 59;
+							$scope.timer.secs = 59;
+						} else {
+							if ($scope.timer.days > 0) {
+								$scope.timer.days--;
+								$scope.timer.hours = 23;
+								$scope.timer.mins = 59;
+								$scope.timer.secs = 59;
+							} else {
+								killTimer();
+							}
+						}
+					}
+				}
+			});
+		}, 1000);
+	}
+
+	function killTimer() {
+		if ($scope.timer != null) {
+			clearInterval($scope.timerInterval);
+			$scope.timer.days = 0;
+			$scope.timer.hours = 0;
+			$scope.timer.mins = 0;
+			$scope.timer.secs = 0;
 		}
 	}
 });

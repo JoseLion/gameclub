@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.commons.catalog.Catalog;
+import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.entity.RestoreLite;
 import ec.com.levelap.gameclub.module.restore.service.RestoreService;
@@ -48,6 +49,18 @@ public class RestoreController {
 	public ResponseEntity<RestoreLite> save(@RequestBody Restore restore) throws ServletException {
 		RestoreLite restoreLite = restoreService.save(restore);
 		return new ResponseEntity<RestoreLite>(restoreLite, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="confirmGamer", method=RequestMethod.POST)
+	public ResponseEntity<Loan> confirmGamer(@RequestBody Restore restore) throws ServletException {
+		Loan loan = restoreService.confirmRestore(restore, true);
+		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="confirmLender", method=RequestMethod.POST)
+	public ResponseEntity<Loan> confirmLender(@RequestBody Restore restore) throws ServletException {
+		Loan loan = restoreService.confirmRestore(restore, false);
+		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	
 	private static class Search {

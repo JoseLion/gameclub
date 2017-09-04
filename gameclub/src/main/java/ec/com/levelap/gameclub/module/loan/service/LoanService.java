@@ -174,11 +174,13 @@ public class LoanService extends BaseService<Loan> {
 			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(), Loan.class.getSimpleName() + "-R1-" + loan.getId(), new Runnable() {
 				@Override
 				public void run() {
+					Catalog noTracking = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
 					Restore restore = new Restore(taskLoan);
 					restore.setLenderMessage(taskLoan.getLenderMessage());
 					restore.setGamerMessage(taskLoan.getGamerMessage());
 					restore.setPublicUserGame(taskLoan.getPublicUserGame());
 					restore.setGamer(taskLoan.getGamer());
+					restore.setShippingStatus(noTracking);
 					
 					restoreRepo.save(restore);
 					
@@ -299,6 +301,7 @@ public class LoanService extends BaseService<Loan> {
 	public void rescheduleTasks() {
 		LoanRepo repoLoan = ApplicationContextHolder.getContext().getBean(LoanRepo.class);
 		RestoreRepo repoRestore = ApplicationContextHolder.getContext().getBean(RestoreRepo.class);
+		CatalogRepo repoCatalog = ApplicationContextHolder.getContext().getBean(CatalogRepo.class);
 		List<Loan> loans = repoLoan.findByShippingStatusCode(Code.SHIPPING_DELIVERED);
 		Date today = new Date();
 		Calendar threeDays = Calendar.getInstance();
@@ -314,11 +317,13 @@ public class LoanService extends BaseService<Loan> {
 				levelapTaskScheduler.scheduleTaskAtDate(threeDays.getTime(), Loan.class.getSimpleName() + "-R1-" + loan.getId(), new Runnable() {
 					@Override
 					public void run() {
+						Catalog noTracking = repoCatalog.findByCode(Code.SHIPPING_NO_TRACKING);
 						Restore restore = new Restore(loan);
 						restore.setLenderMessage(loan.getLenderMessage());
 						restore.setGamerMessage(loan.getGamerMessage());
 						restore.setPublicUserGame(loan.getPublicUserGame());
 						restore.setGamer(loan.getGamer());
+						restore.setShippingStatus(noTracking);
 						
 						repoRestore.save(restore);
 						

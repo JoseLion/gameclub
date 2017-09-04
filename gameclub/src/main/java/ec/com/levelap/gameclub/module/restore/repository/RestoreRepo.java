@@ -28,8 +28,8 @@ public interface RestoreRepo extends JpaRepository<Restore, Long> {
 				"LEFT JOIN pg.publicUser p " +
 				"LEFT JOIN r.gamer g " +
 			"WHERE " +
-				"r.lenderStatusDate IS NOT NULL AND " +
-				"r.gamerStatusDate IS NOT NULL AND " +
+				"r.lenderConfirmDate IS NOT NULL AND " +
+				"r.gamerConfirmDate IS NOT NULL AND " +
 				"(UPPER(p.name) LIKE UPPER('%' || :lender || '%') OR UPPER(p.lastName) LIKE UPPER('%' || :lender || '%') OR UPPER(p.name || ' ' || p.lastName) LIKE ('%' || :lender || '%')) AND " +
 				"(UPPER(g.name) LIKE UPPER('%' || :gamer || '%') OR UPPER(g.lastName) LIKE UPPER('%' || :gamer || '%') OR UPPER(g.name || ' ' || g.lastName) LIKE ('%' || :gamer || '%')) AND " +
 				"(:shippingStatus IS NULL OR r.shippingStatus=:shippingStatus) AND " +

@@ -30,8 +30,9 @@ public interface PublicUserGameRepo extends JpaRepository<PublicUserGame, Long> 
 				"LEFT JOIN pg.console c " +
 				"LEFT JOIN pg.game g " +
 			"WHERE " +
-				"(:origin IS NULL OR (lp.origin=:origin AND lp.destination=p.location)) AND " +
+				"(lp.origin=:origin AND lp.destination=p.location) AND " +
 				"pg.status=TRUE AND " +
+				"p.isReady=TRUE AND " +
 				"(:publicUser IS NULL OR p<>:publicUser) AND " +
 				"g.id=:gameId AND " +
 				"c.id=:consoleId " +
@@ -52,6 +53,7 @@ public interface PublicUserGameRepo extends JpaRepository<PublicUserGame, Long> 
 			"LEFT JOIN pg.game g " +
 		"WHERE " +
 			"pg.status=TRUE AND " +
+			"p.isReady=TRUE AND " +
 			"g.id=:gameId AND " +
 			"c.id=:consoleId " +
 		"ORDER BY pg.status DESC, p.rating DESC, pg.integrity DESC")

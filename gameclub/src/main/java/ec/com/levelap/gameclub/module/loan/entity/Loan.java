@@ -10,17 +10,22 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.postgresql.geometric.PGpoint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.catalog.Catalog;
+import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.message.entity.Message;
+import ec.com.levelap.gameclub.module.restore.entity.Restore;
+import ec.com.levelap.gameclub.module.review.entity.Review;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.utils.Const;
@@ -82,12 +87,6 @@ public class Loan extends BaseEntity {
 	@Column(name="box_number", columnDefinition="VARCHAR")
 	private String boxNumber;
 	
-	@Column(name="lender_confirmed", columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean lenderConfirmed = false;
-	
-	@Column(name="gamer_confirmed", columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean gamerConfirmed = false;
-	
 	@Column(name="lender_status_date")
 	private Date lenderStatusDate;
 	
@@ -109,6 +108,20 @@ public class Loan extends BaseEntity {
 	
 	@Column(name="delivery_date")
 	private Date deliveryDate;
+	
+	@JsonManagedReference("LoanRestore")
+	@OneToOne(mappedBy="loan", fetch=FetchType.LAZY)
+	private Restore restore;
+	
+	@JsonManagedReference("LoanReview")
+	@OneToOne(mappedBy="loan", fetch=FetchType.LAZY)
+	private Review review;
+	
+	@Transient
+	private Boolean lenderConfirmed = false;
+	
+	@Transient
+	private Boolean gamerConfirmed = false;
 	
 	@Transient
 	private Date returnDate;
@@ -241,22 +254,6 @@ public class Loan extends BaseEntity {
 		this.boxNumber = boxNumber;
 	}
 
-	public Boolean getLenderConfirmed() {
-		return lenderConfirmed;
-	}
-
-	public void setLenderConfirmed(Boolean lenderConfirmed) {
-		this.lenderConfirmed = lenderConfirmed;
-	}
-
-	public Boolean getGamerConfirmed() {
-		return gamerConfirmed;
-	}
-
-	public void setGamerConfirmed(Boolean gamerConfirmed) {
-		this.gamerConfirmed = gamerConfirmed;
-	}
-
 	public Date getLenderStatusDate() {
 		return lenderStatusDate;
 	}
@@ -313,11 +310,62 @@ public class Loan extends BaseEntity {
 		this.deliveryDate = deliveryDate;
 	}
 
+	public Restore getRestore() {
+		return restore;
+	}
+	
+	public void setRestore(Restore restore) {
+		this.restore = restore;
+	}
+
+	public Review getReview() {
+		return review;
+	}
+
+	public void setReview(Review review) {
+		this.review = review;
+	}
+
+	public Boolean getLenderConfirmed() {
+		if(lenderStatusDate == null) {
+			lenderConfirmed = false;
+		} else {
+			lenderConfirmed = true;
+		}
+		
+		return lenderConfirmed;
+	}
+
+	public void setLenderConfirmed(Boolean lenderConfirmed) {
+		this.lenderConfirmed = lenderConfirmed;
+	}
+
+	public Boolean getGamerConfirmed() {
+		if (gamerStatusDate == null) {
+			gamerConfirmed = false;
+		} else {
+			gamerConfirmed = true;
+		}
+		
+		return gamerConfirmed;
+	}
+
+	public void setGamerConfirmed(Boolean gamerConfirmed) {
+		this.gamerConfirmed = gamerConfirmed;
+	}
+
 	public Date getReturnDate() {
 		if (deliveryDate != null) {
+			boolean realTimes = Boolean.parseBoolean(ApplicationContextHolder.getContext().getEnvironment().getProperty("game-club.real-times"));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(deliveryDate);
-			calendar.add(Calendar.DATE, 7*weeks);
+			
+			if (realTimes) {
+				calendar.add(Calendar.DATE, 7*weeks);
+			} else {
+				calendar.add(Calendar.MINUTE, 3);
+			}
+			
 			returnDate = calendar.getTime();
 		}
 		

@@ -70,3 +70,6 @@ tcc-configuration:
   url: http://clientes.tcc.com.co/preservicios
   account: 6019000
   nit: 1792738865001
+
+game-club:
+  real-times: false

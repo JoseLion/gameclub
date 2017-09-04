@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.postgresql.geometric.PGpoint;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
@@ -31,8 +31,8 @@ import ec.com.levelap.gameclub.utils.Const;
 @Table(schema=Const.SCHEMA, name="restore", uniqueConstraints=@UniqueConstraint(columnNames="loan", name="loan_uk"))
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Restore extends BaseEntity {
-	@JsonIgnore
-	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JsonBackReference("LoanRestore")
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH, optional=false)
 	@JoinColumn(name="loan", foreignKey=@ForeignKey(name="loan_fk"))
 	private Loan loan;
 	
@@ -70,6 +70,12 @@ public class Restore extends BaseEntity {
 	@Column(name="gamer_receiver", columnDefinition="VARCHAR")
 	private String gamerReceiver;
 	
+	@Column(name="lender_confirm_date")
+	private Date lenderConfirmDate;
+	
+	@Column(name="gamer_confirm_date")
+	private Date gamerConfirmDate;
+	
 	@Column(name="lender_status_date")
 	private Date lenderStatusDate;
 	
@@ -91,6 +97,10 @@ public class Restore extends BaseEntity {
 	
 	@Transient
 	private Boolean gamerConfirmed;
+	
+	public Restore() {
+		super();
+	}
 
 	public Restore(Loan loan) {
 		super();
@@ -217,6 +227,22 @@ public class Restore extends BaseEntity {
 		this.shippingNote = shippingNote;
 	}
 
+	public Date getLenderConfirmDate() {
+		return lenderConfirmDate;
+	}
+
+	public void setLenderConfirmDate(Date lenderConfirmDate) {
+		this.lenderConfirmDate = lenderConfirmDate;
+	}
+
+	public Date getGamerConfirmDate() {
+		return gamerConfirmDate;
+	}
+
+	public void setGamerConfirmDate(Date gamerConfirmDate) {
+		this.gamerConfirmDate = gamerConfirmDate;
+	}
+
 	public Catalog getShippingStatus() {
 		return shippingStatus;
 	}
@@ -226,7 +252,7 @@ public class Restore extends BaseEntity {
 	}
 
 	public Boolean getLenderConfirmed() {
-		if (lenderStatusDate == null) {
+		if (lenderConfirmDate == null) {
 			lenderConfirmed = false;
 		} else {
 			lenderConfirmed = true;
@@ -240,7 +266,7 @@ public class Restore extends BaseEntity {
 	}
 
 	public Boolean getGamerConfirmed() {
-		if (gamerStatusDate == null) {
+		if (gamerConfirmDate == null) {
 			gamerConfirmed = false;
 		} else {
 			gamerConfirmed = true;

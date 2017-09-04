@@ -12,6 +12,7 @@ import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
 import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
+import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKitLite;
 import ec.com.levelap.gameclub.module.welcomeKit.repository.WelcomeKitRepo;
@@ -32,6 +33,9 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 	@Autowired
 	private MessageRepo messageRepo;
 	
+	@Autowired
+	private PublicUserRepo publicUserRepo;
+	
 	@Transactional
 	public WelcomeKit confirmWelcomeKit(WelcomeKit welcomeKit) throws ServletException {
 		Catalog shippingStatus = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
@@ -44,8 +48,18 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 	
 	@Transactional
 	public WelcomeKitLite save(WelcomeKit kit) throws ServletException {
-		kit.getMessage().setRead(false);
-		kit.setMessage(messageRepo.saveAndFlush(kit.getMessage()));
+		WelcomeKit previous = welcomeKitRepo.findOne(kit.getId());
+		
+		if (!kit.getShippingStatus().equals(previous.getShippingStatus()) || (kit.getShippingNote() != null && !kit.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
+			kit.getMessage().setRead(false);
+			kit.setMessage(messageRepo.saveAndFlush(kit.getMessage()));
+		}
+		
+		if (kit.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
+			kit.getPublicUser().setIsReady(true);
+			kit.setPublicUser(publicUserRepo.saveAndFlush(kit.getPublicUser()));
+		}
+		
 		kit = welcomeKitRepo.saveAndFlush(kit);
 		WelcomeKitLite kitLite = welcomeKitRepo.findById(kit.getId());
 		return kitLite;

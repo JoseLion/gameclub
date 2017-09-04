@@ -75,8 +75,8 @@ public class GameOpenController {
 		PageRequest page = filter.sort.isEmpty() ? new PageRequest(filter.page, Const.TABLE_SIZE) : new PageRequest(filter.page, Const.TABLE_SIZE, new Sort(filter.desc ? Direction.DESC : Direction.ASC, filter.sort));
 		Page<PublicUserGameOpen> games;
 		
-		if (currentUser != null) {
-			games = gameService.getPublicUserGameRepo().findAvailableGames(currentUser, currentUser != null ? currentUser.getLocation() : null, filter.gameId, filter.consoleId, page);
+		if (currentUser != null && currentUser.getLocation() != null) {
+			games = gameService.getPublicUserGameRepo().findAvailableGames(currentUser, currentUser.getLocation(), filter.gameId, filter.consoleId, page);
 		} else {
 			games = gameService.getPublicUserGameRepo().findAvailableGamesOpen(filter.gameId, filter.consoleId, page);
 		}
@@ -86,8 +86,6 @@ public class GameOpenController {
 	
 	private static class Search {
 		public String name = "";
-		
-		public String trailerUrl = "";
 		
 		public Long categoryId;
 		

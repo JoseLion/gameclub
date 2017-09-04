@@ -53,10 +53,24 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 						$scope.loan.lenderAddress = $scope.loan.lenderAddress != null ? $scope.loan.lenderAddress : $rootScope.currentUser.billingAddress;
 						$scope.loan.lenderGeolocation = $scope.loan.lenderGeolocation != null ? $scope.loan.lenderGeolocation : $rootScope.currentUser.geolocation;
 						$scope.loan.lenderReceiver = $scope.loan.lenderReceiver != null ? $scope.loan.lenderReceiver : $rootScope.currentUser.receiver;
+
+						if ($scope.loan.restore != null) {
+							$scope.loan.restore.isDisabled = true;
+							$scope.loan.restore.lenderAddress = $scope.loan.restore.lenderAddress != null ? $scope.loan.restore.lenderAddress : $rootScope.currentUser.billingAddress;
+							$scope.loan.restore.lenderGeolocation = $scope.loan.restore.lenderGeolocation != null ? $scope.loan.restore.lenderGeolocation : $rootScope.currentUser.geolocation;
+							$scope.loan.restore.lenderReceiver = $scope.loan.restore.lenderReceiver != null ? $scope.loan.restore.lenderReceiver : $rootScope.currentUser.receiver;
+						}
 					}
 
 					if ($rootScope.currentUser.id == $scope.loan.gamer.id) {
 						$scope.loan.gamerGeolocation = $scope.loan.gamerGeolocation != null ? $scope.loan.gamerGeolocation : $rootScope.currentUser.geolocation;
+
+						if ($scope.loan.restore != null) {
+							$scope.loan.restore.isDisabled = true;
+							$scope.loan.restore.gamerAddress = $scope.loan.restore.gamerAddress != null ? $scope.loan.restore.gamerAddress : $rootScope.currentUser.billingAddress;
+							$scope.loan.restore.gamerGeolocation = $scope.loan.restore.gamerGeolocation != null ? $scope.loan.restore.gamerGeolocation : $rootScope.currentUser.geolocation;
+							$scope.loan.restore.gamerReceiver = $scope.loan.restore.gamerReceiver != null ? $scope.loan.restore.gamerReceiver : $rootScope.currentUser.receiver;
+						}
 					}
 
 					canvasToBottom();
@@ -223,6 +237,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 				rest("loan/confirmLender").post($scope.loan, function(data) {
 					$scope.loan = data;
+					$scope.loan.isDisabled = true;
 					notif.success("Préstamo confirmado");
 					sweet.close();
 					canvasToBottom();
@@ -265,6 +280,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 				rest("loan/confirmGamer").post($scope.loan, function(data) {
 					$scope.loan = data;
+					$scope.loan.isDisabled = true;
 					notif.success("Pago realizado con éxito");
 					sweet.close();
 					canvasToBottom();
@@ -279,6 +295,151 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 						$rootScope.currentUser = data;
 					});
 				}
+			});
+		}
+	}
+
+	$scope.getDatePlus = function(millis, days) {
+		let date = new Date(millis);
+		date.setDate(date.getDate() + days);
+		return date;
+	}
+
+	$scope.gamerConfirmRestore = function() {
+		let isValid = true;
+
+		if ($scope.loan.restore.gamerAddress == null || $scope.loan.restore.gamerAddress == '') {
+			notif.danger("El campo dirección es requerido para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.restore.gamerGeolocation == null) {
+			notif.danger("La geolocalización es requerida para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.restore.gamerReceiver == null || $scope.loan.restore.gamerReceiver == '') {
+			notif.danger("El campo Persona de Entrega es requerido para continuar");
+			isValid = false;
+		}
+
+		if (isValid) {
+			sweet.default("Se confirmará la dirección de retiro", function() {
+				$scope.loan.restore.isDisabled = true;
+
+				rest("restore/confirmGamer").post($scope.loan.restore, function(data) {
+					$scope.loan = data;
+					$scope.loan.restore.isDisabled = true;
+					notif.success("Dirección de retiro confirmada");
+					sweet.close();
+					canvasToBottom();
+				}, function(error) {
+					sweet.close();
+				});
+
+				if ($scope.loan.restore.saveChanges == true) {
+					$rootScope.currentUser.billingAddress = $scope.loan.restore.gamerAddress;
+					$rootScope.currentUser.geolocation = $scope.loan.restore.gamerGeolocation;
+					$rootScope.currentUser.receiver = $scope.loan.restore.gamerReceiver;
+
+					rest("publicUser/save").post($rootScope.currentUser, function(data) {
+						$rootScope.currentUser = data;
+					}, function(error) {
+						sweet.close();
+					});
+				}
+			});
+		}
+	}
+
+	$scope.lenderConfirmRestore = function() {
+		let isValid = true;
+
+		if ($scope.loan.restore.lenderAddress == null || $scope.loan.restore.lenderAddress == '') {
+			notif.danger("El campo dirección es requerido para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.restore.lenderGeolocation == null) {
+			notif.danger("La geolocalización es requerida para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.restore.lenderReceiver == null || $scope.loan.restore.lenderReceiver == '') {
+			notif.danger("El campo Persona de Entrega es requerido para continuar");
+			isValid = false;
+		}
+
+		if (isValid) {
+			sweet.default("Se confirmará la dirección de entrega", function() {
+				$scope.loan.restore.isDisabled = true;
+
+				rest("restore/confirmLender").post($scope.loan.restore, function(data) {
+					$scope.loan = data;
+					$scope.loan.restore.isDisabled = true;
+					notif.success("Dirección de entrega confirmada");
+					sweet.close();
+					canvasToBottom();
+				}, function(error) {
+					sweet.close();
+				});
+
+				if ($scope.loan.restore.saveChanges == true) {
+					$rootScope.currentUser.billingAddress = $scope.loan.restore.lenderAddress;
+					$rootScope.currentUser.geolocation = $scope.loan.restore.lenderGeolocation;
+					$rootScope.currentUser.receiver = $scope.loan.restore.lenderReceiver;
+
+					rest("publicUser/save").post($rootScope.currentUser, function(data) {
+						$rootScope.currentUser = data;
+					}, function(error) {
+						sweet.close();
+					});
+				}
+			});
+		}
+	}
+
+	$scope.sendReview = function() {
+		let isValid = true;
+
+		if ($scope.loan.review == null) {
+			isValid = false;
+		} else {
+			if ($scope.loan.gamer.id == $rootScope.currentUser.id) {
+				if ($scope.loan.review.lenderScore == null || $scope.loan.review.lenderScore < 1) {
+					notif.danger("Debes dar una calificación para continuar");
+					isValid = false;
+				}
+
+				if ($scope.loan.review.lenderComment == null || $scope.loan.review.lenderComment == '') {
+					notif.danger("Debes dejar un comentario para continuar");
+					isValid = false;
+				}
+			} else {
+				if ($scope.loan.review.gamerScore == null || $scope.loan.review.gamerScore < 1) {
+					notif.danger("Debes dar una calificación para continuar");
+					isValid = false;
+				}
+
+				if ($scope.loan.review.gamerComment == null || $scope.loan.review.gamerComment == '') {
+					notif.danger("Debes dejar un comentario para continuar");
+					isValid = false;
+				}
+			}
+		}
+
+		if (isValid) {
+			sweet.default("Se enviará tu calificación y comentario", function() {
+				$scope.loan.review.loan = {id: $scope.loan.id};
+
+				rest("review/sendReview").post($scope.loan.review, function(data) {
+					$scope.loan = data;
+					notif.success("Calificación enviada con éxito");
+					sweet.close();
+					canvasToBottom();
+				}, function(error) {
+					sweet.close();
+				});
 			});
 		}
 	}

@@ -32,7 +32,7 @@ import ec.com.levelap.gameclub.utils.Const;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Restore extends BaseEntity {
 	@JsonBackReference("LoanRestore")
-	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH, optional=false)
 	@JoinColumn(name="loan", foreignKey=@ForeignKey(name="loan_fk"))
 	private Loan loan;
 	
@@ -69,6 +69,12 @@ public class Restore extends BaseEntity {
 	
 	@Column(name="gamer_receiver", columnDefinition="VARCHAR")
 	private String gamerReceiver;
+	
+	@Column(name="lender_confirm_date")
+	private Date lenderConfirmDate;
+	
+	@Column(name="gamer_confirm_date")
+	private Date gamerConfirmDate;
 	
 	@Column(name="lender_status_date")
 	private Date lenderStatusDate;
@@ -221,6 +227,22 @@ public class Restore extends BaseEntity {
 		this.shippingNote = shippingNote;
 	}
 
+	public Date getLenderConfirmDate() {
+		return lenderConfirmDate;
+	}
+
+	public void setLenderConfirmDate(Date lenderConfirmDate) {
+		this.lenderConfirmDate = lenderConfirmDate;
+	}
+
+	public Date getGamerConfirmDate() {
+		return gamerConfirmDate;
+	}
+
+	public void setGamerConfirmDate(Date gamerConfirmDate) {
+		this.gamerConfirmDate = gamerConfirmDate;
+	}
+
 	public Catalog getShippingStatus() {
 		return shippingStatus;
 	}
@@ -230,7 +252,7 @@ public class Restore extends BaseEntity {
 	}
 
 	public Boolean getLenderConfirmed() {
-		if (lenderStatusDate == null) {
+		if (lenderConfirmDate == null) {
 			lenderConfirmed = false;
 		} else {
 			lenderConfirmed = true;
@@ -244,7 +266,7 @@ public class Restore extends BaseEntity {
 	}
 
 	public Boolean getGamerConfirmed() {
-		if (gamerStatusDate == null) {
+		if (gamerConfirmDate == null) {
 			gamerConfirmed = false;
 		} else {
 			gamerConfirmed = true;

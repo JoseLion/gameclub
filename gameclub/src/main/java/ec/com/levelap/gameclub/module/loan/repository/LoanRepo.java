@@ -30,8 +30,8 @@ public interface LoanRepo extends JpaRepository<Loan, Long> {
 				"LEFT JOIN pg.publicUser p " +
 				"LEFT JOIN l.gamer g " +
 			"WHERE " +
-				"l.lenderConfirmed=TRUE AND " +
-				"l.gamerConfirmed=TRUE AND " +
+				"l.lenderStatusDate IS NOT NULL AND " +
+				"l.gamerStatusDate IS NOT NULL AND " +
 				"(UPPER(p.name) LIKE UPPER('%' || :lender || '%') OR UPPER(p.lastName) LIKE UPPER('%' || :lender || '%') OR UPPER(p.name || ' ' || p.lastName) LIKE ('%' || :lender || '%')) AND " +
 				"(UPPER(g.name) LIKE UPPER('%' || :gamer || '%') OR UPPER(g.lastName) LIKE UPPER('%' || :gamer || '%') OR UPPER(g.name || ' ' || g.lastName) LIKE ('%' || :gamer || '%')) AND " +
 				"(:shippingStatus IS NULL OR l.shippingStatus=:shippingStatus) AND " +

@@ -1,4 +1,4 @@
-angular.module('Core').factory('rest', function($resource, $q, $rootScope, $cookies, $location, urlRestPath, forEach, Const, notif) {
+angular.module('Core').factory('rest', function($resource, $rootScope, $cookies, $location, urlRestPath, forEach, Const, notif) {
 	let baseUrl = urlRestPath.url + "/api/";
 
 	let resourceInterceptor = {
@@ -20,7 +20,7 @@ angular.module('Core').factory('rest', function($resource, $q, $rootScope, $cook
 				notif.danger("Oops, algo salió mal... Por favor vuelve a inténtarlo más tarde");
 			}
 
-			return $q.reject(response);
+			return response;
 		}
 	};
 

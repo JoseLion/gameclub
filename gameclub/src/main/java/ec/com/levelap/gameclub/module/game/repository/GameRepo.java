@@ -68,7 +68,7 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 	
 	public List<GameOpen> findByCategoriesCategoryIdOrderByName(Long categoryId);
 	
-	@Query(value = "SELECT DISTINCT g.name FROM Game g WHERE UPPER(g.name) LIKE '%' || UPPER(?1) || '%'")
+	@Query("SELECT DISTINCT g.name FROM Game g WHERE UPPER(g.name) LIKE '%' || UPPER(?1) || '%'")
 	public List<String> findAutocomplete(String name);
 	
 }

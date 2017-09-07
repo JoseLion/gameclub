@@ -1,4 +1,4 @@
-angular.module('Core').factory('openRest', function($resource, $q, $rootScope, urlRestPath, forEach, notif) {
+angular.module('Core').factory('openRest', function($resource, $rootScope, urlRestPath, forEach, notif) {
 	let baseUrl = urlRestPath.url + "/open/";
 
 	let resourceInterceptor = {
@@ -11,7 +11,7 @@ angular.module('Core').factory('openRest', function($resource, $q, $rootScope, u
 				notif.danger("Oops, algo salió mal... Por favor vuelve a inténtarlo más tarde");
 			}
 
-			return $q.reject(response);
+			return response;
 		}
 	};
 

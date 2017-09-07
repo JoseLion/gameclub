@@ -46,6 +46,12 @@ public class Review extends BaseEntity {
 	@Column(name="lender_comment", columnDefinition="VARCHAR")
 	private String lenderComment;
 	
+	@Column(name="gamer_accepted")
+	private Boolean gamerAccepted;
+	
+	@Column(name="lender_accepted")
+	private Boolean lenderAccepted;
+	
 	@Transient
 	private Boolean finished = false;
 
@@ -103,6 +109,22 @@ public class Review extends BaseEntity {
 
 	public void setLenderComment(String lenderComment) {
 		this.lenderComment = lenderComment;
+	}
+
+	public Boolean getGamerAccepted() {
+		return gamerAccepted;
+	}
+
+	public void setGamerAccepted(Boolean gamerAccepted) {
+		this.gamerAccepted = gamerAccepted;
+	}
+
+	public Boolean getLenderAccepted() {
+		return lenderAccepted;
+	}
+
+	public void setLenderAccepted(Boolean lenderAccepted) {
+		this.lenderAccepted = lenderAccepted;
 	}
 
 	public Boolean getFinished() {

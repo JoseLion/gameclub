@@ -27,6 +27,7 @@ import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.message.entity.Message;
+import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.repository.RestoreRepo;
@@ -216,6 +217,12 @@ public class LoanService extends BaseService<Loan> {
 				public void run() {
 					try {
 						Restore restore = restoreRepo.findByLoan(taskLoan);
+						restore.getLoan().getGamerMessage().setRead(false);
+						restore.getLoan().getLenderMessage().setRead(false);
+						
+						messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
+						messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
+						
 						sendFinishedMails(restore);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -302,6 +309,7 @@ public class LoanService extends BaseService<Loan> {
 		LoanRepo repoLoan = ApplicationContextHolder.getContext().getBean(LoanRepo.class);
 		RestoreRepo repoRestore = ApplicationContextHolder.getContext().getBean(RestoreRepo.class);
 		CatalogRepo repoCatalog = ApplicationContextHolder.getContext().getBean(CatalogRepo.class);
+		MessageRepo repoMessage = ApplicationContextHolder.getContext().getBean(MessageRepo.class);
 		List<Loan> loans = repoLoan.findByShippingStatusCode(Code.SHIPPING_DELIVERED);
 		Date today = new Date();
 		Calendar threeDays = Calendar.getInstance();
@@ -390,6 +398,13 @@ public class LoanService extends BaseService<Loan> {
 					public void run() {
 						try {
 							Restore restore = repoRestore.findByLoan(loan);
+							
+							restore.getLoan().getGamerMessage().setRead(false);
+							restore.getLoan().getLenderMessage().setRead(false);
+							
+							repoMessage.save(restore.getLoan().getGamerMessage());
+							repoMessage.save(restore.getLoan().getLenderMessage());
+							
 							sendFinishedMails(restore);
 						} catch (Exception e) {
 							e.printStackTrace();

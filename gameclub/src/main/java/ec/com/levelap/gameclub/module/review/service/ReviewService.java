@@ -41,7 +41,6 @@ public class ReviewService {
 			review.setGamerReviwedOn(new Date());
 		}
 		
-		review.setStatus(false);
 		review = reviewRepo.saveAndFlush(review);
 		
 		if (review.getFinished()) {
@@ -52,6 +51,24 @@ public class ReviewService {
 		}
 		
 		loan.setReview(review);
+		return loan;
+	}
+	
+	@Transactional
+	public Loan acceptReview(Long id) throws ServletException {
+		Review review = reviewRepo.findOne(id);
+		PublicUser currentUser = publicUserService.getCurrentUser();
+		
+		if (currentUser.getId().longValue() == review.getLoan().getGamer().getId().longValue()) {
+			review.setGamerAccepted(true);
+		} else {
+			review.setLenderAccepted(true);
+		}
+		
+		review = reviewRepo.save(review);
+		Loan loan = loanRepo.findOne(review.getLoan().getId());
+		loan.setReview(review);
+		
 		return loan;
 	}
 

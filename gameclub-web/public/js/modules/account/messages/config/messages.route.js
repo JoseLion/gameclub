@@ -1,5 +1,4 @@
 angular.module('Messages').config(function($stateProvider) {
-
 	let prefix = 'gameclub.account.';
 
 	$stateProvider
@@ -17,9 +16,7 @@ angular.module('Messages').config(function($stateProvider) {
 			},
 
 			messages: function(rest) {
-				return rest("message/findMessages").post(function(data) {
-					return data;
-				});
+				return rest("message/findMessages").post();
 			}
 		}
 	});

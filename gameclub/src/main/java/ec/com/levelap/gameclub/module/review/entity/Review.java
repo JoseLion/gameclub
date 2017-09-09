@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
+import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
@@ -54,6 +55,12 @@ public class Review extends BaseEntity {
 	
 	@Transient
 	private Boolean finished = false;
+	
+	@Transient
+	private PublicUser gamer;
+	
+	@Transient
+	private PublicUser lender;
 
 	public Loan getLoan() {
 		return loan;
@@ -137,5 +144,23 @@ public class Review extends BaseEntity {
 
 	public void setFinished(Boolean finished) {
 		this.finished = finished;
+	}
+
+	public PublicUser getGamer() {
+		gamer = loan.getGamer();
+		return gamer;
+	}
+
+	public void setGamer(PublicUser gamer) {
+		this.gamer = gamer;
+	}
+
+	public PublicUser getLender() {
+		lender = loan.getPublicUserGame().getPublicUser();
+		return lender;
+	}
+
+	public void setLender(PublicUser lender) {
+		this.lender = lender;
 	}
 }

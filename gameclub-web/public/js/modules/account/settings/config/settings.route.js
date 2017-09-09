@@ -1,5 +1,4 @@
 angular.module('Settings').config(function($stateProvider) {
-
 	let prefix = 'gameclub.account.';
 
 	$stateProvider
@@ -14,6 +13,10 @@ angular.module('Settings').config(function($stateProvider) {
 					name: 'Settings',
 					files: ['js/modules/account/settings/controller/settingsCtrl.js']
 				}]);
+			},
+
+			reviews: function(rest) {
+				return rest("review/getReviewsOfCurrentUser/:page").get({page: 0});
 			}
 		}
 	});

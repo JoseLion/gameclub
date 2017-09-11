@@ -1,11 +1,11 @@
 <span id="score">
 	<i id="score-star-{{star}}" class="gc gc-rating" ng-class="{'active': star <= ngModel, 'pointer': !isDisabled}" ng-repeat="star in stars" ng-click="setScore(star)" ng-mouseenter="mouseEnter(star)" ng-mouseleave="mouseLeave(star)"></i>
-</span>
 
-<style type="text/css">
-	#score{color:black;font-size:1.1em;}
-	#score i{margin:0% 0.25%;}
-	#score i.hover{color: rgba(255,255,255,0.5);}
-	#score i.active{color:white;}
-	#score .pointer{cursor:pointer;}
-</style>
+	<style type="text/css">
+		#score{color:black;font-size:1.1em;}
+		#score i{margin:0% 0.25%;}
+		#score i.hover{color: rgba(255,255,255,0.5);}
+		#score i.active{color:white;}
+		#score .pointer{cursor:pointer;}
+	</style>
+</span>

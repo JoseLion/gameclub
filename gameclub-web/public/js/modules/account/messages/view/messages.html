@@ -434,22 +434,12 @@
 								<br>
 								<br>
 								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptReview(loan.review.id)" ng-if="loan.review.gamerAccepted == null">Aceptar review</button>
-								<button type="button" class="btn btn-xs btn-tertiary" ng-if="loan.review.gamerAccepted == null">Reportar review</button>
 							</div>
 
 							<div class="date" ng-if="loan.review.gamerAccepted == true">{{loan.review.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="blue-box small-box text-center" ng-if="loan.review.gamerAccepted == true">
 								<div class="box-label col-md-12">
 									<span>Review aceptado</span>
-								</div>
-
-								<div class="clearfix"></div>
-							</div>
-
-							<div class="date" ng-if="loan.review.gamerAccepted == false">{{loan.review.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
-							<div class="blue-box small-box text-center" ng-if="loan.review.gamerAccepted == false">
-								<div class="box-label col-md-12">
-									<span>Review Reportado</span>
 								</div>
 
 								<div class="clearfix"></div>
@@ -725,22 +715,12 @@
 								<br>
 								<br>
 								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptReview(loan.review.id)" ng-if="loan.review.lenderAccepted == null">Aceptar review</button>
-								<button type="button" class="btn btn-xs btn-tertiary" ng-if="loan.review.lenderAccepted == null">Reportar review</button>
 							</div>
 
 							<div class="date" ng-if="loan.review.lenderAccepted == true">{{loan.review.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="blue-box small-box text-center" ng-if="loan.review.lenderAccepted == true">
 								<div class="box-label col-md-12">
 									<span>Review aceptado</span>
-								</div>
-
-								<div class="clearfix"></div>
-							</div>
-
-							<div class="date" ng-if="loan.review.lenderAccepted == false">{{loan.review.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
-							<div class="blue-box small-box text-center" ng-if="loan.review.lenderAccepted == false">
-								<div class="box-label col-md-12">
-									<span>Review Reportado</span>
 								</div>
 
 								<div class="clearfix"></div>

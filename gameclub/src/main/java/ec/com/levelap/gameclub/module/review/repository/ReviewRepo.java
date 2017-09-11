@@ -15,5 +15,15 @@ public interface ReviewRepo extends JpaRepository<Review, Long> {
 				"r.loan.gamer.id=:id OR " +
 				"r.loan.publicUserGame.publicUser.id=:id " +
 			"ORDER BY r.creationDate DESC")
-	Page<Review> findReviewsOfUser(@Param("id") Long id, Pageable page);
+	public Page<Review> findReviewsOfUser(@Param("id") Long id, Pageable page);
+	
+	public Long countByGamerAcceptedIsTrueAndLoanGamerId(Long gamerId);
+	
+	public Long countByLenderAcceptedIsTrueAndLoanPublicUserGamePublicUserId(Long lenderId);
+	
+	@Query(value="SELECT AVG(r.gamer_score) FROM gameclub.review r LEFT JOIN gameclub.loan l ON r.loan=l.id WHERE r.gamer_accepted=TRUE AND l.gamer=?1", nativeQuery=true)
+	public Double getGamerAverageScore(Long gamerId);
+	
+	@Query(value="SELECT AVG(r.lender_score) FROM gameclub.review r LEFT JOIN gameclub.loan l ON r.loan=l.id LEFT JOIN gameclub.public_user_game pg ON l.public_user_game=pg.id WHERE r.lender_accepted=TRUE AND pg.public_user=?1", nativeQuery=true)
+	public Double getLenderAverageScore(Long lenderId);
 }

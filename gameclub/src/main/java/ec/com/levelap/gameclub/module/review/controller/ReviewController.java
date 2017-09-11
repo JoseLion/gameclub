@@ -1,10 +1,10 @@
 package ec.com.levelap.gameclub.module.review.controller;
 
+import java.util.Map;
+
 import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,6 @@ import ec.com.levelap.gameclub.module.review.entity.Review;
 import ec.com.levelap.gameclub.module.review.service.ReviewService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
-import ec.com.levelap.gameclub.utils.Const;
 
 @RestController
 @RequestMapping(value="api/review", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -43,16 +42,16 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="getReviewsOfCurrentUser/{page}", method=RequestMethod.GET)
-	public ResponseEntity<Page<Review>> getReviewsOfCurrentUser(@PathVariable Integer page) throws ServletException {
+	public ResponseEntity<Map<String, Object>> getReviewsOfCurrentUser(@PathVariable Integer page) throws ServletException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
-		Page<Review> reviews = reviewService.getReviewRepo().findReviewsOfUser(currentUser.getId(), new PageRequest(page, Const.TABLE_SIZE));
-		System.out.println("GAMER SCORE: " + reviews.getContent().get(0).getGamerScore());
-		return new ResponseEntity<Page<Review>>(reviews, HttpStatus.OK);
+		Map<String, Object> response = reviewService.getReviewsOfUser(currentUser.getId(), page);
+		
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="getReviewsOfUser/{id}/{page}", method=RequestMethod.GET)
-	public ResponseEntity<Page<Review>> getReviewsOfUser(@PathVariable Long id, @PathVariable Integer page) throws ServletException {
-		Page<Review> reviews = reviewService.getReviewRepo().findReviewsOfUser(id, new PageRequest(page, Const.TABLE_SIZE));
-		return new ResponseEntity<Page<Review>>(reviews, HttpStatus.OK);
+	public ResponseEntity<Map<String, Object>> getReviewsOfUser(@PathVariable Long id, @PathVariable Integer page) throws ServletException {
+		Map<String, Object> response = reviewService.getReviewsOfUser(id, page);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 }

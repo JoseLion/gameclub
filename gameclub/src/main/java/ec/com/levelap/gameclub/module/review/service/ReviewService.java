@@ -1,11 +1,15 @@
 package ec.com.levelap.gameclub.module.review.service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
@@ -15,6 +19,7 @@ import ec.com.levelap.gameclub.module.review.entity.Review;
 import ec.com.levelap.gameclub.module.review.repository.ReviewRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Service
 public class ReviewService {
@@ -70,6 +75,24 @@ public class ReviewService {
 		loan.setReview(review);
 		
 		return loan;
+	}
+	
+	@Transactional
+	public Map<String, Object> getReviewsOfUser(Long userId, Integer page) throws ServletException {
+		Page<Review> reviews = reviewRepo.findReviewsOfUser(userId, new PageRequest(page, Const.TABLE_SIZE));
+		Long gamerReviews = reviewRepo.countByGamerAcceptedIsTrueAndLoanGamerId(userId);
+		Long lenderReviews = reviewRepo.countByLenderAcceptedIsTrueAndLoanPublicUserGamePublicUserId(userId);
+		Double gamerAverage = reviewRepo.getGamerAverageScore(userId);
+		Double lenderAverage = reviewRepo.getLenderAverageScore(userId);
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("reviews", reviews);
+		response.put("gamerReviews", gamerReviews);
+		response.put("lenderReviews", lenderReviews);
+		response.put("gamerAverage", gamerAverage);
+		response.put("lenderAverage", lenderAverage);
+		
+		return response;
 	}
 
 	public ReviewRepo getReviewRepo() {

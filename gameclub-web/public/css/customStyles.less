@@ -619,10 +619,15 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #settings section.reviews{background:@color-tertiary-alt;color:@color-primary;padding:2% 0}
 #account #settings section.reviews h2{text-align:center;text-transform:uppercase;font-size:1em;font-weight:700;color:@color-primary;}
 #account #settings section.reviews h2 i.gc-rating,#account #settings section.reviews .rating-container i.no,#account #settings section.reviews .body .title .rating-container i.no{color:@color-primary-s;}
-#account #settings section.reviews .header{border-top-width:2px;border-top-style:solid;padding-top:2%;}
+#account #settings section.reviews .load-more{text-align:center;margin:1% 0%;}
+#account #settings section.reviews .load-more a{color:black;font-size:1.25em;}
+#account #settings section.reviews .load-more a::before{content:"";position:absolute;width:20px;border-top:1px solid black;top:55%;margin-left:85px;}
+#account #settings section.reviews .load-more a::after{content:"";position:absolute;top:45%;margin-left:22px;border:3px solid transparent;border-left-color:black;}
+#account #settings section.reviews .no-reviews{text-align:center;margin:1% 0%;text-transform:uppercase;font-weight:bold;color:#8a8b8b;}
+#account #settings section.reviews .header{border-top-width:2px;border-top-style:solid;padding-top:2%;margin-bottom:2%;}
 #account #settings section.reviews .header small{font-size:0.8em;}
-#account #settings section.reviews .body .title{color:@color-primary;font-size:1em;font-weight:400;}
-#account #settings section.reviews .body .title span{text-align:left;}
+#account #settings section.reviews .body .title{color:@color-primary;font-size:1em;font-weight:400;margin-bottom:1%;}
+#account #settings section.reviews .body .title score{float:right;}
 #account #settings section.reviews .body .title .rating-container{text-align:right;}
 #account #settings section.reviews .body .title .col-md-6{padding:0;}
 #account #settings section.reviews .body .title .rating-container i{color:@color-tertiary;}
@@ -632,11 +637,11 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #settings section.reviews .lender{float:left;margin-right:2%;color:@color-secundary;}
 #account #settings section.reviews .lender .header{border-top-color:@color-secundary;padding-left:65%;}
 #account #settings section.reviews .lender .header .rating-container{color:@color-secundary;}
-#account #settings section.reviews .lender .body{background:@color-secundary;padding:1% 3% 1% 50%;}
+#account #settings section.reviews .lender .body{background:@color-secundary;padding:1% 3% 1% 50%;text-align:left;}
 #account #settings section.reviews .gamer{float:right;margin-left:2%;color:@color-primary-alt;}
 #account #settings section.reviews .gamer .header{border-top-color:@color-primary-alt;padding-right:65%;}
 #account #settings section.reviews .gamer .header .rating-container{color:@color-primary-alt;}
-#account #settings section.reviews .gamer .body{background:@color-primary-alt;padding:1% 50% 1% 3%;}
+#account #settings section.reviews .gamer .body{background:@color-primary-alt;padding:1% 50% 1% 3%;text-align:left;}
 #kushki-payment input{width:100%;}
 /***********************************/
 

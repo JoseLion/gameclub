@@ -158,8 +158,8 @@
                         <div class="rating-container" ng-if="loanGame.publicUser.rating > 0">
                             <stars ng-model="loanGame.publicUser.rating" solid="light"></stars>
                         </div>
-                        <span class="value" ng-if="loanGame.publicUser.rating <= 0" ng-click="$state.go('gameclub.publicProfile')">Este usuario todavía no tiene calificaciones</span>
-                        <button type="button" class="btn btn-tertiary small dark" ng-click="viewOwnerRating()" ng-if="loanGame.publicUser.rating > 0">Ver Rating</button>
+                        <span class="value" ng-if="loanGame.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>
+                        <button type="button" class="btn btn-tertiary small dark" ng-click="viewOwnerRating(loanGame.publicUser)" ng-if="loanGame.publicUser.rating > 0">Ver Rating</button>
                     </div>
 
                     <div class="col-md-9">

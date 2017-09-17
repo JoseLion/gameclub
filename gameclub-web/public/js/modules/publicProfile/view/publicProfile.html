@@ -1,18 +1,17 @@
-<div id="publicProfile">
+<div id="public-profile">
     <section class="banner">
-        <div class="col-md-4"></div>
-        <div class="col-md-8">
-            <div class="col-md-3 name">
-                <img id="avatar_img" archive="user.avatar.image" placeholder="img/contact-person.svg">
+        <div class="col-md-12">
+            <div class="col-md-6 text-right">
+                <img class="avatar" archive="user.avatar.image" placeholder="img/contact-person.svg">
             </div>
-
-            <div class="col-md-9 name2" >
-                <h2 class="title">{{user.name + ' ' + (user.lastName | limitTo: 1) + '.'}}</h2>
-                <div class="col-md-12 no-padding-left no-padding-right">
-                    <div class="connection">&uacute;ltima vez conectado: <span>{{user.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
-                </div>
+            
+            <div class="col-md-6">
+                <div class="user-name">{{user.name + ' ' + (user.lastName | limitTo: 1) + '.'}}</div>
+                <div class="connection">&uacute;ltima vez conectado: <span>{{user.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
             </div>
         </div>
+
+        <div class="clearfix"></div>
     </section>
 
     <section class="reviews">

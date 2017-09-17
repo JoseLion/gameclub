@@ -74,6 +74,18 @@ public class ReviewService {
 		Loan loan = loanRepo.findOne(review.getLoan().getId());
 		loan.setReview(review);
 		
+		if (currentUser.getId().longValue() == review.getLoan().getGamer().getId().longValue()) {
+			Double gamerAverage = reviewRepo.getGamerAverageScore(currentUser.getId());
+			Double lenderAverage = reviewRepo.getLenderAverageScore(currentUser.getId());
+			currentUser.setRating((gamerAverage.doubleValue() + lenderAverage.doubleValue()) / 2.0);
+			publicUserService.getPublicUserRepo().save(currentUser);
+		} else {
+			Double gamerAverage = reviewRepo.getGamerAverageScore(review.getLoan().getPublicUserGame().getPublicUser().getId());
+			Double lenderAverage = reviewRepo.getLenderAverageScore(review.getLoan().getPublicUserGame().getPublicUser().getId());
+			review.getLoan().getPublicUserGame().getPublicUser().setRating((gamerAverage.doubleValue() + lenderAverage.doubleValue()) / 2.0);
+			publicUserService.getPublicUserRepo().save(review.getLoan().getPublicUserGame().getPublicUser());
+		}
+		
 		return loan;
 	}
 	

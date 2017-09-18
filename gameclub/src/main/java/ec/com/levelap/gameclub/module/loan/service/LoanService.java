@@ -21,7 +21,6 @@ import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
-import ec.com.levelap.gameclub.application.GameClubMailTasklet;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
@@ -75,9 +74,6 @@ public class LoanService extends BaseService<Loan> {
 	
 	@Autowired
 	private MailService mailService;
-	
-	@Autowired
-	private GameClubMailTasklet mailTasklet;
 	
 	@Value("${game-club.real-times}")
 	private boolean realTimes;
@@ -250,22 +246,13 @@ public class LoanService extends BaseService<Loan> {
 		params.put("returnDate", df.format(loan.getReturnDate()));
 		params.put("days", isLastReminder ? "1" : "3");
 		
-		mailTasklet.setMailParameters(mailParameters);
-		mailTasklet.setTemplate("MSGARM");
-		mailTasklet.setParams(params);
-		mailTasklet.sendMail();
+		mailService.sendMailWihTemplate(mailParameters, "MSGARM", params);
 		
 		mailParameters.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
-		mailTasklet.setMailParameters(mailParameters);
-		mailTasklet.setTemplate("MSGLRM");
-		mailTasklet.setParams(params);
-		mailTasklet.sendMail();
+		mailService.sendMailWihTemplate(mailParameters, "MSGLRM", params);
 		
 		mailParameters.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
-		mailTasklet.setMailParameters(mailParameters);
-		mailTasklet.setTemplate("MSGGRM");
-		mailTasklet.setParams(params);
-		mailTasklet.sendMail();
+		mailService.sendMailWihTemplate(mailParameters, "MSGGRM", params);
 	}
 	
 	private void sendFinishedMails(Restore restore) throws Exception {
@@ -282,26 +269,17 @@ public class LoanService extends BaseService<Loan> {
 		
 		if (!restore.getLenderConfirmed() || !restore.getGamerConfirmed()) {
 			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
-			mailTasklet.setMailParameters(mailParameters);
-			mailTasklet.setTemplate("MSGAUR");
-			mailTasklet.setParams(params);
-			mailTasklet.sendMail();
+			mailService.sendMailWihTemplate(mailParameters, "MSGAUR", params);
 		}
 		
 		if (!restore.getLenderConfirmed()) {
 			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
-			mailTasklet.setMailParameters(mailParameters);
-			mailTasklet.setTemplate("MSGLUR");
-			mailTasklet.setParams(params);
-			mailTasklet.sendMail();
+			mailService.sendMailWihTemplate(mailParameters, "MSGLUR", params);
 		}
 		
 		if (!restore.getGamerConfirmed()) {
 			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
-			mailTasklet.setMailParameters(mailParameters);
-			mailTasklet.setTemplate("MSGGUR");
-			mailTasklet.setParams(params);
-			mailTasklet.sendMail();
+			mailService.sendMailWihTemplate(mailParameters, "MSGGUR", params);
 		}
 	}
 	

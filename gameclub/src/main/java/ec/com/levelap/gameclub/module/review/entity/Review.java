@@ -147,7 +147,10 @@ public class Review extends BaseEntity {
 	}
 
 	public PublicUser getGamer() {
-		gamer = loan.getGamer();
+		if (loan != null) {
+			gamer = loan.getGamer();
+		}
+		
 		return gamer;
 	}
 
@@ -156,7 +159,10 @@ public class Review extends BaseEntity {
 	}
 
 	public PublicUser getLender() {
-		lender = loan.getPublicUserGame().getPublicUser();
+		if (loan != null && loan.getPublicUserGame() != null) {
+			lender = loan.getPublicUserGame().getPublicUser();
+		}
+		
 		return lender;
 	}
 

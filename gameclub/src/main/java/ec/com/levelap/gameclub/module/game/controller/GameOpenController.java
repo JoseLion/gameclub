@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
 import ec.com.levelap.gameclub.module.game.service.GameService;
@@ -82,6 +83,12 @@ public class GameOpenController {
 		}
 		
 		return new ResponseEntity<Page<PublicUserGameOpen>>(games, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="findMostPlayed", method=RequestMethod.POST)
+	public ResponseEntity<List<GameOpen>> findMostPlayed(@RequestBody(required=false) Console console) throws ServletException {
+		Page<GameOpen> mostPlayed = gameService.getGameRepo().findMostPlayed(new PageRequest(0, 12));
+		return new ResponseEntity<List<GameOpen>>(mostPlayed.getContent(), HttpStatus.OK);
 	}
 	
 	private static class Search {

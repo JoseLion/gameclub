@@ -24,7 +24,7 @@
             </div>
 
             <div class="body" ng-if="lenderReviews > 0">
-                <div class="rating" ng-repeat="review in reviews" ng-if="review.lenderAccepted == true">
+                <div class="rating" ng-repeat="review in reviews" ng-if="review.lenderAccepted == true && review.lender.id == user.id">
                     <div class="title">
                         <span class="upper-case">{{review.lender.name}} {{review.lender.lastName | limitTo: 1}}.</span>
                         <score ng-model="review.lenderScore" disabled></score>
@@ -45,7 +45,7 @@
             </div>
 
             <div class="body" ng-if="gamerReviews > 0">
-                <div class="rating" ng-repeat="review in reviews" ng-if="review.gamerAccepted == true">
+                <div class="rating" ng-repeat="review in reviews" ng-if="review.gamerAccepted == true && review.gamer.id == user.id">
                     <div class="title">
                         <span class="upper-case">{{review.gamer.name}} {{review.gamer.lastName | limitTo: 1}}.</span>
                         <score ng-model="review.gamerScore" disabled></score>
@@ -66,77 +66,6 @@
 
         <div class="clearfix"></div>
     </section>
-
-    <!-- <section class="reviews">
-        <h2 class="subtitle"><i class="gc gc-circle-small"></i> Tus reviews <i class="gc gc-rating"></i></h2>
-        <div class="lender">
-            <div class="header">
-                <h2 class="subtitle">Prestador</h2>
-                <stars ng-model="100" solid="red"></stars>
-                <small>13 opiniones</small>
-            </div>
-            <div class="body">
-                <div class="rating">
-                    <div class="title">
-                        <span class="col-md-6">USUARIO 1</span>
-                        <stars ng-model="100" solid="light"></stars>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-
-                <div class="rating">
-                    <div class="title">
-                        <span class="col-md-6">USUARIO 1</span>
-                        <stars ng-model="100" solid="light"></stars>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-
-                <div class="rating">
-                    <div class="title">
-                        <span class="col-md-6">USUARIO 1</span>
-                        <stars ng-model="100" solid="light"></stars>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="gamer">
-            <div class="header">
-                <h2 class="subtitle">Jugador</h2>
-                <stars ng-model="100" solid="blue"></stars>
-                <small>13 opiniones</small>
-            </div>
-            <div class="body">
-                <div class="rating">
-                    <div class="title">
-                        <span class="col-md-6">USUARIO 1</span>
-                        <stars ng-model="100" solid="light"></stars>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="clearfix"></div>
-    </section> -->
     
     <section class="final"></section>
 </div>

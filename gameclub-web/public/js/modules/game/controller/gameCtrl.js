@@ -1,4 +1,4 @@
-angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
+angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, mostPlayed, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
     let currentPage = 0;
 
     if (game != null) {
@@ -42,6 +42,10 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             {icon: 'gc-cd', sort: 'integrity', desc: true, active: false},
             {icon: 'gc-filter', sort: ''}
         ];
+
+        mostPlayed.$promise.then(function(data) {
+            $scope.mostPlayed = data;
+        });
     } else {
         $state.go(Const.mainState);
     }

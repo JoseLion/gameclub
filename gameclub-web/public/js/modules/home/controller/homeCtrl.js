@@ -1,8 +1,12 @@
-angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview, notif, Const) {
+angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, mostPlayed, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview, notif, Const) {
     $scope.search = {};
     $scope.contactUs = {};
 
     chooseFirstCategory(0);
+
+    mostPlayed.$promise.then(function(data) {
+        $scope.mostPlayed = data;
+    });
 
     $scope.find = function() {
         if($scope.search.console == null) {
@@ -99,29 +103,6 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
     $scope.gameConsole = {};
     $scope.currentBlogPage = 0;
 
-    $scope.mostPlayed = [
-        {
-            id: 1,
-            url: 'img/test/game-1.png',
-            rating: 4
-        },
-        {
-            id: 2,
-            url: 'img/test/game-2.png',
-            rating: 4
-        },
-        {
-            id: 3,
-            url: 'img/test/game-3.png',
-            rating: 5
-        },
-        {
-            id: 4,
-            url: 'img/test/game-4.png',
-            rating: 3
-        }
-    ];
-
     $scope.getPreviousGame = function() {
         let temp = $scope.mostPlayed.splice(0, 1);
         $scope.mostPlayed[3] = temp[0];
@@ -162,16 +143,5 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, $loca
             }
         });
         $scope.totalPagesMostSeen = data.totalPages;
-    }
-
-
-    /* ----------------------------------------------------- */
-    /* ------------------- TCC TESTS ----------------------- */
-    /* ----------------------------------------------------- */
-
-    $scope.testTcc = function() {
-        openRest("messaging/pickupStatus/:id/:office").get({id: 564, office: 1}, function(data) {
-            console.log("data: ", data);
-        });
     }
 });

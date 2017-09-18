@@ -85,7 +85,7 @@
                     </div>
                     <div class="games-availables">
                         <div class="table-container">
-                            <table>
+                            <table width="100%">
                                 <col width="17%">
                                 <col width="15%">
                                 <col width="17%">
@@ -124,6 +124,12 @@
                                         </td>
                                     </tr>
                                 </tbody>
+
+                                <tfoot ng-if="availableGames.length == 0">
+                                    <tr class="text-center">
+                                        <td colspan="7">No hay juegos disponibles</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

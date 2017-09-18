@@ -36,6 +36,10 @@ angular.module('Game').config(function($stateProvider) {
 				return openRest("game/getAvailableGames").post(filter, function(data) {
 					return data;
 				});
+			},
+
+			mostPlayed: function(openRest) {
+				return openRest("game/findMostPlayed", true).post();
 			}
 		}
 	});

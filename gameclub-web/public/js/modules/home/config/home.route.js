@@ -1,5 +1,4 @@
 angular.module('Home').config(function($stateProvider) {
-
 	let prefix = 'gameclub.';
 
 	$stateProvider
@@ -26,11 +25,13 @@ angular.module('Home').config(function($stateProvider) {
 				return $stateParams.anchor;
 			},
 
-            blogsPreview: function(openRest) {
-                return openRest("levelapBlog/findArticles").post({isMostSeen: true}, function(data) {
-                    return data;
-                });
-            }
+			blogsPreview: function(openRest) {
+				return openRest("levelapBlog/findArticles").post({isMostSeen: true});
+			},
+
+			mostPlayed: function(openRest) {
+				return openRest("game/findMostPlayed", true).post();
+			}
 		}
 	});
 

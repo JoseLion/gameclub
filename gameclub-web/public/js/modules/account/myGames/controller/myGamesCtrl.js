@@ -1,4 +1,4 @@
-angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, mostPlayed, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const) {
     $scope.myGame = {};
     $scope.filter = {};
     $scope.search = {};
@@ -9,6 +9,10 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
 
     integrity.$promise.then(function(data) {
         $scope.integrity = data;
+    });
+
+    mostPlayed.$promise.then(function(data) {
+        $scope.mostPlayed = data;
     });
 
     if (game != null) {
@@ -123,193 +127,6 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
         $scope.isConsoleFilter = true;
     }
 
-
-
-
-
-
-
-
-    $scope.gameConsolesW =[
-        {
-            name: 'PlayStation 4',
-            img: 'img/test/svg/ps4.svg'
-        }, {
-            name: 'XBOX ONE',
-            img: 'img/test/svg/xbox-one.svg'
-        }, {
-            name: 'Nintendo Switch',
-            img: 'img/test/svg/nintendo-switch.svg'
-        }
-    ]
-
-    $scope.gameConsole = {};
-    $scope.gameConsoles =[
-        {
-            name: 'PlayStation 4',
-            img: 'img/test/svg/ps4-b.svg'
-        }, {
-            name: 'XBOX ONE',
-            img: 'img/test/svg/xbox-one-b.svg'
-        }, {
-            name: 'Nintendo Switch',
-            img: 'img/test/svg/nintendo-switch-b.svg'
-        }
-    ];
-
-    $scope.currentPage = 0;
-    $scope.gameList = [
-        {
-            id: 1,
-            src: 'img/test/game-3.png',
-            title: 'CALL OF DUTY: Black Ops 3',
-            coins: 150,
-            rating: 4,
-            types: [
-                {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }
-            ],
-            contentRating: {
-                src: 'img/test/svg/esrb.svg'
-            },
-            platform: {
-                src: 'img/test/svg/ps4-b.svg'
-            }
-        }, {
-            id: 2,
-            src: 'img/test/game-3.png',
-            title: 'CALL OF DUTY: Black Ops 3 - Deluxe Edition',
-            coins: 150,
-            rating: 4,
-            types: [
-                {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }
-            ],
-            contentRating: {
-                src: 'img/test/svg/esrb.svg'
-            },
-            platform: {
-                src: 'img/test/svg/ps4-b.svg'
-            }
-        }, {
-            id: 3,
-            src: 'img/test/game-3.png',
-            title: 'CALL OF DUTY: MW3',
-            coins: 150,
-            rating: 4,
-            types: [
-                {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }
-            ],
-            contentRating: {
-                src: 'img/test/svg/esrb.svg'
-            },
-            platform: {
-                src: 'img/test/svg/ps4-b.svg'
-            }
-        }, {
-            id: 4,
-            src: 'img/test/game-3.png',
-            title: 'CALL OF DUTY: MW3 - Deluxe Edition',
-            coins: 150,
-            rating: 4,
-            types: [
-                {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }
-            ],
-            contentRating: {
-                src: 'img/test/svg/esrb.svg'
-            },
-            platform: {
-                src: 'img/test/svg/ps4-b.svg'
-            }
-        }, {
-            id: 5,
-            src: 'img/test/game-3.png',
-            title: 'CALL OF DUTY: Infinite Warfare',
-            coins: 100,
-            rating: 4,
-            types: [
-                {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }
-            ],
-            contentRating: {
-                src: 'img/test/svg/esrb.svg'
-            },
-            platform: {
-                src: 'img/test/svg/ps4-b.svg'
-            }
-        }, {
-            id: 6,
-            src: 'img/test/game-3.png',
-            title: 'CALL OF DUTY: HEROES',
-            coins: 70,
-            rating: 4,
-            types: [
-                {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }, {
-                    src: 'img/test/svg/sports.svg'
-                }
-            ],
-            contentRating: {
-                src: 'img/test/svg/esrb.svg'
-            },
-            platform: {
-                src: 'img/test/svg/ps4-b.svg'
-            }
-        }
-    ];
-
-    $scope.mostPlayed = [
-        {
-            id: 1,
-            url: 'img/test/game-1.png',
-            rating: 4
-        },
-        {
-            id: 2,
-            url: 'img/test/game-2.png',
-            rating: 4
-        },
-        {
-            id: 3,
-            url: 'img/test/game-3.png',
-            rating: 5
-        },
-        {
-            id: 4,
-            url: 'img/test/game-4.png',
-            rating: 3
-        }
-    ];
     $scope.getPreviousGame = function() {
         let temp = $scope.mostPlayed.splice(0, 1);
         $scope.mostPlayed[3] = temp[0];
@@ -317,16 +134,6 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     $scope.getNextGame = function() {
         let temp = $scope.mostPlayed.splice(-1, 1);
         $scope.mostPlayed.unshift(temp[0]);
-    };
-
-    /* MAQUETACIÓN DE LA FICHA DE PRESTAMO */
-
-    $scope.gameLoan = {
-        status: 'DISPONIBLE',
-        gameStatus: 9,
-        comments: 'El juego tiene un rasguño en el tiro del CD.',
-        insured: true,
-        coins: 150
     };
 
     $scope.nameAutocomplete = [];

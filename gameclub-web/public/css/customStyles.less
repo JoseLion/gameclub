@@ -153,8 +153,8 @@ footer#main-footer .designed span{letter-spacing:1px;}
 #most-played{background:@color-primary;text-align:center;position:relative;padding-top:1%;padding-bottom:5%;color:@color-tertiary;}
 #most-played .separator{width:2em;height:2em;position:absolute;top:-1em;left:0;right:0;margin:auto;background:@color-primary;border-radius:50%;}
 #most-played .title{padding-top:10px;margin-bottom:10px;text-transform:uppercase;font-size:1.5em;font-weight:700;border-left:2px solid @color-primary-alt;border-right:2px solid @color-primary-alt;}
-#most-played .games .left,#most-played .games .right{position:relative;padding-top:5em}
-#most-played .games .left .btn-most-played,#most-played .games .right .btn-most-played{padding:0;}
+#most-played .games .left, #most-played .games .right{top: 75px;}
+#most-played .games .left .btn-most-played,#most-played .games .right .btn-most-played{}
 #most-played .games .left .btn-most-played i,#most-played .games .right .btn-most-played i{font-size:4em;-webkit-text-fill-color:transparent;}
 #most-played .games .left .btn-most-played i{
 background:@color-primary;background:linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(180deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
@@ -162,7 +162,7 @@ background:@color-primary;background:linear-gradient(180deg,@color-secundary,@co
 #most-played .games .right .btn-most-played i{
 background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
 -webkit-background-clip:text;}
-#most-played .games .list{padding-top:7%;}
+#most-played .games .list{}
 #most-played .games .list>div #game-rating .game-container .background>div.image-container{width:100%;height:100%;margin:-18px auto auto;}
 #most-played .selector .ui-select-match-text img{height:1.7em;}
 /********************************/
@@ -415,7 +415,7 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #login section.login button{border-color:@color-secundary;}
 #login section.login button.login{color:@color-primary;margin-top:7%;margin-bottom:7%;min-height:2.2em;min-width:12em;}
 #login section.login a{margin-top:10%;}
-#login section.login button.login div#loading{width:1.7em;height:1.7em;top:33%;}
+#login section.login button.login div#loading{width:1.7em;height:1.7em;top:1.8vw;}
 #login section form input{width:100%;margin:1%;border:2px solid @color-primary;border-radius:5px;padding:1% 7% 1% 3%;background:transparent;}
 #login section form input:focus{outline:none;}
 #login section form input::-webkit-input-placeholder{color:@color-tertiary;text-transform:none;}
@@ -443,32 +443,37 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 /***********************************/
 
 /******PUBLIC-PROFILE***************/
-#publicProfile section.reviews{background:@color-tertiary-alt;color:@color-primary;padding:2% 0}
-#publicProfile section.reviews h2{text-align:center;text-transform:uppercase;font-size:1em;font-weight:700;color:@color-primary;}
-#publicProfile section.reviews h2 i.gc-rating,#publicProfile section.reviews .rating-container i.no,#publicProfile section.reviews .body .title .rating-container i.no{color:@color-primary-s;}
-#publicProfile section.reviews .load-more{text-align:center;margin:1% 0%;}
-#publicProfile section.reviews .load-more a{color:black;font-size:1.25em;}
-#publicProfile section.reviews .load-more a::before{content:"";position:absolute;width:20px;border-top:1px solid black;top:55%;margin-left:85px;}
-#publicProfile section.reviews .load-more a::after{content:"";position:absolute;top:45%;margin-left:22px;border:3px solid transparent;border-left-color:black;}
-#publicProfile section.reviews .no-reviews{text-align:center;margin:1% 0%;text-transform:uppercase;font-weight:bold;color:#8a8b8b;}
-#publicProfile section.reviews .header{border-top-width:2px;border-top-style:solid;padding-top:2%;margin-bottom:2%;}
-#publicProfile section.reviews .header small{font-size:0.8em;}
-#publicProfile section.reviews .body .title{color:@color-primary;font-size:1em;font-weight:400;margin-bottom:1%;}
-#publicProfile section.reviews .body .title score{float:right;}
-#publicProfile section.reviews .body .title .rating-container{text-align:right;}
-#publicProfile section.reviews .body .title .col-md-6{padding:0;}
-#publicProfile section.reviews .body .title .rating-container i{color:@color-tertiary;}
-#publicProfile section.reviews .body .description{border-radius:5px;background:@color-tertiary;color:@color-primary-alt;padding:1%;font-size:0.8em;text-transform:none;text-align:left;}
-#publicProfile section.reviews .body .rating{margin-bottom:3%;}
-#publicProfile section.reviews .lender,#publicProfile section.reviews .gamer{width:48%;padding-top:2%;text-align:center;}
-#publicProfile section.reviews .lender{float:left;margin-right:2%;color:@color-secundary;}
-#publicProfile section.reviews .lender .header{border-top-color:@color-secundary;padding-left:65%;}
-#publicProfile section.reviews .lender .header .rating-container{color:@color-secundary;}
-#publicProfile section.reviews .lender .body{background:@color-secundary;padding:1% 3% 1% 50%;text-align:left;}
-#publicProfile section.reviews .gamer{float:right;margin-left:2%;color:@color-primary-alt;}
-#publicProfile section.reviews .gamer .header{border-top-color:@color-primary-alt;padding-right:65%;}
-#publicProfile section.reviews .gamer .header .rating-container{color:@color-primary-alt;}
-#publicProfile section.reviews .gamer .body{background:@color-primary-alt;padding:1% 50% 1% 3%;text-align:left;}
+#public-profile section.banner{background:@color-secundary;color:@color-tertiary;padding-top:10%;padding-bottom:4%}
+#public-profile section.banner img.avatar{border:10px solid #FFFFFF;padding:0.5vw;border-radius:50%;width:7vw;}
+#public-profile section.banner .user-name{font-size:1.8em;text-transform:uppercase;font-weight:bold;margin-top:45px;}
+#public-profile section.banner .connection{padding:1px 1.5%;border-radius:10px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:bold;}
+#public-profile section.banner .connection span{color:@color-primary-alt;}
+#public-profile section.reviews{background:@color-tertiary-alt;color:@color-primary;padding:2% 0}
+#public-profile section.reviews h2{text-align:center;text-transform:uppercase;font-size:1em;font-weight:700;color:@color-primary;}
+#public-profile section.reviews h2 i.gc-rating,#public-profile section.reviews .rating-container i.no,#public-profile section.reviews .body .title .rating-container i.no{color:@color-primary-s;}
+#public-profile section.reviews .load-more{text-align:center;margin:1% 0%;}
+#public-profile section.reviews .load-more a{color:black;font-size:1.25em;}
+#public-profile section.reviews .load-more a::before{content:"";position:absolute;width:20px;border-top:1px solid black;top:55%;margin-left:85px;}
+#public-profile section.reviews .load-more a::after{content:"";position:absolute;top:45%;margin-left:22px;border:3px solid transparent;border-left-color:black;}
+#public-profile section.reviews .no-reviews{text-align:center;margin:1% 0%;text-transform:uppercase;font-weight:bold;color:#8a8b8b;}
+#public-profile section.reviews .header{border-top-width:2px;border-top-style:solid;padding-top:2%;margin-bottom:2%;}
+#public-profile section.reviews .header small{font-size:0.8em;}
+#public-profile section.reviews .body .title{color:@color-primary;font-size:1em;font-weight:400;margin-bottom:1%;}
+#public-profile section.reviews .body .title score{float:right;}
+#public-profile section.reviews .body .title .rating-container{text-align:right;}
+#public-profile section.reviews .body .title .col-md-6{padding:0;}
+#public-profile section.reviews .body .title .rating-container i{color:@color-tertiary;}
+#public-profile section.reviews .body .description{border-radius:5px;background:@color-tertiary;color:@color-primary-alt;padding:1%;font-size:0.8em;text-transform:none;text-align:left;}
+#public-profile section.reviews .body .rating{margin-bottom:3%;}
+#public-profile section.reviews .lender,#public-profile section.reviews .gamer{width:48%;padding-top:2%;text-align:center;}
+#public-profile section.reviews .lender{float:left;margin-right:2%;color:@color-secundary;}
+#public-profile section.reviews .lender .header{border-top-color:@color-secundary;padding-left:65%;}
+#public-profile section.reviews .lender .header .rating-container{color:@color-secundary;}
+#public-profile section.reviews .lender .body{background:@color-secundary;padding:1% 3% 1% 50%;text-align:left;}
+#public-profile section.reviews .gamer{float:right;margin-left:2%;color:@color-primary-alt;}
+#public-profile section.reviews .gamer .header{border-top-color:@color-primary-alt;padding-right:65%;}
+#public-profile section.reviews .gamer .header .rating-container{color:@color-primary-alt;}
+#public-profile section.reviews .gamer .body{background:@color-primary-alt;padding:1% 50% 1% 3%;text-align:left;}
 /***********************************/
 
 /********** PROFILE-PAGE **********/
@@ -1031,7 +1036,7 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #game section.games .filters li:last-child>a>i::before{font-size:1.4em;}
 #game section.games .filters li>a{position:absolute;left:0;right:0;top:0.25em;text-decoration:none;color:@color-tertiary;padding-top:10%;}
 #game section.games .filters li>a.active{color:@color-primary-alt;}
-#game section.games div>button{padding:5px 1% 2px;}
+#game section.games div > button{padding:5px 5px 2px;}
 
 #game #most-played>div.separator{display:none;}
 

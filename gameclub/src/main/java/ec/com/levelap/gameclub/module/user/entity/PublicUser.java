@@ -117,8 +117,8 @@ public class PublicUser extends BaseEntity {
 	@OneToMany(mappedBy="publicUser", fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<KushkiSubscription> paymentMethods = new ArrayList<>();
 	
-	@Column(columnDefinition="INTEGER DEFAULT 0")
-	private Integer rating = 0;
+	@Column(columnDefinition="DECIMAL(5, 2) DEFAULT 0.0")
+	private Double rating = 0.0;
 	
 	@Column(name="games_limit", columnDefinition="INTEGER DEFAULT 5")
 	private Integer gamesLimit = 5;
@@ -335,11 +335,11 @@ public class PublicUser extends BaseEntity {
 		this.paymentMethods = paymentMethods;
 	}
 	
-	public Integer getRating() {
-		return rating;
+	public Double getRating() {
+		return rating * 100.0 / 5.0;
 	}
 
-	public void setRating(Integer rating) {
+	public void setRating(Double rating) {
 		this.rating = rating;
 	}
 

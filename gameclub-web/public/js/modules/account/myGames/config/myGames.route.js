@@ -35,6 +35,10 @@ angular.module('MyGames').config(function($stateProvider) {
 				return rest("catalog/findChildrenOf/:code", true).get({code: 'ITG'}, function(data) {
 					return data;
 				});
+			},
+
+			mostPlayed: function(openRest) {
+				return openRest("game/findMostPlayed", true).post();
 			}
 		}
 	});

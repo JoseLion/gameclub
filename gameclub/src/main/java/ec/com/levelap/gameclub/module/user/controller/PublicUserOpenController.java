@@ -1,6 +1,7 @@
 package ec.com.levelap.gameclub.module.user.controller;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -27,7 +28,7 @@ public class PublicUserOpenController {
 	private PublicUserService publicUserService;
 	
 	@RequestMapping(value="signIn", method=RequestMethod.POST)
-	public ResponseEntity<?> signIn(@RequestBody SignObj signObj) throws ServletException, MessagingException {
+	public ResponseEntity<?> signIn(@RequestBody SignObj signObj) throws ServletException, MessagingException, IOException, GeneralSecurityException {
 		return publicUserService.signIn(signObj.publicUser, signObj.baseUrl);
 	}
 	

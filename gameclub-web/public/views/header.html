@@ -43,7 +43,7 @@
             </nav>
         </div>
         <div ng-if="currentUser" class="col-md-12 text-right coins">
-            <span class="text">{{currentUser.coins}}</span>
+            <span class="text">{{currentUser.shownBalance | currency: '$': 2}}</span>
             <i class="gc gc-usd-o"></i>
         </div>
         <div class="clearfix"></div>

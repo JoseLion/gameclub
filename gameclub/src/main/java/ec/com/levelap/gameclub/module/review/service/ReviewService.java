@@ -18,6 +18,7 @@ import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
 import ec.com.levelap.gameclub.module.review.entity.Review;
 import ec.com.levelap.gameclub.module.review.repository.ReviewRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
+import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -35,6 +36,9 @@ public class ReviewService {
 	@Autowired
 	private PublicUserService publicUserService;
 	
+	@Autowired
+	private PublicUserGameRepo publicUserGameRepo;
+	
 	@Transactional
 	public Loan sendReview(Review review) throws ServletException {
 		Loan loan = loanRepo.findOne(review.getLoan().getId());
@@ -42,6 +46,9 @@ public class ReviewService {
 		
 		if (currentUser.getId().longValue() == loan.getGamer().getId().longValue()) {
 			review.setLenderReviwedOn(new Date());
+			
+			review.getLoan().getPublicUserGame().setIsBorrewed(false);
+			review.getLoan().setPublicUserGame(publicUserGameRepo.save(review.getLoan().getPublicUserGame()));
 		} else {
 			review.setGamerReviwedOn(new Date());
 		}

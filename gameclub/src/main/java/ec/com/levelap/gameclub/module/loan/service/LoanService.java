@@ -107,6 +107,9 @@ public class LoanService extends BaseService<Loan> {
 		
 		if (wasAccepted) {
 			loan.setAcceptedDate(new Date());
+			
+			loan.getPublicUserGame().setIsBorrewed(true);
+			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
 		}
 		
 		loan = loanRepo.save(loan);

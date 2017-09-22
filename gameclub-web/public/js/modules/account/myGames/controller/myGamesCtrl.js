@@ -1,4 +1,4 @@
-angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, mostPlayed, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, gamesSummary, mostPlayed, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const) {
     $scope.myGame = {};
     $scope.filter = {};
     $scope.search = {};
@@ -9,6 +9,10 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
 
     integrity.$promise.then(function(data) {
         $scope.integrity = data;
+    });
+
+    gamesSummary.$promise.then(function(data) {
+        console.log("data: ", data);
     });
 
     mostPlayed.$promise.then(function(data) {

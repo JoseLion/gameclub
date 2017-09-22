@@ -2,6 +2,7 @@ package ec.com.levelap.gameclub.module.user.controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -135,6 +136,14 @@ public class PublicUserController {
 		publicUser.setToken(UUID.randomUUID().toString());
 		publicUser.setUsername(usernameObj.newUsername);
 		return this.publicUserService.save(publicUser, usernameObj.baseUrl);
+	}
+	
+	@RequestMapping(value="getGamesSummary", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, String>> getGamesSummary() throws ServletException {
+		PublicUser currentUser = publicUserService.getCurrentUser();
+		Map<String, String> summary = publicUserService.getPublicUserRepo().getGamesSummary(currentUser.getId());
+		
+		return new ResponseEntity<Map<String,String>>(summary, HttpStatus.OK);
 	}
 
 	private static class Filter {

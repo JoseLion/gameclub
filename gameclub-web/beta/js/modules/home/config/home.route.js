@@ -10,7 +10,12 @@ angular.module('Home').config(function($stateProvider) {
 		},
 		templateUrl: 'js/modules/home/view/home.html',
 		data: {displayName: 'GameClub'},
-		metaTags: {title: 'Home', description: 'Descripción del home', keywords: 'keywords,del,home', properties: {'og:title': 'Home'}},
+		metaTags: {
+			title: 'GameClub - Alquila Videojuegos & Gana Dinero',
+			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila Juegos, Gana Dinero, PS4, Xbox, Nintendo.',
+			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
+			properties: {'og:title': 'GameClub - Alquila Videojuegos & Gana Dinero'}
+		},
 		controller: 'HomeCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {

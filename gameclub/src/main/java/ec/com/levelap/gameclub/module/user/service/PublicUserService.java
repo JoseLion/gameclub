@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -301,6 +302,19 @@ public class PublicUserService extends BaseService<PublicUser> {
 		
 		user = publicUserRepo.save(user);
 		return user;
+	}
+	
+	@Transactional
+	public Map<String, Long> getGamesSummary() throws ServletException {
+		PublicUser currentUser = getCurrentUser();
+		Map<String, Long> summary = new HashMap<>();
+		Date today = new Date();
+		
+		summary.put("borrowed",publicUserRepo.countByGamesIsBorrowedIsTrueAndId(currentUser.getId()));
+		summary.put("toReturn", publicUserRepo.countGamesToReturn(currentUser.getId()));
+		summary.put("updateDate", today.getTime());
+		
+		return summary;
 	}
 
 	public PublicUserRepo getPublicUserRepo() {

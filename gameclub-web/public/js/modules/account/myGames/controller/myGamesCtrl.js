@@ -12,7 +12,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     });
 
     gamesSummary.$promise.then(function(data) {
-        console.log("data: ", data);
+        $scope.summary = data;
     });
 
     mostPlayed.$promise.then(function(data) {

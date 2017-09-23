@@ -4,7 +4,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
-            // console.log("Break point Ctrl: " + data.trailerUrl);
+            
             openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(data) {
                 $scope.background = {
                     background: "url('" + getImageBase64(data, $scope.game.banner.type) + "') center bottom / 100% no-repeat"
@@ -77,7 +77,15 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.consoleSelected = function() {
-        console.log('FIND AVAILABLES BY CONSOLE: ', $scope.console.selected);
+        let filter = {
+            gameId: $scope.game.id,
+            consoleId: $scope.console.selected.console.id
+        };
+
+        openRest("game/getAvailableGames").post(filter, function(data) {
+            $scope.availableGames = [];
+            setPagedAvailableGames(data);
+        });
     }
 
     $scope.getPreviousGame = function() {
@@ -288,16 +296,13 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     function setPagedAvailableGames(data) {
-        console.log("availableGames: ", data);
         if ($scope.availableGames == null) {
             $scope.availableGames = [];
         }
 
-        //angular.extend($scope.availableGames, data.content);
         Array.prototype.push.apply($scope.availableGames, data.content);
         $scope.lastPage = data.last;
         currentPage = data.number;
-        console.log("size: ", $scope.availableGames.length);
     }
 
     function filterAvailibleGames() {

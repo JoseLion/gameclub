@@ -47,7 +47,7 @@ public class ReviewService {
 		if (currentUser.getId().longValue() == loan.getGamer().getId().longValue()) {
 			review.setLenderReviwedOn(new Date());
 			
-			review.getLoan().getPublicUserGame().setIsBorrewed(false);
+			review.getLoan().getPublicUserGame().setIsBorrowed(false);
 			review.getLoan().setPublicUserGame(publicUserGameRepo.save(review.getLoan().getPublicUserGame()));
 		} else {
 			review.setGamerReviwedOn(new Date());

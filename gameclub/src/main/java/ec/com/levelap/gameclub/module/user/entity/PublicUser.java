@@ -392,11 +392,13 @@ public class PublicUser extends BaseEntity {
 	}
 
 	public Double getShownBalance() throws IOException, GeneralSecurityException {
-		LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
-		File key = File.createTempFile("key", ".tmp");
-		FileUtils.writeByteArrayToFile(key, privateKey);
-		String decypted = cryptoService.decrypt(balance, key);
-		shownBalance = Double.parseDouble(decypted);
+		if (privateKey != null && balance.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, privateKey);
+			String decypted = cryptoService.decrypt(balance, key);
+			shownBalance = Double.parseDouble(decypted);
+		}
 		
 		return shownBalance;
 	}

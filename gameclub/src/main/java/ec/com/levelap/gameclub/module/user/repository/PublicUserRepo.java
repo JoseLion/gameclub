@@ -1,7 +1,6 @@
 package ec.com.levelap.gameclub.module.user.repository;
 
 import java.util.Date;
-import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,21 +37,9 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 			@Param("endDate") Date endDate,
 			Pageable page);
 	
-	@Query(	"SELECT " +
-				"(CASE WHEN ld.id=:userId THEN " +
-					"('' || COUNT(ldg.isBorrewed)) " +
-				"WHEN g.id=:userId THEN " +
-					"('' || COUNT(gg.isBorrewed)) " +
-				"ELSE '' END) AS borrowed " +
-			"FROM Loan l " +
-				"LEFT JOIN l.publicUserGame.publicUser ld " +
-				"LEFT JOIN ld.games ldg " +
-				"LEFT JOIN l.gamer g " +
-				"LEFT JOIN g.games gg " +
-			"WHERE " +
-				"ld.id=:userId OR " +
-				"g.id=:userId " +
-			"GROUP BY ld, ldg, g, gg, l.gamer")
-	public Map<String, String> getGamesSummary(@Param("userId") Long userId);
+	public Long countByGamesIsBorrowedIsTrueAndId(Long id);
+	
+	@Query("SELECT COUNT(l.id) FROM Loan l WHERE l.gamer.id=:id AND l.review IS NULL")
+	public Long countGamesToReturn(@Param("id") Long id);
 
 }

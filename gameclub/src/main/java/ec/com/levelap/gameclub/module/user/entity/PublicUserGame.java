@@ -45,7 +45,7 @@ public class PublicUserGame extends BaseEntity {
 	private Integer cost = 0;
 	
 	@Column(name="is_borrowed", columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean isBorrewed = false;
+	private Boolean isBorrowed = false;
 	
 	@Transient
 	private Double shippingCost;
@@ -98,12 +98,12 @@ public class PublicUserGame extends BaseEntity {
 		this.cost = cost;
 	}
 
-	public Boolean getIsBorrewed() {
-		return isBorrewed;
+	public Boolean getIsBorrowed() {
+		return isBorrowed;
 	}
 
-	public void setIsBorrewed(Boolean isBorrewed) {
-		this.isBorrewed = isBorrewed;
+	public void setIsBorrowed(Boolean isBorrewed) {
+		this.isBorrowed = isBorrewed;
 	}
 
 	public Double getShippingCost() {

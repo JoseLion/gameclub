@@ -18,9 +18,7 @@ angular.module('Game').config(function($stateProvider) {
 			},
 
 			game: function(openRest, $stateParams) {
-				return openRest("game/findOne/:id").get({id: $stateParams.id}, function(data) {
-					return data;
-				});
+				return openRest("game/findOne/:id").get({id: $stateParams.id});
 			},
 
 			consoleId: function($stateParams) {
@@ -33,9 +31,7 @@ angular.module('Game').config(function($stateProvider) {
 					consoleId: $stateParams.consoleId
 				};
 
-				return openRest("game/getAvailableGames").post(filter, function(data) {
-					return data;
-				});
+				return openRest("game/getAvailableGames").post(filter);
 			},
 
 			mostPlayed: function(openRest) {

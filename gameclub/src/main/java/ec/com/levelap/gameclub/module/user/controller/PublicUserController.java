@@ -139,11 +139,9 @@ public class PublicUserController {
 	}
 	
 	@RequestMapping(value="getGamesSummary", method=RequestMethod.GET)
-	public ResponseEntity<Map<String, String>> getGamesSummary() throws ServletException {
-		PublicUser currentUser = publicUserService.getCurrentUser();
-		Map<String, String> summary = publicUserService.getPublicUserRepo().getGamesSummary(currentUser.getId());
-		
-		return new ResponseEntity<Map<String,String>>(summary, HttpStatus.OK);
+	public ResponseEntity<Map<String, Long>> getGamesSummary() throws ServletException {
+		Map<String, Long> summary = publicUserService.getGamesSummary();
+		return new ResponseEntity<Map<String,Long>>(summary, HttpStatus.OK);
 	}
 
 	private static class Filter {

@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.tcc.entity;
+package ec.com.levelap.gameclub.module.shippingPrice.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,17 +14,10 @@ import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.location.Location;
 import ec.com.levelap.gameclub.utils.Const;
 
-
-/**
- * The Class LocationsPrices.
- */
-/*
- * The Class LocationsPrices.
- */
 @Entity
-@Table(schema = Const.SCHEMA, name = "location_price")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class LocationPrice extends BaseEntity{
+@Table(schema=Const.SCHEMA, name="shipping_price")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class ShippingPrice extends BaseEntity{
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="origin", foreignKey=@ForeignKey(name="origin_location_fk"))
 	private Location origin;

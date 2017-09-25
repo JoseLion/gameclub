@@ -16,11 +16,12 @@ angular.module("ShippingPrice").controller('ShippingPriceCtrl', function($scope,
 
 	$scope.save = function(data) {
 		sweet.default("Se actualizará los datos con el archivo ingresado", function(data) {
-			console.log("file: ", $scope.file);
 			rest("shippingPrice/updatePrices").multipart({file: $scope.file}, function() {
-
-			}, function(error) {
+				sweet.success();
+				setPagedData(data);
 				sweet.close();
+			}, function(error) {
+				sweet.error(error.data ? error.data.message : error);
 			});
 		});
 	}

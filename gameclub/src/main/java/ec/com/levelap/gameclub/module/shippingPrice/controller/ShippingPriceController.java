@@ -1,6 +1,6 @@
 package ec.com.levelap.gameclub.module.shippingPrice.controller;
 
-import java.io.File;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 
@@ -38,10 +38,8 @@ public class ShippingPriceController {
 	}
 	
 	@RequestMapping(value="updatePrices", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<?> updatePrices(@RequestPart MultipartFile file) throws ServletException {
-		System.out.println("FILE: " + file);
-		
-		return null;
+	public ResponseEntity<?> updatePrices(@RequestPart MultipartFile file) throws ServletException, IOException {
+		return shippingPriceService.updatePrices(file);
 	}
 	
 	private static class Search {

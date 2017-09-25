@@ -5,13 +5,48 @@ INSERT INTO commons.location(name, code, parent) VALUES
 	INSERT INTO commons.location(name, code, other, parent) VALUES
 	('Azuay', 'ECAZ', NULL, (SELECT id FROM commons.location WHERE code='EC'));
 		INSERT INTO commons.location(name, code, other, parent) VALUES
-		('Cuenca', 'ECAZCU', '01001050', (SELECT id FROM commons.location WHERE code='ECAZ'));
+		('Cuenca', 'ECAZCU', '01001050', (SELECT id FROM commons.location WHERE code='ECAZ')),
+		('Chordeleg', 'ECAZCH', '01011050', (SELECT id FROM commons.location WHERE code='ECAZ')),
+		('Gualaceo', 'ECAZGL', '01003050', (SELECT id FROM commons.location WHERE code='ECAZ')),
+		('Paute', 'ECAZPT', '01005050', (SELECT id FROM commons.location WHERE code='ECAZ')),
+		('Sigsig', 'ECAZSG', '01009050', (SELECT id FROM commons.location WHERE code='ECAZ'));
+		
+	/*Cañar*/
+	INSERT INTO commons.location(name, code, other, parent) VALUES
+	('Cañar', 'ECCN', NULL, (SELECT id FROM commons.location WHERE code='EC'));
+		INSERT INTO commons.location(name, code, other, parent) VALUES
+		('Cañar', 'ECCNCN', '03003050', (SELECT id FROM commons.location WHERE code='ECCN')),
+		('Azogues', 'ECCNAZ', '03001050', (SELECT id FROM commons.location WHERE code='ECCN')),
+		('Biblián', 'ECCNBL', '03002050', (SELECT id FROM commons.location WHERE code='ECCN')),
+		('La Troncal', 'ECCNTR', '03004050', (SELECT id FROM commons.location WHERE code='ECCN'));
+		
+	/*Carchi*/
+	INSERT INTO commons.location(name, code, other, parent) VALUES
+	('Carchi', 'ECCH', NULL, (SELECT id FROM commons.location WHERE code='EC'));
+		INSERT INTO commons.location(name, code, other, parent) VALUES
+		('Tulcán', 'ECCHTL', '04001050', (SELECT id FROM commons.location WHERE code='ECCH'));
+	
+	/*Chimborazo*/
+	INSERT INTO commons.location(name, code, other, parent) VALUES
+	('Chimborazo', 'ECCM', NULL, (SELECT id FROM commons.location WHERE code='EC'));
+		INSERT INTO commons.location(name, code, other, parent) VALUES
+		('Riobamba', 'ECCMRB', '06001050', (SELECT id FROM commons.location WHERE code='ECCM')),
+		('Colta', 'ECCMCT', '06003050', (SELECT id FROM commons.location WHERE code='ECCM'));
+		
+	/*Cotopaxi*/
+	INSERT INTO commons.location(name, code, other, parent) VALUES
+	('Cotopaxi', 'ECCX', NULL, (SELECT id FROM commons.location WHERE code='EC'));
+		INSERT INTO commons.location(name, code, other, parent) VALUES
+		('Latacunga', 'ECCXLT', '05001050', (SELECT id FROM commons.location WHERE code='ECCX'));
 	
 	/*El Oro*/
 	INSERT INTO commons.location(name, code, other, parent) VALUES
 	('El Oro', 'ECEO', NULL, (SELECT id FROM commons.location WHERE code='EC'));
 		INSERT INTO commons.location(name, code, other, parent) VALUES
-		('Machala', 'ECEOMC','07001050', (SELECT id FROM commons.location WHERE code='ECEO'));
+		('Machala', 'ECEOMC','07001050', (SELECT id FROM commons.location WHERE code='ECEO')),
+		('El Guabo', 'ECEOEG', '07006050', (SELECT id FROM commons.location WHERE code='ECEO')),
+		('Pasaje', 'ECEOPJ', '07009050', (SELECT id FROM commons.location WHERE code='ECEO')),
+		('Santa Rosa', 'ECEOSR', '07012050', (SELECT id FROM commons.location WHERE code='ECEO'));
 		
 		
     /*Esmeraldas*/
@@ -24,15 +59,17 @@ INSERT INTO commons.location(name, code, parent) VALUES
 	INSERT INTO commons.location(name, code, other, parent) VALUES
 	('Guayas', 'ECGY', NULL, (SELECT id FROM commons.location WHERE code='EC'));
 		INSERT INTO commons.location(name, code, other, parent) VALUES
-        ('Duran', 'ECGYDR', '09006050', (SELECT id FROM commons.location WHERE code='ECGY')),
+        ('Durán', 'ECGYDR', '09006050', (SELECT id FROM commons.location WHERE code='ECGY')),
         ('Guayaquil', 'ECGYGQ','09001050', (SELECT id FROM commons.location WHERE code='ECGY')),
         ('Pascuales', 'ECGYPA','09001054', (SELECT id FROM commons.location WHERE code='ECGY')),
-        ('Puerto Alfredo Baquerizo Moreno', 'ECGYPB','09002050', (SELECT id FROM commons.location WHERE code='ECGY')),
-        ('Chongon', 'ECGYBL', '09001051', (SELECT id FROM commons.location WHERE code='ECGY')),
         ('Daule', 'ECGYDL', '09006050', (SELECT id FROM commons.location WHERE code='ECGY')),
+        ('El Triunfo', 'ECGYET', '09009050', (SELECT id FROM commons.location WHERE code='ECGY')),
         ('Milagro', 'ECGYML', '09010050', (SELECT id FROM commons.location WHERE code='ECGY')),
+        ('Naranjal', 'ECGYNJ', '09011050', (SELECT id FROM commons.location WHERE code='ECGY')),
+        ('Naranjito', 'ECGYNT', '09012050', (SELECT id FROM commons.location WHERE code='ECGY')),
+        ('Nobol', 'ECGYNB', '09025050', (SELECT id FROM commons.location WHERE code='ECGY')),
+        ('Playas', 'ECGYPY', '09021050', (SELECT id FROM commons.location WHERE code='ECGY')),
         ('Posorja', 'ECGYPO', '09001056', (SELECT id FROM commons.location WHERE code='ECGY')),
-        ('Roberto Astudillo', 'ECGYRA', '09010054', (SELECT id FROM commons.location WHERE code='ECGY')),
         ('Samborondón', 'ECGYSM', '09016050', (SELECT id FROM commons.location WHERE code='ECGY'));
         
 	/*Imbabura*/
@@ -65,6 +102,12 @@ INSERT INTO commons.location(name, code, parent) VALUES
 		('Chone', 'ECMBCN', '13003050', (SELECT id FROM commons.location WHERE code='ECMB')),
 		('Manta', 'ECMBMT', '13008050', (SELECT id FROM commons.location WHERE code='ECMB')),
 		('Portoviejo', 'ECMBPT', '13001050', (SELECT id FROM commons.location WHERE code='ECMB'));
+		
+	/*Orellana*/
+	INSERT INTO commons.location(name, code, other, parent) VALUES
+	('Orellana', 'ECON', NULL, (SELECT id FROM commons.location WHERE code='EC'));
+		INSERT INTO commons.location(name, code, other, parent) VALUES
+		('El Coca', 'ECONEC', '22001050', (SELECT id FROM commons.location WHERE code='ECON'));
      
 	/* Pichincha */
 	INSERT INTO commons.location(name, code, other, parent) VALUES
@@ -118,8 +161,15 @@ INSERT INTO commons.location(name, code, parent) VALUES
 		INSERT INTO commons.location(name, code, other, parent) VALUES
 		('Santo Domingo', 'ECSDSD','23001050', (SELECT id FROM commons.location WHERE code='ECSD'));
 		
+	/*Sucumbios*/
+	INSERT INTO commons.location(name, code, other, parent) VALUES
+	('Sucumbios', 'ECSC', NULL, (SELECT id FROM commons.location WHERE code='EC'));
+		INSERT INTO commons.location(name, code, other, parent) VALUES
+		('Lago Agrio', 'ECSCLG', '21001050', (SELECT id FROM commons.location WHERE code='ECSC'));
+		
     /*Tungurahua*/
 	INSERT INTO commons.location(name, code, other, parent) VALUES
 	('Tungurahua', 'ECTH', NULL, (SELECT id FROM commons.location WHERE code='EC'));
 		INSERT INTO commons.location(name, code, other, parent) VALUES
-        ('Ambato', 'ECTHAB', '18001050', (SELECT id FROM commons.location WHERE code='ECTH'));
+        ('Ambato', 'ECTHAB', '18001050', (SELECT id FROM commons.location WHERE code='ECTH')),
+        ('Cevallos', 'ECTHCV', '18003050', (SELECT id FROM commons.location WHERE code='ECTH'));

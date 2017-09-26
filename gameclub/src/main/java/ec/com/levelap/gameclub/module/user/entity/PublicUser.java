@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.location.Location;
 import ec.com.levelap.gameclub.module.avatar.entity.Avatar;
+import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.utils.Const;
@@ -124,6 +125,25 @@ public class PublicUser extends BaseEntity {
 	
 	@Transient
 	private Integer unreadMessages = 0;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="publicUserFine", fetch=FetchType.LAZY)
+	private List<Fine> finePublicUser = new ArrayList<>();
+
+	
+	/**
+	 * @return the finePublicUser
+	 */
+	public List<Fine> getFinePublicUser() {
+		return finePublicUser;
+	}
+
+	/**
+	 * @param finePublicUser the finePublicUser to set
+	 */
+	public void setFinePublicUser(List<Fine> finePublicUser) {
+		this.finePublicUser = finePublicUser;
+	}
 
 	public String getUsername() {
 		return username;
@@ -368,4 +388,5 @@ public class PublicUser extends BaseEntity {
 	public void setUnreadMessages(Integer unreadMessages) {
 		this.unreadMessages = unreadMessages;
 	}
+	
 }

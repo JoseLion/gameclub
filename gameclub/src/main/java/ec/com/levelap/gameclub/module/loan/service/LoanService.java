@@ -22,6 +22,7 @@ import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.application.GameClubMailTasklet;
+import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
@@ -230,6 +231,8 @@ public class LoanService extends BaseService<Loan> {
 		return loanLite;
 	}
 	
+	
+	
 	private void sendRemindingMails(Loan loan, boolean isLastReminder) throws Exception {
 		MailParameters mailParameters = new MailParameters();
 		Map<String, String> params = new HashMap<>();
@@ -298,6 +301,7 @@ public class LoanService extends BaseService<Loan> {
 		}
 	}
 	
+	@Transactional
 	public void rescheduleTasks() {
 		LoanRepo repoLoan = ApplicationContextHolder.getContext().getBean(LoanRepo.class);
 		RestoreRepo repoRestore = ApplicationContextHolder.getContext().getBean(RestoreRepo.class);
@@ -384,7 +388,7 @@ public class LoanService extends BaseService<Loan> {
 				});
 			}
 			
-			if (today.before(loan.getReturnDate()) && today.after(oneDay.getTime())) {
+			if (today.before(loan.getReturnDate()) && today.after(oneDay.getTime())) {	
 				levelapTaskScheduler.scheduleTaskAtDate(loan.getReturnDate(), Loan.class.getSimpleName() + "-R3-" + loan.getId(), new Runnable() {
 					@Override
 					public void run() {

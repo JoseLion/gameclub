@@ -1,4 +1,4 @@
-angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, rest, $cookies, openRest, forEach, getImageBase64) {
+angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, rest, $cookies, openRest, forEach, getImageBase64, $location, $anchorScroll) {
 	$http.get(urlRestPath.url + "/api/token").then(function(response) {
 		if (response != null && response.data != null) {
 			$rootScope.paddingLogged = {
@@ -27,6 +27,11 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 		}
 	}, function(error) {
 		$rootScope.currentUser = null;
+	});
+
+	/************** Call Settings Table *****************/
+	openRest("settings/findAll").get(function(data) {
+		$rootScope.settings = data;
 	});
 
 	openRest("category/findAll", true).get(function(data) {
@@ -78,6 +83,14 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			$state.go("gameclub.account");
 		}
 	}
+
+	/******** Método para anclar a una seccion con id  ********/
+	$rootScope.gotoAnchor = function(route,idAnchor) {
+  		$state.go(route).then(function() {
+  			$location.hash(idAnchor);
+  			$anchorScroll();
+  		}); 
+    }
 
 	$rootScope.link = {
 		shareAndPlay: {

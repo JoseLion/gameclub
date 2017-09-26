@@ -1,7 +1,12 @@
-angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const, SweetAlert) {
     $scope.myGame = {};
     $scope.filter = {};
     $scope.search = {};
+
+
+    var priceChartingGM = parseFloat($rootScope.settings['STPCHG'].value);
+    var priceChartingGMLoan = 0.0;
+    var gameLoanPCH = parseFloat($rootScope.settings['STGRCO'].value);
 
     gamesList.$promise.then(function(data) {
         setPagedData(data);
@@ -13,7 +18,6 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
 
     if (game != null) {
         $scope.myGame.game = game;
-
         openRest("archive/downloadFile").download({name: $scope.myGame.game.banner.name, module: $scope.myGame.game.banner.module}, function(data) {
             $scope.background = {
                 background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
@@ -30,8 +34,18 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             }
         });
 
+        /************* Calculo PriceChartin segun parámetros y valor juego *********************/
+        if($rootScope.settings['STPCHG'].type == "TOSPRC" && game.uploadPayment != null){
+            priceChartingGMLoan = ((($scope.myGame.game.uploadPayment*priceChartingGM)/100)+$scope.myGame.game.uploadPayment)/gameLoanPCH;
+            $scope.priceChartingGM = priceChartingGMLoan;
+        } else if($rootScope.settings['STPCHG'].type == "TOSNBR" && game.uploadPayment != null){
+            priceChartingGMLoan = ($scope.myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH;
+            $scope.priceChartingGM = priceChartingGMLoan;
+        }
+
         $scope.showGame = true;
     }
+    
 
     $scope.editGame = function(cross) {
         $scope.myGame = cross;
@@ -69,21 +83,51 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     }
 
     $scope.save = function() {
-        sweet.save(function() {
-            $scope.myGame.console = $scope.search.console.console;
-            rest("publicUser/saveGame").post($scope.myGame, function(data) {
-                sweet.success();
-                setPagedData(data);
-                $scope.showGame = false;
-                sweet.close();
 
-                rest("publicUser/getCurrentUser").get(function(data) {
-                    $rootScope.currentUser = data;
+        let isValid = true;
+        let minPrice = 0.0;
+        let maxPrice = 0.0;
+        if($rootScope.settings['STPCHGMIN'].type == 'TOSPRC' && $rootScope.settings['STPCHGMAX'].type == 'TOSPRC'){
+           minPrice = priceChartingGMLoan-((priceChartingGMLoan*parseFloat($rootScope.settings['STPCHGMIN'].value))/100);
+           maxPrice = priceChartingGMLoan+((priceChartingGMLoan*parseFloat($rootScope.settings['STPCHGMAX'].value))/100);
+        } else if($rootScope.settings['STPCHGMIN'].type == 'TOSNBR' && $rootScope.settings['STPCHGMAX'].type == 'TOSNBR'){
+           minPrice = priceChartingGMLoan-parseFloat($rootScope.settings['STPCHGMIN'].value);
+           maxPrice = priceChartingGMLoan+parseFloat($rootScope.settings['STPCHGMAX'].value);
+        }
+        if($scope.myGame.status == null) {
+            isValid = false;
+            notif.danger('Estatus no seleccionado.');
+        } 
+        if($scope.myGame.integrity == null) {
+            isValid = false;
+            notif.danger('Estado del juego no seleccionado.');
+        }
+        if($scope.myGame.cost == null) {
+            isValid = false;
+            notif.danger('Valor costo no ingresado.');
+        } else if($scope.myGame.cost<minPrice || $scope.myGame.cost>maxPrice ){
+            isValid = false;
+            SweetAlert.swal('El precio de alquiler de ' + $scope.myGame.game.name +' debe ser entre $' + minPrice.toFixed(2) +' y $' + maxPrice.toFixed(2));
+        }
+        if(isValid == true){
+            sweet.save(function() {
+                $scope.myGame.console = $scope.search.console.console;
+                rest("publicUser/saveGame").post($scope.myGame, function(data) {
+                    sweet.success();
+                    setPagedData(data);
+                    $scope.showGame = false;
+                    sweet.close();
+
+                    rest("publicUser/getCurrentUser").get(function(data) {
+                        $rootScope.currentUser = data;
+                    });
+                }, function(error) {
+                    sweet.close();
                 });
-            }, function(error) {
-                sweet.close();
             });
-        });
+        } else {
+            // notif.danger('Error al guardar juego.');
+        }
     }
 
     $scope.pageChanged = function() {
@@ -121,6 +165,10 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             setPagedData(data);
         });
         $scope.isConsoleFilter = true;
+    }
+
+    function priceCharting(){
+
     }
 
 

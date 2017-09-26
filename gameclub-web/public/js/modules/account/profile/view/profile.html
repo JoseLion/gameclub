@@ -103,11 +103,13 @@
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
                             <i class="gc gc-mail"></i>
-                            <span>Verificaci&oacute;n de tu correo</span>
+                            <!--<span>Verificaci&oacute;n de tu correo</span>-->
+                            <span ng-if="currentUser.token">Verifica tu correo</span>
+                            <span ng-if="!currentUser.token">Tu correo ha sido verificado</span>
                         </div>
                         <div class="col-md-4 text-left">
-                            <button type="submit" class="btn btn-primary small" ng-if="isEditableMean">Guardar info</button>
-                            <button type="button" class="btn btn-primary small" ng-click="editContactMean()">{{isEditableMean ? 'Volver' : 'Cambiar correo'}}</button>
+                            <!--<button type="submit" class="btn btn-primary small" ng-if="isEditableMean">Guardar info</button>
+                            <button type="button" class="btn btn-primary small" ng-click="editContactMean()">{{isEditableMean ? 'Volver' : 'Cambiar correo'}}</button>-->
                         </div>
                     </span>
                     <div class="clearfix"></div>

@@ -1,0 +1,60 @@
+<div class="ibox">
+	<div class="ibox-content">
+		<div class="col-md-12 form-group" style="text-align: right;">
+		<button type="button" class="btn btn-w-m btn-primary" ng-click="addSettings()">
+				<i class="fa fa-plus" style="margin-right: 5px"></i>
+				<span>Buscar multas</span>
+			</button>
+	</div>
+	<div class="col-md-12 form-group">
+			<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover" >
+				
+				<col width="20%">
+				<col width="40%">
+				<col width="10%">
+				<col width="10%">
+				<col width="10%">
+
+				<thead>
+					<tr>
+						
+						<th>Usuario</th>
+						<th>Motivo</th>
+						<th>Valor</th>
+						<th>Status</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="fine in fines">
+						
+						<td style='text-transform:uppercase'>{{fine.publicUserFine.name}} {{fine.publicUserFine.lastName}}</td>
+						<td>{{fine.description}}</td>
+						<td>{{fine.amount}}</td>
+						<td ng-if="fine.apply == null">
+							<!--<label for="applyYes">Si:</label>
+					    	<input id="applyYes" type="radio" ng-model="fine.apply" value="true" />
+					    	<label for="applyNo">No:</label>
+					    	<input id="applyNo" type="radio" ng-model="fine.apply" value="false" />-->
+					    	<!-- <select name="select">
+							      <option>PENDIENTE</option>
+							      <option>APLICA</option>
+							      <option>CANCELADO</option>
+							      <option>PAGADO</option>
+							 </select> -->
+							 PENDIENTE
+					    </td>
+						<td style="text-align: center;">
+							<button type="button" class="btn btn-xs btn-warning"  tooltip="Editar multa">
+								<i class="fa fa-pencil"></i>
+							</button>
+							<button type="button" class="btn btn-xs" >
+								<i class="fa fa-power-off"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clearfix"/>
+</div>

@@ -250,4 +250,18 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         };
 	}
 
+
+
+    var getMessage = function() {
+        var message = $rootScope.currentUser.token;
+        console.log($rootScope.currentUser.token);
+        if ($rootScope.currentUser.token != null) {
+            message = "Tu correo ha sido verificado";
+        } else {
+            message = "Verifica tu correo";
+        }
+        
+        return message;
+    }
+
 });

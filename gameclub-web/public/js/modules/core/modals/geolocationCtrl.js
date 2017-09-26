@@ -1,5 +1,6 @@
 angular.module("Core").controller('GeolocationCtrl', function($scope, $uibModalInstance, NgMap, $http, Const) {
 	$scope.currentPos = {lat: 0, lng: 0};
+	var msn = 'Arrastra Pin a tu lugar de entrega';
 
 	NgMap.getMap().then(function(map) {
 		google.maps.event.trigger(map, "resize");
@@ -7,8 +8,8 @@ angular.module("Core").controller('GeolocationCtrl', function($scope, $uibModalI
 
 		let marker = new google.maps.Marker({
 			position: $scope.currentPos,
-			map: map,
-			title: 'Drag me',
+			map: map,			
+			title: msn,
 			draggable: true
 		});
 

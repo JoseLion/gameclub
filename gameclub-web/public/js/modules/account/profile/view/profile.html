@@ -103,11 +103,13 @@
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
                             <i class="gc gc-mail"></i>
-                            <span>Verificaci&oacute;n de tu correo</span>
+                            <!--<span>Verificaci&oacute;n de tu correo</span>-->
+                            <span ng-if="currentUser.token">Verifica tu correo</span>
+                            <span ng-if="!currentUser.token">Tu correo ha sido verificado</span>
                         </div>
                         <div class="col-md-4 text-left">
-                            <button type="submit" class="btn btn-primary small" ng-if="isEditableMean">Guardar info</button>
-                            <button type="button" class="btn btn-primary small" ng-click="editContactMean()">{{isEditableMean ? 'Volver' : 'Cambiar correo'}}</button>
+                            <!--<button type="submit" class="btn btn-primary small" ng-if="isEditableMean">Guardar info</button>
+                            <button type="button" class="btn btn-primary small" ng-click="editContactMean()">{{isEditableMean ? 'Volver' : 'Cambiar correo'}}</button>-->
                         </div>
                     </span>
                     <div class="clearfix"></div>
@@ -127,7 +129,7 @@
             </div>
         </form>
     </section>
-    <section class="row contact-ruc">
+    <!--<section class="row contact-ruc">
         <form role="form" on-submit="save()" novalidate>
             <div class="completed">
                 <span class="col-md-12">&#191;TIENES RUC&#63;</span>
@@ -159,7 +161,7 @@
             </div>
             <div class="clearfix"></div>
         </form>
-    </section>
+    </section>-->
     <section class="row games">
         <div class="col-xs-12 col-md-4">
             <img src="img/books-icon.svg" />

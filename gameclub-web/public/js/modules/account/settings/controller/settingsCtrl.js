@@ -7,6 +7,13 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
         setPagedData(data.reviews);
     });
 
+    $scope.validCards = [];
+    angular.forEach($rootScope.currentUser.paymentMethods, function(cards){
+        if (cards.status) {
+            $scope.validCards.push(cards);
+        }
+    });
+
     $scope.loadMore = function() {
         $scope.page++;
 
@@ -18,13 +25,16 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
     $scope.removeMethod = function(method) {
         sweet.default("Se eliminará la forma de pago permanentemente", function() {
             rest("publicUser/deletePaymentMethod/:subscriptionId").get({subscriptionId: method.id}, function(data) {
-                $rootScope.currentUser = data;
+                $rootScope.validCards = data;
                 notif.success("Forma de pago eliminada con éxito");
                 sweet.close();
+                // $state.go("^.account.settings");
+
             }, function(error) {
                 sweet.close();
             });
         });
+        $state.go('gameclub.account.settings');
     }
 
     function setPagedData(data) {

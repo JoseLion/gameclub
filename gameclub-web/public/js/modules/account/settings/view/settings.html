@@ -24,19 +24,19 @@
             </div>
             <div class="clearfix"></div>
             <div class="col-md-12 payment">
-                <h2 class="subtitle" ng-if="currentUser.paymentMethods.length > 0">Formas de pago:</h2>
-                <div ng-repeat="method in currentUser.paymentMethods">
+                <h2 class="subtitle" ng-if="validCards.length > 0">Formas de pago:</h2>
+                <div ng-repeat="method in validCards" ng-if="method.status">
                     <div class="col-md-12 card-info">
                         <div class="col-md-4">
                             <input value="xxxx xxxx xxxx {{method.cardFinale}}" readonly />
                         </div>
                         <div class="col-md-3">
-                            <button class="btn btn-secundary full small" ng-click="removeMethod(method)">Borrar tarjeta</button>
+                            <button class="btn btn-secundary full small" ng-click="removeMethod(method)" ng-if="validCards.length > 1">Borrar tarjeta</button>
                         </div>
                     </div>
                 </div>
 
-                <div ng-if="currentUser.paymentMethods.length < 2">
+                <div ng-if="validCards.length < 2">
                     <span class="col-md-12 paymen-help">Ingresar forma de pago</span>
                     <kushki class="col-md-7 new-payment" />
                 </div>

@@ -115,10 +115,8 @@
 								</div>
 
 								<div class="form-row col-md-12">
-									<label class="col-md-3 control-label"><i class="gc gc-address" ng-click="openMap(kit)"></i></label>
-									<div class="col-md-9">
-										<img class="geo-check" src="/img/check.svg" ng-if="kit.geolocation != null">
-									</div>
+									<label class="col-md-3 control-label">Geolocalizaci&oacute;n</label><i class="gc gc-address" ng-click="openMap(kit)"></i>
+										<img class="geo-check" src="/img/check.svg" ng-if="kit.geolocation != null">				
 								</div>
 
 								<div class="form-row col-md-12">
@@ -150,15 +148,6 @@
 							<div ng-if="kit.shippingNote != null && kit.shippingNote != ''">
 								<span>Observaciones: </span><span class="text-black">{{kit.shippingNote}}</span>
 							</div>
-						</div>
-
-						<div class="date" ng-if="kit.shippingStatus.code == Const.code.shippingDelivered">{{kit.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
-						<div class="blue-box small-box text-center" ng-if="kit.shippingStatus.code == Const.code.shippingDelivered">
-							<div class="box-label col-md-12">
-								<span>Entregado</span>
-							</div>
-							
-							<div class="clearfix"></div>
 						</div>
 					</div>
 
@@ -454,7 +443,7 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span class="text-black">{{loan.gamer.name}} {{loan.gamer.lastName | limitTo: 1}}. </span>
+								<span class="text-black">{{loan.gamer.name}} {{loan.gamer.name | limitTo: 1}}</span>
 								<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goTouser(loan.gamer)">Ver ficha del usuario</button>
 								<br>
 								<span>desea pedir prestado el siguiente juego:</span>

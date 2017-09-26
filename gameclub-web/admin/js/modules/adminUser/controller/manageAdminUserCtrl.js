@@ -5,7 +5,7 @@ angular.module("AdminUser").controller('ManageAdminUserCtrl', function($scope, p
 		$scope.profiles = data;
 
 		if (adminUser != null) {
-			adminUser.$promise.then(function(userData) {
+			adminUser.$promise.then(function(s) {
 				$scope.adminUser = userData;
 			});
 		}

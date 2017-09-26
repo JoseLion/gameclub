@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-md-12 to-validate">
                     <label>Fecha de nacimiento</label>
-                    <date-selector ng-model="currentUserTemp.birthDate" ng-disabled="!isEditable" show-calendar="false">
+                    <date-selector ng-model="currentUserTemp.birthDate" ng-disabled="!isEditable" show-calendar="true">
                 </div>
                 <div class="col-md-12 to-validate">
                     <label>Ocupaci&oacute;n</label>
@@ -125,6 +125,39 @@
                 <div class="col-xs-12 col-md-3"></div>
                 <div class="clearfix"></div>
             </div>
+        </form>
+    </section>
+    <section class="row contact-ruc">
+        <form role="form" on-submit="save()" novalidate>
+            <div class="completed">
+                <span class="col-md-12">&#191;TIENES RUC&#63;</span>
+                
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-8 form">
+                <div class="col-md-12  ">
+                    <label>NOMBRE</label>
+                    <input ng-model="currentUserTemp.document">
+                </div>
+                <div class="col-md-12  ">
+                    <label>N&#176; DE RUC</label>
+                    <input ng-model="currentUserTemp.document">
+                </div>
+                <div class="col-md-12  ">
+                    <label>DIRECCI&#211;N DE FACTURACI&#211;N</label>
+                    <div class="col-xs-12 col-md-12 billing-address">
+                        <textarea type="address" ng-disabled="!isEditable" ng-model="currentUserTemp.billingAddress" rows="0" maxlength="150"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12 to-validate phone">
+                    <label class="col-xs-12 col-md-4">TEL&#201;FONO</label>
+                    <div class="col-xs-12 col-md-8">
+                        <input type="phone" ng-disabled="!isEditable" ng-model="currentUserTemp.contactPhone" class="complete" />
+                    </div>
+                </div>
+                
+            </div>
+            <div class="clearfix"></div>
         </form>
     </section>
     <section class="row games">

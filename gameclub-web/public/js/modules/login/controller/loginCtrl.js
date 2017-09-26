@@ -223,7 +223,21 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				rest("publicUser/getCurrentUser").get(function(data) {
 					if (data != null) {
 						if (data.hasTempPassword) {
-							let modal = changePassword();
+							$rootScope.currentUser = data;
+							let modalInstance = $uibModal.open({
+							size: 'md',
+							backdrop: 'static',
+							templateUrl: 'js/modules/core/modals/changePassword.html',
+							controller: 'ChangePasswordCtrl',
+							resolve: {
+								loadPlugin: function($ocLazyLoad) {
+									return $ocLazyLoad.load([{
+										name: 'Core',
+										files: ['js/modules/core/modals/changePasswordCtrl.js']
+									}]);
+								}}});
+							console.log("Lanzo modal");
+							// let modal = changePassword();
 
 							modal.result.then(function(userData) {
 								$rootScope.currentUser = userData;

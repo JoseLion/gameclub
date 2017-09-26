@@ -102,8 +102,8 @@
                         </ui-select>
                     </form>
                 </div>
-                <div class="col-md-12 category">
-                    <img ng-repeat="cross in myGame.game.categories" archive="cross.category.blackVector" src="">
+                <div class="col-md-12 category" ng-repeat="cross in myGame.game.categories">
+                    <img archive="cross.category.blackVector" src="" >
                 </div>
             </div>
         </section>
@@ -125,7 +125,7 @@
                 <div class="col-md-12 to-validate">
                     <label class="form-cell">Estado del juego</label>
                     <div class="form-cell">
-                        <ui-select validation ng-model="myGame.integrity" theme="bootstrap" class="selector integrity" required>
+                        <ui-select validation ng-model="myGame.integrity" theme="bootstrap" class="selector integrity" >
                             <ui-select-match placeholder="Seleccionar...">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="item in integrity | filter: $select.search">
                                 <div ng-bind-html="item.name | highlight: $select.search"></div>
@@ -148,13 +148,13 @@
                 <div class="col-md-12 help to-validate">
                     <label class="form-cell">Costo prestamo por semana</label>
                     <div class="form-cell">
-                        <input validation ng-model="myGame.cost" class="coins" type="number" min="0">
+                        <input validation ng-model="myGame.cost" class="coins"  min="0" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
                     </div>
                     <div class="form-cell help">
-                        <span>Coins</span>
+                        <span>&#36;</span>
                     </div>
                     <span class="form-cell text-left">
-                        (Recomendación del juego: {{myGame.game.uploadPayment/4 | number:2}} Coins)
+                        (Recomendación del juego: <B>&#36;{{priceChartingGM| number:2}}</B> )
                     </span>
                 </div>
 

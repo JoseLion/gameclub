@@ -1,0 +1,47 @@
+<div class="ibox">
+	<div class="ibox-content">
+		<div class="col-md-12 form-group" style="text-align: right;">
+			<!--<button type="button" class="btn btn-w-m btn-primary" ng-click="addSettings()">
+				<i class="fa fa-plus" style="margin-right: 5px"></i>
+				<span>Agregar Nuevo Par&aacute;metro</span>
+			</button>-->
+		</div>
+
+		<div class="col-md-12 form-group">
+			<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover" >
+				
+				<col width="20%">
+				<col width="40%">
+				<col width="10%">
+				<col width="10%">
+
+				<thead>
+					<tr>
+						
+						<th>Categor&iacute;a</th>
+						<th>Descripci&oacute;n</th>
+						<th>Valor</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="setting in settingsList">
+						
+						<td>{{setting.category}}</td>
+						<td>{{setting.name}}</td>
+						<td>{{setting.value}}</td>
+						<td style="text-align: center;">
+							<button type="button" class="btn btn-xs btn-warning" ng-click="editSetting(setting)" tooltip="Editar par&aacute;metro">
+								<i class="fa fa-pencil"></i>
+							</button>
+							<button type="button" class="btn btn-xs" >
+								<i class="fa fa-power-off"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clearfix"/>
+	</div>
+</div>

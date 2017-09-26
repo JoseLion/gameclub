@@ -1,15 +1,15 @@
 <section id="most-played" class="row">
     <div class="separator"></div>
     <form>
-        <div>
+        <div class="header">
             <div class="col-md-3"></div>
-            <div class="col-xs-6 col-md-6">
-                <div class="col-xs-1 col-md-2"></div>
-                <h2 class="col-xs-10 col-md-8 title" ng-if="title == null || title == ''">Los m&aacute;s <span class="game-font game-font-blue">jugados</span></h2>
-                <h2 class="col-xs-10 col-md-8 title" ng-if="title != null && title != ''">{{title}}</span></h2>
-                <div class="col-xs-1 col-md-2"></div>
+            <div class="col-xs-7 col-md-6">
+                <div class="col-md-2"></div>
+                <h2 class="col-xs-12 col-md-8 title" ng-if="title == null || title == ''">Los m&aacute;s <span class="game-font game-font-blue">jugados</span></h2>
+                <h2 class="col-xs-12 col-md-8 title" ng-if="title != null && title != ''">{{title}}</span></h2>
+                <div class="col-md-2"></div>
             </div>
-            <div class="col-xs-3 col-md-3 no-padding-right text-right">
+            <div class="col-xs-4 col-md-3 no-padding-right text-right">
                 <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector">
                     <ui-select-match><img ng-src="{{$select.selected.whiteBase64}}" class="gameConsole"/></ui-select-match>
                     <ui-select-choices repeat="console in consoles | filter: $select.search.name" class="text-center">

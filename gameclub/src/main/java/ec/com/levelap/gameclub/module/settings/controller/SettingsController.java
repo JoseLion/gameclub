@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ec.com.levelap.gameclub.module.settings.controller;
 
 import org.springframework.http.HttpStatus;
@@ -23,26 +20,12 @@ import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-/**
- * The Class SettingsController.
- *
- * @author Levelap
- */
 @RestController
 @RequestMapping(value="api/settings", produces=MediaType.APPLICATION_JSON_VALUE)
 public class SettingsController {
-	
-	/** The settings service. */
 	@Autowired
 	private SettingsService settingsService;
 	
-	/**
-	 * Find all.
-	 *
-	 * @return the response entity
-	 * @throws ServletException the servlet exception
-	 */
 	@RequestMapping(value="findAll", method=RequestMethod.GET)
 	public ResponseEntity<List<Settings>> findAll() throws ServletException{
 		List<Settings> settingsList = settingsService.getSettingsRepo().findAll();
@@ -76,25 +59,12 @@ public class SettingsController {
 		return new ResponseEntity<List<Settings>>(priceChartingList, HttpStatus.OK);
 	}
 	
-	private static class SettingsCategories{
+	private class SettingsCategories{
+		@SuppressWarnings("unused")
 		public String category;
+		
 		public SettingsCategories(String categoriesList) {
 			this.category = categoriesList;
 		}
-		/**
-		 * @return the categoriesList
-		 */
-		public String getCategory() {
-			return category;
-		}
-		/**
-		 * @param categoriesList the categoriesList to set
-		 */
-		public void setCategory(String categoriesList) {
-			this.category = categoriesList;
-		}
-		
 	}
-	
-
 }

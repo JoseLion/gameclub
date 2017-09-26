@@ -34,7 +34,7 @@
 						<ul class="list" ng-if="!questionSelected && !isLoading">
 							<li class="item" ng-repeat="faq in currentCategory.faqs" ng-if="!category.isLoading" ng-click="setQuestion(faq)">
 								<img class="document-icon" src="img/faqs/document-icon.svg">
-								<span>{{faq.question}}</span>
+								<span class="document">{{faq.question}}</span>
 							</li>
 						</ul>
 

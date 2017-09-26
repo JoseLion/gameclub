@@ -1,5 +1,10 @@
 angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, mostPlayed, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
     let currentPage = 0;
+    $scope.validCards = [];
+
+    var priceChartingGM = parseFloat($rootScope.settings['STPCHG'].value);
+    var priceChartingGMLoan = 0.0;
+    var gameLoanPCH = parseFloat($rootScope.settings['STGRCO'].value);
 
     if (game != null) {
         game.$promise.then(function(data) {
@@ -99,9 +104,17 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.openLoanView = function(cross) {
+        
+        console.log($rootScope.currentUser, "entra");
         if ($rootScope.currentUser == null) {
             $state.go("^.login", {redirect: $location.$$absUrl});
         } else {
+            angular.forEach($rootScope.currentUser.paymentMethods, function(cards){
+                if (cards.status) {
+                    $scope.validCards.push(cards);
+                }
+            });
+            
             if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100 && $rootScope.currentUser.isReady) {
                 $scope.loanGame = cross;
                 $scope.loanViewOpen = true;
@@ -221,14 +234,22 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             failedValidation = true;
         }
 
+        /**** Revisar con bugs ******/
         if (!failedValidation) {
+            console.log("Valida");
+            if($rootScope.currentUser.paymentMethods.length = 1){
+                console.log("Hay una tarjetA");
+                console.log($rootScope.currentUser.paymentMethods[0].status);
+            }
+            
             sweet.default("Se enviará una solicitud de prestamo al propietario del juego", function() {
                 console.log("loan: ", $scope.loan);
-
+                console.log($rootScope.currentUser.paymentMethods[0].status);
                 rest("loan/requestGame").post($scope.loan, function(data) {
-                    notif.success("Solicitud enviada con éxito. Ve a tus mensajes para revisarla");
+                    notif.success("Solicitud enviada con éxito");
                     $rootScope.currentUser = data;
                     sweet.close();
+                    $state.go("gameclub.account.messages");
                 }, function(error) {
                     sweet.close();
                 });
@@ -239,7 +260,8 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     $scope.removeCard = function(method) {
         sweet.default("Se eliminará la forma de pago permanentemente", function() {
             rest("publicUser/deletePaymentMethod/:subscriptionId").get({subscriptionId: method.id}, function(data) {
-                $rootScope.currentUser = data;
+                // $rootScope.currentUser = data;
+                $scope.validCards = data;
                 notif.success("Forma de pago eliminada con éxito");
                 sweet.close();
             }, function(error) {

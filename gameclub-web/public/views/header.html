@@ -14,7 +14,7 @@
         <section class="contacts col-md-6 col-xs-12">
             <a href="mailto:info@gameclub.com.ec"><i class="gc gc-send-mail"></i><span>info@gameclub.com.ec</span></a>
             <!--<a href="https://www.facebook.com/gameclub.ec/"><i class="gc gc-facebook"></i><span>(+593) 96 799 5408</span></a>-->
-            <a href="https://www.facebook.com/gameclub.ec/" target="_blank"><i class="gc gc-facebook"></i><span>www.facebook.com</span></a>
+            <a href="https://www.facebook.com/gameclub.ec/" target="_blank"><i class="gc gc-facebook"></i><span>gameclub.ec</span></a>
         </section>
     </div>
     <section class="row shortcut-links">
@@ -37,12 +37,12 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li>
-                            <button class="btn btn-primary" ui-sref="{{link.shareAndPlay.route}}" ui-sref-active="active">
+                            <button class="btn btn-primary" ng-click="gotoAnchor('gameclub.home','how-it-works')" href="">
                                 <span class="spacing">{{link.shareAndPlay.name}}</span>
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-primary" ui-sref="{{link.faq.route}}">
+                            <button class="btn btn-primary" ui-sref="{{link.faq.route}}" ui-sref-active="active">
                                 <span class="upper-case">{{link.faq.name}}</span>
                             </button>
                         </li>

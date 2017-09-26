@@ -238,18 +238,28 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Transactional
 	@SuppressWarnings("unchecked")
-	public PublicUser removeKushkiSubscription(Long subscriptionId) throws ServletException, KushkiException {
-		PublicUser publicUser = getCurrentUser();
+	public PublicUser removeKushkiSubscription(Long subscriptionId) {
+		PublicUser publicUser = new PublicUser();
+		KushkiSubscription methodP = new KushkiSubscription();
+		try {
+		publicUser = getCurrentUser();
 		
 		for (KushkiSubscription method : publicUser.getPaymentMethods()) {
-			if (method.getId().longValue() == subscriptionId.longValue()) {
-				kushkiService.subscriptionCancel(method.getSubscriptionId());
-				publicUser.getPaymentMethods().remove(method);
+			methodP = method;
+			if (methodP.getId().longValue() == subscriptionId.longValue()) {
+				kushkiService.subscriptionCancel(methodP.getSubscriptionId());
+				publicUser.getPaymentMethods().remove(methodP);
 				break;
 			}
 		}
-		
-		publicUserRepo.save(publicUser);
+		} catch (ServletException e) {
+			System.out.println(e.getMessage() + " " + methodP.getId().toString() + " "+ methodP.getStatus().toString());
+		} catch (KushkiException ke) {
+			methodP.setStatus(false);
+			System.out.println(ke.getMessage() + " " + methodP.getId().toString() + " "+ methodP.getStatus().toString());
+		} finally {
+			publicUserRepo.save(publicUser);
+		}
 		return publicUser;
 	}
 	

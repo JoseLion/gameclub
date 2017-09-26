@@ -256,8 +256,11 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game-item .rating{padding-top:3%;padding-left:0;padding-right:0}
 #game-item .rating div.platform{padding-left:0;padding-right:0;}
 #game-item .rating img.platform{height:1.2em;margin-bottom:5%;}
-#game-item .rating .types img{width:2.5em;height:2.5em;padding:0.5em;border:2px solid @color-primary;border-radius:50%;margin:auto 1%;}
-#game-item .rating .content-rating img{width:85%;margin-top:1em;}
+#game-item .rating .types img{display:inline-block;margin-left:2%;margin-right:2%;width:2.5em;height:2.5em;border:2px solid @color-primary;border-radius:50%;}
+/*#game-item .rating .types img{width:2.5em;height:2.5em;padding:25%;margin-bottom:1em;}
+
+/*#game-item .rating .types img{width:2.5em;height:2.5em;padding:0.5em;border:2px solid @color-primary;border-radius:50%;margin:auto 1%;}
+*/#game-item .rating .content-rating img{width:85%;margin-top:1em;}
 /*******************************/
 
 /********** NOTIFY **********/
@@ -985,7 +988,10 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game section.header .rating .platform{height:3em;}
 #game section.header .rating .platform .selector .ui-select-match-text img{height:1.5em;right:15px;}
 #game section.header .rating .platform .selector i.caret.pull-right{color:@color-secundary;}
-#game section.header .rating .category img{width:2.5em;height:2.5em;border:2px solid @color-primary;padding:0.35em;border-radius:50%;margin:auto 1%;}
+#game section.header .rating .category{display:inline-block;width:2.5em;height:2.5em;
+					border:2px solid @color-primary;border-radius:50%;padding:0.0em;float:right;}
+#game section.header .rating .category img{width:2.25em;height:2.25em;border:0px solid @color-primary;padding:0.35em;margin:auto 1%;}
+/*#game section.header .rating .category img{width:2.5em;height:2.5em;border:2px solid @color-primary;padding:0.35em;border-radius:50%;margin:auto 1%;}*/
 #game section.header .rating>div{margin-bottom:1em;}
 
 #game section.information{color:@color-secundary;background:@color-tertiary-alt;}
@@ -1051,9 +1057,9 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #game section.games .loan-view div.loan-cost .value{display:initial;}
 #game section.games .loan-view div.loan-cost .value.big{font-weight:bold;font-size:1.8em;}
 #game section.games .loan-view div.loan-cost .value.black{font-weight:bold;color:rgb(7,20,40);}
-#game section.games .loan-view div.loan-cost .selector{display:inline-block;width:auto;margin-left:2%;border-bottom:3px solid rgb(7,20,40);font-size:1.8em; padding:0;transform:translate(0, -10%);margin-left:3%;}
+#game section.games .loan-view div.loan-cost .selector{display:inline-block;width:auto;margin-left:2%;border-bottom:3px solid rgb(7,20,40);font-size:1.8em; padding:0;transform:translate(0, -20%);margin-left:3%;}
 #game section.games .loan-view div.loan-cost .selector .caret{position:relative;top:50% !important;left:10% !important;color:rgb(7,20,40);}
-#game section.games .loan-view div.loan-cost .selector ul.ui-select-choices{width:100%;margin-left:0%;font-weight:bold;}
+#game section.games .loan-view div.loan-cost .selector ul.ui-select-choices{width:100%;margin-left:0%;font-weight:bold;transform:translate(0, -5%);cursor:pointer;}
 #game section.games .loan-view .shipping{border-left:2px solid #FFFFFF;}
 #game section.games .loan-view .shipping .col-md-9{display:-webkit-box;padding-left:0%;margin-bottom:1.5%;border-bottom:2px solid #FFFFFF;margin-left:3%;}
 #game section.games .loan-view .shipping .no-underline{border-bottom:none;margin-bottom:0%;}
@@ -1181,9 +1187,9 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #faqs section.body .questions img.question-gamepad{width:15%;margin:5% 42.5%;}
 #faqs section.body .questions .loading{position:absolute;top:85%;left:46%;}
 #faqs section.body .questions .list{list-style:none;padding-left:0%;}
-#faqs section.body .questions .list .item{cursor:pointer;}
-#faqs section.body .questions .list .item:hover{box-shadow:0px 0px 30px 2px @color-secundary;}
+#faqs section.body .questions .list .item{cursor:pointer;padding-top:2%;}
 #faqs section.body .questions .list .item img.document-icon{width:4%;margin-right:3%;}
+#faqs section.body .questions .list .item:hover span.document{box-shadow: inset 0 -1px 0 0 @color-secundary;}
 #faqs section.body .answer{font-size:0.8em;line-height:125%;display:grid;}
 #faqs section.body .answer .head{font-weight:bold;text-transform:uppercase;text-align:center;}
 #faqs section.body .answer .body{white-space:pre-wrap;}

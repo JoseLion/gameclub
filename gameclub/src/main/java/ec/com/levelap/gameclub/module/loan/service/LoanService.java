@@ -286,6 +286,7 @@ public class LoanService extends BaseService<Loan> {
 		}
 	}
 	
+	@Transactional
 	public void rescheduleTasks() {
 		LoanRepo repoLoan = ApplicationContextHolder.getContext().getBean(LoanRepo.class);
 		RestoreRepo repoRestore = ApplicationContextHolder.getContext().getBean(RestoreRepo.class);

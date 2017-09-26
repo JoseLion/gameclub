@@ -1,8 +1,14 @@
 package ec.com.levelap.gameclub.module.user.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -11,6 +17,8 @@ import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +32,7 @@ import org.springframework.stereotype.Service;
 
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.service.BaseService;
+import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.kushki.repository.KushkiSubscriptionRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
@@ -61,13 +70,16 @@ public class PublicUserService extends BaseService<PublicUser> {
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private LevelapCryptography cryptoService;
 
 	public PublicUserService() {
 		super(PublicUser.class);
 	}
 
 	@Transactional
-	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl) throws ServletException, MessagingException {
+	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl) throws ServletException, MessagingException, IOException, GeneralSecurityException {
 		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(publicUser.getUsername());
 		
 		if (found != null) {
@@ -77,6 +89,11 @@ public class PublicUserService extends BaseService<PublicUser> {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
 		publicUser.setPassword(encoder.encode(publicUser.getPassword()));
 		publicUser.setToken(UUID.randomUUID().toString());
+		
+		File key = cryptoService.generateKeyFile();
+		publicUser.setPrivateKey(IOUtils.toByteArray(new FileInputStream(key)));
+		publicUser.setBalance(cryptoService.encrypt("0.0", key));
+		
 		publicUser = publicUserRepo.save(publicUser);
 
 		MailParameters mailParameters = new MailParameters();
@@ -259,6 +276,45 @@ public class PublicUserService extends BaseService<PublicUser> {
 		mailService.sendMailWihTemplate(mailParameters, "SUBCBR", params);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@Transactional
+	public PublicUser setUserPrivateKey(Long id) throws ServletException, NoSuchAlgorithmException, IOException {
+		PublicUser user = publicUserRepo.findOne(id);
+		
+		if (user.getPrivateKey() == null) {
+			File key = cryptoService.generateKeyFile();
+			user.setPrivateKey(IOUtils.toByteArray(new FileInputStream(key)));
+			user = publicUserRepo.save(user);
+		}
+		
+		return user;
+	}
+	
+	@Transactional
+	public PublicUser setUserBalance(Long id, Double balance) throws ServletException, GeneralSecurityException, IOException {
+		PublicUser user = publicUserRepo.findOne(id);
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		
+		byte[] encrypted = cryptoService.encrypt(Double.toString(balance), key);
+		user.setBalance(encrypted);
+		
+		user = publicUserRepo.save(user);
+		return user;
+	}
+	
+	@Transactional
+	public Map<String, Long> getGamesSummary() throws ServletException {
+		PublicUser currentUser = getCurrentUser();
+		Map<String, Long> summary = new HashMap<>();
+		Date today = new Date();
+		
+		summary.put("borrowed",publicUserRepo.countByGamesIsBorrowedIsTrueAndId(currentUser.getId()));
+		summary.put("toReturn", publicUserRepo.countGamesToReturn(currentUser.getId()));
+		summary.put("updateDate", today.getTime());
+		
+		return summary;
 	}
 
 	public PublicUserRepo getPublicUserRepo() {

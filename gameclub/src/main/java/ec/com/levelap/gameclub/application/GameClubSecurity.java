@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.application;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Date;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
+import javax.servlet.ServletException;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +21,7 @@ import ec.com.levelap.gameclub.module.user.entity.AdminUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.repository.AdminUserRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
+import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.mail.MailParameters;
 import ec.com.levelap.security.SecurityConfig;
@@ -63,6 +67,18 @@ public class GameClubSecurity implements SecurityConfig {
 			if (extra.equals(Const.PUBLIC_USER)) {
 				PublicUserRepo publicUserRepo = ApplicationContextHolder.getContext().getBean(PublicUserRepo.class);
 				PublicUser user = publicUserRepo.findByUsernameIgnoreCase(username);
+				
+				if (user.getPrivateKey() == null || user.getBalance() == null) {
+					PublicUserService publicUserService = ApplicationContextHolder.getContext().getBean(PublicUserService.class);
+					try {
+						user = publicUserService.setUserPrivateKey(user.getId());
+						user = publicUserService.setUserBalance(user.getId(), 0.0);
+					} catch (ServletException | IOException | GeneralSecurityException e) {
+						e.printStackTrace();
+						return null;
+					}
+					
+				}
 				
 				if (user != null) {
 					return user.getPassword();

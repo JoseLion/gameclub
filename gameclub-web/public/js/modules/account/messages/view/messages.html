@@ -406,7 +406,7 @@
 									<br>
 									<textarea type="text" class="review-comment" ng-model="loan.review.lenderComment" rows="3" ng-disabled="loan.lenderReviwedOn"></textarea>
 									<br>
-									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="sendReview()" ng-if="loan.review.lenderReviwedOn == null">Validar Calificación</button>
+									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="sendReview()" ng-if="!loan.review.lenderReviwedOn">Validar Calificación</button>
 								</form>
 							</div>
 
@@ -433,8 +433,16 @@
 								<span>Puedes ignorarlo y no aparecerá en tu perfil o denunciarlo.</span>
 								<br>
 								<br>
-								<button type="button" class="btn btn-xs btn-tertiary full">Aceptar review</button>
-								<button type="button" class="btn btn-xs btn-tertiary">Reportar review</button>
+								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptReview(loan.review.id)" ng-if="loan.review.gamerAccepted == null">Aceptar review</button>
+							</div>
+
+							<div class="date" ng-if="loan.review.gamerAccepted == true">{{loan.review.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="loan.review.gamerAccepted == true">
+								<div class="box-label col-md-12">
+									<span>Review aceptado</span>
+								</div>
+
+								<div class="clearfix"></div>
 							</div>
 						</div>
 						<!-- ************************ END - GAMER MESSAGE FLOW ************************ -->
@@ -679,7 +687,7 @@
 									<br>
 									<textarea type="text" class="review-comment" ng-model="loan.review.gamerComment" rows="3" ng-disabled="loan.review.gamerReviwedOn"></textarea>
 									<br>
-									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="sendReview()">Validar Calificación</button>
+									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="sendReview()" ng-if="!loan.review.gamerReviwedOn">Validar Calificación</button>
 								</form>
 							</div>
 
@@ -706,8 +714,16 @@
 								<span>Puedes ignorarlo y no aparecerá en tu perfil o denunciarlo.</span>
 								<br>
 								<br>
-								<button type="button" class="btn btn-xs btn-tertiary full">Aceptar review</button>
-								<button type="button" class="btn btn-xs btn-tertiary">Reportar review</button>
+								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptReview(loan.review.id)" ng-if="loan.review.lenderAccepted == null">Aceptar review</button>
+							</div>
+
+							<div class="date" ng-if="loan.review.lenderAccepted == true">{{loan.review.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="loan.review.lenderAccepted == true">
+								<div class="box-label col-md-12">
+									<span>Review aceptado</span>
+								</div>
+
+								<div class="clearfix"></div>
 							</div>
 						</div>
 						<!-- ************************ END - LENDER MESSAGE FLOW ************************ -->

@@ -21,12 +21,12 @@ import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
-import ec.com.levelap.gameclub.application.GameClubMailTasklet;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.message.entity.Message;
+import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.repository.RestoreRepo;
@@ -75,9 +75,6 @@ public class LoanService extends BaseService<Loan> {
 	@Autowired
 	private MailService mailService;
 	
-	@Autowired
-	private GameClubMailTasklet mailTasklet;
-	
 	@Value("${game-club.real-times}")
 	private boolean realTimes;
 	
@@ -110,6 +107,9 @@ public class LoanService extends BaseService<Loan> {
 		
 		if (wasAccepted) {
 			loan.setAcceptedDate(new Date());
+			
+			loan.getPublicUserGame().setIsBorrowed(true);
+			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
 		}
 		
 		loan = loanRepo.save(loan);
@@ -216,6 +216,12 @@ public class LoanService extends BaseService<Loan> {
 				public void run() {
 					try {
 						Restore restore = restoreRepo.findByLoan(taskLoan);
+						restore.getLoan().getGamerMessage().setRead(false);
+						restore.getLoan().getLenderMessage().setRead(false);
+						
+						messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
+						messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
+						
 						sendFinishedMails(restore);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -243,22 +249,13 @@ public class LoanService extends BaseService<Loan> {
 		params.put("returnDate", df.format(loan.getReturnDate()));
 		params.put("days", isLastReminder ? "1" : "3");
 		
-		mailTasklet.setMailParameters(mailParameters);
-		mailTasklet.setTemplate("MSGARM");
-		mailTasklet.setParams(params);
-		mailTasklet.sendMail();
+		mailService.sendMailWihTemplate(mailParameters, "MSGARM", params);
 		
 		mailParameters.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
-		mailTasklet.setMailParameters(mailParameters);
-		mailTasklet.setTemplate("MSGLRM");
-		mailTasklet.setParams(params);
-		mailTasklet.sendMail();
+		mailService.sendMailWihTemplate(mailParameters, "MSGLRM", params);
 		
 		mailParameters.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
-		mailTasklet.setMailParameters(mailParameters);
-		mailTasklet.setTemplate("MSGGRM");
-		mailTasklet.setParams(params);
-		mailTasklet.sendMail();
+		mailService.sendMailWihTemplate(mailParameters, "MSGGRM", params);
 	}
 	
 	private void sendFinishedMails(Restore restore) throws Exception {
@@ -275,26 +272,17 @@ public class LoanService extends BaseService<Loan> {
 		
 		if (!restore.getLenderConfirmed() || !restore.getGamerConfirmed()) {
 			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
-			mailTasklet.setMailParameters(mailParameters);
-			mailTasklet.setTemplate("MSGAUR");
-			mailTasklet.setParams(params);
-			mailTasklet.sendMail();
+			mailService.sendMailWihTemplate(mailParameters, "MSGAUR", params);
 		}
 		
 		if (!restore.getLenderConfirmed()) {
 			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
-			mailTasklet.setMailParameters(mailParameters);
-			mailTasklet.setTemplate("MSGLUR");
-			mailTasklet.setParams(params);
-			mailTasklet.sendMail();
+			mailService.sendMailWihTemplate(mailParameters, "MSGLUR", params);
 		}
 		
 		if (!restore.getGamerConfirmed()) {
 			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
-			mailTasklet.setMailParameters(mailParameters);
-			mailTasklet.setTemplate("MSGGUR");
-			mailTasklet.setParams(params);
-			mailTasklet.sendMail();
+			mailService.sendMailWihTemplate(mailParameters, "MSGGUR", params);
 		}
 	}
 	
@@ -302,6 +290,7 @@ public class LoanService extends BaseService<Loan> {
 		LoanRepo repoLoan = ApplicationContextHolder.getContext().getBean(LoanRepo.class);
 		RestoreRepo repoRestore = ApplicationContextHolder.getContext().getBean(RestoreRepo.class);
 		CatalogRepo repoCatalog = ApplicationContextHolder.getContext().getBean(CatalogRepo.class);
+		MessageRepo repoMessage = ApplicationContextHolder.getContext().getBean(MessageRepo.class);
 		List<Loan> loans = repoLoan.findByShippingStatusCode(Code.SHIPPING_DELIVERED);
 		Date today = new Date();
 		Calendar threeDays = Calendar.getInstance();
@@ -390,6 +379,13 @@ public class LoanService extends BaseService<Loan> {
 					public void run() {
 						try {
 							Restore restore = repoRestore.findByLoan(loan);
+							
+							restore.getLoan().getGamerMessage().setRead(false);
+							restore.getLoan().getLenderMessage().setRead(false);
+							
+							repoMessage.save(restore.getLoan().getGamerMessage());
+							repoMessage.save(restore.getLoan().getLenderMessage());
+							
 							sendFinishedMails(restore);
 						} catch (Exception e) {
 							e.printStackTrace();

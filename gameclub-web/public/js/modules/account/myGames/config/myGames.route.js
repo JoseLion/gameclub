@@ -31,10 +31,16 @@ angular.module('MyGames').config(function($stateProvider) {
 				return $stateParams.consoleSelected;
 			},
 
-			integrity: function(rest) {
-				return rest("catalog/findChildrenOf/:code", true).get({code: 'ITG'}, function(data) {
-					return data;
-				});
+			integrity: function(rest, Const) {
+				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.integrity});
+			},
+
+			gamesSummary: function(rest) {
+				return rest("publicUser/getGamesSummary").get();
+			},
+
+			mostPlayed: function(openRest) {
+				return openRest("game/findMostPlayed", true).post();
 			}
 		}
 	});

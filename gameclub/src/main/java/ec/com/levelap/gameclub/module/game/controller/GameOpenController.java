@@ -1,5 +1,6 @@
 package ec.com.levelap.gameclub.module.game.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
 import ec.com.levelap.gameclub.module.game.service.GameService;
@@ -82,6 +84,20 @@ public class GameOpenController {
 		}
 		
 		return new ResponseEntity<Page<PublicUserGameOpen>>(games, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="findMostPlayed", method=RequestMethod.POST)
+	public ResponseEntity<List<GameOpen>> findMostPlayed(@RequestBody(required=false) Console console) throws ServletException {
+		List<GameOpen> finalList = new ArrayList<>();
+		Page<GameOpen> mostPlayed = gameService.getGameRepo().findMostPlayed(new PageRequest(0, 12));
+		finalList.addAll(mostPlayed.getContent());
+		
+		if (finalList.size() < 12) {
+			Page<GameOpen> extras = gameService.getGameRepo().findAllByOrderByName(new PageRequest(0, 12 - finalList.size()));
+			finalList.addAll(extras.getContent());
+		}
+		
+		return new ResponseEntity<List<GameOpen>>(finalList, HttpStatus.OK);
 	}
 	
 	private static class Search {

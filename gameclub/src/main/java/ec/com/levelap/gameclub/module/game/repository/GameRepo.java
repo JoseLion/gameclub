@@ -69,7 +69,30 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 	
 	public List<GameOpen> findByCategoriesCategoryIdOrderByName(Long categoryId);
 	
-	@Query(value = "SELECT DISTINCT g.name FROM Game g WHERE UPPER(g.name) LIKE '%' || UPPER(?1) || '%'")
+	@Query("SELECT DISTINCT g.name FROM Game g WHERE UPPER(g.name) LIKE '%' || UPPER(?1) || '%'")
 	public List<String> findAutocomplete(String name);
+	
+	@Query(	"SELECT " +
+				"g.id AS id, " +
+				"g.name AS name, " +
+				"g.trailerUrl AS trailerUrl, " +
+				"gm.rating AS rating, " +
+				"g.contentRating AS contentRating, " +
+				"g.cover AS cover, " +
+				"g.diamond AS diamond " +
+			"FROM Loan l, GameMagazine gm " +
+				"LEFT JOIN l.publicUserGame pg " +
+				"LEFT JOIN pg.game g " +
+				"LEFT JOIN g.contentRating r " +
+				"LEFT JOIN g.cover c " +
+				"LEFT JOIN g.diamond d " +
+				"LEFT JOIN gm.magazine m " +
+			"WHERE " +
+				"(gm.game=g AND m.name='" + Const.RATING_MAGAZINE + "') " +
+				"GROUP BY g, gm, r, c, d " +
+			"ORDER BY COUNT(g) DESC")
+	public Page<GameOpen> findMostPlayed(Pageable page);
+	
+	public Page<GameOpen> findAllByOrderByName(Pageable page);
 	
 }

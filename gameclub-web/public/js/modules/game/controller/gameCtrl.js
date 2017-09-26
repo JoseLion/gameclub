@@ -1,10 +1,10 @@
-angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation) {
+angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, mostPlayed, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
     let currentPage = 0;
 
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
-            // console.log("Break point Ctrl: " + data.trailerUrl);
+            
             openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(data) {
                 $scope.background = {
                     background: "url('" + getImageBase64(data, $scope.game.banner.type) + "') center bottom / 100% no-repeat"
@@ -42,6 +42,10 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             {icon: 'gc-cd', sort: 'integrity', desc: true, active: false},
             {icon: 'gc-filter', sort: ''}
         ];
+
+        mostPlayed.$promise.then(function(data) {
+            $scope.mostPlayed = data;
+        });
     } else {
         $state.go(Const.mainState);
     }
@@ -73,7 +77,15 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.consoleSelected = function() {
-        console.log('FIND AVAILABLES BY CONSOLE: ', $scope.console.selected);
+        let filter = {
+            gameId: $scope.game.id,
+            consoleId: $scope.console.selected.console.id
+        };
+
+        openRest("game/getAvailableGames").post(filter, function(data) {
+            $scope.availableGames = [];
+            setPagedAvailableGames(data);
+        });
     }
 
     $scope.getPreviousGame = function() {
@@ -270,6 +282,10 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         return percent;
     }
 
+    $scope.viewOwnerRating = function(owner) {
+        $state.go("^.publicProfile", {id: owner.id, alias: friendlyUrl(owner.name + ' ' + owner.lastName.substring(0, 1))});
+    }
+
     function getIdentityPercentage() {
         let percent = 0;
         if ($rootScope.currentUser != null) {
@@ -280,16 +296,13 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     function setPagedAvailableGames(data) {
-        console.log("availableGames: ", data);
         if ($scope.availableGames == null) {
             $scope.availableGames = [];
         }
 
-        //angular.extend($scope.availableGames, data.content);
         Array.prototype.push.apply($scope.availableGames, data.content);
         $scope.lastPage = data.last;
         currentPage = data.number;
-        console.log("size: ", $scope.availableGames.length);
     }
 
     function filterAvailibleGames() {

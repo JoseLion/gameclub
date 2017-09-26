@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
+import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
@@ -46,8 +47,20 @@ public class Review extends BaseEntity {
 	@Column(name="lender_comment", columnDefinition="VARCHAR")
 	private String lenderComment;
 	
+	@Column(name="gamer_accepted")
+	private Boolean gamerAccepted;
+	
+	@Column(name="lender_accepted")
+	private Boolean lenderAccepted;
+	
 	@Transient
 	private Boolean finished = false;
+	
+	@Transient
+	private PublicUser gamer;
+	
+	@Transient
+	private PublicUser lender;
 
 	public Loan getLoan() {
 		return loan;
@@ -105,6 +118,22 @@ public class Review extends BaseEntity {
 		this.lenderComment = lenderComment;
 	}
 
+	public Boolean getGamerAccepted() {
+		return gamerAccepted;
+	}
+
+	public void setGamerAccepted(Boolean gamerAccepted) {
+		this.gamerAccepted = gamerAccepted;
+	}
+
+	public Boolean getLenderAccepted() {
+		return lenderAccepted;
+	}
+
+	public void setLenderAccepted(Boolean lenderAccepted) {
+		this.lenderAccepted = lenderAccepted;
+	}
+
 	public Boolean getFinished() {
 		if (gamerScore != null && lenderScore != null) {
 			finished = true;
@@ -115,5 +144,29 @@ public class Review extends BaseEntity {
 
 	public void setFinished(Boolean finished) {
 		this.finished = finished;
+	}
+
+	public PublicUser getGamer() {
+		if (loan != null) {
+			gamer = loan.getGamer();
+		}
+		
+		return gamer;
+	}
+
+	public void setGamer(PublicUser gamer) {
+		this.gamer = gamer;
+	}
+
+	public PublicUser getLender() {
+		if (loan != null && loan.getPublicUserGame() != null) {
+			lender = loan.getPublicUserGame().getPublicUser();
+		}
+		
+		return lender;
+	}
+
+	public void setLender(PublicUser lender) {
+		this.lender = lender;
 	}
 }

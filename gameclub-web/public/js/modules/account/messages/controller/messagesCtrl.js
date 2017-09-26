@@ -444,6 +444,19 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		}
 	}
 
+	$scope.acceptReview = function(id) {
+		sweet.default("El review aparecerá en tu perfíl público", function() {
+			rest("review/acceptReview/:id").get({id: id}, function(data) {
+				$scope.loan = data;
+				notif.success("Se ha aceptado el review con éxito");
+				sweet.close();
+				canvasToBottom();
+			}, function(error) {
+				sweet.close();
+			});
+		});
+	}
+
 	function clearCanvas() {
 		$scope.welcomeKits = null;
 		$scope.loan = null;

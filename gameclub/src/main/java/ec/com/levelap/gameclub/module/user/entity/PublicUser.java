@@ -1,5 +1,8 @@
 package ec.com.levelap.gameclub.module.user.entity;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.io.FileUtils;
 import org.postgresql.geometric.PGpoint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,6 +28,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.location.Location;
+import ec.com.levelap.cryptography.LevelapCryptography;
+import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.avatar.entity.Avatar;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.message.entity.Message;
@@ -50,9 +56,14 @@ public class PublicUser extends BaseEntity {
 
 	@Column(name = "is_facebook_user", columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean isFacebookUser = false;
-
-	@Column(columnDefinition = "INTEGER DEFAULT 0")
-	private Integer coins = 0;
+	
+	@JsonIgnore
+	@Column(name="private_key")
+	private byte[] privateKey;
+	
+	@JsonIgnore
+	@Column
+	private byte[] balance;
 
 	@Column(columnDefinition = "VARCHAR")
 	private String token;
@@ -106,8 +117,8 @@ public class PublicUser extends BaseEntity {
 	@OneToMany(mappedBy="publicUser", fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<KushkiSubscription> paymentMethods = new ArrayList<>();
 	
-	@Column(columnDefinition="INTEGER DEFAULT 0")
-	private Integer rating = 0;
+	@Column(columnDefinition="DECIMAL(5, 2) DEFAULT 0.0")
+	private Double rating = 0.0;
 	
 	@Column(name="games_limit", columnDefinition="INTEGER DEFAULT 5")
 	private Integer gamesLimit = 5;
@@ -124,6 +135,9 @@ public class PublicUser extends BaseEntity {
 	
 	@Transient
 	private Integer unreadMessages = 0;
+	
+	@Transient
+	private Double shownBalance;
 
 	public String getUsername() {
 		return username;
@@ -173,12 +187,20 @@ public class PublicUser extends BaseEntity {
 		this.isFacebookUser = isFacebookUser;
 	}
 
-	public Integer getCoins() {
-		return coins;
+	public byte[] getPrivateKey() {
+		return privateKey;
 	}
 
-	public void setCoins(Integer coins) {
-		this.coins = coins;
+	public void setPrivateKey(byte[] privateKey) {
+		this.privateKey = privateKey;
+	}
+
+	public byte[] getBalance() {
+		return balance;
+	}
+
+	public void setBalance(byte[] balance) {
+		this.balance = balance;
 	}
 
 	public String getToken() {
@@ -313,11 +335,11 @@ public class PublicUser extends BaseEntity {
 		this.paymentMethods = paymentMethods;
 	}
 	
-	public Integer getRating() {
-		return rating;
+	public Double getRating() {
+		return rating * 100.0 / 5.0;
 	}
 
-	public void setRating(Integer rating) {
+	public void setRating(Double rating) {
 		this.rating = rating;
 	}
 
@@ -367,5 +389,21 @@ public class PublicUser extends BaseEntity {
 
 	public void setUnreadMessages(Integer unreadMessages) {
 		this.unreadMessages = unreadMessages;
+	}
+
+	public Double getShownBalance() throws IOException, GeneralSecurityException {
+		if (privateKey != null && balance.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, privateKey);
+			String decypted = cryptoService.decrypt(balance, key);
+			shownBalance = Double.parseDouble(decypted);
+		}
+		
+		return shownBalance;
+	}
+
+	public void setShownBalance(Double shownBalance) {
+		this.shownBalance = shownBalance;
 	}
 }

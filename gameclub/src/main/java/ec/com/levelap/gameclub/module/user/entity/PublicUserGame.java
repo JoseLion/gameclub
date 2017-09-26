@@ -1,8 +1,5 @@
 package ec.com.levelap.gameclub.module.user.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,8 +44,8 @@ public class PublicUserGame extends BaseEntity {
 	@Column(columnDefinition="INTEGER DEFAULT 0")
 	private Integer cost = 0;
 	
-	@Transient
-	private Map<String, Object> publicUserObj = new HashMap<>();
+	@Column(name="is_borrowed", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean isBorrowed = false;
 	
 	@Transient
 	private Double shippingCost;
@@ -101,15 +98,12 @@ public class PublicUserGame extends BaseEntity {
 		this.cost = cost;
 	}
 
-	public Map<String, Object> getPublicUserObj() {
-		publicUserObj.put("location", publicUser.getLocation());
-		publicUserObj.put("rating", publicUser.getRating());
-		
-		return publicUserObj;
+	public Boolean getIsBorrowed() {
+		return isBorrowed;
 	}
 
-	public void setPublicUserObj(Map<String, Object> publicUserObj) {
-		this.publicUserObj = publicUserObj;
+	public void setIsBorrowed(Boolean isBorrewed) {
+		this.isBorrowed = isBorrewed;
 	}
 
 	public Double getShippingCost() {

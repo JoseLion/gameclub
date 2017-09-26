@@ -19,9 +19,11 @@ angular.module('PublicProfile').config(function($stateProvider) {
 			},
 
 			user: function(rest, $stateParams) {
-				return rest("publicUser/findOne/:id").get({id: $stateParams.id}, function(data) {
-					return data;
-				});
+				return rest("publicUser/findOne/:id").get({id: $stateParams.id});
+			},
+
+			reviews: function(rest, $stateParams) {
+				return rest("review/getReviewsOfUser/:id/:page").get({id: $stateParams.id, page: 0});
 			}
 		}
 	});

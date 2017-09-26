@@ -20,17 +20,17 @@ public interface PublicUserGameRepo extends JpaRepository<PublicUserGame, Long> 
 	@Query(	"SELECT " +
 				"pg.id AS id, " +
 				"pg.status AS status, " +
-				"lp.cost AS shippingCost, " +
+				"sp.cost AS shippingCost, " +
 				"pg.publicUser AS publicUser, " +
 				"pg.cost AS cost, " +
 				"pg.integrity AS integrity, " +
 				"pg.observations AS observations " +
-			"FROM PublicUserGame pg, LocationPrice lp " +
+			"FROM PublicUserGame pg, ShippingPrice sp " +
 				"LEFT JOIN pg.publicUser p " +
 				"LEFT JOIN pg.console c " +
 				"LEFT JOIN pg.game g " +
 			"WHERE " +
-				"(lp.origin=:origin AND lp.destination=p.location) AND " +
+				"(sp.origin=:origin AND sp.destination=p.location) AND " +
 				"pg.status=TRUE AND " +
 				"p.isReady=TRUE AND " +
 				"(:publicUser IS NULL OR p<>:publicUser) AND " +

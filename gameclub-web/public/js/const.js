@@ -58,7 +58,8 @@ angular.module('GameClub').constant('Const', {
 
 	code: {
 		faq: "FAQ",
-		shippingDelivered: "SHPETG"
+		shippingDelivered: "SHPETG",
+		integrity: 'ITG'
 	},
 
 	tooltips: {

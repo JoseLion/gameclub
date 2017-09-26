@@ -5,6 +5,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, mostP
     chooseFirstCategory(0);
 
     mostPlayed.$promise.then(function(data) {
+        console.log("data: ", data);
         $scope.mostPlayed = data;
     });
 

@@ -2,7 +2,7 @@
     <div class="separator"></div>
     <form>
         <div>
-            <div class="col-xs-3 col-md-3"></div>
+            <div class="col-md-3"></div>
             <div class="col-xs-6 col-md-6">
                 <div class="col-xs-1 col-md-2"></div>
                 <h2 class="col-xs-10 col-md-8 title" ng-if="title == null || title == ''">Los m&aacute;s <span class="game-font game-font-blue">jugados</span></h2>
@@ -20,7 +20,7 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="games">
+        <div class="games col-md-12 col-xs-12">
             <div class="col-xs-1 col-md-1 left">
                 <button class="btn btn-most-played" ng-click="previous()">
                     <i class="gc gc-arrow-left"></i>
@@ -28,7 +28,7 @@
             </div>
 
             <div class="col-xs-10 col-md-10 list">
-                <div class="col-xs-12 col-md-3 no-padding-left no-padding-right" ng-repeat="game in games">
+                <div class="col-xs-6 col-md-3 no-padding-left no-padding-right" ng-repeat="game in games | limitTo: 4">
                     <game-rating image-archive="game.diamond" rating="game.rating" ng-click="viewGameDetail(game)"></game-rating>
                 </div>
             </div>
@@ -39,5 +39,7 @@
                 </button>
             </div>
         </div>
+
+        <div class="clearfix"></div>
     </form>
 </section>

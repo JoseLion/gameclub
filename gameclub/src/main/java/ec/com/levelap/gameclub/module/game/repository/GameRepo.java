@@ -93,4 +93,6 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 			"ORDER BY COUNT(g) DESC")
 	public Page<GameOpen> findMostPlayed(Pageable page);
 	
+	public Page<GameOpen> findAllByOrderByName(Pageable page);
+	
 }

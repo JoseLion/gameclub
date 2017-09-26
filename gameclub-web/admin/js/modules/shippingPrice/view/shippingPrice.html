@@ -1,20 +1,39 @@
 <div class="col-md-12">
-	<div class="ibox">
-		<div class="ibox-content">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Carga Masíva</strong>
+		</div>
+
+		<div class="panel-body">
 			<div class="col-md-1"></div>
 
 			<div class="col-md-10">
 				<form class="form-horizontal" role="form" on-submit="save()" novalidate>
 					<div class="form-group text-center">
-						<label class="col-md-4 control-label">Excel</label>
-						<div class="col-md-4">
+						<label class="col-md-3 control-label">Excel</label>
+						<div class="col-md-6">
 							<file-upload validation ng-model="file" required></file-upload>
-						</div>
-						<div class="col-md-4 text-left">
-							<button type="submit" class="btn btn-w-m btn-success">Actualizar</button>
 						</div>
 					</div>
 
+					<div class="form-group">
+						<div class="col-md-12 text-center">
+							<button type="submit" class="btn btn-w-m btn-success">Actualizar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-12">
+	<div class="ibox">
+		<div class="ibox-content">
+			<div class="col-md-1"></div>
+
+			<div class="col-md-10">
+				<form class="form-horizontal" role="form" on-submit="find()" novalidate>
 					<div class="col-md-6">
 						<div class="form-group">
 							<label class="col-md-3 control-label">Origen</label>
@@ -41,7 +60,7 @@
 
 						<div class="form-group">
 							<div class="col-md-12 text-right">
-								<button type="button" class="btn btn-w-m btn-primary" ng-click="find()">Buscar</button>
+								<button type="submit" class="btn btn-w-m btn-primary">Buscar</button>
 								<button type="button" class="btn btn-w-m btn-default" ng-click="clear()">Limpiar</button>
 							</div>
 						</div>

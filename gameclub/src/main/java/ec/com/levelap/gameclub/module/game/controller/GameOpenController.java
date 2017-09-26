@@ -1,5 +1,6 @@
 package ec.com.levelap.gameclub.module.game.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -87,8 +88,16 @@ public class GameOpenController {
 	
 	@RequestMapping(value="findMostPlayed", method=RequestMethod.POST)
 	public ResponseEntity<List<GameOpen>> findMostPlayed(@RequestBody(required=false) Console console) throws ServletException {
+		List<GameOpen> finalList = new ArrayList<>();
 		Page<GameOpen> mostPlayed = gameService.getGameRepo().findMostPlayed(new PageRequest(0, 12));
-		return new ResponseEntity<List<GameOpen>>(mostPlayed.getContent(), HttpStatus.OK);
+		finalList.addAll(mostPlayed.getContent());
+		
+		if (finalList.size() < 12) {
+			Page<GameOpen> extras = gameService.getGameRepo().findAllByOrderByName(new PageRequest(0, 12 - finalList.size()));
+			finalList.addAll(extras.getContent());
+		}
+		
+		return new ResponseEntity<List<GameOpen>>(finalList, HttpStatus.OK);
 	}
 	
 	private static class Search {

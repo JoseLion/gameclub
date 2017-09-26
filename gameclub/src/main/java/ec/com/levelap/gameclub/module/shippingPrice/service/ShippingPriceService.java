@@ -132,9 +132,9 @@ public class ShippingPriceService {
 	
 	private Location getLocation(List<Location> provinces, String provinceName, String cityName) {
 		for (Location province : provinces) {
-			if (province.getName().equalsIgnoreCase(provinceName)) {
+			if (province.getName().equalsIgnoreCase(provinceName.trim())) {
 				for (Location city : province.getChildren()) {
-					if (city.getName().equalsIgnoreCase(cityName)) {
+					if (city.getName().equalsIgnoreCase(cityName.trim())) {
 						return city;
 					}
 				}

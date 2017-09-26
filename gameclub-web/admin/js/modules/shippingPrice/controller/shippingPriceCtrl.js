@@ -16,7 +16,7 @@ angular.module("ShippingPrice").controller('ShippingPriceCtrl', function($scope,
 
 	$scope.save = function(data) {
 		sweet.default("Se actualizará los datos con el archivo ingresado", function(data) {
-			rest("shippingPrice/updatePrices").multipart({file: $scope.file}, function() {
+			rest("shippingPrice/updatePrices").multipart({file: $scope.file}, function(data) {
 				sweet.success();
 				setPagedData(data);
 				sweet.close();

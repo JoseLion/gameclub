@@ -1,23 +1,67 @@
 @import url("variables.less");
 
-@media only screen and (max-width: 732px) {
+@media only screen and (max-width: 768px) {
+	.row{margin:0;padding:0;}
+	.row-left{margin:0;padding-left:0;}
+	.row-right{margin:0;padding-right:0;}
+	header .contacts{text-align:left;padding-left:0;}
+	header#main-header .social-media{text-align:center;}
+	header#main-header .contacts{text-align:center;}
+	header#main-header .shortcut-links img{width:100%;}
+	header#main-header .shortcut-links .links{padding:2.5% 0%;}
+	.navbar-nav{margin:auto;}
+	.navbar-default .navbar-toggle{border-color:transparent;}
+	.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{background-color:transparent;}
+	.navbar-default .navbar-toggle .icon-bar{background-color:white;}
+	.navbar-default .navbar-toggle:focus .icon-bar, .navbar-default .navbar-toggle:hover .icon-bar{background-color:@color-secundary;}
+	header#main-header .shortcut-links .links nav li{display:block;border-left:unset !important;text-align:center;border-bottom:2px solid @color-secundary;margin-left:10%;margin-right:10%;}
+	header#main-header .shortcut-links .links nav li:last-child{border-bottom:unset;}
+	.navbar-default .navbar-collapse, .navbar-default .navbar-form{border-color:transparent;border-top:unset;position:absolute;left:-100%;width:200%;padding:0%;background-color:@color-primary;}
 
-.row{margin:0;padding:0;}
-.row-left{margin:0;padding-left:0;}
-.row-right{margin:0;padding-right:0;}
+	#most-played .games .left, #most-played .games .right{padding-top:25%;padding-left:0%;padding-right:0%;}
+	#most-played .games .left .btn-most-played, #most-played .games .right .btn-most-played{font-size:0.5em;padding:0%;}
 
-header .contacts{text-align:left;padding-left:0;}
+	#home .banner{margin-top:40%;padding-bottom:15%;}
+	#home .banner::before{background-size:70%;top:-35%;}
+	#home .banner .title{font-size:1.5em;margin-top:2%;}
+	#home .banner .description{font-size:1.1em;}
+	#home .banner .search{margin-top:3%;}
+	#home .banner .search form{padding:1%;padding-left:4%;}
+	#home .banner .search .search-params{border:2.5px solid #071428;border-radius:8px;font-size:0.8em;background-color:rgba(255,10,40,0.65);}
+	#home .banner .search .search-params .filter{border:none;background-color:transparent;padding:2%;}
+	#home .banner .search form > div{text-align:center !important;padding:1%;}
+	#home .banner .search.white-search .btn-tertiary{width:2em;height:2em;font-size:0.75em;padding:14px;}
 
-#most-played .games .left,#most-played .games .right{padding-top:1%}
-#most-played .games .list>div{padding-left:35%;padding-right:35%;}
+	#home .how-it-works .separator{width:1.5em;height:1.5em;top:-1.5em;}
+	#home .how-it-works .title{font-size:1.3em;}
+	#home section.how-it-works .title.first{font-size:1em;font-weight:bold;letter-spacing:2px;}
+	#home .how-it-works .path-left.path-4h, #home .how-it-works .path-right.path-4h{padding-top:15%;}
+	#home .how-it-works .square-box.first{width:2.3em;height:2.3em;right:10% !important;top:35%;}
+	#home .how-it-works .path-left.path-3h, #home .how-it-works .path-right.path-3h{padding-top:6%;}
+	#home .how-it-works .path-left.path-2h, #home .how-it-works .path-right.path-2h{padding-top:40%;}
+	#home .how-it-works .path-left.path-2h.responsive-path-1, #home .how-it-works .path-right.path-2h.responsive-path-1{padding-top:8%;}
+	#home .how-it-works .square-box.second{width:2.3em;height:2.3em;transform:translate(150%, 75%);}
+	#home .how-it-works .step.first-step::before{top:-72%;width:60%}
+	#home section.how-it-works .right-blue-box{padding:3% 1%;font-size:0.8em;}
+	#home section.how-it-works .right-blue-box i, #home section.how-it-works .left-blue-box i{padding-right:4%;}
+	#home .how-it-works .path-left.path-4h.responsive-path-2, #home .how-it-works .path-right.path-4h.responsive-path-2{padding-top:43%;}
+	#home .how-it-works .step.second-step::before{top:-95%;right:4%;width:60%;padding-top:60%;}
+	#home section.how-it-works .left-blue-box{padding:3% 1% 3% 6.5%;font-size:0.8em;}
+	#home .how-it-works .rectangle-box.third{width:3.5em;height:2.5em;margin-top:-60%;left:-95%;}
+	#home .how-it-works .path-left.path-2h.responsive-path-3, #home .how-it-works .path-right.path-2h.responsive-path-3{padding-top:5%;}
+	#home section.how-it-works .step .title{font-size:1.5em;padding:1% 0% 1% 12%;}
+	#home section.how-it-works .step.third-step{font-size:0.8em;padding-bottom:20%;}
+	#home section.how-it-works .step.third-step::before{bottom:0%;left:-30%;background-size: 94%;padding-top:50%;}
+	#home section.how-it-works .rectangle-box.fourth{width:3.5em;height:2.5em;margin-top:0%;left:15%;bottom:5%;}
+	#home section.how-it-works .step.third-step .description{margin-bottom:6%;}
 
-#home .banner::before{background-size:65%;}
-#home .banner .search form>div{text-align:center;}
-#home .banner .search .search-params{border:2.5px solid @color-primary;border-radius:8px;font-size:1.1em;background-color:@color-secundary-65;font-weight:700;}
-#home .banner .search .search-params .filter{border:none;background-color:transparent;}
+	#home .choose-by-cat .games{top:-10%;bottom:-10%;left:65%;right:3%;}
 
-#account #profile section.contact-information .completed{position:relative;top:0;left:0;right:0;bottom:0;}
-#account #profile section.contact-information form::before{border-left:none;}
-#account #profile section.contact-information form>div{border-bottom:none;}
+	footer#main-footer .logo img{width:35%;}
 
+	#account #profile section.contact-information .completed{position:relative;top:0;left:0;right:0;bottom:0;}
+	#account #profile section.contact-information form::before{border-left:none;}
+	#account #profile section.contact-information form>div{border-bottom:none;}
+
+	#most-seen > hr.subtitle, #blog hr.subtitle{width:22%!important;}
 }

@@ -104,8 +104,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.openLoanView = function(cross) {
-        
-        console.log($rootScope.currentUser, "entra");
         if ($rootScope.currentUser == null) {
             $state.go("^.login", {redirect: $location.$$absUrl});
         } else {

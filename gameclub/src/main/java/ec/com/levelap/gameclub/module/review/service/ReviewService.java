@@ -41,14 +41,14 @@ public class ReviewService {
 	
 	@Transactional
 	public Loan sendReview(Review review) throws ServletException {
-		Loan loan = loanRepo.findOne(review.getLoan().getId());
+		Loan loan = loanRepo.findOne(review.getLoanId());
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		
 		if (currentUser.getId().longValue() == loan.getGamer().getId().longValue()) {
 			review.setLenderReviwedOn(new Date());
 			
-			review.getLoan().getPublicUserGame().setIsBorrowed(false);
-			review.getLoan().setPublicUserGame(publicUserGameRepo.save(review.getLoan().getPublicUserGame()));
+			loan.getPublicUserGame().setIsBorrowed(false);
+			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
 		} else {
 			review.setGamerReviwedOn(new Date());
 		}
@@ -63,6 +63,7 @@ public class ReviewService {
 		}
 		
 		loan.setReview(review);
+		loan = loanRepo.save(loan);
 		return loan;
 	}
 	
@@ -84,11 +85,29 @@ public class ReviewService {
 		if (currentUser.getId().longValue() == review.getLoan().getGamer().getId().longValue()) {
 			Double gamerAverage = reviewRepo.getGamerAverageScore(currentUser.getId());
 			Double lenderAverage = reviewRepo.getLenderAverageScore(currentUser.getId());
+			
+			if (gamerAverage == null) {
+				gamerAverage = 0.0;
+			}
+			
+			if (lenderAverage == null) {
+				lenderAverage = 0.0;
+			}
+			
 			currentUser.setRating((gamerAverage.doubleValue() + lenderAverage.doubleValue()) / 2.0);
 			publicUserService.getPublicUserRepo().save(currentUser);
 		} else {
 			Double gamerAverage = reviewRepo.getGamerAverageScore(review.getLoan().getPublicUserGame().getPublicUser().getId());
 			Double lenderAverage = reviewRepo.getLenderAverageScore(review.getLoan().getPublicUserGame().getPublicUser().getId());
+			
+			if (gamerAverage == null) {
+				gamerAverage = 0.0;
+			}
+			
+			if (lenderAverage == null) {
+				lenderAverage = 0.0;
+			}
+			
 			review.getLoan().getPublicUserGame().getPublicUser().setRating((gamerAverage.doubleValue() + lenderAverage.doubleValue()) / 2.0);
 			publicUserService.getPublicUserRepo().save(review.getLoan().getPublicUserGame().getPublicUser());
 		}

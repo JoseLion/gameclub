@@ -16,7 +16,7 @@
 			<div class="clearfix"></div>
 			<div class="col-md-10 coins">
 				<div class="col-md-6 no-padding-left">
-					<span class="subtitle">Coins: <span class="dark">{{currentUser.coins}}</span> <i class="gc gc-usd-o"></i></span>
+					<span class="subtitle">Balance: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
 				</div>
 				<div class="col-md-6 text-center">
 					<button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
@@ -25,11 +25,11 @@
 			<div class="clearfix"></div>
 			<div class="col-md-12 total">
 				<span class="subtitle">Resumen de estatus de juegos</span>
-				<div class="col-md-8 description">
+				<div class="col-md-6 description">
 					<span>Juegos actualmente prestados: <span class="dark">0</span></span>
 					<div class="updated">&uacute;ltima actualizaci&oacute;n: <span>01-04-2017</span></div>
 				</div>
-				<div class="col-md-8 description">
+				<div class="col-md-6 description">
 					<span>Juegos por devolver: <span class="dark">0</span></span>
 					<div class="updated">&uacute;ltima actualizaci&oacute;n: <span>01-04-2017</span></div>
 				</div>
@@ -170,7 +170,7 @@
 								<br>
 								<span>Durante <span class="text-black">{{loan.weeks}} semanas</span> desde la entrega del juego.</span>
 								<br>
-								<span>Pagarás un total de <span class="text-black">{{loan.publicUserGame.cost}} COINS</span> por este préstamo.</span>
+								<span>Pagarás un total de <span class="text-black">{{loan.publicUserGame.cost | currency: '$': 2}}</span> por este préstamo.</span>
 								<br>
 								<span>Si el préstamo es rechazado volverán a acreditarse a tu cuenta.</span>
 								<br>
@@ -454,7 +454,7 @@
 								<br>
 								<span>Durante <span class="text-black">{{loan.weeks}} semanas</span> desde la entrega del juego.</span>
 								<br>
-								<span>Recibirás un total de <span class="text-black">{{loan.publicUserGame.cost}} COINS</span> por este préstamo.</span>
+								<span>Recibirás un total de <span class="text-black">{{loan.publicUserGame.cost | currency: '$': 2}}</span> por este préstamo.</span>
 								<br>
 								<span>Una vez aceptado el préstamo, se te notificará la fecha exacta que tendrás tu juego de vuelta.</span>
 								<br>
@@ -580,7 +580,7 @@
 								<span>Tu juego estará de vuelta el día: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
 								<br>
 								<br>
-								<span>Se acaban de acreditar a tu cuenta: </span><span class="text-black upper-case">{{loan.publicUserGame.cost}} coins</span>
+								<span>Se acaban de acreditar a tu cuenta: </span><span class="text-black upper-case">{{loan.publicUserGame.cost | currency: '$': 2}}</span>
 								<br>
 								<br>
 								<span class="text-lg">Timepo restante: </span>

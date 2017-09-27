@@ -20,7 +20,7 @@ import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.kushki.entity.BaseKushkiSubscription;
 
 @Entity
-@Table(schema = Const.SCHEMA, name = "kushki_subscription")
+@Table(schema=Const.SCHEMA, name="kushki_subscription")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class KushkiSubscription extends BaseKushkiSubscription {
 	@JsonBackReference("publicUserKushkiSubscription")

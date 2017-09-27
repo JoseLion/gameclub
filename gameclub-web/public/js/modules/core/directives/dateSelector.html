@@ -1,20 +1,20 @@
 <div id="date-selector">
     <div class="selector" ng-class="disableSelectors ? 'disabled' : ''" ng-click="selection(0)">
-        <input class="date-number" placeholder="{{today | date:'dd'}}" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-model="day" />
+        <input class="date-number" placeholder="DD" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-model="day" />
         <i class="gc gc-arrow-down"></i>
         <ul id="day" class="dropdown" ng-if="dayFocused">
             <li ng-repeat="number in numberSelector" ng-click="daySelected(number)">{{number}}</li>
         </ul>
     </div>
     <div class="selector" ng-class="disableSelectors ? 'disabled' : ''" ng-click="selection(1)">
-        <input class="date-number" placeholder="{{today | date:'MM'}}" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-model="month" />
+        <input class="date-number" placeholder="MM" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-model="month" />
         <i class="gc gc-arrow-down"></i>
         <ul id="day" class="dropdown" ng-if="monthFocused">
             <li ng-repeat="number in numberSelector" ng-click="monthSelected(number)">{{number}}</li>
         </ul>
     </div>
     <div class="selector" ng-class="disableSelectors ? 'disabled' : ''" ng-click="selection(2)">
-        <input class="date-number" placeholder="{{today | date:'yyyy'}}" size="5" maxlength="4" ng-disabled="disableSelectors" readonly ng-model="year" />
+        <input class="date-number" placeholder="AAAA" size="5" maxlength="4" ng-disabled="disableSelectors" readonly ng-model="year" />
         <i class="gc gc-arrow-down"></i>
         <ul id="day" class="dropdown" ng-if="yearFocused">
             <li ng-repeat="number in numberSelector" ng-click="yearSelected(number)">{{number}}</li>

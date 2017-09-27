@@ -73,6 +73,8 @@ form input[type="checkbox"]:checked::after{content:"\f00c";position:absolute;top
 form ul.dropdown-menu{padding:2%;background:@color-primary;}
 form ul.dropdown-menu a{color:@color-tertiary;}
 form ul.dropdown-menu>.active>a,form ul.dropdown-menu>.active>a:focus,form ul.dropdown-menu>.active>a:hover{background:@color-secundary;}
+
+.ui-select-container{z-index:999;}
 /*****************************/
 
 /********** HEADER **********/
@@ -196,7 +198,8 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #date-selector div.selector.disabled>input{cursor:not-allowed;}
 #date-selector div.selector ul.dropdown{padding:0;text-align:right;position:absolute;width:100%;left:0;right:0;background:@color-primary;height:10.9em;overflow-y:scroll;z-index:10;border:5px solid @color-primary;}
 #date-selector div.selector ul.dropdown{border-bottom-left-radius:5px;border-bottom-right-radius:5px;}
-#date-selector div.selector ul.dropdown::-webkit-scrollbar{width:0;}
+#date-selector div.selector ul.dropdown::-webkit-scrollbar{width:5px;background-color:@color-secundary;}
+#date-selector div.selector ul.dropdown::-webkit-scrollbar-thumb{background-color:white;}
 #date-selector div.selector ul.dropdown li{display:block;padding:1px 5px 0;}
 #date-selector div.selector ul.dropdown li:hover{background:@color-secundary;}
 #date-selector div.calendar-icon{display:inline;position:relative;}
@@ -510,12 +513,12 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #profile section.contact-information .form input{color:@color-primary;font-size:1.5em;}
 #account #profile section.contact-information .form input.ocupation{width:80%;}
 #account #profile section.contact-information .form input[disabled]{color:@color-primary;}
-#account #profile section.contact-information .form input[disabled]::-webkit-input-placeholder{color:@color-primary;}
-#account #profile section.contact-information .form input[disabled]::-moz-placeholder{color:@color-primary;}
-#account #profile section.contact-information .form input[disabled]::-ms-input-placeholder{color:@color-primary;}
-#account #profile section.contact-information .form input::-webkit-input-placeholder{color:@color-primary;}
-#account #profile section.contact-information .form input::-moz-placeholder{color:@color-primary;}
-#account #profile section.contact-information .form input::-ms-input-placeholder{color:@color-primary;}
+#account #profile section.contact-information .form input[disabled]::-webkit-input-placeholder{color:rgba(7, 20, 40, 0.4);}
+#account #profile section.contact-information .form input[disabled]::-moz-placeholder{color:rgba(7, 20, 40, 0.4);}
+#account #profile section.contact-information .form input[disabled]::-ms-input-placeholder{color:rgba(7, 20, 40, 0.4);}
+#account #profile section.contact-information .form input::-webkit-input-placeholder{color:rgba(7, 20, 40, 0.4);}
+#account #profile section.contact-information .form input::-moz-placeholder{color:rgba(7, 20, 40, 0.4);}
+#account #profile section.contact-information .form input::-ms-input-placeholder{color:rgba(7, 20, 40, 0.4);}
 #account #profile section.contact-information .form .selector{width:100%;padding-top:0;padding-bottom:0;}
 #account #profile section.contact-information .form .selector *{outline:none;}
 #account #profile section.contact-information .form .selector .ui-select-match .ui-select-match-text{color:@color-primary;font-weight:400;height:2em;font-size:1.5em;}

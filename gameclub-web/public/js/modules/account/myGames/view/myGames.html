@@ -16,7 +16,7 @@
             <div class="clearfix"></div>
             <div class="col-md-10 coins">
                 <div class="col-md-6 no-padding-left">
-                    <span class="subtitle">Coins: <span class="dark">{{currentUser.coins}}</span> <i class="gc gc-usd-o"></i></span>
+                    <span class="subtitle">Balance: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
                 </div>
                 <div class="col-md-6 text-center">
                     <button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
@@ -176,7 +176,7 @@
     <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" title="Tus juegos" ng-if="showGame"></most-played>
     <section class="row upload text-center" ng-if="!isSearching && !showGame">
         <span class="subtitle">Carga tus juegos</span>
-        <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar COINS y poder pedir prestado otros juegos.</p>
+        <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar DINERO y poder pedir prestado otros juegos.</p>
         <button class="btn btn-secundary small" ng-click="showSearch()">Subir juegos</button>
     </section>
     <section class="banner" ng-if="isSearching">

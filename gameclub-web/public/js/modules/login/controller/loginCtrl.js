@@ -254,6 +254,9 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 
 					$scope.isLoginIn = false;
 					$scope.isFbLogIn = false;
+				}, function(error) {
+					$scope.isLoginIn = false;
+					$scope.isFbLogIn = false;
 				});
 			}
 		}, function(error) {

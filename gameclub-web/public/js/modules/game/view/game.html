@@ -13,7 +13,12 @@
                 <stars ng-model=game.rating></stars>
             </div>
             <div class="col-md-12 video">
-                <span><a ng_href="{{game.trailerUrl}}" target="_blank"><i class="gc gc-youtube" ></i> <font color=#111111><B>Video game play </B></fond></a></span>
+                <span>
+                    <a ng_href="{{game.trailerUrl}}" target="_blank">
+                    <i class="gc gc-youtube" ></i>
+                    <font color=#111111><B>Video game play </B></font>
+                    </a>
+                </span>
             </div>
         </div>
         <div class="col-md-3 rating text-right">
@@ -47,7 +52,10 @@
                 </div>
             </div>
             <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">{{game.releaseDate | date: 'dd-MM-yyyy'}}</span></span>
-            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{(game.uploadPayment / 4.0) | number: 0}} coins</span></span>
+            <span class="col-md-12 subtitle">Costo promedio por semana: 
+                <span class="red" ng-if="settings['STPCHG'].type == 'TOSPRC'">&#36;{{((((game.uploadPayment*priceChartingGM)/100)+game.uploadPayment)/gameLoanPCH) | number:2}}</span>
+                <span class="red" ng-if="settings['STPCHG'].type == 'TOSNBR'">&#36;{{((game.uploadPayment+priceChartingGM)/gameLoanPCH) | number:2}}</span>
+            </span>
         </div>
         <div class="col-md-3 rating">
             <div class="reviews text-center">

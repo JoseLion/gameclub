@@ -2,9 +2,10 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     let currentPage = 0;
     $scope.validCards = [];
 
-    var priceChartingGM = parseFloat($rootScope.settings['STPCHG'].value);
-    var priceChartingGMLoan = 0.0;
-    var gameLoanPCH = parseFloat($rootScope.settings['STGRCO'].value);
+    $scope.priceChartingGM = parseFloat($rootScope.settings['STPCHG'].value);
+    priceChartingGMLoan = 0.0;
+    $scope.gameLoanPCH = parseFloat($rootScope.settings['STGRCO'].value);
+
 
     if (game != null) {
         game.$promise.then(function(data) {

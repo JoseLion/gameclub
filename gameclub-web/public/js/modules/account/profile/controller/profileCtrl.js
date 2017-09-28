@@ -264,4 +264,9 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         return message;
     }
 
+    $scope.checkboxRuc = true;
+    $scope.chechRuc = function(){
+        console.log("entra al check: ");
+    }
+
 });

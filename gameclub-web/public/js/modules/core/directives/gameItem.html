@@ -5,7 +5,7 @@
     <div class="col-xs-12 col-md-7 information">
         <span class="description">{{ngModel.name}}</span>
         <stars ng-model="ngModel.rating"></stars>
-        <span class="price" ng-if="showCoins">Costo prestamo por semana: <span class="light">{{coins}} coins</span></span>
+        <span class="price" ng-if="showCoins">Costo prestamo por semana: <span class="light">{{coins | number:2}} &#36;</span></span>
         <br>
         <button class="btn btn-primary small" ng-click="viewDetails()">{{isEditable ? 'Editar' : 'Ver juego'}}</button>
     </div>

@@ -87,14 +87,13 @@ public class ReviewService {
 			Double lenderAverage = reviewRepo.getLenderAverageScore(currentUser.getId());
 			
 			if (gamerAverage == null) {
-				gamerAverage = 0.0;
+				currentUser.setRating(lenderAverage.doubleValue());
+			} else if (lenderAverage == null) {
+				currentUser.setRating(gamerAverage.doubleValue());
+			} else {
+				currentUser.setRating((gamerAverage.doubleValue() + lenderAverage.doubleValue()) / 2.0);
 			}
 			
-			if (lenderAverage == null) {
-				lenderAverage = 0.0;
-			}
-			
-			currentUser.setRating((gamerAverage.doubleValue() + lenderAverage.doubleValue()) / 2.0);
 			publicUserService.getPublicUserRepo().save(currentUser);
 		} else {
 			Double gamerAverage = reviewRepo.getGamerAverageScore(review.getLoan().getPublicUserGame().getPublicUser().getId());

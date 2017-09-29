@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.io.FileUtils;
+import org.hibernate.annotations.Where;
 import org.postgresql.geometric.PGpoint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -113,6 +114,7 @@ public class PublicUser extends BaseEntity {
 	@Column(name="is_subscriber", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean isSubscriber = false;
 	
+	@Where(clause="status")
 	@JsonManagedReference("publicUserKushkiSubscription")
 	@OneToMany(mappedBy="publicUser", fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<KushkiSubscription> paymentMethods = new ArrayList<>();

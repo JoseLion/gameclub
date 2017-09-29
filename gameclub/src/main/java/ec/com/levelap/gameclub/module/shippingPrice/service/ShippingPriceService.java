@@ -51,12 +51,12 @@ public class ShippingPriceService {
 		XSSFSheet sheet = workbook.getSheetAt(0);
 		
 		for (int j = 0; j < 3; j++) {
-			for (int i = 5; i < sheet.getLastRowNum(); i++) {
+			for (int i = 5; i <= sheet.getLastRowNum(); i++) {
 				XSSFCell yCode = sheet.getRow(i).getCell(j);
 				XSSFCell xCode = sheet.getRow(j).getCell(i);
 				
 				if (!yCode.getRawValue().equalsIgnoreCase(xCode.getRawValue())) {
-				String message = "Formato inválido";
+					String message = "Formato inválido";
 					
 					if (j == 0) {
 						message = "Los códigos de la columna 'A' no coinciden con los de la fila '1'";
@@ -76,7 +76,7 @@ public class ShippingPriceService {
 		}
 		
 		List<Location> provinces = locationRepo.findByParentCode(Code.COUNTRY_CODE);
-		for (int i = 5; i < sheet.getLastRowNum(); i++) {
+		for (int i = 5; i <= sheet.getLastRowNum(); i++) {
 			String province = sheet.getRow(i).getCell(2).getStringCellValue();
 			String city = sheet.getRow(i).getCell(1).getStringCellValue();
 			
@@ -88,7 +88,7 @@ public class ShippingPriceService {
 		shippingPriceRepo.deleteAllInBatch();
 		List<ShippingPrice> newPrices = new ArrayList<>();
 		
-		for (int i = 5; i < sheet.getLastRowNum(); i++) {
+		for (int i = 5; i <= sheet.getLastRowNum(); i++) {
 			XSSFRow row = sheet.getRow(i);
 			String originProvince = row.getCell(2).getStringCellValue();
 			String originCity = row.getCell(1).getStringCellValue();
@@ -118,6 +118,7 @@ public class ShippingPriceService {
 						shippingPrice.getDestination().setOther("" + sheet.getRow(0).getCell(j).getNumericCellValue());
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 					return new ResponseEntity<ErrorControl>(new ErrorControl("Formato de celda incorrecto. Las provincias y ciudades deben ser de tipo texto y los precios de tipo número", true), HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 				

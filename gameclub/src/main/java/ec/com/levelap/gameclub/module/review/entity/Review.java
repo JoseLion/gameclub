@@ -61,6 +61,9 @@ public class Review extends BaseEntity {
 	
 	@Transient
 	private PublicUser lender;
+	
+	@Transient
+	private Long loanId;
 
 	public Loan getLoan() {
 		return loan;
@@ -168,5 +171,17 @@ public class Review extends BaseEntity {
 
 	public void setLender(PublicUser lender) {
 		this.lender = lender;
+	}
+
+	public Long getLoanId() {
+		if (loan != null) {
+			loanId = loan.getId();
+		}
+		
+		return loanId;
+	}
+
+	public void setLoanId(Long loanId) {
+		this.loanId = loanId;
 	}
 }

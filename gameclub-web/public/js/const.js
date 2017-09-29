@@ -62,6 +62,11 @@ angular.module('GameClub').constant('Const', {
 		integrity: 'ITG'
 	},
 
+	settings: {
+		priceChartingGames: 'STPCHG',
+		weekShippingCost: 'STGRCO'
+	},
+
 	tooltips: {
 		password: 'La contraseña debe tener únicamente letras y números, mínimo 6 caracteres, con al menos una mayúscula y un número'
 	},

@@ -16,7 +16,7 @@
             <div class="clearfix"></div>
             <div class="col-md-10 coins">
                 <div class="col-md-6 no-padding-left">
-                    <span class="subtitle">Coins: <span class="dark">{{currentUser.coins}}</span> <i class="gc gc-usd-o"></i></span>
+                    <span class="subtitle">Balance: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
                 </div>
                 <div class="col-md-6 text-center">
                     <button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
@@ -26,17 +26,19 @@
             <div class="col-md-12 payment">
                 <h2 class="subtitle" ng-if="validCards.length > 0">Formas de pago:</h2>
                 <div ng-repeat="method in validCards" ng-if="method.status == true">
+                <h2 class="subtitle" ng-if="currentUser.paymentMethods.length > 0">Formas de pago:</h2>
+                <div ng-repeat="method in currentUser.paymentMethods" ng-if="method.status">
                     <div class="col-md-12 card-info">
                         <div class="col-md-4">
                             <input value="xxxx xxxx xxxx {{method.cardFinale}}" readonly />
                         </div>
                         <div class="col-md-3">
-                            <button class="btn btn-secundary full small" ng-click="removeMethod(method)" ng-if="validCards.length > 1">Borrar tarjeta</button>
+                            <button class="btn btn-secundary full small" ng-click="removeMethod(method)" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button>
                         </div>
                     </div>
                 </div>
 
-                <div ng-if="validCards.length < 2">
+                <div ng-if="currentUser.paymentMethods.length < 2">
                     <span class="col-md-12 paymen-help">Ingresar forma de pago</span>
                     <kushki class="col-md-7 new-payment" />
                 </div>

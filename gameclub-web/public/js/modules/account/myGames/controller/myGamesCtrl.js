@@ -181,8 +181,6 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
 
 
 
-
-
     $scope.gameConsolesW =[
         {
             name: 'PlayStation 4',
@@ -363,14 +361,16 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             rating: 3
         }
     ];
+    
     $scope.getPreviousGame = function() {
         let temp = $scope.mostPlayed.splice(0, 1);
         $scope.mostPlayed[3] = temp[0];
-    };
+    }
+
     $scope.getNextGame = function() {
         let temp = $scope.mostPlayed.splice(-1, 1);
         $scope.mostPlayed.unshift(temp[0]);
-    };
+    }
 
     $scope.nameAutocomplete = [];
     $scope.$watch('search.name', function(newValue, oldValue) {

@@ -24,7 +24,6 @@
 
         <div class="col-md-8 col-xs-6 text-right links" ng-style="paddingLogged">
             <nav class="navbar-default pull-right">
-
                 <div class="navbar-header">
                       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                         <span class="icon-bar"></span>
@@ -59,15 +58,23 @@
                                 <span class="upper-case">
                                     <span class="name">{{currentUser.name}}</span> <span class="last-name">{{currentUser.lastName}}</span>
                                 </span>
+
                                 <img archive="currentUser.avatar.image" placeholder="img/contact-person.svg" class="avatar">
                                 <span class="label label-default notification" ng-if="currentUser.unreadMessages > 0">{{currentUser.unreadMessages}}</span>
                             </button>
+
+                            <div ng-if="currentUser" class="text-right coins visible-xs">
+                                <span class="text">{{currentUser.shownBalance | currency: '$': 2}}</span>
+                                <i class="gc gc-usd-o"></i>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </nav>
+
+            <span class="label label-default notification visible-xs" ng-if="currentUser.unreadMessages > 0">{{currentUser.unreadMessages}}</span>
         </div>
-        <div ng-if="currentUser" class="col-md-12 text-right coins">
+        <div ng-if="currentUser" class="col-md-12 col-xs-12 text-right coins hidden-xs">
             <span class="text">{{currentUser.shownBalance | currency: '$': 2}}</span>
             <i class="gc gc-usd-o"></i>
         </div>

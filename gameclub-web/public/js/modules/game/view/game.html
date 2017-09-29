@@ -107,7 +107,7 @@
                                         <th>Disponibilidad</th>
                                         <th>Costo shipping</th>
                                         <th>Ciudad</th>
-                                        <th>Costo coins</th>
+                                        <th>Costo</th>
                                         <th>Rating usuario</th>
                                         <th>Estado juego</th>
                                         <th></th>
@@ -119,7 +119,7 @@
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
                                         <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
                                         <td>{{cross.publicUser.location.name}}</td>
-                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | number: 0}}</td>
+                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 0}}</td>
                                         <td>
                                             <stars ng-model="cross.publicUser.rating" ng-if="cross.publicUser.rating > 0"></stars>
                                             <span ng-if="cross.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>
@@ -195,7 +195,7 @@
                         </ui-select>
                     </div>
 
-                    <div class="clearfix"></div><br/><br/><br/><br/>
+                    <div class="clearfix"></div>
                     <div class="subtitle top-space">Costo shipping</div>
 
                     <div class="shipping">
@@ -252,16 +252,16 @@
                     <div class="col-md-12 subtitle">Forma de pago</div>
 
                     <div class="col-md-6">
-                        <div ng-if="validCards[0] != null ">
+                        <div ng-if="currentUser.paymentMethods[0] != null ">
                             <label class="col-md-12">Elige tu tarjeta</label>
                             <div class="col-md-12">
-                                <div class="box" ng-class="{'checked': loan.payment == validCards[0]}" ng-click="loan.payment = validCards[0]" ></div>
-                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{validCards[0].cardFinale}}" readonly>
-                                <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(validCards[0])" ng-if="validCards.length > 1">Borrar tarjeta</button><p>{{idCard11}}</p><p>{{idCard2}}</p>
+                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[0]}" ng-click="loan.payment = currentUser.paymentMethods[0]" ></div>
+                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{currentUser.paymentMethods[0].cardFinale}}" readonly>
+                                <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button><p>{{idCard11}}</p><p>{{idCard2}}</p>
                             </div>
                         </div>
                         
-                        <div ng-if="validCards[0] == null">
+                        <div ng-if="currentUser.paymentMethods[0] == null">
                             <label class="col-md-12">Ingresa otra forma de pago</label>
                             <div class="col-md-12">
                                 <kushki class="new-payment"></kushki>
@@ -270,16 +270,16 @@
                     </div>
 
                     <div class="col-md-6 left-decoration">
-                        <div ng-if="validCards[1] != null">
+                        <div ng-if="currentUser.paymentMethods[1] != null">
                             <label class="col-md-12">Elige tu tarjeta</label>
                             <div class="col-md-12">
-                                <div class="box" ng-class="{'checked': loan.payment == validCards[1]}" ng-click="loan.payment = validCards[1]"></div>
-                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{validCards[1].cardFinale}}" readonly>
-                                <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(validCards[1])">Borrar tarjeta</button>
+                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[1]}" ng-click="loan.payment = currentUser.paymentMethods[1]"></div>
+                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{currentUser.paymentMethods[1].cardFinale}}" readonly>
+                                <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[1])">Borrar tarjeta</button>
                             </div>
                         </div>
                         
-                        <div ng-if="validCards[1] == null">
+                        <div ng-if="currentUser.paymentMethods[1] == null">
                             <label class="col-md-12">Ingresa otra forma de pago</label>
                             <div class="col-md-12">
                                 <kushki class="new-payment"></kushki>

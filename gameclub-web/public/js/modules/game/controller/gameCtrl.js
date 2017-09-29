@@ -1,11 +1,15 @@
 angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, mostPlayed, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
     let currentPage = 0;
+
     $scope.validCards = [];
 
     $scope.priceChartingGM = parseFloat($rootScope.settings['STPCHG'].value);
     priceChartingGMLoan = 0.0;
     $scope.gameLoanPCH = parseFloat($rootScope.settings['STGRCO'].value);
 
+    let priceChartingGM = parseFloat($rootScope.settings[Const.settings.priceChartingGames].value);
+    let priceChartingGMLoan = 0.0;
+    let gameLoanPCH = parseFloat($rootScope.settings[Const.settings.weekShippingCost].value);
 
     if (game != null) {
         game.$promise.then(function(data) {
@@ -105,17 +109,9 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.openLoanView = function(cross) {
-        
-        console.log($rootScope.currentUser, "entra");
         if ($rootScope.currentUser == null) {
             $state.go("^.login", {redirect: $location.$$absUrl});
         } else {
-            angular.forEach($rootScope.currentUser.paymentMethods, function(cards){
-                if (cards.status) {
-                    $scope.validCards.push(cards);
-                }
-            });
-            
             if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100 && $rootScope.currentUser.isReady) {
                 $scope.loanGame = cross;
                 $scope.loanViewOpen = true;
@@ -261,8 +257,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     $scope.removeCard = function(method) {
         sweet.default("Se eliminará la forma de pago permanentemente", function() {
             rest("publicUser/deletePaymentMethod/:subscriptionId").get({subscriptionId: method.id}, function(data) {
-                // $rootScope.currentUser = data;
-                $scope.validCards = data;
+                $rootScope.currentUser = data;
                 notif.success("Forma de pago eliminada con éxito");
                 sweet.close();
             }, function(error) {

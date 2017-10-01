@@ -25,12 +25,14 @@
             <div class="clearfix"></div>
             <div class="col-md-12 total">
                 <span class="subtitle">Resumen de estatus de juegos</span>
-                <div class="col-md-6 description">
-                    <span>Juegos actualmente prestados: <span class="dark">{{summary.borrowed}}</span></span>
+
+                <div class="col-md-12 description">
+                    <div>Juegos actualmente prestados: <span class="dark">{{summary.borrowed}}</span></div>
                     <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
-                <div class="col-md-6 description">
-                    <span>Juegos por devolver: <span class="dark">{{summary.toReturn}}</span></span>
+                
+                <div class="col-md-12 description">
+                    <div>Juegos por devolver: <span class="dark">{{summary.toReturn}}</span></div>
                     <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
             </div>

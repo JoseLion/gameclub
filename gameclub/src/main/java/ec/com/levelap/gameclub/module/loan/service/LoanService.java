@@ -219,6 +219,24 @@ public class LoanService extends BaseService<Loan> {
 						restore.getLoan().getGamerMessage().setRead(false);
 						restore.getLoan().getLenderMessage().setRead(false);
 						
+						if (!restore.getGamerConfirmed()) {
+							restore.setGamerAddress(taskLoan.getGamerAddress());
+							restore.setGamerGeolocation(taskLoan.getGamerGeolocation());
+							restore.setGamerReceiver(taskLoan.getGamerReceiver());
+							restore.setGamerConfirmDate(new Date());
+						}
+						
+						if (!restore.getLenderConfirmed()) {
+							restore.setLenderAddress(taskLoan.getLenderAddress());
+							restore.setLenderGeolocation(taskLoan.getLenderGeolocation());
+							restore.setLenderReceiver(taskLoan.getLenderReceiver());
+							restore.setLenderConfirmDate(new Date());
+						}
+						
+						if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
+							restore = restoreRepo.save(restore);
+						}
+						
 						messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
 						messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
 						
@@ -341,6 +359,30 @@ public class LoanService extends BaseService<Loan> {
 					public void run() {
 						try {
 							Restore restore = repoRestore.findByLoan(loan);
+							restore.getLoan().getGamerMessage().setRead(false);
+							restore.getLoan().getLenderMessage().setRead(false);
+							
+							if (!restore.getGamerConfirmed()) {
+								restore.setGamerAddress(loan.getGamerAddress());
+								restore.setGamerGeolocation(loan.getGamerGeolocation());
+								restore.setGamerReceiver(loan.getGamerReceiver());
+								restore.setGamerConfirmDate(new Date());
+							}
+							
+							if (!restore.getLenderConfirmed()) {
+								restore.setLenderAddress(loan.getLenderAddress());
+								restore.setLenderGeolocation(loan.getLenderGeolocation());
+								restore.setLenderReceiver(loan.getLenderReceiver());
+								restore.setLenderConfirmDate(new Date());
+							}
+							
+							if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
+								restore = repoRestore.save(restore);
+							}
+							
+							repoMessage.save(restore.getLoan().getGamerMessage());
+							repoMessage.save(restore.getLoan().getLenderMessage());
+							
 							sendFinishedMails(restore);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -366,6 +408,30 @@ public class LoanService extends BaseService<Loan> {
 					public void run() {
 						try {
 							Restore restore = repoRestore.findByLoan(loan);
+							restore.getLoan().getGamerMessage().setRead(false);
+							restore.getLoan().getLenderMessage().setRead(false);
+							
+							if (!restore.getGamerConfirmed()) {
+								restore.setGamerAddress(loan.getGamerAddress());
+								restore.setGamerGeolocation(loan.getGamerGeolocation());
+								restore.setGamerReceiver(loan.getGamerReceiver());
+								restore.setGamerConfirmDate(new Date());
+							}
+							
+							if (!restore.getLenderConfirmed()) {
+								restore.setLenderAddress(loan.getLenderAddress());
+								restore.setLenderGeolocation(loan.getLenderGeolocation());
+								restore.setLenderReceiver(loan.getLenderReceiver());
+								restore.setLenderConfirmDate(new Date());
+							}
+							
+							if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
+								restore = repoRestore.save(restore);
+							}
+							
+							repoMessage.save(restore.getLoan().getGamerMessage());
+							repoMessage.save(restore.getLoan().getLenderMessage());
+							
 							sendFinishedMails(restore);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -380,9 +446,26 @@ public class LoanService extends BaseService<Loan> {
 					public void run() {
 						try {
 							Restore restore = repoRestore.findByLoan(loan);
-							
 							restore.getLoan().getGamerMessage().setRead(false);
 							restore.getLoan().getLenderMessage().setRead(false);
+							
+							if (!restore.getGamerConfirmed()) {
+								restore.setGamerAddress(loan.getGamerAddress());
+								restore.setGamerGeolocation(loan.getGamerGeolocation());
+								restore.setGamerReceiver(loan.getGamerReceiver());
+								restore.setGamerConfirmDate(new Date());
+							}
+							
+							if (!restore.getLenderConfirmed()) {
+								restore.setLenderAddress(loan.getLenderAddress());
+								restore.setLenderGeolocation(loan.getLenderGeolocation());
+								restore.setLenderReceiver(loan.getLenderReceiver());
+								restore.setLenderConfirmDate(new Date());
+							}
+							
+							if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
+								restore = repoRestore.save(restore);
+							}
 							
 							repoMessage.save(restore.getLoan().getGamerMessage());
 							repoMessage.save(restore.getLoan().getLenderMessage());

@@ -63,9 +63,8 @@ VALUES('MSGREQ',
 ('MSGLUR',
 	'<p>Hola {{lender}},</p>
 	<p></p>
-	<p>El préstamo de tu juego <strong>{{game}} ({{console}})</strong> ha finalizado y todavía no has confirmado tu dirección de entrega.</p>
-	<p>Te recordamos que estos retrasos pueden generar multas como se especifica en los términos y condiciones de uso.</p>
-	<p>Para confirmar tu información de entrega, por favor dirigete a https://gameclub.com.ec</p>
+	<p>El préstamo de tu juego <strong>{{game}} ({{console}})</strong> ha finalizado y todavía no confirmaste tu dirección de entrega.</p>
+	<p>Enviaremos tu juego a la misma dirección en la que lo recogimos, te recordamos que si nadie recibe el juego se pueden generar multas a tu cuenta como se especifica en los términos y condiciones de uso.</p>
 	<p></p>
 	<p>Atentamente,</p>
 	<p>El equipo de Game Club</p>',
@@ -75,8 +74,7 @@ VALUES('MSGREQ',
 	'<p>Hola {{gamer}},</p>
 	<p></p>
 	<p>El préstamo del juego <strong>{{game}} ({{console}})</strong> ha finalizado y todavía no has confirmado tu dirección de retiro.</p>
-	<p>Te recordamos que estos retrasos pueden generar multas como se especifica en los términos y condiciones de uso.</p>
-	<p>Para confirmar tu información de retiro, por favor dirigete a https://gameclub.com.ec</p>
+	<p>Recogeremos el juego en la misma dirección a la que lo enviamos, te recordamos que si  no lo entregas se pueden generar multas a tu cuenta como se especifica en los términos y condiciones de uso.</p>
 	<p></p>
 	<p>Atentamente,</p>
 	<p>El equipo de Game Club</p>',

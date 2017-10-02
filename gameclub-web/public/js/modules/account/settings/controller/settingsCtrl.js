@@ -6,6 +6,24 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
         $scope.lenderReviews = data.lenderReviews;
         setPagedData(data.reviews);
     });
+    $scope.numberCards = false;
+    $scope.card = true;
+    console.log($rootScope.currentUser.paymentMethods);
+    if($rootScope.currentUser.paymentMethods.length>0){
+        console.log($rootScope.currentUser.paymentMethods);
+        var j = 0;
+        for(i = 0; i < $rootScope.currentUser.paymentMethods.length; i++){
+            j++;
+            if (j == 2) {
+                $scope.numberCards = true;
+                $scope.card = false;
+            }
+            // j++;
+        }
+    } else{
+        $scope.numberCards = false;
+        $scope.card = true;
+    }
 
     $scope.loadMore = function() {
         $scope.page++;

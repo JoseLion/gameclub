@@ -1,4 +1,5 @@
-angular.module("Settings").controller('ViewSettingsCtrl', function($scope, settingsList, getDTOptions, $state, friendlyUrl, sweet, rest){
+// angular.module("Settings").controller('ViewSettingsCtrl', function($scope, settingsList, getDTOptions, $state, friendlyUrl, sweet, rest){
+angular.module("Settings").controller('ViewSettingsCtrl', function($scope, settingsList, getDTOptions, Const, rest, sweet) {	
 	
 	$scope.dtOptions = getDTOptions.unpaged("fTgitp");
 	$scope.dtColumnDefs = getDTOptions.notSortableAll(3);
@@ -7,27 +8,17 @@ angular.module("Settings").controller('ViewSettingsCtrl', function($scope, setti
 		$scope.settingsList = data;
 	});
 
-	/*$scope.find = function() {
-		rest("settings/findAll",true).post(function(data){
-			$scope.settings = data;
+	$scope.save = function(data) {
+		console.log("Entra");
+		console.log("Entra");
+		sweet.default("Se actualizará los datos ingresado", function() {
+			rest("settings/save").post(	$scope.settingsList, function() {
+				sweet.success();
+				sweet.close();
+			}, function(error) {
+				sweet.error(error.data ? error.data.message : error);
+			});
 		});
 	}
-
-	$scope.typeVal = function(val){
-		var $scope.valu = "";
-		switch (val.type) {
-		    case "TOSNBR": $scope.valu = "$"; break;
-		    case "TOSPRC": $scope.valu = "%"; break;
-		    default: $scope.valu = "Semanas"; break;
-		}
-		return $scope.valu;
-	}*/
-
-	$scope.addSettings = function() {
-		$state.go("^.addSetting");
-	}
-
-	$scope.editSetting = function(settingObj) {
-		$state.go("^.editSetting",{fullName: friendlyUrl(settingObj.name), id: settingObj.id});
-	}
+	
 });

@@ -7,9 +7,9 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     priceChartingGMLoan = 0.0;
     $scope.gameLoanPCH = parseFloat($rootScope.settings['STGRCO'].value);
 
-    let priceChartingGM = parseFloat($rootScope.settings[Const.settings.priceChartingGames].value);
-    let priceChartingGMLoan = 0.0;
-    let gameLoanPCH = parseFloat($rootScope.settings[Const.settings.weekShippingCost].value);
+    // let priceChartingGM = parseFloat($rootScope.settings[Const.settings.priceChartingGames].value);
+    // let priceChartingGMLoan = 0.0;
+    // let gameLoanPCH = parseFloat($rootScope.settings[Const.settings.weekShippingCost].value);
 
     if (game != null) {
         game.$promise.then(function(data) {

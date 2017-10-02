@@ -153,9 +153,12 @@
                     <div class="form-cell help">
                         <span>&#36;</span>
                     </div>
-                    <span class="form-cell text-left">
+                    <!--<span class="form-cell text-left">
                         (Recomendación del juego: <B>&#36;{{priceChartingGM| number:2}}</B> )
-                    </span>
+                    </span>-->
+                    <span class="form-cell text-left" ng-if="settings['STPCHG'].type == 'percentage'">(Recomendación del juego: <B>&#36;{{((((myGame.game.uploadPayment*priceChartingGM)/100)+myGame.game.uploadPayment)/gameLoanPCH) | number:2}}</B> )</span>
+                    <span class="form-cell text-left" ng-if="settings['STPCHG'].type == 'number'">(Recomendación del juego: <B>&#36;{{((myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH) | number:2}}</B> )</span>
+            </span>
                 </div>
 
                 <div class="col-md-12 relax">

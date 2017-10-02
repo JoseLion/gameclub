@@ -33,7 +33,7 @@ public class SettingsController {
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<?> save(@RequestBody Settings settingObj) throws ServletException, IOException{
+	public ResponseEntity<?> save(@RequestBody List<Settings> settingObj) throws ServletException, IOException{
 		return settingsService.save(settingObj);
 	}
 	

@@ -7,6 +7,7 @@ package ec.com.levelap.gameclub.module.settings.service;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
@@ -47,16 +48,15 @@ public class SettingsService extends BaseService<Settings> {
 	 * @return the response entity
 	 */
 	@Transactional
-	public ResponseEntity<?> save(Settings settingObj) throws ServletException, IOException{
-		if(settingObj.getId() == null) {
-			Settings found = settingsRepo.findByCode(settingObj.getCode());
-			if(found != null) {
-				return new ResponseEntity<ErrorControl>(new ErrorControl("Par·metro ya existe ", true), HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<?> save(List<Settings> settingObj) throws ServletException, IOException{
+		if(settingObj.size() > 0) {
+			for (Settings settings : settingObj) {
+				settingsRepo.save(settings);
 			}
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ErrorControl>(new ErrorControl("Par√°metro ya existe ", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		settingsRepo.save(settingObj);
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	

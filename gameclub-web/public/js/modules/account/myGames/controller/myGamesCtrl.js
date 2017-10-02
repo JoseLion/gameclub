@@ -4,9 +4,9 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     $scope.search = {};
 
 
-    var priceChartingGM = parseFloat($rootScope.settings['STPCHG'].value);
-    var priceChartingGMLoan = 0.0;
-    var gameLoanPCH = parseFloat($rootScope.settings['STGRCO'].value);
+    $scope.priceChartingGM = parseFloat($rootScope.settings['STPCHG'].value);
+    $scope.priceChartingGMLoan = 0.0;
+    $scope.gameLoanPCH = parseFloat($rootScope.settings['STGRCO'].value);
 
     gamesList.$promise.then(function(data) {
         setPagedData(data);
@@ -44,13 +44,13 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
         });
 
         /************* Calculo PriceChartin segun parámetros y valor juego *********************/
-        if($rootScope.settings['STPCHG'].type == "TOSPRC" && game.uploadPayment != null){
-            priceChartingGMLoan = ((($scope.myGame.game.uploadPayment*priceChartingGM)/100)+$scope.myGame.game.uploadPayment)/gameLoanPCH;
-            $scope.priceChartingGM = priceChartingGMLoan;
-        } else if($rootScope.settings['STPCHG'].type == "TOSNBR" && game.uploadPayment != null){
-            priceChartingGMLoan = ($scope.myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH;
-            $scope.priceChartingGM = priceChartingGMLoan;
-        }
+        // if($rootScope.settings['STPCHG'].type == "TOSPRC" && game.uploadPayment != null){
+        //     priceChartingGMLoan = ((($scope.myGame.game.uploadPayment*priceChartingGM)/100)+$scope.myGame.game.uploadPayment)/gameLoanPCH;
+        //     $scope.priceChartingGM = priceChartingGMLoan;
+        // } else if($rootScope.settings['STPCHG'].type == "number" && game.uploadPayment != null){
+        //     priceChartingGMLoan = ($scope.myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH;
+        //     $scope.priceChartingGM = priceChartingGMLoan;
+        // }
 
         $scope.showGame = true;
     }
@@ -92,16 +92,22 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     }
 
     $scope.save = function() {
+        var priceChartingGMLoan1 = 0.0;
+        if($rootScope.settings['STPCHG'].type == "percentage" && $scope.myGame.game.uploadPayment != null){
+            priceChartingGMLoan1 = ((($scope.myGame.game.uploadPayment*$scope.priceChartingGM)/100)+$scope.myGame.game.uploadPayment)/$scope.gameLoanPCH;
+        } else if($rootScope.settings['STPCHG'].type == "number" && $scope.myGame.game.uploadPayment != null){
+            priceChartingGMLoan1 = ($scope.myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH;
+        }
 
         let isValid = true;
         let minPrice = 0.0;
         let maxPrice = 0.0;
-        if($rootScope.settings['STPCHGMIN'].type == 'TOSPRC' && $rootScope.settings['STPCHGMAX'].type == 'TOSPRC'){
-           minPrice = priceChartingGMLoan-((priceChartingGMLoan*parseFloat($rootScope.settings['STPCHGMIN'].value))/100);
-           maxPrice = priceChartingGMLoan+((priceChartingGMLoan*parseFloat($rootScope.settings['STPCHGMAX'].value))/100);
-        } else if($rootScope.settings['STPCHGMIN'].type == 'TOSNBR' && $rootScope.settings['STPCHGMAX'].type == 'TOSNBR'){
-           minPrice = priceChartingGMLoan-parseFloat($rootScope.settings['STPCHGMIN'].value);
-           maxPrice = priceChartingGMLoan+parseFloat($rootScope.settings['STPCHGMAX'].value);
+        if($rootScope.settings['STPCHGMIN'].type == 'percentage' && $rootScope.settings['STPCHGMAX'].type == 'percentage'){
+           minPrice = priceChartingGMLoan1-((priceChartingGMLoan1*parseFloat($rootScope.settings['STPCHGMIN'].value))/100);
+           maxPrice = priceChartingGMLoan1+((priceChartingGMLoan1*parseFloat($rootScope.settings['STPCHGMAX'].value))/100);
+        } else if($rootScope.settings['STPCHGMIN'].type == 'number' && $rootScope.settings['STPCHGMAX'].type == 'number'){
+           minPrice = priceChartingGMLoan1-parseFloat($rootScope.settings['STPCHGMIN'].value);
+           maxPrice = priceChartingGMLoan1+parseFloat($rootScope.settings['STPCHGMAX'].value);
         }
         if($scope.myGame.status == null) {
             isValid = false;

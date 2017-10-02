@@ -238,27 +238,30 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Transactional
 	@SuppressWarnings("unchecked")
-	public PublicUser removeKushkiSubscription(Long subscriptionId) throws ServletException {
-		PublicUser publicUser = getCurrentUser();
-		
-		for (KushkiSubscription method : publicUser.getPaymentMethods()) {
-			try {
+	public PublicUser removeKushkiSubscription(Long subscriptionId)  {
+		PublicUser publicUser1 = null;
+		KushkiSubscription method1 = null;
+		try {
+			PublicUser publicUser = getCurrentUser();
+			publicUser1 = publicUser;
+			for (KushkiSubscription method : publicUser1.getPaymentMethods()) {
+				method1 = method;
 				if (method.getId().longValue() == subscriptionId.longValue()) {
 					kushkiService.subscriptionCancel(method.getSubscriptionId());
 					publicUser.getPaymentMethods().remove(method);
 					break;
 				}
-			} catch (ServletException e) {
-				System.out.println(e.getMessage() + " " + method.getId().toString() + " "+ method.getStatus().toString());
-			} catch (KushkiException ke) {
-				method.setStatus(false);
-				System.out.println(ke.getMessage() + " " + method.getId().toString() + " "+ method.getStatus().toString());
-			} finally {
-				publicUserRepo.save(publicUser);
 			}
+		} catch (ServletException e) {
+			method1.setStatus(false);
+			System.out.println(e.getMessage() + " " + method1.getId().toString() + "1 "+ method1.getStatus().toString());
+		} catch (KushkiException ke) {
+			method1.setStatus(false);
+			System.out.println(ke.getMessage() + " " + method1.getId().toString() + " "+ method1.getStatus().toString());
+		} finally {
+			publicUserRepo.save(publicUser1);
+			return publicUser1;
 		}
-		
-		return publicUser;
 	}
 	
 	@Transactional

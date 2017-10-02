@@ -27,6 +27,10 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 						}, function(error) {
 							return error;
 						});
+					},
+
+					gamesSummary: function(rest) {
+						return rest("publicUser/getGamesSummary").get();
 					}
 				}
 			})

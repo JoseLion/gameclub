@@ -105,26 +105,23 @@
 								<div class="col-md-3">
 									<div class="input-group">
 										<input validation type="number" class="form-control" ng-model="game.priceChartingId" required min="0">
-									</div>
-								</div>
-								<div class="col-md-1">
-									<div class="input-group">
-									<button type="button" class="btn btn-xs btn-warning" ng-click="getPriceCharting()" style="margin-top:5px; margin-left:-50px" ng-disabled="game.priceChartingId == ''">
-										<i class="fa fa-plug"></i>
-									</button>
+										<span class="input-group-addon">
+											<button type="button" class="btn btn-xs btn-warning" ng-click="getPriceCharting()" style="font-size: 11px;" ng-disabled="game.priceChartingId == null || game.priceChartingId == ''">
+												<i class="fa fa-plug"></i>
+											</button>
+										</span>
 									</div>
 								</div>
 							</div>
 
 							<div class="form-group to-validate">
-								<label class="col-md-3 control-label">Coins por Cargar Juego</label>
+								<label class="col-md-3 control-label">Precio Price Charting</label>
 								<div class="col-md-3">
 									<div class="input-group">
-										<input validation type="number" class="form-control" ng-model="game.uploadPayment" required min="0">
+										<input type="number" class="form-control" ng-model="game.uploadPayment" disabled>
 										<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
 									</div>
 								</div>
-								
 							</div>
 						</div>
 					</div>

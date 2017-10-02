@@ -43,12 +43,12 @@
                         <div class="col-md-4">
                             <input value="xxxx xxxx xxxx {{method.cardFinale}}" readonly />
                         </div>
-                        <div class="col-md-3" ng-if="numberCards">
-                            <button class="btn btn-secundary full small" ng-click="removeMethod(method)" >Borrar tarjeta</button>
+                        <div class="col-md-3" >
+                            <button class="btn btn-secundary full small" ng-click="removeMethod(method)" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button>
                         </div>
                     </div>
                 </div>
-                <div ng-if="cards">
+                <div ng-if="currentUser.paymentMethods.length < 2">
                     <span class="col-md-12 paymen-help">Ingresar forma de pago</span>
                     <kushki class="col-md-7 new-payment" />
                 </div>

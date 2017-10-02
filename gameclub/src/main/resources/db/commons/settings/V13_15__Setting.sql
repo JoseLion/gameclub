@@ -5,6 +5,7 @@ INSERT INTO commons.settings(code, category, name, value, type, is_editable) VAL
 ('STGPGMNGVGM', 'Multas', 'Jugador no entrega el juego al courier al finalizar el préstamo ($)', '5', 'number', true),
 ('STGPGM2TMNGV', 'Multas', 'Jugador no entrega el juego al courier por segunda vez al finalizar el préstamo ($)', '5', 'number', true),
 ('STGPOWNRCGM', 'Multas', 'Dueño no recibe el juego a la entrega del courier ($)', '5', 'number', true),
+('STGMLTVEM', 'Multas', 'Valor entregado al prestador cuando el jugador no recibibe el juego ($)', '5', 'number', true),
 
 ('STPCHGMAX', 'Price Charting', 'Máxima diferencia de precio (%)', '10', 'percentage', false),
 ('STPCHGMIN', 'Price Charting', 'Mínima diferencia de precio (%)', '10', 'percentage', false),

@@ -35,10 +35,6 @@ angular.module('MyGames').config(function($stateProvider) {
 				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.integrity});
 			},
 
-			gamesSummary: function(rest) {
-				return rest("publicUser/getGamesSummary").get();
-			},
-
 			mostPlayed: function(openRest) {
 				return openRest("game/findMostPlayed", true).post();
 			}

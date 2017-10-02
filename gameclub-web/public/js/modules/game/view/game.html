@@ -121,7 +121,7 @@
                                         <td>{{cross.publicUser.location.name}}</td>
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 0}}</td>
                                         <td>
-                                            <stars ng-model="cross.publicUser.rating" ng-if="cross.publicUser.rating > 0"></stars>
+                                            <stars class="cursor-pointer" ng-model="cross.publicUser.rating" ng-click="viewOwnerRating(cross.publicUser)" ng-if="cross.publicUser.rating > 0"></stars>
                                             <span ng-if="cross.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>
                                         </td>
                                         <td class="game-status">{{cross.integrity.name}}</td>
@@ -147,10 +147,8 @@
                 </div>
 
                 <div class="loan-view" ng-if="loanViewOpen">
-                    <div class="subtitle">
-                        Ficha del juego disponible
-                        <button type="button" class="btn btn-tertiary small dark" ng-click="closeLoanView()">Volver a propuestas</button>
-                    </div>
+                    <div class="subtitle">Ficha del juego disponible</div>
+                    <button type="button" class="btn btn-tertiary small dark" ng-click="closeLoanView()">Volver a propuestas</button>
 
                     <div class="col-md-9">
                         <label>Estatus</label>

@@ -713,25 +713,31 @@ public class GameService extends BaseService<Game> {
 	}
 	
 	public Double getAvailablePrice(HashMap<String, String> priceChart) {
+		Double price = null;
+		
 		if (priceChart != null) {
 			if (priceChart.get("gamestop-price") != null) {
-				return Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
+				price = Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
 			}
 			
 			if (priceChart.get("retail-new-sell") != null) {
-				return Double.parseDouble(priceChart.get("retail-new-sell")) / 100.0;
+				price = Double.parseDouble(priceChart.get("retail-new-sell")) / 100.0;
 			}
 			
 			if (priceChart.get("retail-cib-sell") != null) {
-				return Double.parseDouble(priceChart.get("retail-cib-sell")) / 100.0;
+				price = Double.parseDouble(priceChart.get("retail-cib-sell")) / 100.0;
 			}
 			
 			if (priceChart.get("retail-loose-sell") != null) {
-				return Double.parseDouble(priceChart.get("retail-loose-sell")) / 100.0;
+				price = Double.parseDouble(priceChart.get("retail-loose-sell")) / 100.0;
 			}
 		}
 		
-		return null;
+		if (price == 9.09) {
+			price = 9.99;
+		}
+		
+		return price;
 	}
 	
 	private void checkConfiguration() throws ServletException {

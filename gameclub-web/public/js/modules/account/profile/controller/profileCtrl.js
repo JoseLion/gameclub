@@ -33,19 +33,29 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
 
     $scope.save = function() {
         let isValid = true;
+        var younger1 = false;
         if($scope.currentUserTemp.document == null || $scope.currentUserTemp.document == '') {
             isValid = true;
-        } else if($scope.currentUserTemp.document != null && $scope.currentUserTemp.document.length != 10) {
+        } else if($scope.currentUserTemp.document != null && $scope.currentUserTemp.document.length != 10 ) {
             isValid = false;
             notif.danger('Tu número de cédula debe tener 10 dígitos');
         } else if(!ciValidation($scope.currentUserTemp.document)) {
             isValid = false;
             notif.danger('Ingresa un número de cédula válido');
-        }
-        if($scope.currentUserTemp.province != null && $scope.currentUserTemp.location == null) {
+        } if($scope.currentUserTemp.birthDate == null) {
+            isValid = false;
+            notif.danger('Ingresa fecha de nacimiento');
+        } if(younger($scope.currentUserTemp.birthDate)) {
+            $scope.currentUserTemp.hasRuc = true;            
+        } if($scope.currentUserTemp.hasRuc) {
+            if(dataRuc()){
+                isValid = false;
+                notif.danger('Debes ingresar datos para el RUC');
+            } 
+        } if($scope.currentUserTemp.province != null && $scope.currentUserTemp.location == null) {
             isValid = false;
             notif.danger('Completa tu ciudad');
-        }
+        } 
         if(isValid) {
             sweet.save(function() {
                 rest('publicUser/save').post($scope.currentUserTemp, function(data) {
@@ -64,7 +74,42 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             });
         }
     };
+
+    /********* Funcion para validad edad Gamer ***************/
+    function younger(birthDay){
+        var date = new Date();
+        var dateB = new Date(birthDay);
+        var age = date.getFullYear() - dateB.getFullYear();
+        var month = date.getMonth() - dateB.getMonth();
+        if (month < 0 || (month === 0 && date.getDate() < dateB.getDate())) {age--;} 
+        if (age<18){return true;}else{return false;}
+    }
+
+    function dataRuc () {
+        if(($scope.currentUserTemp.documentRuc == null || 
+                $scope.currentUserTemp.documentRuc.length != 13) ||
+            $scope.currentUserTemp.nameRuc == null ||
+            $scope.currentUserTemp.addressRuc == null ||
+            $scope.currentUserTemp.phoneRuc == null 
+            ){
+            return true;
+        } else if(!ciValidation($scope.currentUserTemp.documentRuc)){
+            return true;
+        } else{
+            return false;
+        }
+    }
     
+    $scope.saveRuc = function() {
+        let isValid = true;
+        if(dataRuc()) {
+            isValid = false;
+            notif.danger('Datos para el RUC incorrectos');
+        } 
+        if(isValid) {
+             $scope.save();
+        }
+    };
     $scope.changeMail = function() {
         let isValid = true;
         let emailValidation = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

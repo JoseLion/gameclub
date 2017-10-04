@@ -140,6 +140,21 @@ public class PublicUser extends BaseEntity {
 	
 	@Transient
 	private Double shownBalance;
+	
+	@Column(name="document_ruc", columnDefinition = "VARCHAR")
+	private String documentRuc;
+	
+	@Column(name="name_ruc", columnDefinition = "VARCHAR")
+	private String nameRuc;
+	
+	@Column(name="address_ruc", columnDefinition = "VARCHAR")
+	private String addressRuc;
+	
+	@Column(name="phone_ruc", columnDefinition = "VARCHAR")
+	private String phoneRuc;
+	
+	@Column(name="has_ruc", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean hasRuc = false;
 
 	public String getUsername() {
 		return username;
@@ -408,4 +423,46 @@ public class PublicUser extends BaseEntity {
 	public void setShownBalance(Double shownBalance) {
 		this.shownBalance = shownBalance;
 	}
+
+	public String getDocumentRuc() {
+		return documentRuc;
+	}
+
+	public void setDocumentRuc(String documentRuc) {
+		this.documentRuc = documentRuc;
+	}
+
+	public String getNameRuc() {
+		return nameRuc;
+	}
+
+	public void setNameRuc(String nameRuc) {
+		this.nameRuc = nameRuc;
+	}
+
+	public String getAddressRuc() {
+		return addressRuc;
+	}
+
+	public void setAddressRuc(String addressRuc) {
+		this.addressRuc = addressRuc;
+	}
+
+	public String getPhoneRuc() {
+		return phoneRuc;
+	}
+
+	public void setPhoneRuc(String phoneRuc) {
+		this.phoneRuc = phoneRuc;
+	}
+
+	public Boolean getHasRuc() {
+		return hasRuc;
+	}
+
+	public void setHasRuc(Boolean hasRuc) {
+		this.hasRuc = hasRuc;
+	}
+	
+	
 }

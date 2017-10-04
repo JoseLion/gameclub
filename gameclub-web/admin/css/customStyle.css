@@ -58,3 +58,7 @@ table tbody tr td {
 .irs-slider {
 	cursor: pointer !important;
 }
+
+.center {
+	text-align: center;
+}

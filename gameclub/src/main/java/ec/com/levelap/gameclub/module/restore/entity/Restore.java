@@ -32,7 +32,7 @@ import ec.com.levelap.gameclub.utils.Const;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Restore extends BaseEntity {
 	@JsonBackReference("LoanRestore")
-	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH, optional=false)
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH, optional=false)
 	@JoinColumn(name="loan", foreignKey=@ForeignKey(name="loan_fk"))
 	private Loan loan;
 	
@@ -44,11 +44,11 @@ public class Restore extends BaseEntity {
 	@JoinColumn(name="gamer_message", foreignKey=@ForeignKey(name="gamer_message_fk"))
 	private Message gamerMessage;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="public_user_game", foreignKey=@ForeignKey(name="public_user_game_fk"))
 	private PublicUserGame publicUserGame;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="gamer", foreignKey=@ForeignKey(name="gamer_public_user_fk"))
 	private PublicUser gamer;
 	

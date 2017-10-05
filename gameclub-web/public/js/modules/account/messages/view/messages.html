@@ -90,7 +90,7 @@
 
 								<div class="form-row col-md-12">
 									<label class="col-md-3 control-label">Ciudad</label>
-									<div class="col-md-9">
+									<div class="col-md-9 city">
 										<span>{{currentUser.location.name}}</span>
 									</div>
 								</div>
@@ -117,8 +117,10 @@
 								</div>
 
 								<div class="form-row col-md-12">
-									<label class="col-md-3 control-label">Geolocalizaci&oacute;n</label><i class="gc gc-address" ng-click="openMap(kit)"></i>
-										<img class="geo-check" src="/img/check.svg" ng-if="kit.geolocation != null">				
+									<label class="col-md-3 control-label">Geolocalizaci&oacute;n</label>
+									<i class="gc gc-address cursor-pointer" ng-click="openMap(kit)" ng-if="!kit.wasConfirmed"></i>
+									<i class="gc gc-address cursor-no-drop" ng-if="kit.wasConfirmed"></i>
+									<img class="geo-check" src="/img/check.svg" ng-if="kit.geolocation != null">				
 								</div>
 
 								<div class="form-row col-md-12">

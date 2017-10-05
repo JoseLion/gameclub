@@ -123,6 +123,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
         if(isValid == true){
             sweet.save(function() {
                 $scope.myGame.console = $scope.search.console.console;
+                
                 rest("publicUser/saveGame").post($scope.myGame, function(data) {
                     sweet.success();
                     setPagedData(data);

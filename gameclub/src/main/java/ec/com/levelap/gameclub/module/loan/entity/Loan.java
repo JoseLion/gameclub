@@ -39,11 +39,11 @@ import ec.com.levelap.gameclub.utils.Const;
 @Table(schema=Const.SCHEMA, name="loan")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Loan extends BaseEntity {
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="gamer_message", foreignKey=@ForeignKey(name="gamer_message_fk"))
 	private Message gamerMessage;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="lender_message", foreignKey=@ForeignKey(name="lender_message_fk"))
 	private Message lenderMessage;
 	

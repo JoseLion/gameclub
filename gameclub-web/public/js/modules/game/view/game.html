@@ -81,11 +81,10 @@
         <form role="form" on-submit="requestLoan()" novalidate>
             <div class="row">
                 <div ng-if="!loanViewOpen">
-                    <div class="subtitle">
-                        Juegos disponibles
-                        <button type="button" class="btn btn-tertiary small dark" ng-click="addToLibrary()" ng-if="currentUser">Sube tu juego</button>
-                        <button type="button" class="btn btn-tertiary small dark" ng-click="login()" ng-if="!currentUser">Inicia Sesión</button>
-                    </div>
+                    <div class="subtitle">Juegos disponibles</div>
+                    <button type="button" class="btn btn-tertiary small dark" ng-click="addToLibrary()" ng-if="currentUser">Sube tu juego</button>
+                    <button type="button" class="btn btn-tertiary small dark" ng-click="login()" ng-if="!currentUser">Inicia Sesión</button>
+
                     <div class="filters">
                         <li ng-repeat="filter in filters">
                             <a href ng-class="{'active': filter.active}" ng-click="doFilter(filter)"><i class="gc" ng-class="filter.icon"></i></a>

@@ -22,15 +22,15 @@ import ec.com.levelap.gameclub.utils.Const;
 @Table(schema=Const.SCHEMA, name="public_user_game")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PublicUserGame extends BaseEntity {
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="public_user", foreignKey=@ForeignKey(name="public_user_fk"))
 	private PublicUser publicUser;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="game", foreignKey=@ForeignKey(name="game_fk"))
 	private Game game;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="console", foreignKey=@ForeignKey(name="console_fk"))
 	private Console console;
 	

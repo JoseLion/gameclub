@@ -32,14 +32,16 @@ public class ReviewController {
 	@RequestMapping(value="sendReview", method=RequestMethod.POST)
 	public ResponseEntity<Loan> sendReview(@RequestBody Review review) throws ServletException {
 		Loan loan = reviewService.sendReview(review);
+		loan = reviewService.acceptReview(loan.getReview().getId());
+		
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="acceptReview/{id}", method=RequestMethod.GET)
+	/*@RequestMapping(value="acceptReview/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Loan> acceptReview(@PathVariable Long id) throws ServletException {
 		Loan loan = reviewService.acceptReview(id);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
-	}
+	}*/
 	
 	@RequestMapping(value="getReviewsOfCurrentUser/{page}", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getReviewsOfCurrentUser(@PathVariable Integer page) throws ServletException {

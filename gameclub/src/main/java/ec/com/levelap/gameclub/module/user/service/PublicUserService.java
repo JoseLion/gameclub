@@ -167,12 +167,13 @@ public class PublicUserService extends BaseService<PublicUser> {
 	@Transactional
 	public Page<PublicUserGame> saveGame(PublicUserGame myGame) throws ServletException {
 		PublicUser user = this.getCurrentUser();
-		myGame.setPublicUser(user);
-		publicUserGameRepo.saveAndFlush(myGame);
 		
-		if (user.getGames().size() == 1) {
+		if (myGame.getId() == null && user.getGames().size() == 0) {
 			messageService.requestWelcomeKit(user, null);
 		}
+		
+		myGame.setPublicUser(user);
+		publicUserGameRepo.saveAndFlush(myGame);
 
 		Page<PublicUserGame> gameList = publicUserGameRepo.findMyGames(user, null, new PageRequest(0, Const.TABLE_SIZE, new Sort("game.name")));
 		return gameList;

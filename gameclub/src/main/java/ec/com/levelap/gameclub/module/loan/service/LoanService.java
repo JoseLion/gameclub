@@ -285,20 +285,20 @@ public class LoanService extends BaseService<Loan> {
 		params.put("game", restore.getPublicUserGame().getGame().getName());
 		params.put("console", restore.getPublicUserGame().getConsole().getName());
 		params.put("returnDate", df.format(new Date()));
-		params.put("lenderConfirmationDate", restore.getLenderConfirmed() != null ? df.format(restore.getLenderStatusDate()) : "SIN CONFIRMAR");
-		params.put("gamerConfirmationDate", restore.getGamerConfirmed() != null ? df.format(restore.getGamerStatusDate()) : "SIN CONFIRMAR");
+		params.put("lenderConfirmationDate", restore.getLenderStatusDate() != null ? df.format(restore.getLenderStatusDate()) : "SIN CONFIRMAR");
+		params.put("gamerConfirmationDate", restore.getGamerStatusDate() != null ? df.format(restore.getGamerStatusDate()) : "SIN CONFIRMAR");
 		
-		if (!restore.getLenderConfirmed() || !restore.getGamerConfirmed()) {
+		if (restore.getLenderStatusDate() == null || restore.getGamerStatusDate() == null) {
 			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
 			mailService.sendMailWihTemplate(mailParameters, "MSGAUR", params);
 		}
 		
-		if (!restore.getLenderConfirmed()) {
+		if (restore.getLenderStatusDate() == null) {
 			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
 			mailService.sendMailWihTemplate(mailParameters, "MSGLUR", params);
 		}
 		
-		if (!restore.getGamerConfirmed()) {
+		if (restore.getGamerStatusDate() == null) {
 			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
 			mailService.sendMailWihTemplate(mailParameters, "MSGGUR", params);
 		}

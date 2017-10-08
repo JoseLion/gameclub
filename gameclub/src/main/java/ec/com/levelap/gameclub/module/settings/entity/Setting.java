@@ -11,9 +11,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ec.com.levelap.base.entity.BaseEntity;
 
 @Entity
-@Table(schema="commons", name="settings", uniqueConstraints={@UniqueConstraint(columnNames={"code"}, name="code_uk")})
+@Table(schema="commons", name="setting", uniqueConstraints={@UniqueConstraint(columnNames={"code"}, name="code_uk")})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Settings extends BaseEntity {
+public class Setting extends BaseEntity {
 	@Column(nullable=false, columnDefinition="VARCHAR")
 	private String code;
 	

@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -239,30 +240,27 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Transactional
 	@SuppressWarnings("unchecked")
-	public PublicUser removeKushkiSubscription(Long subscriptionId)  {
-		PublicUser publicUser1 = null;
-		KushkiSubscription method1 = null;
-		try {
-			PublicUser publicUser = getCurrentUser();
-			publicUser1 = publicUser;
-			for (KushkiSubscription method : publicUser1.getPaymentMethods()) {
-				method1 = method;
-				if (method.getId().longValue() == subscriptionId.longValue()) {
-					kushkiService.subscriptionCancel(method.getSubscriptionId());
-					publicUser.getPaymentMethods().remove(method);
-					break;
-				}
+	public PublicUser removeKushkiSubscription(Long subscriptionId) throws ServletException, KushkiException  {
+		PublicUser publicUser = getCurrentUser();
+		
+		for (KushkiSubscription method : publicUser.getPaymentMethods()) {
+			if (method.getId().longValue() == subscriptionId.longValue()) {
+				kushkiService.subscriptionCancel(method.getSubscriptionId());
+				publicUser.getPaymentMethods().remove(method);
+				break;
 			}
-		} catch (ServletException e) {
-			method1.setStatus(false);
-			System.out.println(e.getMessage() + " " + method1.getId().toString() + "1 "+ method1.getStatus().toString());
-		} catch (KushkiException ke) {
-			method1.setStatus(false);
-			System.out.println(ke.getMessage() + " " + method1.getId().toString() + " "+ method1.getStatus().toString());
-		} finally {
-			publicUserRepo.save(publicUser1);
-			return publicUser1;
 		}
+		
+		try {
+			publicUserRepo.save(publicUser);
+		} catch (ConstraintViolationException e) {
+			KushkiSubscription method = kushkiSubscriptionRepo.findOne(subscriptionId);
+			method.setStatus(false);
+			kushkiSubscriptionRepo.save(method);
+			publicUser = getCurrentUser();
+		}
+		
+		return publicUser;
 	}
 	
 	@Transactional
@@ -310,6 +308,34 @@ public class PublicUserService extends BaseService<PublicUser> {
 		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
 		
 		byte[] encrypted = cryptoService.encrypt(Double.toString(balance), key);
+		user.setBalance(encrypted);
+		
+		user = publicUserRepo.save(user);
+		return user;
+	}
+	
+	@Transactional
+	public PublicUser addToUserBalance(Long id, Double ammount) throws ServletException, GeneralSecurityException, IOException {
+		PublicUser user = publicUserRepo.findOne(id);
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		
+		Double balance = Double.parseDouble(cryptoService.decrypt(user.getBalance(), key));
+		byte[] encrypted = cryptoService.encrypt(Double.toString(balance + ammount), key);
+		user.setBalance(encrypted);
+		
+		user = publicUserRepo.save(user);
+		return user;
+	}
+	
+	@Transactional
+	public PublicUser substractFromUserBalance(Long id, Double ammount) throws ServletException, GeneralSecurityException, IOException {
+		PublicUser user = publicUserRepo.findOne(id);
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		
+		Double balance = Double.parseDouble(cryptoService.decrypt(user.getBalance(), key));
+		byte[] encrypted = cryptoService.encrypt(Double.toString(balance - ammount), key);
 		user.setBalance(encrypted);
 		
 		user = publicUserRepo.save(user);

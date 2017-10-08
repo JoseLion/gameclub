@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import ec.com.levelap.commons.location.Location;
 import ec.com.levelap.gameclub.module.shippingPrice.entity.ShippingPrice;
 
 @Repository
@@ -21,4 +22,6 @@ public interface ShippingPriceRepo extends JpaRepository<ShippingPrice, Long> {
 				"(:cost IS NULL OR sp.cost=:cost) " +
 			"ORDER BY sp.origin.name, sp.destination.name, sp.cost DESC")
 	public Page<ShippingPrice> findShippingPrices(@Param("origin") String origin, @Param("destination") String destination, @Param("cost") Double cost, Pageable page);
+	
+	public ShippingPrice findByOriginAndDestination(Location origin, Location destination);
 }

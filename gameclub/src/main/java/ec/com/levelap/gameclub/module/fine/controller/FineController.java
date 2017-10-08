@@ -22,42 +22,26 @@ import ec.com.levelap.gameclub.module.fine.service.FineService;
 
 @RestController
 @RequestMapping(value="api/fine", produces=MediaType.APPLICATION_JSON_VALUE)
-public class FineCtrl {
+public class FineController {
 	@Autowired
 	private FineService fineService;
 
 	@RequestMapping(value="findFines", method=RequestMethod.GET)
-	public ResponseEntity<List<Fine>> findFines() throws ServletException{
-		List<Fine> fines = fineService.getFineRepo().findFines();
-		return new ResponseEntity<List<Fine>>(fines, HttpStatus.OK);
-	}
-
-	@RequestMapping(value="findFinesFilter", method=RequestMethod.GET)
 	public ResponseEntity<List<Fine>> findFinesFilter(@RequestBody(required=false) Search search) throws ServletException{
-		Boolean apply = null , wasPayed = false;
-		switch (search.selection) {
-			case "PENDIENTE":
-				apply = null; wasPayed = false; break;
-			case "APLICA":
-				apply = true; wasPayed = false; break;
-			case "CANCELADO":
-				apply = false; wasPayed = false; break;
-			case "PAGADO":
-				apply = true; wasPayed = true; break;
-			default:
-				apply = false; wasPayed = false; break;
+		if (search == null) {
+			search = new Search();
 		}
 		
-		List<Fine> fines = fineService.getFineRepo().findFinesFilter(search.name, search.lastName, apply, wasPayed, search.startDate, search.endDate);
+		List<Fine> fines = fineService.getFineRepo().findFines(search.name, search.apply, search.wasPayed, search.startDate, search.endDate);
 		return new ResponseEntity<List<Fine>>(fines, HttpStatus.OK);
 	}
 	
 	private static class Search {
 		public String name = "";
 		
-		public String lastName = "";
+		public Boolean apply;
 		
-		public String selection = "";
+		public Boolean wasPayed;
 		
 		public Date startDate = new Date(0);
 		

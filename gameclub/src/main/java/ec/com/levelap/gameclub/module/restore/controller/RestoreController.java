@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.restore.controller;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -22,6 +24,7 @@ import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.entity.RestoreLite;
 import ec.com.levelap.gameclub.module.restore.service.RestoreService;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.kushki.KushkiException;
 
 @RestController
 @RequestMapping(value="api/restore", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -46,7 +49,7 @@ public class RestoreController {
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<RestoreLite> save(@RequestBody Restore restore) throws ServletException {
+	public ResponseEntity<RestoreLite> save(@RequestBody Restore restore) throws ServletException, GeneralSecurityException, IOException, KushkiException {
 		RestoreLite restoreLite = restoreService.save(restore);
 		return new ResponseEntity<RestoreLite>(restoreLite, HttpStatus.OK);
 	}

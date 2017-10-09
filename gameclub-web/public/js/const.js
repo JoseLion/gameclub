@@ -64,7 +64,9 @@ angular.module('GameClub').constant('Const', {
 
 	settings: {
 		priceChartingGames: 'STGPCHNAP',
-		weekShippingCost: 'STGRETWEK'
+		priceChartingMax: 'STGPCHMAX',
+		priceChartingMin: 'STGPCHMIN',
+		weekShippingCost: 'STGRETWEK',
 	},
 
 	tooltips: {

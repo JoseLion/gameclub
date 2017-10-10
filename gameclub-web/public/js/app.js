@@ -23,6 +23,7 @@ angular.module('GameClub', [
 	'PublicProfile',
 	'Messages',
 	'Faq',
+	'Balance',
 	'ContactUs'
 ])
 .config(['$locationProvider' ,'$httpProvider', function($locationProvider, $httpProvider, $http) {

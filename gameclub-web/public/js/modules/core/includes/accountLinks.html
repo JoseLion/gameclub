@@ -7,6 +7,7 @@
         	<span class="label label-default notification" ng-if="currentUser.unreadMessages > 0">{{currentUser.unreadMessages}}</span>
         	<button class="btn btn-account-links" ui-sref="gameclub.account.messages" ui-sref-active="active">Mensajes</button>
         </li>
+        <li><button class="btn btn-account-links" ui-sref="gameclub.account.balance" ui-sref-active="active">Tu balance</button></li>
         <li><button class="btn btn-account-links">Obt&eacute;n coins</button></li>
         <li><button class="btn btn-account-links" ng-click="logout()">Cerrar sesi&oacute;n</button></li>
     </nav>

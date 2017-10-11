@@ -26,8 +26,8 @@ public class Fine extends BaseEntity {
 	@Column(nullable=false, columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
 	private Double amount = 0.0;
 	
-	@Column(nullable=false, columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean wasPayed;
+	@Column(name="was_payed", nullable=false, columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean wasPayed = false;
 	
 	@Column
 	private Boolean apply;

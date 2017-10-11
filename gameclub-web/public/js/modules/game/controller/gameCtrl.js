@@ -106,7 +106,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         if ($rootScope.currentUser == null) {
             $state.go("^.login", {redirect: $location.$$absUrl});
         } else {
-            if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100 && $rootScope.currentUser.isReady) {
+            if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100/* && $rootScope.currentUser.isReady*/) {
                 $scope.loanGame = cross;
                 $scope.loanViewOpen = true;
 
@@ -129,9 +129,9 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                     }
                 }
 
-                if (!$rootScope.currentUser.isReady) {
+                /*if (!$rootScope.currentUser.isReady) {
                     notif.danger("Para poder solicitar un juego primero debes haber recibido tu Welcome Kit. Sube tu primer juego y te enviaremos uno gratis");
-                }
+                }*/
             }
         }
     }

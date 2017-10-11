@@ -499,11 +499,10 @@ public class LoanService extends BaseService<Loan> {
 	
 	@Transactional
 	private void createFines(Loan loan) throws ServletException, GeneralSecurityException, IOException {
-		Double loanCost = loan.getPublicUserGame().getCost() * loan.getWeeks().doubleValue();
 		Double shippingCost = shippingPriceService.getPrice(loan.getPublicUserGame().getPublicUser().getLocation(), loan.getGamer().getLocation());
 		
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
-			loan.setGamer(publicUserService.addToUserBalance(loan.getGamer().getId(), loanCost));
+			loan.setGamer(publicUserService.addToUserBalance(loan.getGamer().getId(), loan.getCost()));
 			
 			Fine fine = new Fine();
 			fine.setOwner(loan.getPublicUserGame().getPublicUser());
@@ -518,7 +517,7 @@ public class LoanService extends BaseService<Loan> {
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)) {
 			Double penalty = Double.parseDouble(settingsService.getSettingValue(Code.SETTING_GAMER_DIDNT_RECEIVE));
 			Double reward = Double.parseDouble(settingsService.getSettingValue(Code.SETTING_NO_LOAN_REWARD));
-			loan.setGamer(publicUserService.addToUserBalance(loan.getGamer().getId(), loanCost - penalty));
+			loan.setGamer(publicUserService.addToUserBalance(loan.getGamer().getId(), loan.getCost() - penalty));
 			loan.getPublicUserGame().setPublicUser(publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), reward));
 			
 			loan.getPublicUserGame().setIsBorrowed(false);

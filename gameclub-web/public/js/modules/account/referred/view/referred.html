@@ -1,7 +1,7 @@
 <div id="referred">
 	<section class="row header">
 		<div class="col-md-4"></div>
-        <div class="col-md-8 no-padding-left no-padding-right">
+        <div class="col-md-8 no-padding-left no-padding-right container">
         	<div class="col-md-10 name">
                 <div class="col-md-3 no-padding-left no-padding-right">
                     <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
@@ -20,21 +20,79 @@
                     <span class="subtitle">Tu saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span><!--<hr class="light">-->
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9 ">
                 <B>
 	                <p class="light1">COMPARTE</p>
 	                <p class="light2">ESTA EXPERIENCIA</p>
 	                <p class="light3">GAMER</p>
 	                <p class="light4">CON TUS AMIGOS</p>
 	                <hr class="light">
-	            </B>	
+	            </B>
+	            <p class="visual"></p>
             </div>
             <div class="clearfix"></div>
         </div>
 	</section>
-	<section class="row foother">
-        <div class="center">
-            <button class="btn btn-tertiary">ALQUILA TUS JUEGOS Y GANA DINERO</button>
-        </div>
+	<section class="row gamers">
+		<form id="frmLink">
+			<div class="col-md-12 center">
+	            <div class="col-md-4">
+	            	<img id="joystick" archive="joystick" placeholder="img/joystick1.svg" >
+	            </div>
+	            <div class="col-md-8">
+	            	<h1 ><B>todos los gamers ganan</B></h1>
+	            </div>
+	        </div>
+	        <div class="clearfix"></div>
+	        <div class="col-md-12 center">
+	        	<B>
+	        		<p class="red">Comparte tu link en las redes sociales para que tus amigo se registren.</p>
+		        	<p class="red">Se te acreditar&aacute;n 5$ en tu Cuenta por cada referido que ingrese un juego.</p>
+		        	<p class="red">Si alguno de tus referidos alquila un juego, tambi&eacute;n se le acreditar&aacute; 5$ a tu Cuenta.</p>
+		        </B>
+	        </div>
+	        <div class="col-md-12">
+	        	<B><p class="dark">Comparte tu link:</p></B>
+	        </div>
+	        <div class="col-md-12">
+	        	<button class="btn btn-primary link">GENERA TU LINK</button>
+	        	<input class="link" maxlength="100" size="20" placeholder="HTTPS://GOO.GL/CCTXTC">
+	        </div>
+	        <div class="col-md-12">
+	        	<button class="btn btn-primary copy-link">COPÍA TU LINK</button>
+	        	<button class="btn btn-primary facebook">COMPARTE EN FACEBOOK</button>
+	        </div>
+        </form>
+    </section>
+    <section class="row win-money">
+    	<div class="col-md-12 center">
+    		<h1 class="title">G&Aacute;NA DINERO F&Aacute;CIL</h1>
+    	</div><br><br><br>
+    	<div class="col-md-12 center">
+    		<div class="col-md-4 center">
+	    		<!-- <div class="col-md-6 center"> -->
+	    			<img id="mouse-money" archive="mouse-money" placeholder="img/mouse-money.svg" width="60" height="60">
+	    		<!-- </div>
+	    		<div class="col-md-6 center"> -->
+	    			<h1 class="subtitle">COMPARTE TU LINK A TUS AMIGOS</h1>
+	    		<!-- </div> -->
+	    	</div>
+	    	<div class="col-md-4 center">
+	    		<!-- <div class="col-md-6 center"> -->
+	    			<img id="compact-disc" archive="compact-disc" placeholder="img/compact-disc.svg" width="60" height="60">
+	    		<!-- </div>
+	    		<div class="col-md-6 center"> -->
+	    			<h1 class="subtitle">GANA POR CADA REFERIDO QUE INGRESE SU PRIMER JUEGO</h1>
+	    		<!-- </div> -->
+	    	</div>
+	    	<div class="col-md-4 center">
+	    		<!-- <div class="col-md-6 center"> -->
+	    			<img id="small-gamepad-black" archive="small-gamepad-black" placeholder="img/small-gamepad-black.svg" width="60" height="60">
+	    		<!-- </div>
+	    		<div class="col-md-6 center"> -->
+	    			<h1 class="subtitle">GANA DINERO POR CADA REFERIDO QUE ALQUILE SU PRIMER JUEGO</h1>
+	    		<!-- </div> -->
+	    	</div>
+    	</div>
     </section>
 </div>

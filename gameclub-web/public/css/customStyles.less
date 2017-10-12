@@ -810,21 +810,39 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 /***********************************/
 
 /**********************************************/
-/********** BALANCE-PAGE **********/
+/********** REFERRED-PAGE **********/
 #account #referred{padding-top:6em;}
+/*::before{content:"";background:url("../img/home/banner-bg.png") repeat-y center top;background-size:100%;position:absolute;top:-5%;right:0;bottom:0;left:0;z-index:-10;opacity:0.8;}*/
+#account #referred section.header{background:@color-primary;padding-top:1.5%;background:url("../img/dust-home.png") no-repeat;background-size: 100%; background-position-y: -20em;background-position-x: 0em;}
+#account #referred section.header .container::before{content:"";background:url("../img/visual-control.png") no-repeat left bottom;background-size:128%;position:absolute;width:157%;padding-top:30%;bottom:-18px;left:-37px;height: 150%;}
+/*#account #referred section.header .contend.name::before{content:"";background:url("../img/visual-control.png") no-repeat right bottom;background-size:100%;position:absolute;}*/
+#account #referred section.header .container .name img{width:100%;border:10px solid @color-tertiary;border-radius:50%;}
+#account #referred section.header p.light1{font-weight: bold;font-size: 35px;color: @color-tertiary;padding-left: -2em; margin-top: 30px;margin-left: -1em;}
+#account #referred section.header p.light2{font-weight: bold;font-size: 32px;color: @color-tertiary;padding-left: 1em; margin-top: -0.4em;margin-left: -1em;}
+#account #referred section.header p.light3{font-weight: bold;font-size: 35px;color: @color-tertiary;padding-left: 3.2em; margin-top: -0.4em;margin-left: -1em;}
+#account #referred section.header p.light4{font-weight: bold;font-size: 32px;color: @color-tertiary;padding-left: 2.1em; margin-top: -0.4em;margin-left: -1em;}
+#account #referred section.header hr.light{margin-top: -2.5%;margin-bottom: 10em; height: 5px;margin-left: 18%;margin-right: -15%;background-color: @color-secundary;border: 0px;margin-left: 3em;}
 
-#account #referred section.header{background:@color-primary;padding-top:1.5%;}
-#account #referred section.header .name img{width:100%;border:10px solid @color-tertiary;border-radius:50%;}
-#account #referred section.header p.light1{font-size: 35px;color: @color-tertiary;padding-left: 1em; margin-top: 30px;}
-#account #referred section.header p.light2{font-size: 32px;color: @color-tertiary;padding-left: 2em; margin-top: -0.4em;}
-#account #referred section.header p.light3{font-size: 35px;color: @color-tertiary;padding-left: 4.2em; margin-top: -0.4em;}
-#account #referred section.header p.light4{font-size: 32px;color: @color-tertiary;padding-left: 3.1em; margin-top: -0.4em;}
-#account #referred section.header hr.light{margin-top: -2.5%;margin-bottom: 10em; height: 5px;margin-left: 27%;margin-right: 0%;background-color: @color-secundary;border: 0px;}
-#account #referred section.foother{position:relative;padding-top: 2%;padding-bottom:2%;background:@color-tertiary-alt;}
-#account #referred section.foother .center{text-align: center;}
-#account #referred section.foother button{border:2px solid @color-tertiary;color: @color-primary;background:@color-secundary;}
-#account #referred section.foother hr.dark{height: 5px;margin-top: -2.50%;margin-left: -100%;margin-right: 80%;background-color: @color-primary;border: 0px;}
+#account #referred section.gamers{position:relative;padding-top: 2%;padding-bottom:2%;background:@color-tertiary-alt;}
+#account #referred section.gamers .center{text-align: center;}
+#account #referred section.gamers img{margin-right: -10em;margin-top: 0em;width: 5.5em;height: 5.5em;}
+#account #referred section.gamers h1{font-weight: bold;margin-top: 1em;margin-left: -8em;text-transform:uppercase;font-size:1.6em;font-family:@font-family-josefinsans;color:@color-secundary;}
+#account #referred section.gamers p.red{font-weight: bold;font-size:1.2em;font-family:@font-family-josefinsans;color:@color-secundary;margin-bottom: -0.2em;}
+#account #referred section.gamers p.dark{font-weight: bold; margin-left: 12em;margin-top: 1em;font-size:1.2em;font-family:@font-family-josefinsans;color:@color-primary;margin-bottom: -0.2em;}
+#account #referred section.gamers button.link{margin-top: 0.5em;margin-left: 13.5em;padding-left: 1em;padding-right: 1em;border:2px solid @color-secundary;color: @color-primary;background: none;border-radius: 10px;}
+#account #referred section.gamers button.copy-link{font-weight: bold;margin-top: 0.5em;margin-left: 13.5em;padding-left: 1.5em;padding-right: 1.5em;border:2px solid @color-tertiary;color: @color-tertiary;background: @color-secundary;border-radius: 10px;}
+#account #referred section.gamers button.facebook{background:url("../img/facebook-ico.svg") no-repeat;background-size: 0.8em;margin-top: 0.5em;margin-left: 2em;
+background-color: #314A7E;background-position-x: 0.85em;background-position-y: 0.25em; border-width: 0em;color:@color-tertiary; border-radius: 11px; }
+/*#account #referred section.gamers input{margin-top: 0.5em; padding: 1em; text-transform:uppercase;font-weight: bold;color: @color-primary-85;border-top-right-radius: 15px;
+										border-bottom-right-radius: 15px; border-top-color: #000000; border-color: #ffffff; border: #000000;}*/
+#account #referred section.gamers input.link{color: @color-primary-85; border: @color-secundary;}
+#account #referred section.gamers input.link::placeholder{color: @color-primary; font-weight: bold;}
+#account #referred section.gamers hr.dark{height: 5px;margin-top: -2.50%;margin-left: -100%;margin-right: 80%;background-color: @color-primary;border: 0px;}
 
+#account #referred section.win-money{position:relative;padding-top: 2%;padding-bottom:2%;background:@color-primary-alt;}
+#account #referred section.win-money .center{text-align: center;}
+#account #referred section.win-money h1.title{font-weight: bold;margin-top: 0em;text-transform:uppercase;font-size:1.6em;font-family:@font-family-josefinsans;color:@color-tertiary;}
+#account #referred section.win-money h1.subtitle{font-weight: bold;margin-top: 1em;text-transform:uppercase;font-size:1em;font-family:@font-family-josefinsans;color:@color-tertiary;}
 /********** GAMES-PAGE **********/
 #account #games{padding-top:9em;}
 

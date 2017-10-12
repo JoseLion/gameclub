@@ -9,5 +9,5 @@ INSERT INTO commons.catalog(name, code, other, parent) VALUES
 	('En Reparto', 'SHPERT', '5', (SELECT id FROM commons.catalog WHERE code='SHP')),
 	('Entregada', 'SHPETG', '6', (SELECT id FROM commons.catalog WHERE code='SHP')),
 	('Anulada', 'SHPANL', '7', (SELECT id FROM commons.catalog WHERE code='SHP')),
-	('Con Novedad', 'SHPCNV', '7', (SELECT id FROM commons.catalog WHERE code='SHP')),
-	('Novedad Solucionada', 'SHPNSL', '7', (SELECT id FROM commons.catalog WHERE code='SHP'));
+	('Con Novedad', 'SHPCNV', '8', (SELECT id FROM commons.catalog WHERE code='SHP')),
+	('Novedad Solucionada', 'SHPNSL', '9', (SELECT id FROM commons.catalog WHERE code='SHP'));

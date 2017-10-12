@@ -1,9 +1,7 @@
 package ec.com.levelap.gameclub.module.loan.entity;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,21 +10,18 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.postgresql.geometric.PGpoint;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
-import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
@@ -130,10 +125,6 @@ public class Loan extends BaseEntity {
 	
 	@Transient
 	private Date returnDate;
-
-	@JsonIgnore
-	@OneToMany(mappedBy="loanFine", fetch=FetchType.LAZY)
-	private List<Fine> fineLoan = new ArrayList<>();
 
 	public Message getGamerMessage() {
 		return gamerMessage;

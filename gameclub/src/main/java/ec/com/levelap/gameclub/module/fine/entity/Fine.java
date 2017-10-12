@@ -1,7 +1,5 @@
 package ec.com.levelap.gameclub.module.fine.entity;
 
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +12,6 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
-import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -23,45 +20,27 @@ import ec.com.levelap.gameclub.utils.Const;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Fine extends BaseEntity {
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="public_user_fine", foreignKey=@ForeignKey(name="public_user_fine_fk"))
-	private PublicUser publicUserFine;
+	@JoinColumn(name="owner", foreignKey=@ForeignKey(name="public_user_owner_fk"))
+	private PublicUser owner;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="loan_fine", foreignKey=@ForeignKey(name="loan_fine_fk"))
-	private Loan loanFine;
-	
-	@Column(columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
+	@Column(nullable=false, columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
 	private Double amount = 0.0;
 	
-	@Column(name="date", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private Date date = new Date();
+	@Column(name="was_payed", nullable=false, columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean wasPayed = false;
 	
-	@Column(nullable=false, columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean wasPayed;
-	
-	@Column(nullable=true)
+	@Column
 	private Boolean apply;
 	
 	@Column(nullable=false, columnDefinition="VARCHAR")
 	private String description;
-	
-	@Column(columnDefinition="INTEGER DEFAULT 0")
-	private Integer notifications;
 
-	public PublicUser getPublicUserFine() {
-		return publicUserFine;
+	public PublicUser getOwner() {
+		return owner;
 	}
 
-	public void setPublicUserFine(PublicUser publicUserFine) {
-		this.publicUserFine = publicUserFine;
-	}
-
-	public Loan getLoanFine() {
-		return loanFine;
-	}
-
-	public void setLoanFine(Loan loanFine) {
-		this.loanFine = loanFine;
+	public void setOwner(PublicUser owner) {
+		this.owner = owner;
 	}
 
 	public Double getAmount() {
@@ -70,14 +49,6 @@ public class Fine extends BaseEntity {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public Boolean getWasPayed() {
@@ -102,13 +73,5 @@ public class Fine extends BaseEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Integer getNotifications() {
-		return notifications;
-	}
-
-	public void setNotifications(Integer notifications) {
-		this.notifications = notifications;
 	}
 }

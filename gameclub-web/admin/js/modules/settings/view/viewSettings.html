@@ -1,7 +1,8 @@
-<div class="col-md-12">
+<div class="col-md-1"></div>
+<div class="col-md-10">
 	<div class="ibox">
 		<div class="ibox-content">
-			<div class="col-md-10">
+			<div class="col-md-12">
 				<form  role="form" on-submit="save(settingsList)" novalidate>
 					<div class="col-md-12 text-rigth" style="text-align: right;">
 						<button type="submit" class="btn btn-w-m btn-primary">Guardar</button>
@@ -29,11 +30,15 @@
 										<td>{{setting.name}}</td>
 										<td>
 											<div class="form-group to-validate" ng-if="setting.isEditable">
-												<input id="percentage" type="radio" ng-model="setting.type" value="percentage" />
-												<label for="percentage">Valor en &#37;:</label>
-												<br>
-												<input id="value" type="radio" ng-model="setting.type" value="number" />
-												<label for="value">Valor en &#36;:</label>
+												<div>
+													<radio-button name="setting-{{$index}}" ng-model="setting.type" ng-value="Const.settings.percentage"></radio-button>
+													<span>Valor en %</span>
+												</div>
+												
+												<div>
+													<radio-button name="setting-{{$index}}" ng-model="setting.type" ng-value="Const.settings.number"></radio-button>
+													<span>Valor en $</span>
+												</div>
 											</div>
 										</td>
 										<td class="center">

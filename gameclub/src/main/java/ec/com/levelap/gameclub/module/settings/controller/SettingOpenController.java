@@ -14,22 +14,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.com.levelap.gameclub.module.settings.entity.Settings;
-import ec.com.levelap.gameclub.module.settings.service.SettingsService;
+import ec.com.levelap.gameclub.module.settings.entity.Setting;
+import ec.com.levelap.gameclub.module.settings.service.SettingService;
 
 @RestController
 @RequestMapping(value="open/settings", produces=MediaType.APPLICATION_JSON_VALUE)
-public class SettingsOpenController {
+public class SettingOpenController {
 	@Autowired
-	private SettingsService settingsService;
+	private SettingService settingsService;
 
 	@RequestMapping(value="findAll", method=RequestMethod.GET)
-	public ResponseEntity<Map<String, Settings>> findAll() throws ServletException {
-		List<Settings> settingList = settingsService.getSettingsRepo().findAll();
-		Map<String, Settings> settingsList = new HashMap<>();
-		for (Settings setting : settingList) {
+	public ResponseEntity<Map<String, Setting>> findAll() throws ServletException {
+		List<Setting> settingList = settingsService.getSettingsRepo().findAll();
+		Map<String, Setting> settingsList = new HashMap<>();
+		for (Setting setting : settingList) {
 			settingsList.put(setting.getCode(), setting);
 		}
-		return new ResponseEntity<Map<String, Settings>>(settingsList, HttpStatus.OK);
+		return new ResponseEntity<Map<String, Setting>>(settingsList, HttpStatus.OK);
 	}
 }

@@ -584,7 +584,7 @@
 								<span>Tu juego estará de vuelta el día: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
 								<br>
 								<br>
-								<span>Se acaban de acreditar a tu cuenta: </span><span class="text-black upper-case">{{loan.publicUserGame.cost | currency: '$': 2}}</span>
+								<span>Se acaban de acreditar a tu cuenta: </span><span class="text-black upper-case">{{(loan.publicUserGame.cost * loan.weeks) | currency: '$': 2}}</span>
 								<br>
 								<br>
 								<span class="text-lg">Timepo restante: </span>

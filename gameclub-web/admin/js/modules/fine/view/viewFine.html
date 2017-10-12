@@ -28,7 +28,7 @@
 				<tbody>
 					<tr ng-repeat="fine in fines">
 						
-						<td style='text-transform:uppercase'>{{fine.publicUserFine.name}} {{fine.publicUserFine.lastName}}</td>
+						<td>{{fine.owner.name}} {{fine.owner.lastName}}</td>
 						<td>{{fine.description}}</td>
 						<td>{{fine.amount}}</td>
 						<td ng-if="fine.apply == null">

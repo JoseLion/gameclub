@@ -6,11 +6,11 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
         $scope.lenderReviews = data.lenderReviews;
         setPagedData(data.reviews);
     });
+    
     $scope.numberCards = false;
     $scope.card = true;
-    console.log($rootScope.currentUser.paymentMethods);
+
     if($rootScope.currentUser.paymentMethods.length>0){
-        console.log($rootScope.currentUser.paymentMethods);
         var j = 0;
         for(i = 0; i < $rootScope.currentUser.paymentMethods.length; i++){
             j++;
@@ -43,7 +43,6 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
                 sweet.close();
             });
         });
-        $state.go('gameclub.account.settings');
     }
 
     function setPagedData(data) {

@@ -174,9 +174,10 @@ public class LoanService extends BaseService<Loan> {
 		}
 		
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
-			loan.setDeliveryDate(new Date());
 			final Loan taskLoan = loan;
 			Calendar calendar = Calendar.getInstance();
+			loan.setDeliveryDate(new Date());
+			publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), loan.getPublicUserGame().getCost() * loan.getWeeks().doubleValue());
 			
 			if (realTimes) {
 				calendar.setTime(loan.getReturnDate());

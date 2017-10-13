@@ -131,6 +131,11 @@ public class ShippingPriceService {
 		return new ResponseEntity<Page<ShippingPrice>>(shippingPrices, HttpStatus.OK);
 	}
 	
+	public Double getPrice(Location origin, Location destination) {
+		ShippingPrice shippingPrice = shippingPriceRepo.findByOriginAndDestination(origin, destination);
+		return shippingPrice.getCost();
+	}
+	
 	private Location getLocation(List<Location> provinces, String provinceName, String cityName) {
 		for (Location province : provinces) {
 			if (province.getName().equalsIgnoreCase(provinceName.trim())) {

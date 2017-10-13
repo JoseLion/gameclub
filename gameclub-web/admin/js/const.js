@@ -61,5 +61,10 @@ angular.module("Gameclub").constant('Const', {
 		contentRatings: "CRT",
 		magazines: "MGZ",
 		shippingCatalog: "SHP"
+	},
+
+	settings: {
+		percentage: 'percentage',
+		number: 'number'
 	}
 });

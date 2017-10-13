@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.loan.controller;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 
 import javax.mail.MessagingException;
@@ -52,7 +54,7 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<LoanLite> save(@RequestBody Loan loan) throws ServletException {
+	public ResponseEntity<LoanLite> save(@RequestBody Loan loan) throws ServletException, GeneralSecurityException, IOException {
 		LoanLite loanLite = loanService.save(loan);
 		return new ResponseEntity<LoanLite>(loanLite, HttpStatus.OK);
 	}

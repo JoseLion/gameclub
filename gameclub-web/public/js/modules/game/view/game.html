@@ -53,8 +53,8 @@
             </div>
             <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">{{game.releaseDate | date: 'dd-MM-yyyy'}}</span></span>
             <span class="col-md-12 subtitle">Costo promedio por semana: 
-                <span class="red" ng-if="settings['STPCHG'].type == 'percentage'">&#36;{{((((game.uploadPayment*priceChartingGM)/100)+game.uploadPayment)/gameLoanPCH) | number:2}}</span>
-                <span class="red" ng-if="settings['STPCHG'].type == 'number'">&#36;{{((game.uploadPayment+priceChartingGM)/gameLoanPCH) | number:2}}</span>
+                <span class="red" ng-if="settings[Const.settings.priceChartingGames].type == 'percentage'">&#36;{{((((game.uploadPayment*priceChartingGM)/100)+game.uploadPayment)/gameLoanPCH) | number:2}}</span>
+                <span class="red" ng-if="settings[Const.settings.priceChartingGames].type == 'number'">&#36;{{((game.uploadPayment+priceChartingGM)/gameLoanPCH) | number:2}}</span>
             </span>
         </div>
         <div class="col-md-3 rating">
@@ -226,12 +226,12 @@
                         <div class="col-md-8 left-decoration">
                             <div class="col-md-12">
                                 <label class="big">Costo final</label>
-                                <span class="big-value">{{loanGame.cost * loan.weeks}} &#36;</span>
+                                <span class="big-value">{{(loan.cost = (loanGame.cost * loan.weeks) + (loanGame.shippingCost * 2.0)) | currency: '$': 2}} &#36;</span>
                             </div>
                             
                             <div class="col-md-12">
                                 <label class="big">Costo shipping final</label>
-                                <span class="big-value bigger">{{(loan.cost = loanGame.shippingCost) | currency: '$': 2}}</span>
+                                <span class="big-value bigger">{{(loanGame.shippingCost * 2.0) | currency: '$': 2}}</span>
                             </div>
 
                             <div class="col-md-12 foot-note">(Costo en base a dirección actual)</div>

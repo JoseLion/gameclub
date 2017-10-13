@@ -41,8 +41,8 @@ public class PublicUserGame extends BaseEntity {
 	@Column(columnDefinition="VARCHAR")
 	private String observations;
 	
-	@Column(columnDefinition="INTEGER DEFAULT 0")
-	private Integer cost = 0;
+	@Column(columnDefinition="DECIMAL(9, 2) DEFAULT 0.0")
+	private Double cost = 0.0;
 	
 	@Column(name="is_borrowed", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean isBorrowed = false;
@@ -90,11 +90,11 @@ public class PublicUserGame extends BaseEntity {
 		this.observations = observations;
 	}
 
-	public Integer getCost() {
+	public Double getCost() {
 		return cost;
 	}
 
-	public void setCost(Integer cost) {
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 

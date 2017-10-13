@@ -1,15 +1,9 @@
 angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, mostPlayed, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
     let currentPage = 0;
-
     $scope.validCards = [];
-
-    $scope.priceChartingGM = parseFloat($rootScope.settings['STPCHG'].value);
-    priceChartingGMLoan = 0.0;
-    $scope.gameLoanPCH = parseFloat($rootScope.settings['STGRCO'].value);
-
-    // let priceChartingGM = parseFloat($rootScope.settings[Const.settings.priceChartingGames].value);
-    // let priceChartingGMLoan = 0.0;
-    // let gameLoanPCH = parseFloat($rootScope.settings[Const.settings.weekShippingCost].value);
+    $scope.priceChartingGM = parseFloat($rootScope.settings[Const.settings.priceChartingGames].value);
+    let priceChartingGMLoan = 0.0;
+    $scope.gameLoanPCH = parseFloat($rootScope.settings[Const.settings.weekShippingCost].value);
 
     if (game != null) {
         game.$promise.then(function(data) {
@@ -112,7 +106,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         if ($rootScope.currentUser == null) {
             $state.go("^.login", {redirect: $location.$$absUrl});
         } else {
-            if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100 && $rootScope.currentUser.isReady) {
+            if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100/* && $rootScope.currentUser.isReady*/) {
                 $scope.loanGame = cross;
                 $scope.loanViewOpen = true;
 
@@ -135,9 +129,9 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                     }
                 }
 
-                if (!$rootScope.currentUser.isReady) {
+                /*if (!$rootScope.currentUser.isReady) {
                     notif.danger("Para poder solicitar un juego primero debes haber recibido tu Welcome Kit. Sube tu primer juego y te enviaremos uno gratis");
-                }
+                }*/
             }
         }
     }

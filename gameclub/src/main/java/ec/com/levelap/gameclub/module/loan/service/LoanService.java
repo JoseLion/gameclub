@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.loan.service;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -21,6 +23,8 @@ import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
+import ec.com.levelap.gameclub.module.fine.entity.Fine;
+import ec.com.levelap.gameclub.module.fine.repository.FineRepo;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
@@ -30,6 +34,8 @@ import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.repository.RestoreRepo;
+import ec.com.levelap.gameclub.module.settings.service.SettingService;
+import ec.com.levelap.gameclub.module.shippingPrice.service.ShippingPriceService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
@@ -68,6 +74,15 @@ public class LoanService extends BaseService<Loan> {
 	
 	@Autowired
 	private KushkiService kushkiService;
+	
+	@Autowired
+	private FineRepo fineRepo;
+	
+	@Autowired
+	private SettingService settingsService;
+	
+	@Autowired
+	private ShippingPriceService shippingPriceService;
 	
 	@Autowired
 	private LevelapTaskScheduler levelapTaskScheduler;
@@ -145,7 +160,7 @@ public class LoanService extends BaseService<Loan> {
 	}
 	
 	@Transactional
-	public LoanLite save(Loan loan) throws ServletException {
+	public LoanLite save(Loan loan) throws ServletException, GeneralSecurityException, IOException {
 		Loan previous = loanRepo.findOne(loan.getId());
 		
 		if (!loan.getShippingStatus().equals(previous.getShippingStatus()) || (loan.getShippingNote() != null && !loan.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
@@ -159,9 +174,10 @@ public class LoanService extends BaseService<Loan> {
 		}
 		
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
-			loan.setDeliveryDate(new Date());
 			final Loan taskLoan = loan;
 			Calendar calendar = Calendar.getInstance();
+			loan.setDeliveryDate(new Date());
+			publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), loan.getPublicUserGame().getCost() * loan.getWeeks().doubleValue());
 			
 			if (realTimes) {
 				calendar.setTime(loan.getReturnDate());
@@ -246,62 +262,14 @@ public class LoanService extends BaseService<Loan> {
 					}
 				}
 			});
+		} else {
+			createFines(loan);
 		}
 		
 		loan = loanRepo.save(loan);
 		LoanLite loanLite = loanRepo.findById(loan.getId());
 		
 		return loanLite;
-	}
-	
-	private void sendRemindingMails(Loan loan, boolean isLastReminder) throws Exception {
-		MailParameters mailParameters = new MailParameters();
-		Map<String, String> params = new HashMap<>();
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-		
-		mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
-		params.put("lender", loan.getPublicUserGame().getPublicUser().getName()  + " " + loan.getPublicUserGame().getPublicUser().getLastName());
-		params.put("gamer", loan.getGamer().getName() + " " + loan.getGamer().getLastName());
-		params.put("game", loan.getPublicUserGame().getGame().getName());
-		params.put("console", loan.getPublicUserGame().getConsole().getName());
-		params.put("returnDate", df.format(loan.getReturnDate()));
-		params.put("days", isLastReminder ? "1" : "3");
-		
-		mailService.sendMailWihTemplate(mailParameters, "MSGARM", params);
-		
-		mailParameters.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
-		mailService.sendMailWihTemplate(mailParameters, "MSGLRM", params);
-		
-		mailParameters.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
-		mailService.sendMailWihTemplate(mailParameters, "MSGGRM", params);
-	}
-	
-	private void sendFinishedMails(Restore restore) throws Exception {
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-		MailParameters mailParameters = new MailParameters();
-		Map<String, String> params = new HashMap<>();
-		params.put("lender", restore.getPublicUserGame().getPublicUser().getName()  + " " + restore.getPublicUserGame().getPublicUser().getLastName());
-		params.put("gamer", restore.getGamer().getName() + " " + restore.getGamer().getLastName());
-		params.put("game", restore.getPublicUserGame().getGame().getName());
-		params.put("console", restore.getPublicUserGame().getConsole().getName());
-		params.put("returnDate", df.format(new Date()));
-		params.put("lenderConfirmationDate", restore.getLenderStatusDate() != null ? df.format(restore.getLenderStatusDate()) : "SIN CONFIRMAR");
-		params.put("gamerConfirmationDate", restore.getGamerStatusDate() != null ? df.format(restore.getGamerStatusDate()) : "SIN CONFIRMAR");
-		
-		if (restore.getLenderStatusDate() == null || restore.getGamerStatusDate() == null) {
-			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
-			mailService.sendMailWihTemplate(mailParameters, "MSGAUR", params);
-		}
-		
-		if (restore.getLenderStatusDate() == null) {
-			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
-			mailService.sendMailWihTemplate(mailParameters, "MSGLUR", params);
-		}
-		
-		if (restore.getGamerStatusDate() == null) {
-			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
-			mailService.sendMailWihTemplate(mailParameters, "MSGGUR", params);
-		}
 	}
 	
 	@Transactional
@@ -477,6 +445,84 @@ public class LoanService extends BaseService<Loan> {
 					}
 				});
 			}
+		}
+	}
+	
+	private void sendRemindingMails(Loan loan, boolean isLastReminder) throws Exception {
+		MailParameters mailParameters = new MailParameters();
+		Map<String, String> params = new HashMap<>();
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		
+		mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		params.put("lender", loan.getPublicUserGame().getPublicUser().getName()  + " " + loan.getPublicUserGame().getPublicUser().getLastName());
+		params.put("gamer", loan.getGamer().getName() + " " + loan.getGamer().getLastName());
+		params.put("game", loan.getPublicUserGame().getGame().getName());
+		params.put("console", loan.getPublicUserGame().getConsole().getName());
+		params.put("returnDate", df.format(loan.getReturnDate()));
+		params.put("days", isLastReminder ? "1" : "3");
+		
+		mailService.sendMailWihTemplate(mailParameters, "MSGARM", params);
+		
+		mailParameters.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
+		mailService.sendMailWihTemplate(mailParameters, "MSGLRM", params);
+		
+		mailParameters.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
+		mailService.sendMailWihTemplate(mailParameters, "MSGGRM", params);
+	}
+	
+	private void sendFinishedMails(Restore restore) throws Exception {
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		MailParameters mailParameters = new MailParameters();
+		Map<String, String> params = new HashMap<>();
+		params.put("lender", restore.getPublicUserGame().getPublicUser().getName()  + " " + restore.getPublicUserGame().getPublicUser().getLastName());
+		params.put("gamer", restore.getGamer().getName() + " " + restore.getGamer().getLastName());
+		params.put("game", restore.getPublicUserGame().getGame().getName());
+		params.put("console", restore.getPublicUserGame().getConsole().getName());
+		params.put("returnDate", df.format(new Date()));
+		params.put("lenderConfirmationDate", restore.getLenderStatusDate() != null ? df.format(restore.getLenderStatusDate()) : "SIN CONFIRMAR");
+		params.put("gamerConfirmationDate", restore.getGamerStatusDate() != null ? df.format(restore.getGamerStatusDate()) : "SIN CONFIRMAR");
+		
+		if (restore.getLenderStatusDate() == null || restore.getGamerStatusDate() == null) {
+			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+			mailService.sendMailWihTemplate(mailParameters, "MSGAUR", params);
+		}
+		
+		if (restore.getLenderStatusDate() == null) {
+			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+			mailService.sendMailWihTemplate(mailParameters, "MSGLUR", params);
+		}
+		
+		if (restore.getGamerStatusDate() == null) {
+			mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+			mailService.sendMailWihTemplate(mailParameters, "MSGGUR", params);
+		}
+	}
+	
+	@Transactional
+	private void createFines(Loan loan) throws ServletException, GeneralSecurityException, IOException {
+		Double shippingCost = shippingPriceService.getPrice(loan.getPublicUserGame().getPublicUser().getLocation(), loan.getGamer().getLocation());
+		
+		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
+			loan.setGamer(publicUserService.addToUserBalance(loan.getGamer().getId(), loan.getCost()));
+			
+			Fine fine = new Fine();
+			fine.setOwner(loan.getPublicUserGame().getPublicUser());
+			fine.setAmount(shippingCost * 2.0);
+			fine.setDescription(loan.getShippingStatus().getName());
+			
+			fineRepo.save(fine);
+			loan.getPublicUserGame().setIsBorrowed(false);
+			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
+		}
+		
+		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)) {
+			Double penalty = Double.parseDouble(settingsService.getSettingValue(Code.SETTING_GAMER_DIDNT_RECEIVE));
+			Double reward = Double.parseDouble(settingsService.getSettingValue(Code.SETTING_NO_LOAN_REWARD));
+			loan.setGamer(publicUserService.addToUserBalance(loan.getGamer().getId(), loan.getCost() - penalty));
+			loan.getPublicUserGame().setPublicUser(publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), reward));
+			
+			loan.getPublicUserGame().setIsBorrowed(false);
+			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
 		}
 	}
 	

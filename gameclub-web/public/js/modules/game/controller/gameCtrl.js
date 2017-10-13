@@ -298,20 +298,24 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         $state.go("^.publicProfile", {id: owner.id, alias: friendlyUrl(owner.name + ' ' + owner.lastName.substring(0, 1))});
     }
 
-    $scope.balanceGamer = 98.52;
+    $scope.gamerBalance = 98;
+    $scope.gamerDue = 100;
+
     $scope.slider = {
-        value: $scope.balanceGamer,
+        value: Math.floor($scope.gamerBalance),
         options: {
-            hidePointerLabels: false,
+            hidePointerLabels: true,
             hideLimitLabels: true,
             showSelectionBar: true,
-            scale: 1.5,
-            getTickColor: function(value) {return '#071428';},,
-            getPointerColor: function(value) {return '#d6d6d6';},
+            step: (1/100),
+            precision: (1/100),
+            getTickColor: function(value) {return '#071428';},
+            getPointerColor: function(value) {return '#071428';},
             getSelectionBarColor: function(value) {return '#071428';}
         }
     };
-
+    // $scope.gamerBalanceInt = $scope.gamerBalance-$scope.slider.value;
+    $scope.gamerBalanceFlb = 0;
     function getIdentityPercentage() {
         let percent = 0;
         if ($rootScope.currentUser != null) {

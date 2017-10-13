@@ -244,11 +244,25 @@
 
             <div class="payment-view" ng-if="loanViewOpen">
                 <div class="col-md-2"></div>
-
-                <div class="col-md-8">
+                <div class="col-md-8 ">
                     <h1 class="col-md-12 title">Forma de pago</h1>
+                    <div class="col-md-12 ">
+                        <h2 class="subtitle"> SALDO ACTUAL: </h2><h3 class="int-number-balance">&#36;{{gamerBalance-slider.value | number:2}}</h3><!-- <h3 class="flb-number-balance">&#44;00</h3> -->
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="col-md-6 left-decoration sub-title ">
+                            <div calss="sub-title vertical-line"></div>
+                            <h2 ><B>PAGO CON SALDO</B></h2>
+                            <h3 class="int-number-slider">&#36;{{slider.value | number:2}}</h3><!-- <h3 class="flb-number-slider">&#44;00</h3> -->
+                            <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
+                        </div>
+                        <div class="col-md-6 sub-title">
+                            <h2 ><B>monto restante a pagar</B></h2>
+                            <h3 class="int-number-slider">&#36;{{gamerDue-slider.value | number:2}}</h3>
+                        </div>
+                    </div>
 
-                    <!-- <div class="col-md-6">
+                    <div class="col-md-6 left-decoration">                        
                         <div ng-if="currentUser.paymentMethods[0] != null ">
                             <label class="col-md-12">Elige tu tarjeta</label>
                             <div class="col-md-12">
@@ -264,19 +278,6 @@
                                 <kushki class="new-payment"></kushki>
                             </div>
                         </div>
-                    </div> -->
-                    <div class="col-md-12 subtitle">SALDO ACTUAL:</div>
-                    <div class="col-md-6 ">
-                        <div class="col-md-6 sub-title">
-                            <h2 ><B>PAGO CON SALDO</B></h2>
-                            <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
-                        </div>
-                        <div class="col-md-6 sub-title">
-                            <h2 ><B>monto restante a pagar</B></h2>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 left-decoration">
                         <!--<div ng-if="currentUser.paymentMethods[0] != null">
                             <label class="col-md-12">Elige tu tarjeta</label>
                             <div class="col-md-12">
@@ -292,24 +293,8 @@
                                 <kushki class="new-payment"></kushki>
                             </div>
                         </div>-->
-                        <div ng-if="currentUser.paymentMethods[0] != null ">
-                            <label class="col-md-12">Elige tu tarjeta</label>
-                            <div class="col-md-12">
-                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[0]}" ng-click="loan.payment = currentUser.paymentMethods[0]" ></div>
-                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{currentUser.paymentMethods[0].cardFinale}}" readonly>
-                                <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button><p>{{idCard11}}</p><p>{{idCard2}}</p>
-                            </div>
-                        </div>
-                        
-                        <div ng-if="currentUser.paymentMethods[0] == null">
-                            <label class="col-md-12">Ingresa otra forma de pago</label>
-                            <div class="col-md-12">
-                                <kushki class="new-payment"></kushki>
-                            </div>
-                        </div>
                     </div>
                 </div>
-
                 <div class="col-md-2"></div>
                 <div class="clearfix"></div>
             </div>

@@ -298,12 +298,16 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         $state.go("^.publicProfile", {id: owner.id, alias: friendlyUrl(owner.name + ' ' + owner.lastName.substring(0, 1))});
     }
 
+    $scope.balanceGamer = 98.52;
     $scope.slider = {
-        value: 100,
+        value: $scope.balanceGamer,
         options: {
             hidePointerLabels: false,
             hideLimitLabels: true,
             showSelectionBar: true,
+            scale: 1.5,
+            getTickColor: function(value) {return '#071428';},,
+            getPointerColor: function(value) {return '#d6d6d6';},
             getSelectionBarColor: function(value) {return '#071428';}
         }
     };

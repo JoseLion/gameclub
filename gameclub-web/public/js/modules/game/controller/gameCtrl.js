@@ -304,6 +304,16 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         $state.go("^.publicProfile", {id: owner.id, alias: friendlyUrl(owner.name + ' ' + owner.lastName.substring(0, 1))});
     }
 
+    $scope.slider = {
+        value: 100,
+        options: {
+            hidePointerLabels: false,
+            hideLimitLabels: true,
+            showSelectionBar: true,
+            getSelectionBarColor: function(value) {return '#071428';}
+        }
+    };
+
     function getIdentityPercentage() {
         let percent = 0;
         if ($rootScope.currentUser != null) {

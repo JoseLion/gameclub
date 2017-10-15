@@ -29,7 +29,7 @@ public class PublicUserOpenController {
 	
 	@RequestMapping(value="signIn", method=RequestMethod.POST)
 	public ResponseEntity<?> signIn(@RequestBody SignObj signObj) throws ServletException, MessagingException, IOException, GeneralSecurityException {
-		return publicUserService.signIn(signObj.publicUser, signObj.baseUrl);
+		return publicUserService.signIn(signObj.publicUser, signObj.baseUrl, signObj.token);
 	}
 	
 	@RequestMapping(value="verifyAccount/{token}/{id}", method=RequestMethod.GET)
@@ -77,5 +77,7 @@ public class PublicUserOpenController {
 		public PublicUser publicUser;
 		
 		public String baseUrl;
+		
+		public String token;
 	}
 }

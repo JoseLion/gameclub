@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -38,12 +39,15 @@ import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.kushki.repository.KushkiSubscriptionRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
+import ec.com.levelap.gameclub.module.settings.entity.Setting;
+import ec.com.levelap.gameclub.module.settings.repository.SettingRepo;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserController.Password;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserOpenController.ContactUs;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
+import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.kushki.KushkiException;
 import ec.com.levelap.kushki.object.KushkiAmount;
@@ -59,6 +63,9 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Autowired
 	private PublicUserGameRepo publicUserGameRepo;
+	
+	@Autowired
+	private SettingRepo settingRepo;
 
 	@Autowired
 	private MailService mailService;
@@ -80,22 +87,37 @@ public class PublicUserService extends BaseService<PublicUser> {
 	}
 
 	@Transactional
-	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl) throws ServletException, MessagingException, IOException, GeneralSecurityException {
+	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl, String token) throws ServletException, MessagingException, IOException, GeneralSecurityException {
 		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(publicUser.getUsername());
 		
-		if (found != null) {
+		if (found != null && found.getStatus()) {
 			return new ResponseEntity<ErrorControl>(new ErrorControl("El correo ingresado ya se encuentra registrado", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
-		publicUser.setPassword(encoder.encode(publicUser.getPassword()));
-		publicUser.setToken(UUID.randomUUID().toString());
 		
-		File key = cryptoService.generateKeyFile();
-		publicUser.setPrivateKey(IOUtils.toByteArray(new FileInputStream(key)));
-		publicUser.setBalance(cryptoService.encrypt("0.0", key));
-		
-		publicUser = publicUserRepo.save(publicUser);
+		if (found == null) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
+			publicUser.setPassword(encoder.encode(publicUser.getPassword()));
+			publicUser.setToken(UUID.randomUUID().toString());
+			
+			File key = cryptoService.generateKeyFile();
+			publicUser.setPrivateKey(IOUtils.toByteArray(new FileInputStream(key)));
+			publicUser.setBalance(cryptoService.encrypt("0.0", key));
+			
+			publicUser = publicUserRepo.save(publicUser);
+			
+			if (token != null && !token.isEmpty()) {
+				PublicUser refferer = publicUserRepo.findByUrlToken(token);
+				
+				if (refferer != null) {
+					Setting setting = settingRepo.findByCode(Code.SETTING_REFFERED_REWARD);
+					addToUserBalance(refferer.getId(), Double.parseDouble(setting.getValue()));
+					publicUser = addToUserBalance(publicUser.getId(), Double.parseDouble(setting.getValue()));
+				}
+			}
+		} else {
+			found.setStatus(true);
+			publicUser = publicUserRepo.save(found);
+		}
 
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
@@ -199,14 +221,14 @@ public class PublicUserService extends BaseService<PublicUser> {
 	@Transactional
 	public void deleteAccount() throws ServletException {
 		PublicUser user = this.getCurrentUser();
-		user.setUsername(getRevokedUsername(user.getUsername(), 0));
-		user.setPassword("********************");
+		//user.setUsername(getRevokedUsername(user.getUsername(), 0));
+		user.setPassword("");
 		user.setStatus(false);
 
 		publicUserRepo.save(user);
 	}
 
-	private String getRevokedUsername(String username, int i) {
+	/*private String getRevokedUsername(String username, int i) {
 		if (i == 0) {
 			username += "(Revoked)";
 		} else {
@@ -222,7 +244,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		}
 
 		return username;
-	}
+	}*/
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
@@ -353,6 +375,19 @@ public class PublicUserService extends BaseService<PublicUser> {
 		summary.put("updateDate", today.getTime());
 		
 		return summary;
+	}
+	
+	@Transactional
+	public String generateUrlToken() throws ServletException {
+		PublicUser currentUser = getCurrentUser();
+		String token = UUID.randomUUID().toString();
+		Random random = new Random();
+		int pos = random.nextInt(token.length());
+		token = token.substring(0, pos) + currentUser.getId().toString() + token.substring(pos);
+		currentUser.setUrlToken(token);
+		publicUserRepo.save(currentUser);
+		
+		return token;
 	}
 
 	public PublicUserRepo getPublicUserRepo() {

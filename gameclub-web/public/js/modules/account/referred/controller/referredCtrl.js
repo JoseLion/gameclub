@@ -1,10 +1,37 @@
-angular.module('Referred').controller('ReferredCtrl', function($scope, $rootScope, rest, sweet, notif, forEach) {
-	
+angular.module('Referred').controller('ReferredCtrl', function($scope, $rootScope, rest, sweet, notif, $location) {
+	$scope.reffer = {};
+	let baseUrl = $location.$$protocol + '://' + $location.$$host + "/gameclub/login/";
 
-	$scope.transactions=[{date:"18/JUN/2017",transaction:"ALQUILASTE", game: "CALL OF DUTY II", time: 3, creditbalance: 13, debitbalance:0, debitcard:0 },
-        {date:"12/JUN/2017",transaction:"ALQUILASTE", game: "ZELDA BIW", time: 1, creditbalance: 3.50, debitbalance:0, debitcard:0 },
-        {date:"09/JUN/2017",transaction:"JUGASTE", game: "GTA V", time: 2, creditbalance: 0, debitbalance:1, debitcard:2},
-        {date:"26/MAY/2017",transaction:"JUGASTE", game: "MARIO ODYSSEY", time: 1, creditbalance: 0, debitbalance:3, debitcard:0 },
-        {date:"12/JUN/2017",transaction:"ALQUILASTE", game: "INJUSTICE 2", time: 1, creditbalance: 2.50, debitbalance:0, debitcard:0 }];
+	if ($rootScope.currentUser.urlToken) {
+		$scope.reffer.link = baseUrl + $rootScope.currentUser.urlToken;
+	}
 
+	$scope.generateUrlToken = function() {
+		sweet.default("Se generará un nuevo link para referir", function() {
+			rest("publicUser/generateUrlToken").get(function(data) {
+				$scope.reffer.link = baseUrl + data;
+				notif.success("Link generado con éxito");
+				sweet.close();
+			}, function(error) {
+				sweet.close();
+			});
+		});
+	}
+
+	$scope.copyLinkToClipboard = function() {
+		angular.element("#reffer-link")[0].select();
+
+		try {
+			let successful = document.execCommand('copy');
+			if (!successful) {
+				throw successful;
+			}
+		} catch (err) {
+			window.prompt("Copy to clipboard: Ctrl+C, Enter", toCopy);
+		}
+	}
+
+	$scope.shareLinkFB = function() {
+		window.open("https://www.facebook.com/sharer/sharer.php?u=" + $scope.reffer.link, "Compartelo en Facebbok", "width=500,height=500");
+	}
 });

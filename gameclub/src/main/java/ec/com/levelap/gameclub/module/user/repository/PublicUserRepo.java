@@ -41,5 +41,6 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 	
 	@Query("SELECT COUNT(l.id) FROM Loan l WHERE l.gamer.id=:id AND l.review IS NULL")
 	public Long countGamesToReturn(@Param("id") Long id);
-
+	
+	public PublicUser findByUrlToken(String urlToken);
 }

@@ -69,13 +69,13 @@ public class GameClubSecurity implements SecurityConfig {
 				PublicUser user = publicUserRepo.findByUsernameIgnoreCase(username);
 				
 				if (user.getPrivateKey() == null || user.getBalance() == null) {
-					PublicUserService publicUserService = ApplicationContextHolder.getContext().getBean(PublicUserService.class);
 					try {
+						PublicUserService publicUserService = ApplicationContextHolder.getContext().getBean(PublicUserService.class);
 						user = publicUserService.setUserPrivateKey(user.getId());
 						user = publicUserService.setUserBalance(user.getId(), 0.0);
 					} catch (ServletException | IOException | GeneralSecurityException e) {
 						e.printStackTrace();
-						return null;
+						return "****";
 					}
 					
 				}

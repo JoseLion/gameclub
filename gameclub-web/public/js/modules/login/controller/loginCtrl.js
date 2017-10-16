@@ -1,4 +1,4 @@
-angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, redirect, sweet, openRest, $state, Const, authenticate, rest, SweetAlert, $uibModal, notif, $location) {
+angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, redirect, token, sweet, openRest, $state, Const, authenticate, rest, SweetAlert, $uibModal, notif, $location) {
 	$scope.user = {};
 	$scope.credentials = {};
 	$scope.passRegex = '^(?=.*[0-9])(?=.*[A-Z])([0-9-a-zA-Z]+)$';
@@ -27,7 +27,8 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 						$scope.isSaving = true;
 						let signObj = {
 							baseUrl: $location.$$protocol + "://" + $location.$$host,
-							publicUser: user
+							publicUser: user,
+							token: token
 						};
 
 						openRest("publicUser/signIn").post(signObj, function() {
@@ -263,7 +264,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 			if (error.status == -1) {
 				notif.danger(Const.messages.unableToConnect);
 			} else {
-				notif.danger(error.data);
+				notif.danger("Usuario y/o contraseña incorrectos");
 			}
 
 			$scope.isLoginIn = false;

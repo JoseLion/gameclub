@@ -131,15 +131,6 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(name="is_ready", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean isReady = false;
-
-	@Transient
-	private Integer numberOfGames;
-	
-	@Transient
-	private Integer unreadMessages = 0;
-	
-	@Transient
-	private Double shownBalance;
 	
 	@Column(name="document_ruc", columnDefinition = "VARCHAR")
 	private String documentRuc;
@@ -155,6 +146,18 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(name="has_ruc", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean hasRuc = false;
+	
+	@Column(name="url_token", columnDefinition="VARCHAR")
+	private String urlToken;
+
+	@Transient
+	private Integer numberOfGames;
+	
+	@Transient
+	private Integer unreadMessages = 0;
+	
+	@Transient
+	private Double shownBalance;
 
 	public String getUsername() {
 		return username;
@@ -383,6 +386,54 @@ public class PublicUser extends BaseEntity {
 	public void setIsReady(Boolean isReady) {
 		this.isReady = isReady;
 	}
+	
+	public String getDocumentRuc() {
+		return documentRuc;
+	}
+
+	public void setDocumentRuc(String documentRuc) {
+		this.documentRuc = documentRuc;
+	}
+
+	public String getNameRuc() {
+		return nameRuc;
+	}
+
+	public void setNameRuc(String nameRuc) {
+		this.nameRuc = nameRuc;
+	}
+
+	public String getAddressRuc() {
+		return addressRuc;
+	}
+
+	public void setAddressRuc(String addressRuc) {
+		this.addressRuc = addressRuc;
+	}
+
+	public String getPhoneRuc() {
+		return phoneRuc;
+	}
+
+	public void setPhoneRuc(String phoneRuc) {
+		this.phoneRuc = phoneRuc;
+	}
+
+	public Boolean getHasRuc() {
+		return hasRuc;
+	}
+
+	public void setHasRuc(Boolean hasRuc) {
+		this.hasRuc = hasRuc;
+	}
+
+	public String getUrlToken() {
+		return urlToken;
+	}
+
+	public void setUrlToken(String urlToken) {
+		this.urlToken = urlToken;
+	}
 
 	public Integer getNumberOfGames() {
 		return this.games.size();
@@ -423,46 +474,4 @@ public class PublicUser extends BaseEntity {
 	public void setShownBalance(Double shownBalance) {
 		this.shownBalance = shownBalance;
 	}
-
-	public String getDocumentRuc() {
-		return documentRuc;
-	}
-
-	public void setDocumentRuc(String documentRuc) {
-		this.documentRuc = documentRuc;
-	}
-
-	public String getNameRuc() {
-		return nameRuc;
-	}
-
-	public void setNameRuc(String nameRuc) {
-		this.nameRuc = nameRuc;
-	}
-
-	public String getAddressRuc() {
-		return addressRuc;
-	}
-
-	public void setAddressRuc(String addressRuc) {
-		this.addressRuc = addressRuc;
-	}
-
-	public String getPhoneRuc() {
-		return phoneRuc;
-	}
-
-	public void setPhoneRuc(String phoneRuc) {
-		this.phoneRuc = phoneRuc;
-	}
-
-	public Boolean getHasRuc() {
-		return hasRuc;
-	}
-
-	public void setHasRuc(Boolean hasRuc) {
-		this.hasRuc = hasRuc;
-	}
-	
-	
 }

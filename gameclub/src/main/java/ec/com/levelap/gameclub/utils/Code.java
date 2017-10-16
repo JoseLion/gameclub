@@ -26,4 +26,6 @@ public interface Code {
 	public static final String SETTING_GAMER_DIDNT_DELIVER_2ND = "STGFNEPD2";
 	
 	public static final String SETTING_NO_LOAN_REWARD = "STGFNEVPL";
+	
+	public static final String SETTING_REFFERED_REWARD = "STGREFREW";
 }

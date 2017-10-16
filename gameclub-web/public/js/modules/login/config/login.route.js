@@ -4,8 +4,8 @@ angular.module('Login').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'login', {
-		url: '/login',
-		params: {redirect: null},
+		url: '/login/:token',
+		params: {redirect: null, token: null},
 		templateUrl: 'js/modules/login/view/login.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'LoginCtrl',
@@ -19,6 +19,10 @@ angular.module('Login').config(function($stateProvider) {
 
 			redirect: function($stateParams) {
 				return $stateParams.redirect;
+			},
+
+			token: function($stateParams) {
+				return $stateParams.token;
 			}
 		}
 	})

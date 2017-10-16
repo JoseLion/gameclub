@@ -143,6 +143,12 @@ public class PublicUserController {
 		Map<String, Long> summary = publicUserService.getGamesSummary();
 		return new ResponseEntity<Map<String,Long>>(summary, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="generateUrlToken", method=RequestMethod.GET, produces=MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> generateUrlToken() throws ServletException {
+		String token = publicUserService.generateUrlToken();
+		return new ResponseEntity<String>(token, HttpStatus.OK);
+	}
 
 	private static class Filter {
 		public String sort;

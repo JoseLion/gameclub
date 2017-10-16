@@ -137,7 +137,7 @@ public class LoanService extends BaseService<Loan> {
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Loan confirmLoan(Loan loan, boolean isGamer) throws ServletException, KushkiException {
+	public Loan confirmLoan(Loan loan, boolean isGamer) throws ServletException, KushkiException, GeneralSecurityException, IOException {
 		Catalog noTracking = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
 		loan.setShippingStatus(noTracking);
 		
@@ -145,11 +145,16 @@ public class LoanService extends BaseService<Loan> {
 			loan.setLenderConfirmed(true);
 			loan.setLenderStatusDate(new Date());
 			
-			Map<String, Object> optionals = new HashMap<>();
-			optionals.put("amount", new KushkiAmount(loan.getCost()));
-			String ticket = kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), optionals);
+			if (loan.getBalancePart() > 0.0) {
+				publicUserService.substractFromUserBalance(loan.getGamer().getId(), loan.getBalancePart());
+			}
 			
-			loan.setTransactionTicket(ticket);
+			if (loan.getCardPart() > 0.0) {
+				Map<String, Object> optionals = new HashMap<>();
+				optionals.put("amount", new KushkiAmount(loan.getCardPart()));
+				String ticket = kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), optionals);
+				loan.setTransactionTicket(ticket);
+			}
 		} else {
 			loan.setGamerConfirmed(true);
 			loan.setGamerStatusDate(new Date());

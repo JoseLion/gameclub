@@ -272,10 +272,12 @@
 									</div>
 									<br>
 									<div class="final-cost">
-										<span class="text-lg upper-case">Costo shipping final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
+										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
 									</div>
 									<br>
-									<span class="upper-case">Forma de pago: </span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span>
+									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.cardPart | balancePart: '$': 2}}</span></span>
+									<br>
+									<span ng-if="loan.cardPart > 0.0"><span class="upper-case">Pago con tarjeta: {{loan.cardPart | currency: '$': 2}}</span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span></span>
 									<br>
 									<br>
 									<span>Estado del envío: </span><span class="text-black">{{loan.shippingStatus.name}}</span>

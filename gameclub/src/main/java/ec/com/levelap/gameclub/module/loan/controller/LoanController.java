@@ -88,13 +88,13 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="confirmLender", method=RequestMethod.POST)
-	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan) throws ServletException, KushkiException {
+	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan) throws ServletException, KushkiException, GeneralSecurityException, IOException {
 		loan = loanService.confirmLoan(loan, false);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="confirmGamer", method=RequestMethod.POST)
-	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan) throws ServletException, KushkiException {
+	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan) throws ServletException, KushkiException, GeneralSecurityException, IOException {
 		loan = loanService.confirmLoan(loan, true);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}

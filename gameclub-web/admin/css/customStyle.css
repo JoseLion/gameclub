@@ -62,3 +62,8 @@ table tbody tr td {
 .center {
 	text-align: center;
 }
+
+/* MODAL GLITCH FIX */
+
+.modal-backdrop{background-color:rgba(0,0,0,0.5);}
+.modal-backdrop.in{opacity:1 !important;}

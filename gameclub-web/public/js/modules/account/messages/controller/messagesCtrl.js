@@ -82,6 +82,20 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					}
 				});
 			}
+
+			// if(message.subject == "Cobro multa"){
+				// rest("fine/findFineMessage", true).get(message, function(data) {
+				// 	$scope.fine = data;
+				// 	if ($scope.fine.message != null) {
+				// 		canvasToBottom();
+					
+				// 		if (!message.read) {
+				// 			message.read = true;
+				// 			$rootScope.currentUser.unreadMessages--;
+				// 		}
+				// 	}					
+				// });
+			// }
 		}
 	}
 

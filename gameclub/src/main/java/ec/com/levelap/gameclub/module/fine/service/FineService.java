@@ -29,7 +29,7 @@ public class FineService extends BaseService<Fine> {
 		if(fineObj.getId() == null) {
 			Fine found = fineRepo.findOne(fineObj.getId());
 			if(found != null) {
-				return new ResponseEntity<ErrorControl>(new ErrorControl("Par�metro ya existe ", true), HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<ErrorControl>(new ErrorControl("Parámetro ya existe ", true), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 		fineRepo.save(fineObj);

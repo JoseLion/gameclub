@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import ec.com.levelap.gameclub.module.fine.entity.Fine;
+import ec.com.levelap.gameclub.module.message.entity.Message;
+import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +27,12 @@ public interface FineRepo extends JpaRepository<Fine, Long>{
 			@Param("wasPayed") Boolean wasPayed,
 			@Param("startDate") Date startDate,
 			@Param("endDate") Date endDate);
+	
+	@Query("SELECT f FROM Fine f "
+			+ "WHERE f.message=:message")
+	public Fine findFinesMessage(@Param("message") Message message);
+	
+	@Query("SELECT f FROM Fine f "
+			+ "WHERE f.owner=:owner")
+	public List<Fine> findFinesMessages(@Param("owner") PublicUser owner);
 }

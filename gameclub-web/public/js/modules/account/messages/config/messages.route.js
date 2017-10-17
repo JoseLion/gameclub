@@ -18,6 +18,11 @@ angular.module('Messages').config(function($stateProvider) {
 			messages: function(rest) {
 				return rest("message/findMessages").post();
 			}
+			// ,
+
+			// fines: function(openRest) {
+			// 	return openRest("fine/findFinesMessages").post($rootScope.currentUser);
+			// }
 		}
 	});
 });

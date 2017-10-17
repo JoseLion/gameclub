@@ -44,11 +44,13 @@
 							 </select> -->
 							 PENDIENTE
 					    </td>
-						<td style="text-align: center;">
-							<button type="button" class="btn btn-xs btn-warning"  tooltip="Editar multa">
-								<i class="fa fa-pencil"></i>
+					    <td ng-if="fine.apply == true && fine.wasPayed == false">NO PAGADA</td>
+					    <td ng-if="fine.apply == true && fine.wasPayed == true">PAGADA</td>
+					    <td ng-if="fine.apply == false && fine.wasPayed == false ">NO APLICA COBRO</td>
+						<td style="text-align: center;" ng-if="(fine.apply == null || fine.apply == true) && fine.wasPayed == false" >
+							<button type="button" class="btn btn-xs btn-warning" ng-click="executeFine(fine)" tooltip="Ejecutar multa"><i class="fa fa-pencil"></i>
 							</button>
-							<button type="button" class="btn btn-xs" >
+							<button type="button" class="btn btn-xs" ng-click="noExecuteFine(fine)" tooltip="No ejecutar multa">
 								<i class="fa fa-power-off"></i>
 							</button>
 						</td>

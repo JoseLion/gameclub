@@ -7,11 +7,13 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
+import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -34,6 +36,10 @@ public class Fine extends BaseEntity {
 	
 	@Column(nullable=false, columnDefinition="VARCHAR")
 	private String description;
+	
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="message", foreignKey=@ForeignKey(name="message_fk"))
+	private Message message;
 
 	public PublicUser getOwner() {
 		return owner;
@@ -74,4 +80,14 @@ public class Fine extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public Message getMessage() {
+		return message;
+	}
+
+	public void setMessage(Message message) {
+		this.message = message;
+	}
+	
+	
 }

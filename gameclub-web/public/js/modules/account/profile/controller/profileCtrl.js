@@ -46,12 +46,28 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             isValid = false;
             notif.danger('Ingresa fecha de nacimiento');
         } if(younger($scope.currentUserTemp.birthDate)) {
-            $scope.currentUserTemp.hasRuc = true;            
+            $scope.currentUserTemp.hasRuc = true;
         } if($scope.currentUserTemp.hasRuc) {
-            if(dataRuc()){
+            if(younger($scope.currentUserTemp.birthDate) && ($scope.currentUserTemp.documentRuc == null && dataRuc())){
+                var str1 = 'Según tu información de contacto, eres menor de edad.\n';
+                var str2 = 'Debes obligatoriamente llenar el campo de RUC con \n';
+                var str3 = 'los datos de tu representante legal para poder continuar.\n\n';
+                var str4 = 'Si no eres menor de edad edita tu información de contacto.';
+                var total = str1.concat(str2, str3, str4);
                 isValid = false;
-                notif.danger('Debes ingresar datos para el RUC');
-            } 
+                sweet.default(total, function() {                    
+                    sweet.close();
+                });
+            } else if(dataRuc()){
+                isValid = false;                
+                notif.danger('Todos los datos para el RUC son requeridos');
+            } else if($scope.currentUserTemp.documentRuc != null ){
+                if(!ciValidation($scope.currentUserTemp.documentRuc)){
+                    isValid = false;                
+                    notif.danger('Ingresa un número de RUC válido');
+                }                
+            }
+            
         } if($scope.currentUserTemp.province != null && $scope.currentUserTemp.location == null) {
             isValid = false;
             notif.danger('Completa tu ciudad');
@@ -86,16 +102,12 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     }
 
     function dataRuc () {
-        if(($scope.currentUserTemp.documentRuc == null || 
-                $scope.currentUserTemp.documentRuc.length != 13) ||
-            $scope.currentUserTemp.nameRuc == null ||
+        if( $scope.currentUserTemp.nameRuc == null ||
             $scope.currentUserTemp.addressRuc == null ||
             $scope.currentUserTemp.phoneRuc == null 
             ){
             return true;
-        } else if(!ciValidation($scope.currentUserTemp.documentRuc)){
-            return true;
-        } else{
+        } else {
             return false;
         }
     }

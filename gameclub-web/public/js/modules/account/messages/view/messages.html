@@ -220,10 +220,13 @@
 									</div>
 									<br>
 									<div class="final-cost">
-										<span class="text-lg upper-case">Costo shipping final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
+										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
 									</div>
 									<br>
-									<span class="upper-case">Forma de pago: </span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span>
+									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
+									<br>
+									<br>
+									<span ng-if="loan.cardPart > 0.0"><span class="upper-case">Pago con tarjeta: {{loan.cardPart | currency: '$': 2}}</span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span></span>
 									<br>
 									<br>
 									<div class="alert-icon">
@@ -275,7 +278,8 @@
 										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
 									</div>
 									<br>
-									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.cardPart | balancePart: '$': 2}}</span></span>
+									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
+									<br>
 									<br>
 									<span ng-if="loan.cardPart > 0.0"><span class="upper-case">Pago con tarjeta: {{loan.cardPart | currency: '$': 2}}</span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span></span>
 									<br>
@@ -460,7 +464,7 @@
 								<br>
 								<span>Durante <span class="text-black">{{loan.weeks}} semanas</span> desde la entrega del juego.</span>
 								<br>
-								<span>Recibirás un total de <span class="text-black">{{loan.publicUserGame.cost | currency: '$': 2}}</span> por este préstamo.</span>
+								<span>Recibirás un total de <span class="text-black">{{(loan.publicUserGame.cost * loan.weeks) | currency: '$': 2}}</span> por este préstamo.</span>
 								<br>
 								<span>Una vez aceptado el préstamo, se te notificará la fecha exacta que tendrás tu juego de vuelta.</span>
 								<br>

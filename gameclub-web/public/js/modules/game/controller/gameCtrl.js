@@ -194,6 +194,10 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         if (!failedValidation) {
             $scope.paymentViewOpen = true;
             angular.element(".payment-view").toggle(250);
+
+            setTimeout(function() {
+                $scope.$broadcast('rzSliderForceRender');
+            }, 100);
         }
     }
 
@@ -298,11 +302,10 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         $state.go("^.publicProfile", {id: owner.id, alias: friendlyUrl(owner.name + ' ' + owner.lastName.substring(0, 1))});
     }
 
-    $scope.gamerBalance = 98;
-    $scope.gamerDue = 100;
+    $scope.loan = {balancePart: parseFloat($scope.currentUser.shownBalance)};
 
     $scope.slider = {
-        value: Math.floor($scope.gamerBalance),
+        value: Math.floor(parseFloat($rootScope.currentUser.shownBalance)),
         options: {
             hidePointerLabels: true,
             hideLimitLabels: true,
@@ -311,11 +314,11 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             precision: (1/100),
             getTickColor: function(value) {return '#071428';},
             getPointerColor: function(value) {return '#071428';},
-            getSelectionBarColor: function(value) {return '#071428';}
+            getSelectionBarColor: function(value) {return '#071428';},
+            onChange: function() {$scope.loan.balancePart = $scope.slider.value}
         }
     };
-    // $scope.gamerBalanceInt = $scope.gamerBalance-$scope.slider.value;
-    $scope.gamerBalanceFlb = 0;
+    
     function getIdentityPercentage() {
         let percent = 0;
         if ($rootScope.currentUser != null) {

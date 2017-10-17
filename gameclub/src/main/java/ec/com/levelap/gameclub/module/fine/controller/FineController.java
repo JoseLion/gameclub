@@ -69,13 +69,14 @@ public class FineController {
 		return fineService.save(fineObj);
 	}
 	
-	@RequestMapping(value="saveBalanceFine", method=RequestMethod.POST)
-	public ResponseEntity<?> saveFineBalance(Fine fineObj) throws ServletException, IOException{
+	@RequestMapping(value="applyFine", method=RequestMethod.POST)
+	public ResponseEntity<?> saveFineBalance(@RequestBody Fine fineObj) throws ServletException, IOException{
 		PublicUser usr = new PublicUser();
 		Double subtraction = 0D;
 		Message message = new Message();
+//		Fine fineTmp = fineService.getFineRepo().findOne(fineId.getId());
 		try {
-			if(fineObj.getOwner().getShownBalance() != null) {
+			if(fineObj.getOwner() != null) {
 				subtraction = fineObj.getOwner().getShownBalance() - fineObj.getAmount();
  				if(subtraction >= 0) { 
 					usr = publicUserService.substractFromUserBalance(fineObj.getOwner().getId(), fineObj.getAmount());
@@ -113,19 +114,11 @@ public class FineController {
 			fineObj.setWasPayed(true);
 			fineObj.setMessage(message);
 			return fineService.save(fineObj);
-//			return null;
 		} else {
 			return fineService.save(fineObj);
-//			return null;
 		}
 	}
-	
-	@RequestMapping(value="findFineMessage", method=RequestMethod.GET)
-	public ResponseEntity<Fine> findFineMessage(Message message) throws ServletException, IOException{
-		Fine fine = fineService.getFineRepo().findFinesMessage(message);
-		return new ResponseEntity<Fine>(fine, HttpStatus.OK);
-	}
-	
+
 	@RequestMapping(value="findFinesMessages", method=RequestMethod.POST)
 	public ResponseEntity<List<Fine>> findFinesMessages(PublicUser owner) throws ServletException, IOException{
 		List<Fine> fines = fineService.getFineRepo().findFinesMessages(owner);

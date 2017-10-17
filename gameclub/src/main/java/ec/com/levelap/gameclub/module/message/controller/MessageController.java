@@ -1,5 +1,6 @@
 package ec.com.levelap.gameclub.module.message.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.service.LoanService;
 import ec.com.levelap.gameclub.module.message.entity.Message;
@@ -65,6 +67,16 @@ public class MessageController {
 		messageService.getMessageRepo().save(message);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="findFineMessage/{messageId}", method=RequestMethod.GET)
+	public ResponseEntity<Fine> findFineMessage(@PathVariable Long messageId) throws ServletException{
+		Fine fine = messageService.getMessageRepo().findFinesMessage(messageId);
+		Message message = messageService.getMessageRepo().findOne(messageId);
+		message.setRead(true);
+		messageService.getMessageRepo().save(message);
+		return new ResponseEntity<Fine>(fine, HttpStatus.OK);
+	}
+	
 	
 	private static class Search {
 		public String text = "";

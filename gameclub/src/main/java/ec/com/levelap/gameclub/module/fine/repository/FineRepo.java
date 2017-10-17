@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param;
 
 @Repository
 public interface FineRepo extends JpaRepository<Fine, Long>{
-	@Query(	"SELECT f FROM Fine f WHERE " +
+	@Query(	"SELECT f FROM Fine f join f.owner ow WHERE " +
 				"(UPPER(f.owner.name) LIKE UPPER('%' || :name || '%') OR " +
 				"UPPER(f.owner.lastName) LIKE UPPER('%' || :name || '%') OR " +
 				"UPPER(f.owner.name || ' ' || f.owner.lastName) LIKE UPPER('%' || :name || '%')) AND " +
@@ -27,10 +27,6 @@ public interface FineRepo extends JpaRepository<Fine, Long>{
 			@Param("wasPayed") Boolean wasPayed,
 			@Param("startDate") Date startDate,
 			@Param("endDate") Date endDate);
-	
-	@Query("SELECT f FROM Fine f "
-			+ "WHERE f.message=:message")
-	public Fine findFinesMessage(@Param("message") Message message);
 	
 	@Query("SELECT f FROM Fine f "
 			+ "WHERE f.owner=:owner")

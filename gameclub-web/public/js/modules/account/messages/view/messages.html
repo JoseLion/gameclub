@@ -715,13 +715,6 @@
 								<br>
 								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptReview(loan.review.id)" ng-if="loan.review.lenderAccepted == null">Aceptar review</button> -->
 							</div>
-
-							<div class="date" ng-if="fine.message != null">{{fine.message.date | date: 'dd/MM/yy - HH:mm'}}</div>
-							<div class="red-box medium-box" ng-if="fine.message != null">
-								<span>Hola {{fine.owner.name}}, has sido multado el valor de $: {{fine.amount}}, por {{fine.description}}, este saldo ha sido descontado de tu balance y/o tu tarjeta ingresada. </span>
-								<br>
-							</div>
-
 							<!-- <div class="date" ng-if="loan.review.lenderAccepted == true">{{loan.review.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="blue-box small-box text-center" ng-if="loan.review.lenderAccepted == true">
 								<div class="box-label col-md-12">
@@ -732,6 +725,15 @@
 							</div> -->
 						</div>
 						<!-- ************************ END - LENDER MESSAGE FLOW ************************ -->
+					</div>
+
+					<div class="welcome-fine col-md-12" ng-if="fine.status != null">
+						<div class="date" >{{fine.message.date | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box medium-box" >
+								<span>Hola {{fine.owner.name}}, has sido cobrado el valor de $: {{fine.amount}}, por {{fine.description}}, este saldo ha sido descontado de tu balance y/o tu tarjeta ingresada. </span>
+							</div>
+							<br>
+						</div>
 					</div>
 
 					<div class="clearfix"></div>

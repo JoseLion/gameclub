@@ -318,6 +318,10 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             onChange: function() {$scope.loan.balancePart = $scope.slider.value}
         }
     };
+
+    $scope.getSliderMax = function() {
+        return 100.0;
+    }
     
     function getIdentityPercentage() {
         let percent = 0;

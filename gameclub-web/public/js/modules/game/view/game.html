@@ -118,7 +118,7 @@
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
                                         <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
                                         <td>{{cross.publicUser.location.name}}</td>
-                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 0}}</td>
+                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 2}}</td>
                                         <td>
                                             <stars class="cursor-pointer" ng-model="cross.publicUser.rating" ng-click="viewOwnerRating(cross.publicUser)" ng-if="cross.publicUser.rating > 0"></stars>
                                             <span ng-if="cross.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>
@@ -183,7 +183,7 @@
 
                     <div class="col-md-12 loan-cost">
                         <label>Costo prestamo</label>
-                        <span class="value big">{{loanGame.cost}} &#36;</span> <span class="value black">x</span>
+                        <span class="value big">{{loanGame.cost | currency: '$': 2}}</span> <span class="value black">x</span>
                         <ui-select ng-model="loan.weeks" class="selector" ng-change="weekSelected()" style="width:auto;">
                             <ui-select-match placeholder="Semanas...">{{$select.selected}} {{$select.selected == 1 ? 'Semana' : 'Semanas'}}</ui-select-match>
                             <ui-select-choices repeat="num in [1, 2, 3, 4] | filter: $select.search">
@@ -226,7 +226,7 @@
                         <div class="col-md-8 left-decoration">
                             <div class="col-md-12">
                                 <label class="big">Costo final</label>
-                                <span class="big-value">{{(loan.cost = (loanGame.cost * loan.weeks) + (loanGame.shippingCost * 2.0)) | currency: '$': 2}} &#36;</span>
+                                <span class="big-value">{{(loan.cost = (loanGame.cost * loan.weeks) + (loanGame.shippingCost * 2.0)) | currency: '$': 2}}</span>
                             </div>
                             
                             <div class="col-md-12">
@@ -254,7 +254,7 @@
                             <div calss="sub-title vertical-line"></div>
                             <h2 ><B>PAGO CON SALDO</B></h2>
                             <h3 class="int-number-slider">{{slider.value | currency: '$': 2}}</h3>
-                            <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
+                            <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options" rz-slider-high="getSliderMax()"></rzslider>
                         </div>
                         <div class="col-md-6 sub-title">
                             <h2 ><B>monto restante a pagar</B></h2>

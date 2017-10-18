@@ -165,6 +165,13 @@ public class PublicUserService extends BaseService<PublicUser> {
 				return new ResponseEntity<>(new ErrorControl("No se pudo enviar el código al correo indicado, por favor vuelve a intentarlo", true), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
+		
+		if (publicUser.getId() != null) {
+			PublicUser original = publicUserRepo.findOne(publicUser.getId());
+			publicUser.setPrivateKey(original.getPrivateKey());
+			publicUser.setBalance(original.getBalance());
+		}
+		
 		publicUser = publicUserRepo.save(publicUser);
 		return new ResponseEntity<>(publicUser, HttpStatus.OK);
 	}

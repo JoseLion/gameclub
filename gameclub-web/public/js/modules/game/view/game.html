@@ -52,10 +52,7 @@
                 </div>
             </div>
             <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">{{game.releaseDate | date: 'dd-MM-yyyy'}}</span></span>
-            <span class="col-md-12 subtitle">Costo promedio por semana: 
-                <span class="red" ng-if="settings[Const.settings.priceChartingGames].type == 'percentage'">&#36;{{((((game.uploadPayment*priceChartingGM)/100)+game.uploadPayment)/gameLoanPCH) | number:2}}</span>
-                <span class="red" ng-if="settings[Const.settings.priceChartingGames].type == 'number'">&#36;{{((game.uploadPayment+priceChartingGM)/gameLoanPCH) | number:2}}</span>
-            </span>
+            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{getWeeklyCost(game) | currency: '$': 2}}</span></span>
         </div>
         <div class="col-md-3 rating">
             <div class="reviews text-center">
@@ -254,7 +251,7 @@
                             <div calss="sub-title vertical-line"></div>
                             <h2 ><B>PAGO CON SALDO</B></h2>
                             <h3 class="int-number-slider">{{slider.value | currency: '$': 2}}</h3>
-                            <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options" rz-slider-high="getSliderMax()"></rzslider>
+                            <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
                         </div>
                         <div class="col-md-6 sub-title">
                             <h2 ><B>monto restante a pagar</B></h2>
@@ -266,7 +263,7 @@
                         <div ng-if="currentUser.paymentMethods[0] != null ">
                             <label class="col-md-12">Elige tu tarjeta</label>
                             <div class="col-md-12">
-                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[0]}" ng-click="loan.payment = currentUser.paymentMethods[0]" ></div>
+                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[0]}" ng-click="loan.payment = currentUser.paymentMethods[0]" ng-if="loan.cardPart > 0.0"></div>
                                 <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{currentUser.paymentMethods[0].cardFinale}}" readonly>
                                 <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button><p>{{idCard11}}</p><p>{{idCard2}}</p>
                             </div>

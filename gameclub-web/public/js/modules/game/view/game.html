@@ -147,22 +147,22 @@
                     <button type="button" class="btn btn-tertiary small dark" ng-click="closeLoanView()">Volver a propuestas</button>
 
                     <div class="col-md-9">
-                        <label>Estatus</label>
+                        <label class="title">Estatus</label>
                         <span class="value">{{loanGame.status ? 'Disponible' : 'Prestado'}}</span>
                     </div>
 
                     <div class="col-md-9">
-                        <label>Estado del juego</label>
+                        <label class="title">Estado del juego</label>
                         <span class="value">{{loanGame.integrity.name}}</span>
                     </div>
 
                     <div class="col-md-9">
-                        <label>Observaciones</label>
+                        <label class="title">Observaciones</label>
                         <span class="value original-text">{{loanGame.observations}}</span>
                     </div>
 
                     <div class="col-md-9">
-                        <label>Rating del prestador</label>
+                        <label class="title">Rating del prestador</label>
                         <div class="rating-container" ng-if="loanGame.publicUser.rating > 0">
                             <stars ng-model="loanGame.publicUser.rating" solid="light"></stars>
                         </div>
@@ -171,15 +171,15 @@
                     </div>
 
                     <div class="col-md-9">
-                        <label>Ciudad del juego</label>
+                        <label class="title">Ciudad del juego</label>
                         <span class="value">{{loanGame.publicUser.location.name}}</span>
                     </div>
 
                     <div class="clearfix"></div>
-                    <div class="subtitle top-space">Costo &#36;</div>
+                    <div class="subtitle top-space">Costo alquiler</div>
 
                     <div class="col-md-12 loan-cost">
-                        <label>Costo prestamo</label>
+                        <label class="title">Costo prestamo</label>
                         <span class="value big">{{loanGame.cost | currency: '$': 2}}</span> <span class="value black">x</span>
                         <ui-select ng-model="loan.weeks" class="selector" ng-change="weekSelected()" style="width:auto;">
                             <ui-select-match placeholder="Semanas...">{{$select.selected}} {{$select.selected == 1 ? 'Semana' : 'Semanas'}}</ui-select-match>
@@ -187,13 +187,28 @@
                                 <div ng-bind-html="num + (num == 1 ? ' semana' : ' semanas') | highlight: $select"></div>
                             </ui-select-choices>
                         </ui-select>
+                        <span class="value big">&#61; {{loanGame.cost * loan.weeks | currency: '$': 0}}</span>
                     </div>
 
                     <div class="clearfix"></div>
-                    <div class="subtitle top-space">Costo shipping</div>
+                    <div class="subtitle top-space">Costo shipping 
+                        <!-- <label class="title">Ciudad de retiro del juego {{loanGame.publicUser.location.name}}</label>  -->
+                    </div>
 
                     <div class="shipping">
                         <div class="address-title">Dirección de entrega actual:</div>
+
+                        <!-- <div class="col-md-9">
+                            <label>Ciudad</label> -->
+                            <!-- <span class="value">{{loanGame.publicUser.location.name}}</span> -->
+                            <!--<input type="text" ng-model="loan.gamerAddress" required /> -->
+                            <!-- <ui-select ng-model="loanGame.publicUser.location.name" theme="bootstrap" class="selector" >
+                                <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                                <ui-select-choices repeat="city in locationCities | filter: $select.search">
+                                    <div ng-bind-html="city.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div> -->
 
                         <div class="col-md-9">
                             <label>Dirección</label>
@@ -218,18 +233,24 @@
                         <div class="clearfix"></div>
                     </div>
 
+                    <div class="final-shipping ">
+                        <h1 class="title">Costo shipping = {{loanGame.shippingCost * 2.0 | currency: '$':2}}</h1>
+                        <h1 class="title1">(ida y vuelta)</h1>
+                        <!-- <label class="title">Ciudad de retiro del juego {{loanGame.publicUser.location.name}}</label>  -->
+                    </div>
+
                     <div class="final-costs">
                         <div class="col-md-3"></div>
                         <div class="col-md-8 left-decoration">
                             <div class="col-md-12">
-                                <label class="big">Costo final</label>
+                                <label class="big">Costo final total</label>
                                 <span class="big-value">{{(loan.cost = (loanGame.cost * loan.weeks) + (loanGame.shippingCost * 2.0)) | currency: '$': 2}}</span>
                             </div>
                             
-                            <div class="col-md-12">
+                           <!--  <div class="col-md-12">
                                 <label class="big">Costo shipping final</label>
                                 <span class="big-value bigger">{{(loanGame.shippingCost * 2.0) | currency: '$': 2}}</span>
-                            </div>
+                            </div> -->
 
                             <div class="col-md-12 foot-note">(Costo en base a dirección actual)</div>
                         </div>

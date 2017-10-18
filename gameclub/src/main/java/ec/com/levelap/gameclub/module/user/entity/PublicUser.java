@@ -59,7 +59,7 @@ public class PublicUser extends BaseEntity {
 	private Boolean isFacebookUser = false;
 	
 	@JsonIgnore
-	@Column(name="private_key")
+	@Column
 	private byte[] privateKey;
 	
 	@JsonIgnore

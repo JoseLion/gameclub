@@ -52,10 +52,7 @@
                 </div>
             </div>
             <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">{{game.releaseDate | date: 'dd-MM-yyyy'}}</span></span>
-            <span class="col-md-12 subtitle">Costo promedio por semana: 
-                <span class="red" ng-if="settings[Const.settings.priceChartingGames].type == 'percentage'">&#36;{{((((game.uploadPayment*priceChartingGM)/100)+game.uploadPayment)/gameLoanPCH) | number:2}}</span>
-                <span class="red" ng-if="settings[Const.settings.priceChartingGames].type == 'number'">&#36;{{((game.uploadPayment+priceChartingGM)/gameLoanPCH) | number:2}}</span>
-            </span>
+            <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{getWeeklyCost(game) | currency: '$': 2}}</span></span>
         </div>
         <div class="col-md-3 rating">
             <div class="reviews text-center">
@@ -118,7 +115,7 @@
                                         <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
                                         <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
                                         <td>{{cross.publicUser.location.name}}</td>
-                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 0}}</td>
+                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 2}}</td>
                                         <td>
                                             <stars class="cursor-pointer" ng-model="cross.publicUser.rating" ng-click="viewOwnerRating(cross.publicUser)" ng-if="cross.publicUser.rating > 0"></stars>
                                             <span ng-if="cross.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>
@@ -183,7 +180,7 @@
 
                     <div class="col-md-12 loan-cost">
                         <label>Costo prestamo</label>
-                        <span class="value big">{{loanGame.cost}} &#36;</span> <span class="value black">x</span>
+                        <span class="value big">{{loanGame.cost | currency: '$': 2}}</span> <span class="value black">x</span>
                         <ui-select ng-model="loan.weeks" class="selector" ng-change="weekSelected()" style="width:auto;">
                             <ui-select-match placeholder="Semanas...">{{$select.selected}} {{$select.selected == 1 ? 'Semana' : 'Semanas'}}</ui-select-match>
                             <ui-select-choices repeat="num in [1, 2, 3, 4] | filter: $select.search">
@@ -226,7 +223,7 @@
                         <div class="col-md-8 left-decoration">
                             <div class="col-md-12">
                                 <label class="big">Costo final</label>
-                                <span class="big-value">{{(loan.cost = (loanGame.cost * loan.weeks) + (loanGame.shippingCost * 2.0)) | currency: '$': 2}} &#36;</span>
+                                <span class="big-value">{{(loan.cost = (loanGame.cost * loan.weeks) + (loanGame.shippingCost * 2.0)) | currency: '$': 2}}</span>
                             </div>
                             
                             <div class="col-md-12">
@@ -266,7 +263,7 @@
                         <div ng-if="currentUser.paymentMethods[0] != null ">
                             <label class="col-md-12">Elige tu tarjeta</label>
                             <div class="col-md-12">
-                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[0]}" ng-click="loan.payment = currentUser.paymentMethods[0]" ></div>
+                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[0]}" ng-click="loan.payment = currentUser.paymentMethods[0]" ng-if="loan.cardPart > 0.0"></div>
                                 <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{currentUser.paymentMethods[0].cardFinale}}" readonly>
                                 <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button><p>{{idCard11}}</p><p>{{idCard2}}</p>
                             </div>

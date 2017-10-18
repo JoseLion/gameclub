@@ -1,9 +1,29 @@
 angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, mostPlayed, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
     let currentPage = 0;
-    $scope.validCards = [];
-    $scope.priceChartingGM = parseFloat($rootScope.settings[Const.settings.priceChartingGames].value);
     let priceChartingGMLoan = 0.0;
-    $scope.gameLoanPCH = parseFloat($rootScope.settings[Const.settings.weekShippingCost].value);
+    $scope.validCards = [];
+
+    $scope.slider = {
+        value: 0.0,
+        options: {
+            hidePointerLabels: true,
+            hideLimitLabels: true,
+            showSelectionBar: true,
+            step: (1/100),
+            precision: (1/100),
+            floor: 0.0,
+            getTickColor: function(value) {return '#071428';},
+            getPointerColor: function(value) {return '#071428';},
+            getSelectionBarColor: function(value) {return '#071428';},
+            onChange: function() {
+                $scope.loan.balancePart = $scope.slider.value
+
+                if ($scope.loan.cardPart == 0.0) {
+                    $scope.loan.payment = null;
+                }
+            }
+        }
+    };
 
     if (game != null) {
         game.$promise.then(function(data) {
@@ -114,7 +134,8 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                     publicUserGame: cross,
                     weeks: 1,
                     gamerAddress: $rootScope.currentUser.billingAddress,
-                    gamerReceiver: ($rootScope.currentUser.name + ' ' + $rootScope.currentUser.lastName)
+                    gamerGeolocation: $rootScope.currentUser.geolocation,
+                    gamerReceiver: $rootScope.currentUser.receiver != null ? $rootScope.currentUser.receiver : ($rootScope.currentUser.name + ' ' + $rootScope.currentUser.lastName)
                 };
             } else {
                 if (getInfoPercentage() < 100 && getIdentityPercentage() < 100) {
@@ -139,7 +160,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     $scope.closeLoanView = function() {
         $scope.loanGame = null;
         $scope.loanViewOpen = false;
-
+        $scope.paymentViewOpen = false;
         $scope.loan = {};
     }
 
@@ -194,10 +215,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         if (!failedValidation) {
             $scope.paymentViewOpen = true;
             angular.element(".payment-view").toggle(250);
-
-            setTimeout(function() {
-                $scope.$broadcast('rzSliderForceRender');
-            }, 100);
+            $scope.slider.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= $scope.loan.cost ? $scope.loan.cost : parseFloat($rootScope.currentUser.shownBalance));
         }
     }
 
@@ -224,25 +242,26 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             failedValidation = true;
         }
 
-        if ($scope.loan.payment == null) {
+        if ($scope.loan.cardPart > 0 && $scope.loan.payment == null) {
             notif.danger("Por favor seleccione una forma de pago");
             failedValidation = true;
         }
 
-        /**** Revisar con bugs ******/
         if (!failedValidation) {
-            console.log("Valida");
-            if($rootScope.currentUser.paymentMethods.length = 1){
-                console.log("Hay una tarjetA");
-                console.log($rootScope.currentUser.paymentMethods[0].status);
-            }
-            
             sweet.default("Se enviará una solicitud de prestamo al propietario del juego", function() {
-                console.log("loan: ", $scope.loan);
-                console.log($rootScope.currentUser.paymentMethods[0].status);
                 rest("loan/requestGame").post($scope.loan, function(data) {
-                    notif.success("Solicitud enviada con éxito");
                     $rootScope.currentUser = data;
+                    notif.success("Solicitud enviada con éxito");
+
+                    if ($scope.loan.saveChanges) {
+                        $rootScope.currentUser.billingAddress = $scope.loan.gamerAddress;
+                        $rootScope.currentUser.geolocation = $scope.loan.gamerGeolocation;
+                        $rootScope.currentUser.receiver = $scope.loan.gamerReceiver;
+                        rest("publicUser/save").post($rootScope.currentUser, function(data) {
+                            $rootScope.currentUser = data;
+                        });
+                    }
+
                     sweet.close();
                     $state.go("gameclub.account.messages");
                 }, function(error) {
@@ -267,6 +286,28 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     $scope.loadMoreGames = function() {
         currentPage++;
         filterAvailibleGames();
+    }
+
+    $scope.viewOwnerRating = function(owner) {
+        $state.go("^.publicProfile", {id: owner.id, alias: friendlyUrl(owner.name + ' ' + owner.lastName.substring(0, 1))});
+    }
+
+    $scope.getWeeklyCost = function(game) {
+        if ($rootScope.settings != null && game != null) {
+            let type = $rootScope.settings[Const.settings.priceChartingGames].type;
+            let priceChartingGM = parseFloat($rootScope.settings[Const.settings.priceChartingGames].value);
+            let gameLoanPCH = parseFloat($rootScope.settings[Const.settings.weekShippingCost].value);
+
+            if (type === 'percentage') {
+                return (((game.uploadPayment * priceChartingGM) / 100.0) + game.uploadPayment) / gameLoanPCH;
+            }
+
+            if (type === 'number') {
+                return (game.uploadPayment + priceChartingGM) / gameLoanPCH;
+            }
+        }
+
+        return null;
     }
 
     function getInfoPercentage() {
@@ -298,27 +339,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         return percent;
     }
 
-    $scope.viewOwnerRating = function(owner) {
-        $state.go("^.publicProfile", {id: owner.id, alias: friendlyUrl(owner.name + ' ' + owner.lastName.substring(0, 1))});
-    }
-
-    $scope.loan = {balancePart: parseFloat($scope.currentUser.shownBalance)};
-
-    $scope.slider = {
-        value: Math.floor(parseFloat($rootScope.currentUser.shownBalance)),
-        options: {
-            hidePointerLabels: true,
-            hideLimitLabels: true,
-            showSelectionBar: true,
-            step: (1/100),
-            precision: (1/100),
-            getTickColor: function(value) {return '#071428';},
-            getPointerColor: function(value) {return '#071428';},
-            getSelectionBarColor: function(value) {return '#071428';},
-            onChange: function() {$scope.loan.balancePart = $scope.slider.value}
-        }
-    };
-    
     function getIdentityPercentage() {
         let percent = 0;
         if ($rootScope.currentUser != null) {

@@ -163,7 +163,7 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span class="text-black">Has pedido a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.name | limitTo: 1}}</span>
+								<span class="text-black">Has pedido a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}.</span>
 								<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goTouser(loan.publicUserGame.publicUser)">Ver ficha del usuario</button>
 								<br>
 								<span>el siguiente juego:</span>
@@ -469,8 +469,8 @@
 								<span>Una vez aceptado el préstamo, se te notificará la fecha exacta que tendrás tu juego de vuelta.</span>
 								<br>
 								<br>
-								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptLoan(loan)" ng-if="loan.wasAccepted == null">Aceptar préstamo</button>
-								<button type="button" class="btn btn-xs btn-tertiary" ng-click="rejectLoan(loan)" ng-if="loan.wasAccepted == null">Rechazar préstamo</button>
+								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptLoan(loan)" ng-if="loan.wasAccepted == null && loan.status">Aceptar préstamo</button>
+								<button type="button" class="btn btn-xs btn-tertiary" ng-click="rejectLoan(loan)" ng-if="loan.wasAccepted == null && loan.status">Rechazar préstamo</button>
 							</div>
 
 							<div ng-include="'firstLoanAnswer.html'" scope="this"></div>

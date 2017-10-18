@@ -160,6 +160,11 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			isValid = false;
 		}
 
+		if (kit.geolocation == null) {
+			notif.danger("La geolocalización es obligatoria");
+			isValid = false;
+		}
+
 		if (isValid) {
 			sweet.default("Se confirmará el envío de tu Welcome Kit", function() {
 				rest("welcomeKit/confirmWelcomeKit").post(kit, function(data) {

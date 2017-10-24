@@ -8,16 +8,13 @@
 	</div>
 	<div class="col-md-12 form-group">
 			<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover" >
-				
 				<col width="20%">
 				<col width="40%">
 				<col width="10%">
 				<col width="10%">
 				<col width="10%">
-
 				<thead>
 					<tr>
-						
 						<th>Usuario</th>
 						<th>Motivo</th>
 						<th>Valor</th>
@@ -27,7 +24,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="fine in fines">
-						
+
 						<td>{{fine.owner.name}} {{fine.owner.lastName}}</td>
 						<td>{{fine.description}}</td>
 						<td>{{fine.amount}}</td>
@@ -48,10 +45,11 @@
 					    <td ng-if="fine.apply == true && fine.wasPayed == true">PAGADA</td>
 					    <td ng-if="fine.apply == false && fine.wasPayed == false ">NO APLICA COBRO</td>
 						<td style="text-align: center;" ng-if="(fine.apply == null || fine.apply == true) && fine.wasPayed == false" >
-							<button type="button" class="btn btn-xs btn-warning" ng-click="executeFine(fine)" tooltip="Ejecutar multa"><i class="fa fa-pencil"></i>
+							<button type="button" class="btn btn-xs btn-success" ng-click="executeFine(fine)" tooltip="Ejecutar multa">
+								<i class="fa fa-check"></i>
 							</button>
-							<button type="button" class="btn btn-xs" ng-click="noExecuteFine(fine)" tooltip="No ejecutar multa">
-								<i class="fa fa-power-off"></i>
+							<button type="button" class="btn btn-xs btn-primary" ng-click="noExecuteFine(fine)" tooltip="No ejecutar multa">
+								<i class="fa fa-ban"></i>
 							</button>
 						</td>
 					</tr>

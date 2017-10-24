@@ -187,11 +187,11 @@
                                 <div ng-bind-html="num + (num == 1 ? ' semana' : ' semanas') | highlight: $select"></div>
                             </ui-select-choices>
                         </ui-select>
-                        <span class="value big">&#61; {{loanGame.cost * loan.weeks | currency: '$': 0}}</span>
+                        <span class="value big">&#61; {{loanGame.cost * loan.weeks | currency: '$': 2}}</span>
                     </div>
 
                     <div class="clearfix"></div>
-                    <div class="subtitle top-space">Costo shipping 
+                    <div class="subtitle top-space">Costo shipping
                         <!-- <label class="title">Ciudad de retiro del juego {{loanGame.publicUser.location.name}}</label>  -->
                     </div>
 
@@ -246,7 +246,7 @@
                                 <label class="big">Costo final total</label>
                                 <span class="big-value">{{(loan.cost = (loanGame.cost * loan.weeks) + (loanGame.shippingCost * 2.0)) | currency: '$': 2}}</span>
                             </div>
-                            
+
                            <!--  <div class="col-md-12">
                                 <label class="big">Costo shipping final</label>
                                 <span class="big-value bigger">{{(loanGame.shippingCost * 2.0) | currency: '$': 2}}</span>
@@ -280,7 +280,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 left-decoration">                        
+                    <div class="col-md-6 left-decoration">
                         <div ng-if="currentUser.paymentMethods[0] != null ">
                             <label class="col-md-12">Elige tu tarjeta</label>
                             <div class="col-md-12">
@@ -289,7 +289,7 @@
                                 <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button><p>{{idCard11}}</p><p>{{idCard2}}</p>
                             </div>
                         </div>
-                        
+
                         <div ng-if="currentUser.paymentMethods[0] == null">
                             <label class="col-md-12">Ingresa otra forma de pago</label>
                             <div class="col-md-12">
@@ -304,7 +304,7 @@
                                 <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])">Borrar tarjeta</button>
                             </div>
                         </div>
-                        
+
                         <div ng-if="currentUser.paymentMethods[0] == null">
                             <label class="col-md-12">Ingresa otra forma de pago</label>
                             <div class="col-md-12">

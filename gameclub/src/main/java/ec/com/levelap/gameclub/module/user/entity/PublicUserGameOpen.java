@@ -15,7 +15,7 @@ public interface PublicUserGameOpen {
 	@Value("#{target.publicUser}")
 	public PublicUser getPublicUser();
 	
-	public Integer getCost();
+	public Double getCost();
 	
 	@Value("#{target.integrity}")
 	public Catalog getIntegrity();

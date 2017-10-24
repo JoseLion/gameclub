@@ -27,7 +27,7 @@
 
 						<td>{{fine.owner.name}} {{fine.owner.lastName}}</td>
 						<td>{{fine.description}}</td>
-						<td>{{fine.amount}}</td>
+						<td>{{fine.amount | currency: '$': 2}}</td>
 						<td ng-if="fine.apply == null">
 							<!--<label for="applyYes">Si:</label>
 					    	<input id="applyYes" type="radio" ng-model="fine.apply" value="true" />

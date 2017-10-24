@@ -14,40 +14,40 @@
             <div class="col-md-12">o</div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="name" placeholder="Nombre..." class="input-form" ng-model="user.name" required>
             </div>
-            <div class="col-md-1 image"><img src="img/contact-person.svg"/></div>
+            <div class="col-md-1 col-xs-1 image"><img src="img/contact-person.svg"/></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="lastName" placeholder="Apellido..." class="input-form" ng-model="user.lastName" required>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-1 col-xs-1"></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="email" type="email" placeholder="E-mail..." class="input-form" ng-model="user.username" required>
             </div>
-            <div class="col-md-1 image"><img src="img/contact-email.svg"/></div>
+            <div class="col-md-1 col-xs-1 image"><img src="img/contact-email.svg"/></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="password" type="password" placeholder="Contraseña..." class="input-form" ng-model="user.password" required ng-minlength="6" ng-pattern="passRegex">
             </div>
-            <div class="col-md-1 image"><img src="img/contact-password.svg" 
+            <div class="col-md-1 col-xs-1 image"><img src="img/contact-password.svg"
                 title="La contrase&ntilde;a debe contener&#58; m&iacute;nimo 6 caracteres por lo menos una MAY&Uacute;SCULA (A-Z)&#44; min&uacute;sculas (a-z) y por lo menos un n&uacute;mero (0-9)"/></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12">
                 <button type="submit" class="btn btn-primary-alt">Registrarme</button>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-1 col-xs-0"></div>
             <div class="clearfix"></div>
         </form>
     </section>
@@ -66,34 +66,34 @@
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="email" type="email" placeholder="E-mail..." ng-model="credentials.username" required>
             </div>
-            <div class="col-md-1 image"><img src="img/contact-email.svg"/></div>
+            <div class="col-md-1 col-xs-1 image"><img src="img/contact-email.svg"/></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="password" type="password" placeholder="Contraseña..." ng-model="credentials.password" required>
             </div>
-            <div class="col-md-1 image"><img src="img/contact-password.svg"/></div>
+            <div class="col-md-1 col-xs-1 image"><img src="img/contact-password.svg"/></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-md-1 col-xs-1"></div>
+            <div class="col-md-10 col-xs-10">
                 <button type="submit" class="btn btn-tertiary login" ng-disabled="isLoginIn">
                     <span ng-if="!isLoginIn">Iniciar sesi&oacute;n</span>
                     <loading showing="isLoginIn"></loading>
                 </button>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-1 col-xs-1"></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-md-1 col-xs-1"></div>
+            <div class="col-md-10 col-xs-10">
                 <a href ng-click="forgotPassword()">&iquest;Olvidaste tu contrase&ntilde;a?</a>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-1 col-xs-1"></div>
             <div class="clearfix"></div>
         </form>
     </section>
@@ -187,5 +187,3 @@
         </div>
     </div>
 </script>
-
-

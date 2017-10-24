@@ -1,20 +1,20 @@
 <div id="kushki-payment">
     <form role="form" class="form-horizontal" novalidate on-submit="kushkiSubmit()">
-        <div class="col-md-12 name form-group">
-            <div class="col-md-6">
+        <div class="col-md-12 col-xs-12 name form-group">
+            <div class="col-md-6 col-xs-6">
                 <input autocomplete="off" type="text" placeholder="Nombre(s)" ng-model="kushki.cardFirstName" class="complete" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-xs-6">
                 <input autocomplete="off" type="text" placeholder="Apellido(s)" ng-model="kushki.cardLastName" class="complete" />
             </div>
         </div>
-        <div class="col-md-12 card-number form-group">
+        <div class="col-md-12 col-xs-12 card-number form-group">
             <input autocomplete="off" type="text" placeholder="1111-2222-3333-4444" data-mask="9999-9999-9999-9999" ng-model="kushki.cardNumber" />
         </div>
-        <div class="col-md-4 expiry form-group">
+        <div class="col-md-4 col-xs-4 expiry form-group">
             <input autocomplete="off" type="text" placeholder="MM/AA" data-mask="99/99" ng-model="kushki.cardExpiry" />
         </div>
-        <div class="col-md-7 cvc form-group">
+        <div class="col-md-7 col-xs-7 cvc form-group">
             <input autocomplete="off" type="password" placeholder="Código de seguridad" maxlength="3" ng-model="kushki.cardCVC" />
         </div>
         <button type="submit" class="btn btn-tertiary small">Validar forma de pago</button>

@@ -7,9 +7,8 @@
 
 	header .contacts{text-align:left;padding-left:0;}
 	header#main-header{margin-bottom:-5%;}
-	header#main-header .social-media{text-align:center;}
-	header#main-header .contacts{text-align:center;}
-	header#main-header .shortcut-links{top:10%;}
+	header#main-header .social-media,header#main-header .contacts{display:none;}
+	header#main-header .shortcut-links{background:@color-primary;padding:0;}
 	header#main-header .shortcut-links .navbar-default{margin-top:-3%;}
 	header#main-header .shortcut-links img{width:100%;}
 	header#main-header .shortcut-links .links{padding:2.5% 0%;}
@@ -20,7 +19,7 @@
 	header#main-header .shortcut-links .coins .text{position:absolute;right:9%;}
 	header#main-header .shortcut-links .coins i.gc{font-size:1.4em;margin-left:50%;}
 	header#main-header .shortcut-links .links nav li.account span.notification{transform:translateX(-50%);right:unset;left:9%;top:5%;font-size:0.75em;}
-	header#main-header .shortcut-links span.notification{background-color:#E43345;color:white;font-weight:bold;font-size:0.6em;border-radius:15px;padding:4px 8px;position:absolute;transform:translate(50%,-50%);top:34%;right:11%;}
+	header#main-header .shortcut-links span.notification{background-color:#E43345;color:@color-tertiary;font-weight:bold;font-size:0.6em;border-radius:15px;padding:4px 8px;position:absolute;transform:translate(50%,-50%);top:34%;right:11%;}
 	header#main-header .navbar-nav{margin:auto;}
 	header#main-header .navbar-default .navbar-toggle{border-color:transparent;}
 	header#main-header .navbar-default .navbar-toggle:focus, header#main-header .navbar-default .navbar-toggle:hover{background-color:transparent;}
@@ -28,12 +27,17 @@
 	header#main-header .navbar-default .navbar-toggle:focus .icon-bar, header#main-header .navbar-default .navbar-toggle:hover .icon-bar{background-color:@color-secundary;}
 	header#main-header .navbar-default .navbar-collapse, header#main-header .navbar-default .navbar-form{border-color:transparent;border-top:unset;position:absolute;left:-100%;width:200%;padding:0%;background-color:@color-primary;}
 
+	footer#main-footer{padding-top:5%;}
+	footer#main-footer .logo img{width:35%;}
+	footer#main-footer .copyright{font-size:1em;margin-top:1em;}
+	footer#main-footer .top-space{margin-top:0.8em;}
+
 	#most-played{font-size:0.9em;}
 	#most-played .header{font-size:0.8em;}
 	#most-played .games .left, #most-played .games .right{padding-top:25%;padding-left:0%;padding-right:0%;}
 	#most-played .games .left .btn-most-played, #most-played .games .right .btn-most-played{font-size:0.5em;padding:0%;}
 
-	#home .banner{margin-top:40%;padding-bottom:15%;}
+	#home .banner{margin-top:50%;padding-bottom:15%;}
 	#home .banner::before{background-size:70%;top:-35%;}
 	#home .banner .title{font-size:1.5em;margin-top:2%;}
 	#home .banner .description{font-size:1.1em;}
@@ -77,11 +81,113 @@
 	#home .choose-by-cat .games .game .previous, #home .choose-by-cat .games .game .next{font-size:2em;}
 	#home .choose-by-cat .games .game .info{top:20%;}
 
-	footer#main-footer .logo img{width:35%;}
+	/* FAQs page: */
+	#faqs{margin-top:25%;}
+	#faqs section.faqs-title{margin-top:auto;padding-top:5%;padding-bottom: 2.5%;}
+	#faqs section.faqs-title .line-1::before,{left:-1%;top:5%;}
+	#faqs section.faqs-title .line-1::after{left:0%;top:20%;}
+	#faqs section.faqs-title .line-2::before{right:-1%;bottom:25%;}
+	#faqs section.faqs-title .line-2::after{right:-2%;bottom:10%;}
+	#faqs section.body .questions{border:none;min-height:auto;}
+	#faqs section.body .questions::before{content:"";height:4px;position:absolute;left:0;right:0;background:@color-primary;
+	background:-webkit-linear-gradient(left, @color-secundary 35%, @color-primary-alt 65%);
+	background:-o-linear-gradient(right, @color-secundary 35%, @color-primary-alt 65%);
+	background:-moz-linear-gradient(right, @color-secundary 35%, @color-primary-alt 65%);
+	background:linear-gradient(to right, @color-secundary 35%, @color-primary-alt 65%);}
 
-	#account #profile section.contact-information .completed{position:relative;top:0;left:0;right:0;bottom:0;}
-	#account #profile section.contact-information form::before{border-left:none;}
-	#account #profile section.contact-information form>div{border-bottom:none;}
+	/* Login page: */
+	#login{padding-top:25%;padding-bottom:0;}
+	#login::before,#login::after{content:none;}
+	#login img.signup-bg{width:200%;opacity:0.75;}
+	#login section.signup,#login section.login{padding:10% 5%;}
+	#login section.signup::before{content:"";position:absolute;top:0;bottom:0;left:0;right:0;z-index:-1;box-shadow:0px 0px 15px 5px @color-primary;
+	background:@color-secundary;background:linear-gradient(45deg,@color-tertiary -45%,@color-secundary 35%);background:-webkit-linear-gradient(45deg,@color-tertiary -45%,@color-secundary 35%);background:-o-linear-gradient(45deg,@color-tertiary -45%,@color-secundary 35%);background:-moz-linear-gradient(225deg,@color-secundary 45%,@color-tertiary 155%);}
+	#login section.login::after{content:"";position:absolute;top:0;bottom:0;left:0;right:0;z-index:-2;
+	background:@color-primary-alt;background:linear-gradient(135deg,@color-primary-alt 60%,@color-tertiary 145%);background:-webkit-linear-gradient(135deg,@color-primary-alt 60%,@color-tertiary 145%);background:-o-linear-gradient(135deg,@color-primary-alt 60%,@color-tertiary 145%);background:-moz-linear-gradient(135deg,@color-primary-alt 60%,@color-tertiary 145%);}
+
+	/* Account links: */
+	#accountLinks{left:0;}
+	#accountLinks nav li{padding-left:0;padding-right:0;}
+
+	/* Account commons: */
+	#account #profile section.contact-information,
+	#account #profile section.contact-ruc,
+	#account #profile section.contact-means,
+	#account #profile section.games,
+	#account #settings section.reviews,
+	#account #games section.upload,
+	#account #messages section.messages,
+	#account #referred section.gamers,
+	#account section.security{padding:5%;}
+
+	/* Account profile page: */
+	#account #profile section.header{margin-bottom:5%;}
+	#account #profile section.header .name{margin-bottom:20%;}
+	#account #profile section.header .name img{margin-bottom:10%;}
+	#account #profile section.contact-information .completed,
+	#account #profile section.contact-ruc .completed{position:relative;top:0;left:0;right:0;bottom:0;}
+	#account #profile section.contact-information .form::before,
+	#account #profile section.contact-ruc .form::before{content:none;}
+
+	/* Account settings page: */
+	#account #settings section.header .name{margin-bottom:20%;}
+	#account #settings section.header .name img{margin-bottom:10%;}
+	#account #settings section.header .name h1.title{margin:0;}
+	#account #settings section.reviews .lender,#account #settings section.reviews .gamer{float:none;margin:auto;text-align:center;width:100%;}
+	#account #settings section.reviews .lender>.header,#account #settings section.reviews .gamer>.header{padding:5% 0;}
+
+	/* Account my games page: */
+	#account #games section.header .name{margin-bottom:20%;}
+	#account #games section.header .name img{margin-bottom:10%;}
+	#account #games section.header .name h1.title{margin:0;}
+	#account #games section.header .coins,
+	#account #games section.header .total{padding-left:10%;padding-right:10%;}
+	#account #games section.header .coins::before,
+	#account #games section.header .total::before{left:2.5em;}
+	#account #games section.header .total .description{padding:0;}
+	#account #games section.upload .subtitle{padding-left:5%;padding-right:5%;}
+	#games .banner .search{margin-top:3%;}
+	#games .banner .search form{padding:1%;padding-left:4%;}
+	#games .banner .search .search-params{border-radius:8px;font-size:0.8em;background-color:rgba(255,10,40,0.65);}
+	#games .banner .search .search-params .filter{border:none;background-color:transparent;padding:2%;}
+	#games .banner .search form > div{text-align:center !important;padding:1%;}
+	#games .banner .search.white-search .btn-tertiary{width:2em;height:2em;font-size:0.75em;padding:14px;}
+
+	/* Account messages page: */
+	#account #messages section.header .name{margin-bottom:20%;}
+	#account #messages section.header .name img{margin-bottom:10%;}
+	#account #messages section.header .name h1.title{margin:0;}
+	#account #messages section.header .coins,
+	#account #messages section.header .total{padding-left:10%;padding-right:10%;}
+	#account #messages section.header .coins::before,
+	#account #messages section.header .total::before{left:2.5em;}
+	#account #messages section.header .total .description{padding:0;}
+	#account #messages section.header{padding-bottom:0;}
+	#account #messages section.messages .inbox{padding:4px;}
+	#account #messages section.messages .inbox .list{padding:0;padding-bottom:4px;}
+	#account #messages section.messages .inbox .list .head{margin-bottom:4px;}
+	#account #messages section.messages .inbox .list .search{padding:3%;height:auto;position:relative;}
+	#account #messages section.messages .inbox .list .search::before{top:auto;}
+	#account #messages section.messages .inbox .list .scrollable{position:relative;}
+	#account #messages section.messages .inbox .list .scrollable .no-messages{top:0;left:0;right:0;transform:none;text-align:center;width:100%;}
+	#account #messages section.messages .inbox .detail{padding:0;}
+	#account #messages section.messages .inbox .detail .head{margin-bottom:4px;}
+	#account #messages section.messages .inbox .detail .canvas{height:96vw;}
+
+	/* Referred page: */
+	#account #referred section.header{padding-bottom:5%;}
+	#account #referred section.header .name{margin-bottom:20%;}
+	#account #referred section.header .name img{margin-bottom:10%;}
+	#account #referred{background-position-x:center;background-size:auto;}
+	#account #referred section.header::before{width:100%;background-position:right;background-position-y:bottom;background-position-x:7em;opacity:0.5;}
+	#account #referred section.header .banner-information{padding-top:0;margin-left:0;padding-left:2em;}
+	#account #referred section.header .banner-information::after{width:80%;left:10%;}
+	#account #referred section.gamers img{margin:0;}
 
 	#most-seen > hr.subtitle, #blog hr.subtitle{width:22%!important;}
+
+	#notify.cg-notify-message.notify{width:75%;}
+	.responsive-margin-bottom{margin-bottom:7%;}
+	.responsive-padding-h-10{padding-left:10%;padding-right:10%;}
+
 }

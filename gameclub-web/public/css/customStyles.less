@@ -434,6 +434,10 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 
 /********** ACCOUNT-PAGE **********/
 #account{background:@color-secundary;color:@color-tertiary;}
+#account section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
+#account section.header .name h1.title{font-size:1.8em;margin-bottom:0;margin-top:0.5em;}
+#account section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
+#account section.header .name .connection span{color:@color-primary-alt;}
 /**********************************/
 
 /********** ACCOUNT-LINKS **********/
@@ -484,10 +488,6 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 /********** PROFILE-PAGE **********/
 #account #profile{padding-top:9em;}
 
-#account #profile section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
-#account #profile section.header .name h2.title{font-size:1.8em;margin-bottom:0;}
-#account #profile section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
-#account #profile section.header .name .connection span{color:@color-primary-alt;}
 #account #profile section.header .completed{position:relative;font-size:1.2em;margin-top:5%;margin-bottom:3%;text-transform:uppercase;font-weight:700;}
 #account #profile section.header .completed span{color:@color-primary-40;}
 #account #profile section.header .completed::after{content:"";position:absolute;bottom:-10%;left:15px;width:15%;border-bottom:2px solid @color-tertiary;}
@@ -569,7 +569,7 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #profile section.games p{margin:2% auto;font-size:0.8em;}
 
 #account #profile section.contact-ruc{position:relative;padding-bottom:2%;background:@color-primary-alt}
-#account #profile section.contact-ruc .completed{position:absolute;top:15%;left:22%;right:61%;bottom:0;text-align:center;font-size:1.2em;font-weight:700;}
+#account #profile section.contact-ruc .completed{position:absolute;top:15%;left:20%;right:60%;bottom:0;text-align:center;font-size:1.2em;font-weight:700;}
 #account #profile section.contact-ruc .completed span.percent{color:@color-primary-40;}
 #account #profile section.contact-ruc .completed button{padding-top:1%;font-size:0.65em;width:50%;}
 #account #profile section.contact-ruc .completed .box.checked::after{content:"";background:url("../img/check.svg") no-repeat center center;position:absolute;left:1px;bottom:-2px;background-size:100%;width:1.5em;height:1.5em;}
@@ -606,7 +606,8 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #profile section.contact-ruc .form .phone>div{display:table-cell;float:none;padding-left:1%;vertical-align:middle;}
 #account #profile section.contact-ruc .form .button-rigth{text-align:right;}
 /*#account #profile section.contact-ruc .form .line::before{box-shadow: inset 0 -2px 0 0 @color-primary;}*/
-#account #profile section.contact-ruc .form .line{box-shadow: inset 0 -2px 0 0 @color-primary;}
+/*#account #profile section.contact-ruc .form .line{box-shadow: inset 0 -2px 0 0 @color-primary;}*/
+#account #profile section.contact-ruc .form .line{border-bottom: 2px solid @color-primary;}
 #account #profile section.contact-ruc .rigth{text-align:right;}
 #account #profile section.contact-ruc .box{position:relative;width:1.4em;height:1.4em;display:inline-block;border:2px solid @color-tertiary;margin-right:2%;color:@color-primary;}
 /***************************************************/
@@ -625,11 +626,7 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 /********** SETTINGS-PAGE **********/
 #account #settings{padding-top:9em;}
 
-#account #settings section.header{color:@color-tertiary;padding-bottom:6%;}
-#account #settings section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
-#account #settings section.header .name h1.title{font-size:1.8em;margin-bottom:0;}
-#account #settings section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
-#account #settings section.header .name .connection span{color:@color-primary-alt;}
+#account #settings section.header{padding-bottom:6%;}
 #account #settings section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
 #account #settings section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
 #account #settings section.header .coins::before{content:"\E008";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
@@ -696,153 +693,10 @@ background:@color-primary-alt;background:linear-gradient(-45deg,@color-primary-a
 #account #settings section.reviews .gamer .body{background:@color-primary-alt;padding:1% 50% 1% 3%;text-align:left;}
 #kushki-payment input{width:100%;}
 
-/********** BALANCE-PAGE **********/
-#account #balance{padding-top:8em;}
-
-#account #balance section.header{color:@color-tertiary;}
-#account #balance section.header .name img{width:100%;border:10px solid @color-tertiary;border-radius:50%;}
-/*#account #balance section.header .name h1.title{font-size:1.8em;margin-bottom:0;}*/
-#account #balance section.header p.light{font-size: 15px;color: @color-tertiary;padding-left: 1px; margin-bottom: -0px; margin-left: -20px;}
-#account #balance section.header p.dark{font-size: 15px;color: @color-primary;padding-left: 1px;margin-bottom: -0px; margin-left: -20px; }
-#account #balance section.header .line{box-shadow: inset 0px -1px 0px 0px @color-primary;}
-#account #balance section.header .name .left{text-align: left;}
-#account #balance section.header button{border:2px solid @color-tertiary;color: @color-primary;background:@color-secundary;}
-#account #balance section.header hr.light{margin-top: 0%; height: 5px;margin-right: 80%;background-color: @color-tertiary;padding-top: -100%;border: 0px;}
-#account #balance section.header hr.dark{margin-bottom: 30%;margin-top: -5%;background-color: @color-secundary;padding-top: 0%;border: 0px;}
-/*#account #balance section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}*/
-#account #balance section.header .name .connection span{color:@color-primary-alt;}
-/*#account #balance section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}*/
-#account #balance section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
-#account #balance section.header .coins::before{content:"\E008";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
-#account #balance section.header .coins span.dark{font-family:@font-family-josefinsans;color:@color-primary;font-weight:700;letter-spacing:2px;}
-#account #balance section.header .coins button>span.light{color:@color-tertiary;}
-#account #balance section.header .coins button{position:relative;padding:4px 25% 1px;border-width:1px;font-size:0.7em;}
-#account #balance section.header .coins button::before,#account #balance section.header .coins button::after{color:@color-tertiary;position:absolute;font-family:gameclub;}
-#account #balance section.header .coins button::before{content:"\E024";left:5px;}
-#account #balance section.header .coins button::after{content:"\E024";right:5px;}
-#account #balance section.header .payment{margin-top:2%;padding:0;}
-#account #balance section.header .payment::before{content:"\E008";position:absolute;top:1em;left:-2.5em;font-size:0.4em;font-family:gameclub;}
-#account #balance section.header .payment h2.subtitle{font-size:1em;text-transform:uppercase;display:block;font-weight:700;margin-bottom:2%;position:relative;letter-spacing:1px;}
-#account #balance section.header .payment .card-info{padding:0;margin-bottom:1em;}
-#account #balance section.header .payment .card-info div{padding-left:unset;padding-right:unset;}
-#account #balance section.header .payment .card-info input{width:100%;border:none;outline:none;border-radius:7px;text-align:center;color:@color-primary;padding:0.5em 1em 0.25em;font-size:0.8em;}
-#account #balance section.header .payment .card-info button{text-align:center;padding:0.5em 1.5em 0.25em;font-size:0.7em;margin:auto 0.5em;border-radius:7px;}
-#account #balance section.header .payment .paymen-help{padding:0;text-transform:uppercase;font-weight:700;font-size:0.75em;}
-#account #balance section.header .payment .new-payment{padding:0;}
-#account #balance section.header .payment .new-payment .name,#account #balance section.header .payment .new-payment .card-number,#account #settings section.header .payment .new-payment .expiry,#account #settings section.header .payment .new-payment .cvc
-{border-bottom:1px solid @color-tertiary;padding:1% 10% 0;margin:1% 0;}
-#account #balance section.header .payment .new-payment input::-webkit-input-placeholder{color:@color-primary-40;}
-#account #balance section.header .payment .new-payment input::-moz-placeholder{color:@color-primary-40;}
-#account #balance section.header .payment .new-payment input::-ms-input-placeholder{color:@color-primary-40;}
-#account #balance section.header .payment .new-payment div.name,#account #balance section.header .payment .new-payment div.card-number,#account #settings section.header .payment .new-payment div.expiry
-{padding-right:0;}
-#account #balance section.header .payment .new-payment div.name::before,#account #balance section.header .payment .new-payment div.card-number::before,#account #settings section.header .payment .new-payment div.expiry::before,#account #settings section.header .payment .new-payment div.cvc::before
-{font-family:gameclub;position:absolute;left:0.5em;bottom:0;}
-#account #balance section.header .payment .new-payment div.cvc::after{font-family:gameclub;position:absolute;right:0.5em;bottom:0;}
-#account #balance section.header .payment .new-payment div.name>div{padding-right:0;}
-#account #balance section.header .payment .new-payment div.name>div:first-child{padding-left:0;}
-#account #balance section.header .payment .new-payment div.name::before{content:"\E019";}
-#account #balance section.header .payment .new-payment div.card-number::before{content:"\E006";}
-#account #balance section.header .payment .new-payment div.expiry{margin-right:1em;}
-#account #balance section.header .payment .new-payment div.expiry::before{content:"\E005";}
-#account #balance section.header .payment .new-payment div.cvc::before{content:"\E014";}
-#account #balance section.header .payment .new-payment div.cvc::after{content:"\E011";}
-#account #balance section.header .payment .new-payment button{padding:2% 12% 1%;font-size:0.8em;margin:4% auto 1%;}
-
-#account #balance section.reviews{background:@color-tertiary-alt;color:@color-primary;padding:2% 0}
-#account #balance section.reviews h2{text-align:center;text-transform:uppercase;font-size:1em;font-weight:700;color:@color-primary;}
-#account #balance section.reviews h2 i.gc-rating,#account #balance section.reviews .rating-container i.no,#account #balance section.reviews .body .title .rating-container i.no{color:@color-primary-s;}
-#account #balance section.reviews .load-more{text-align:center;margin:1% 0%;}
-#account #balance section.reviews .load-more a{color:black;font-size:1.25em;}
-#account #balance section.reviews .load-more a::before{content:"";position:absolute;width:20px;border-top:1px solid black;top:55%;margin-left:85px;}
-#account #balance section.reviews .load-more a::after{content:"";position:absolute;top:45%;margin-left:22px;border:3px solid transparent;border-left-color:black;}
-#account #balance section.reviews .no-reviews{text-align:center;margin:1% 0%;text-transform:uppercase;font-weight:bold;color:#8a8b8b;}
-#account #balance section.reviews .header{border-top-width:2px;border-top-style:solid;padding-top:2%;margin-bottom:2%;}
-#account #balance section.reviews .header small{font-size:0.8em;}
-#account #balance section.reviews .body .title{color:@color-primary;font-size:1em;font-weight:400;margin-bottom:1%;}
-#account #balance section.reviews .body .title score{float:right;}
-#account #balance section.reviews .body .title .rating-container{text-align:right;}
-#account #balance section.reviews .body .title .col-md-6{padding:0;}
-#account #balance section.reviews .body .title .rating-container i{color:@color-tertiary;}
-#account #balance section.reviews .body .description{border-radius:5px;background:@color-tertiary;color:@color-primary-alt;padding:1%;font-size:0.8em;text-transform:none;text-align:left;}
-#account #balance section.reviews .body .rating{margin-bottom:3%;}
-#account #balance section.reviews .lender,#account #balance section.reviews .gamer{width:48%;padding-top:2%;text-align:center;}
-#account #balance section.reviews .lender{float:left;margin-right:2%;color:@color-secundary;}
-#account #balance section.reviews .lender .header{border-top-color:@color-secundary;padding-left:65%;}
-#account #balance section.reviews .lender .header .rating-container{color:@color-secundary;}
-#account #balance section.reviews .lender .body{background:@color-secundary;padding:1% 3% 1% 50%;text-align:left;}
-#account #balance section.reviews .gamer{float:right;margin-left:2%;color:@color-primary-alt;}
-#account #balance section.reviews .gamer .header{border-top-color:@color-primary-alt;padding-right:65%;}
-#account #balance section.reviews .gamer .header .rating-container{color:@color-primary-alt;}
-#account #balance section.reviews .gamer .body{background:@color-primary-alt;padding:1% 50% 1% 3%;text-align:left;}
-#kushki-payment input{width:100%;}
-
-#account #balance section.five-transactions{position:relative;padding-top: 2%;padding-bottom:2%;background:@color-primary-alt}
-/*#account #balance section.five-transactions .line{box-shadow: inset 0 -2px 0 0 @color-tertiary;}*/
-/*	#account #balance section.five-transactions hr{padding: -2%; height: 5px;margin-right: 92%;background-color: @color-tertiary;padding-top: -100%;}*/
-#account #balance section.five-transactions h2{text-transform:uppercase;font-size:1.5em;font-family:@font-family-josefinsans;color:@color-tertiary;}
-#account #balance section.five-transactions .center{text-align: center; padding-top: -10em;}
-#account #balance section.five-transactions .transactions{padding:10px;border:2px solid @color-primary;background:transparent;margin-bottom:1%;}
-#account #balance section.five-transactions .transactions .table-container{background:@color-tertiary;padding:5px;}
-#account #balance section.five-transactions .transactions .table-container table{border:none;color:@color-primary;text-transform:uppercase;font-size:0.8em;background:transparent;}
-#account #balance section.five-transactions .transactions .table-container table th,#account #balance section.five-transactions .transactions .table-container table td{padding:5px;text-align:center;border-right:2px solid @color-tertiary-alt;border-bottom:2px solid @color-tertiary-alt;}
-#account #balance section.five-transactions .transactions .table-container table th{border-bottom:2px solid @color-secundary;}
-#account #balance section.five-transactions .transactions .table-container table th:last-child,#account #balance section.five-transactions .transactions .table-container table td:last-child{border-right:none;}
-#account #balance section.five-transactions .transactions .table-container table tr:last-child td{border-bottom:none;}
-#account #balance section.five-transactions .transactions .table-container table tr td.blue{color:@color-primary-alt;}
-#account #balance section.five-transactions .transactions .table-container table tr td.red{color:@color-secundary;}
-#account #balance section.five-transactions button{border:2px solid @color-tertiary;color: @color-primary;font-size:1em;}
-#account #balance section.five-transactions hr.light{margin-top: 0.5%; height: 5px;margin-right: 91%;background-color: @color-tertiary;padding-top: -100%;border: 0px;}
-
-
-#account #balance section.foother{position:relative;padding-top: 2%;padding-bottom:2%;background:@color-tertiary-alt;}
-#account #balance section.foother .center{text-align: center;}
-#account #balance section.foother button{border:2px solid @color-tertiary;color: @color-primary;background:@color-secundary;}
-#account #balance section.foother hr.light{margin-top: 0.5%; height: 5px;margin-right: 91%;background-color: @color-tertiary;padding-top: -100%;border: 0px;}
-
-
-
-/********** REFERRED-PAGE **********/
-#account #referred{padding-top:6em;background:@color-primary;}
-#account #referred section.header{padding-top:1.5%;background:url("../img/dust-home.png") no-repeat;background-size: 100%; background-position-y: -20em;background-position-x: 0em;}
-#account #referred section.header .container::before{content:"";background:url("../img/visual-control.png") no-repeat left bottom;background-size:110%;position:absolute;width:140%;padding-top:11%;bottom:-1px;left:171px;height: 123%;}
-#account #referred section.header .container .name img{width:100%;border:10px solid @color-tertiary;border-radius:50%;}
-#account #referred section.header p.light1{font-weight: bold;font-size: 35px;color: @color-tertiary;padding-left: -2em; margin-top: 30px;margin-left: -1em;}
-#account #referred section.header p.light2{font-weight: bold;font-size: 32px;color: @color-tertiary;padding-left: 1em; margin-top: -0.4em;margin-left: -1em;}
-#account #referred section.header p.light3{font-weight: bold;font-size: 35px;color: @color-tertiary;padding-left: 3.2em; margin-top: -0.4em;margin-left: -1em;}
-#account #referred section.header p.light4{font-weight: bold;font-size: 32px;color: @color-tertiary;padding-left: 2.1em; margin-top: -0.4em;margin-left: -1em;}
-#account #referred section.header hr.light{margin-top: -2.5%;margin-bottom: 10em; height: 5px;margin-left: 18%;margin-right: 5%;background-color: @color-secundary;border: 0px;margin-left: 3em;}
-
-#account #referred section.gamers{position:relative;padding-top: 2%;padding-bottom:2%;background:@color-tertiary-alt;}
-#account #referred section.gamers .center{text-align: center;}
-#account #referred section.gamers img{margin-right: -10em;margin-top: 0em;width: 5.5em;height: 5.5em;}
-#account #referred section.gamers h1{font-weight: bold;margin-top: 1em;margin-left: -8em;text-transform:uppercase;font-size:1.6em;font-family:@font-family-josefinsans;color:@color-secundary;}
-#account #referred section.gamers p.red{font-weight: bold;font-size:1.2em;font-family:@font-family-josefinsans;color:@color-secundary;margin-bottom: -0.2em;}
-#account #referred section.gamers p.dark{font-weight: bold; margin-left: 12em;margin-top: 1em;font-size:1.2em;font-family:@font-family-josefinsans;color:@color-primary;margin-bottom: -0.2em;}
-#account #referred section.gamers button.link{margin-top: 0.5em;margin-left: 13.5em;padding-left: 1em;padding-right: 1em;border:2px solid @color-secundary;color: @color-primary;background: none;border-radius: 10px;}
-#account #referred section.gamers button.copy-link{font-weight: bold;margin-top: 0.5em;margin-left: 13.5em;padding-left: 1.5em;padding-right: 1.5em;border:2px solid @color-tertiary;color: @color-tertiary;background: @color-secundary;border-radius: 10px;}
-#account #referred section.gamers button.facebook{background:url("../img/facebook-ico.svg") no-repeat;background-size: 0.8em;margin-top: 0.5em;margin-left: 2em;
-background-color: #314A7E;background-position-x: 0.85em;background-position-y: 0.25em; border-width: 0em;color:@color-tertiary; border-radius: 11px; }
-#account #referred section.gamers form.link-form input,#account #referred section.gamers form.link-form input{width: 34%; border: 2px solid #999999; color: @color-primary;
-border-radius: 10px; background: transparent; margin-left: -2%; border-left-color: @color-tertiary-alt; margin-left: -1%; padding-left: 1%;
-position: absolute; top: 7px; padding: 0.5% 0% 0.5% 0%; padding-left: 2%; left: 43%;}
-#account #referred section.gamers form input::placeholder{color: @color-primary; font-weight: bold;}
-#account #referred section.gamers hr.dark{height: 5px;margin-top: -2.50%;margin-left: -100%;margin-right: 80%;background-color: @color-primary;border: 0px;}
-
-#account #referred section.win-money{position:relative;padding-top: 2%;padding-bottom:2%;background:@color-primary-alt;}
-#account #referred section.win-money .center{text-align: center;}
-#account #referred section.win-money h1.title{font-weight: bold;margin-top: 0em;text-transform:uppercase;font-size:1.6em;font-family:@font-family-josefinsans;color:@color-tertiary;}
-#account #referred section.win-money h1.subtitle{font-weight: bold;margin-top: 1em;text-transform:uppercase;font-size:1em;font-family:@font-family-josefinsans;color:@color-tertiary;}
-
-
 /********** GAMES-PAGE **********/
 #account #games{padding-top:9em;}
 
-#account #games section.header{color:@color-tertiary;padding-bottom:10%;}
-#account #games section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
-#account #games section.header .name h1.titlnotee{font-size:1.8em;margin-bottom:0;}
-#account #games section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
-#account #games section.header .name .connection span{color:@color-primary-alt;}
+#account #games section.header{padding-bottom:10%;}
 #account #games section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
 #account #games section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
 #account #games section.header .coins::before{content:"\E008";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
@@ -857,7 +711,7 @@ position: absolute; top: 7px; padding: 0.5% 0% 0.5% 0%; padding-left: 2%; left: 
 #account #games section.header .total::before{content:"\E008";position:absolute;top:1.2em;left:-2.5em;font-size:0.4em;font-family:gameclub;}
 #account #games section.header .total .description{font-size:1em;text-transform:uppercase;font-weight:700;line-height:1;margin-bottom:1%;letter-spacing:1px}
 #account #games section.header .total .description span.dark{color:@color-primary;font-size:1.5em;margin-left:4%;}
-#account #games section.header .total .description .updated{padding:4px 3% 2px;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;text-transform:none;}
+#account #games section.header .total .description .updated{padding:4px 3% 2px;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;text-transform:none;margin-top:5px;}
 #account #games section.header .total .description .updated span{color:@color-primary-alt;}
 
 #account #games section.games{background:@color-tertiary-alt;color:@color-primary;}
@@ -964,11 +818,7 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 /********** MESSAGES-PAGE **********/
 #account #messages{padding-top:9em;}
 
-#account #messages section.header{color:@color-tertiary;padding-bottom:10%;}
-#account #messages section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
-#account #messages section.header .name h1.title{font-size:1.8em;margin-bottom:0;}
-#account #messages section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
-#account #messages section.header .name .connection span{color:@color-primary-alt;}
+#account #messages section.header{padding-bottom:10%;}
 #account #messages section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}
 #account #messages section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
 #account #messages section.header .coins::before{content:"\E008";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
@@ -1107,6 +957,163 @@ background:linear-gradient(45deg,@color-tertiary -10%,@color-primary-40,transpar
 #account #messages section.messages .inbox .detail .canvas .welcome-fine .form-row .control-label{padding:unset;width:auto;text-align:left;color:white;margin-top:4px;}
 
 /********************************/
+
+/********** BALANCE-PAGE **********/
+#account #balance{padding-top:8em;}
+
+#account #balance section.header p.light{font-size: 15px;color: @color-tertiary;padding-left: 1px; margin-bottom: -0px; margin-left: -20px;}
+#account #balance section.header p.dark{font-size: 15px;color: @color-primary;padding-left: 1px;margin-bottom: -0px; margin-left: -20px; }
+#account #balance section.header .line{box-shadow: inset 0px -1px 0px 0px @color-primary;}
+#account #balance section.header .name .left{text-align: left;}
+#account #balance section.header button{border:2px solid @color-tertiary;color: @color-primary;background:@color-secundary;}
+#account #balance section.header hr.light{margin-top: 0%; height: 5px;margin-right: 80%;background-color: @color-tertiary;padding-top: -100%;border: 0px;}
+#account #balance section.header hr.dark{margin-bottom: 30%;margin-top: -5%;background-color: @color-secundary;padding-top: 0%;border: 0px;}
+/*#account #balance section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}*/
+#account #balance section.header .name .connection span{color:@color-primary-alt;}
+/*#account #balance section.header .coins{margin:3% auto 0;padding:0 0 2%;border-bottom:1px solid @color-tertiary;}*/
+#account #balance section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
+#account #balance section.header .coins::before{content:"\E008";position:absolute;top:1.7em;left:-2.5em;font-size:0.4em;font-family:gameclub;bottom:-0.3em;}
+#account #balance section.header .coins span.dark{font-family:@font-family-josefinsans;color:@color-primary;font-weight:700;letter-spacing:2px;}
+#account #balance section.header .coins button>span.light{color:@color-tertiary;}
+#account #balance section.header .coins button{position:relative;padding:4px 25% 1px;border-width:1px;font-size:0.7em;}
+#account #balance section.header .coins button::before,#account #balance section.header .coins button::after{color:@color-tertiary;position:absolute;font-family:gameclub;}
+#account #balance section.header .coins button::before{content:"\E024";left:5px;}
+#account #balance section.header .coins button::after{content:"\E024";right:5px;}
+#account #balance section.header .payment{margin-top:2%;padding:0;}
+#account #balance section.header .payment::before{content:"\E008";position:absolute;top:1em;left:-2.5em;font-size:0.4em;font-family:gameclub;}
+#account #balance section.header .payment h2.subtitle{font-size:1em;text-transform:uppercase;display:block;font-weight:700;margin-bottom:2%;position:relative;letter-spacing:1px;}
+#account #balance section.header .payment .card-info{padding:0;margin-bottom:1em;}
+#account #balance section.header .payment .card-info div{padding-left:unset;padding-right:unset;}
+#account #balance section.header .payment .card-info input{width:100%;border:none;outline:none;border-radius:7px;text-align:center;color:@color-primary;padding:0.5em 1em 0.25em;font-size:0.8em;}
+#account #balance section.header .payment .card-info button{text-align:center;padding:0.5em 1.5em 0.25em;font-size:0.7em;margin:auto 0.5em;border-radius:7px;}
+#account #balance section.header .payment .paymen-help{padding:0;text-transform:uppercase;font-weight:700;font-size:0.75em;}
+#account #balance section.header .payment .new-payment{padding:0;}
+#account #balance section.header .payment .new-payment .name,#account #balance section.header .payment .new-payment .card-number,#account #settings section.header .payment .new-payment .expiry,#account #settings section.header .payment .new-payment .cvc
+{border-bottom:1px solid @color-tertiary;padding:1% 10% 0;margin:1% 0;}
+#account #balance section.header .payment .new-payment input::-webkit-input-placeholder{color:@color-primary-40;}
+#account #balance section.header .payment .new-payment input::-moz-placeholder{color:@color-primary-40;}
+#account #balance section.header .payment .new-payment input::-ms-input-placeholder{color:@color-primary-40;}
+#account #balance section.header .payment .new-payment div.name,#account #balance section.header .payment .new-payment div.card-number,#account #settings section.header .payment .new-payment div.expiry
+{padding-right:0;}
+#account #balance section.header .payment .new-payment div.name::before,#account #balance section.header .payment .new-payment div.card-number::before,#account #settings section.header .payment .new-payment div.expiry::before,#account #settings section.header .payment .new-payment div.cvc::before
+{font-family:gameclub;position:absolute;left:0.5em;bottom:0;}
+#account #balance section.header .payment .new-payment div.cvc::after{font-family:gameclub;position:absolute;right:0.5em;bottom:0;}
+#account #balance section.header .payment .new-payment div.name>div{padding-right:0;}
+#account #balance section.header .payment .new-payment div.name>div:first-child{padding-left:0;}
+#account #balance section.header .payment .new-payment div.name::before{content:"\E019";}
+#account #balance section.header .payment .new-payment div.card-number::before{content:"\E006";}
+#account #balance section.header .payment .new-payment div.expiry{margin-right:1em;}
+#account #balance section.header .payment .new-payment div.expiry::before{content:"\E005";}
+#account #balance section.header .payment .new-payment div.cvc::before{content:"\E014";}
+#account #balance section.header .payment .new-payment div.cvc::after{content:"\E011";}
+#account #balance section.header .payment .new-payment button{padding:2% 12% 1%;font-size:0.8em;margin:4% auto 1%;}
+
+#account #balance section.reviews{background:@color-tertiary-alt;color:@color-primary;padding:2% 0}
+#account #balance section.reviews h2{text-align:center;text-transform:uppercase;font-size:1em;font-weight:700;color:@color-primary;}
+#account #balance section.reviews h2 i.gc-rating,#account #balance section.reviews .rating-container i.no,#account #balance section.reviews .body .title .rating-container i.no{color:@color-primary-s;}
+#account #balance section.reviews .load-more{text-align:center;margin:1% 0%;}
+#account #balance section.reviews .load-more a{color:black;font-size:1.25em;}
+#account #balance section.reviews .load-more a::before{content:"";position:absolute;width:20px;border-top:1px solid black;top:55%;margin-left:85px;}
+#account #balance section.reviews .load-more a::after{content:"";position:absolute;top:45%;margin-left:22px;border:3px solid transparent;border-left-color:black;}
+#account #balance section.reviews .no-reviews{text-align:center;margin:1% 0%;text-transform:uppercase;font-weight:bold;color:#8a8b8b;}
+#account #balance section.reviews .header{border-top-width:2px;border-top-style:solid;padding-top:2%;margin-bottom:2%;}
+#account #balance section.reviews .header small{font-size:0.8em;}
+#account #balance section.reviews .body .title{color:@color-primary;font-size:1em;font-weight:400;margin-bottom:1%;}
+#account #balance section.reviews .body .title score{float:right;}
+#account #balance section.reviews .body .title .rating-container{text-align:right;}
+#account #balance section.reviews .body .title .col-md-6{padding:0;}
+#account #balance section.reviews .body .title .rating-container i{color:@color-tertiary;}
+#account #balance section.reviews .body .description{border-radius:5px;background:@color-tertiary;color:@color-primary-alt;padding:1%;font-size:0.8em;text-transform:none;text-align:left;}
+#account #balance section.reviews .body .rating{margin-bottom:3%;}
+#account #balance section.reviews .lender,#account #balance section.reviews .gamer{width:48%;padding-top:2%;text-align:center;}
+#account #balance section.reviews .lender{float:left;margin-right:2%;color:@color-secundary;}
+#account #balance section.reviews .lender .header{border-top-color:@color-secundary;padding-left:65%;}
+#account #balance section.reviews .lender .header .rating-container{color:@color-secundary;}
+#account #balance section.reviews .lender .body{background:@color-secundary;padding:1% 3% 1% 50%;text-align:left;}
+#account #balance section.reviews .gamer{float:right;margin-left:2%;color:@color-primary-alt;}
+#account #balance section.reviews .gamer .header{border-top-color:@color-primary-alt;padding-right:65%;}
+#account #balance section.reviews .gamer .header .rating-container{color:@color-primary-alt;}
+#account #balance section.reviews .gamer .body{background:@color-primary-alt;padding:1% 50% 1% 3%;text-align:left;}
+#kushki-payment input{width:100%;}
+
+#account #balance section.five-transactions{position:relative;padding-top: 2%;padding-bottom:2%;background:@color-primary-alt}
+/*#account #balance section.five-transactions .line{box-shadow: inset 0 -2px 0 0 @color-tertiary;}*/
+/*	#account #balance section.five-transactions hr{padding: -2%; height: 5px;margin-right: 92%;background-color: @color-tertiary;padding-top: -100%;}*/
+#account #balance section.five-transactions h2{text-transform:uppercase;font-size:1.5em;font-family:@font-family-josefinsans;color:@color-tertiary;}
+#account #balance section.five-transactions .center{text-align: center; padding-top: -10em;}
+#account #balance section.five-transactions .transactions{padding:10px;border:2px solid @color-primary;background:transparent;margin-bottom:1%;}
+#account #balance section.five-transactions .transactions .table-container{background:@color-tertiary;padding:5px;}
+#account #balance section.five-transactions .transactions .table-container table{border:none;color:@color-primary;text-transform:uppercase;font-size:0.8em;background:transparent;}
+#account #balance section.five-transactions .transactions .table-container table th,#account #balance section.five-transactions .transactions .table-container table td{padding:5px;text-align:center;border-right:2px solid @color-tertiary-alt;border-bottom:2px solid @color-tertiary-alt;}
+#account #balance section.five-transactions .transactions .table-container table th{border-bottom:2px solid @color-secundary;}
+#account #balance section.five-transactions .transactions .table-container table th:last-child,#account #balance section.five-transactions .transactions .table-container table td:last-child{border-right:none;}
+#account #balance section.five-transactions .transactions .table-container table tr:last-child td{border-bottom:none;}
+#account #balance section.five-transactions .transactions .table-container table tr td.blue{color:@color-primary-alt;}
+#account #balance section.five-transactions .transactions .table-container table tr td.red{color:@color-secundary;}
+#account #balance section.five-transactions button{border:2px solid @color-tertiary;color: @color-primary;font-size:1em;}
+#account #balance section.five-transactions hr.light{margin-top: 0.5%; height: 5px;margin-right: 91%;background-color: @color-tertiary;padding-top: -100%;border: 0px;}
+
+
+#account #balance section.foother{position:relative;padding-top: 2%;padding-bottom:2%;background:@color-tertiary-alt;}
+#account #balance section.foother .center{text-align: center;}
+#account #balance section.foother button{border:2px solid @color-tertiary;color: @color-primary;background:@color-secundary;}
+#account #balance section.foother hr.light{margin-top: 0.5%; height: 5px;margin-right: 91%;background-color: @color-tertiary;padding-top: -100%;border: 0px;}
+
+
+
+/********** REFERRED-PAGE **********/
+#account #referred{padding-top:9em;background:url("../img/home/banner-bg.png") no-repeat;background-size:100%;background-position-y:top;background-color:@color-primary;}
+
+#account #referred section.header{padding-bottom:5em;position:relative;}
+#account #referred section.header::before{content:"";background:url("../img/visual-control.png") no-repeat;background-size:100%;position:absolute;position:absolute;right:0;bottom:0;width:65%;height:30em;background-position-x:14em;}
+#account #referred section.header .container .name img{width:100%;border:10px solid @color-tertiary;border-radius:50%;}
+#account #referred section.header .banner-information{font-weight:700;padding-top:4em;margin-left:-1em;}
+#account #referred section.header .banner-information::after{content:"";width:62%;height:4px;background:@color-secundary;position:absolute;left:3.5em;}
+#account #referred section.header p.light-text{font-size:2em;color:@color-tertiary;margin-top:-0.4em;}
+#account #referred section.header p.light1{margin-top:1em;}
+#account #referred section.header p.light2{padding-left:1em;}
+#account #referred section.header p.light3{padding-left:3.2em;}
+#account #referred section.header p.light4{padding-left:2.1em;margin-bottom:0}
+
+#account #referred section.gamers{padding-top:2%;padding-bottom:4%;background:@color-tertiary-alt;position:relative;}
+#account #referred section.gamers h2.title{color:@color-secundary;}
+#account #referred section.gamers .center{text-align: center;}
+#account #referred section.gamers .gamers-title img{width:5em;}
+#account #referred section.gamers .gamers-title h2{font-size:1.5em;}
+#account #referred section.gamers .gamers-title>div:first-child{text-align:right;}
+#account #referred section.gamers .gamers-title>div:last-child{text-align:left;padding-top:1em;}
+#account #referred section.gamers .gamers-description{text-align:center;font-weight:700;padding-top:1em;}
+#account #referred section.gamers .gamers-description .red{font-weight:700;font-size:1.1em;color:@color-secundary;margin-bottom:0;}
+#account #referred section.gamers .dark{font-weight:700;font-size:1.1em;color:@color-primary;text-align:right;padding-top:0.5em;padding-bottom:0.5em;}
+#account #referred section.gamers .link-generation{padding-bottom:1em;}
+#account #referred section.gamers .link-generation button.link,#account #referred section.gamers .copy-link button.copy-link{padding-left:0;padding-right:0;border-radius:7px;position:relative;z-index:2;width:45%;}
+#account #referred section.gamers .link-generation input#reffer-link{border:2px solid #999999;padding:5px 10px 2.5px 30px;border-left:transparent;border-radius:7px;border-bottom-left-radius:0;border-top-left-radius:0;margin-left:-1em;width:60%;color:@color-primary;font-weight:700;}
+
+#account #referred section.gamers .copy-link button.copy-link{padding-left:0;padding-right:0;border-radius:7px;width:45%;color:@color-tertiary;border:2px solid @color-tertiary;}
+#account #referred section.gamers .copy-link button.facebook{background:url("../img/facebook-ico.svg") no-repeat;background-size:0.8em;background-position-y:0.25em;background-position-x:0.5em;padding-left:0;padding-right:0;border-radius:7px;border:2px solid @color-tertiary;border-color:#314A7E;background-color:#314A7E;width:55%;}
+
+//#account #referred section.gamers p.dark{font-weight: bold; margin-left: 12em;margin-top: 1em;font-size:1.2em;font-family:@font-family-josefinsans;color:@color-primary;margin-bottom: -0.2em;}
+//#account #referred section.gamers button.link{margin-top: 0.5em;margin-left: 13.5em;padding-left: 1em;padding-right: 1em;border:2px solid @color-secundary;color: @color-primary;background: none;border-radius: 10px;}
+// #account #referred section.gamers button.copy-link{font-weight: bold;margin-top: 0.5em;margin-left: 13.5em;padding-left: 1.5em;padding-right: 1.5em;border:2px solid @color-tertiary;color: @color-tertiary;background: @color-secundary;border-radius: 10px;}
+// #account #referred section.gamers button.facebook{background:url("../img/facebook-ico.svg") no-repeat;background-size: 0.8em;margin-top: 0.5em;margin-left: 2em;
+// background-color: #314A7E;background-position-x: 0.85em;background-position-y: 0.25em; border-width: 0em;color:@color-tertiary; border-radius: 11px; }
+// #account #referred section.gamers form.link-form input,#account #referred section.gamers form.link-form input{width: 34%; border: 2px solid #999999; color: @color-primary;
+// border-radius: 10px; background: transparent; margin-left: -2%; border-left-color: @color-tertiary-alt; margin-left: -1%; padding-left: 1%;
+// position: absolute; top: 7px; padding: 0.5% 0% 0.5% 0%; padding-left: 2%; left: 43%;}
+#account #referred section.gamers form input::placeholder{color: @color-primary; font-weight: bold;}
+#account #referred section.gamers hr.dark{height: 5px;margin-top: -2.50%;margin-left: -100%;margin-right: 80%;background-color: @color-primary;border: 0px;}
+
+#account #referred section.win-money{position:relative;padding-top:2%;padding-bottom:3%;background:@color-primary-alt;}
+#account #referred section.win-money div.win-money-title{padding-bottom:2em;text-align:center;}
+#account #referred section.win-money div.description::before,#account #referred section.win-money div.description::after{content:"";width:15%;height:2px;background:@color-tertiary;position:absolute;top:30%;margin:auto;}
+#account #referred section.win-money div.description::before{left:0;right:35%;}
+#account #referred section.win-money div.description::after{left:35%;right:0;}
+#account #referred section.win-money img{width:4em;padding-bottom:1em;}
+#account #referred section.win-money h2.subtitle{font-size:1em;font-weight:700;}
+#account #referred section.win-money h2.subtitle span{display:block;}
+#account #referred section.win-money .center{text-align: center;}
+#account #referred section.win-money h1.title{font-weight: bold;margin-top: 0em;text-transform:uppercase;font-size:1.6em;font-family:@font-family-josefinsans;color:@color-tertiary;}
+#account #referred section.win-money h1.subtitle{font-weight: bold;margin-top: 1em;text-transform:uppercase;font-size:1em;font-family:@font-family-josefinsans;color:@color-tertiary;}
 
 /********** SEARCH-PAGE **********/
 #search{color:@color-tertiary;display:block;position:relative;padding-top:9em;}

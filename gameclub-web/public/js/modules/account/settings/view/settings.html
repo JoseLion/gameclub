@@ -1,7 +1,7 @@
 <div id="settings">
     <section class="row header">
-        <div class="col-md-4"></div>
-        <div class="col-md-8 no-padding-left no-padding-right">
+        <div class="col-md-4 col-xs-5"></div>
+        <div class="col-md-8 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
             <div class="col-md-10 name">
                 <div class="col-md-3 no-padding-left no-padding-right">
                     <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
@@ -14,18 +14,25 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-            <div class="col-md-10 coins">
-                <div class="col-md-12 no-padding-left">
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-md-4 col-xs-0"></div>
+        <div class="col-md-8 col-xs-12 responsive-padding-h-10">
+            <div class="col-md-10 col-xs-12 coins">
+                <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
                     <span class="subtitle">Tu saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
                 </div>
-
                <!--  <div class="col-md-6 text-center">
                     <button class="btn btn-tertiary small">Obt&eacute;n  f&aacute;cil</button>
                 </div> -->
             </div>
-            <div class="clearfix"></div>
-            
-            <div class="col-md-12 payment">
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-md-4 col-xs-0"></div>
+        <div class="col-md-8 col-xs-12 responsive-padding-h-10">
+            <div class="col-md-12 col-xs-12 payment">
                 <h2 class="subtitle" ng-if="currentUser.paymentMethods.length > 0">Formas de pago:</h2>
                 <div ng-repeat="method in currentUser.paymentMethods">
                     <div class="col-md-12 card-info">

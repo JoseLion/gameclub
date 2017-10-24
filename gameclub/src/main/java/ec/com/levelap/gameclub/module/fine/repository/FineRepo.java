@@ -2,15 +2,14 @@ package ec.com.levelap.gameclub.module.fine.repository;
 
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import ec.com.levelap.gameclub.module.fine.entity.Fine;
-import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
-
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 @Repository
 public interface FineRepo extends JpaRepository<Fine, Long>{

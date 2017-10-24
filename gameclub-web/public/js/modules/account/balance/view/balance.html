@@ -62,13 +62,13 @@
                     </thead>
                      <tbody>
                         <tr ng-repeat="trans in transactions">
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.date}}</td>
+                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.creationDate | date: 'dd-MM-yyyy'}}</td>
                             <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.transaction}}</td>
                             <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.game}}</td>
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.time}}</td>
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.creditbalance == 0 ? '-' : (trans.creditbalance | currency)}}</td>
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.debitbalance == 0 ? '-' : (trans.debitbalance | currency)}}</td>
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.debitcard == 0 ? '-' : (trans.debitcard | currency)}}</td>
+                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.weeks}}</td>
+                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.creditPart == 0 ? '-' : (trans.creditPart | currency)}}</td>
+                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.debitBalance == 0 ? '-' : (trans.debitBalance | currency)}}</td>
+                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.debitCard == 0 ? '-' : (trans.debitCard | currency)}}</td>
                             <!-- | -->
                         </tr>
                     </tbody>

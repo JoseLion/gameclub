@@ -13,6 +13,11 @@ angular.module('Balance').config(function($stateProvider) {
 					name: 'Balance'
 					,files: ['js/modules/account/balance/controller/balanceCtrl.js']
 				}]);
+			},
+			transactions: function(rest,$rootScope){
+				return rest("transaction/lastFiveTransactions/:id", true).get({id: $rootScope.currentUser.id},function(data){
+					return data;
+				});
 			}
 		}
 	});

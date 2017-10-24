@@ -1,18 +1,13 @@
-/**
- * 
- */
 package ec.com.levelap.gameclub.module.fine.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.fine.service.FineService;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
@@ -31,8 +25,6 @@ import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
-import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
-import ec.com.levelap.gameclub.module.welcomeKit.repository.WelcomeKitRepo;
 import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.kushki.KushkiException;
 import ec.com.levelap.kushki.object.KushkiAmount;
@@ -69,6 +61,7 @@ public class FineController {
 		return fineService.save(fineObj);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="applyFine", method=RequestMethod.POST)
 	public ResponseEntity<?> saveFineBalance(@RequestBody Fine fineObj) throws ServletException, IOException{
 		PublicUser usr = new PublicUser();
@@ -92,6 +85,11 @@ public class FineController {
 								fineObj.setBalancePart(fineObj.getOwner().getShownBalance());
 								fineObj.setCardPart(Math.abs(subtraction));
 							}
+					//optionals.put("amount", new KushkiAmount(-1 * subtraction));
+					//for (KushkiSubscription kushkiObj : fineObj.getOwner().getPaymentMethods()) {
+					//	if(kushkiObj.getStatus() == true) {
+					//		kushkiService.subscriptionCharge(kushkiObj.getSubscriptionId(), optionals);
+
 							break;
 						}
 					}

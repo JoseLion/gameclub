@@ -28,29 +28,21 @@
 						<td>{{fine.owner.name}} {{fine.owner.lastName}}</td>
 						<td>{{fine.description}}</td>
 						<td>{{fine.amount | currency: '$': 2}}</td>
-						<td ng-if="fine.apply == null">
-							<!--<label for="applyYes">Si:</label>
-					    	<input id="applyYes" type="radio" ng-model="fine.apply" value="true" />
-					    	<label for="applyNo">No:</label>
-					    	<input id="applyNo" type="radio" ng-model="fine.apply" value="false" />-->
-					    	<!-- <select name="select">
-							      <option>PENDIENTE</option>
-							      <option>APLICA</option>
-							      <option>CANCELADO</option>
-							      <option>PAGADO</option>
-							 </select> -->
-							 PENDIENTE
-					    </td>
-					    <td ng-if="fine.apply == true && fine.wasPayed == false">NO PAGADA</td>
-					    <td ng-if="fine.apply == true && fine.wasPayed == true">PAGADA</td>
-					    <td ng-if="fine.apply == false && fine.wasPayed == false ">NO APLICA COBRO</td>
-						<td style="text-align: center;" ng-if="(fine.apply == null || fine.apply == true) && fine.wasPayed == false" >
-							<button type="button" class="btn btn-xs btn-success" ng-click="executeFine(fine)" tooltip="Ejecutar multa">
-								<i class="fa fa-check"></i>
-							</button>
-							<button type="button" class="btn btn-xs btn-primary" ng-click="noExecuteFine(fine)" tooltip="No ejecutar multa">
-								<i class="fa fa-ban"></i>
-							</button>
+						<td>
+							<span ng-if="fine.apply == null">PENDIENTE</span>
+							<span ng-if="fine.apply == true && fine.wasPayed == false">NO PAGADA</span>
+							<span ng-if="fine.apply == true && fine.wasPayed == true">PAGADA</span>
+							<span ng-if="fine.apply == false && fine.wasPayed == false">NO APLICA COBRO</span>
+						</td>
+					    <td style="text-align: center;">
+							<div ng-if="(fine.apply == null || fine.apply == true) && fine.wasPayed == false">
+								<button type="button" class="btn btn-xs btn-success" ng-click="executeFine(fine)" tooltip="Ejecutar multa">
+									<i class="fa fa-check"></i>
+								</button>
+								<button type="button" class="btn btn-xs btn-primary" ng-click="noExecuteFine(fine)" tooltip="No ejecutar multa">
+									<i class="fa fa-ban"></i>
+								</button>
+							</div>
 						</td>
 					</tr>
 				</tbody>

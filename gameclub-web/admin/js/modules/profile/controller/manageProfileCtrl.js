@@ -21,14 +21,8 @@ angular.module("Profile").controller('ManageProfile', function($scope, navigatio
 	$scope.selectedChanged = function(child) {
 		if (child.children.length > 0) {
 			forEach(child.children, function(ch) {
-				if (child.selected) {
-					ch.selected = true;
-					addRemoveNavigation(child);
-				} else {
-					ch.selected = false;
-					addRemoveNavigation(child);
-				}
-				
+				ch.selected = child.selected;
+				addRemoveNavigation(ch);
 			});
 		}
 

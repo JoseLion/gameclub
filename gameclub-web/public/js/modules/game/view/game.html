@@ -283,9 +283,9 @@
                     <div class="col-md-6 left-decoration">
                         <div ng-if="currentUser.paymentMethods[0] != null ">
                             <label class="col-md-12">Elige tu tarjeta</label>
-                            <div class="col-md-12">
-                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[0]}" ng-click="loan.payment = currentUser.paymentMethods[0]" ng-if="loan.cardPart > 0.0"></div>
-                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{currentUser.paymentMethods[0].cardFinale}}" readonly>
+                            <div class="col-md-12" ng-repeat="paymentMethod in currentUser.paymentMethods">
+                                <div class="box" ng-class="{'checked': loan.payment == paymentMethod}" ng-click="loan.payment = paymentMethod" ng-if="loan.cardPart > 0.0"></div>
+                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{paymentMethod.cardFinale}}" readonly>
                                 <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button><p>{{idCard11}}</p><p>{{idCard2}}</p>
                             </div>
                         </div>

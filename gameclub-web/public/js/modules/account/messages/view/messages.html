@@ -174,7 +174,7 @@
 								<br>
 								<span>Durante <span class="text-black">{{loan.weeks}} semanas</span> desde la entrega del juego.</span>
 								<br>
-								<span>Pagarás un total de <span class="text-black">{{loan.publicUserGame.cost | currency: '$': 2}}</span> por este préstamo.</span>
+								<span>Pagarás un total de <span class="text-black">{{loan.cost | currency: '$': 2}}</span> por este préstamo.</span>
 								<br>
 								<span>Si el préstamo es rechazado volverán a acreditarse a tu cuenta.</span>
 								<br>
@@ -453,7 +453,7 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span class="text-black">{{loan.gamer.name}} {{loan.gamer.name | limitTo: 1}}</span>
+								<span class="text-black">{{loan.gamer.name}} {{loan.gamer.lastName | limitTo: 1}}</span>
 								<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goTouser(loan.gamer)">Ver ficha del usuario</button>
 								<br>
 								<span>desea pedir prestado el siguiente juego:</span>

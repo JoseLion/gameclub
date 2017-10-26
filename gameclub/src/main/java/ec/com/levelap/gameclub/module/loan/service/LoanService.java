@@ -36,6 +36,8 @@ import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.repository.RestoreRepo;
 import ec.com.levelap.gameclub.module.settings.service.SettingService;
 import ec.com.levelap.gameclub.module.shippingPrice.service.ShippingPriceService;
+import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
+import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
@@ -93,6 +95,9 @@ public class LoanService extends BaseService<Loan> {
 	@Value("${game-club.real-times}")
 	private boolean realTimes;
 	
+	@Autowired
+	private TransactionService transactionService;
+	
 	@Transactional
 	public void requestGame(Loan loan) throws ServletException, MessagingException {
 		Map<String, Message> messages = messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
@@ -142,19 +147,30 @@ public class LoanService extends BaseService<Loan> {
 		loan.setShippingStatus(noTracking);
 		
 		if (!isGamer) {
+			Transaction transaction = new Transaction();
 			loan.setLenderConfirmed(true);
 			loan.setLenderStatusDate(new Date());
 			
 			if (loan.getBalancePart() > 0.0) {
 				publicUserService.substractFromUserBalance(loan.getGamer().getId(), loan.getBalancePart());
+				transaction.setDebitBalance(loan.getBalancePart());
 			}
 			
 			if (loan.getCardPart() > 0.0) {
 				Map<String, Object> optionals = new HashMap<>();
 				optionals.put("amount", new KushkiAmount(loan.getCardPart()));
 				String ticket = kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), optionals);
+				if(ticket != "" && ticket != null) {
+					transaction.setDebitCard(loan.getCardPart());
+				}
 				loan.setTransactionTicket(ticket);
 			}
+			transaction.setCreditPart(loan.getCost());
+			transaction.setWeeks(loan.getWeeks());
+			transaction.setOwner(loan.getGamer());
+			transaction.setGame(loan.getPublicUserGame().getGame().getName());
+			transaction.setTransaction("JUGASTE");
+			transaction = transactionService.getTransactionRepo().save(transaction);
 		} else {
 			loan.setGamerConfirmed(true);
 			loan.setGamerStatusDate(new Date());
@@ -179,10 +195,18 @@ public class LoanService extends BaseService<Loan> {
 		}
 		
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
+			Transaction transaction = new Transaction();
 			final Loan taskLoan = loan;
 			Calendar calendar = Calendar.getInstance();
 			loan.setDeliveryDate(new Date());
 			publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), loan.getPublicUserGame().getCost() * loan.getWeeks().doubleValue());
+			
+			transaction.setCreditPart(loan.getWeeks()*(loan.getPublicUserGame().getCost()));
+			transaction.setWeeks(loan.getWeeks());
+			transaction.setOwner(loan.getPublicUserGame().getPublicUser());
+			transaction.setGame(loan.getPublicUserGame().getGame().getName());
+			transaction.setTransaction("ALQUILASTE");
+			transaction = transactionService.getTransactionRepo().save(transaction);
 			
 			if (realTimes) {
 				calendar.setTime(loan.getReturnDate());

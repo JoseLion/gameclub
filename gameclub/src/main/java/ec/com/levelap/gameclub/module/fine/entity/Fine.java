@@ -22,7 +22,7 @@ import ec.com.levelap.gameclub.utils.Const;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Fine extends BaseEntity {
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="owner", foreignKey=@ForeignKey(name="public_user_owner_fk"))
+	@JoinColumn(name="public_user_fine", foreignKey=@ForeignKey(name="public_user_fine_fk"))
 	private PublicUser owner;
 	
 	@Column(nullable=false, columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
@@ -40,11 +40,11 @@ public class Fine extends BaseEntity {
 	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JoinColumn(name="message", foreignKey=@ForeignKey(name="message_fk"))
 	private Message message;
-	
-	@Column(name="balance_part", nullable=false, columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
+
+	@Column(name="balance_part", columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
 	private Double balancePart = 0.0;
 	
-	@Column(name="card_part", nullable=false, columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
+	@Column(name="card_part", columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
 	private Double cardPart = 0.0;
 
 	public PublicUser getOwner() {

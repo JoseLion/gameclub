@@ -47,8 +47,8 @@
 	        <div class="col-md-12 center">
 	        	<B>
 	        		<p class="red">Comparte tu link en las redes sociales para que tus amigo se registren.</p>
-		        	<p class="red">Se te acreditar&aacute;n 5$ en tu Cuenta por cada referido que ingrese un juego.</p>
-		        	<p class="red">Si alguno de tus referidos alquila un juego, tambi&eacute;n se le acreditar&aacute; 5$ a tu Cuenta.</p>
+		        	<p class="red">Se te acreditar&aacute;n &#36;5 en tu Cuenta por cada referido que ingrese un juego.</p>
+		        	<p class="red">Si alguno de tus referidos alquila un juego, tambi&eacute;n se le acreditar&aacute; &#36;5 a tu Cuenta.</p>
 		        </B>
 	        </div>
 	        <div class="col-md-12">
@@ -59,7 +59,7 @@
 	        	<input id="reffer-link" type="text" placeholder="HTTPS://GOO.GL/CCTXTC" ng-model="reffer.link" readonly>
 	        </div>
 	        <div class="col-md-12">
-	        	<button class="btn btn-primary copy-link" ng-click="copyLinkToClipboard()">COPÍA TU LINK</button>
+	        	<button class="btn btn-primary copy-link" ng-click="copyLinkToClipboard()" data-toggle="modal" data-target="#myModal">COPÍA TU LINK</button>
 	        	<button class="btn btn-primary facebook" ng-click="shareLinkFB()" ng-disabled="!reffer.link">COMPARTE EN FACEBOOK</button>
 	        </div>
         </form>

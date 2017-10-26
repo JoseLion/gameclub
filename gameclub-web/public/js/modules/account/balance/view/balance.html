@@ -4,7 +4,7 @@
         <div class="col-md-8 no-padding-left no-padding-right">
             <div class="col-md-10 name">
                 <div class="col-md-3 no-padding-left no-padding-right">
-                    <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+                    <img id="avatar_img" src="img/contact-person.svg">
                 </div>
                 <div class="col-md-9">
                     <h2 class="title">{{currentUser.name}} {{currentUser.lastName}}</h2>
@@ -24,7 +24,9 @@
             <div class="clearfix"></div>
 
             <div class="col-md-3">
-                <img id="money-play" archive="warning_img" placeholder="img/money-play.svg" height="125" width="125">
+
+                <img id="money-play" src="img/money-play.svg" height="125" width="125">
+
             </div>
             <div class="col-md-9">
                 <p class="light">Puedes canjear tu saldo por efectivo.</p>
@@ -36,7 +38,9 @@
 
             <div class="col-md-6">
                 <hr class="dark">
-                <button class="btn btn-tertiary ">Retira tu saldo</button>
+                <button class="btn btn-tertiary " ng-click="takeYourBalance()">Retira tu saldo</button>
+                
+                <!-- <button class="btn btn-tertiary" ng-click="prueba()">PRUEBA</button> -->
                 <hr class="dark">
             </div>
             <div class="col-md-12"></div>
@@ -91,3 +95,35 @@
         </div>
     </section>
 </div>
+
+<!-- MODAL PARA EL RETIRO DE SALDO -->
+<!--
+<script type="text/ng-template" id="takeYourBalance.html">
+    <div class="inmodal">
+        <div class="modal-heading text-center">
+            <h2 class="tertiary"><img id="warning_img" src="img/gamepad.svg" height="42" width="42"></h2>
+        </div>
+
+        <div class="modal-body">
+            <form role="form" on-submit="ok()" class="terms-form form-horizontal" novalidate>
+                <div class="form-group text-center">
+                    <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" target="_blank">{{link.termsConditions.name}}</a></span>
+                </div>
+
+                <div class="form-group text-center">
+                    <div class="col-md-4">
+                        <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
+                    </div>
+                    <div class="col-md-8">
+                        <button type="submit" class="btn save" ng-disabled="isSaving">
+                            <span ng-if="!isSaving">OK</span>
+                            <loading showing="isSaving" inline width="1em">
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</script>
+-->

@@ -74,22 +74,19 @@ public class FineController {
 					usr = publicUserService.substractFromUserBalance(fineObj.getOwner().getId(), fineObj.getAmount());
 					fineObj.setBalancePart(fineObj.getAmount());
 				} else if(subtraction < 0) {
-					usr = publicUserService.substractFromUserBalance(fineObj.getOwner().getId(), fineObj.getOwner().getShownBalance());
 					Map<String, Object> optionals = new HashMap<>();
 					optionals.put("amount", new KushkiAmount(Math.abs(subtraction)));
 					String ticket = "";
 					for (KushkiSubscription kushkiObj : fineObj.getOwner().getPaymentMethods()) {
 						if(kushkiObj.getStatus() == true) {
+							usr = publicUserService.substractFromUserBalance(fineObj.getOwner().getId(), fineObj.getOwner().getShownBalance());
 							ticket = kushkiService.subscriptionCharge(kushkiObj.getSubscriptionId(), optionals);
+							fineObj.setBalancePart(Double.parseDouble(fineObj.getOwner().getShownBalance().toString()));
+							fineObj.setCardPart(Math.abs(subtraction));
 							if(ticket != "") {
 								fineObj.setBalancePart(fineObj.getOwner().getShownBalance());
 								fineObj.setCardPart(Math.abs(subtraction));
 							}
-					//optionals.put("amount", new KushkiAmount(-1 * subtraction));
-					//for (KushkiSubscription kushkiObj : fineObj.getOwner().getPaymentMethods()) {
-					//	if(kushkiObj.getStatus() == true) {
-					//		kushkiService.subscriptionCharge(kushkiObj.getSubscriptionId(), optionals);
-
 							break;
 						}
 					}

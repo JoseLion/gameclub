@@ -34,8 +34,10 @@ public class TransactionController {
 	@Autowired
 	private TransactionService transactionService;
 	
-	@RequestMapping(value="lastFiveTransactions/{id}", method=RequestMethod.GET)
-	public ResponseEntity<List<Transaction>> lastFiveTransactions(@PathVariable Long id) throws ServletException{
+
+	@RequestMapping(value="lastFiveTransactions", method=RequestMethod.POST)
+	public ResponseEntity<List<Transaction>> lastFiveTransactions(@RequestBody PublicUser id) throws ServletException{
+
 //		if (publicUser == null) {
 //			publicUser = new PublicUser();
 //		}

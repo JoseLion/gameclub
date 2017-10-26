@@ -19,6 +19,13 @@ angular.module('Balance').config(function($stateProvider) {
 					return data;
 				});
 			}
+			/*transactions: function(rest,$rootScope){
+				console.log($rootScope);
+				console.log($rootScope.currentUser);
+				return rest("transaction/lastFiveTransactions", true).post($rootScope.currentUser,function(data){
+					return data;
+				});
+			}*/
 		}
 	});
 

@@ -47,6 +47,12 @@ public class Fine extends BaseEntity {
 	@Column(name="card_part", columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
 	private Double cardPart = 0.0;
 
+	@Column(name="balance_part", columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
+	private Double balancePart = 0.0;
+	
+	@Column(name="card_part", columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
+	private Double cardPart = 0.0;
+
 	public PublicUser getOwner() {
 		return owner;
 	}

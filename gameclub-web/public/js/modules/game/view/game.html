@@ -191,24 +191,17 @@
                     </div>
 
                     <div class="clearfix"></div>
-                    <div class="subtitle top-space">Costo shipping
-                        <!-- <label class="title">Ciudad de retiro del juego {{loanGame.publicUser.location.name}}</label>  -->
+                    <div class="subtitle top-space">Costo shipping: 
+                        <h1 class=" title-black">Ciudad de retiro del juego: {{loanGame.publicUser.location.name}}</h1>
                     </div>
 
                     <div class="shipping">
                         <div class="address-title">Dirección de entrega actual:</div>
 
-                        <!-- <div class="col-md-9">
-                            <label>Ciudad</label> -->
-                            <!-- <span class="value">{{loanGame.publicUser.location.name}}</span> -->
-                            <!--<input type="text" ng-model="loan.gamerAddress" required /> -->
-                            <!-- <ui-select ng-model="loanGame.publicUser.location.name" theme="bootstrap" class="selector" >
-                                <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
-                                <ui-select-choices repeat="city in locationCities | filter: $select.search">
-                                    <div ng-bind-html="city.name | highlight: $select.search"></div>
-                                </ui-select-choices>
-                            </ui-select>
-                        </div> -->
+                        <div class="col-md-9">
+                            <label>Ciudad</label>
+                            <input ng-model="loanGame.publicUser.location.name" readonly="true" disabled="true" />
+                        </div>
 
                         <div class="col-md-9">
                             <label>Dirección</label>
@@ -218,6 +211,7 @@
                         <div class="col-md-9">
                             <label class="icon" ng-click="openMapsModal()"><i class="gc gc-address"></i></label>
                             <img class="geo-check" src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
+                            <input placeholder="Aprieta el bot&oacute;n de GEOLOCALIZACI&Oacute;N" readonly="true" disabled="true" />
                         </div>
 
                         <div class="col-md-9">
@@ -235,8 +229,7 @@
 
                     <div class="final-shipping ">
                         <h1 class="title">Costo shipping = {{loanGame.shippingCost * 2.0 | currency: '$':2}}</h1>
-                        <h1 class="title1">(ida y vuelta)</h1>
-                        <!-- <label class="title">Ciudad de retiro del juego {{loanGame.publicUser.location.name}}</label>  -->
+                        <h1 class="title-upper">(Ida y vuelta, incluye seguro de env&iacute;o)</h1>
                     </div>
 
                     <div class="final-costs">
@@ -252,7 +245,7 @@
                                 <span class="big-value bigger">{{(loanGame.shippingCost * 2.0) | currency: '$': 2}}</span>
                             </div> -->
 
-                            <div class="col-md-12 foot-note">(Costo en base a dirección actual)</div>
+                            <div class="col-md-12 foot-note">(Costo en base a dirección actual, incluye fee de GameClub)</div>
                         </div>
 
                         <div class="clearfix"></div>

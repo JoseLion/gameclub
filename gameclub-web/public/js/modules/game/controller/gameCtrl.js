@@ -70,6 +70,13 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         mostPlayed.$promise.then(function(data) {
             $scope.mostPlayed = data;
         });
+
+        var code = "";code = $rootScope.currentUser.location.parent.code;
+        if($rootScope.currentUser.location.parent != null){
+            rest("location/findChildrenOf/:code", true).get({code: code}, function(data) {
+                    $scope.locationCities = data;
+                });
+        }
     } else {
         $state.go(Const.mainState);
     }
@@ -387,4 +394,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             setPagedAvailableGames(data);
         });
     }
+
+    
 });

@@ -18,25 +18,25 @@
         <div class="clearfix"></div>
 
         <div class="col-md-4 col-xs-0"></div>
-        <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
+        <div class="col-md-8 col-xs-12">
             <div class="col-md-10 col-xs-12 coins">
-                <div class="col-md-6 col-xs-12 no-padding-left">
-                    <span class="subtitle">Balance: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
+                <div class="col-md-12 col-xs-12 no-padding-left">
+                    <span class="subtitle">Saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
                 </div>
-                <div class="col-md-6 col-xs-12 text-center">
+                <!-- <div class="col-md-6 col-xs-12 text-center">
                     <button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="clearfix"></div>
 
         <div class="col-md-4 col-xs-0"></div>
-        <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
+        <div class="col-md-8 col-xs-12">
             <div class="col-md-12 col-xs-12 total">
-                <span class="subtitle">Resumen de estatus de juegos</span>
+                <h2 class="subtitle">Resumen de status de juegos</h2>
 
                 <div class="col-md-12 col-xs-12 description">
-                    <div>Juegos actualmente prestados: <span class="dark">{{summary.borrowed}}</span></div>
+                    <div>Juegos actualmente alquilados: <span class="dark">{{summary.borrowed}}</span></div>
                     <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
 
@@ -189,9 +189,10 @@
     </div>
     <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" title="Tus juegos" ng-if="showGame"></most-played>
     <section class="row upload text-center" ng-if="!isSearching && !showGame">
-        <span class="subtitle">Carga tus juegos</span>
-        <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar DINERO y poder pedir prestado otros juegos.</p>
-        <button class="btn btn-secundary small" ng-click="showSearch()">Subir juegos</button>
+        <span class="subtitle">Alquila tus juegos</span>
+        <p>Ingresa tus juegos a la plataforma para que otros usuarios puedan ALQUILARLOS y puedas ganar DINERO. Con ese DINERO puedes alquilar otros juegos o incluso comprar nuevos juegos.</p>
+        <!-- <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar DINERO y poder pedir prestado otros juegos.</p> -->
+        <button class="btn btn-secundary small" ng-click="showSearch()">Alquila tus juegos</button>
     </section>
     <section class="banner" ng-if="isSearching">
         <div class="row">
@@ -236,5 +237,16 @@
             </form>
             <div class="col-md-1 col-xs-0"></div>
         </div>
+    </section>
+    <section class="row shipping-kit text-center">
+        <div class="title-section">
+            <img class="box-image" src="img/myGames/shipping-kit-box.svg" alt="shipping-kit-box"/>
+            <h2 class="title">Solicita tu Shipping Kit</h2>
+        </div>
+        <p>&iquest;Se te acabaron las cajas y fundas que ten&iacute;as o quieres renovar tus cajas y fundas Game Club?</p>
+        <p>Te env&iacute;amos un kit completo con 4 cajas, fundas, etiquetas de seguridad y un adhesivo oficial.</p>
+        <span class="subtitle">Tiene un costo de $12.50.</span>
+        <span class="dark-section">Solo con nuestras cajas y fundas podr&aacute;s alquilar tus juegos.</span>
+        <button class="btn btn-primary" ng-click="askShippingKit()">Pedir Shipping Kit</button>
     </section>
 </div>

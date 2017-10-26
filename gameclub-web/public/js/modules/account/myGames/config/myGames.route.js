@@ -10,7 +10,8 @@ angular.module('MyGames').config(function($stateProvider) {
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'MyGamesCtrl',
 		resolve: {
-			loadPlugin: function($ocLazyLoad) {
+			loadPlugin: function($ocLazyLoad, lessLoad) {
+				lessLoad.add('css/resources/myGames.less');
 				return $ocLazyLoad.load([{
 					name: 'MyGames',
 					files: ['js/modules/account/myGames/controller/myGamesCtrl.js']

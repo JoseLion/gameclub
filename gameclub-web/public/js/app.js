@@ -26,7 +26,8 @@ angular.module('GameClub', [
 	'Faq',
 	'Balance',
 	'Referred',
-	'ContactUs'
+	'ContactUs',
+	'ShippingKit'
 ])
 .config(['$locationProvider' ,'$httpProvider', function($locationProvider, $httpProvider, $http) {
 	$httpProvider.defaults.withCredentials = true;
@@ -50,6 +51,6 @@ angular.module('GameClub', [
 	if ($location.$$port == 443) {
 		port = '8390';
 	}
-	
+
 	return {url: $location.$$protocol + '://' + $location.$$host + ':' + port + '/gameclub'};
 });

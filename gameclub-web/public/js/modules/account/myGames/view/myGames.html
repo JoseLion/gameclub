@@ -1,7 +1,7 @@
 <div id="games">
     <section class="row header">
-        <div class="col-md-4"></div>
-        <div class="col-md-8 no-padding-left no-padding-right">
+        <div class="col-md-4 col-xs-5"></div>
+        <div class="col-md-8 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
             <div class="col-md-10 name">
                 <div class="col-md-3 no-padding-left no-padding-right">
                     <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
@@ -14,24 +14,33 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-            <div class="col-md-10 coins">
-                <div class="col-md-6 no-padding-left">
-                    <span class="subtitle">Balance: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
-                </div>
-                <div class="col-md-6 text-center">
-                    <button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="col-md-12 total">
-                <span class="subtitle">Resumen de estatus de juegos</span>
+        </div>
+        <div class="clearfix"></div>
 
-                <div class="col-md-12 description">
-                    <div>Juegos actualmente prestados: <span class="dark">{{summary.borrowed}}</span></div>
+        <div class="col-md-4 col-xs-0"></div>
+        <div class="col-md-8 col-xs-12">
+            <div class="col-md-10 col-xs-12 coins">
+                <div class="col-md-12 col-xs-12 no-padding-left">
+                    <span class="subtitle">Saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
+                </div>
+                <!-- <div class="col-md-6 col-xs-12 text-center">
+                    <button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
+                </div> -->
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-md-4 col-xs-0"></div>
+        <div class="col-md-8 col-xs-12">
+            <div class="col-md-12 col-xs-12 total">
+                <h2 class="subtitle">Resumen de status de juegos</h2>
+
+                <div class="col-md-12 col-xs-12 description">
+                    <div>Juegos actualmente alquilados: <span class="dark">{{summary.borrowed}}</span></div>
                     <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
-                
-                <div class="col-md-12 description">
+
+                <div class="col-md-12 col-xs-12 description">
                     <div>Juegos por devolver: <span class="dark">{{summary.toReturn}}</span></div>
                     <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
@@ -180,9 +189,10 @@
     </div>
     <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" title="Tus juegos" ng-if="showGame"></most-played>
     <section class="row upload text-center" ng-if="!isSearching && !showGame">
-        <span class="subtitle">Carga tus juegos</span>
-        <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar DINERO y poder pedir prestado otros juegos.</p>
-        <button class="btn btn-secundary small" ng-click="showSearch()">Subir juegos</button>
+        <span class="subtitle">Alquila tus juegos</span>
+        <p>Ingresa tus juegos a la plataforma para que otros usuarios puedan ALQUILARLOS y puedas ganar DINERO. Con ese DINERO puedes alquilar otros juegos o incluso comprar nuevos juegos.</p>
+        <!-- <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar DINERO y poder pedir prestado otros juegos.</p> -->
+        <button class="btn btn-secundary small" ng-click="showSearch()">Alquila tus juegos</button>
     </section>
     <section class="banner" ng-if="isSearching">
         <div class="row">
@@ -192,13 +202,13 @@
             <span class="description">Busca el juego que quieras subir</span>
         </div>
         <div class="row search white-search">
-            <div class="col-xs-12 col-md-1"></div>
-            <form class="col-xs-12 col-md-11" role="form" on-submit="find()" novalidate>
-                <div class="col-xs-12 col-md-10 search-params">
-                    <div class="col-xs-12 col-md-4 filter">
+            <div class="col-md-1 col-xs-0"></div>
+            <form class="col-md-11 col-xs-12" role="form" on-submit="find()" novalidate>
+                <div class="col-md-10 col-xs-10 search-params">
+                    <div class="col-md-4 col-xs-4 filter">
                         <input placeholder="T&iacute;tulo..." ng-model="search.name" uib-typeahead="state for state in nameAutocomplete | filter:$viewValue">
                     </div>
-                    <div class="col-xs-12 col-md-4 filter">
+                    <div class="col-md-4 col-xs-4 filter">
                         <ui-select ng-model="search.category" theme="bootstrap" class="selector">
                             <ui-select-match allow-clear placeholder="Categoría...">
                                 {{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}
@@ -209,7 +219,7 @@
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div class="col-xs-12 col-md-4 filter">
+                    <div class="col-md-4 col-xs-4 filter">
                         <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center">
                             <ui-select-match allow-clear placeholder="Consola...">
                                 <img ng-src="{{$select.selected.whiteBase64}}" class="gameConsole"/>
@@ -221,11 +231,22 @@
                         </ui-select>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-2 text-left">
+                <div class="col-md-2 col-xs-2 text-left">
                     <button type="submit" class="btn btn-tertiary"><i class="gc gc-turn-on"></i></button>
                 </div>
             </form>
-            <div class="col-xs-12 col-md-1"></div>
+            <div class="col-md-1 col-xs-0"></div>
         </div>
+    </section>
+    <section class="row shipping-kit text-center">
+        <div class="title-section">
+            <img class="box-image" src="img/myGames/shipping-kit-box.svg" alt="shipping-kit-box"/>
+            <h2 class="title">Solicita tu Shipping Kit</h2>
+        </div>
+        <p>&iquest;Se te acabaron las cajas y fundas que ten&iacute;as o quieres renovar tus cajas y fundas Game Club?</p>
+        <p>Te env&iacute;amos un kit completo con 4 cajas, fundas, etiquetas de seguridad y un adhesivo oficial.</p>
+        <span class="subtitle">Tiene un costo de $12.50.</span>
+        <span class="dark-section">Solo con nuestras cajas y fundas podr&aacute;s alquilar tus juegos.</span>
+        <button class="btn btn-primary" ng-click="askShippingKit()">Pedir Shipping Kit</button>
     </section>
 </div>

@@ -1,13 +1,13 @@
 <div id="profile">
     <section class="row header">
-        <div class="col-md-4"></div>
-        <div class="col-md-8 no-padding-left no-padding-right">
+        <div class="col-md-4 col-xs-5"></div>
+        <div class="col-md-8 col-xs-7 no-padding-left no-padding-right">
             <div class="col-md-10 name">
                 <div class="col-md-3 no-padding-left no-padding-right">
                     <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
                 </div>
                 <div class="col-md-9">
-                    <h2 class="title">{{currentUser.name}} {{currentUser.lastName}}</h2>
+                    <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
                     <div class="col-md-12 no-padding-left no-padding-right">
                         <div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
                     </div>
@@ -15,6 +15,10 @@
                 </div>
             </div>
             <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-4 col-xs-0"></div>
+        <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
             <div class="col-md-12 completed">
                 Usuario completado: <span>{{getFullPercentaje()}}%</span>
             </div>
@@ -42,19 +46,19 @@
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-8 form">
-                <div class="col-md-12 to-validate ci-req">
+                <div class="col-md-12 col-xs-12 to-validate ci-req">
                     <label>N&uacute;mero de c&eacute;dula</label>
                     <input ng-disabled="!isEditable" ng-model="currentUserTemp.document">
                 </div>
-                <div class="col-md-12 to-validate">
+                <div class="col-md-12 col-xs-12 to-validate">
                     <label>Fecha de nacimiento</label>
                     <date-selector ng-model="currentUserTemp.birthDate" ng-disabled="!isEditable" show-calendar="true" >
                 </div>
-                <div class="col-md-12 to-validate">
+                <div class="col-md-12 col-xs-12 to-validate">
                     <label>Ocupaci&oacute;n</label>
                     <input class="ocupation" placeholder="Estudiante - Programador" ng-disabled="!isEditable" ng-model="currentUserTemp.profession" ng-change="onBlur()"/>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-xs-12">
                     <label class="col-xs-12 col-md-4">Provincia</label>
                     <div class="col-xs-12 col-md-8">
                         <ui-select ng-model="currentUserTemp.province" theme="bootstrap" class="selector" ng-disabled="!isEditable" ng-change="findCities()">
@@ -66,7 +70,7 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-xs-12">
                     <label class="col-xs-12 col-md-4">Ciudad</label>
                     <div class="col-xs-12 col-md-8">
                         <ui-select ng-model="currentUserTemp.location" theme="bootstrap" class="selector" ng-disabled="!isEditable">
@@ -78,16 +82,16 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="col-md-12 to-validate billing">
+                <div class="col-md-12 col-xs-12 to-validate billing">
                     <label class="col-xs-12 col-md-4">Dirección de domicilio</label>
                     <div class="col-xs-12 col-md-12 billing-address">
                         <textarea type="address" ng-disabled="!isEditable" ng-model="currentUserTemp.billingAddress" rows="2" maxlength="150" placeholder="Calle Principal - Numeraci&oacute;n - Calle Secundaria - Sector - Referncia"></textarea>
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="col-md-12 to-validate phone">
-                    <label class="col-xs-12 col-md-4">Tel&eacute;fono de contacto</label>
-                    <div class="col-xs-12 col-md-8">
+                <div class="col-md-12 col-xs-12 to-validate phone">
+                    <label>Tel&eacute;fono de contacto</label>
+                    <div class="col-xs-7 col-md-8">
                         <input type="phone" ng-disabled="!isEditable" ng-model="currentUserTemp.contactPhone" class="complete" />
                     </div>
                 </div>
@@ -101,9 +105,7 @@
                 <img id="warning_img" src="img/warning-icon.svg" height="42" width="42">
                 <br>
                 <span class="col-md-12">&#191;TIENES RUC&#63;</span>
-                <br/>
                 <h6><span class="col-md-12"><B>Si posees Ruc es obligatorio registrarlo para poder facturar todas las transacciones que se hagan. Desde pagar prestamos hasta retirar tus ganancias.</B></span></h6>
-                <br><br><br>
                 <!-- <input type="checkbox" name="ruc" value="checkboxRuc" ng-model="active" ><br> -->
                 <div class="box" ng-class="currentUserTemp.hasRuc ? 'checked' : ''" ng-click="currentUserTemp.hasRuc = !currentUserTemp.hasRuc"></div>
                            <!--  <span class="checkbox-label" ng-click="currentUserTemp.hasRuc = !currentUserTemp.hasRuc">check</span> -->
@@ -138,7 +140,7 @@
                     <button type="submit" class="btn btn-secundary small" ng-disabled="!currentUserTemp.hasRuc">GUARDAR INFORMACI&#211;N</button>
             </div>
             </div>
-            
+
             <div class="clearfix"></div>
         </form>
     </section>
@@ -176,7 +178,7 @@
             </div>
         </form>
     </section>
-    
+
     <section class="row games">
         <div class="col-xs-12 col-md-4">
             <img src="img/books-icon.svg" />

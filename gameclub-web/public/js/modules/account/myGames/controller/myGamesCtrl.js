@@ -22,7 +22,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
 
     if (game != null) {
         $scope.myGame.game = game;
-        
+
         openRest("archive/downloadFile").download({name: $scope.myGame.game.banner.name, module: $scope.myGame.game.banner.module}, function(data) {
             $scope.background = {
                 background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
@@ -33,7 +33,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
                 gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
             });
-            
+
             if(consoleSelected == gameConsole){
                 $scope.search = {console: gameConsole};
             }
@@ -50,7 +50,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
 
         $scope.showGame = true;
     }
-    
+
 
     $scope.editGame = function(cross) {
         $scope.myGame = cross;
@@ -108,7 +108,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
         if($scope.myGame.status == null) {
             isValid = false;
             notif.danger('Estatus no seleccionado.');
-        } 
+        }
         if($scope.myGame.integrity == null) {
             isValid = false;
             notif.danger('Estado del juego no seleccionado.');
@@ -123,7 +123,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
         if(isValid == true){
             sweet.save(function() {
                 $scope.myGame.console = $scope.search.console.console;
-                
+
                 rest("publicUser/saveGame").post($scope.myGame, function(data) {
                     sweet.success();
                     setPagedData(data);
@@ -364,7 +364,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             rating: 3
         }
     ];
-    
+
     $scope.getPreviousGame = function() {
         let temp = $scope.mostPlayed.splice(0, 1);
         $scope.mostPlayed[3] = temp[0];
@@ -383,5 +383,9 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             });
         }
     });
+
+    $scope.askShippingKit = function() {
+        $state.go('gameclub.shippingKit');
+    };
 
 });

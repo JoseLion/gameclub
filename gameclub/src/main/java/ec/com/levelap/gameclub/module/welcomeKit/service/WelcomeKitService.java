@@ -12,7 +12,6 @@ import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
 import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
-import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKitLite;
@@ -57,10 +56,8 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 		}
 		
 		if (kit.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
-			PublicUser user = publicUserRepo.findOne(kit.getPublicUser().getId());
-			user.setIsReady(true);
-			user = publicUserRepo.save(user);
-			kit.setPublicUser(user);
+			kit.getPublicUser().setIsReady(true);
+			kit.setPublicUser(publicUserRepo.saveAndFlush(kit.getPublicUser()));
 		}
 		
 		kit = welcomeKitRepo.saveAndFlush(kit);

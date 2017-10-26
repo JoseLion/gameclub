@@ -1,0 +1,133 @@
+<div id="shippingKit">
+    <section class="row header">
+        <div class="col-md-4 col-xs-1"></div>
+        <div class="col-md-8 col-xs-10 no-padding-left no-padding-right responsive-margin-bottom">
+            <div class="col-md-10 name">
+                <div class="col-md-3 no-padding-left no-padding-right">
+                    <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+                </div>
+                <div class="col-md-9">
+                    <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
+                    <div class="col-md-12 no-padding-left no-padding-right">
+                        <div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="col-md-10 col-xs-12 coins">
+                <div class="col-md-12 col-xs-12 no-padding-left">
+                    <span class="subtitle">Balance: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+    <section class="row shipping">
+        <div class="col-md-12 col-xs-12 information">
+            <div class="title-section">
+                <img class="box-image" src="img/myGames/shipping-kit-box.svg" alt="shipping-kit-box"/>
+                <h2 class="title">Shipping Kit</h2>
+            </div>
+            <p>Cada SHIPPING KIT tiene un costo de $12,50 y contiene:</p>
+            <span>4 cajas</span>
+            <span>4 fundas</span>
+            <span>Etiquetas de seguridad</span>
+            <span>Adhesivo oficial</span>
+            <span>Instructivo</span>
+        </div>
+        <div class="col-md-12 col-xs-12 quantity">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-4 col-xs-12">
+                <div class="col-md-12 col-xs-12">
+                    <h2 class="subtitle">N&deg; de Kits</h2>
+                    <span class="value">{{quantity.value | currency:'':0}}</span>
+                </div>
+                <div class="col-md-2 col-xs-0"></div>
+                <div class="col-md-8 col-xs-12">
+                    <rzslider rz-slider-model="quantity.value" rz-slider-options="quantity.options" class="rz-slider-secundary"></rzslider>
+                </div>
+                <div class="col-md-2 col-xs-0"></div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <h2 class="subtitle">Precio a Pagar</h2>
+                <span class="value">{{totalToPay | currency:'$ ':2}}</span>
+            </div>
+            <div class="col-md-2 col-xs-0"></div>
+        </div>
+    </section>
+    <section class="row payment-view">
+        <div class="col-md-12 col-xs-12">
+            <h2 class="title">Forma de pago</h2>
+            <div class="balance">
+                <span class="subtitle">Saldo actual</span>
+                <span class="value">{{currentUser.shownBalance - balance.value | currency:'$ ':2}}</span>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12 no-padding-left no-padding-right text-center slider">
+            <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
+                <div class="col-md-6 col-xs-12 with-balance">
+                    <span class="text-tooltip">Paga con saldo</span>
+                    <span class="value">{{balance.value | currency:'$ ':2}}</span>
+                    <rzslider rz-slider-model="balance.value" rz-slider-options="balance.options" class="rz-slider-primary"></rzslider>
+                </div>
+                <div class="col-md-6 col-xs-12 difference">
+                    <span class="text-tooltip">Monto restante a pagar</span>
+                    <span class="value">{{totalToPay - balance.value | currency:'$ ':2}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12 payment">
+            <div class="col-md-12 col-xs-12">
+                <span class="text-tooltip">Pago con tarjeta</span>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                <span class="text-tooltip-or">O</span>
+            </div>
+            <div class="col-md-12">
+                <kushki class="new-payment"></kushki>
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- <div class="col-md-6 left-decoration"> -->
+            <!-- <div ng-if="currentUser.paymentMethods[0] != null ">
+                <label class="col-md-12">Elige tu tarjeta</label>
+                <div class="col-md-12" ng-repeat="paymentMethod in currentUser.paymentMethods">
+                    <div class="box" ng-class="{'checked': loan.payment == paymentMethod}" ng-click="loan.payment = paymentMethod" ng-if="loan.cardPart > 0.0"></div>
+                    <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{paymentMethod.cardFinale}}" readonly>
+                    <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button><p>{{idCard11}}</p><p>{{idCard2}}</p>
+                </div>
+            </div> -->
+
+            <!-- <div ng-if="currentUser.paymentMethods[0] == null">
+                <label class="col-md-12">Ingresa otra forma de pago</label>
+                <div class="col-md-12">
+                    <kushki class="new-payment"></kushki>
+                </div>
+            </div> -->
+            <!--<div ng-if="currentUser.paymentMethods[0] != null">
+                <label class="col-md-12">Elige tu tarjeta</label>
+                <div class="col-md-12">
+                    <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[0]}" ng-click="loan.payment = currentUser.paymentMethods[1]"></div>
+                    <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{currentUser.paymentMethods[0].cardFinale}}" readonly>
+                    <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])">Borrar tarjeta</button>
+                </div>
+            </div>
+
+            <div ng-if="currentUser.paymentMethods[0] == null">
+                <label class="col-md-12">Ingresa otra forma de pago</label>
+                <div class="col-md-12">
+                    <kushki class="new-payment"></kushki>
+                </div>
+            </div>-->
+        <!-- </div> -->
+        <div class="clearfix"></div>
+    </section>
+</div>

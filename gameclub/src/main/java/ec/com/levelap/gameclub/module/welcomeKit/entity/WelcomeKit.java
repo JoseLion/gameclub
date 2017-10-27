@@ -1,5 +1,8 @@
 package ec.com.levelap.gameclub.module.welcomeKit.entity;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -10,13 +13,18 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.apache.commons.io.FileUtils;
 import org.postgresql.geometric.PGpoint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.catalog.Catalog;
+import ec.com.levelap.cryptography.LevelapCryptography;
+import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.utils.Const;
@@ -60,6 +68,23 @@ public class WelcomeKit extends BaseEntity {
 	
 	@Column(name="shipping_note", columnDefinition="VARCHAR")
 	private String shippingNote;
+	
+	@JsonIgnore
+	@Column(name = "amount_balance")
+	private byte[] amountBalance;
+
+	@Transient
+	private Double amountBalanceValue;
+
+	@JsonIgnore
+	@Column(name = "amount_card")
+	private byte[] amountCard;
+
+	@Transient
+	private Double amountCardValue;
+
+	@Column(name = "payment_id")
+	private Long paymentId;
 
 	public Message getMessage() {
 		return message;
@@ -148,4 +173,61 @@ public class WelcomeKit extends BaseEntity {
 	public void setShippingNote(String shippingNote) {
 		this.shippingNote = shippingNote;
 	}
+
+	public byte[] getAmountBalance() {
+		return amountBalance;
+	}
+
+	public void setAmountBalance(byte[] amountBalance) {
+		this.amountBalance = amountBalance;
+	}
+
+	public Double getAmountBalanceValue() throws IOException, GeneralSecurityException {
+		if (publicUser.getPrivateKey() != null && amountBalance.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
+					.getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, publicUser.getPrivateKey());
+			String decypted = cryptoService.decrypt(amountBalance, key);
+			amountBalanceValue = Double.parseDouble(decypted);
+		}
+		return amountBalanceValue;
+	}
+
+	public void setAmountBalanceValue(Double amountBalanceValue) {
+		this.amountBalanceValue = amountBalanceValue;
+	}
+
+	public byte[] getAmountCard() {
+		return amountCard;
+	}
+
+	public void setAmountCard(byte[] amountCard) {
+		this.amountCard = amountCard;
+	}
+
+	public Double getAmountCardValue() throws IOException, GeneralSecurityException {
+		if (publicUser.getPrivateKey() != null && amountCard.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
+					.getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, publicUser.getPrivateKey());
+			String decypted = cryptoService.decrypt(amountCard, key);
+			amountCardValue = Double.parseDouble(decypted);
+		}
+		return amountCardValue;
+	}
+
+	public void setAmountCardValue(Double amountCardValue) {
+		this.amountCardValue = amountCardValue;
+	}
+
+	public Long getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(Long paymentId) {
+		this.paymentId = paymentId;
+	}
+
 }

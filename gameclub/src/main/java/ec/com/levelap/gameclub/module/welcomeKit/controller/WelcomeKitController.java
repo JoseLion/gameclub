@@ -1,6 +1,9 @@
 package ec.com.levelap.gameclub.module.welcomeKit.controller;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 
@@ -18,17 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.location.Location;
+import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKitLite;
 import ec.com.levelap.gameclub.module.welcomeKit.service.WelcomeKitService;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.kushki.KushkiException;
 
 @RestController
 @RequestMapping(value="api/welcomeKit", produces=MediaType.APPLICATION_JSON_VALUE)
 public class WelcomeKitController {
 	@Autowired
 	private WelcomeKitService welcomeKitService;
-	
+		
 	@RequestMapping(value="findWelcomeKits", method=RequestMethod.POST)
 	public ResponseEntity<Page<WelcomeKitLite>> findWelcomeKits(@RequestBody(required=false) Search search) throws ServletException {
 		if (search == null) {
@@ -55,6 +60,35 @@ public class WelcomeKitController {
 	public ResponseEntity<WelcomeKitLite> save(@RequestBody WelcomeKit kit) throws ServletException {
 		WelcomeKitLite kitLite = welcomeKitService.save(kit);
 		return new ResponseEntity<WelcomeKitLite>(kitLite, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "requestShippingKit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> requestShippingKit(@RequestBody Map<String, Object> amounts) throws ServletException {
+		if (amounts.containsKey("amountBalance") && amounts.containsKey("amountCard") && amounts.containsKey("paymentId")) {
+			PublicUser publicUser = null;
+			try {
+				publicUser = welcomeKitService.saveShippingKit(
+						Double.valueOf(amounts.get("amountBalance").toString()),
+						Double.valueOf(amounts.get("amountCard").toString()),
+						Long.valueOf(amounts.get("paymentId").toString()));
+			} catch (IOException | GeneralSecurityException ex) {
+				ex.printStackTrace();
+				return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+			}
+			return new ResponseEntity<>(publicUser, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+	}
+	
+	@RequestMapping(value = "confirmShippingKit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> confirmShippingKit(@RequestBody Long shippingKitId) throws ServletException {
+		try {
+			welcomeKitService.confirmShippingKit(shippingKitId);
+		} catch (IOException | GeneralSecurityException | KushkiException ex) {
+			ex.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	private static class Search {

@@ -1,10 +1,9 @@
-angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope, $scope, notif, Const, $state, $filter, forEach) {
+angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope, $scope, notif, Const, $state, $filter, forEach, sweet, rest, $state) {
 
     if($rootScope.currentUser == null) {
         notif.danger(Const.messages.expired);
         $state.go('gameclub.home');
     }
-    console.log($rootScope.currentUser.paymentMethods)
 
     $scope.quantity = {
         value: 1,
@@ -38,10 +37,24 @@ angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope,
 
     $scope.completePayment = function() {
         if(($scope.totalToPay - $scope.balance.value > 0) && $scope.cardSelected == null) {
-            console.log('DEBE SELECCIONAR');
+            notif.danger(Const.errorMessages.cardRequired);
             return;
         }
-        console.log('SUBMIT DE FORM');
+        notif.closeAll();
+        sweet.default("Se confirmará el envío de tu Welcome Kit", function() {
+            let kit = {
+                amountBalance: $scope.balance.value,
+                amountCard: $scope.totalToPay - $scope.balance.value,
+                paymentId: $scope.cardSelected.id
+            };
+            rest("welcomeKit/requestShippingKit").post(kit, function(data) {
+                $rootScope.currentUser = data;
+                $state.go('gameclub.account');
+            }, function(error) {
+                sweet.close();
+            });
+            sweet.close();
+        });
     };
 
     function calculateTotalToPay() {

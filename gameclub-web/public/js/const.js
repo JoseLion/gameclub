@@ -39,7 +39,8 @@ angular.module('GameClub').constant('Const', {
 		maxlength: 'El texto sobrepasa la cantidad máxima de caracteres',
 		minlength: 'El texto no cumple con la cantidad mínima de caracteres',
 		tableRequired: 'La tabla debe contener al menos un elemento',
-		consoleRequired: 'Elije una consola para poder realizar tu búsqueda'
+		consoleRequired: 'Elije una consola para poder realizar tu búsqueda',
+		cardRequired: 'Debe seleccionar una tarjeta para completar realizar el pedido'
 	},
 
 	messages: {

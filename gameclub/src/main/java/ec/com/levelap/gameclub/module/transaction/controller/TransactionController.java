@@ -1,12 +1,7 @@
 package ec.com.levelap.gameclub.module.transaction.controller;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 
@@ -21,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -35,15 +28,10 @@ public class TransactionController {
 	private TransactionService transactionService;
 	
 
-	@RequestMapping(value="lastFiveTransactions", method=RequestMethod.POST)
-	public ResponseEntity<List<Transaction>> lastFiveTransactions(@RequestBody PublicUser id) throws ServletException{
-
-//		if (publicUser == null) {
-//			publicUser = new PublicUser();
-//		}
-		
-		List<Transaction> transactions = transactionService.getTransactionRepo().findFiveTransactions(id, new PageRequest(0, 5)).getContent();
-		return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+	@RequestMapping(value="lastFiveTransactions/{publicUserId}", method=RequestMethod.GET)
+	public ResponseEntity<?> lastFiveTransactions(@PathVariable Long publicUserId) throws ServletException{
+		List<Transaction> transactions = transactionService.getTransactionRepo().findFiveTransactions(publicUserId, new PageRequest(0, 5)).getContent();
+		return new ResponseEntity<>(transactions, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="allTransactions", method=RequestMethod.GET)

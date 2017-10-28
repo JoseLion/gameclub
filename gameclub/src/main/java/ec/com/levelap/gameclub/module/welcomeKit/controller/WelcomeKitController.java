@@ -26,7 +26,6 @@ import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKitLite;
 import ec.com.levelap.gameclub.module.welcomeKit.service.WelcomeKitService;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.kushki.KushkiException;
 
 @RestController
 @RequestMapping(value="api/welcomeKit", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -58,19 +57,32 @@ public class WelcomeKitController {
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)
 	public ResponseEntity<WelcomeKitLite> save(@RequestBody WelcomeKit kit) throws ServletException {
-		WelcomeKitLite kitLite = welcomeKitService.save(kit);
+		WelcomeKitLite kitLite;
+		if(kit.getQuantity() == 0) {
+			kitLite = welcomeKitService.save(kit);			
+		} else {
+			try{
+				kitLite = welcomeKitService.sendShippingKit(
+						kit.getId(),
+						kit.getTracking(),
+						kit.getShippingNote());
+			} catch (Exception ex) {
+				throw new ServletException(ex);
+			}
+		}
 		return new ResponseEntity<WelcomeKitLite>(kitLite, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "requestShippingKit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> requestShippingKit(@RequestBody Map<String, Object> amounts) throws ServletException {
-		if (amounts.containsKey("amountBalance") && amounts.containsKey("amountCard") && amounts.containsKey("paymentId")) {
+		if (amounts.containsKey("quantity") && amounts.containsKey("amountBalance") && amounts.containsKey("amountCard")) {
 			PublicUser publicUser = null;
 			try {
 				publicUser = welcomeKitService.saveShippingKit(
+						Integer.valueOf(amounts.get("quantity").toString()),
 						Double.valueOf(amounts.get("amountBalance").toString()),
 						Double.valueOf(amounts.get("amountCard").toString()),
-						Long.valueOf(amounts.get("paymentId").toString()));
+						amounts.containsKey("paymentId") ? Long.valueOf(amounts.get("paymentId").toString()) : null);
 			} catch (IOException | GeneralSecurityException ex) {
 				ex.printStackTrace();
 				return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
@@ -81,14 +93,27 @@ public class WelcomeKitController {
 	}
 	
 	@RequestMapping(value = "confirmShippingKit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> confirmShippingKit(@RequestBody Long shippingKitId) throws ServletException {
-		try {
-			welcomeKitService.confirmShippingKit(shippingKitId);
-		} catch (IOException | GeneralSecurityException | KushkiException ex) {
-			ex.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+	public ResponseEntity<?> confirmShippingKit(@RequestBody WelcomeKit shippingKit) throws ServletException {
+		WelcomeKit kit = welcomeKitService.confirmShippingKit(shippingKit);
+		return new ResponseEntity<>(kit, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "findShippingKits", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> findShippingKits(@RequestBody(required = false) Search search) throws ServletException {
+		if (search == null) {
+			search = new Search();
 		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		
+		Page<WelcomeKitLite> shippingKits = welcomeKitService.getWelcomeKitRepo().findShippingKits(
+				search.name,
+				search.startDate,
+				search.endDate,
+				search.province,
+				search.city,
+				search.tracking,
+				search.shippingStatus,
+				new PageRequest(search.page, Const.TABLE_SIZE));
+		return new ResponseEntity<>(shippingKits, HttpStatus.OK);
 	}
 	
 	private static class Search {

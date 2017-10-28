@@ -18,6 +18,8 @@ import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
 import ec.com.levelap.cryptography.LevelapCryptography;
+import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
+import ec.com.levelap.gameclub.module.kushki.repository.KushkiSubscriptionRepo;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -58,6 +60,9 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 	@Autowired
 	private KushkiService kushkiService;
 	
+	@Autowired
+	private KushkiSubscriptionRepo kushkiSubscriptionRepo;
+	
 	@Transactional
 	public WelcomeKit confirmWelcomeKit(WelcomeKit welcomeKit) throws ServletException {
 		Catalog shippingStatus = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
@@ -81,14 +86,14 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 			kit.getPublicUser().setIsReady(true);
 			kit.setPublicUser(publicUserRepo.saveAndFlush(kit.getPublicUser()));
 		}
-		
+
 		kit = welcomeKitRepo.saveAndFlush(kit);
 		WelcomeKitLite kitLite = welcomeKitRepo.findById(kit.getId());
 		return kitLite;
 	}
 
 	@Transactional
-	public PublicUser saveShippingKit(Double amountBalance, Double amountCard, Long paymentId)
+	public PublicUser saveShippingKit(Integer quantity, Double amountBalance, Double amountCard, Long paymentId)
 			throws ServletException, IOException, GeneralSecurityException {
 		PublicUser publicUser = publicUserService.getCurrentUser();
 		File key = File.createTempFile("key", ".tmp");
@@ -98,11 +103,13 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 		message.setIsLoan(false);
 		message.setOwner(publicUser);
 		message.setSubject(Const.SBJ_SHIPPING_KIT);
+		message.setIsShippingKit(Boolean.TRUE);
 		messageRepo.save(message);
 
 		WelcomeKit welcomeKit = new WelcomeKit();
 		welcomeKit.setPublicUser(publicUser);
 		welcomeKit.setMessage(message);
+		welcomeKit.setQuantity(quantity);
 		welcomeKit.setAmountBalance(cryptoService.encrypt(Double.toString(amountBalance), key));
 		welcomeKit.setAmountCard(cryptoService.encrypt(Double.toString(amountCard), key));
 		welcomeKit.setPaymentId(paymentId);
@@ -112,24 +119,70 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 	}
 
 	@Transactional
+	public WelcomeKit confirmShippingKit(WelcomeKit shippingKit) throws ServletException {
+		Catalog shippingStatus = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
+		WelcomeKit finalShippingKit = welcomeKitRepo.findOne(shippingKit.getId());
+		finalShippingKit.setShippingStatus(shippingStatus);
+		finalShippingKit.setWasConfirmed(Boolean.TRUE);
+		finalShippingKit.setConfirmationDate(new Date());
+		finalShippingKit.setAddress(shippingKit.getAddress());
+		finalShippingKit.setGeolocation(shippingKit.getGeolocation());
+		finalShippingKit.setPhone(shippingKit.getPhone());
+		finalShippingKit.setReceiver(shippingKit.getReceiver());
+		return welcomeKitRepo.save(finalShippingKit);
+	}
+
+	@Transactional
 	@SuppressWarnings("unchecked")
-	public void confirmShippingKit(Long shippingKitId)
-			throws ServletException, IOException, GeneralSecurityException, KushkiException {
-		PublicUser publicUser = publicUserService.getCurrentUser();
+	public WelcomeKitLite sendShippingKit(Long shippingKitId, String tracking, String shippingNote)
+			throws ServletException, IOException, NumberFormatException, GeneralSecurityException {
+		WelcomeKit shippingKit = welcomeKitRepo.findOne(shippingKitId);		
+		PublicUser publicUser = publicUserService.getPublicUserRepo().findOne(shippingKit.getPublicUser().getId());
+		
 		File key = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(key, publicUser.getPrivateKey());
-
-		WelcomeKit shippingKit = welcomeKitRepo.findOne(shippingKitId);
+		
 		Double amountBalance = Double.valueOf(cryptoService.decrypt(shippingKit.getAmountBalance(), key));
 		Double amountCard = Double.valueOf(cryptoService.decrypt(shippingKit.getAmountCard(), key));
-
 		Double balance = Double.valueOf(cryptoService.decrypt(publicUser.getBalance(), key));
-		publicUser.setBalance(cryptoService.encrypt(Double.toString(balance - amountBalance), key));
-		publicUserRepo.save(publicUser);
+		Double totalBalance = balance - amountBalance;
+		
+		if (totalBalance < 0) {
+			amountCard += Math.abs(totalBalance);
+			amountBalance = balance;
+			balance = 0D;
+			shippingKit.setAmountBalance(cryptoService.encrypt(Double.toString(amountBalance), key));
+			shippingKit.setAmountCard(cryptoService.encrypt(Double.toString(amountCard), key));
+		} else {
+			balance = totalBalance;
+		}
 
-		Map<String, Object> kushkiSubscription = new HashMap<>();
-		kushkiSubscription.put("amount", amountCard);
-		kushkiService.subscriptionCharge(shippingKit.getPaymentId().toString(), kushkiSubscription);
+		if(amountCard > 0) {
+			try {
+				Map<String, Object> kushkiSubscription = new HashMap<>();
+				kushkiSubscription.put("amount", amountCard);
+				KushkiSubscription subscription = kushkiSubscriptionRepo.findOne(shippingKit.getPaymentId());
+				kushkiService.subscriptionCharge(subscription.getSubscriptionId(), kushkiSubscription);
+			} catch (KushkiException ex) {
+				ex.printStackTrace();
+				throw new ServletException(ex);
+			}
+		}
+		
+		Catalog shippingStatus = catalogRepo.findByCode(Code.SHIPPING_DELIVERED);
+		
+		shippingKit.setShippingStatus(shippingStatus);
+		shippingKit.setTracking(tracking);
+		shippingKit.setShippingNote(shippingNote);
+		shippingKit = welcomeKitRepo.save(shippingKit);
+		
+		Message message = messageRepo.findOne(shippingKit.getMessage().getId());
+		message.setRead(Boolean.FALSE);
+		messageRepo.save(message);
+		
+		publicUser.setBalance(cryptoService.encrypt(Double.toString(balance), key));
+		publicUserRepo.save(publicUser);
+		return welcomeKitRepo.findById(shippingKit.getId());
 	}
 
 	public WelcomeKitRepo getWelcomeKitRepo() {

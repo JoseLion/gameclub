@@ -85,6 +85,9 @@ public class WelcomeKit extends BaseEntity {
 
 	@Column(name = "payment_id")
 	private Long paymentId;
+	
+	@Column(name = "quantity", columnDefinition = "INTEGER DEFAULT 0")
+	private Integer quantity = 0;
 
 	public Message getMessage() {
 		return message;
@@ -183,13 +186,15 @@ public class WelcomeKit extends BaseEntity {
 	}
 
 	public Double getAmountBalanceValue() throws IOException, GeneralSecurityException {
-		if (publicUser.getPrivateKey() != null && amountBalance.length > 0) {
+		if (publicUser.getPrivateKey() != null && amountBalance != null && amountBalance.length > 0) {
 			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
 					.getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");
 			FileUtils.writeByteArrayToFile(key, publicUser.getPrivateKey());
 			String decypted = cryptoService.decrypt(amountBalance, key);
 			amountBalanceValue = Double.parseDouble(decypted);
+		} else {
+			amountBalanceValue = 0D;
 		}
 		return amountBalanceValue;
 	}
@@ -207,13 +212,15 @@ public class WelcomeKit extends BaseEntity {
 	}
 
 	public Double getAmountCardValue() throws IOException, GeneralSecurityException {
-		if (publicUser.getPrivateKey() != null && amountCard.length > 0) {
+		if (publicUser.getPrivateKey() != null && amountCard !=null && amountCard.length > 0) {
 			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
 					.getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");
 			FileUtils.writeByteArrayToFile(key, publicUser.getPrivateKey());
 			String decypted = cryptoService.decrypt(amountCard, key);
 			amountCardValue = Double.parseDouble(decypted);
+		} else {
+			amountCardValue = 0D;
 		}
 		return amountCardValue;
 	}
@@ -228,6 +235,14 @@ public class WelcomeKit extends BaseEntity {
 
 	public void setPaymentId(Long paymentId) {
 		this.paymentId = paymentId;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 }

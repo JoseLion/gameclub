@@ -23,16 +23,13 @@
                 <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
                     <span class="subtitle">Saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
                 </div>
-               <!--  <div class="col-md-6 text-center">
-                    <button class="btn btn-tertiary small">Obt&eacute;n  f&aacute;cil</button>
-                </div> -->
             </div>
         </div>
         <div class="clearfix"></div>
 
         <div class="col-md-4 col-xs-0"></div>
         <div class="col-md-8 col-xs-12 responsive-padding-h-10">
-            <div class="col-md-12 col-xs-12 payment">
+            <div class="col-md-12 col-xs-12 payment total">
                 <h2 class="subtitle" ng-if="currentUser.paymentMethods.length > 0">Formas de pago:</h2>
                 <div ng-repeat="method in currentUser.paymentMethods">
                     <div class="col-md-12 card-info">
@@ -44,10 +41,10 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="currentUser.paymentMethods.length < 2">
-                    <span class="col-md-12 paymen-help">Ingresar forma de pago</span>
-                    <kushki class="col-md-7 new-payment" />
-                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 total" ng-if="currentUser.paymentMethods.length < 2">
+                <h2 class="subtitle">Ingresar forma de pago:</h2>
+                <kushki class="col-md-7 new-payment" />
             </div>
         </div>
         <div class="clearfix"></div>

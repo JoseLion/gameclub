@@ -21,14 +21,14 @@ angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope,
         }
     };
     $scope.balance = {
-        value: 0,
+        value: 0.0,
         options: {
             hidePointerLabels: true,
             hideLimitLabels: true,
             showSelectionBar: true,
-            step: 1/100,
-            precision: 1/100,
-            floor: 0
+            step: 0.01,
+            precision: 0.01,
+            floor: 0.0
         }
     };
     $scope.amountBalance = 0;
@@ -41,15 +41,18 @@ angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope,
             return;
         }
         notif.closeAll();
-        sweet.default("Se confirmará el envío de tu Welcome Kit", function() {
+        sweet.default("Se confirmará el envío de tu Shipping Kit", function() {
             let kit = {
+                quantity: $scope.quantity.value,
                 amountBalance: $scope.balance.value,
-                amountCard: $scope.totalToPay - $scope.balance.value,
-                paymentId: $scope.cardSelected.id
+                amountCard: $scope.totalToPay - $scope.balance.value
             };
+            if($scope.cardSelected != null) {
+                kit.paymentId = $scope.cardSelected.id;
+            }
             rest("welcomeKit/requestShippingKit").post(kit, function(data) {
                 $rootScope.currentUser = data;
-                $state.go('gameclub.account');
+                $state.go('gameclub.account.myGames');
             }, function(error) {
                 sweet.close();
             });

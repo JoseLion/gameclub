@@ -1,4 +1,9 @@
 angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScope, messages, forEach, $filter, rest, geolocation, notif, sweet, $state, friendlyUrl) {
+
+	if($rootScope.currentUser == null) {
+		$state.go('gameclub.home');
+	}
+
 	let page = 0;
 	messages.$promise.then(function(data) {
 		$scope.messages = data.content;
@@ -32,11 +37,14 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			clearCanvas();
 			killTimer();
 
-			if (message.isLoan == false) {
-				rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
-					$scope.welcomeKits = data;
+			if (!message.isLoan) {
+				rest("message/getMessageById/:messageId").get({messageId: message.id}, function(data) {
+					if(message.isFine) {
+						$scope.fine = data;
+					} else {
+						$scope.kit = data;
+					}
 					canvasToBottom();
-					
 					if (!message.read) {
 						message.read = true;
 						$rootScope.currentUser.unreadMessages--;
@@ -44,7 +52,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				});
 			}
 
-			if (message.isLoan == true) {
+			if (message.isLoan) {
 				rest("message/getLoanMessage/:messageId").get({messageId: message.id}, function(data) {
 					$scope.loan = data;
 					$scope.loan.isDisabled = true;
@@ -89,12 +97,12 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					$scope.fine = data;
 					if ($scope.fine.message != null) {
 						canvasToBottom();
-					
+
 						if (!message.read) {
 							message.read = true;
 							$rootScope.currentUser.unreadMessages--;
 						}
-					}					
+					}
 				});
 			}
 		}
@@ -141,42 +149,47 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		});
 	}
 
-	$scope.confirmWelcomeKit = function(kit) {
+	$scope.confirmKit = function(kit) {
 		let isValid = true;
-
 		if (kit.address == null || kit.address == '') {
 			notif.danger("El campo dirrección es obligatorio");
 			isValid = false;
 		}
-
 		if (kit.phone == null || kit.phone == '') {
 			notif.danger("El campo teléfono es obligatorio");
 			isValid = false;
 		}
-
 		if (kit.receiver == null || kit.receiver == '') {
 			notif.danger("El campo persona de entrega es obligatorio");
 			isValid = false;
 		}
-
 		if (kit.geolocation == null) {
 			notif.danger("La geolocalización es obligatoria");
 			isValid = false;
 		}
 
 		if (isValid) {
-			sweet.default("Se confirmará el envío de tu Welcome Kit", function() {
-				rest("welcomeKit/confirmWelcomeKit").post(kit, function(data) {
-					let index = $scope.welcomeKits.indexOf(kit);
-					$scope.welcomeKits[index] = data;
-					sweet.close();
-				}, function(error) {
-					sweet.close();
+			if(kit.quantity === 0) {
+				sweet.default("Se confirmará el envío de tu Welcome Kit", function() {
+					rest("welcomeKit/confirmWelcomeKit").post(kit, function(data) {
+						$scope.kit = data;
+						sweet.close();
+					}, function(error) {
+						sweet.close();
+					});
 				});
-			});
-			
+			} else {
+				sweet.default("Se confirmará el envío de tu Shipping Kit", function() {
+					rest("welcomeKit/confirmShippingKit").post(kit, function(data) {
+						$scope.kit = data;
+						sweet.close();
+					}, function(error) {
+						sweet.close();
+					});
+				});
+			}
 		}
-	}
+	};
 
 	$scope.goToGame = function(publicUserGame) {
 		$state.go('gameclub.game', {id: publicUserGame.game.id, consoleId: publicUserGame.console.id, name: friendlyUrl(publicUserGame.game.name)});
@@ -478,7 +491,10 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	}*/
 
 	function clearCanvas() {
-		$scope.welcomeKits = null;
+		$scope.welcomeKit = null;
+		$scope.shipping = null;
+		$scope.fine = null;
+
 		$scope.loan = null;
 	}
 

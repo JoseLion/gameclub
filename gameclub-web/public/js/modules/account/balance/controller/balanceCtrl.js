@@ -1,14 +1,10 @@
 
-angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath,) {
-	
-	console.log($rootScope.currentUser);
-	rest("transaction/lastFiveTransactions", true).post($rootScope.currentUser, function(data) {
+angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath) {
+
+	$scope.transactions = [];
+	rest("transaction/lastFiveTransactions/:publicUserId", true).get({publicUserId: $rootScope.currentUser.id}, function(data) {
 		$scope.transactions = data;
 	});
-
-	/*transactions.$promise.then(function(data){
-		$scope.transactions = data;
-	});*/	
 
 	$scope.takeYourBalance = function() {
 		SweetAlert.swal({
@@ -31,10 +27,10 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 			     	$state.go('gameclub.account.profile').then(function() {
 			  			$location.hash('ruc-section');
 			  			$anchorScroll();
-			  		}); 
+			  		});
 			    	swal.close();
 			    }
-			     
+
 			    if($rootScope.currentUser.hasRuc){
 			    	swal.close();
 			    	// mostGame();
@@ -42,7 +38,7 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 		       		swal.close();
 			    	// mostGame();
 		       }
-		    } 
+		    }
 
 		});
 	}
@@ -75,5 +71,4 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 		});
     }
 
-	
 });

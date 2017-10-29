@@ -97,33 +97,40 @@
 </div>
 
 <!-- MODAL PARA EL RETIRO DE SALDO -->
-<!--
 <script type="text/ng-template" id="takeYourBalance.html">
-    <div class="inmodal">
+    <div id="request-balance-modal" class="inmodal">
         <div class="modal-heading text-center">
-            <h2 class="tertiary"><img id="warning_img" src="img/gamepad.svg" height="42" width="42"></h2>
+            <img id="warning_img" src="img/gamepad.svg" width="20%">
         </div>
 
         <div class="modal-body">
             <form role="form" on-submit="ok()" class="terms-form form-horizontal" novalidate>
-                <div class="form-group text-center">
-                    <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" target="_blank">{{link.termsConditions.name}}</a></span>
-                </div>
+               <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <h3 class="title uppercase">¿Estás seguro de retirar tu saldo?</h3>
+                       <small>Puedes usar <span class="uppercase">tu saldo</span> actual para alquilar y jugar nuevos juegos</small>
+                    </div>
+               </div>
 
-                <div class="form-group text-center">
-                    <div class="col-md-4">
-                        <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
+               <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()"></most-played>
                     </div>
-                    <div class="col-md-8">
-                        <button type="submit" class="btn save" ng-disabled="isSaving">
-                            <span ng-if="!isSaving">OK</span>
-                            <loading showing="isSaving" inline width="1em">
-                        </button>
-                    </div>
-                </div>
+               </div>
+
+               <div class="form-group">
+                   <div class="col-md-12 text-center">
+                       <button type="submit" class="btn small btn-primary">Retirar tu saldo</button>
+                       <button type="button" class="btn small btn-primary" ng-click="cancel()">Cancelar</button>
+                   </div>
+               </div>
             </form>
-            <div class="clearfix"></div>
         </div>
     </div>
 </script>
--->
+
+<style type="text/css">
+    #request-balance-modal #most-played{padding-left:2%;padding-right:2%;}
+    #request-balance-modal #most-played .left, #request-balance-modal #most-played .right{padding:unset;}
+    #request-balance-modal button{color:white;}
+</style>

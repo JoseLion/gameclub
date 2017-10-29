@@ -10,22 +10,14 @@ angular.module('Balance').config(function($stateProvider) {
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
-					name: 'Balance'
-					,files: ['js/modules/account/balance/controller/balanceCtrl.js']
+					name: 'Balance',
+					files: ['js/modules/account/balance/controller/balanceCtrl.js']
 				}]);
 			},
-			transactions: function(rest,$rootScope){
-				return rest("transaction/lastFiveTransactions/:id", true).get({id: $rootScope.currentUser.id},function(data){
-					return data;
-				});
+
+			transactions: function(rest, $rootScope){
+				return rest("transaction/lastFiveTransactions", true).get();
 			}
-			/*transactions: function(rest,$rootScope){
-				console.log($rootScope);
-				console.log($rootScope.currentUser);
-				return rest("transaction/lastFiveTransactions", true).post($rootScope.currentUser,function(data){
-					return data;
-				});
-			}*/
 		}
 	});
 

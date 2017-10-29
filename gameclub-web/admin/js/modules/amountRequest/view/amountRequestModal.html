@@ -1,0 +1,88 @@
+<div class="inmodal">
+	<form class="form-horizontal" role="form" on-submit="save()" novalidate>
+		<div class="modal-header">
+			<i class="fa fa-gears modal-icon"></i>
+			<h4 class="modal-title">Aprobaci&oacute;n</h4>
+		</div>
+
+		<div class="modal-body">
+			<div class="form-group to-validate">
+				<label class="col-md-3 control-label">Monto</label>
+				<div class="col-md-9 control-info">
+					<span>{{obj.adminAmount | currency:'$ ':2}}</span>
+				</div>
+			</div>
+			<div class="form-group to-validate">
+				<label class="col-md-3 control-label">Beneficiario</label>
+				<div class="col-md-9 control-info">
+					<span>{{obj.accountFullName}}</span>
+				</div>
+			</div>
+			<div class="form-group to-validate">
+				<label class="col-md-3 control-label">Banco</label>
+				<div class="col-md-9 control-info">
+					<span>{{obj.accountBank}}</span>
+				</div>
+			</div>
+			<div class="form-group to-validate">
+				<label class="col-md-3 control-label">N&#176; Cuenta</label>
+				<div class="col-md-9 control-info">
+					<span>{{obj.accountNumber}}</span>
+				</div>
+			</div>
+			<div class="form-group to-validate">
+				<label class="col-md-3 control-label">E-Mail</label>
+				<div class="col-md-9 control-info">
+					<span>{{obj.accountEmail}}</span>
+				</div>
+			</div>
+			<div class="form-group to-validate">
+				<label class="col-md-3 control-label">Tipo de Cuenta</label>
+				<div class="col-md-9 control-info">
+					<span>{{obj.accountIsSaving == true ? 'Ahorros' : 'Corriente'}}</span>
+				</div>
+			</div>
+			<div class="form-group to-validate">
+				<label class="col-md-3 control-label">Estado</label>
+				<div class="col-md-9">
+					<div class="col-md-9">
+						<ui-select validation ng-model="obj.requestStatus" theme="bootstrap" required>
+							<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected.name}}</ui-select-match>
+							<ui-select-choices repeat="amtRq in amountRequestCatalog | filter: $select.kit">
+								<div ng-bind-html="amtRq.name | highlight: $select.kit"></div>
+							</ui-select-choices>
+						</ui-select>
+					</div>
+				</div>
+			</div>
+
+			<!--<div class="form-group to-validate">
+				<label class="col-md-3 control-label">Estado del envío</label>
+				<div class="col-md-9">
+					<ui-select validation ng-model="obj.shippingStatus" theme="bootstrap" required>
+						<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected.name}}</ui-select-match>
+						<ui-select-choices repeat="shippingStatus in shippingCatalog | filter: $select.kit">
+							<div ng-bind-html="shippingStatus.name | highlight: $select.kit"></div>
+						</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+
+			<div class="form-group to-validate">
+				<label class="col-md-3 control-label">Observaciones</label>
+				<div class="col-md-9">
+					<textarea validation type="text" class="form-control" ng-model="obj.shippingNote" rows="3" style="resize: vertical;"></textarea>
+				</div>
+			</div>
+		</div>-->
+
+		<div class="modal-footer">
+			<div class="form-group">
+				<div class="col-md-12 text-right">
+					<button type="submit" class="btn btn-w-m btn-primary">Guardar</button>
+					<button type="button" class="btn btn-w-m btn-default" ng-click="cancel()">Cancelar</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

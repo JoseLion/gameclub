@@ -1,4 +1,3 @@
-
 angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath,) {
 	
 	console.log($rootScope.currentUser);

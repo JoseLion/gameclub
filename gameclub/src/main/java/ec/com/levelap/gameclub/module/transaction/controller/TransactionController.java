@@ -37,11 +37,6 @@ public class TransactionController {
 
 	@RequestMapping(value="lastFiveTransactions", method=RequestMethod.POST)
 	public ResponseEntity<List<Transaction>> lastFiveTransactions(@RequestBody PublicUser id) throws ServletException{
-
-//		if (publicUser == null) {
-//			publicUser = new PublicUser();
-//		}
-		
 		List<Transaction> transactions = transactionService.getTransactionRepo().findFiveTransactions(id, new PageRequest(0, 5)).getContent();
 		return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
 	}

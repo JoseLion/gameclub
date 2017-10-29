@@ -26,7 +26,8 @@ angular.module("Gameclub", [
 	'Logistic',
 	'ShippingPrice',
 	'Settings',
-	'Fine'
+	'Fine',
+	'AmountRequest'
 ]).config(["$locationProvider" ,"$httpProvider", function($locationProvider, $httpProvider, $http) {
 	$httpProvider.defaults.withCredentials = true;
 

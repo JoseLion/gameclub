@@ -1,0 +1,50 @@
+<section class="payment-view">
+    <div class="col-md-12 col-xs-12">
+        <h2 class="title">Forma de pago</h2>
+        <div class="balance">
+            <span class="subtitle">Saldo actual</span>
+            <span class="value">{{totalBalance - balance.value | currency:'$ ':2}}</span>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12 no-padding-left no-padding-right text-center slider">
+        <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
+            <div class="col-md-6 col-xs-12 with-balance">
+                <span class="text-tooltip">Paga con saldo</span>
+                <span class="value">{{balance.value | currency:'$ ':2}}</span>
+                <rzslider rz-slider-model="balance.value" rz-slider-options="balance.options" class="rz-slider-primary"></rzslider>
+            </div>
+            <div class="col-md-6 col-xs-12 difference">
+                <span class="text-tooltip">Monto restante a pagar</span>
+                <span class="value">{{totalToPay - balance.value | currency:'$ ':2}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12 payment">
+        <div class="col-md-12 col-xs-12 no-padding-left no-padding-right" ng-if="paymentMethods.length > 0">
+            <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
+                <span class="text-tooltip">Pago con tarjeta</span>
+            </div>
+            <div class="col-md-12 col-xs-12 no-padding-left no-padding-right table-payments">
+                <div class="table-row" ng-repeat="paymentMethod in paymentMethods">
+                    <div class="table-cell check">
+                        <div class="box" ng-class="{'check' : paymentMethod.isSelected}" ng-click="chooseCard(paymentMethod)" ng-if="totalToPay - balance.value > 0"></div>
+                    </div>
+                    <div class="table-cell card-number">
+                        <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{paymentMethod.cardFinale}}" readonly />
+                    </div>
+                    <div class="table-cell remove-card">
+                        <button type="button" class="btn btn-secundary full" ng-click="removeCard(paymentMethod)">Borrar tarjeta</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
+                <span class="text-tooltip-or">O</span>
+            </div>
+        </div>
+        <div class="col-md-12 no-padding-left no-padding-right">
+            <span class="text-tooltip">Ingresa otra forma de pago</span>
+            <kushki class="new-payment"></kushki>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</section>

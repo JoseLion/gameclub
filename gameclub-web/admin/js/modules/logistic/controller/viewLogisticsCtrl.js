@@ -1,4 +1,4 @@
-angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loans, restores, welcomeKits, shippingCatalog, provinces, getDTOptions, Const, $uibModal, rest) {
+angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loans, restores, welcomeKits, shippingCatalog, provinces, getDTOptions, Const, $uibModal, rest, shippingKits) {
 	$scope.searchL = {};
 	$scope.totalElementsL;
 	$scope.beginningL;
@@ -32,6 +32,17 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 
 	$scope.dtColumnDefsW = getDTOptions.notSortableAll(6);
 
+	$scope.searchS = {};
+	$scope.totalElementsS;
+	$scope.beginningS;
+	$scope.endS;
+
+	$scope.dtOptionsS = getDTOptions.paged().withOption('infoCallback', function(settings, start, end, max, total, pre) {
+		return getDTOptions.infoCallback($scope.totalElementsS, $scope.beginningS, $scope.endS);
+	});
+
+	$scope.dtColumnDefsS = getDTOptions.notSortableAll(6);
+
 	//-------------------------------------------------------------------------------------------------------------------------------------
 
 	loans.$promise.then(function(data) {
@@ -44,6 +55,10 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 
 	welcomeKits.$promise.then(function(data) {
 		setPagedWelcomeKits(data);
+	});
+
+	shippingKits.$promise.then(function(data) {
+		setPagedShippingKits(data);
 	});
 
 	shippingCatalog.$promise.then(function(data) {
@@ -66,6 +81,12 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 		});
 	}
 
+	$scope.findShippingKits = function() {
+		rest("welcomeKit/findShippingKits").post($scope.searchS, function(data) {
+			setPagedShippingKits(data);
+		});
+	}
+
 	$scope.clearLoans = function() {
 		$scope.searchL = {};
 		$scope.findLoans();
@@ -76,6 +97,11 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 		$scope.findWelcomeKits();
 	}
 
+	$scope.clearShippingKits = function() {
+		$scope.searchS = {};
+		$scope.findShippingKits();
+	}
+
 	$scope.LoansPageChanged = function() {
 		$scope.searchL.page = $scope.currentPageL - 1;
 		$scope.findLoans();
@@ -84,6 +110,11 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 	$scope.welcomeKitsPageChanged = function() {
 		$scope.searchW.page = $scope.currentPageW - 1;
 		$scope.findWelcomeKits();
+	}
+
+	$scope.shippingKitsPageChanged = function() {
+		$scope.searchS.page = $scope.currentPageS - 1;
+		$scope.findShippingKits();
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------------------------
@@ -205,7 +236,17 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 	$scope.setWelcomeKitTracking = function(kit) {
 		$uibModal.open(getTrackingModal(null, null, kit)).result.then(function(data) {
 			let index = $scope.welcomeKits.indexOf(kit);
+			console.log($scope.welcomeKits, index)
+			console.log(kit)
+			console.log(data)
 			$scope.welcomeKits[index] = data;
+		});
+	}
+
+	$scope.setShippingKitTracking = function(kit) {
+		$uibModal.open(getTrackingModal(null, null, kit)).result.then(function(data) {
+			let index = $scope.shippingKits.indexOf(kit);
+			$scope.shippingKits[index] = data;
 		});
 	}
 
@@ -235,7 +276,23 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 		$scope.totalPagesW = data.totalPages;
 	}
 
+	function setPagedShippingKits(data) {
+		$scope.shippingKits = data.content;
+		$scope.totalElementsS = data.totalElements;
+		$scope.beginningS = (Const.tableSize * data.number) + 1;
+		$scope.endS = $scope.beginningS + data.numberOfElements - 1;
+		$scope.totalPagesS = data.totalPages;
+	}
+
 	let getTrackingModal = function(loan, restore, kit) {
+		let shippingCode;
+		if(loan != null) {
+			shippingCode = loan.shippingStatus.code;
+		} else if(restore != null) {
+			shippingCode = restore.shippingStatus.code;
+		} else {
+			shippingCode = kit.shippingStatus.code;
+		}
 		return {
 			size: 'md',
 			backdrop: 'static',
@@ -280,7 +337,7 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 				},
 
 				shippingCatalog: function(rest, Const) {
-					return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.shippingCatalog}, function(data) {
+					return rest("statusProcess/findByFrom/:code", true).get({code: shippingCode}, function(data) {
 						return data;
 					});
 				}

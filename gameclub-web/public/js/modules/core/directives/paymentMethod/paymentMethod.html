@@ -33,15 +33,15 @@
                         <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{paymentMethod.cardFinale}}" readonly />
                     </div>
                     <div class="table-cell remove-card">
-                        <button type="button" class="btn btn-secundary full" ng-click="removeCard(paymentMethod)">Borrar tarjeta</button>
+                        <button type="button" class="btn btn-secundary full" ng-if="paymentMethods.length > 1" ng-click="removeCard(paymentMethod)">Borrar tarjeta</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
+            <div class="col-md-12 col-xs-12 no-padding-left no-padding-right" ng-if="paymentMethods.length < 2">
                 <span class="text-tooltip-or">O</span>
             </div>
         </div>
-        <div class="col-md-12 no-padding-left no-padding-right">
+        <div class="col-md-12 no-padding-left no-padding-right" ng-if="paymentMethods.length < 2">
             <span class="text-tooltip">Ingresa otra forma de pago</span>
             <kushki class="new-payment"></kushki>
         </div>

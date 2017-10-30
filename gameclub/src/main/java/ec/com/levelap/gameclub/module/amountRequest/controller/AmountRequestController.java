@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
 
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.service.AmountRequestService;
@@ -27,8 +27,6 @@ import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.kushki.KushkiException;
-
 
 @RestController
 @RequestMapping(value="api/amountRequest", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -102,8 +100,6 @@ public class AmountRequestController {
 		System.out.println(search.lastName);
 		System.out.println(search.catalogId);
 		List<AmountRequest> amountRequests = amountRequestService.getAmountRequesteRepo().findAmountRequest(search.catalogId, search.name, search.lastName, search.startDate, search.endDate);
-//		List<AmountRequest> amountRequests = amountRequestService.getAmountRequesteRepo().findAmountRequest(/*search.name, search.lastName,*/ search.catalogId/*, search.startDate, search.endDate*/);List<AmountRequest> amountRequests = amountRequestService.getAmountRequesteRepo().findAmountRequest(/*search.name, search.lastName,*/ search.catalogId/*, search.startDate, search.endDate*/);
-		System.out.println(search.catalogId);
 		return new ResponseEntity<List<AmountRequest>>(amountRequests, HttpStatus.OK);
 	}
 	

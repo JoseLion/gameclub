@@ -18,33 +18,30 @@
 		<div class="clearfix"></div>
 
         <div class="col-md-4 col-xs-0"></div>
-        <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
-			<div class="col-md-10 coins">
-				<div class="col-md-6 no-padding-left">
-					<span class="subtitle">Balance: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
-				</div>
-				<div class="col-md-6 text-center">
-					<button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
-				</div>
-			</div>
+        <div class="col-md-8 col-xs-12">
+			<div class="col-md-10 col-xs-12 coins">
+                <div class="col-md-12 col-xs-12 no-padding-left">
+                    <span class="subtitle">Saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
+                </div>
+            </div>
 		</div>
         <div class="clearfix"></div>
 
 		<div class="col-md-4 col-xs-0"></div>
-        <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
-			<div class="col-md-12 total">
-				<span class="subtitle">Resumen de estatus de juegos</span>
+        <div class="col-md-8 col-xs-12">
+            <div class="col-md-12 col-xs-12 total">
+                <h2 class="subtitle">Resumen de status de juegos</h2>
 
-				<div class="col-md-12 description">
-					<div>Juegos actualmente prestados: <span class="dark">{{summary.borrowed}}</span></div>
-					<div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
-				</div>
+                <div class="col-md-12 col-xs-12 description">
+                    <div>Juegos actualmente alquilados: <span class="dark">{{summary.borrowed}}</span></div>
+                    <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
+                </div>
 
-				<div class="col-md-12 description">
-					<div>Juegos por devolver: <span class="dark">{{summary.toReturn}}</span></div>
-					<div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
-				</div>
-			</div>
+                <div class="col-md-12 col-xs-12 description">
+                    <div>Juegos por devolver: <span class="dark">{{summary.toReturn}}</span></div>
+                    <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
+                </div>
+            </div>
 		</div>
 		<div class="clearfix"></div>
 	</section>
@@ -53,11 +50,9 @@
 		<div class="inbox col-md-12">
 			<div class="list col-md-4">
 				<div class="head">Mensajes</div>
-
 				<div class="search">
 					<input type="text" placeholder="Buscar en mensajes" ng-model="search">
 				</div>
-
 				<div class="scrollable">
 					<span class="no-messages" ng-if="messages.length == 0">No tienes ningún mensaje</span>
 					<div class="inbox-cell" ng-class="{'unread': !message.read, 'selected': message.selected}" ng-repeat="message in messages" ng-click="messageSelected(message)">
@@ -65,17 +60,13 @@
 							<img src="img/messages/gameclub-icon.svg" ng-if="!message.isLoan">
 							<img class="avatar" archive="message.fromUser ? message.fromUser.avatar.image : message.toUser.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="message.isLoan">
 						</div>
-
 						<div class="labels col-md-6">
 							<span id="from">{{getFromTo(message)}}</span>
-							<br>
 							<span>{{message.subject}}</span>
 						</div>
-
 						<div class="date col-md-3">
 							<span>{{getFormattedDate(message.date)}}</span>
 						</div>
-
 						<div class="clearfix"></div>
 					</div>
 				</div>
@@ -87,82 +78,7 @@
 				<div class="canvas">
 					<span class="no-content" ng-if="noSelected()">Selecciona un mensaje</span>
 
-					<div class="welcome-kit col-md-12" ng-repeat="kit in welcomeKits" ng-if="welcomeKits">
-						<div class="date">{{kit.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
-						<div class="red-box">
-							<form class="form-horizontal" role="form" novalidate>
-								<span class="body">Hola {{kit.publicUser.name}},</span>
-								<br>
-								<br>
-								<span class="body">GAME CLUB te da la bienvenida, te enviaremos un Welcome Kit para que puedas pedir y prestar juegos, por favor confirma tu información de recepción.</span>
-								<br>
-
-								<div class="form-row col-md-12">
-									<label class="col-md-3 control-label">Ciudad</label>
-									<div class="col-md-9 city">
-										<span>{{currentUser.location.name}}</span>
-									</div>
-								</div>
-
-								<div class="form-row col-md-12">
-									<label class="col-md-3 control-label">Dirección</label>
-									<div class="col-md-9">
-										<textarea type="text" class="address" ng-model="kit.address" required ng-init="kit.address = currentUser.billingAddress" rows="3" ng-disabled="kit.wasConfirmed"></textarea>
-									</div>
-								</div>
-
-								<div class="form-row col-md-12">
-									<label class="col-md-3 control-label">Teléfono</label>
-									<div class="col-md-9">
-										<input type="text" class="phone" ng-model="kit.phone" required ng-init="kit.phone = currentUser.contactPhone" onkeypress="return !isNaN(String.fromCharCode(event.charCode))" ng-disabled="kit.wasConfirmed">
-									</div>
-								</div>
-
-								<div class="form-row col-md-12">
-									<label class="col-md-5 control-label">Persona de entrega</label>
-									<div class="col-md-7">
-										<input type="text" class="receiver" ng-model="kit.receiver" required ng-init="kit.receiver = currentUser.name + ' ' + currentUser.lastName" ng-disabled="kit.wasConfirmed">
-									</div>
-								</div>
-
-								<div class="form-row col-md-12">
-									<label class="col-md-3 control-label">Geolocalizaci&oacute;n</label>
-									<i class="gc gc-address cursor-pointer" ng-click="openMap(kit)" ng-if="!kit.wasConfirmed"></i>
-									<i class="gc gc-address cursor-no-drop" ng-if="kit.wasConfirmed"></i>
-									<img class="geo-check" src="/img/check.svg" ng-if="kit.geolocation != null">
-								</div>
-
-								<div class="form-row col-md-12">
-									<button type="button" class="btn btn-tertiary full btn-xs" ng-click="confirmWelcomeKit(kit)" ng-if="!kit.wasConfirmed">Confirmar envío</button>
-								</div>
-
-								<div class="clearfix"></div>
-							</form>
-						</div>
-
-						<div class="date" ng-if="kit.wasConfirmed">{{kit.confirmationDate | date: 'dd/MM/yy - HH:mm'}}</div>
-						<div class="blue-box small-box text-center" ng-if="kit.wasConfirmed">
-							<div class="box-label col-md-12">
-								<span>Confirmado</span>
-							</div>
-
-							<div class="clearfix"></div>
-						</div>
-
-						<div class="date" ng-if="kit.tracking != null && kit.tracking != ''">{{kit.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
-						<div class="red-box" ng-if="kit.tracking != null && kit.tracking != ''">
-							<span class="body">Hola {{kit.publicUser.name}},</span>
-							<br>
-							<br>
-							<span class="body">Tu Welcome Kit ha sido enviado a la dirección que nos has proporcionado.</span>
-							<br>
-							<br>
-							<span class="body">Estado del envío:</span> <span class="body text-black">{{kit.shippingStatus.name}}</span>
-							<div ng-if="kit.shippingNote != null && kit.shippingNote != ''">
-								<span>Observaciones: </span><span class="text-black">{{kit.shippingNote}}</span>
-							</div>
-						</div>
-					</div>
+					<div ng-include="'js/modules/account/messages/view/kitsSection.html'"></div>
 
 					<div class="loan col-md-12" ng-if="loan">
 						<!-- ************************ BEGIN - GAMER MESSAGE FLOW ************************ -->
@@ -229,7 +145,7 @@
 									</div>
 									<br>
 									<div class="final-cost">
-										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
+										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">{{loan.cost | currency:'$ ':2}}</span>
 									</div>
 									<br>
 									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
@@ -284,7 +200,7 @@
 									</div>
 									<br>
 									<div class="final-cost">
-										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
+										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">{{loan.cost | currency:'$ ':2}}</span>
 									</div>
 									<br>
 									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
@@ -329,9 +245,9 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Iremos a buscar el juego el día: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
+								<span>Iremos a buscar el juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date:'EEEE d'}} de {{showLendDay(loan.returnDate) | date:'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
 								<br>
-								<span>Hora: </span><span class="text-black">XXhXX</span><span> - </span><span class="text-black">XXhXX</span>
+								<span>Hora: </span><span class="text-black">14H00</span><span> - </span><span class="text-black">18H00</span>
 								<br>
 								<br>
 								<div class="decorator-black">
@@ -489,9 +405,9 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Retiraremos tu juego el día: </span><span class="text-black">XXXXX XX de Xxxxxx</span>
+								<span>Retiraremos tu juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.acceptedDate) | date:'EEEE d'}} de {{showLendDay(loan.acceptedDate) | date:'MMMM'}} del {{showLendDay(loan.acceptedDate) | date:'yyyy'}}</span>
 								<br>
-								<span>Hora de retiro: </span><span class="text-black">XXhXX</span><span> - </span><span class="text-black">XXhXX</span>
+								<span>Hora de retiro: </span><span class="text-black">14h00</span><span> - </span><span class="text-black">18:00</span>
 								<br>
 								<br>
 								<form>
@@ -545,11 +461,13 @@
 							<div class="date" ng-if="loan.lenderConfirmed">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="blue-box text-left" ng-if="loan.lenderConfirmed">
 								<span class="text-black text-lg upper-case">Préstamo en curso</span>
-								<br>
-								<br>
-								<span>Retiro de juego: </span><span class="text-black">XXXXX XX de Xxxxx</span>
-								<br>
-								<span>Hora: </span><span class="text-black">XXhXX</span><span> - </span><span class="text-black">XXhXX</span>
+								<div ng-if="loan.deliveryDate != null">
+									<br>
+									<br>
+									<span>Retiro de juego: </span><span class="text-black">{{loan.deliveryDate | date:'d'}} de {{loan.deliveryDate | date:'MMMM'}} del {{loan.deliveryDate | date:'yyyy'}}</span>
+									<br>
+									<span>Hora: </span><span class="text-black">{{loan.deliveryDate | date:'HH'}}H{{loan.deliveryDate | date:'mm'}}</span>
+								</div>
 								<br>
 								<br>
 								<form>
@@ -616,10 +534,10 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Iremos a buscar tu juego el día: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
+								<span>Iremos a buscar tu juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date:'EEEE d'}} de {{showLendDay(loan.returnDate) | date:'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
 								<br>
 								<br>
-								<span>Entregaremos tu juego el dia: </span><span class="text-black upper-case">{{getDatePlus(loan.returnDate, 1) | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{getDatePlus(loan.returnDate, 1) | date: 'LLLL'}}</span>
+								<span>Entregaremos tu juego el dia: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date: 'EEEE d'}} de {{showLendDay(loan.returnDate) | date: 'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
 								<br>
 								<br>
 								<form>

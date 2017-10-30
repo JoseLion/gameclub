@@ -9,15 +9,16 @@ angular.module('Profile').config(function($stateProvider) {
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'ProfileCtrl',
 		resolve: {
-			loadPlugin: function($ocLazyLoad) {
+			loadPlugin: function($ocLazyLoad, lessLoad) {
+				lessLoad.add('css/resources/profile.less');
 				return $ocLazyLoad.load([{
 					name: 'Profile',
 					files: ['js/modules/account/profile/controller/profileCtrl.js']
 				}]);
 			},
 
-			provinces: function(openRest) {
-				return openRest("location/findChildrenOf/:code", true).get({code: 'EC'}, function(data) {
+			provinces: function(openRest, Const) {
+				return openRest("location/findChildrenOf/:code", true).get({code: Const.code.country}, function(data) {
 					return data;
 				});
 			}

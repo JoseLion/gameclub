@@ -51,4 +51,7 @@ public interface Const {
 	public static final String SETTINGS_PERCENTAGE = "percentage";
 	
 	public static final String SETTINGS_NUMBER = "number";
+	
+	public static final String SBJ_SHIPPING_KIT = "SHIPPING KIT";
+	
 }

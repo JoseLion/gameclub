@@ -51,10 +51,11 @@ public class AmountRequestController {
 		PublicUser usr = new PublicUser();
 		Transaction transaction = new Transaction();
 		AmountRequest amountRequest = new AmountRequest();
-		amountRequest = amtRqObj;
+		
 		
 		try {			
-			if(amtRqObj.getRequestStatus().getCode().equals("PGSPGD") && amountRequest.getPublicUser().getShownBalance() > 0) {
+			if(amtRqObj.getRequestStatus().getCode().equals("PGSPGD") && amtRqObj.getPublicUser().getShownBalance() > 0) {
+				amountRequest = amtRqObj;
 				transaction.setDebitBalance(amountRequest.getPublicUser().getShownBalance());
 				transaction.setOwner(amountRequest.getPublicUser());
 				transaction.setTransaction("Retiro Balance");
@@ -63,6 +64,9 @@ public class AmountRequestController {
 				usr = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), amountRequest.getPublicUser().getShownBalance());
 				
 				message.setIsLoan(false);
+				message.setIsLoan(Boolean.FALSE);
+				message.setIsFine(Boolean.FALSE);
+				message.setIsAmountRequest(Boolean.TRUE);
 				message.setOwner(amtRqObj.getPublicUser());
 				message.setDate(new Date());
 				message.setSubject(Const.SBJ_AMOUNT_REQUEST);
@@ -71,7 +75,7 @@ public class AmountRequestController {
 				amountRequest.setMessage(message);
 				amountRequest = amountRequestService.save(amountRequest);
 			} else {
-				amountRequest = amountRequestService.save(amountRequest);
+				amountRequest = amountRequestService.save(amtRqObj);
 			}
 		} catch (ServletException e) {
 			e.printStackTrace();

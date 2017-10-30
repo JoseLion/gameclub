@@ -43,6 +43,12 @@ angular.module("Logistic").config(function($stateProvider) {
 				return rest("location/findChildrenOf/:code", true).get({code: Const.code.locationEC}, function(data) {
 					return data;
 				});
+			},
+
+			shippingKits: function(rest) {
+				return rest("welcomeKit/findShippingKits").post(function(data) {
+					return data;
+				});
 			}
 		}
 	});

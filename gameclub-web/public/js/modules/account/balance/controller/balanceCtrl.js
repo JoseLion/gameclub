@@ -1,6 +1,12 @@
-angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, transactions, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath,) {
-	transactions.$promise.then(function(data){
-		$scope.transactions = data;
+angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath) {
+
+	if($rootScope.currentUser == null) {
+		$state.go('gameclub.home');
+	}
+
+	$scope.transactions = [];
+	rest("transaction/lastFiveTransactions").get(function(data) {
+		$scope.transactions = data.content;
 	});
 
 	$scope.takeYourBalance = function() {
@@ -29,7 +35,13 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 					}
 				} else {
 					swal.close();
+			    	// mostGame();
+		    	} else{
+		       		swal.close();
+			    	// mostGame();
 				}
+		    }
+
 			});
 		} else {
 			takeYourBalance();
@@ -76,5 +88,4 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 		});
     }
 
-	
 });

@@ -49,6 +49,14 @@ public class MessageController {
 		return new ResponseEntity<Page<Message>>(messages, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "getMessageById/{messageId}", method = RequestMethod.GET)
+	public ResponseEntity<?> getMessageById(@PathVariable Long messageId) throws ServletException {
+		Message message = messageService.getMessageRepo().findOne(messageId);
+		message.setRead(Boolean.TRUE);
+		messageService.getMessageRepo().save(message);
+		return new ResponseEntity<>(messageService.getWelcomeKitRepo().findByMessageId(messageId), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="getWelcomeKitMessages/{messageId}", method=RequestMethod.GET)
 	public ResponseEntity<List<WelcomeKit>> getWelcomeKitMessages(@PathVariable Long messageId) throws ServletException {
 		List<WelcomeKit> welcomeKits = messageService.getWelcomeKitRepo().findByMessageIdOrderByCreationDateDesc(messageId);

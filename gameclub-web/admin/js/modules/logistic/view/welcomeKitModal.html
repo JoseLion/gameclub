@@ -2,7 +2,7 @@
 	<form class="form-horizontal" role="form" novalidate>
 		<div class="modal-header">
 			<i class="fa fa-eye modal-icon"></i>
-			<h4 class="modal-title">Welcome Kit</h4>
+			<h4 class="modal-title"><span ng-if="kit.quantity == 0">Welcome</span><span ng-if="kit.quantity > 0">Shipping</span> kit</h4>
 		</div>
 
 		<div class="modal-body">

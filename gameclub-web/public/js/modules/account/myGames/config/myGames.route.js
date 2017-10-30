@@ -38,6 +38,12 @@ angular.module('MyGames').config(function($stateProvider) {
 
 			mostPlayed: function(openRest) {
 				return openRest("game/findMostPlayed", true).post();
+			},
+
+			shippingKitValue: function(rest, Const) {
+				return rest('settings/findOneByCode/:code').get({code: Const.settings.shippingKitValue}, function(data) {
+					return data;
+				});
 			}
 		}
 	});

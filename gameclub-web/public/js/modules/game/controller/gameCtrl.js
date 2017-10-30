@@ -3,41 +3,53 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     let priceChartingGMLoan = 0.0;
     $scope.validCards = [];
 
-    $scope.slider = {
+    $scope.balance = {
         value: 0.0,
         options: {
             hidePointerLabels: true,
             hideLimitLabels: true,
             showSelectionBar: true,
-            step: (1/100),
-            precision: (1/100),
-            floor: 0.0,
-            getTickColor: function(value) {return '#071428';},
-            getPointerColor: function(value) {return '#071428';},
-            getSelectionBarColor: function(value) {return '#071428';},
-            onChange: function() {
-                $scope.loan.balancePart = $scope.slider.value
-
-                if ($scope.loan.cardPart == 0.0) {
-                    $scope.loan.payment = null;
-                }
-            }
+            step: 0.01,
+            precision: 0.01,
+            floor: 0.0
         }
     };
+
+    // $scope.slider = {
+    //     value: 0.0,
+    //     options: {
+    //         hidePointerLabels: true,
+    //         hideLimitLabels: true,
+    //         showSelectionBar: true,
+    //         step: (1/100),
+    //         precision: (1/100),
+    //         floor: 0.0,
+    //         getTickColor: function(value) {return '#071428';},
+    //         getPointerColor: function(value) {return '#071428';},
+    //         getSelectionBarColor: function(value) {return '#071428';},
+    //         onChange: function() {
+    //             $scope.loan.balancePart = $scope.slider.value
+    //
+    //             if ($scope.loan.cardPart == 0.0) {
+    //                 $scope.loan.payment = null;
+    //             }
+    //         }
+    //     }
+    // };
 
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
-            
-            openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(data) {
+
+            openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(dwFile) {
                 $scope.background = {
-                    background: "url('" + getImageBase64(data, $scope.game.banner.type) + "') center bottom / 100% no-repeat"
+                    background: "url('" + getImageBase64(dwFile, $scope.game.banner.type) + "') center bottom / 100% no-repeat"
                 };
             });
 
             forEach($scope.game.consoles, function(gameConsole) {
-                openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
-    				gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
+                openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(dwFile) {
+    				gameConsole.console.blackLogoBase64 = getImageBase64(dwFile, gameConsole.console.blackLogo.type);
     			});
             });
 
@@ -67,15 +79,23 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             {icon: 'gc-filter', sort: ''}
         ];
 
-        mostPlayed.$promise.then(function(data) {
-            $scope.mostPlayed = data;
+        mostPlayed.$promise.then(function(mostP) {
+            $scope.mostPlayed = mostP;
         });
 
-        var code = "";code = $rootScope.currentUser.location.parent.code;
-        if($rootScope.currentUser.location.parent != null){
-            rest("location/findChildrenOf/:code", true).get({code: code}, function(data) {
-                    $scope.locationCities = data;
+        if($rootScope.currentUser != null && $rootScope.currentUser.location != null) {
+            var code = "";
+            console.log($rootScope.currentUser);
+            console.log($rootScope.currentUser.location);
+            console.log($rootScope.currentUser.location.parent);
+            console.log($rootScope.currentUser.location.parent.code);
+            code = $rootScope.currentUser.location.parent.code;
+            console.log(code);
+            if($rootScope.currentUser.location.parent != null){
+                rest("location/findChildrenOf/:code", true).get({code: code}, function(location) {
+                    $scope.locationCities = location;
                 });
+            }
         }
     } else {
         $state.go(Const.mainState);
@@ -136,6 +156,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             if (getInfoPercentage() >= 100 && getIdentityPercentage() >= 100/* && $rootScope.currentUser.isReady*/) {
                 $scope.loanGame = cross;
                 $scope.loanViewOpen = true;
+                $scope.paymentViewOpen = false;
 
                 $scope.loan = {
                     publicUserGame: cross,
@@ -186,7 +207,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         if (filter.sort != '') {
             filter.active = true;
         }
-        
+
         filterAvailibleGames();
     }
 
@@ -222,7 +243,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         if (!failedValidation) {
             $scope.paymentViewOpen = true;
             angular.element(".payment-view").toggle(250);
-            $scope.slider.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= $scope.loan.cost ? $scope.loan.cost : parseFloat($rootScope.currentUser.shownBalance));
+            $scope.balance.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= $scope.loan.cost ? $scope.loan.cost : parseFloat($rootScope.currentUser.shownBalance));
         }
     }
 
@@ -256,6 +277,8 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
         if (!failedValidation) {
             sweet.default("Se enviará una solicitud de prestamo al propietario del juego", function() {
+                $scope.loan.balancePart = $scope.balance.value;
+                $scope.loan.cardPart = $scope.loan.cost - $scope.balance.value;
                 rest("loan/requestGame").post($scope.loan, function(data) {
                     $rootScope.currentUser = data;
                     notif.success("Solicitud enviada con éxito");
@@ -317,13 +340,13 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         return null;
     }
 
-    $scope.$watch("loan.cost", function(newValue) {
-        $scope.slider.value = 0.0;
-
-        if (newValue != null && $rootScope.currentUser != null && $scope.loan != null && $scope.paymentViewOpen) {
-            $scope.slider.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= newValue ? newValue : parseFloat($rootScope.currentUser.shownBalance));
-        }
-    });
+    // $scope.$watch("loan.cost", function(newValue) {
+    //     $scope.slider.value = 0.0;
+    //
+    //     if (newValue != null && $rootScope.currentUser != null && $scope.loan != null && $scope.paymentViewOpen) {
+    //         $scope.slider.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= newValue ? newValue : parseFloat($rootScope.currentUser.shownBalance));
+    //     }
+    // });
 
     function getInfoPercentage() {
         let percent = 0;
@@ -349,7 +372,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                 percent += factor;
             }
         }
-        
+
         percent = Math.round(percent);
         return percent;
     }
@@ -395,5 +418,5 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         });
     }
 
-    
+
 });

@@ -1,4 +1,4 @@
-angular.module('Core').directive('paymentMethod', function(Const, notif, $rootScope, rest, forEach) {
+angular.module('Core').directive('paymentMethod', function(Const, notif, $rootScope, rest, forEach, sweet) {
     return {
         restrict: 'E',
         templateUrl: 'js/modules/core/directives/paymentMethod/paymentMethod.html',
@@ -29,9 +29,12 @@ angular.module('Core').directive('paymentMethod', function(Const, notif, $rootSc
             };
 
             $scope.removeCard = function(paymentMethod) {
-                rest("publicUser/deletePaymentMethod/:subscriptionId").get({subscriptionId: paymentMethod.id}, function(data) {
-                    $rootScope.currentUser = data;
-                    notif.success(Const.messages.success);
+                sweet.default('Esta acción eliminara la tarjeta asociada', function() {
+                    rest("publicUser/deletePaymentMethod/:subscriptionId").get({subscriptionId: paymentMethod.id}, function(data) {
+                        $rootScope.currentUser = data;
+                        notif.success(Const.messages.success);
+                        sweet.close();
+                    });
                 });
             }
 

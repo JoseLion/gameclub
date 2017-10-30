@@ -15,7 +15,7 @@ angular.module("Fine").config(function($stateProvider){
 				}]);
 			},
 			fines: function(rest){
-				return rest("fine/findFines", true).get(function(data){
+				return rest("fine/findFines", true).post(function(data){
 					return data;
 				});
 			}

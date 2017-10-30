@@ -40,7 +40,7 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 			templateUrl: 'views/content.html'
 		});
 
-}).run(function($rootScope, $state, Const, $location, $anchorScroll, $http, urlRestPath) {
+}).run(function($rootScope, $state, Const, $location, $anchorScroll, $http, urlRestPath, rest) {
 	$rootScope.$state = $state;
 	$rootScope.Const = Const;
 
@@ -50,6 +50,12 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 		}, function(error) {
 			$rootScope.currentUser = null;
 		});
+		if($rootScope.currentUser != null) {
+			rest("publicUser/updateLoggedInformation").get(function(data) {
+				$rootScope.currentUser.shownBalance = data.shownBalance;
+				$rootScope.currentUser.unreadMessages = data.unreadMessages;
+			});
+		}
 	});
 
 	$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {

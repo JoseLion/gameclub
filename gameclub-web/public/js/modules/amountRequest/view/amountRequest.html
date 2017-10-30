@@ -31,27 +31,27 @@
                 <div class="clearfix"></div>
                 <div class="col-md-8 col-xs-12 form-section div-section">
                     <label>Nombre del 1er beneficiario</label>
-                    <input placeholder="Pablo Ponce" />
+                    <input ng-model="request.accountFullName" placeholder="Pablo Ponce" />
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-8 col-xs-12 form-section div-section">
                     <label>C&eacute;dula de identidad</label>
-                    <input placeholder="1234567890" />
+                    <input ng-model="request.accountDocument" placeholder="1234567890" />
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-8 col-xs-12 form-section div-section">
                     <label>Banco</label>
-                    <input placeholder="Bolivariano" />
+                    <input ng-model="request.accountBank" placeholder="Bolivariano" />
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-8 col-xs-12 form-section div-section">
                     <label>N&deg; de cuenta</label>
-                    <input placeholder="104143229805" />
+                    <input ng-model="request.accountNumber" placeholder="104143229805" />
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-8 col-xs-12 form-section div-section">
                     <label>Correo electr&oacute;nico</label>
-                    <input placeholder="pponce@gmail.com" />
+                    <input ng-model="request.accountEmail" placeholder="pponce@gmail.com" />
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-8 col-xs-12 div-section">
@@ -60,13 +60,13 @@
                             <label>Cuenta de ahorros</label>
                         </div>
                         <div class="table-cell">
-                            <div class="box"></div>
+                            <div class="box" ng-class="{'check': request.accountIsSaving}" ng-click="request.accountIsSaving = true"></div>
                         </div>
                         <div class="table-cell">
                             <label>Cuenta corriente</label>
                         </div>
                         <div class="table-cell">
-                            <div class="box check"></div>
+                            <div class="box" ng-class="{'check': !request.accountIsSaving}" ng-click="request.accountIsSaving = false"></div>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,9 @@
                 <div class="col-md-12 col-xs-12 div-section">
                     <p>Necesitamos verificar tu informaci&oacute;n para poder proceder con el pago.</p>
                     <p>Sube una foto de tu c&eacute;dula.</p>
-                    <button type="button" class="btn btn-tertiary">Selecciona archivo de tu ordenador</button>
+                    <button type="button" class="btn btn-tertiary" ng-click="openFileBrowser()">Selecciona archivo de tu ordenador</button>
+                    <input id="input-file" type="file" ng-model="file.identityPhoto" file-model ng-show="false">
+                    <div>{{file.identityPhoto.name}}</div>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -98,7 +100,7 @@
                 <div class="col-md-6 col-xs-12 form-section div-section selector-section">
                     <label class="col-md-4 col-xs-12 no-padding-left no-padding-right">Provincia</label>
                     <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
-                        <ui-select ng-model="addressInformation.province" theme="bootstrap" class="selector">
+                        <ui-select ng-model="request.province" theme="bootstrap" class="selector">
                             <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
                             <ui-select-choices repeat="province in provinces | filter: $select.search">
                                 <div ng-bind-html="province.name | highlight: $select.search"></div>
@@ -110,9 +112,9 @@
                 <div class="col-md-6 col-xs-12 form-section div-section selector-section">
                     <label class="col-md-4 no-padding-left no-padding-right">Ciudad</label>
                     <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
-                        <ui-select ng-model="addressInformation.city" theme="bootstrap" class="selector">
+                        <ui-select ng-model="request.locationDestiny" theme="bootstrap" class="selector">
                             <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
-                            <ui-select-choices repeat="city in cities | filter: $select.search">
+                            <ui-select-choices repeat="city in request.province.children | filter: $select.search">
                                 <div ng-bind-html="city.name | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
@@ -124,12 +126,12 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-8 col-xs-12 billing-address">
-                    <textarea type="address" rows="2" maxlength="150" placeholder="Calle Principal - Numeraci&oacute;n - Calle Secundaria - Sector - Referncia"></textarea>
+                    <textarea type="address" ng-model="request.address" rows="2" maxlength="150" placeholder="Calle Principal - Numeraci&oacute;n - Calle Secundaria - Sector - Referncia"></textarea>
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-8 col-xs-12 form-section div-section">
                     <label>T&eacute;lefono de contacto</label>
-                    <input placeholder="0985361316" />
+                    <input ng-model="request.contactPhone" placeholder="0985361316" />
                 </div>
                 <div class="clearfix"></div>
             </div>

@@ -36,7 +36,6 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 		}
 	}
 
-	/*********** Lógica para el llamdo del mosal ****************/
 	function takeYourBalance(){
         let modal = $uibModal.open({
 			size: "md",
@@ -60,12 +59,20 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 				$scope.cancel = function() {
 					$uibModalInstance.dismiss();
 				}
+
+				$scope.ok = function() {
+					$uibModalInstance.close();
+				}
 			},
 			resolve: {
 				mostPlayed: function(openRest) {
 					return openRest("game/findMostPlayed", true).post();
 				}
 			}
+		});
+
+		modal.result.then(function() {
+			$state.go("gameclub.amountRequest");
 		});
     }
 

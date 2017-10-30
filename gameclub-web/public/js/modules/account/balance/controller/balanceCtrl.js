@@ -94,6 +94,7 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 			}, function(isConfirm) {
 				if (isConfirm) {
 					$state.go("gameclub.amountRequest");
+					swal.close();
 				} else {
 					swal.close();
 				}

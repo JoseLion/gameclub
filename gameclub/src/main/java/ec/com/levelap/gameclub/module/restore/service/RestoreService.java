@@ -129,21 +129,23 @@ public class RestoreService {
 
 		} else if (shippingStatus.getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND)) {
 			Double value = restore.getPublicUserGame().getGame().getUploadPayment();
-			gamer = publicUserService.substractFromUserBalance(restore.getGamer().getId(), value);
+			String priceCharting = settingService.getSettingValue(Code.SETTING_NATIONALIZACION);
+			gamer = publicUserService.substractFromUserBalance(restore.getGamer().getId(),
+					value + (value * Double.valueOf(priceCharting)));
 
-			Double totalBalanceGamer = gamer.getShownBalance() - value;
+			Double totalBalanceGamer = gamer.getShownBalance() - value + (value * Double.valueOf(priceCharting));
 			byte[] toBalance = null;
 			byte[] toCard = null;
 			if (totalBalanceGamer < 0) {
 				gamer = publicUserService.setUserBalance(gamer.getId(), 0D);
 				Map<String, Object> kushkiSubscription = new HashMap<>();
 				kushkiSubscription.put("amount", (Double) Math.abs(totalBalanceGamer));
-				try {
-					kushkiService.subscriptionCharge(restore.getLoan().getPayment().getSubscriptionId(),
-							kushkiSubscription);
-				} catch (KushkiException ex) {
-					throw new KushkiException(ex);
-				}
+				Loan loan = loanRepo.findOne(restore.getLoan().getId());
+//				try {
+//					kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), kushkiSubscription);
+//				} catch (KushkiException ex) {
+//					throw new KushkiException(ex);
+//				}
 				toBalance = cryptoService.encrypt(Double.toString(gamer.getShownBalance()), keyGamer);
 				toCard = cryptoService.encrypt(Double.toString(Math.abs(totalBalanceGamer)), keyGamer);
 			} else {

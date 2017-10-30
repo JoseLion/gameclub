@@ -105,6 +105,21 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					}
 				});
 			}
+
+			$scope.amountRequest = {};
+			if(message.subject == "Retiro saldo" && message.fromUser == null && message.toUser == null){
+				rest("message/amountRqFineMessage/:messageId").get({messageId: message.id}, function(data) {
+					$scope.amountRequest = data;
+					if ($scope.amountRequest.message != null) {
+						canvasToBottom();
+					
+						if (!message.read) {
+							message.read = true;
+							$rootScope.currentUser.unreadMessages--;
+						}
+					}					
+				});
+			}
 		}
 	}
 

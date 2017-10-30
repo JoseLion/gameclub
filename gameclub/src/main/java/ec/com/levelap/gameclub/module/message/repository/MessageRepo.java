@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -37,4 +38,7 @@ public interface MessageRepo extends JpaRepository<Message, Long> {
 	
 	@Query("SELECT f FROM Fine f WHERE f.message.id=:message")
 	public Fine findFinesMessage(@Param("message") Long message);
+	
+	@Query("SELECT f FROM AmountRequest f WHERE f.message.id=:message")
+	public AmountRequest findAmountRqMessage(@Param("message") Long message);
 }

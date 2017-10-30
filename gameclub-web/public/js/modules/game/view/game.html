@@ -277,7 +277,7 @@
                 <div class="clearfix"></div>
             </div>
         </section>
-        <payment-method total-balance="currentUser.shownBalance" payment-methods="currentUser.paymentMethods" balance="balance" total-to-pay="loan.cost" card-selected="cardSelected" class="row payment-view"  ng-if="paymentViewOpen"/>
+        <payment-method total-balance="currentUser.shownBalance" payment-methods="currentUser.paymentMethods" balance="balance" total-to-pay="loan.cost" card-selected="$parent.cardSelected" class="row payment-view"  ng-if="paymentViewOpen"/>
         <section class="row loan-footer" ng-if="loanViewOpen">
             <div class="col-md-12 text-center">
                 <button type="button" class="btn btn-secundary" ng-click="continueRequest()" ng-if="!paymentViewOpen">Continuar con soliciud de préstamo</button>

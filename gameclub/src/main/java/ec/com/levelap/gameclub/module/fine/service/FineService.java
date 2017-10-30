@@ -58,7 +58,8 @@ public class FineService extends BaseService<Fine> {
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public ResponseEntity<?> save(Fine fineObj, Boolean isApply) throws ServletException, IOException, GeneralSecurityException {
+	public ResponseEntity<?> save(Fine fineObj, Boolean isApply)
+			throws ServletException, IOException, GeneralSecurityException {
 		fineObj = fineRepo.findOne(fineObj.getId());
 		fineObj.setApply(isApply);
 		if (isApply) {
@@ -85,7 +86,8 @@ public class FineService extends BaseService<Fine> {
 					} catch (KushkiException ex) {
 						fineObj.setWasPayed(Boolean.FALSE);
 						fineRepo.save(fineObj);
-						return new ResponseEntity<>(new ErrorControl(ex.getMessage()), HttpStatus.BAD_GATEWAY);
+						return new ResponseEntity<>(new ErrorControl(ex.getMessage()),
+								HttpStatus.INTERNAL_SERVER_ERROR);
 					}
 				}
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
@@ -94,14 +96,8 @@ public class FineService extends BaseService<Fine> {
 				fineObj.setBalancePartEnc(fineObj.getAmountEnc());
 				publicUser = publicUserService.substractFromUserBalance(publicUser.getId(), fineObj.getAmount());
 			}
-			
-			Transaction transaction = new Transaction(
-					publicUser,
-					"MULTA - ",
-					"-",
-					0,
-					null,
-					fineObj.getBalancePartEnc(),
+
+			Transaction transaction = new Transaction(publicUser, "MULTA - ", "-", 0, null, fineObj.getBalancePartEnc(),
 					fineObj.getCardPartEnc());
 			transactionRepo.save(transaction);
 

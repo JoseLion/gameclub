@@ -1,33 +1,14 @@
-angular.module('AmountRequest').controller('AmountRequestCtrl', function($rootScope, $scope) {
+angular.module('AmountRequest').controller('AmountRequestCtrl', function($scope, provinces) {
+    $scope.request = {};
 
-    $scope.amountRequest = {};
+    provinces.$promise.then(function(data) {
+        $scope.provinces = data;
+    });
 
-    $scope.provinces = [
-        {
-            name: 'Provincia 1'
-        }, {
-            name: 'Provincia 2'
-        }, {
-            name: 'Provincia 3'
-        }, {
-            name: 'Provincia 4'
-        }, {
-            name: 'Provincia 5'
-        }
-    ];
-    $scope.cities = [
-        {
-            name: 'Ciudad 1'
-        }, {
-            name: 'Ciudad 2'
-        }, {
-            name: 'Ciudad 3'
-        }, {
-            name: 'Ciudad 4'
-        }, {
-            name: 'Ciudad 5'
-        }
-    ];
+    $scope.openFileBrowser = function() {
+        angular.element('#input-file').trigger('click')
+    }
+    
     $scope.addressInformation = {
         province: null,
         city: null

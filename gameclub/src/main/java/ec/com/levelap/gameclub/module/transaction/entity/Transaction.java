@@ -45,7 +45,7 @@ public class Transaction extends BaseEntity {
 
 	@JsonIgnore
 	@Column(name = "balance_part")
-	private byte[] creditPartEnc;
+	private byte[] balancePartEnc;
 
 	@JsonIgnore
 	@Column(name = "debit_balance")
@@ -56,13 +56,27 @@ public class Transaction extends BaseEntity {
 	private byte[] debitCardEnc;
 
 	@Transient
-	private Double creditPart;
+	private Double balancePart;
 
 	@Transient
 	private Double debitBalance;
 
 	@Transient
 	private Double debitCard;
+	
+	public Transaction() {
+	}
+
+	public Transaction(PublicUser owner, String transaction, String game, Integer weeks, byte[] balancePartEnc,
+			byte[] debitBalanceEnc, byte[] debitCardEnc) {
+		this.owner = owner;
+		this.transaction = transaction;
+		this.game = game;
+		this.weeks = weeks;
+		this.balancePartEnc = balancePartEnc;
+		this.debitBalanceEnc = debitBalanceEnc;
+		this.debitCardEnc = debitCardEnc;
+	}
 
 	public PublicUser getOwner() {
 		return owner;
@@ -96,12 +110,12 @@ public class Transaction extends BaseEntity {
 		this.weeks = weeks;
 	}
 
-	public byte[] getCreditPartEnc() {
-		return creditPartEnc;
+	public byte[] getBalancePartEnc() {
+		return balancePartEnc;
 	}
 
-	public void setCreditPartEnc(byte[] creditPartEnc) {
-		this.creditPartEnc = creditPartEnc;
+	public void setBalancePartEnc(byte[] balancePartEnc) {
+		this.balancePartEnc = balancePartEnc;
 	}
 
 	public byte[] getDebitBalanceEnc() {
@@ -120,26 +134,26 @@ public class Transaction extends BaseEntity {
 		this.debitCardEnc = debitCardEnc;
 	}
 
-	public Double getCreditPart() throws IOException, GeneralSecurityException {
-		if (owner.getPrivateKey() != null && creditPartEnc !=null && creditPartEnc.length > 0) {
+	public Double getBalancePart() throws IOException, GeneralSecurityException {
+		if (owner.getPrivateKey() != null && balancePartEnc != null && balancePartEnc.length > 0) {
 			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
 					.getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");
 			FileUtils.writeByteArrayToFile(key, owner.getPrivateKey());
-			String decypted = cryptoService.decrypt(creditPartEnc, key);
-			creditPart = Double.parseDouble(decypted);
+			String decypted = cryptoService.decrypt(balancePartEnc, key);
+			balancePart = Double.parseDouble(decypted);
 		} else {
-			creditPart = 0D;
+			balancePart = 0D;
 		}
-		return creditPart;
+		return balancePart;
 	}
 
-	public void setCreditPart(Double creditPart) {
-		this.creditPart = creditPart;
+	public void setBalancePart(Double balancePart) {
+		this.balancePart = balancePart;
 	}
 
 	public Double getDebitBalance() throws IOException, GeneralSecurityException {
-		if (owner.getPrivateKey() != null && debitBalanceEnc !=null && debitBalanceEnc.length > 0) {
+		if (owner.getPrivateKey() != null && debitBalanceEnc != null && debitBalanceEnc.length > 0) {
 			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
 					.getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");
@@ -157,7 +171,7 @@ public class Transaction extends BaseEntity {
 	}
 
 	public Double getDebitCard() throws IOException, GeneralSecurityException {
-		if (owner.getPrivateKey() != null && debitCardEnc !=null && debitCardEnc.length > 0) {
+		if (owner.getPrivateKey() != null && debitCardEnc != null && debitCardEnc.length > 0) {
 			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
 					.getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");

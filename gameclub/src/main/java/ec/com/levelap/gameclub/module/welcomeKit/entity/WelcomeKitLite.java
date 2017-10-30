@@ -19,4 +19,6 @@ public interface WelcomeKitLite {
 	public Catalog getShippingStatus();
 	
 	public String getTracking();
+	
+	public Integer getQuantity();
 }

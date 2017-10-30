@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -16,6 +17,7 @@ import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.location.Location;
+import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -70,6 +72,9 @@ public class AmountRequest extends BaseEntity{
 	@Transient
 	private Double adminAmount;
 	
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="message_amount_request", foreignKey=@ForeignKey(name="message_amount_request_fk"))
+	private Message message;
 
 	public PublicUser getPublicUser() {
 		return publicUser;
@@ -183,7 +188,13 @@ public class AmountRequest extends BaseEntity{
 	public void setAdminAmount(Double adminAmount) {
 		this.adminAmount = adminAmount;
 	}
-	
-	
 
+	public Message getMessage() {
+		return message;
+	}
+
+	public void setMessage(Message message) {
+		this.message = message;
+	}
+		
 }

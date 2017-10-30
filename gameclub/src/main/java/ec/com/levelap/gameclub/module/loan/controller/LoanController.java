@@ -60,8 +60,8 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="requestGame", method=RequestMethod.POST)
-	public ResponseEntity<PublicUser> requestGame(@RequestBody Loan loan) throws ServletException, MessagingException {
-		loanService.requestGame(loan);
+	public ResponseEntity<PublicUser> requestGame(@RequestBody Loan loan) throws ServletException, MessagingException, IOException, GeneralSecurityException {
+		loanService.requestGame(loan, loan.getCost(), loan.getBalancePart(), loan.getCardPart());
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		return new ResponseEntity<PublicUser>(currentUser, HttpStatus.OK);
 	}

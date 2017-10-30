@@ -9,17 +9,17 @@
 			<div class="form-group to-validate">
 				<label class="col-md-3 control-label">Tracking</label>
 				<div class="col-md-9">
-					<input validation type="text" class="form-control" ng-model="obj.tracking" ng-required="obj.shippingStatus.other > 0">
+					<input validation type="text" class="form-control" ng-model="obj.tracking" ng-required="shippingStatus.selected.statusTo.other > 0">
 				</div>
 			</div>
 
 			<div class="form-group to-validate">
 				<label class="col-md-3 control-label">Estado del envío</label>
 				<div class="col-md-9">
-					<ui-select validation ng-model="obj.shippingStatus" theme="bootstrap" required>
-						<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected.name}}</ui-select-match>
-						<ui-select-choices repeat="shippingStatus in shippingCatalog | filter: $select.kit">
-							<div ng-bind-html="shippingStatus.name | highlight: $select.kit"></div>
+					<ui-select validation ng-model="shippingStatus.selected" theme="bootstrap" required>
+						<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected.statusTo.name}}</ui-select-match>
+						<ui-select-choices repeat="shippingStatus in shippingCatalog | filter: $select.search">
+							<div ng-bind-html="shippingStatus.statusTo.name | highlight: $select.search"></div>
 						</ui-select-choices>
 					</ui-select>
 				</div>

@@ -10,15 +10,10 @@ angular.module('Balance').config(function($stateProvider) {
 		resolve: {
 			loadPlugin: function($ocLazyLoad, lessLoad) {
 				lessLoad.add('css/resources/balance.less');
-
 				return $ocLazyLoad.load([{
 					name: 'Balance',
 					files: ['js/modules/account/balance/controller/balanceCtrl.js']
 				}]);
-			},
-
-			transactions: function(rest, $rootScope){
-				return rest("transaction/lastFiveTransactions", true).get();
 			}
 		}
 	});

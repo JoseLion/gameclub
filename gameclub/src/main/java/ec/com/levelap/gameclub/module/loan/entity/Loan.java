@@ -1,5 +1,8 @@
 package ec.com.levelap.gameclub.module.loan.entity;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -14,13 +17,16 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.io.FileUtils;
 import org.postgresql.geometric.PGpoint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.catalog.Catalog;
+import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.message.entity.Message;
@@ -31,104 +37,116 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
-@Table(schema=Const.SCHEMA, name="loan")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(schema = Const.SCHEMA, name = "loan")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Loan extends BaseEntity {
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
-	@JoinColumn(name="gamer_message", foreignKey=@ForeignKey(name="gamer_message_fk"))
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "gamer_message", foreignKey = @ForeignKey(name = "gamer_message_fk"))
 	private Message gamerMessage;
-	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
-	@JoinColumn(name="lender_message", foreignKey=@ForeignKey(name="lender_message_fk"))
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "lender_message", foreignKey = @ForeignKey(name = "lender_message_fk"))
 	private Message lenderMessage;
-	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="public_user_game", foreignKey=@ForeignKey(name="public_user_game_fk"))
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "public_user_game", foreignKey = @ForeignKey(name = "public_user_game_fk"))
 	private PublicUserGame publicUserGame;
-	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="gamer", foreignKey=@ForeignKey(name="gamer_public_user_fk"))
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "gamer", foreignKey = @ForeignKey(name = "gamer_public_user_fk"))
 	private PublicUser gamer;
-	
-	@Column(columnDefinition="INTEGER DEFAULT 1")
+
+	@Column(columnDefinition = "INTEGER DEFAULT 1")
 	private Integer weeks = 1;
-	
-	@Column(name="gamer_address", columnDefinition="VARCHAR")
+
+	@Column(name = "gamer_address", columnDefinition = "VARCHAR")
 	private String gamerAddress;
-	
-	@Column(name="gamer_geolocation")
+
+	@Column(name = "gamer_geolocation")
 	private PGpoint gamerGeolocation;
-	
-	@Column(name="gamer_receiver", columnDefinition="VARCHAR")
+
+	@Column(name = "gamer_receiver", columnDefinition = "VARCHAR")
 	private String gamerReceiver;
-	
-	@Column(name="lender_address", columnDefinition="VARCHAR")
+
+	@Column(name = "lender_address", columnDefinition = "VARCHAR")
 	private String lenderAddress;
-	
-	@Column(name="lender_geolocation")
+
+	@Column(name = "lender_geolocation")
 	private PGpoint lenderGeolocation;
-	
-	@Column(name="lender_receiver", columnDefinition="VARCHAR")
+
+	@Column(name = "lender_receiver", columnDefinition = "VARCHAR")
 	private String lenderReceiver;
-	
-	@Column(columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
-	private Double cost = 0.0;
-	
-	@Column(name="balance_part", columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
-	private Double balancePart = 0.0;
-	
-	@Column(name="card_part", columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
-	private Double cardPart = 0.0;
-	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="payment", foreignKey=@ForeignKey(name="payment_kushki_subscription_fk"))
+
+	@JsonIgnore
+	@Column(name = "cost")
+	private byte[] costEnc;
+
+	@Transient
+	private Double cost;
+
+	@JsonIgnore
+	@Column(name = "balance_part")
+	private byte[] balancePartEnc;
+
+	@Transient
+	private Double balancePart;
+
+	@JsonIgnore
+	@Column(name = "card_part")
+	private byte[] cardPartEnc;
+
+	@Transient
+	private Double cardPart;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "payment", foreignKey = @ForeignKey(name = "payment_kushki_subscription_fk"))
 	private KushkiSubscription payment;
-	
-	@Column(name="was_accepted", columnDefinition="BOOLEAN DEFAULT NULL")
+
+	@Column(name = "was_accepted", columnDefinition = "BOOLEAN DEFAULT NULL")
 	private Boolean wasAccepted;
-	
-	@Column(name="accepted_date")
+
+	@Column(name = "accepted_date")
 	private Date acceptedDate;
-	
-	@Column(name="box_number", columnDefinition="VARCHAR")
+
+	@Column(name = "box_number", columnDefinition = "VARCHAR")
 	private String boxNumber;
-	
-	@Column(name="lender_status_date")
+
+	@Column(name = "lender_status_date")
 	private Date lenderStatusDate;
-	
-	@Column(name="gamer_status_date")
+
+	@Column(name = "gamer_status_date")
 	private Date gamerStatusDate;
-	
-	@Column(columnDefinition="VARCHAR")
+
+	@Column(columnDefinition = "VARCHAR")
 	private String tracking;
-	
-	@Column(name="shipping_note", columnDefinition="VARCHAR")
+
+	@Column(name = "shipping_note", columnDefinition = "VARCHAR")
 	private String shippingNote;
-	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
-	@JoinColumn(name="shipping_status", foreignKey=@ForeignKey(name="shipping_status_catalog_fk"))
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "shipping_status", foreignKey = @ForeignKey(name = "shipping_status_catalog_fk"))
 	private Catalog shippingStatus;
-	
-	@Column(name="transaction_ticket", columnDefinition="VARCHAR")
+
+	@Column(name = "transaction_ticket", columnDefinition = "VARCHAR")
 	private String transactionTicket;
-	
-	@Column(name="delivery_date")
+
+	@Column(name = "delivery_date")
 	private Date deliveryDate;
-	
+
 	@JsonManagedReference("LoanRestore")
-	@OneToOne(mappedBy="loan", fetch=FetchType.LAZY)
+	@OneToOne(mappedBy = "loan", fetch = FetchType.LAZY)
 	private Restore restore;
-	
+
 	@JsonManagedReference("LoanReview")
-	@OneToOne(mappedBy="loan", fetch=FetchType.LAZY)
+	@OneToOne(mappedBy = "loan", fetch = FetchType.LAZY)
 	private Review review;
-	
+
 	@Transient
 	private Boolean lenderConfirmed = false;
-	
+
 	@Transient
 	private Boolean gamerConfirmed = false;
-	
+
 	@Transient
 	private Date returnDate;
 
@@ -218,30 +236,6 @@ public class Loan extends BaseEntity {
 
 	public void setLenderReceiver(String lenderReceiver) {
 		this.lenderReceiver = lenderReceiver;
-	}
-
-	public Double getCost() {
-		return cost;
-	}
-
-	public void setCost(Double cost) {
-		this.cost = cost;
-	}
-
-	public Double getBalancePart() {
-		return balancePart;
-	}
-
-	public void setBalancePart(Double balancePart) {
-		this.balancePart = balancePart;
-	}
-
-	public Double getCardPart() {
-		return cardPart;
-	}
-
-	public void setCardPart(Double cardPart) {
-		this.cardPart = cardPart;
 	}
 
 	public KushkiSubscription getPayment() {
@@ -335,7 +329,7 @@ public class Loan extends BaseEntity {
 	public Restore getRestore() {
 		return restore;
 	}
-	
+
 	public void setRestore(Restore restore) {
 		this.restore = restore;
 	}
@@ -349,12 +343,12 @@ public class Loan extends BaseEntity {
 	}
 
 	public Boolean getLenderConfirmed() {
-		if(lenderStatusDate == null) {
+		if (lenderStatusDate == null) {
 			lenderConfirmed = false;
 		} else {
 			lenderConfirmed = true;
 		}
-		
+
 		return lenderConfirmed;
 	}
 
@@ -368,7 +362,7 @@ public class Loan extends BaseEntity {
 		} else {
 			gamerConfirmed = true;
 		}
-		
+
 		return gamerConfirmed;
 	}
 
@@ -378,24 +372,109 @@ public class Loan extends BaseEntity {
 
 	public Date getReturnDate() {
 		if (deliveryDate != null) {
-			boolean realTimes = Boolean.parseBoolean(ApplicationContextHolder.getContext().getEnvironment().getProperty("game-club.real-times"));
+			boolean realTimes = Boolean.parseBoolean(
+					ApplicationContextHolder.getContext().getEnvironment().getProperty("game-club.real-times"));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(deliveryDate);
-			
+
 			if (realTimes) {
-				calendar.add(Calendar.DATE, 7*weeks);
+				calendar.add(Calendar.DATE, 7 * weeks);
 			} else {
 				calendar.add(Calendar.MINUTE, 3);
 			}
-			
+
 			returnDate = calendar.getTime();
 		}
-		
+
 		return returnDate;
 	}
 
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
-	
+
+	public byte[] getCostEnc() {
+		return costEnc;
+	}
+
+	public void setCostEnc(byte[] costEnc) {
+		this.costEnc = costEnc;
+	}
+
+	public Double getCost() throws IOException, GeneralSecurityException {
+		if (cost != null)
+			return cost;
+		if (gamer.getPrivateKey() != null && costEnc != null && costEnc.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
+					.getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, gamer.getPrivateKey());
+			String decypted = cryptoService.decrypt(costEnc, key);
+			cost = Double.parseDouble(decypted);
+		} else {
+			cost = 0D;
+		}
+		return cost;
+	}
+
+	public void setCost(Double cost) {
+		this.cost = cost;
+	}
+
+	public byte[] getBalancePartEnc() {
+		return balancePartEnc;
+	}
+
+	public void setBalancePartEnc(byte[] balancePartEnc) {
+		this.balancePartEnc = balancePartEnc;
+	}
+
+	public Double getBalancePart() throws IOException, GeneralSecurityException {
+		if (balancePart != null)
+			return cost;
+		if (gamer.getPrivateKey() != null && balancePartEnc != null && balancePartEnc.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
+					.getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, gamer.getPrivateKey());
+			String decypted = cryptoService.decrypt(balancePartEnc, key);
+			balancePart = Double.parseDouble(decypted);
+		} else {
+			balancePart = 0D;
+		}
+		return balancePart;
+	}
+
+	public void setBalancePart(Double balancePart) {
+		this.balancePart = balancePart;
+	}
+
+	public byte[] getCardPartEnc() {
+		return cardPartEnc;
+	}
+
+	public void setCardPartEnc(byte[] cardPartEnc) {
+		this.cardPartEnc = cardPartEnc;
+	}
+
+	public Double getCardPart() throws IOException, GeneralSecurityException {
+		if (cardPart != null)
+			return cardPart;
+		if (gamer.getPrivateKey() != null && cardPartEnc != null && cardPartEnc.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
+					.getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, gamer.getPrivateKey());
+			String decypted = cryptoService.decrypt(cardPartEnc, key);
+			cardPart = Double.parseDouble(decypted);
+		} else {
+			cardPart = 0D;
+		}
+		return cardPart;
+	}
+
+	public void setCardPart(Double cardPart) {
+		this.cardPart = cardPart;
+	}
+
 }

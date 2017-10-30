@@ -1,5 +1,6 @@
 package ec.com.levelap.gameclub.module.loan.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
@@ -15,6 +16,7 @@ import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
+import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.fine.repository.FineRepo;
@@ -35,9 +38,8 @@ import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.repository.RestoreRepo;
 import ec.com.levelap.gameclub.module.settings.service.SettingService;
-import ec.com.levelap.gameclub.module.shippingPrice.service.ShippingPriceService;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
-import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
+import ec.com.levelap.gameclub.module.transaction.repository.TransactionRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
@@ -45,8 +47,6 @@ import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.kushki.KushkiException;
-import ec.com.levelap.kushki.object.KushkiAmount;
-import ec.com.levelap.kushki.service.KushkiService;
 import ec.com.levelap.mail.MailParameters;
 import ec.com.levelap.taskScheduler.LevelapTaskScheduler;
 
@@ -75,16 +75,10 @@ public class LoanService extends BaseService<Loan> {
 	private RestoreRepo restoreRepo;
 	
 	@Autowired
-	private KushkiService kushkiService;
-	
-	@Autowired
 	private FineRepo fineRepo;
 	
 	@Autowired
-	private SettingService settingsService;
-	
-	@Autowired
-	private ShippingPriceService shippingPriceService;
+	private SettingService settingService;
 	
 	@Autowired
 	private LevelapTaskScheduler levelapTaskScheduler;
@@ -96,15 +90,24 @@ public class LoanService extends BaseService<Loan> {
 	private boolean realTimes;
 	
 	@Autowired
-	private TransactionService transactionService;
+	private LevelapCryptography cryptoService;
+
+	@Autowired
+	private TransactionRepo transactionRepo;
 	
 	@Transactional
-	public void requestGame(Loan loan) throws ServletException, MessagingException {
+	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart) throws ServletException, MessagingException, IOException, GeneralSecurityException {
 		Map<String, Message> messages = messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
 		PublicUser gamer = publicUserService.getCurrentUser();
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, gamer.getPrivateKey());
+		
 		loan.setGamer(gamer);
 		loan.setGamerMessage(messages.get(Const.GAMER));
 		loan.setLenderMessage(messages.get(Const.LENDER));
+		loan.setCostEnc(cryptoService.encrypt(Double.toString(cost), key));
+		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(balancePart), key));
+		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(cardPart), key));
 		loan = loanRepo.save(loan);
 		
 		PublicUserGame cross = publicUserGameRepo.findOne(loan.getPublicUserGame().getId());
@@ -115,7 +118,7 @@ public class LoanService extends BaseService<Loan> {
 		params.put("user", loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
 		params.put("game", loan.getPublicUserGame().getGame().getName());
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
-		params.put("cost", "" + loan.getPublicUserGame().getCost().intValue());
+		params.put("cost", "" + loan.getPublicUserGame().getCost());
 
 		mailService.sendMailWihTemplate(mailParameters, "MSGREQ", params);
 	}
@@ -140,46 +143,59 @@ public class LoanService extends BaseService<Loan> {
 		return loan;
 	}
 	
-	@SuppressWarnings("unchecked")
+	// TODO
 	@Transactional
 	public Loan confirmLoan(Loan loan, boolean isGamer) throws ServletException, KushkiException, GeneralSecurityException, IOException {
 		Catalog noTracking = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
 		loan.setShippingStatus(noTracking);
 		
-		if (!isGamer) {
-			Transaction transaction = new Transaction();
-			loan.setLenderConfirmed(true);
-			loan.setLenderStatusDate(new Date());
-			
-			if (loan.getBalancePart() > 0.0) {
-				publicUserService.substractFromUserBalance(loan.getGamer().getId(), loan.getBalancePart());
-				transaction.setDebitBalance(loan.getBalancePart());
-			}
-			
-			if (loan.getCardPart() > 0.0) {
-				Map<String, Object> optionals = new HashMap<>();
-				optionals.put("amount", new KushkiAmount(loan.getCardPart()));
-				String ticket = kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), optionals);
-				if(ticket != "" && ticket != null) {
-					transaction.setDebitCard(loan.getCardPart());
-				}
-				loan.setTransactionTicket(ticket);
-			}
-			transaction.setCreditPart(loan.getCost());
-			transaction.setWeeks(loan.getWeeks());
-			transaction.setOwner(loan.getGamer());
-			transaction.setGame(loan.getPublicUserGame().getGame().getName());
-			transaction.setTransaction("JUGASTE");
-			transaction = transactionService.getTransactionRepo().save(transaction);
-		} else {
-			loan.setGamerConfirmed(true);
-			loan.setGamerStatusDate(new Date());
-		}
+		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
+		PublicUser connected = publicUserService.getCurrentUser();
+		File keyGamer = File.createTempFile("keyGamer", ".tmp");
+		FileUtils.writeByteArrayToFile(keyGamer, gamer.getPrivateKey());
 		
+		loan.setCostEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
+		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getBalancePart()), keyGamer));
+		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(loan.getCardPart()), keyGamer));
+		
+		if (isGamer) {
+			loan.setGamerConfirmed(Boolean.TRUE);
+			loan.setGamerStatusDate(new Date());
+			connected = publicUserService.substractFromUserBalance(connected.getId(), loan.getBalancePart());
+			
+			Transaction transaction = new Transaction(
+					connected,
+					"JUGASTE",
+					loan.getPublicUserGame().getGame().getName(),
+					loan.getWeeks(),
+					null,
+					loan.getBalancePartEnc(),
+					loan.getCardPartEnc());
+			transactionRepo.save(transaction);
+			
+		} else {
+			loan.setLenderConfirmed(Boolean.TRUE);
+			loan.setLenderStatusDate(new Date());
+			connected = publicUserService.addToUserBalance(connected.getId(), loan.getPublicUserGame().getCost());
+			File keyLender= File.createTempFile("keyGamer", ".tmp");
+			FileUtils.writeByteArrayToFile(keyLender, connected.getPrivateKey());
+
+			Transaction transaction = new Transaction(
+					connected,
+					"ALQUILASTE",
+					loan.getPublicUserGame().getGame().getName(),
+					loan.getWeeks(),
+					cryptoService.encrypt(Double.toString(loan.getPublicUserGame().getCost()), keyLender),
+					null,
+					null);
+			transactionRepo.save(transaction);
+
+		}
 		loan = loanRepo.save(loan);
 		return loan;
 	}
-	
+
+	//TODO
 	@Transactional
 	public LoanLite save(Loan loan) throws ServletException, GeneralSecurityException, IOException {
 		Loan previous = loanRepo.findOne(loan.getId());
@@ -195,19 +211,19 @@ public class LoanService extends BaseService<Loan> {
 		}
 		
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
-			Transaction transaction = new Transaction();
+			
+			if(previous.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER) || 
+					previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE) ||
+					previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER) ||
+					previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND)) {
+				publicUserService.substractFromUserBalance(loan.getGamer().getId(), loan.getBalancePart());
+				publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), loan.getPublicUserGame().getCost());
+			}
+			
 			final Loan taskLoan = loan;
 			Calendar calendar = Calendar.getInstance();
 			loan.setDeliveryDate(new Date());
-			publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), loan.getPublicUserGame().getCost() * loan.getWeeks().doubleValue());
-			
-			transaction.setCreditPart(loan.getWeeks()*(loan.getPublicUserGame().getCost()));
-			transaction.setWeeks(loan.getWeeks());
-			transaction.setOwner(loan.getPublicUserGame().getPublicUser());
-			transaction.setGame(loan.getPublicUserGame().getGame().getName());
-			transaction.setTransaction("ALQUILASTE");
-			transaction = transactionService.getTransactionRepo().save(transaction);
-			
+
 			if (realTimes) {
 				calendar.setTime(loan.getReturnDate());
 				calendar.add(Calendar.DATE, -3);
@@ -261,8 +277,6 @@ public class LoanService extends BaseService<Loan> {
 				public void run() {
 					try {
 						Restore restore = restoreRepo.findByLoan(taskLoan);
-						restore.getLoan().getGamerMessage().setRead(false);
-						restore.getLoan().getLenderMessage().setRead(false);
 						
 						if (!restore.getGamerConfirmed()) {
 							restore.setGamerAddress(taskLoan.getGamerAddress());
@@ -281,7 +295,10 @@ public class LoanService extends BaseService<Loan> {
 						if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
 							restore = restoreRepo.save(restore);
 						}
-						
+
+						restore.getLoan().getGamerMessage().setRead(false);
+						restore.getLoan().getLenderMessage().setRead(false);
+
 						messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
 						messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
 						
@@ -330,7 +347,12 @@ public class LoanService extends BaseService<Loan> {
 						restore.setGamer(loan.getGamer());
 						restore.setShippingStatus(noTracking);
 						
+
 						repoRestore.save(restore);
+						restore.getGamerMessage().setRead(Boolean.FALSE);
+						repoMessage.save(restore.getLoan().getGamerMessage());
+						restore.getLenderMessage().setRead(Boolean.FALSE);
+						repoMessage.save(restore.getLoan().getLenderMessage());
 						
 						try {
 							sendRemindingMails(loan, false);
@@ -356,8 +378,6 @@ public class LoanService extends BaseService<Loan> {
 					public void run() {
 						try {
 							Restore restore = repoRestore.findByLoan(loan);
-							restore.getLoan().getGamerMessage().setRead(false);
-							restore.getLoan().getLenderMessage().setRead(false);
 							
 							if (!restore.getGamerConfirmed()) {
 								restore.setGamerAddress(loan.getGamerAddress());
@@ -376,6 +396,9 @@ public class LoanService extends BaseService<Loan> {
 							if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
 								restore = repoRestore.save(restore);
 							}
+							
+							restore.getLoan().getGamerMessage().setRead(false);
+							restore.getLoan().getLenderMessage().setRead(false);
 							
 							repoMessage.save(restore.getLoan().getGamerMessage());
 							repoMessage.save(restore.getLoan().getLenderMessage());
@@ -405,8 +428,6 @@ public class LoanService extends BaseService<Loan> {
 					public void run() {
 						try {
 							Restore restore = repoRestore.findByLoan(loan);
-							restore.getLoan().getGamerMessage().setRead(false);
-							restore.getLoan().getLenderMessage().setRead(false);
 							
 							if (!restore.getGamerConfirmed()) {
 								restore.setGamerAddress(loan.getGamerAddress());
@@ -425,6 +446,9 @@ public class LoanService extends BaseService<Loan> {
 							if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
 								restore = repoRestore.save(restore);
 							}
+							
+							restore.getLoan().getGamerMessage().setRead(false);
+							restore.getLoan().getLenderMessage().setRead(false);
 							
 							repoMessage.save(restore.getLoan().getGamerMessage());
 							repoMessage.save(restore.getLoan().getLenderMessage());
@@ -527,31 +551,93 @@ public class LoanService extends BaseService<Loan> {
 		}
 	}
 	
+	// TODO
 	@Transactional
 	private void createFines(Loan loan) throws ServletException, GeneralSecurityException, IOException {
-		Double shippingCost = shippingPriceService.getPrice(loan.getPublicUserGame().getPublicUser().getLocation(), loan.getGamer().getLocation());
 		
-		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
-			loan.setGamer(publicUserService.addToUserBalance(loan.getGamer().getId(), loan.getCost()));
+		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
+		File keyGamer = File.createTempFile("keyGamer", ".tmp");
+		FileUtils.writeByteArrayToFile(keyGamer, gamer.getPrivateKey());
+		
+		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
+		File keyLender = File.createTempFile("keyLender", ".tmp");
+		FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
+		
+		Transaction transaction;
+		
+		Catalog shippingStatus = catalogRepo.findByCode(loan.getShippingStatus().getCode());
+		
+		if (shippingStatus.getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
+			// TODO: en vez de cobrar el valor del balance se debe cobrar de la tarjeta.
+			gamer = publicUserService.addToUserBalance(loan.getGamer().getId(), loan.getCost());
+			lender = publicUserService.substractFromUserBalance(loan.getPublicUserGame().getPublicUser().getId(), loan.getPublicUserGame().getCost());
+			
+			loan.getPublicUserGame().setIsBorrowed(Boolean.FALSE);
+			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
+			
+			Double shippingCost = loan.getCost() - loan.getPublicUserGame().getCost();
 			
 			Fine fine = new Fine();
 			fine.setOwner(loan.getPublicUserGame().getPublicUser());
-			fine.setAmount(shippingCost * 2.0);
-			fine.setDescription(loan.getShippingStatus().getName());
-			
+			fine.setAmountEnc(cryptoService.encrypt(Double.toString(shippingCost), keyLender));
+			fine.setDescription(shippingStatus.getName());
 			fineRepo.save(fine);
-			loan.getPublicUserGame().setIsBorrowed(false);
-			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
-		}
-		
-		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)) {
-			Double penalty = Double.parseDouble(settingsService.getSettingValue(Code.SETTING_GAMER_DIDNT_RECEIVE));
-			Double reward = Double.parseDouble(settingsService.getSettingValue(Code.SETTING_NO_LOAN_REWARD));
-			loan.setGamer(publicUserService.addToUserBalance(loan.getGamer().getId(), loan.getCost() - penalty));
-			loan.getPublicUserGame().setPublicUser(publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), reward));
 			
-			loan.getPublicUserGame().setIsBorrowed(false);
-			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
+			transaction = new Transaction(
+					gamer,
+					"DEVOLUCION",
+					loan.getPublicUserGame().getGame().getName(),
+					loan.getWeeks(),
+					cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer),
+					null,
+					null);
+			transactionRepo.save(transaction);
+			
+			transaction = new Transaction(
+					lender,
+					"DEVOLUCION",
+					loan.getPublicUserGame().getGame().getName(),
+					loan.getWeeks(),
+					null,
+					cryptoService.encrypt(Double.toString(loan.getPublicUserGame().getCost()), keyLender),
+					null);
+			transactionRepo.save(transaction);
+			
+		} else if (shippingStatus.getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)) {
+			Double value = Double.valueOf(settingService.getSettingValue(Code.SETTING_GAMER_DIDNT_RECEIVE));
+			gamer = publicUserService.addToUserBalance(loan.getGamer().getId(), loan.getCost() - value);
+			lender = publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), value);
+			
+			transaction = new Transaction(
+					gamer,
+					"DEVOLICION",
+					loan.getPublicUserGame().getGame().getName(),
+					loan.getWeeks(),
+					cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer),
+					null,
+					null);
+			transactionRepo.save(transaction);
+			
+			transaction = new Transaction(
+					gamer,
+					"MULTA - " + shippingStatus.getName(),
+					loan.getPublicUserGame().getGame().getName(),
+					loan.getWeeks(),
+					null,
+					cryptoService.encrypt(Double.toString(value), keyGamer),
+					null);
+			transactionRepo.save(transaction);
+			
+			transaction = new Transaction(
+					lender,
+					"DEVOLICION",
+					loan.getPublicUserGame().getGame().getName(),
+					loan.getWeeks(),
+					cryptoService.encrypt(Double.toString(value), keyLender),
+					null,
+					null);
+			transactionRepo.save(transaction);
+			
 		}
 	}
 	

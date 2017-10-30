@@ -22,6 +22,7 @@ angular.module("Logistic").controller('TrackingModalCtrl', function($scope, $uib
 	shippingCatalog.$promise.then(function(data) {
 		$scope.shippingCatalog = data;
 	});
+	$scope.shippingStatus = {};
 
 	$scope.save = function() {
 		sweet.save(function() {
@@ -39,6 +40,7 @@ angular.module("Logistic").controller('TrackingModalCtrl', function($scope, $uib
 				module = "welcomeKit";
 			}
 
+			$scope.obj.shippingStatus = $scope.shippingStatus.selected.statusTo;
 			rest(module + "/save").post($scope.obj, function(data) {
 				sweet.success();
 				sweet.close();

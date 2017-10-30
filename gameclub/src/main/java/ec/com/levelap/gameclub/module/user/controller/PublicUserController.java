@@ -1,7 +1,9 @@
 package ec.com.levelap.gameclub.module.user.controller;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -148,6 +150,15 @@ public class PublicUserController {
 	public ResponseEntity<String> generateUrlToken() throws ServletException {
 		String token = publicUserService.generateUrlToken();
 		return new ResponseEntity<String>(token, HttpStatus.OK);
+	}
+
+	@RequestMapping(value="updateLoggedInformation", method=RequestMethod.GET)
+	public ResponseEntity<?> updateLoggedInformation() throws ServletException, IOException, GeneralSecurityException {
+		PublicUser publicUser = publicUserService.getCurrentUser();
+		Map<String, Object> informationToUpdate = new HashMap<>();
+		informationToUpdate.put("unreadMessages", publicUser.getUnreadMessages());
+		informationToUpdate.put("shownBalance", publicUser.getShownBalance());
+		return new ResponseEntity<>(informationToUpdate, HttpStatus.OK);
 	}
 
 	private static class Filter {

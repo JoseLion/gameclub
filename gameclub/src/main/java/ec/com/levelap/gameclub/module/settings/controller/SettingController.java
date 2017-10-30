@@ -60,6 +60,12 @@ public class SettingController {
 		return new ResponseEntity<List<Setting>>(priceChartingList, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="findOneByCode/{code}", method=RequestMethod.GET)
+	public ResponseEntity<?> findOne(@PathVariable String code) throws ServletException{
+		Setting setting = settingsService.getSettingsRepo().findByCode(code);
+		return new ResponseEntity<>(setting, HttpStatus.OK);
+	}
+	
 	private class SettingsCategories{
 		@SuppressWarnings("unused")
 		public String category;

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.service.LoanService;
@@ -49,6 +50,14 @@ public class MessageController {
 		return new ResponseEntity<Page<Message>>(messages, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "getMessageById/{messageId}", method = RequestMethod.GET)
+	public ResponseEntity<?> getMessageById(@PathVariable Long messageId) throws ServletException {
+		Message message = messageService.getMessageRepo().findOne(messageId);
+		message.setRead(Boolean.TRUE);
+		messageService.getMessageRepo().save(message);
+		return new ResponseEntity<>(messageService.getWelcomeKitRepo().findByMessageId(messageId), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="getWelcomeKitMessages/{messageId}", method=RequestMethod.GET)
 	public ResponseEntity<List<WelcomeKit>> getWelcomeKitMessages(@PathVariable Long messageId) throws ServletException {
 		List<WelcomeKit> welcomeKits = messageService.getWelcomeKitRepo().findByMessageIdOrderByCreationDateDesc(messageId);
@@ -74,6 +83,15 @@ public class MessageController {
 		message.setRead(true);
 		messageService.getMessageRepo().save(message);
 		return new ResponseEntity<Fine>(fine, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="amountRqFineMessage/{messageId}", method=RequestMethod.GET)
+	public ResponseEntity<AmountRequest> amountRqFineMessage(@PathVariable Long messageId) throws ServletException{
+		AmountRequest amountRequest = messageService.getMessageRepo().findAmountRqMessage(messageId);
+		Message message = messageService.getMessageRepo().findOne(messageId);
+		message.setRead(true);
+		messageService.getMessageRepo().save(message);
+		return new ResponseEntity<AmountRequest>(amountRequest, HttpStatus.OK);
 	}
 	
 	

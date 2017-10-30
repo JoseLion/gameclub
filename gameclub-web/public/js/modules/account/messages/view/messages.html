@@ -660,9 +660,15 @@
 								<span>Hola {{fine.owner.name}}, has sido cobrado el valor de {{fine.amount | currency: '$': 2}}, por {{fine.description}}, este saldo ha sido descontado de tu balance y/o tu tarjeta ingresada. </span>
 							</div>
 							<br>
-						</div>
 					</div>
 
+					<div class="welcome-amountrq col-md-12" ng-if="amountRequest.status != null">
+						<div class="date" >{{amountRequest.message.date | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box medium-box" >
+								<span>Estimado {{amountRequest.publicUser.name}}, hemos realizado la transacci&oacute;n del retiro de tu saldo  por un valor de {{amountRequest.adminAmount | currency: '$': 2}}. </span>
+							</div>
+							<br>
+					</div>
 					<div class="clearfix"></div>
 				</div>
 			</div>

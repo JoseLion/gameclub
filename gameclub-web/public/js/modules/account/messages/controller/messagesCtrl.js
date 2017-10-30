@@ -313,6 +313,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 				rest("loan/confirmGamer").post($scope.loan, function(data) {
 					$scope.loan = data;
+					$rootScope.currentUser.shownBalance -= data.balancePart;
 					$scope.loan.isDisabled = true;
 					notif.success("Pago realizado con éxito");
 					sweet.close();
@@ -409,6 +410,8 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 				rest("restore/confirmLender").post($scope.loan.restore, function(data) {
 					$scope.loan = data;
+					console.log($scope.loan);
+					//$rootScope.currentUser.shownBalance += $scope.loan.;
 					$scope.loan.restore.isDisabled = true;
 					notif.success("Dirección de entrega confirmada");
 					sweet.close();
@@ -490,11 +493,25 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		});
 	}*/
 
-	function clearCanvas() {
-		$scope.welcomeKit = null;
-		$scope.shipping = null;
-		$scope.fine = null;
+	$scope.showLendDay = function(acceptedDate) {
+		let lendDay = new Date(acceptedDate);
+		switch (lendDay.getDay()) {
+			case 5:
+				lendDay.setDate(lendDay.getDate() + 3);
+				break;
+			case 6:
+				lendDay.setDate(lendDay.getDate() + 2);
+				break;
+			default:
+				lendDay.setDate(lendDay.getDate() + 1);
+				break;
+		}
+		return lendDay;
+	};
 
+	function clearCanvas() {
+		$scope.kit = null;
+		$scope.fine = null;
 		$scope.loan = null;
 	}
 

@@ -9,7 +9,8 @@ angular.module("Fine").controller('ViewFineCtrl',function($scope, $rootScope, fi
 	$scope.executeFine = function(data){
 		sweet.default("Se actualizará los datos ingresado", function() {
 			rest("fine/applyFine").post(data, function(response) {
-				//data = response;
+				let index = $scope.fines.indexOf(data);
+				$scope.fines[index] = response;
 				sweet.success();
 				sweet.close();
 			}, function(error) {
@@ -21,7 +22,8 @@ angular.module("Fine").controller('ViewFineCtrl',function($scope, $rootScope, fi
 	$scope.noExecuteFine = function(data){
 		sweet.default("Se actualizará los datos ingresado", function() {
 			rest("fine/notApplyFine").post(	data, function(response) {
-				//data = response;
+				let index = $scope.fines.indexOf(data);
+				$scope.fines[index] = response;
 				sweet.success();
 				sweet.close();
 			}, function(error) {

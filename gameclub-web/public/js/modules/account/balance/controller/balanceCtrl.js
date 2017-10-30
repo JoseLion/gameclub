@@ -1,9 +1,15 @@
 
 angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath) {
 
+	if($rootScope.currentUser == null) {
+		$state.go('gameclub.home');
+	}
+
 	$scope.transactions = [];
-	rest("transaction/lastFiveTransactions/:publicUserId", true).get({publicUserId: $rootScope.currentUser.id}, function(data) {
-		$scope.transactions = data;
+	console.log($rootScope.currentUser.id);
+	rest("transaction/lastFiveTransactions").get(function(data) {
+		console.log(data);
+		$scope.transactions = data.content;
 	});
 
 	$scope.takeYourBalance = function() {

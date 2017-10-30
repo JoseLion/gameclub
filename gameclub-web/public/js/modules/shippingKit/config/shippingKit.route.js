@@ -5,7 +5,6 @@ angular.module('ShippingKit').config(function($stateProvider) {
 	$stateProvider
 	.state(prefix + 'shippingKit', {
 		url: '/account/shipping-kit',
-		params: {},
 		templateUrl: 'js/modules/shippingKit/view/shippingKit.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'ShippingKitCtrl',
@@ -16,6 +15,12 @@ angular.module('ShippingKit').config(function($stateProvider) {
 					name: 'ShippingKit',
 					files: ['js/modules/shippingKit/controller/shippingKitCtrl.js']
 				}]);
+			},
+
+			shippingKitValue: function(rest, Const) {
+				return rest('settings/findOneByCode/:code').get({code: Const.settings.shippingKitValue}, function(data) {
+					return data;
+				});
 			}
 		}
 	});

@@ -8,7 +8,7 @@
             <game-rating image-archive="game.diamond" no-rating no-selection="true"></game-rating>
         </div>
         <div class="col-md-6 principal">
-            <h2 class="col-md-12 title">{{game.name}}</h2>
+            <h1 class="col-md-12 title">{{game.name}}</h1>
             <div class="col-md-12 rating-container">
                 <stars ng-model=game.rating></stars>
             </div>
@@ -74,94 +74,95 @@
             </div>
         </div>
     </section>
-    <section class="games">
-        <form role="form" on-submit="requestLoan()" novalidate>
-            <div class="row">
-                <div ng-if="!loanViewOpen">
-                    <div class="subtitle">Juegos disponibles</div>
-                    <button type="button" class="btn btn-tertiary small dark" ng-click="addToLibrary()" ng-if="currentUser">Sube tu juego</button>
-                    <button type="button" class="btn btn-tertiary small dark" ng-click="login()" ng-if="!currentUser">Inicia Sesión</button>
-
-                    <div class="filters">
-                        <li ng-repeat="filter in filters">
-                            <a href ng-class="{'active': filter.active}" ng-click="doFilter(filter)"><i class="gc" ng-class="filter.icon"></i></a>
-                        </li>
-                    </div>
-                    <div class="games-availables">
-                        <div class="table-container">
-                            <table width="100%">
-                                <col width="17%">
-                                <col width="15%">
-                                <col width="17%">
-                                <col width="15%">
-                                <col width="16%">
-                                <col width="13%">
-                                <col width="5%">
-
-                                <thead>
-                                    <tr>
-                                        <th>Disponibilidad</th>
-                                        <th>Costo shipping</th>
-                                        <th>Ciudad</th>
-                                        <th>Costo</th>
-                                        <th>Rating usuario</th>
-                                        <th>Estado juego</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr ng-repeat="cross in availableGames">
-                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
-                                        <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
-                                        <td>{{cross.publicUser.location.name}}</td>
-                                        <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 2}}</td>
-                                        <td>
-                                            <stars class="cursor-pointer" ng-model="cross.publicUser.rating" ng-click="viewOwnerRating(cross.publicUser)" ng-if="cross.publicUser.rating > 0"></stars>
-                                            <span ng-if="cross.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>
-                                        </td>
-                                        <td class="game-status">{{cross.integrity.name}}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary small dark" ng-click="openLoanView(cross)">
-                                                {{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-
-                                <tfoot ng-if="availableGames.length == 0">
-                                    <tr class="text-center">
-                                        <td colspan="7">No hay juegos disponibles</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-12 text-center" ng-if="!lastPage">
-                        <button type="button" class="btn btn-secundary small" ng-click="loadMoreGames()" ng-if="!lastPage">Ver más propuestas</button>
+    <form role="form" on-submit="requestLoan()" novalidate>
+        <section class="row games">
+            <div ng-if="!loanViewOpen">
+                <div class="subtitle">Juegos disponibles</div>
+                <button type="button" class="btn btn-tertiary small dark" ng-click="addToLibrary()" ng-if="currentUser">Sube tu juego</button>
+                <button type="button" class="btn btn-tertiary small dark" ng-click="login()" ng-if="!currentUser">Inicia Sesión</button>
+                <div class="filters">
+                    <li ng-repeat="filter in filters">
+                        <a href ng-class="{'active': filter.active}" ng-click="doFilter(filter)"><i class="gc" ng-class="filter.icon"></i></a>
+                    </li>
+                </div>
+                <div class="games-availables">
+                    <div class="table-container">
+                        <table width="100%">
+                            <col width="17%">
+                            <col width="15%">
+                            <col width="17%">
+                            <col width="15%">
+                            <col width="16%">
+                            <col width="13%">
+                            <col width="5%">
+                            <thead>
+                                <tr>
+                                    <th>Disponibilidad</th>
+                                    <th>Costo shipping</th>
+                                    <th>Ciudad</th>
+                                    <th>Costo</th>
+                                    <th>Rating usuario</th>
+                                    <th>Estado juego</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="cross in availableGames">
+                                    <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
+                                    <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
+                                    <td>{{cross.publicUser.location.name}}</td>
+                                    <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 2}}</td>
+                                    <td>
+                                        <stars class="cursor-pointer" ng-model="cross.publicUser.rating" ng-click="viewOwnerRating(cross.publicUser)" ng-if="cross.publicUser.rating > 0"></stars>
+                                        <span ng-if="cross.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>
+                                    </td>
+                                    <td class="game-status">{{cross.integrity.name}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary small dark" ng-click="openLoanView(cross)">
+                                            {{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot ng-if="availableGames.length == 0">
+                                <tr class="text-center">
+                                    <td colspan="7">No hay juegos disponibles</td>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
+                <div class="col-md-12 text-center" ng-if="!lastPage">
+                    <button type="button" class="btn btn-secundary small" ng-click="loadMoreGames()" ng-if="!lastPage">Ver más propuestas</button>
+                </div>
+            </div>
+            <div class="loan-view" ng-if="loanViewOpen">
+                <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="subtitle">Ficha del juego disponible</div>
+                        <button type="button" class="btn btn-tertiary small dark" ng-click="closeLoanView()">Volver a propuestas</button>
+                    </div>
+                    <div class="clearfix"></div>
 
-                <div class="loan-view" ng-if="loanViewOpen">
-                    <div class="subtitle">Ficha del juego disponible</div>
-                    <button type="button" class="btn btn-tertiary small dark" ng-click="closeLoanView()">Volver a propuestas</button>
-
-                    <div class="col-md-9">
-                        <label class="title">Estatus</label>
+                    <div class="col-md-9 col-xs-12 information-separation">
+                        <label class="title">Status</label>
                         <span class="value">{{loanGame.status ? 'Disponible' : 'Prestado'}}</span>
                     </div>
+                    <div class="clearfix"></div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-9 col-xs-12 information-separation">
                         <label class="title">Estado del juego</label>
                         <span class="value">{{loanGame.integrity.name}}</span>
                     </div>
+                    <div class="clearfix"></div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-9 col-xs-12 information-separation">
                         <label class="title">Observaciones</label>
                         <span class="value original-text">{{loanGame.observations}}</span>
                     </div>
+                    <div class="clearfix"></div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-12 col-xs-12 information-separation">
                         <label class="title">Rating del prestador</label>
                         <div class="rating-container" ng-if="loanGame.publicUser.rating > 0">
                             <stars ng-model="loanGame.publicUser.rating" solid="light"></stars>
@@ -169,157 +170,122 @@
                         <span class="value" ng-if="loanGame.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>
                         <button type="button" class="btn btn-tertiary small dark" ng-click="viewOwnerRating(loanGame.publicUser)" ng-if="loanGame.publicUser.rating > 0">Ver Rating</button>
                     </div>
+                    <div class="clearfix"></div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-9 col-xs-12 information-separation">
                         <label class="title">Ciudad del juego</label>
                         <span class="value">{{loanGame.publicUser.location.name}}</span>
                     </div>
-
                     <div class="clearfix"></div>
-                    <div class="subtitle top-space">Costo alquiler</div>
+                </div>
+                <div class="clearfix"></div>
 
-                    <div class="col-md-12 loan-cost">
+                <div class="col-ms-12 col-xs-12 no-padding-left no-padding-right">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="subtitle">Costo alquiler</div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="col-md-12 col-xs-12 information-separation">
                         <label class="title">Costo prestamo</label>
-                        <span class="value big">{{loanGame.cost | currency: '$': 2}}</span> <span class="value black">x</span>
-                        <ui-select ng-model="loan.weeks" class="selector" ng-change="weekSelected()" style="width:auto;">
+                        <span class="value big">{{loanGame.cost | currency:'$ ':2}}</span> <span class="value dark">x</span>
+                        <ui-select ng-model="loan.weeks" class="selector" ng-change="weekSelected()">
                             <ui-select-match placeholder="Semanas...">{{$select.selected}} {{$select.selected == 1 ? 'Semana' : 'Semanas'}}</ui-select-match>
                             <ui-select-choices repeat="num in [1, 2, 3, 4] | filter: $select.search">
-                                <div ng-bind-html="num + (num == 1 ? ' semana' : ' semanas') | highlight: $select"></div>
+                                <div ng-bind-html="num + (num == 1 ? ' semana' : ' semanas') | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
-                        <span class="value big">&#61; {{loanGame.cost * loan.weeks | currency: '$': 2}}</span>
+                        <span class="value big">= {{loanGame.cost * loan.weeks | currency: '$ ': 2}}</span>
                     </div>
-
                     <div class="clearfix"></div>
-                    <div class="subtitle top-space">Costo shipping: 
-                        <h1 class=" title-black">Ciudad de retiro del juego: {{loanGame.publicUser.location.name}}</h1>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="col-ms-12 col-xs-12 no-padding-left no-padding-right">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="subtitle">Costo shipping</div>
                     </div>
+                    <div class="clearfix"></div>
 
-                    <div class="shipping">
-                        <div class="address-title">Dirección de entrega actual:</div>
+                    <div class="col-md-12 col-xs-12 information-separation">
+                        <label class="title dark">Ciudad de retiro del juego: {{loanGame.publicUser.location.name}}</label>
+                    </div>
+                    <div class="clearfix"></div>
 
-                        <div class="col-md-9">
+                    <div class="col-md-12 col-xs-12 shipping">
+                        <div class="col-md-12 col-xs-12">
+                            <span class="address-title">Dirección de entrega actual:</span>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-9 col-xs-12 information-separation">
                             <label>Ciudad</label>
                             <input ng-model="loanGame.publicUser.location.name" readonly="true" disabled="true" />
                         </div>
+                        <div class="clearfix"></div>
 
-                        <div class="col-md-9">
+                        <div class="col-md-9 col-xs-12 information-separation">
                             <label>Dirección</label>
                             <input type="text" ng-model="loan.gamerAddress" required />
                         </div>
+                        <div class="clearfix"></div>
 
-                        <div class="col-md-9">
+                        <div class="col-md-9 col-xs-12 information-separation">
                             <label class="icon" ng-click="openMapsModal()"><i class="gc gc-address"></i></label>
                             <img class="geo-check" src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
                             <input placeholder="Aprieta el bot&oacute;n de GEOLOCALIZACI&Oacute;N" readonly="true" disabled="true" />
                         </div>
+                        <div class="clearfix"></div>
 
-                        <div class="col-md-9">
+                        <div class="col-md-9 col-xs-12 information-separation">
                             <label>Persona de entrega</label>
                             <input type="text" ng-model="loan.gamerReceiver" required>
                         </div>
+                        <div class="clearfix"></div>
 
-                        <div class="col-md-9 no-underline">
+                        <div class="col-md-9 col-xs-12 information-separation no-underline">
                             <div class="box" ng-class="loan.saveChanges ? 'checked' : ''" ng-click="loan.saveChanges = !loan.saveChanges"></div>
                             <span class="checkbox-label" ng-click="loan.saveChanges = !loan.saveChanges">Guardar información para siguiente préstamo</span>
                         </div>
-
                         <div class="clearfix"></div>
                     </div>
+                    <div class="clearfix"></div>
 
-                    <div class="final-shipping ">
-                        <h1 class="title">Costo shipping = {{loanGame.shippingCost * 2.0 | currency: '$':2}}</h1>
-                        <h1 class="title-upper">(Ida y vuelta, incluye seguro de env&iacute;o)</h1>
+                    <div class="col-md-12 col-xs-12 information-separation">
+                        <label class="title dark">Costo shipping = {{loanGame.shippingCost * 2.0 | currency:'$ ':2}}</label>
+                        <span class="title-help">(Ida y vuelta, incluye seguro de env&iacute;o)</span>
                     </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
 
-                    <div class="final-costs">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-8 left-decoration">
-                            <div class="col-md-12">
-                                <label class="big">Costo final total</label>
-                                <span class="big-value">{{(loan.cost = (loanGame.cost * loan.weeks) + (loanGame.shippingCost * 2.0)) | currency: '$': 2}}</span>
-                            </div>
-
-                           <!--  <div class="col-md-12">
-                                <label class="big">Costo shipping final</label>
-                                <span class="big-value bigger">{{(loanGame.shippingCost * 2.0) | currency: '$': 2}}</span>
-                            </div> -->
-
-                            <div class="col-md-12 foot-note">(Costo en base a dirección actual, incluye fee de GameClub)</div>
+                <div class="col-md-12 col-xs-12 no-padding-left no-padding-right final-costs">
+                    <div class="col-md-3 col-xs-0"></div>
+                    <div class="col-md-8 col-xs-12 left-decoration">
+                        <div class="col-md-12 col-xs-12">
+                            <label class="big">Costo final total</label>
+                            <span class="big-value">{{(loan.cost = (loanGame.cost * loan.weeks) + (loanGame.shippingCost * 2.0)) | currency: '$ ': 2}}</span>
                         </div>
-
+                        <div class="clearfix"></div>
+                        <div class="col-md-12 col-xs-12 foot-note">
+                            (Costo en base a dirección actual, incluye fee de GameClub)
+                        </div>
                         <div class="clearfix"></div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
-            </div>
-
-            <div class="payment-view" ng-if="loanViewOpen">
-                <div class="col-md-2"></div>
-                <div class="col-md-8 ">
-                    <h1 class="col-md-12 title">Forma de pago</h1>
-                    <div class="col-md-12 ">
-                        <h2 class="subtitle"> SALDO ACTUAL: </h2><h3 class="int-number-balance">{{currentUser.shownBalance - slider.value | currency: '$': 2}}</h3>
-                    </div>
-                    <div class="col-md-6 ">
-                        <div class="col-md-6 left-decoration sub-title ">
-                            <div calss="sub-title vertical-line"></div>
-                            <h2 ><B>PAGO CON SALDO</B></h2>
-                            <h3 class="int-number-slider">{{slider.value | currency: '$': 2}}</h3>
-                            <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
-                        </div>
-                        <div class="col-md-6 sub-title">
-                            <h2 ><B>monto restante a pagar</B></h2>
-                            <h3 class="int-number-slider">{{(loan.cardPart = loan.cost - slider.value) | currency: '$': 2}}</h3>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 left-decoration">
-                        <div ng-if="currentUser.paymentMethods[0] != null ">
-                            <label class="col-md-12">Elige tu tarjeta</label>
-                            <div class="col-md-12" ng-repeat="paymentMethod in currentUser.paymentMethods">
-                                <div class="box" ng-class="{'checked': loan.payment == paymentMethod}" ng-click="loan.payment = paymentMethod" ng-if="loan.cardPart > 0.0"></div>
-                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{paymentMethod.cardFinale}}" readonly>
-                                <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button><p>{{idCard11}}</p><p>{{idCard2}}</p>
-                            </div>
-                        </div>
-
-                        <div ng-if="currentUser.paymentMethods[0] == null">
-                            <label class="col-md-12">Ingresa otra forma de pago</label>
-                            <div class="col-md-12">
-                                <kushki class="new-payment"></kushki>
-                            </div>
-                        </div>
-                        <!--<div ng-if="currentUser.paymentMethods[0] != null">
-                            <label class="col-md-12">Elige tu tarjeta</label>
-                            <div class="col-md-12">
-                                <div class="box" ng-class="{'checked': loan.payment == currentUser.paymentMethods[0]}" ng-click="loan.payment = currentUser.paymentMethods[1]"></div>
-                                <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{currentUser.paymentMethods[0].cardFinale}}" readonly>
-                                <button type="button" class="btn btn-secundary small remove-card" ng-click="removeCard(currentUser.paymentMethods[0])">Borrar tarjeta</button>
-                            </div>
-                        </div>
-
-                        <div ng-if="currentUser.paymentMethods[0] == null">
-                            <label class="col-md-12">Ingresa otra forma de pago</label>
-                            <div class="col-md-12">
-                                <kushki class="new-payment"></kushki>
-                            </div>
-                        </div>-->
-                    </div>
-                </div>
-                <div class="col-md-2"></div>
                 <div class="clearfix"></div>
             </div>
-
-            <div class="loan-footer" ng-if="loanViewOpen">
-                <div class="col-md-12 text-center">
-                    <button type="button" class="btn btn-secundary" ng-click="continueRequest()" ng-if="!paymentViewOpen">Continuar con soliciud de préstamo</button>
-                    <button type="submit" class="btn btn-secundary" ng-if="paymentViewOpen">Realizar pedido de prestamo</button>
-                </div>
-
-                <div class="clearfix"></div>
+        </section>
+        <payment-method total-balance="currentUser.shownBalance" payment-methods="currentUser.paymentMethods" balance="balance" total-to-pay="loan.cost" card-selected="cardSelected" class="row payment-view"  ng-if="paymentViewOpen"/>
+        <section class="row loan-footer" ng-if="loanViewOpen">
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-secundary" ng-click="continueRequest()" ng-if="!paymentViewOpen">Continuar con soliciud de préstamo</button>
+                <button type="submit" class="btn btn-secundary" ng-if="paymentViewOpen">Realizar pedido de prestamo</button>
             </div>
-        </form>
-    </section>
+            <div class="clearfix"></div>
+        </section>
+    </form>
     <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" game-consoles="consoles"/>
     <section class="final"></section>
 </div>

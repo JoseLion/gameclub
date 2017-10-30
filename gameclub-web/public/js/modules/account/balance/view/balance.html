@@ -71,14 +71,13 @@
                     </thead>
                      <tbody>
                         <tr ng-repeat="trans in transactions">
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.creationDate | date: 'dd-MM-yyyy'}}</td>
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.transaction}}</td>
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.game}}</td>
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.weeks}}</td>
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.creditPart == 0 ? '-' : (trans.creditPart | currency)}}</td>
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.debitBalance == 0 ? '-' : (trans.debitBalance | currency)}}</td>
-                            <td ng-class="trans.transaction =='ALQUILASTE' ? 'blue' : 'red'">{{trans.debitCard == 0 ? '-' : (trans.debitCard | currency)}}</td>
-                            <!-- | -->
+                            <td ng-class="trans.balancePart != 0 ? 'blue' : 'red'">{{trans.creationDate | date: 'dd-MM-yyyy'}}</td>
+                            <td ng-class="trans.balancePart != 0 ? 'blue' : 'red'">{{trans.transaction}}</td>
+                            <td ng-class="trans.balancePart != 0 ? 'blue' : 'red'">{{trans.game}}</td>
+                            <td ng-class="trans.balancePart != 0 ? 'blue' : 'red'">{{trans.weeks}}</td>
+                            <td ng-class="trans.balancePart != 0 ? 'blue' : 'red'">{{trans.balancePart == 0 ? '-' : (trans.balancePart | currency:'$ ':2)}}</td>
+                            <td ng-class="trans.balancePart != 0 ? 'blue' : 'red'">{{trans.debitBalance == 0 ? '-' : (trans.debitBalance | currency:'$ ':2)}}</td>
+                            <td ng-class="trans.balancePart != 0 ? 'blue' : 'red'">{{trans.debitCard == 0 ? '-' : (trans.debitCard | currency:'$ ':2)}}</td>
                         </tr>
                     </tbody>
                 </table>

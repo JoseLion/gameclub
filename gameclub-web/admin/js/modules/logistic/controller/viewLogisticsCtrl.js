@@ -236,6 +236,9 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 	$scope.setWelcomeKitTracking = function(kit) {
 		$uibModal.open(getTrackingModal(null, null, kit)).result.then(function(data) {
 			let index = $scope.welcomeKits.indexOf(kit);
+			console.log($scope.welcomeKits, index)
+			console.log(kit)
+			console.log(data)
 			$scope.welcomeKits[index] = data;
 		});
 	}
@@ -282,6 +285,14 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 	}
 
 	let getTrackingModal = function(loan, restore, kit) {
+		let shippingCode;
+		if(loan != null) {
+			shippingCode = loan.shippingStatus.code;
+		} else if(restore != null) {
+			shippingCode = restore.shippingStatus.code;
+		} else {
+			shippingCode = kit.shippingStatus.code;
+		}
 		return {
 			size: 'md',
 			backdrop: 'static',
@@ -326,7 +337,7 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 				},
 
 				shippingCatalog: function(rest, Const) {
-					return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.shippingCatalog}, function(data) {
+					return rest("statusProcess/findByFrom/:code", true).get({code: shippingCode}, function(data) {
 						return data;
 					});
 				}

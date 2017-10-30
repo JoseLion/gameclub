@@ -145,7 +145,7 @@
 									</div>
 									<br>
 									<div class="final-cost">
-										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
+										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">{{loan.cost | currency:'$ ':2}}</span>
 									</div>
 									<br>
 									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
@@ -200,7 +200,7 @@
 									</div>
 									<br>
 									<div class="final-cost">
-										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
+										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">{{loan.cost | currency:'$ ':2}}</span>
 									</div>
 									<br>
 									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
@@ -245,9 +245,9 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Iremos a buscar el juego el día: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
+								<span>Iremos a buscar el juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date:'EEEE d'}} de {{showLendDay(loan.returnDate) | date:'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
 								<br>
-								<span>Hora: </span><span class="text-black">XXhXX</span><span> - </span><span class="text-black">XXhXX</span>
+								<span>Hora: </span><span class="text-black">14H00</span><span> - </span><span class="text-black">18H00</span>
 								<br>
 								<br>
 								<div class="decorator-black">
@@ -405,9 +405,9 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Retiraremos tu juego el día: </span><span class="text-black">XXXXX XX de Xxxxxx</span>
+								<span>Retiraremos tu juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.acceptedDate) | date:'EEEE d'}} de {{showLendDay(loan.acceptedDate) | date:'MMMM'}} del {{showLendDay(loan.acceptedDate) | date:'yyyy'}}</span>
 								<br>
-								<span>Hora de retiro: </span><span class="text-black">XXhXX</span><span> - </span><span class="text-black">XXhXX</span>
+								<span>Hora de retiro: </span><span class="text-black">14h00</span><span> - </span><span class="text-black">18:00</span>
 								<br>
 								<br>
 								<form>
@@ -461,11 +461,13 @@
 							<div class="date" ng-if="loan.lenderConfirmed">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="blue-box text-left" ng-if="loan.lenderConfirmed">
 								<span class="text-black text-lg upper-case">Préstamo en curso</span>
-								<br>
-								<br>
-								<span>Retiro de juego: </span><span class="text-black">XXXXX XX de Xxxxx</span>
-								<br>
-								<span>Hora: </span><span class="text-black">XXhXX</span><span> - </span><span class="text-black">XXhXX</span>
+								<div ng-if="loan.deliveryDate != null">
+									<br>
+									<br>
+									<span>Retiro de juego: </span><span class="text-black">{{loan.deliveryDate | date:'d'}} de {{loan.deliveryDate | date:'MMMM'}} del {{loan.deliveryDate | date:'yyyy'}}</span>
+									<br>
+									<span>Hora: </span><span class="text-black">{{loan.deliveryDate | date:'HH'}}H{{loan.deliveryDate | date:'mm'}}</span>
+								</div>
 								<br>
 								<br>
 								<form>
@@ -532,10 +534,10 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Iremos a buscar tu juego el día: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
+								<span>Iremos a buscar tu juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date:'EEEE d'}} de {{showLendDay(loan.returnDate) | date:'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
 								<br>
 								<br>
-								<span>Entregaremos tu juego el dia: </span><span class="text-black upper-case">{{getDatePlus(loan.returnDate, 1) | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{getDatePlus(loan.returnDate, 1) | date: 'LLLL'}}</span>
+								<span>Entregaremos tu juego el dia: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date: 'EEEE d'}} de {{showLendDay(loan.returnDate) | date: 'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
 								<br>
 								<br>
 								<form>

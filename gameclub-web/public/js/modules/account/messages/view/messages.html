@@ -464,7 +464,7 @@
 								<div ng-if="loan.deliveryDate != null">
 									<br>
 									<br>
-									<span>Retiro de juego: </span><span class="text-black">{{loan.deliveryDate | date:'d'}} de {{loan.deliveryDate | date:'MMMM'}} del {{loan.deliveryDate | date:'yyyy'}}</span>
+									<span>Retiro de juego: </span><span class="text-black  upper-case">{{loan.deliveryDate | date:'EEEE d'}} de {{loan.deliveryDate | date:'d'}} de {{loan.deliveryDate | date:'MMMM'}} del {{loan.deliveryDate | date:'yyyy'}}</span>
 									<br>
 									<span>Hora: </span><span class="text-black">{{loan.deliveryDate | date:'HH'}}H{{loan.deliveryDate | date:'mm'}}</span>
 								</div>

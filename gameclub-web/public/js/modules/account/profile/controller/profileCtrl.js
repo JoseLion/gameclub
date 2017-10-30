@@ -50,8 +50,10 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             isValid = false;
             notif.danger('Ingresa fecha de nacimiento');
         } if(younger($scope.currentUserTemp.birthDate)) {
+            console.log($scope.currentUserTemp.birthDate)
             $scope.currentUserTemp.hasRuc = true;
         } if($scope.currentUserTemp.hasRuc) {
+            console.log(younger($scope.currentUserTemp.birthDate), ($scope.currentUserTemp.documentRuc == null && dataRuc())
             if(younger($scope.currentUserTemp.birthDate) && ($scope.currentUserTemp.documentRuc == null && dataRuc())){
                 var str1 = 'Según tu información de contacto, eres menor de edad.\n';
                 var str2 = 'Debes obligatoriamente llenar el campo de RUC con \n';

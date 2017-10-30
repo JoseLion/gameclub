@@ -28,4 +28,7 @@ public interface Code {
 	public static final String SETTING_NO_LOAN_REWARD = "STGFNEVPL";
 	
 	public static final String SETTING_REFFERED_REWARD = "STGREFREW";
+	
+	public static final String SETTING_NATIONALIZACION = "STGPCHNAP";
+	
 }

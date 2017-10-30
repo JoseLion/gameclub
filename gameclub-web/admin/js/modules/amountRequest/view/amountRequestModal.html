@@ -44,15 +44,18 @@
 			</div>
 			<div class="form-group to-validate">
 				<label class="col-md-3 control-label">Estado</label>
-				<div class="col-md-9">
+				<div class="col-md-9" >
 					<div class="col-md-9">
-						<ui-select validation ng-model="obj.requestStatus" theme="bootstrap" required>
+						<ui-select validation ng-model="obj.requestStatus" theme="bootstrap" required ng-if="!hidden">
 							<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected.name}}</ui-select-match>
 							<ui-select-choices repeat="amtRq in amountRequestCatalog | filter: $select.kit">
 								<div ng-bind-html="amtRq.name | highlight: $select.kit"></div>
 							</ui-select-choices>
 						</ui-select>
 					</div>
+				</div>
+				<div class="col-md-9 control-info" ng-if="hidden">
+					<span>PAGADO</span>
 				</div>
 			</div>
 

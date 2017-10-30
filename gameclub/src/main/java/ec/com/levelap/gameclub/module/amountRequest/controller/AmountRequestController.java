@@ -46,32 +46,34 @@ public class AmountRequestController {
 	@Autowired
 	private TransactionService transactionService;
 	
-//	@SuppressWarnings("finally")
+	@SuppressWarnings("finally")
 	@RequestMapping(value="save", method=RequestMethod.POST)
 	public ResponseEntity<AmountRequest> save(@RequestBody AmountRequest amtRqObj) {
 		Message message = new Message();
 		PublicUser usr = new PublicUser();
 		Transaction transaction = new Transaction();
 		AmountRequest amountRequest = new AmountRequest();
+		amountRequest = amtRqObj;
 		
 		try {			
-			if(amtRqObj.getRequestStatus().getCode().equals("PGSPGD")) {
-				transaction.setCreditPart(amountRequest.getPublicUser().getShownBalance());
+			if(amtRqObj.getRequestStatus().getCode().equals("PGSPGD") && amountRequest.getPublicUser().getShownBalance() > 0) {
+				transaction.setDebitBalance(amountRequest.getPublicUser().getShownBalance());
 				transaction.setOwner(amountRequest.getPublicUser());
-				transaction.setTransaction("Retir Balance");
+				transaction.setTransaction("Retiro Balance");
 				transaction = transactionService.getTransactionRepo().save(transaction);
 				
 				usr = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), amountRequest.getPublicUser().getShownBalance());
 				
 				message.setIsLoan(false);
-				message.setOwner(amountRequest.getPublicUser());
+				message.setOwner(amtRqObj.getPublicUser());
 				message.setDate(new Date());
 				message.setSubject(Const.SBJ_AMOUNT_REQUEST);
 				message = messageRepo.save(message);
+				amountRequest.setPublicUser(usr);
 				amountRequest.setMessage(message);
-				amountRequest = amountRequestService.save(amtRqObj);
+				amountRequest = amountRequestService.save(amountRequest);
 			} else {
-				amountRequest = amountRequestService.save(amtRqObj);
+				amountRequest = amountRequestService.save(amountRequest);
 			}
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -79,11 +81,9 @@ public class AmountRequestController {
 			e.printStackTrace();
 		} catch (GeneralSecurityException e) {
 			e.printStackTrace();
-		} //finally {
-//			return new ResponseEntity<AmountRequest>(amountRequest, HttpStatus.OK);
-		//}
-		
-		return new ResponseEntity<AmountRequest>(amountRequest, HttpStatus.OK);
+		} finally {
+			return new ResponseEntity<AmountRequest>(amountRequest, HttpStatus.OK);
+		}
 	}
 	
 	@RequestMapping(value="findAll", method=RequestMethod.POST)

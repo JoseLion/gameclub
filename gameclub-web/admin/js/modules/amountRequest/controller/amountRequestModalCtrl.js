@@ -1,10 +1,14 @@
 angular.module("AmountRequest").controller('AmountRequestModalCtrl', function($scope, amountRequest, amountRequestCatalog, sweet, rest, Const, $uibModalInstance) {
 	$scope.obj = {};
 	$scope.catalog = {};
+	$scope.hidden = false;
 
 	if (amountRequest != null) {
 		amountRequest.$promise.then(function(data) {
 			$scope.obj = data;
+			if($scope.obj.requestStatus.code == 'PGSPGD'){
+				$scope.hidden = true;
+			}
 		});
 
 		amountRequestCatalog.$promise.then(function(data) {

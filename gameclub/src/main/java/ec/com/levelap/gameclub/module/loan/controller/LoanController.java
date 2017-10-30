@@ -54,7 +54,7 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<LoanLite> save(@RequestBody Loan loan) throws ServletException, GeneralSecurityException, IOException {
+	public ResponseEntity<LoanLite> save(@RequestBody Loan loan) throws ServletException, GeneralSecurityException, IOException, KushkiException {
 		LoanLite loanLite = loanService.save(loan);
 		return new ResponseEntity<LoanLite>(loanLite, HttpStatus.OK);
 	}

@@ -29,8 +29,8 @@
 
         <div class="col-md-4 col-xs-0"></div>
         <div class="col-md-8 col-xs-12 responsive-padding-h-10">
-            <div class="col-md-12 col-xs-12 payment total">
-                <h2 class="subtitle" ng-if="currentUser.paymentMethods.length > 0">Formas de pago:</h2>
+            <div class="col-md-12 col-xs-12 payment total" ng-if="currentUser.paymentMethods.length > 0">
+                <h2 class="subtitle">Formas de pago:</h2>
                 <div ng-repeat="method in currentUser.paymentMethods">
                     <div class="col-md-12 card-info">
                         <div class="col-md-4">

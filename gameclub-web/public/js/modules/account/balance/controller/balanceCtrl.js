@@ -72,9 +72,22 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 		});
 
 		modal.result.then(function() {
-			$state.go("gameclub.amountRequest");
+			SweetAlert.swal({
+				title: "SE TE ENVIARÁ TU SALDO VÍA TRANSFERENCIA BANCARIA.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonText: "INGRESA TUS DATOS",
+				cancelButtonText: "CANCELAR RETIRO",
+				closeOnConfirm: false,
+				closeOnCancel: false,
+				showLoaderOnConfirm: true
+			}, function(isConfirm) {
+				if (isConfirm) {
+					$state.go("gameclub.amountRequest");
+				} else {
+					swal.close();
+				}
+			});
 		});
     }
-
-	
 });

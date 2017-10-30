@@ -1,18 +1,14 @@
 package ec.com.levelap.gameclub.module.amountRequest.repository;
 
-import java.util.List;import java.util.Date;
+import java.util.Date;
 import java.util.List;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import ec.com.levelap.commons.catalog.Catalog;
-import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
-import ec.com.levelap.gameclub.module.user.entity.PublicUser;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 
 @Repository
 public interface AmountRequestRepo extends JpaRepository<AmountRequest, Long> {

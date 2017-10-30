@@ -431,7 +431,7 @@ public class Loan extends BaseEntity {
 
 	public Double getBalancePart() throws IOException, GeneralSecurityException {
 		if (balancePart != null)
-			return cost;
+			return balancePart;
 		if (gamer.getPrivateKey() != null && balancePartEnc != null && balancePartEnc.length > 0) {
 			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
 					.getBean(LevelapCryptography.class);

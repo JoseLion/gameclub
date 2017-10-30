@@ -36,10 +36,7 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 				} else {
 					swal.close();
 			    	// mostGame();
-		    	} else{
-		       		swal.close();
-			    	// mostGame();
-				}
+		    	}
 		    });
 		} else {
 			takeYourBalance();

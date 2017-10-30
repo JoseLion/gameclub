@@ -15,28 +15,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         }
     };
 
-    // $scope.slider = {
-    //     value: 0.0,
-    //     options: {
-    //         hidePointerLabels: true,
-    //         hideLimitLabels: true,
-    //         showSelectionBar: true,
-    //         step: (1/100),
-    //         precision: (1/100),
-    //         floor: 0.0,
-    //         getTickColor: function(value) {return '#071428';},
-    //         getPointerColor: function(value) {return '#071428';},
-    //         getSelectionBarColor: function(value) {return '#071428';},
-    //         onChange: function() {
-    //             $scope.loan.balancePart = $scope.slider.value
-    //
-    //             if ($scope.loan.cardPart == 0.0) {
-    //                 $scope.loan.payment = null;
-    //             }
-    //         }
-    //     }
-    // };
-
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
@@ -85,12 +63,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
         if($rootScope.currentUser != null && $rootScope.currentUser.location != null) {
             var code = "";
-            console.log($rootScope.currentUser);
-            console.log($rootScope.currentUser.location);
-            console.log($rootScope.currentUser.location.parent);
-            console.log($rootScope.currentUser.location.parent.code);
             code = $rootScope.currentUser.location.parent.code;
-            console.log(code);
             if($rootScope.currentUser.location.parent != null){
                 rest("location/findChildrenOf/:code", true).get({code: code}, function(location) {
                     $scope.locationCities = location;
@@ -270,15 +243,17 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             failedValidation = true;
         }
 
-        if ($scope.loan.cardPart > 0 && $scope.loan.payment == null) {
+        $scope.loan.balancePart = $scope.balance.value;
+        $scope.loan.cardPart = $scope.loan.cost - $scope.balance.value;
+        if ($scope.loan.cardPart > 0 && $scope.cardSelected == null) {
             notif.danger("Por favor seleccione una forma de pago");
             failedValidation = true;
+        } else {
+            $scope.loan.payment = $scope.cardSelected;
         }
 
         if (!failedValidation) {
             sweet.default("Se enviará una solicitud de prestamo al propietario del juego", function() {
-                $scope.loan.balancePart = $scope.balance.value;
-                $scope.loan.cardPart = $scope.loan.cost - $scope.balance.value;
                 rest("loan/requestGame").post($scope.loan, function(data) {
                     $rootScope.currentUser = data;
                     notif.success("Solicitud enviada con éxito");

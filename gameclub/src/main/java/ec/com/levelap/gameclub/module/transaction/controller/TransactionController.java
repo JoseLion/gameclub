@@ -1,7 +1,5 @@
 package ec.com.levelap.gameclub.module.transaction.controller;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
+import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 
 @RestController
 @RequestMapping(value = "api/transaction", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,6 +27,7 @@ public class TransactionController {
 
 	@Autowired
 	private TransactionService transactionService;
+<<<<<<< HEAD
 
 	@RequestMapping(value = "lastFiveTransactions", method = RequestMethod.GET)
 	public ResponseEntity<?> lastFiveTransactions()
@@ -35,6 +35,18 @@ public class TransactionController {
 		PublicUser publicUser = transactionService.getPublicUserService().getCurrentUser();
 		Page<Transaction> transactions = transactionService.getTransactionRepo().findFiveTransactions(publicUser.getId(), new PageRequest(0, 5));
 		return new ResponseEntity<>(transactions, HttpStatus.OK);
+=======
+	
+	@Autowired
+	private PublicUserService publicUserService;
+	
+
+	@RequestMapping(value="lastFiveTransactions", method=RequestMethod.GET)
+	public ResponseEntity<List<Transaction>> lastFiveTransactions() throws ServletException{
+		PublicUser currentUser = publicUserService.getCurrentUser();
+		List<Transaction> transactions = transactionService.getTransactionRepo().findFiveTransactions(currentUser, new PageRequest(0, 5)).getContent();
+		return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+>>>>>>> Licuadora
 	}
 
 	@RequestMapping(value = "allTransactions", method = RequestMethod.GET)

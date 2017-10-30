@@ -58,6 +58,7 @@ angular.module('GameClub').constant('Const', {
 	},
 
 	code: {
+		country: 'EC',
 		faq: "FAQ",
 		shippingDelivered: "SHPETG",
 		integrity: 'ITG'

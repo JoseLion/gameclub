@@ -106,11 +106,12 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, mostP
     $scope.getPreviousGame = function() {
         let temp = $scope.mostPlayed.splice(0, 1);
         $scope.mostPlayed[3] = temp[0];
-    };
+    }
+
     $scope.getNextGame = function() {
         let temp = $scope.mostPlayed.splice(-1, 1);
         $scope.mostPlayed.unshift(temp[0]);
-    };
+    }
 
     blogsPreview.$promise.then(function(data) {
         setPageBlogsMostSeen(data);
@@ -132,6 +133,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, mostP
             });
         }
     });
+
     function setPageBlogsMostSeen(data) {
         $scope.blogsPreview = data.content;
         $scope.blogsPreview.forEach(function(preview) {

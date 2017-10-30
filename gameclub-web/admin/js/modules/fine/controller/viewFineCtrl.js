@@ -7,6 +7,9 @@ angular.module("Fine").controller('ViewFineCtrl',function($scope, $rootScope, fi
 	});
 
 	$scope.executeFine = function(data){
+		console.log(data.owner);
+		console.log(data.owner.shownBalance);
+		console.log(data.id);
 		sweet.default("Se actualizará los datos ingresado", function() {
 			rest("fine/applyFine").post(data, function(response) {
 				let index = $scope.fines.indexOf(data);

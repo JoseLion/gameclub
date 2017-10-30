@@ -17,8 +17,8 @@ angular.module('Profile').config(function($stateProvider) {
 				}]);
 			},
 
-			provinces: function(openRest) {
-				return openRest("location/findChildrenOf/:code", true).get({code: 'EC'}, function(data) {
+			provinces: function(openRest, Const) {
+				return openRest("location/findChildrenOf/:code", true).get({code: Const.code.country}, function(data) {
 					return data;
 				});
 			}

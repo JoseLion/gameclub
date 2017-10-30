@@ -48,6 +48,7 @@ public class Fine extends BaseEntity {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "message", foreignKey = @ForeignKey(name = "message_fk"))
 	private Message message;
+<<<<<<< HEAD
 
 	@JsonIgnore
 	@Column(name = "amount", nullable = false)
@@ -69,6 +70,8 @@ public class Fine extends BaseEntity {
 
 	@Transient
 	private Double cardPart;
+=======
+>>>>>>> Licuadora
 
 	public PublicUser getOwner() {
 		return owner;

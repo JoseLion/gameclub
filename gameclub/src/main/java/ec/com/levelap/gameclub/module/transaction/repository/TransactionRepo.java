@@ -19,7 +19,12 @@ public interface TransactionRepo extends JpaRepository<Transaction, Long> {
 	@Query("SELECT t FROM Transaction t WHERE t.owner = :owner ORDER BY t.id DESC")
 	public List<Transaction> findAll(@Param("owner") PublicUser owner);
 
+<<<<<<< HEAD
 	@Query("SELECT t FROM Transaction t WHERE t.owner.id = :owner ORDER BY t.id DESC")
 	public Page<Transaction> findFiveTransactions(@Param("owner") Long owner, Pageable page);
+=======
+	@Query("SELECT t FROM Transaction t WHERE t.owner=:owner ORDER BY t.id DESC")
+	public Page<Transaction> findFiveTransactions(@Param("owner") PublicUser owner, Pageable page);
+>>>>>>> Licuadora
 
 }

@@ -2,6 +2,7 @@ package ec.com.levelap.gameclub.module.amountRequest.controller;
 
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.List;
 
@@ -17,11 +18,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 
-import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.service.AmountRequestService;
-import ec.com.levelap.gameclub.module.fine.entity.Fine;
-import ec.com.levelap.gameclub.module.loan.entity.Loan;
+import ec.com.levelap.gameclub.module.message.entity.Message;
+import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
+import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
+import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
+import ec.com.levelap.gameclub.module.user.entity.PublicUser;
+import ec.com.levelap.gameclub.module.user.service.PublicUserService;
+import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.kushki.KushkiException;
+
+
 @RestController
 @RequestMapping(value="api/amountRequest", produces=MediaType.APPLICATION_JSON_VALUE)
 public class AmountRequestController {
@@ -29,10 +37,52 @@ public class AmountRequestController {
 	@Autowired
 	private AmountRequestService amountRequestService;
 	
+	@Autowired
+	private MessageRepo messageRepo;
+	
+	@Autowired
+	private PublicUserService publicUserService;
+	
+	@Autowired
+	private TransactionService transactionService;
+	
+//	@SuppressWarnings("finally")
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<AmountRequest> save(@RequestBody AmountRequest amtRqObj) throws ServletException, IOException{
-//		return amountRequestService.save(amtRqObj);
-		AmountRequest amountRequest = amountRequestService.save(amtRqObj);
+	public ResponseEntity<AmountRequest> save(@RequestBody AmountRequest amtRqObj) {
+		Message message = new Message();
+		PublicUser usr = new PublicUser();
+		Transaction transaction = new Transaction();
+		AmountRequest amountRequest = new AmountRequest();
+		
+		try {			
+			if(amtRqObj.getRequestStatus().getCode().equals("PGSPGD")) {
+				transaction.setCreditPart(amountRequest.getPublicUser().getShownBalance());
+				transaction.setOwner(amountRequest.getPublicUser());
+				transaction.setTransaction("Retir Balance");
+				transaction = transactionService.getTransactionRepo().save(transaction);
+				
+				usr = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), amountRequest.getPublicUser().getShownBalance());
+				
+				message.setIsLoan(false);
+				message.setOwner(amountRequest.getPublicUser());
+				message.setDate(new Date());
+				message.setSubject(Const.SBJ_AMOUNT_REQUEST);
+				message = messageRepo.save(message);
+				amountRequest.setMessage(message);
+				amountRequest = amountRequestService.save(amtRqObj);
+			} else {
+				amountRequest = amountRequestService.save(amtRqObj);
+			}
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (GeneralSecurityException e) {
+			e.printStackTrace();
+		} //finally {
+//			return new ResponseEntity<AmountRequest>(amountRequest, HttpStatus.OK);
+		//}
+		
 		return new ResponseEntity<AmountRequest>(amountRequest, HttpStatus.OK);
 	}
 	

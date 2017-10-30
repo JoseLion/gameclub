@@ -40,6 +40,8 @@ public interface Const {
 	
 	public static final String SBJ_FINE = "Cobro multa";
 	
+	public static final String SBJ_AMOUNT_REQUEST = "Retiro saldo";
+	
 	public static final String GAMER = "GAMER";
 	
 	public static final String LENDER = "LENDER";

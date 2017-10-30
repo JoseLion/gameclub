@@ -30,7 +30,7 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 						$state.go('gameclub.account.profile').then(function() {
 							$location.hash('ruc-section');
 							$anchorScroll();
-						}); 
+						});
 						swal.close();
 					}
 				} else {
@@ -40,13 +40,11 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 		       		swal.close();
 			    	// mostGame();
 				}
-		    }
-
-			});
+		    });
 		} else {
 			takeYourBalance();
 		}
-	}
+	};
 
 	function takeYourBalance(){
         let modal = $uibModal.open({

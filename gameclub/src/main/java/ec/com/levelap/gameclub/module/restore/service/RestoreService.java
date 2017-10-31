@@ -137,17 +137,19 @@ public class RestoreService {
 			byte[] toBalance = null;
 			byte[] toCard = null;
 			if (totalBalanceGamer < 0) {
+				toBalance = cryptoService.encrypt(Double.toString(gamer.getShownBalance()), keyGamer);
+				toCard = cryptoService.encrypt(Double.toString(Math.abs(totalBalanceGamer)), keyGamer);
+				
 				gamer = publicUserService.setUserBalance(gamer.getId(), 0D);
 				Map<String, Object> kushkiSubscription = new HashMap<>();
 				kushkiSubscription.put("amount", (Double) Math.abs(totalBalanceGamer));
 				Loan loan = loanRepo.findOne(restore.getLoan().getId());
-//				try {
-//					kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), kushkiSubscription);
-//				} catch (KushkiException ex) {
-//					throw new KushkiException(ex);
-//				}
-				toBalance = cryptoService.encrypt(Double.toString(gamer.getShownBalance()), keyGamer);
-				toCard = cryptoService.encrypt(Double.toString(Math.abs(totalBalanceGamer)), keyGamer);
+				try {
+					kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), kushkiSubscription);
+				} catch (KushkiException ex) {
+					throw new KushkiException(ex);
+				}
+				
 			} else {
 				gamer = publicUserService.substractFromUserBalance(gamer.getId(), value);
 				toBalance = cryptoService.encrypt(Double.toString(value), keyGamer);

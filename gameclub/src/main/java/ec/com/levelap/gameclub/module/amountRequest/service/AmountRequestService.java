@@ -1,11 +1,14 @@
 package ec.com.levelap.gameclub.module.amountRequest.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,11 +19,17 @@ import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogService;
 import ec.com.levelap.commons.service.DocumentService;
+import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.repository.AmountRequestRepo;
+import ec.com.levelap.gameclub.module.message.entity.Message;
+import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
+import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
+import ec.com.levelap.gameclub.module.transaction.repository.TransactionRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Service
 public class AmountRequestService extends BaseService<AmountRequest> {
@@ -33,6 +42,12 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 	private AmountRequestRepo amountRequesteRepo;
 	
 	@Autowired
+	private MessageRepo messageRepo;
+	
+	@Autowired
+	private TransactionRepo transactionRepo;
+	
+	@Autowired
 	private PublicUserService publicUserService;
 	
 	@Autowired
@@ -41,19 +56,24 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 	@Autowired
 	private DocumentService documentService;
 	
+	@Autowired
+	private LevelapCryptography cryptoService;
+	
 	@Transactional
 	public PublicUser requestBalance(AmountRequest request, MultipartFile identityPhoto) throws ServletException, IOException, GeneralSecurityException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		Catalog requestStatus = catalogService.getCatalogRepo().findByCode(Code.PAYMENT_NEW_REQUEST);
 		FileData fileData = documentService.saveFile(identityPhoto, AmountRequest.class.getSimpleName());
 		Archive archive = new Archive();
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, currentUser.getPrivateKey());
 		
 		archive.setModule(AmountRequest.class.getSimpleName());
 		archive.setName(fileData.getName());
 		archive.setType(identityPhoto.getContentType());
 		
 		request.setPublicUser(currentUser);
-		request.setAmount(currentUser.getShownBalance());
+		request.setAmount(cryptoService.encrypt(currentUser.getShownBalance().toString(), key));
 		request.setRequestStatus(requestStatus);
 		request.setIdentityPhoto(archive);
 		
@@ -65,15 +85,41 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 	}
 	
 	@Transactional
-	public AmountRequest save(AmountRequest amountRequestObj) throws ServletException, IOException{
-		if(amountRequestObj.getId() == null) {
-			AmountRequest found = amountRequesteRepo.findOne(amountRequestObj.getId());
-			if(found != null) {
-//				return new ResponseEntity<ErrorControl>(new ErrorControl("Parámetro ya existe ", true), HttpStatus.INTERNAL_SERVER_ERROR);
+	public AmountRequest save(AmountRequest amountRequest) throws IOException, GeneralSecurityException, ServletException {
+		Message message = new Message();
+		PublicUser user = publicUserService.getPublicUserRepo().findOne(amountRequest.getPublicUser().getId());
+		Transaction transaction = new Transaction();
+		
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		if(amountRequest.getRequestStatus().getCode().equals("PGSPGD") && user.getShownBalance() > 0) {
+			amountRequest.setPublicUser(user);
+			amountRequest.setAmount(user.getBalance());
+			transaction.setDebitBalanceEnc(user.getBalance());
+			transaction.setOwner(amountRequest.getPublicUser());
+			transaction.setTransaction("Retiro Balance");
+			transaction = transactionRepo.save(transaction);
+			user = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), user.getShownBalance());
+			message.setIsLoan(false);
+			message.setIsLoan(Boolean.FALSE);
+			message.setIsFine(Boolean.FALSE);
+			message.setIsAmountRequest(Boolean.TRUE);
+			message.setOwner(amountRequest.getPublicUser());
+			message.setDate(new Date());
+			message.setSubject(Const.SBJ_AMOUNT_REQUEST);
+			message = messageRepo.save(message);
+			
+			amountRequest.setMessage(message);
+		} else if(amountRequest.getRequestStatus().getCode().equals("PGSNVS") || amountRequest.getRequestStatus().getCode().equals("PGSPRS")){
+			if(user.getShownBalance() > 0) {
+				amountRequest.setAmount(cryptoService.encrypt(Double.toString(user.getShownBalance()), key));
+			} else {
+				amountRequest.setAmount(cryptoService.encrypt(Double.toString(0.00D), key));
 			}
 		}
-		amountRequestObj = amountRequesteRepo.save(amountRequestObj);
-		return amountRequestObj;
+		
+		amountRequest = amountRequesteRepo.save(amountRequest);
+		return amountRequest;
 	}
 
 	public AmountRequestRepo getAmountRequesteRepo() {

@@ -197,7 +197,7 @@ public class LoanService extends BaseService<Loan> {
 		} else {
 			loan.setLenderConfirmed(Boolean.TRUE);
 			loan.setLenderStatusDate(new Date());
-			connected = publicUserService.addToUserBalance(connected.getId(), loan.getPublicUserGame().getCost());
+			connected = publicUserService.addToUserBalance(connected.getId(), loan.getPublicUserGame().getCost() * loan.getWeeks());
 			File keyLender = File.createTempFile("keyGamer", ".tmp");
 			FileUtils.writeByteArrayToFile(keyLender, connected.getPrivateKey());
 
@@ -605,7 +605,7 @@ public class LoanService extends BaseService<Loan> {
 
 		Double totalToDebit = loan.getPublicUserGame().getCost() * loan.getWeeks();
 		if (shippingStatus.getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
-			gamer = publicUserService.addToUserBalance(gamer.getId(), loan.getCost());
+			gamer = publicUserService.addToUserBalance(gamer.getId(), (loan.getCost() * loan.getWeeks()));
 
 			Double totalBalanceLender = lender.getShownBalance() - totalToDebit;
 			byte[] toBalance = null;
@@ -629,7 +629,7 @@ public class LoanService extends BaseService<Loan> {
 			loan.getPublicUserGame().setIsBorrowed(Boolean.FALSE);
 			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
 
-			Double shippingCost = loan.getCost() - loan.getPublicUserGame().getCost();
+			Double shippingCost = loan.getCost() - (loan.getPublicUserGame().getCost() * loan.getWeeks());
 
 			Fine fine = new Fine();
 			fine.setOwner(loan.getPublicUserGame().getPublicUser());
@@ -638,7 +638,7 @@ public class LoanService extends BaseService<Loan> {
 			fineRepo.save(fine);
 
 			transaction = new Transaction(gamer, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
-					loan.getWeeks(), cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer), null, null);
+					loan.getWeeks(), cryptoService.encrypt(Double.toString((loan.getCost())), keyGamer), null, null);
 			transactionRepo.save(transaction);
 
 			transaction = new Transaction(lender, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),

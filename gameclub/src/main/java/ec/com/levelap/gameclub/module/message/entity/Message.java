@@ -54,6 +54,9 @@ public class Message extends BaseEntity {
 	@Column(name = "is_fine", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean isFine = Boolean.FALSE;
 	
+	@Column(name = "is_amountRequest", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+	private Boolean isAmountRequest = Boolean.FALSE;
+	
 	public PublicUser getOwner() {
 		return owner;
 	}
@@ -134,4 +137,13 @@ public class Message extends BaseEntity {
 		this.isFine = isFine;
 	}
 
+	public Boolean getIsAmountRequest() {
+		return isAmountRequest;
+	}
+
+	public void setIsAmountRequest(Boolean isAmountRequest) {
+		this.isAmountRequest = isAmountRequest;
+	}
+
+	
 }

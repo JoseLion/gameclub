@@ -41,6 +41,8 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				rest("message/getMessageById/:messageId").get({messageId: message.id}, function(data) {
 					if(message.isFine) {
 						$scope.fine = data;
+					} else if(message.isAmountRequest) {
+						$scope.amountRequest = data;
 					} else {
 						$scope.kit = data;
 					}

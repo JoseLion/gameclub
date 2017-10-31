@@ -4,7 +4,7 @@ angular.module('AmountRequest').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'amountRequest', {
-		url: 'amount-request',
+		url: '/amount-request',
 		params: {},
 		templateUrl: 'js/modules/amountRequest/view/amountRequest.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},

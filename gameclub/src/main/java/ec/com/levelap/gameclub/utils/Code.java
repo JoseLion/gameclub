@@ -28,4 +28,8 @@ public interface Code {
 	public static final String SETTING_NO_LOAN_REWARD = "STGFNEVPL";
 	
 	public static final String SETTING_REFFERED_REWARD = "STGREFREW";
+	
+	public static final String PAYMENT_NEW_REQUEST = "PGSNVS";
+	
+	public static final String PAYMENT_PAYED = "PGSPGD";
 }

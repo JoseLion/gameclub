@@ -10,40 +10,48 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 	});
 
 	$scope.takeYourBalance = function() {
-		if (!$rootScope.currentUser.hasRuc) {
-			SweetAlert.swal({
-				title: "¿TIENES RUC?",
-				text: "Si posees RUC es obligatorio registrarlo para poder\n" +
-					"canjear tu SALDO. Realizaremos una verificación ante el SRI\n" +
-					"antes de validar el pago.\n" +
-					"Si tienes RUC, ingrésalo en TU PERFIL.",
-				type: "warning",
-				showCancelButton: true,
-				confirmButtonText: "SI TENGO RUC",
-				cancelButtonText: "NO TENGO RUC",
-				closeOnConfirm: false,
-				closeOnCancel: false,
-				showLoaderOnConfirm: true
-			}, function(isConfirm) {
-				if (isConfirm) {
-					if(!$rootScope.currentUser.hasRuc) {
-						$state.go('gameclub.account.profile').then(function() {
-							$location.hash('ruc-section');
-							$anchorScroll();
-						});
-						swal.close();
-					}
-				} else {
+		SweetAlert.swal({
+			title: "¿TIENES RUC?",
+			text: "Si posees RUC es obligatorio registrarlo para poder\n" +
+				"canjear tu SALDO. Realizaremos una verificación ante el SRI\n" +
+				"antes de validar el pago.\n" +
+				"Si tienes RUC, ingrésalo en TU PERFIL.",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonText: "SI TENGO RUC",
+			cancelButtonText: "NO TENGO RUC",
+			closeOnConfirm: false,
+			closeOnCancel: false,
+			showLoaderOnConfirm: true
+		}, function(isConfirm) {
+			if (isConfirm) {
+				if(!$rootScope.currentUser.hasRuc) {
+					goToProfileRuc();
 					swal.close();
-			    	// mostGame();
-		    	}
-		    });
-		} else {
-			takeYourBalance();
-		}
+				} else {
+					takeYourBalance();
+					swal.close();
+				}
+			} else {
+				if ($rootScope.currentUser.hasRuc) {
+					goToProfileRuc();
+					swal.close();
+				} else {
+					takeYourBalance();
+					swal.close();
+				}
+			}
+		});
 	};
 
-	function takeYourBalance(){
+	function goToProfileRuc() {
+		$state.go('gameclub.account.profile').then(function() {
+			$location.hash('ruc-section');
+			$anchorScroll();
+		});
+	}
+
+	function takeYourBalance() {
         let modal = $uibModal.open({
 			size: "md",
 			backdrop: true,

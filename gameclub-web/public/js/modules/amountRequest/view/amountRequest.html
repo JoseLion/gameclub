@@ -1,5 +1,5 @@
 <div id="amountRequest">
-    <form role="form" class="form-horizontal" novalidate on-submit="completePayment()">
+    <form role="form" class="form-horizontal" novalidate on-submit="requestBalance()">
         <section class="row header">
             <div class="col-md-2 col-xs-5 name">
                 <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
@@ -85,13 +85,13 @@
                     <p>Sube una foto de tu c&eacute;dula.</p>
                     <button type="button" class="btn btn-tertiary" ng-click="openFileBrowser()">Selecciona archivo de tu ordenador</button>
                     <input id="input-file" type="file" ng-model="file.identityPhoto" file-model ng-show="false">
-                    <div>{{file.identityPhoto.name}}</div>
+                    <span class="file-name" ng-if="file.identityPhoto">{{file.identityPhoto.name}} <span class="file-check"></span></span>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <div class="clearfix"></div>
         </section>
-        <section class="row contact-address">
+        <section class="row contact-address" ng-if="!currentUser.hasRuc">
             <div class="col-md-2 col-xs-0"></div>
             <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
                 <div class="col-md-12 col-xs-12 div-section div-title">

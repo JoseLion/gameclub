@@ -83,8 +83,8 @@
                 <div class="col-md-12 col-xs-12 div-section">
                     <p>Necesitamos verificar tu informaci&oacute;n para poder proceder con el pago.</p>
                     <p>Sube una foto de tu c&eacute;dula.</p>
-                    <button type="button" class="btn btn-tertiary" ng-click="openFileBrowser()">Selecciona archivo de tu ordenador</button>
-                    <input id="input-file" type="file" ng-model="file.identityPhoto" file-model ng-show="false">
+                    <button type="button" class="btn btn-tertiary" ng-click="openFileBrowser('input-photo')">Selecciona archivo de tu ordenador</button>
+                    <input id="input-photo" type="file" ng-model="file.identityPhoto" file-model ng-show="false">
                     <span class="file-name" ng-if="file.identityPhoto">{{file.identityPhoto.name}} <span class="file-check"></span></span>
                 </div>
                 <div class="clearfix"></div>
@@ -171,6 +171,158 @@
                     <input ng-model="currentUser.phoneRuc" readonly>
                 </div>
                 <div class="clearfix"></div>
+        </section>
+
+        <section class="row how-to" ng-if="rucOpened">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
+                <div class="col-md-12 col-xs-12 div-section div-title">
+                    <h2 class="title">Como llenar tu factura</h2>
+                </div>
+
+                <div class="col-md-8 col-xs-8">
+                    <p>Te damos un ejemplo d ecomo tienes que</p>
+                    <p>llenar tu factura correctamente para retirar</p>
+                    <p>tu saldo.</p>
+                    <p>Éste es un ejemplo con $100.</p>
+                    <p>Debes hacerlo con tu saldo actual</p>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <div class="bill-number">
+                        <p>Factura</p>
+                        <p>N.-0000001</p>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-xs-12">
+                    <div class="bill-header">
+                        <div class="col-md-12 col-xs-12">
+                            <span class="bill-label">Señores:</span> <span class="bill-dotted">Tomorrowlabs S.A.</span>
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <span class="bill-label">RUC / C.I.:</span> <span class="bill-dotted">1792738865001</span>
+                        </div>
+                        <div class="col-md-4 col-md-4">
+                            <span class="bill-label">Teléfono:</span> <span class="bill-dotted">0999176170</span>
+                        </div>
+
+                        <div class="col-md-8">
+                            <span class="bill-label">Dirección</span> <span class="bill-dotted">Av. Siena 214 y Miguel Angel ' Ed. Mater</span>
+                        </div>
+                        <div class="col-md-4 col-md-4">
+                            <span class="bill-label">Fecha:</span> <span class="bill-dotted">01/01/2017</span>
+                        </div>
+
+                        <div class="col-md-12 col-xs-12">
+                            <span class="bill-label">Email:</span> <span class="bill-dotted">pagos@tomorrowlabs.com.ec</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-xs-12">
+                    <div class="bill-body">
+                        <table>
+                            <col width="10%">
+                            <col width="40%">
+                            <col width="25%">
+                            <col width="25%">
+
+                            <thead>
+                                <tr>
+                                    <th class="bill-label">Cantidad</th>
+                                    <th class="bill-label">Descripción</th>
+                                    <th class="bill-label">V.Unitario</th>
+                                    <th class="bill-label">V.Total</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="text-center bill-number">1</td>
+                                    <td class="text-left">LOREM IPSUM DOLOR SIT AMET, CON-SECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS</td>
+                                    <td class="text-center bill-number">$100</td>
+                                    <td class="text-center bill-number">$100</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="no-border text-right bill-label" colspan="3">Subtotal</td>
+                                    <td class="text-center bill-number">$100</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="no-border text-right bill-label" colspan="3">IVA 12%</td>
+                                    <td class="text-center bill-number">$12</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="no-border text-right bill-label" colspan="3">Total USD</td>
+                                    <td class="text-center bill-number">$112</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-xs-12">
+                    <div class="load-bill div-section">
+                        <button type="button" class="btn btn-tertiary" ng-click="openFileBrowser('input-bill')">Selecciona archivo de tu ordenador</button>
+                        <input id="input-bill" type="file" ng-model="file.bill" file-model ng-show="false">
+                        <span class="file-name" ng-if="file.bill">{{file.bill.name}} <span class="file-check"></span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="row contact-address" ng-if="rucOpened">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
+                <div class="col-md-12 col-xs-12 div-section div-title">
+                    <h2 class="title">Ingresa direcci&oacute;n de retiro de tu factura</h2>
+                </div>
+                <div class="col-md-6 col-xs-12 form-section div-section selector-section">
+                    <label class="col-md-4 col-xs-12 no-padding-left no-padding-right">Provincia</label>
+                    <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
+                        <ui-select ng-model="request.province" theme="bootstrap" class="selector">
+                            <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                            <ui-select-choices repeat="province in provinces | filter: $select.search">
+                                <div ng-bind-html="province.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6 col-xs-12 form-section div-section selector-section">
+                    <label class="col-md-4 no-padding-left no-padding-right">Ciudad</label>
+                    <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
+                        <ui-select ng-model="request.locationDestiny" theme="bootstrap" class="selector">
+                            <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                            <ui-select-choices repeat="city in request.province.children | filter: $select.search">
+                                <div ng-bind-html="city.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section address-title">
+                    <label>Direcci&oacute;n de entrega</label>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 billing-address">
+                    <textarea type="address" ng-model="request.address" rows="2" maxlength="150" placeholder="Calle Principal - Numeraci&oacute;n - Calle Secundaria - Sector - Referncia"></textarea>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section">
+                    <label>T&eacute;lefono de contacto</label>
+                    <input ng-model="request.contactPhone" placeholder="0985361316" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </section>
+
+        <section class="row submit" ng-if="rucOpened">
+            <button type="submit" class="btn btn-secundary">Finalizar proceso de retiro</button>
         </section>
     </form>
 </div>

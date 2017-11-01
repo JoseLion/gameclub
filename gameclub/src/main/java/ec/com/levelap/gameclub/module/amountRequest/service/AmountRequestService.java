@@ -60,22 +60,32 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 	private LevelapCryptography cryptoService;
 	
 	@Transactional
-	public PublicUser requestBalance(AmountRequest request, MultipartFile identityPhoto) throws ServletException, IOException, GeneralSecurityException {
+	public PublicUser requestBalance(AmountRequest request, MultipartFile identityPhoto, MultipartFile billPhoto) throws ServletException, IOException, GeneralSecurityException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		Catalog requestStatus = catalogService.getCatalogRepo().findByCode(Code.PAYMENT_NEW_REQUEST);
-		FileData fileData = documentService.saveFile(identityPhoto, AmountRequest.class.getSimpleName());
-		Archive archive = new Archive();
+		FileData identityFileData = documentService.saveFile(identityPhoto, AmountRequest.class.getSimpleName());
+		Archive identity = new Archive();
 		File key = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(key, currentUser.getPrivateKey());
 		
-		archive.setModule(AmountRequest.class.getSimpleName());
-		archive.setName(fileData.getName());
-		archive.setType(identityPhoto.getContentType());
+		identity.setModule(AmountRequest.class.getSimpleName());
+		identity.setName(identityFileData.getName());
+		identity.setType(identityPhoto.getContentType());
 		
 		request.setPublicUser(currentUser);
 		request.setAmount(cryptoService.encrypt(currentUser.getShownBalance().toString(), key));
 		request.setRequestStatus(requestStatus);
-		request.setIdentityPhoto(archive);
+		request.setIdentityPhoto(identity);
+		
+		if (billPhoto != null) {
+			FileData billFileData = documentService.saveFile(billPhoto, AmountRequest.class.getSimpleName());
+			Archive bill = new Archive();
+			bill.setModule(AmountRequest.class.getSimpleName());
+			bill.setName(billFileData.getName());
+			bill.setType(billPhoto.getContentType());
+			
+			request.setBillPhoto(bill);
+		}
 		
 		amountRequesteRepo.save(request);
 		

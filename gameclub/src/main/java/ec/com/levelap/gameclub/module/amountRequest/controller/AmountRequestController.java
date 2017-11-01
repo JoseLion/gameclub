@@ -32,8 +32,8 @@ public class AmountRequestController {
 	private AmountRequestService amountRequestService;
 	
 	@RequestMapping(value="requestBalance", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<PublicUser> requestBalance(@RequestPart AmountRequest request, @RequestPart MultipartFile identityPhoto) throws ServletException, IOException, GeneralSecurityException {
-		return new ResponseEntity<PublicUser>(amountRequestService.requestBalance(request, identityPhoto), HttpStatus.OK);
+	public ResponseEntity<PublicUser> requestBalance(@RequestPart AmountRequest request, @RequestPart MultipartFile identityPhoto, @RequestPart(required=false) MultipartFile billPhoto) throws ServletException, IOException, GeneralSecurityException {
+		return new ResponseEntity<PublicUser>(amountRequestService.requestBalance(request, identityPhoto, billPhoto), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)

@@ -6,10 +6,10 @@ angular.module('AmountRequest').controller('AmountRequestCtrl', function($scope,
         $scope.provinces = data;
     });
 
-    $scope.openFileBrowser = function() {
+    $scope.openFileBrowser = function(id) {
         setTimeout(function() {
             $scope.$apply(function() {
-                angular.element('#input-file').trigger('click');
+                angular.element('#' + id).trigger('click');
             });
         }, 0);
     }
@@ -21,11 +21,69 @@ angular.module('AmountRequest').controller('AmountRequestCtrl', function($scope,
     }
 
     $scope.requestBalance = function() {
-        if (isfirstFormValid()) {
+        let isValid = true;
+
+        if ($scope.request.accountFullName == null || $scope.request.accountFullName == '') {
+            isValid = false;
+            notif.danger("El nombre del 1er beneficiario es obligatorio")
+        }
+
+        if ($scope.request.accountDocument == null || $scope.request.accountDocument == '') {
+            isValid = false;
+            notif.danger("La cédula de identidad es obligatoria")
+        }
+
+        if ($scope.request.accountBank == null || $scope.request.accountBank == '') {
+            isValid = false;
+            notif.danger("El banco es obligatorio")
+        }
+
+        if ($scope.request.accountNumber == null || $scope.request.accountNumber == '') {
+            isValid = false;
+            notif.danger("el número de cuenta es obligatorio")
+        }
+
+        if ($scope.request.accountEmail == null || $scope.request.accountEmail == '') {
+            isValid = false;
+            notif.danger("El correo electrónico es obligatorio")
+        }
+
+        if ($scope.file.identityPhoto == null) {
+            isValid = false;
+            notif.danger("La foto de tu cédula es obligatoria")
+        }
+
+        if ($scope.request.province == null) {
+            isValid = false;
+            notif.danger("La provicia es obligatoria")
+        }
+
+        if ($scope.request.locationDestiny == null) {
+            isValid = false;
+            notif.danger("La ciudad es obligatoria")
+        }
+
+        if ($scope.request.address == null || $scope.request.address == '') {
+            isValid = false;
+            notif.danger("La dirección de entrega es obligatoria")
+        }
+
+        if ($scope.request.contactPhone == null || $scope.request.contactPhone == '') {
+            isValid = false;
+            notif.danger("El teléfono de contacto es obligatorio")
+        }
+
+        if ($rootScope.currentUser.hasRuc && $scope.file.bill == null) {
+            isValid = false;
+            notif.danger("La foto d ela factura es obligatoria")
+        }
+
+        if (isValid) {
             sweet.default("Se enviará una solicitud de retiro de saldo", function() {
                 let formData = {
                     request: $scope.request,
-                    identityPhoto: $scope.file.identityPhoto
+                    identityPhoto: $scope.file.identityPhoto,
+                    billPhoto: $scope.file.bill
                 };
 
                 rest("amountRequest/requestBalance").multipart(formData, function(data) {
@@ -79,28 +137,6 @@ angular.module('AmountRequest').controller('AmountRequestCtrl', function($scope,
         if ($scope.file.identityPhoto == null) {
             isValid = false;
             notif.danger("La foto de tu cédula es obligatoria")
-        }
-
-        if (!$rootScope.currentUser.hasRuc) {
-            if ($scope.request.province == null) {
-                isValid = false;
-                notif.danger("La provicia es obligatoria")
-            }
-
-            if ($scope.request.locationDestiny == null) {
-                isValid = false;
-                notif.danger("La ciudad es obligatoria")
-            }
-
-            if ($scope.request.address == null || $scope.request.address == '') {
-                isValid = false;
-                notif.danger("La dirección de entrega es obligatoria")
-            }
-
-            if ($scope.request.contactPhone == null || $scope.request.contactPhone == '') {
-                isValid = false;
-                notif.danger("El teléfono de contacto es obligatorio")
-            }
         }
 
         return isValid;

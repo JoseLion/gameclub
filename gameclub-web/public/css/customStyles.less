@@ -847,15 +847,25 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 
 /********** kushki directive: **********/
 #kushki-payment input{width:100%;}
-#kushki-payment.new-payment .name,#kushki-payment.new-payment .card-number,#kushki-payment.new-payment .expiry,#kushki-payment.new-payment .cvc{border-bottom:1px solid @color-tertiary;padding:1% 10% 0;margin:1% 0;}
+#kushki-payment.new-payment .card-name,
+#kushki-payment.new-payment .card-number,
+#kushki-payment.new-payment .expiry,
+#kushki-payment.new-payment .cvc{border-bottom:1px solid @color-tertiary;padding:1% 10% 0;margin:1% 0;}
 #kushki-payment.new-payment input::-webkit-input-placeholder{color:@color-primary-40;}
 #kushki-payment.new-payment input::-moz-placeholder{color:@color-primary-40;}
 #kushki-payment.new-payment input::-ms-input-placeholder{color:@color-primary-40;}
-#kushki-payment.new-payment div.name,#kushki-payment.new-payment div.card-number,#kushki-payment.new-payment div.expiry{padding-right:0;}#kushki-payment.new-payment div.name::before,#kushki-payment.new-payment div.card-number::before,#kushki-payment.new-payment div.expiry::before,#kushki-payment.new-payment div.cvc::before,#kushki-payment.new-payment div.cvc::after{font-family:gameclub;position:absolute;left:0.5em;bottom:0;}
+#kushki-payment.new-payment div.card-name,
+#kushki-payment.new-payment div.card-number,
+#kushki-payment.new-payment div.expiry{padding-right:0;}
+#kushki-payment.new-payment div.card-name::before,
+#kushki-payment.new-payment div.card-number::before,
+#kushki-payment.new-payment div.expiry::before,
+#kushki-payment.new-payment div.cvc::before,
+#kushki-payment.new-payment div.cvc::after{font-family:gameclub;position:absolute;left:0.5em;bottom:0;}
 #kushki-payment.new-payment div.cvc::after{left:auto;right:0.5em;}
-#kushki-payment.new-payment div.name>div{padding-right:0;}
-#kushki-payment.new-payment div.name>div:first-child{padding-left:0;}
-#kushki-payment.new-payment div.name::before{content:"\E019";}
+#kushki-payment.new-payment div.card-name>div{padding-right:0;}
+#kushki-payment.new-payment div.card-name>div:first-child{padding-left:0;}
+#kushki-payment.new-payment div.card-name::before{content:"\E019";}
 #kushki-payment.new-payment div.card-number::before{content:"\E006";}
 #kushki-payment.new-payment div.expiry{margin-right:1em;}
 #kushki-payment.new-payment div.expiry::before{content:"\E005";}

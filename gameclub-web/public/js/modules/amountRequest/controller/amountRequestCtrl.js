@@ -14,7 +14,41 @@ angular.module('AmountRequest').controller('AmountRequestCtrl', function($scope,
         }, 0);
     }
 
+    $scope.openRucDetails = function() {
+        if (isfirstFormValid()) {
+            $scope.rucOpened = true;
+        }
+    }
+
     $scope.requestBalance = function() {
+        if (isfirstFormValid()) {
+            sweet.default("Se enviará una solicitud de retiro de saldo", function() {
+                let formData = {
+                    request: $scope.request,
+                    identityPhoto: $scope.file.identityPhoto
+                };
+
+                rest("amountRequest/requestBalance").multipart(formData, function(data) {
+                    $rootScope.currentUser = data;
+                    SweetAlert.swal({
+                        title: "SOLICITUD DE RETIRO DE SALDO EXITOSO",
+                        text: "En los próximos días procederemos a validar toda la información que adjuntaste para generar el pago de tu saldo. Un asesor comercial se comunicará contigo para dar seguimiento a este proceso.",
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonText: "OK",
+                        closeOnConfirm: false,
+                        closeOnCancel: false,
+                        showLoaderOnConfirm: false
+                    }, function() {
+                        $state.go("gameclub.account.balance");
+                        swal.close();
+                    });
+                });
+            });
+        }
+    }
+
+    function isfirstFormValid() {
         let isValid = true;
 
         if ($scope.request.accountFullName == null || $scope.request.accountFullName == '') {
@@ -69,30 +103,6 @@ angular.module('AmountRequest').controller('AmountRequestCtrl', function($scope,
             }
         }
 
-        if (isValid) {
-            sweet.default("Se enviará una solicitud de retiro de saldo", function() {
-                let formData = {
-                    request: $scope.request,
-                    identityPhoto: $scope.file.identityPhoto
-                };
-
-                rest("amountRequest/requestBalance").multipart(formData, function(data) {
-                    $rootScope.currentUser = data;
-                    SweetAlert.swal({
-                        title: "SOLICITUD DE RETIRO DE SALDO EXITOSO",
-                        text: "En los próximos días procederemos a validar toda la información que adjuntaste para generar el pago de tu saldo. Un asesor comercial se comunicará contigo para dar seguimiento a este proceso.",
-                        type: "warning",
-                        showCancelButton: false,
-                        confirmButtonText: "OK",
-                        closeOnConfirm: false,
-                        closeOnCancel: false,
-                        showLoaderOnConfirm: false
-                    }, function() {
-                        $state.go("gameclub.account.balance");
-                        swal.close();
-                    });
-                });
-            });
-        }
+        return isValid;
     }
 });

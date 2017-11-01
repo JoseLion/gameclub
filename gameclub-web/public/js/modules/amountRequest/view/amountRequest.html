@@ -22,7 +22,7 @@
             </div>
             <div class="clearfix"></div>
         </section>
-        <section class="row bank">
+        <section class="row bank" ng-show="!rucOpened">
             <div class="col-md-2 col-xs-0"></div>
             <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
                 <div class="col-md-12 col-xs-12 div-section div-title">
@@ -74,7 +74,7 @@
             </div>
             <div class="clearfix"></div>
         </section>
-        <section class="row document-image">
+        <section class="row document-image" ng-show="!rucOpened">
             <div class="col-md-2 col-xs-0"></div>
             <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
                 <div class="col-md-12 col-xs-12 div-section div-title">
@@ -137,8 +137,40 @@
             </div>
             <div class="clearfix"></div>
         </section>
-        <section class="row submit">
-            <button type="submit" class="btn btn-secundary">Continuar con el retiro de tu saldo</button>
+        <section class="row submit" ng-if="!rucOpened">
+            <button type="submit" class="btn btn-secundary" ng-if="!currentUser.hasRuc">Continuar con el retiro de tu saldo</button>
+            <button type="button" class="btn btn-secundary" ng-if="currentUser.hasRuc" ng-click="openRucDetails()">Continuar con el retiro de tu saldo</button>
+        </section>
+
+        <section class="row ruc" ng-if="rucOpened">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
+                <div class="col-md-12 col-xs-12 div-section div-title">
+                    <h2 class="title">Tu ruc</h2>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section">
+                    <label>Nombre</label>
+                    <input ng-model="currentUser.nameRuc" readonly>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section">
+                    <label>Nº de ruc</label>
+                    <input ng-model="currentUser.documentRuc" readonly>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section">
+                    <label>Dirección de facturación</label>
+                    <div class="address">
+                        <textarea ng-model="currentUser.addressRuc" rows="2" readonly></textarea>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section">
+                    <label>Teléfono</label>
+                    <input ng-model="currentUser.phoneRuc" readonly>
+                </div>
+                <div class="clearfix"></div>
         </section>
     </form>
 </div>

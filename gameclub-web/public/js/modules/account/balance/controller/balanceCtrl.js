@@ -1,8 +1,4 @@
-angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath) {
-
-	if($rootScope.currentUser == null) {
-		$state.go('gameclub.home');
-	}
+angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath, openReport) {
 
 	$scope.transactions = [];
 	rest("transaction/lastFiveTransactions").get(function(data) {
@@ -41,6 +37,10 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 		} else {
 			takeYourBalance();
 		}
+	};
+
+	$scope.viewHistorial = function() {
+		openReport.excel('transactions', {owner: $rootScope.currentUser.id});
 	};
 
 	function takeYourBalance(){

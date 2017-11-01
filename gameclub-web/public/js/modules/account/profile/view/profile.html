@@ -132,8 +132,8 @@
                     <label>TEL&#201;FONO</label>
                     <input ng-model="currentUserTemp.phoneRuc" ng-disabled="!currentUserTemp.hasRuc" required> <!-- ng-disabled="!active" -->
                 </div>
-                <div class="col-md-12 rigth" >
-                    <button type="submit" class="btn btn-secundary small" ng-disabled="!currentUserTemp.hasRuc">GUARDAR INFORMACI&#211;N</button>
+                <div class="col-md-12 rigth">
+                    <button type="submit" class="btn btn-secundary small" ng-if="currentUserTemp.hasRuc">GUARDAR INFORMACI&#211;N</button>
                 </div>
             </div>
 

@@ -26,13 +26,11 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
 
     if (game != null) {
         $scope.myGame.game = game;
-
         openRest("archive/downloadFile").download({name: $scope.myGame.game.banner.name, module: $scope.myGame.game.banner.module}, function(data) {
             $scope.background = {
                 background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
             };
         });
-
         forEach($scope.myGame.game.consoles, function(gameConsole) {
             openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
                 gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
@@ -55,7 +53,6 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
         $scope.showGame = true;
     }
 
-
     $scope.editGame = function(cross) {
         $scope.myGame = cross;
         openRest("archive/downloadFile").download({name: $scope.myGame.game.banner.name, module: $scope.myGame.game.banner.module}, function(data) {
@@ -67,7 +64,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
                 gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
             });
-            if($scope.myGame.console.id == gameConsole.console.id){
+            if(consoleSelected == gameConsole){
                 $scope.search = {console: gameConsole};
             }
         });

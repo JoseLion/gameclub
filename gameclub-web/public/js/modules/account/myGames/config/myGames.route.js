@@ -12,6 +12,7 @@ angular.module('MyGames').config(function($stateProvider) {
 		resolve: {
 			loadPlugin: function($ocLazyLoad, lessLoad) {
 				lessLoad.add('css/resources/myGames.less');
+				lessLoad.add('css/resources/game.less');
 				return $ocLazyLoad.load([{
 					name: 'MyGames',
 					files: ['js/modules/account/myGames/controller/myGamesCtrl.js']

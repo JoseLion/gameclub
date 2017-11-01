@@ -1,9 +1,5 @@
 angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScope, messages, forEach, $filter, rest, geolocation, notif, sweet, $state, friendlyUrl) {
 
-	if($rootScope.currentUser == null) {
-		$state.go('gameclub.home');
-	}
-
 	let page = 0;
 	messages.$promise.then(function(data) {
 		$scope.messages = data.content;
@@ -112,12 +108,12 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					$scope.amountRequest = data;
 					if ($scope.amountRequest.message != null) {
 						canvasToBottom();
-					
+
 						if (!message.read) {
 							message.read = true;
 							$rootScope.currentUser.unreadMessages--;
 						}
-					}					
+					}
 				});
 			}
 		}

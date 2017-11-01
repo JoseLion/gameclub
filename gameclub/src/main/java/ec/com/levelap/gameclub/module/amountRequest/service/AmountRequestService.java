@@ -10,11 +10,15 @@ import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.base.service.BaseService;
+import ec.com.levelap.commons.archive.Archive;
+import ec.com.levelap.commons.catalog.Catalog;
+import ec.com.levelap.commons.catalog.CatalogService;
+import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.repository.AmountRequestRepo;
@@ -22,9 +26,9 @@ import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.repository.TransactionRepo;
-import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
+import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Service
@@ -41,67 +45,90 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 	private MessageRepo messageRepo;
 	
 	@Autowired
+	private TransactionRepo transactionRepo;
+	
+	@Autowired
 	private PublicUserService publicUserService;
 	
 	@Autowired
-	private TransactionRepo transactionRepo;
+	private CatalogService catalogService;
+	
+	@Autowired
+	private DocumentService documentService;
 	
 	@Autowired
 	private LevelapCryptography cryptoService;
 	
 	@Transactional
-	public AmountRequest save(AmountRequest amountRequestObj) {
-		Message message = new Message();
-		PublicUser usr = new PublicUser();
-		Transaction transaction = new Transaction();
-		AmountRequest amountRequest = new AmountRequest();
-		amountRequest = amountRequestObj;
+	public PublicUser requestBalance(AmountRequest request, MultipartFile identityPhoto, MultipartFile billPhoto) throws ServletException, IOException, GeneralSecurityException {
+		PublicUser currentUser = publicUserService.getCurrentUser();
+		Catalog requestStatus = catalogService.getCatalogRepo().findByCode(Code.PAYMENT_NEW_REQUEST);
+		FileData identityFileData = documentService.saveFile(identityPhoto, AmountRequest.class.getSimpleName());
+		Archive identity = new Archive();
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, currentUser.getPrivateKey());
 		
-		if(amountRequest.getId() == null) {
-			AmountRequest found = amountRequesteRepo.findOne(amountRequest.getId());
-			if(found != null) {
-//				return new ResponseEntity<ErrorControl>(new ErrorControl("Parámetro ya existe ", true), HttpStatus.INTERNAL_SERVER_ERROR);
+		identity.setModule(AmountRequest.class.getSimpleName());
+		identity.setName(identityFileData.getName());
+		identity.setType(identityPhoto.getContentType());
+		
+		request.setPublicUser(currentUser);
+		request.setAmount(cryptoService.encrypt(currentUser.getShownBalance().toString(), key));
+		request.setRequestStatus(requestStatus);
+		request.setIdentityPhoto(identity);
+		
+		if (billPhoto != null) {
+			FileData billFileData = documentService.saveFile(billPhoto, AmountRequest.class.getSimpleName());
+			Archive bill = new Archive();
+			bill.setModule(AmountRequest.class.getSimpleName());
+			bill.setName(billFileData.getName());
+			bill.setType(billPhoto.getContentType());
+			
+			request.setBillPhoto(bill);
+		}
+		
+		amountRequesteRepo.save(request);
+		
+		currentUser.setIsRequestingBalance(true);
+		currentUser = publicUserService.getPublicUserRepo().save(currentUser);
+		return currentUser;
+	}
+	
+	@Transactional
+	public AmountRequest save(AmountRequest amountRequest) throws IOException, GeneralSecurityException, ServletException {
+		Message message = new Message();
+		PublicUser user = publicUserService.getPublicUserRepo().findOne(amountRequest.getPublicUser().getId());
+		Transaction transaction = new Transaction();
+		
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		if(amountRequest.getRequestStatus().getCode().equals("PGSPGD") && user.getShownBalance() > 0) {
+			amountRequest.setPublicUser(user);
+			amountRequest.setAmount(user.getBalance());
+			transaction.setDebitBalanceEnc(user.getBalance());
+			transaction.setOwner(amountRequest.getPublicUser());
+			transaction.setTransaction("Retiro Balance");
+			transaction = transactionRepo.save(transaction);
+			user = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), user.getShownBalance());
+			message.setIsLoan(false);
+			message.setIsLoan(Boolean.FALSE);
+			message.setIsFine(Boolean.FALSE);
+			message.setIsAmountRequest(Boolean.TRUE);
+			message.setOwner(amountRequest.getPublicUser());
+			message.setDate(new Date());
+			message.setSubject(Const.SBJ_AMOUNT_REQUEST);
+			message = messageRepo.save(message);
+			
+			amountRequest.setMessage(message);
+		} else if(amountRequest.getRequestStatus().getCode().equals("PGSNVS") || amountRequest.getRequestStatus().getCode().equals("PGSPRS")){
+			if(user.getShownBalance() > 0) {
+				amountRequest.setAmount(cryptoService.encrypt(Double.toString(user.getShownBalance()), key));
+			} else {
+				amountRequest.setAmount(cryptoService.encrypt(Double.toString(0.00D), key));
 			}
 		}
 		
-		try {
-			usr = publicUserService.getPublicUserRepo().findOne(amountRequest.getPublicUser().getId());
-			File key = File.createTempFile("key", ".tmp");
-			FileUtils.writeByteArrayToFile(key, usr.getPrivateKey());
-			if(amountRequest.getRequestStatus().getCode().equals("PGSPGD") && usr.getShownBalance() > 0) {
-				amountRequest.setPublicUser(usr);
-				amountRequest.setAmount(usr.getBalance());
-				transaction.setDebitBalanceEnc(usr.getBalance());
-				transaction.setOwner(amountRequest.getPublicUser());
-				transaction.setTransaction("Retiro Balance");
-				transaction = transactionRepo.save(transaction);
-				usr = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), usr.getShownBalance());
-				message.setIsLoan(false);
-				message.setIsLoan(Boolean.FALSE);
-				message.setIsFine(Boolean.FALSE);
-				message.setIsAmountRequest(Boolean.TRUE);
-				message.setOwner(amountRequestObj.getPublicUser());
-				message.setDate(new Date());
-				message.setSubject(Const.SBJ_AMOUNT_REQUEST);
-				message = messageRepo.save(message);
-				
-				amountRequest.setMessage(message);
-			} else if(amountRequest.getRequestStatus().getCode().equals("PGSNVS") || amountRequest.getRequestStatus().getCode().equals("PGSPRS")){
-				if(usr.getShownBalance() > 0) {
-					amountRequest.setAmount(cryptoService.encrypt(Double.toString(usr.getShownBalance()), key));
-				} else {
-					amountRequest.setAmount(cryptoService.encrypt(Double.toString(0.00D), key));
-				}
-			} 
-		} catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (GeneralSecurityException e) {
-			e.printStackTrace();
-		} finally {
-			amountRequest = amountRequesteRepo.save(amountRequest);
-		}
+		amountRequest = amountRequesteRepo.save(amountRequest);
 		return amountRequest;
 	}
 

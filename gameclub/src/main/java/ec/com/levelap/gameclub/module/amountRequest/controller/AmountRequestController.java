@@ -16,17 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.service.AmountRequestService;
-import ec.com.levelap.gameclub.module.message.entity.Message;
-import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
-import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
-import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
-import ec.com.levelap.gameclub.module.user.service.PublicUserService;
-import ec.com.levelap.gameclub.utils.Const;
 
 @RestController
 @RequestMapping(value="api/amountRequest", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -35,14 +31,15 @@ public class AmountRequestController {
 	@Autowired
 	private AmountRequestService amountRequestService;
 	
+	@RequestMapping(value="requestBalance", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<PublicUser> requestBalance(@RequestPart AmountRequest request, @RequestPart MultipartFile identityPhoto, @RequestPart(required=false) MultipartFile billPhoto) throws ServletException, IOException, GeneralSecurityException {
+		return new ResponseEntity<PublicUser>(amountRequestService.requestBalance(request, identityPhoto, billPhoto), HttpStatus.OK);
+	}
 	
-	
-	@SuppressWarnings("finally")
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<AmountRequest> save(@RequestBody AmountRequest amtRqObj) throws ServletException, IOException {
+	public ResponseEntity<AmountRequest> save(@RequestBody AmountRequest amtRqObj) throws ServletException, IOException, GeneralSecurityException {
 		AmountRequest amountRequest = amountRequestService.save(amtRqObj);
 		return new ResponseEntity<AmountRequest>(amountRequest, HttpStatus.OK);
-		
 	}
 	
 	@RequestMapping(value="findAll", method=RequestMethod.POST)

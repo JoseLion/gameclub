@@ -66,8 +66,12 @@ public class AmountRequest extends BaseEntity{
 	private Boolean accountIsSaving;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "identity_photo", foreignKey = @ForeignKey(name = "identity_photo_fk"))
+	@JoinColumn(name = "identity_photo", foreignKey = @ForeignKey(name = "identity_photo_archive_fk"))
 	private Archive identityPhoto;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "bill_photo", foreignKey = @ForeignKey(name = "bill_photo_archive_fk"))
+	private Archive billPhoto;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "location_destiny", foreignKey = @ForeignKey(name = "location_destiny_fk"))
@@ -156,6 +160,14 @@ public class AmountRequest extends BaseEntity{
 
 	public void setIdentityPhoto(Archive identityPhoto) {
 		this.identityPhoto = identityPhoto;
+	}
+
+	public Archive getBillPhoto() {
+		return billPhoto;
+	}
+
+	public void setBillPhoto(Archive billPhoto) {
+		this.billPhoto = billPhoto;
 	}
 
 	public Location getLocationDestiny() {

@@ -108,7 +108,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="cross in availableGames">
-                                    <td ng-class="cross.status ? 'blue' : 'red'">{{cross.status ? 'Disponible' : 'Prestado'}}</td>
+                                    <td ng-class="cross.status ? 'blue' : 'red'">{{cross.isBorrowed ? 'Disponible' : 'Prestado'}}</td>
                                     <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
                                     <td>{{cross.publicUser.location.name}}</td>
                                     <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 2}}</td>
@@ -118,7 +118,7 @@
                                     </td>
                                     <td class="game-status">{{cross.integrity.name}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary small dark" ng-click="openLoanView(cross)">
+                                        <button type="button" class="btn btn-primary small dark" ng-click="openLoanView(cross)" ng-if="isBorrowed">
                                             {{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}
                                         </button>
                                     </td>

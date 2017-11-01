@@ -79,6 +79,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 	}
 
 	$scope.goToAccount = function() {
+		angular.element('#myNavbar').collapse('hide');
 		if (!$state.includes("gameclub.account")) {
 			$state.go("gameclub.account");
 		}
@@ -86,10 +87,11 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 
 	/******** Método para anclar a una seccion con id  ********/
 	$rootScope.gotoAnchor = function(route,idAnchor) {
+		angular.element('#myNavbar').collapse('hide');
   		$state.go(route).then(function() {
   			$location.hash(idAnchor);
   			$anchorScroll();
-  		}); 
+  		});
     }
 
 	$rootScope.link = {

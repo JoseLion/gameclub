@@ -56,6 +56,7 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 				$rootScope.currentUser.unreadMessages = data.unreadMessages;
 			});
 		}
+		angular.element('#myNavbar').collapse('hide');
 	});
 
 	$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {

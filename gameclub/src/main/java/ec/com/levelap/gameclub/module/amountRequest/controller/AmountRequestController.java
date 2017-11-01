@@ -16,17 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.service.AmountRequestService;
-import ec.com.levelap.gameclub.module.message.entity.Message;
-import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
-import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
-import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
-import ec.com.levelap.gameclub.module.user.service.PublicUserService;
-import ec.com.levelap.gameclub.utils.Const;
 
 @RestController
 @RequestMapping(value="api/amountRequest", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -35,53 +31,15 @@ public class AmountRequestController {
 	@Autowired
 	private AmountRequestService amountRequestService;
 	
-	@Autowired
-	private MessageRepo messageRepo;
+	@RequestMapping(value="requestBalance", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<PublicUser> requestBalance(@RequestPart AmountRequest request, @RequestPart MultipartFile identityPhoto, @RequestPart(required=false) MultipartFile billPhoto) throws ServletException, IOException, GeneralSecurityException {
+		return new ResponseEntity<PublicUser>(amountRequestService.requestBalance(request, identityPhoto, billPhoto), HttpStatus.OK);
+	}
 	
-	@Autowired
-	private PublicUserService publicUserService;
-	
-	@Autowired
-	private TransactionService transactionService;
-	
-	@SuppressWarnings("finally")
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<AmountRequest> save(@RequestBody AmountRequest amtRqObj) {
-		Message message = new Message();
-		PublicUser usr = new PublicUser();
-		Transaction transaction = new Transaction();
-		AmountRequest amountRequest = new AmountRequest();
-		amountRequest = amtRqObj;
-		
-		try {			
-			if(amtRqObj.getRequestStatus().getCode().equals("PGSPGD") && amountRequest.getPublicUser().getShownBalance() > 0) {
-				transaction.setDebitBalance(amountRequest.getPublicUser().getShownBalance());
-				transaction.setOwner(amountRequest.getPublicUser());
-				transaction.setTransaction("Retiro Balance");
-				transaction = transactionService.getTransactionRepo().save(transaction);
-				
-				usr = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), amountRequest.getPublicUser().getShownBalance());
-				
-				message.setIsLoan(false);
-				message.setOwner(amtRqObj.getPublicUser());
-				message.setDate(new Date());
-				message.setSubject(Const.SBJ_AMOUNT_REQUEST);
-				message = messageRepo.save(message);
-				amountRequest.setPublicUser(usr);
-				amountRequest.setMessage(message);
-				amountRequest = amountRequestService.save(amountRequest);
-			} else {
-				amountRequest = amountRequestService.save(amountRequest);
-			}
-		} catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (GeneralSecurityException e) {
-			e.printStackTrace();
-		} finally {
-			return new ResponseEntity<AmountRequest>(amountRequest, HttpStatus.OK);
-		}
+	public ResponseEntity<AmountRequest> save(@RequestBody AmountRequest amtRqObj) throws ServletException, IOException, GeneralSecurityException {
+		AmountRequest amountRequest = amountRequestService.save(amtRqObj);
+		return new ResponseEntity<AmountRequest>(amountRequest, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="findAll", method=RequestMethod.POST)
@@ -95,10 +53,7 @@ public class AmountRequestController {
 		if (search == null) {
 			search = new Search();
 		}
-
-		System.out.println(search.name);
-		System.out.println(search.lastName);
-		System.out.println(search.catalogId);
+		
 		List<AmountRequest> amountRequests = amountRequestService.getAmountRequesteRepo().findAmountRequest(search.catalogId, search.name, search.lastName, search.startDate, search.endDate);
 		return new ResponseEntity<List<AmountRequest>>(amountRequests, HttpStatus.OK);
 	}

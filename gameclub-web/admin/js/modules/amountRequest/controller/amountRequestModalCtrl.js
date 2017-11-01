@@ -6,6 +6,7 @@ angular.module("AmountRequest").controller('AmountRequestModalCtrl', function($s
 	if (amountRequest != null) {
 		amountRequest.$promise.then(function(data) {
 			$scope.obj = data;
+			console.log($scope.obj);
 			if($scope.obj.requestStatus.code == 'PGSPGD'){
 				$scope.hidden = true;
 			}

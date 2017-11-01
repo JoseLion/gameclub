@@ -107,19 +107,17 @@
                 <br>
                 <span class="col-md-12">&#191;TIENES RUC&#63;</span>
                 <h6><span class="col-md-12"><B>Si posees Ruc es obligatorio registrarlo para poder facturar todas las transacciones que se hagan. Desde pagar prestamos hasta retirar tus ganancias.</B></span></h6>
-                <!-- <input type="checkbox" name="ruc" value="checkboxRuc" ng-model="active" ><br> -->
-                <div class="box" ng-class="currentUserTemp.hasRuc ? 'checked' : ''" ng-click="currentUserTemp.hasRuc = !currentUserTemp.hasRuc"></div>
-                           <!--  <span class="checkbox-label" ng-click="currentUserTemp.hasRuc = !currentUserTemp.hasRuc">check</span> -->
+                <div class="box cursor-pointer" ng-class="currentUserTemp.hasRuc ? 'checked' : ''" ng-click="currentUserTemp.hasRuc = !currentUserTemp.hasRuc"></div>
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-8 form">
                 <div class="col-md-12  line">
                     <label>NOMBRE</label>
-                    <input ng-model="currentUserTemp.nameRuc" ng-disabled="!currentUserTemp.hasRuc" required> <!-- ng-disabled="!active" -->
+                    <input ng-model="currentUserTemp.nameRuc" ng-disabled="!currentUserTemp.hasRuc" required>
                 </div>
                 <div class="col-md-12  line">
                     <label>N&#176; DE RUC</label>
-                    <input ng-model="currentUserTemp.documentRuc" ng-disabled="!currentUserTemp.hasRuc" ng-pattern="/^[0-9]/" required /> <!-- ng-disabled="!active" -->
+                    <input ng-model="currentUserTemp.documentRuc" ng-disabled="!currentUserTemp.hasRuc" ng-pattern="/^[0-9]/" required />
                 </div>
                 <div class="col-md-12" to-validate>
                     <label>DIRECCI&#211;N DE FACTURACI&#211;N</label>
@@ -129,14 +127,8 @@
                 </div>
                 <div class="col-md-12 to-validate  line">
                     <label>TEL&#201;FONO</label>
-                    <input ng-model="currentUserTemp.phoneRuc" ng-disabled="!currentUserTemp.hasRuc" required> <!-- ng-disabled="!active" -->
+                    <input ng-model="currentUserTemp.phoneRuc" ng-disabled="!currentUserTemp.hasRuc" required>
                 </div>
-                <!-- <div class="col-md-12 line">
-                    <label class="col-xs-12 col-md-4">TEL&#201;FONO</label>
-                    <div class="col-xs-12 col-md-8">
-                        <input type="phone" ng-disabled="!isEditable" ng-model="currentUserTemp.contactPhone" class="complete" />
-                    </div>
-                </div> -->
                 <div class="col-md-12 rigth" >
                     <button type="submit" class="btn btn-secundary small" ng-disabled="!currentUserTemp.hasRuc">GUARDAR INFORMACI&#211;N</button>
             </div>

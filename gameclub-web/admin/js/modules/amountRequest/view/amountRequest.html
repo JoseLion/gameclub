@@ -89,7 +89,7 @@
 					<tr ng-repeat="amtRq in amountRequests">
 						<td style="text-align: center;">{{amtRq.creationDate | date: 'dd-MM-yyyy'}}</td>
 						<td>{{amtRq.publicUser.name}} {{amtRq.publicUser.lastName}}</td>
-						<td style="text-align: center;">{{amtRq.adminAmount | currency:'$ ':2}}</td>
+						<td style="text-align: center;">{{amtRq.showAmount | currency:'$ ':2}}</td>
 						<td>{{amtRq.requestStatus.name}}</td>
 						
 						<td style="text-align: center;">

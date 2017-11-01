@@ -1,5 +1,9 @@
 package ec.com.levelap.gameclub.module.amountRequest.entity;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,12 +15,17 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.io.FileUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.location.Location;
+import ec.com.levelap.cryptography.LevelapCryptography;
+import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.utils.Const;
@@ -34,8 +43,9 @@ public class AmountRequest extends BaseEntity{
 	@JoinColumn(name = "request_status_amount_request", foreignKey = @ForeignKey(name = "request_status_amount_request_fk"))
 	private Catalog requestStatus;
 	
-	@Column(name="amount", nullable=false, columnDefinition="DECIMAL(8, 4) DEFAULT 0.0")
-	private Double amount;
+	@JsonIgnore
+	@Column(name = "amount")
+	private byte[] amount;
 	
 	@Column(name="account_full_name", nullable=false, columnDefinition="VARCHAR")
 	private String accountFullName;
@@ -56,8 +66,12 @@ public class AmountRequest extends BaseEntity{
 	private Boolean accountIsSaving;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "identity_photo", foreignKey = @ForeignKey(name = "identity_photo_fk"))
+	@JoinColumn(name = "identity_photo", foreignKey = @ForeignKey(name = "identity_photo_archive_fk"))
 	private Archive identityPhoto;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "bill_photo", foreignKey = @ForeignKey(name = "bill_photo_archive_fk"))
+	private Archive billPhoto;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "location_destiny", foreignKey = @ForeignKey(name = "location_destiny_fk"))
@@ -70,7 +84,7 @@ public class AmountRequest extends BaseEntity{
 	private String contactPhone;
 	
 	@Transient
-	private Double adminAmount;
+	private Double showAmount;
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JoinColumn(name="message_amount_request", foreignKey=@ForeignKey(name="message_amount_request_fk"))
@@ -148,6 +162,14 @@ public class AmountRequest extends BaseEntity{
 		this.identityPhoto = identityPhoto;
 	}
 
+	public Archive getBillPhoto() {
+		return billPhoto;
+	}
+
+	public void setBillPhoto(Archive billPhoto) {
+		this.billPhoto = billPhoto;
+	}
+
 	public Location getLocationDestiny() {
 		return locationDestiny;
 	}
@@ -172,29 +194,39 @@ public class AmountRequest extends BaseEntity{
 		this.contactPhone = contactPhone;
 	}
 
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-	public Double getAdminAmount() {
-		adminAmount = amount;
-		return adminAmount;
-	}
-
-	public void setAdminAmount(Double adminAmount) {
-		this.adminAmount = adminAmount;
-	}
-
 	public Message getMessage() {
 		return message;
 	}
 
 	public void setMessage(Message message) {
 		this.message = message;
+	}
+
+	public byte[] getAmount() {
+		return amount;
+	}
+
+	public void setAmount(byte[] amount) {
+		this.amount = amount;
+	}
+
+	public Double getShowAmount() throws IOException, GeneralSecurityException {
+		
+		if (publicUser.getPrivateKey() != null && amount != null && amount.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
+					.getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, publicUser.getPrivateKey());
+			String decypted = cryptoService.decrypt(amount, key);
+			showAmount = Double.parseDouble(decypted);
+		} else {
+			showAmount = 0D;
+		}
+		return showAmount;
+	}
+
+	public void setShowAmount(Double showAmount) {
+		this.showAmount = showAmount;
 	}
 		
 }

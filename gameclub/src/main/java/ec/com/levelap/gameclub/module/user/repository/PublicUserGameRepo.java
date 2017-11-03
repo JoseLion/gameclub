@@ -24,7 +24,8 @@ public interface PublicUserGameRepo extends JpaRepository<PublicUserGame, Long> 
 				"pg.publicUser AS publicUser, " +
 				"pg.cost AS cost, " +
 				"pg.integrity AS integrity, " +
-				"pg.observations AS observations " +
+				"pg.observations AS observations, " +
+				"pg.isBorrowed AS isBorrowed " +
 			"FROM PublicUserGame pg, ShippingPrice sp " +
 				"LEFT JOIN pg.publicUser p " +
 				"LEFT JOIN pg.console c " +
@@ -46,7 +47,8 @@ public interface PublicUserGameRepo extends JpaRepository<PublicUserGame, Long> 
 			"pg.publicUser AS publicUser, " +
 			"pg.cost AS cost, " +
 			"pg.integrity AS integrity, " +
-			"pg.observations AS observations " +
+			"pg.observations AS observations, " +
+			"pg.isBorrowed AS isBorrowed " +
 		"FROM PublicUserGame pg " +
 			"LEFT JOIN pg.publicUser p " +
 			"LEFT JOIN pg.console c " +

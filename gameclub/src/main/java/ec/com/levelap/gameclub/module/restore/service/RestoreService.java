@@ -27,6 +27,7 @@ import ec.com.levelap.gameclub.module.settings.service.SettingService;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.repository.TransactionRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
+import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.kushki.KushkiException;
@@ -160,6 +161,11 @@ public class RestoreService {
 					restore.getPublicUserGame().getGame().getName(), restore.getLoan().getWeeks(), null, toBalance,
 					toCard);
 			transactionRepo.save(transaction);
+		} else if(shippingStatus.getCode().equals(Code.SHIPPING_DELIVERED)) {
+			PublicUserGame publicUserGame = restore.getPublicUserGame();
+			publicUserGame.setIsBorrowed(Boolean.TRUE);
+			publicUserService.getPublicUserGameRepo().save(publicUserGame);
+			restore.setPublicUserGame(publicUserGame);
 		}
 
 		restoreRepo.save(restore);

@@ -17,7 +17,7 @@
             <div class="clearfix"></div>
         </div>
         <div class="clearfix"></div>
-        
+
         <div class="col-md-4 col-xs-0"></div>
         <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
             <div class="col-md-12 completed">
@@ -53,13 +53,13 @@
                 </div>
                 <div class="col-md-12 col-xs-12 to-validate">
                     <label>Fecha de nacimiento</label>
-                    <date-selector ng-model="currentUserTemp.birthDate" ng-disabled="!isEditable" show-calendar="true" >
+                    <date-selector ng-model="currentUserTemp.birthDate" ng-disabled="!isEditable" show-calendar="true" />
                 </div>
                 <div class="col-md-12 col-xs-12 to-validate">
                     <label>Ocupaci&oacute;n</label>
                     <input class="ocupation" placeholder="Estudiante - Programador" ng-disabled="!isEditable" ng-model="currentUserTemp.profession" ng-change="onBlur()"/>
                 </div>
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-8 col-xs-12">
                     <label class="col-xs-12 col-md-4">Provincia</label>
                     <div class="col-xs-12 col-md-8">
                         <ui-select ng-model="currentUserTemp.province" theme="bootstrap" class="selector" ng-disabled="!isEditable" ng-change="findCities()">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-8 col-xs-12">
                     <label class="col-xs-12 col-md-4">Ciudad</label>
                     <div class="col-xs-12 col-md-8">
                         <ui-select ng-model="currentUserTemp.location" theme="bootstrap" class="selector" ng-disabled="!isEditable">
@@ -103,11 +103,14 @@
     <section id="ruc-section" class="row contact-ruc">
         <form role="form" on-submit="save()" novalidate>
             <div class="completed">
-                <img id="warning_img" src="img/warning-icon.svg" height="42" width="42">
-                <br>
-                <span class="col-md-12">&#191;TIENES RUC&#63;</span>
-                <h6><span class="col-md-12"><B>Si posees Ruc es obligatorio registrarlo para poder facturar todas las transacciones que se hagan. Desde pagar prestamos hasta retirar tus ganancias.</B></span></h6>
-                <div class="box cursor-pointer" ng-class="currentUserTemp.hasRuc ? 'checked' : ''" ng-click="currentUserTemp.hasRuc = !currentUserTemp.hasRuc"></div>
+                <div class="col-md-12 col-xs-12 icon-help">
+                    <img id="warning_img" src="img/warning-icon.svg" alt="warning-icon" height="42" width="42">
+                </div>
+                <span class="col-md-12 col-xs-12">&iquest;TIENES RUC?</span>
+                <span class="col-md-12 col-xs-12 ruc-help">Si posees Ruc es obligatorio registrarlo para poder facturar todas las transacciones que se hagan. Desde pagar prestamos hasta retirar tus ganancias.</span>
+                <div class="col-md-12 col-xs-12">
+                    <div class="box cursor-pointer" ng-class="currentUserTemp.hasRuc ? 'checked' : ''" ng-click="currentUserTemp.hasRuc = !currentUserTemp.hasRuc"></div>
+                </div>
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-8 form">
@@ -129,37 +132,33 @@
                     <label>TEL&#201;FONO</label>
                     <input ng-model="currentUserTemp.phoneRuc" ng-disabled="!currentUserTemp.hasRuc" required>
                 </div>
-                <div class="col-md-12 rigth" >
-                    <button type="submit" class="btn btn-secundary small" ng-disabled="!currentUserTemp.hasRuc">GUARDAR INFORMACI&#211;N</button>
-            </div>
+                <div class="col-md-12 rigth">
+                    <button type="submit" class="btn btn-secundary small" ng-if="currentUserTemp.hasRuc">GUARDAR INFORMACI&#211;N</button>
+                </div>
             </div>
 
             <div class="clearfix"></div>
         </form>
     </section>
-    <section class="contact-means">
+    <section class="row contact-means">
         <form role="form" ng-submit="changeMail()">
             <div class="completed">
                 <div class="col-md-12 text-center">
                     <span class="subtitle">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
                             <i class="gc gc-mail"></i>
-                            <!--<span>Verificaci&oacute;n de tu correo</span>-->
                             <span ng-if="currentUser.token">Verifica tu correo</span>
                             <span ng-if="!currentUser.token">Tu correo ha sido verificado</span>
                         </div>
-                        <div class="col-md-4 text-left">
-                            <!--<button type="submit" class="btn btn-primary small" ng-if="isEditableMean">Guardar info</button>
-                            <button type="button" class="btn btn-primary small" ng-click="editContactMean()">{{isEditableMean ? 'Volver' : 'Cambiar correo'}}</button>-->
-                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="clearfix"></div>
                     </span>
-                    <div class="clearfix"></div>
                     <span class="description">Verifica que tu correo electr&oacute;nico es correcto y funcional. Se te enviar&aacute; un mail con un c&oacute;digo de verificaci&oacute;n.</span>
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <div class="row form">
+            <div class="form">
                 <div class="col-xs-12 col-md-3"></div>
                 <div class="col-xs-12 col-md-6">
                     <input placeholder="XXXX@MAIL.COM" ng-model="newUsername" ng-readonly="!isEditableMean">

@@ -3,24 +3,20 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     $scope.file = {};
     let tempUserInfo;
 
-    if($rootScope.currentUser == null) {
-		$state.go('gameclub.home');
-	} else {
-        provinces.$promise.then(function(data) {
-            $scope.provinces = data;
-        });
+    provinces.$promise.then(function(data) {
+        $scope.provinces = data;
+    });
 
-        $rootScope.$watch("currentUser", function(newValue, oldValue) {
-            if (newValue != null) {
-                $scope.currentUserTemp = angular.copy($rootScope.currentUser);
-                $scope.newUsername = angular.copy($rootScope.currentUser.username);
-                if($scope.currentUserTemp.location != null) {
-                    $scope.currentUserTemp.province = $scope.currentUserTemp.location.parent;
-                    $scope.currentUserTemp.location = $scope.currentUserTemp.location;
-                }
+    $rootScope.$watch("currentUser", function(newValue, oldValue) {
+        if (newValue != null) {
+            $scope.currentUserTemp = angular.copy($rootScope.currentUser);
+            $scope.newUsername = angular.copy($rootScope.currentUser.username);
+            if($scope.currentUserTemp.location != null) {
+                $scope.currentUserTemp.province = $scope.currentUserTemp.location.parent;
+                $scope.currentUserTemp.location = $scope.currentUserTemp.location;
             }
-        });
-    }
+        }
+    });
 
     $scope.findCities = function() {
         $scope.currentUserTemp.location = null;
@@ -50,7 +46,6 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             isValid = false;
             notif.danger('Ingresa fecha de nacimiento');
         } if(younger($scope.currentUserTemp.birthDate)) {
-            console.log($scope.currentUserTemp.birthDate)
             $scope.currentUserTemp.hasRuc = true;
         } if($scope.currentUserTemp.hasRuc) {
             if(younger($scope.currentUserTemp.birthDate) && ($scope.currentUserTemp.documentRuc == null && dataRuc())){

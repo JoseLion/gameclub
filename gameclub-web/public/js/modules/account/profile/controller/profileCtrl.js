@@ -19,13 +19,13 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     });
 
     $scope.findCities = function() {
-		$scope.currentUserTemp.location = null;
-		if($scope.currentUserTemp.province != null) {
+        $scope.currentUserTemp.location = null;
+        if($scope.currentUserTemp.province != null) {
             rest("location/findChildrenOf/:code", true).get({code: $scope.currentUserTemp.province.code}, function(data) {
-				$scope.locationCities = data;
-			});
-		}
-	};
+                $scope.locationCities = data;
+            });
+        }
+    };
 
     $scope.provinceRemoved = function() {
         $scope.currentUserTemp.location = null;
@@ -263,11 +263,11 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     };
 
     $scope.chooseAvatar = function() {
-		let modal = $uibModal.open({
-			size: 'lg',
-			backdrop: 'static',
-			templateUrl: 'js/modules/account/profile/view/chooseAvatar.html',
-			controller: chooseAvatarCtrl,
+        let modal = $uibModal.open({
+            size: 'lg',
+            backdrop: 'static',
+            templateUrl: 'js/modules/account/profile/view/chooseAvatar.html',
+            controller: chooseAvatarCtrl,
             resolve: {
                 avatars: function(openRest) {
                     return openRest('avatar/findAll', true).get(null, function(data) {
@@ -275,8 +275,8 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                     });
                 }
             }
-		});
-	};
+        });
+    };
 
     let chooseAvatarCtrl = function($scope, $uibModalInstance, sweet, rest, avatars, $rootScope, getIndexOfArray) {
         $scope.isSaving = false;
@@ -286,26 +286,26 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                 $scope.indexTemp = getIndexOfArray(avatars, 'id', $rootScope.currentUser.avatar.id);
             }
         });
-		$scope.cancel = function() {
-			$uibModalInstance.close();
-		};
-		$scope.save = function() {
+        $scope.cancel = function() {
+            $uibModalInstance.close();
+        };
+        $scope.save = function() {
             $rootScope.currentUser.avatar = $scope.avatars[$scope.indexTemp];
-			sweet.save(function() {
-				rest("publicUser/save").post($rootScope.currentUser, function(data) {
-					sweet.success();
-					sweet.close();
+            sweet.save(function() {
+                rest("publicUser/save").post($rootScope.currentUser, function(data) {
+                    sweet.success();
+                    sweet.close();
                     $rootScope.currentUser = data;
-					$uibModalInstance.close(data);
-				}, function(error) {
-					sweet.error(error.data != null ? error.data.message : error);
-				});
-			});
-		};
+                    $uibModalInstance.close(data);
+                }, function(error) {
+                    sweet.error(error.data != null ? error.data.message : error);
+                });
+            });
+        };
         $scope.chooseThis = function(index) {
             $scope.indexTemp = index;
         };
-	}
+    }
 
     var getMessage = function() {
         var message = $rootScope.currentUser.token;

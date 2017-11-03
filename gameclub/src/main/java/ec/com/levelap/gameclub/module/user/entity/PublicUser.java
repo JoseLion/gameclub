@@ -149,6 +149,9 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(name="url_token", columnDefinition="VARCHAR")
 	private String urlToken;
+	
+	@Column(name="is_requesting_balance", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean isRequestingBalance = false;
 
 	@Transient
 	private Integer numberOfGames;
@@ -433,6 +436,14 @@ public class PublicUser extends BaseEntity {
 
 	public void setUrlToken(String urlToken) {
 		this.urlToken = urlToken;
+	}
+
+	public Boolean getIsRequestingBalance() {
+		return isRequestingBalance;
+	}
+
+	public void setIsRequestingBalance(Boolean isRequestingBalance) {
+		this.isRequestingBalance = isRequestingBalance;
 	}
 
 	public Integer getNumberOfGames() {

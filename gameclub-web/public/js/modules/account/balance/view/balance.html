@@ -41,7 +41,8 @@
             <div class="clearfix"></div>
 
             <div class="col-md-12 col-xs-12 button">
-                <button class="btn btn-tertiary small" ng-click="takeYourBalance()">Retira tu saldo</button>
+                <button class="btn btn-tertiary small" ng-click="takeYourBalance()" ng-disabled="currentUser.isRequestingBalance">Retira tu saldo</button>
+                <span class="request-in-progress" ng-if="currentUser.isRequestingBalance">Retiro de saldo en proceso.</span>
             </div>
             <div class="clearfix"></div>
         </div>

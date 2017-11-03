@@ -145,6 +145,7 @@ public class RestoreService {
 				Map<String, Object> kushkiSubscription = new HashMap<>();
 				kushkiSubscription.put("amount", (Double) Math.abs(totalBalanceGamer));
 				Loan loan = loanRepo.findOne(restore.getLoan().getId());
+				
 				try {
 					kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), kushkiSubscription);
 				} catch (KushkiException ex) {

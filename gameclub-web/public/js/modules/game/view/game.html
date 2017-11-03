@@ -108,7 +108,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="cross in availableGames">
-                                    <td ng-class="cross.status ? 'blue' : 'red'">{{cross.isBorrowed ? 'Disponible' : 'Prestado'}}</td>
+                                    <td ng-class="cross.status ? 'blue' : 'red'">{{!cross.isBorrowed ? 'Disponible' : 'Prestado'}}</td>
                                     <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
                                     <td>{{cross.publicUser.location.name}}</td>
                                     <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 2}}</td>
@@ -118,7 +118,7 @@
                                     </td>
                                     <td class="game-status">{{cross.integrity.name}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary small dark" ng-click="openLoanView(cross)" ng-if="isBorrowed">
+                                        <button type="button" class="btn btn-primary small dark" ng-click="openLoanView(cross)" ng-if="!cross.isBorrowed">
                                             {{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}
                                         </button>
                                     </td>
@@ -189,13 +189,18 @@
                     <div class="col-md-12 col-xs-12 information-separation">
                         <label class="title">Costo prestamo</label>
                         <span class="value big">{{loanGame.cost | currency:'$ ':2}}</span> <span class="value dark">x</span>
+                        <span class="value big">= {{loanGame.cost * loan.weeks | currency: '$ ': 2}}</span>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="col-md-12 col-xs-12">
+                        <label class="title">Tiempo prestamo</label>
                         <ui-select ng-model="loan.weeks" class="selector" ng-change="weekSelected()">
                             <ui-select-match placeholder="Semanas...">{{$select.selected}} {{$select.selected == 1 ? 'Semana' : 'Semanas'}}</ui-select-match>
                             <ui-select-choices repeat="num in [1, 2, 3, 4] | filter: $select.search">
                                 <div ng-bind-html="num + (num == 1 ? ' semana' : ' semanas') | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
-                        <span class="value big">= {{loanGame.cost * loan.weeks | currency: '$ ': 2}}</span>
                     </div>
                     <div class="clearfix"></div>
                 </div>

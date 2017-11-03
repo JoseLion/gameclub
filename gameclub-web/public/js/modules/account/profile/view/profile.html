@@ -59,7 +59,7 @@
                     <label>Ocupaci&oacute;n</label>
                     <input class="ocupation" placeholder="Estudiante - Programador" ng-disabled="!isEditable" ng-model="currentUserTemp.profession" ng-change="onBlur()"/>
                 </div>
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-8 col-xs-12">
                     <label class="col-xs-12 col-md-4">Provincia</label>
                     <div class="col-xs-12 col-md-8">
                         <ui-select ng-model="currentUserTemp.province" theme="bootstrap" class="selector" ng-disabled="!isEditable" ng-change="findCities()">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-8 col-xs-12">
                     <label class="col-xs-12 col-md-4">Ciudad</label>
                     <div class="col-xs-12 col-md-8">
                         <ui-select ng-model="currentUserTemp.location" theme="bootstrap" class="selector" ng-disabled="!isEditable">

@@ -367,6 +367,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         }
 
         Array.prototype.push.apply($scope.availableGames, data.content);
+        console.log($scope.availableGames);
         $scope.lastPage = data.last;
         currentPage = data.number;
     }

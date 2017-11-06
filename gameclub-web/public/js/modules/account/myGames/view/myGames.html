@@ -9,7 +9,7 @@
                 <div class="col-md-9">
                     <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
                     <div class="col-md-12 no-padding-left no-padding-right">
-                        <div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+                        <div class="connection">última vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
                     </div>
                 </div>
             </div>
@@ -34,12 +34,12 @@
 
                 <div class="col-md-12 col-xs-12 description">
                     <div>Juegos actualmente alquilados: <span class="dark">{{summary.borrowed}}</span></div>
-                    <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
+                    <div class="updated">última actualización: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
 
                 <div class="col-md-12 col-xs-12 description">
                     <div>Juegos por devolver: <span class="dark">{{summary.toReturn}}</span></div>
-                    <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
+                    <div class="updated">última actualización: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
             </div>
         </div>
@@ -90,7 +90,7 @@
                 <h2 class="col-md-12 title">{{myGame.game.name}}</h2>
                 <stars ng-model="myGame.game.rating"></stars>
                 <div class="col-md-12 no-padding-left no-padding-right">
-                    <button type="button" class="btn btn-primary small">Editar informaci&oacute;n</button>
+                    <button type="button" class="btn btn-primary small">Editar información</button>
                 </div>
             </div>
             <div class="col-md-3 rating text-right">
@@ -177,7 +177,7 @@
 
                 <div class="col-md-12">
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary small">Guardar informaci&oacute;n</button>
+                        <button type="submit" class="btn btn-primary small">Guardar información</button>
                     </div>
                 </div>
             </form>
@@ -203,7 +203,7 @@
             <form class="col-md-11 col-xs-12" role="form" on-submit="find()" novalidate>
                 <div class="col-md-10 col-xs-10 search-params">
                     <div class="col-md-4 col-xs-4 filter">
-                        <input placeholder="T&iacute;tulo..." ng-model="search.name" uib-typeahead="state for state in nameAutocomplete | filter:$viewValue">
+                        <input placeholder="Título..." ng-model="search.name" uib-typeahead="state for state in nameAutocomplete | filter:$viewValue">
                     </div>
                     <div class="col-md-4 col-xs-4 filter">
                         <ui-select ng-model="search.category" theme="bootstrap" class="selector">
@@ -240,10 +240,10 @@
             <img class="box-image" src="img/myGames/shipping-kit-box.svg" alt="shipping-kit-box"/>
             <h2 class="title">Solicita tu Shipping Kit</h2>
         </div>
-        <p>&iquest;Se te acabaron las cajas y fundas que ten&iacute;as o quieres renovar tus cajas y fundas Game Club?</p>
-        <p>Te env&iacute;amos un kit completo con 4 cajas, fundas, etiquetas de seguridad y un adhesivo oficial.</p>
+        <p>&iquest;Se te acabaron las cajas y fundas que tenías o quieres renovar tus cajas y fundas Game Club?</p>
+        <p>Te envíamos un kit completo con 4 cajas, fundas, etiquetas de seguridad y un adhesivo oficial.</p>
         <span class="subtitle">Tiene un costo de {{shippingKitValue | currency:'$ ':2}}.</span>
-        <span class="dark-section">Solo con nuestras cajas y fundas podr&aacute;s alquilar tus juegos.</span>
+        <span class="dark-section">Solo con nuestras cajas y fundas podrás alquilar tus juegos.</span>
         <button class="btn btn-primary" ng-click="askShippingKit()">Pedir Shipping Kit</button>
     </section>
 </div>

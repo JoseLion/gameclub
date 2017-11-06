@@ -3,11 +3,11 @@
     <section class="col-md-6 row-left signup">
         <form role="form" on-submit="signIn()" novalidate>
             <div class="col-md-12">
-                <h2 class="title game-font">Reg&iacute;strate</h2>
+                <h2 class="title game-font">Regístrate</h2>
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary-alt btn-fb" ng-click="fbSignIn()" ng-disabled="isFbSingIn">
-                    <span ng-if="!isFbSingIn">Reg&iacute;strate usando&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
+                    <span ng-if="!isFbSingIn">Regístrate usando&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
                     <loading showing="isFbSingIn"></loading>
                 </button>
             </div>
@@ -40,7 +40,7 @@
                 <input validation name="password" type="password" placeholder="Contraseña..." class="input-form" ng-model="user.password" required ng-minlength="6" ng-pattern="passRegex">
             </div>
             <div class="col-md-1 col-xs-1 image"><img src="img/contact-password.svg"
-                title="La contrase&ntilde;a debe contener&#58; m&iacute;nimo 6 caracteres por lo menos una MAY&Uacute;SCULA (A-Z)&#44; min&uacute;sculas (a-z) y por lo menos un n&uacute;mero (0-9)"/></div>
+                title="La contrase&ntilde;a debe contener&#58; mínimo 6 caracteres por lo menos una MAYúSCULA (A-Z)&#44; minúsculas (a-z) y por lo menos un número (0-9)"/></div>
             <div class="clearfix"></div>
 
             <div class="col-md-1 col-xs-0"></div>
@@ -54,11 +54,11 @@
     <section class="col-md-6 row-right login">
         <form role="form" on-submit="login()" novalidate>
             <div class="col-md-12">
-                <h2 class="title game-font">Inicia sesi&oacute;n</h2>
+                <h2 class="title game-font">Inicia sesión</h2>
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-tertiary btn-fb" ng-click="fbLogIn()" ng-disabled="isFbLogIn">
-                    <span ng-if="!isFbLogIn">Inicia tu sesi&oacute;n con&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
+                    <span ng-if="!isFbLogIn">Inicia tu sesión con&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
                     <loading showing="isFbLogIn"></loading>
                 </button>
             </div>
@@ -82,7 +82,7 @@
             <div class="col-md-1 col-xs-1"></div>
             <div class="col-md-10 col-xs-10">
                 <button type="submit" class="btn btn-tertiary login" ng-disabled="isLoginIn">
-                    <span ng-if="!isLoginIn">Iniciar sesi&oacute;n</span>
+                    <span ng-if="!isLoginIn">Iniciar sesión</span>
                     <loading showing="isLoginIn"></loading>
                 </button>
             </div>

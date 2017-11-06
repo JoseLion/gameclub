@@ -78,6 +78,10 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 				$scope.ok = function() {
 					$uibModalInstance.close();
 				}
+
+				$scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams, options) {
+					$uibModalInstance.dismiss();
+				});
 			},
 			resolve: {
 				mostPlayed: function(openRest) {

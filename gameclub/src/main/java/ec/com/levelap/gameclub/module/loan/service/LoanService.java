@@ -595,15 +595,12 @@ public class LoanService extends BaseService<Loan> {
 	// TODO
 	@SuppressWarnings("unchecked")
 	@Transactional
-	private void createFines(Loan loan)
-			throws ServletException, GeneralSecurityException, IOException, KushkiException {
-
+	private void createFines(Loan loan) throws ServletException, GeneralSecurityException, IOException, KushkiException {
 		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
 		File keyGamer = File.createTempFile("keyGamer", ".tmp");
 		FileUtils.writeByteArrayToFile(keyGamer, gamer.getPrivateKey());
 
-		PublicUser lender = publicUserService.getPublicUserRepo()
-				.findOne(loan.getPublicUserGame().getPublicUser().getId());
+		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
 		File keyLender = File.createTempFile("keyLender", ".tmp");
 		FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
 
@@ -613,7 +610,7 @@ public class LoanService extends BaseService<Loan> {
 
 		Double totalToDebit = loan.getPublicUserGame().getCost() * loan.getWeeks();
 		if (shippingStatus.getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
-			gamer = publicUserService.addToUserBalance(gamer.getId(), (loan.getCost() * loan.getWeeks()));
+			gamer = publicUserService.addToUserBalance(gamer.getId(), (loan.getCost()));
 
 			Double totalBalanceLender = lender.getShownBalance() - totalToDebit;
 			byte[] toBalance = null;

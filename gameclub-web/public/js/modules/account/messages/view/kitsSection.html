@@ -9,7 +9,7 @@
             </div>
             <div ng-if="kit.quantity > 0">
                 <span class="body">
-                    Gracias por tu compra. Ser&aacute;n debitados <span ng-if="kit.amountCardValue > 0">{{kit.amountCardValue | currency:'$ ':2}} de tu tarjeta <span ng-if="kit.amountBalanceValue > 0">y</span></span> <span ng-if="kit.amountBalanceValue > 0">{{kit.amountBalanceValue | currency:'$ ':2}} de tu balance</span>.
+                    Gracias por tu compra. Serán debitados <span ng-if="kit.amountCardValue > 0">{{kit.amountCardValue | currency:'$ ':2}} de tu tarjeta <span ng-if="kit.amountBalanceValue > 0">y</span></span> <span ng-if="kit.amountBalanceValue > 0">{{kit.amountBalanceValue | currency:'$ ':2}} de tu balance</span>.
                 </span>
                 <span class="body">
                     Enviaremos tu<span ng-if="kit.quantity > 1">s</span> Shipping Kit<span ng-if="kit.quantity > 1">s ({{kit.quantity}})</span> para que puedas seguir pidiendo y alquilando juegos, por favor confirma tu información de recepción.
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="form-row col-md-12">
-                <label class="col-md-3 control-label">Geolocalizaci&oacute;n</label>
+                <label class="col-md-3 control-label">Geolocalización</label>
                 <i class="gc gc-address cursor-pointer" ng-click="openMap(kit)" ng-if="!kit.wasConfirmed"></i>
                 <i class="gc gc-address cursor-no-drop" ng-if="kit.wasConfirmed"></i>
                 <img class="geo-check" src="/img/check.svg" ng-if="kit.geolocation != null">

@@ -9,7 +9,7 @@
 				<div class="col-md-9">
 					<h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
 					<div class="col-md-12 no-padding-left no-padding-right">
-						<div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+						<div class="connection">última vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
 					</div>
 				</div>
 			</div>
@@ -34,12 +34,12 @@
 
                 <div class="col-md-12 col-xs-12 description">
                     <div>Juegos actualmente alquilados: <span class="dark">{{summary.borrowed}}</span></div>
-                    <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
+                    <div class="updated">última actualización: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
 
                 <div class="col-md-12 col-xs-12 description">
                     <div>Juegos por devolver: <span class="dark">{{summary.toReturn}}</span></div>
-                    <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
+                    <div class="updated">última actualización: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
             </div>
 		</div>
@@ -665,7 +665,7 @@
 					<div class="welcome-amountrq col-md-12" ng-if="amountRequest.status != null">
 						<div class="date" >{{amountRequest.message.date | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="red-box medium-box" >
-								<span>Estimado {{amountRequest.publicUser.name}}, hemos realizado la transacci&oacute;n del retiro de tu saldo  por un valor de {{amountRequest.showAmount | currency: '$': 2}}. </span>
+								<span>Estimado {{amountRequest.publicUser.name}}, hemos realizado la transacción del retiro de tu saldo  por un valor de {{amountRequest.showAmount | currency: '$': 2}}. </span>
 							</div>
 							<br>
 					</div>

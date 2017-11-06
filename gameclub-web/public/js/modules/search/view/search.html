@@ -4,7 +4,7 @@
             <form class="col-xs-12 col-md-8" role="form" on-submit="find()" novalidate>
                 <div class="col-xs-12 col-md-10 search-params">
                     <div class="col-xs-12 col-md-4 filter">
-                        <input placeholder="T&iacute;tulo..." ng-model="search.name" uib-typeahead="state for state in nameAutocomplete | filter:$viewValue">
+                        <input placeholder="Título..." ng-model="search.name" uib-typeahead="state for state in nameAutocomplete | filter:$viewValue">
                     </div>
                     <div class="col-xs-12 col-md-4 filter">
                         <ui-select ng-model="search.category" theme="bootstrap" class="selector">
@@ -37,7 +37,7 @@
     </section>
     <section class="row no-result" ng-if="games.length == 0">
         <h2>Cero resultados</h2>
-        <span>Verifica la informaci&oacute;n de b&uacute;squeda y vuelve a intentarlo.</span>
+        <span>Verifica la información de búsqueda y vuelve a intentarlo.</span>
         <br/>
         <span>¿No encontraste el juego que buscabas? Contactanos a <a href="mailto:videojuegos@gameclub.com.ec">videojuegos@gameclub.com.ec</a> para cargar la ficha del juego que buscas.</span>
         <div class="separator"></div>

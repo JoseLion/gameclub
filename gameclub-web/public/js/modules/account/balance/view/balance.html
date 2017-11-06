@@ -9,7 +9,7 @@
                 <div class="col-md-9">
                     <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
                     <div class="col-md-12 no-padding-left no-padding-right">
-                        <div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+                        <div class="connection">última vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
                     </div>
                 </div>
             </div>
@@ -34,14 +34,14 @@
             </div>
             <div class="col-md-10 col-xs-8 text no-padding-left">
                 <p>Puedes canjear tu saldo por efectivo.</p>
-                <p>Se te enviar&aacute; un cheque con el valor TOTAL a tu direcci&oacute;n de elecci&oacute;n.</p><br>
-                <p class="dark">Mientras M&Aacute;S de tus juegos se alquilen,</p>
-                <p class="dark">M&Aacute;S dinero podr&aacute;s GANAR</p>
+                <p>Se te enviará un cheque con el valor TOTAL a tu dirección de elección.</p><br>
+                <p class="dark">Mientras MáS de tus juegos se alquilen,</p>
+                <p class="dark">MáS dinero podrás GANAR</p>
             </div>
             <div class="clearfix"></div>
 
             <div class="col-md-12 col-xs-12 button">
-                <button class="btn btn-tertiary small" ng-click="takeYourBalance()" ng-disabled="currentUser.isRequestingBalance">Retira tu saldo</button>
+                <button class="btn btn-tertiary small" ng-click="takeYourBalance()" ng-disabled="currentUser.isRequestingBalance || currentUser.shownBalance <= 0.0">Retira tu saldo</button>
                 <span class="request-in-progress" ng-if="currentUser.isRequestingBalance">Retiro de saldo en proceso.</span>
             </div>
             <div class="clearfix"></div>

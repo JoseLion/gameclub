@@ -1,5 +1,4 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, ciValidation, $location, $uibModal, SweetAlert) {
-
+angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, $location, $uibModal, SweetAlert) {
     $scope.file = {};
     let tempUserInfo;
     $scope.younger = false;
@@ -34,24 +33,13 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
 
     $scope.save = function() {
         let isValid = true;
-        var younger1 = false;
-        if($scope.currentUserTemp.document == null || $scope.currentUserTemp.document == '') {
-            isValid = true;
-        } else if($scope.currentUserTemp.document != null && $scope.currentUserTemp.document.length != 10 ) {
-            isValid = false;
-            notif.danger('Tu número de cédula debe tener 10 dígitos');
-        } else if(!ciValidation($scope.currentUserTemp.document)) {
-            isValid = false;
-            notif.danger('Ingresa un número de cédula válido');
-        } 
-        if($scope.currentUserTemp.birthDate == null) {
-            isValid = false;
-            notif.danger('Ingresa fecha de nacimiento');
-        } if(younger($scope.currentUserTemp.birthDate)) {
+        
+        if (younger($scope.currentUserTemp.birthDate)) {
             $scope.currentUserTemp.hasRuc = true;
-        } 
-        if($scope.currentUserTemp.hasRuc) {
-            if(younger($scope.currentUserTemp.birthDate) && ($scope.currentUserTemp.documentRuc == null && dataRuc())){
+        }
+
+        if ($scope.currentUserTemp.hasRuc) {
+            if (younger($scope.currentUserTemp.birthDate) && ($scope.currentUserTemp.documentRuc == null && dataRuc())) {
                 var str1 = 'Según tu información de contacto, eres menor de edad.\n';
                 var str2 = 'Debes obligatoriamente llenar el campo de RUC con \n';
                 var str3 = 'los datos de tu representante legal para poder continuar.\n\n';
@@ -84,43 +72,8 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                     }
                 });
             }
-        } 
-        if($scope.currentUserTemp.province != null && $scope.currentUserTemp.location == null) {
-            isValid = false;
-            notif.danger('Completa tu ciudad');
         }
-        if($scope.currentUserTemp.billingAddress == null) {
-            isValid = false;
-            notif.danger('Ingresa tu dirección');
-        }
-        if($scope.currentUserTemp.contactPhone == null) {
-            isValid = false;
-            notif.danger('Ingresa tu número de teléfono');
-        }
-        if($scope.currentUserTemp.hasRuc == true && ($scope.currentUserTemp.nameRuc == null || 
-                                                    $scope.currentUserTemp.nameRuc == "")) {
-            isValid = false;
-            notif.danger('Ingresa tu nonbre para el RUC');
-        } 
-        if($scope.currentUserTemp.hasRuc == true && $scope.currentUserTemp.documentRuc == null) {
-            isValid = false;
-            notif.danger('Ingresa tu número de RUC');
-        } else if($scope.currentUserTemp.documentRuc != null){
-            if($scope.currentUserTemp.documentRuc.length != 13 || !ciValidation($scope.currentUserTemp.documentRuc)){
-                isValid = false;
-                notif.danger('Ingresa un número de RUC válido');
-            }
-        }
-        if($scope.currentUserTemp.hasRuc == true && ($scope.currentUserTemp.addressRuc == null || 
-                                                    $scope.currentUserTemp.addressRuc == "")) {
-            isValid = false;
-            notif.danger('Ingresa tu dirección para el RUC');
-        }
-        if($scope.currentUserTemp.hasRuc == true && ($scope.currentUserTemp.phoneRuc == null ||
-                                                    $scope.currentUserTemp.phoneRuc == "")) {
-            isValid = false;
-            notif.danger('Ingresa tu número telefónico para el RUC');
-        }
+        
         if(isValid) {
             sweet.save(function() {
                 rest('publicUser/save').post($scope.currentUserTemp, function(data) {
@@ -363,5 +316,4 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     $scope.chechRuc = function(){
         console.log("entra al check: ");
     }
-
 });

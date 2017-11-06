@@ -47,13 +47,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         if($scope.currentUserTemp.birthDate == null) {
             isValid = false;
             notif.danger('Ingresa fecha de nacimiento');
-<<<<<<< HEAD
-        } 
-        if(younger($scope.currentUserTemp.birthDate)) {
-            console.log($scope.currentUserTemp.birthDate)
-=======
         } if(younger($scope.currentUserTemp.birthDate)) {
->>>>>>> Licuadora
             $scope.currentUserTemp.hasRuc = true;
         } 
         if($scope.currentUserTemp.hasRuc) {

@@ -37,9 +37,10 @@ angular.module("Gameclub").config(function config($stateProvider, $urlRouterProv
 		templateUrl: "views/common/content.html",
 		data: {displayName: "Blog"}
 	});
-}).run(function($rootScope, $state, Const, rest, $location, $anchorScroll, authenticate) {
+}).run(function($rootScope, $state, Const, rest, $location, $anchorScroll, authenticate, urlRestPath) {
 	$rootScope.$state = $state;
 	$rootScope.Const = Const;
+	$rootScope.urlRestPath = urlRestPath.url;
 
 	$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, options) {
 		if (toState.name != Const.loginState) {

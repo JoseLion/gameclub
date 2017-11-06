@@ -2,6 +2,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
 
     $scope.file = {};
     let tempUserInfo;
+    $scope.younger = false;
 
     if($rootScope.currentUser == null) {
 		$state.go('gameclub.home');
@@ -63,45 +64,34 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                 var str4 = 'Si no eres menor de edad edita tu información de contacto.';
                 var total = str1.concat(str2, str3, str4);
                 isValid = false;
-                // sweet.default(total, function() {
-                //     sweet.close();
-                // });
                 SweetAlert.swal({
-                title: "",
-                text: total,
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Soy menor de edad",
-                cancelButtonText: "Editar información",
-                closeOnConfirm: false,
-                closeOnCancel: false,
-                showLoaderOnConfirm: true
-            }, function(isConfirm) {
-                if (isConfirm) {
-                    if(!$rootScope.currentUser.hasRuc) {
-                        $state.go('gameclub.account.profile').then(function() {
-                            $location.hash('ruc-section');
-                            $anchorScroll();
-                        });
+                    title: "",
+                    text: total,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Soy menor de edad",
+                    cancelButtonText: "Editar información",
+                    closeOnConfirm: false,
+                    closeOnCancel: false,
+                    showLoaderOnConfirm: true
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        if(!$rootScope.currentUser.hasRuc) {
+                            $state.go('gameclub.account.profile').then(function() {
+                                $location.hash('ruc-section');
+                                $anchorScroll();
+                            });
+                            swal.close();
+                        }
+                    } else {
+                        $scope.currentUserTemp.hasRuc = false;
+                        $scope.younger = false;
                         swal.close();
                     }
-                } else {
-                    $scope.currentUserTemp.hasRuc = false;
-                    swal.close();
-                    // mostGame();
-                }
-            });
-            } else if(dataRuc()){
-                isValid = false;
-                notif.danger('Todos los datos para el RUC son requeridos');
-            } else if($scope.currentUserTemp.documentRuc != null ){
-                if(!ciValidation($scope.currentUserTemp.documentRuc)){
-                    isValid = false;
-                    notif.danger('Ingresa un número de RUC válido');
-                }
+                });
             }
-
-        } if($scope.currentUserTemp.province != null && $scope.currentUserTemp.location == null) {
+        } 
+        if($scope.currentUserTemp.province != null && $scope.currentUserTemp.location == null) {
             isValid = false;
             notif.danger('Completa tu ciudad');
         }
@@ -111,22 +101,29 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         }
         if($scope.currentUserTemp.contactPhone == null) {
             isValid = false;
-            notif.danger('Ingresa tu número de teléfpno');
+            notif.danger('Ingresa tu número de teléfono');
         }
-
-        if($scope.currentUserTemp.hasRuc == true && $scope.currentUserTemp.nameRuc) {
+        if($scope.currentUserTemp.hasRuc == true && ($scope.currentUserTemp.nameRuc == null || 
+                                                    $scope.currentUserTemp.nameRuc == "")) {
             isValid = false;
             notif.danger('Ingresa tu nonbre para el RUC');
-        }
-        if($scope.currentUserTemp.hasRuc == true && $scope.currentUserTemp.documentRuc) {
+        } 
+        if($scope.currentUserTemp.hasRuc == true && $scope.currentUserTemp.documentRuc == null) {
             isValid = false;
             notif.danger('Ingresa tu número de RUC');
+        } else if($scope.currentUserTemp.documentRuc != null){
+            if($scope.currentUserTemp.documentRuc.length != 13 || !ciValidation($scope.currentUserTemp.documentRuc)){
+                isValid = false;
+                notif.danger('Ingresa un número de RUC válido');
+            }
         }
-        if($scope.currentUserTemp.hasRuc == true && $scope.currentUserTemp.addressRuc) {
+        if($scope.currentUserTemp.hasRuc == true && ($scope.currentUserTemp.addressRuc == null || 
+                                                    $scope.currentUserTemp.addressRuc == "")) {
             isValid = false;
             notif.danger('Ingresa tu dirección para el RUC');
         }
-        if($scope.currentUserTemp.hasRuc == true && $scope.currentUserTemp.phoneRuc) {
+        if($scope.currentUserTemp.hasRuc == true && ($scope.currentUserTemp.phoneRuc == null ||
+                                                    $scope.currentUserTemp.phoneRuc == "")) {
             isValid = false;
             notif.danger('Ingresa tu número telefónico para el RUC');
         }
@@ -150,13 +147,14 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     };
 
     /********* Funcion para validad edad Gamer ***************/
+    $scope.younger = false;
     function younger(birthDay){
         var date = new Date();
         var dateB = new Date(birthDay);
         var age = date.getFullYear() - dateB.getFullYear();
         var month = date.getMonth() - dateB.getMonth();
         if (month < 0 || (month === 0 && date.getDate() < dateB.getDate())) {age--;}
-        if (age<18){return true;}else{return false;}
+        if (age<18){$scope.younger = true;return true;}else{$scope.younger = false;return false;}
     }
 
     function dataRuc () {
@@ -170,16 +168,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         }
     }
 
-    $scope.saveRuc = function() {
-        let isValid = true;
-        if(dataRuc()) {
-            isValid = false;
-            notif.danger('Datos para el RUC incorrectos');
-        }
-        if(isValid) {
-             $scope.save();
-        }
-    };
+    
     $scope.changeMail = function() {
         let isValid = true;
         let emailValidation = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

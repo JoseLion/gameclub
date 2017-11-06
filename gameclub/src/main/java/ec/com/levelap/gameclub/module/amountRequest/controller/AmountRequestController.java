@@ -1,17 +1,22 @@
 package ec.com.levelap.gameclub.module.amountRequest.controller;
 
 
+import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.com.levelap.commons.archive.Archive;
+import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.service.AmountRequestService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -30,6 +37,9 @@ public class AmountRequestController {
 	
 	@Autowired
 	private AmountRequestService amountRequestService;
+	
+	@Autowired
+	DocumentService document;
 	
 	@RequestMapping(value="requestBalance", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<PublicUser> requestBalance(@RequestPart AmountRequest request, @RequestPart MultipartFile identityPhoto, @RequestPart(required=false) MultipartFile billPhoto) throws ServletException, IOException, GeneralSecurityException {
@@ -64,6 +74,31 @@ public class AmountRequestController {
 		return new ResponseEntity<AmountRequest>(amountRequest, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="downloadIdentityPhoto/{id}", method=RequestMethod.GET)
+	public void downloadIdentityPhoto(@PathVariable Long id, HttpServletResponse response) throws ServletException, IOException {
+		AmountRequest amountRequest = amountRequestService.getAmountRequesteRepo().findOne(id);
+		Archive archive = amountRequestService.getAmountRequesteRepo().findArchive(amountRequest.getIdentityPhoto().getId());
+		response.setContentType(archive.getType());
+		response.setHeader("Content-Disposition", String.format("inline; filename=\"" + archive.getName() +"\""));
+		
+		InputStream inputStream = new BufferedInputStream(document.getFile(archive.getName(), archive.getModule()));
+		FileCopyUtils.copy(inputStream, response.getOutputStream());
+	}
+	
+	@RequestMapping(value="downloadBillPhoto/{id}", method=RequestMethod.GET)
+	public void downloadBillPhoto(@PathVariable Long id, HttpServletResponse response) throws ServletException, IOException {
+		AmountRequest amountRequest = amountRequestService.getAmountRequesteRepo().findOne(id);
+		
+		if(amountRequest.getBillPhoto() != null) {
+			Archive archive = amountRequestService.getAmountRequesteRepo().findArchive(amountRequest.getBillPhoto().getId());
+			response.setContentType(archive.getType());
+			response.setHeader("Content-Disposition", String.format("inline; filename=\"" + archive.getName() +"\""));
+				
+			InputStream inputStream = new BufferedInputStream(document.getFile(archive.getName(), archive.getModule()));
+			FileCopyUtils.copy(inputStream, response.getOutputStream());
+		} 
+		
+	}
 	private static class Search {
 		public String name = "";
 		

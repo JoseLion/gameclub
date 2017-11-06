@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 
 @Repository
@@ -29,4 +30,7 @@ public interface AmountRequestRepo extends JpaRepository<AmountRequest, Long> {
 												  @Param("startDate") Date startDate,
 												  @Param("endDate") Date endDate
 												  );
+	
+	@Query("SELECT a FROM Archive a WHERE a.id=:id")
+	public Archive findArchive(@Param("id") Long id);
 }

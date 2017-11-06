@@ -44,7 +44,7 @@ public class AmountRequest extends BaseEntity{
 	private Catalog requestStatus;
 	
 	@JsonIgnore
-	@Column(name = "amount")
+	@Column
 	private byte[] amount;
 	
 	@Column(name="account_full_name", nullable=false, columnDefinition="VARCHAR")

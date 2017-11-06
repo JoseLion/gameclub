@@ -8,9 +8,7 @@ angular.module('AmountRequest').controller('AmountRequestCtrl', function($scope,
 
     $scope.openFileBrowser = function(id) {
         setTimeout(function() {
-            $scope.$apply(function() {
-                angular.element('#' + id).trigger('click');
-            });
+            angular.element('#' + id).trigger('click');
         }, 0);
     }
 
@@ -101,6 +99,8 @@ angular.module('AmountRequest').controller('AmountRequestCtrl', function($scope,
                         $state.go("gameclub.account.balance");
                         swal.close();
                     });
+                }, function(error) {
+                    swal.close();
                 });
             });
         }

@@ -36,7 +36,7 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game section.header .rating .category img{width:100%;height:auto;padding:15%;}
 #game section.header .rating>div{margin-bottom:1em;}
 
-#game section.information{color:@color-secundary;background:@color-tertiary-alt;}
+#game section.information{color:@color-secundary;background:@color-tertiary-alt;padding-bottom:1em;}
 #game section.information .data .subtitle{color:@color-primary-alt;padding-left:1.5em;font-family:@font-family-jaapokki;font-size:1.4em;text-transform:uppercase;position:relative;margin-bottom:1em;}
 #game section.information .data .subtitle::after{content:"";position:absolute;width:3em;left:0;bottom:0;border-bottom:2px solid @color-primary-alt;}
 #game section.information .data .subtitle span.red{color:@color-secundary;font-family:@font-family-josefinsans;font-size:0.7em;font-weight:700;}
@@ -61,9 +61,11 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game section.games .games-availables{padding:10px;border:2px solid @color-primary;background:transparent;margin-bottom:1%;}
 #game section.games .games-availables .table-container{background:@color-tertiary;padding:5px;}
 #game section.games .games-availables .table-container table{border:none;color:@color-primary;text-transform:uppercase;font-size:0.8em;background:transparent;}
-#game section.games .games-availables .table-container table th,#game section.games .games-availables .table-container table td{padding:5px;text-align:center;border-right:2px solid @color-tertiary-alt;border-bottom:2px solid @color-tertiary-alt;}
+#game section.games .games-availables .table-container table th,
+#game section.games .games-availables .table-container table td{padding:5px;text-align:center;border-right:2px solid @color-tertiary-alt;border-bottom:2px solid @color-tertiary-alt;}
 #game section.games .games-availables .table-container table th{border-bottom:2px solid @color-secundary;}
-#game section.games .games-availables .table-container table th:last-child,#game section.games .games-availables .table-container table td:last-child{border-right:none;}
+#game section.games .games-availables .table-container table th:last-child,
+#game section.games .games-availables .table-container table td:last-child{border-right:none;}
 #game section.games .games-availables .table-container table tr:last-child td{border-bottom:none;}
 #game section.games .games-availables .table-container table tr td.blue{color:@color-primary-alt;}
 #game section.games .games-availables .table-container table tr td.red{color:@color-secundary;}
@@ -74,8 +76,7 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 -webkit-background-clip:text;}
 #game section.games .games-availables .table-container table tr td img{height:1em;}
 #game section.games .games-availables .table-container table tr td button.dark{background:@color-primary;color:@color-tertiary;white-space:normal;font-weight:400;font-size:0.6em;}
-#game section.games .filters{margin-bottom:-1%;}
-#game section.games .filters li{display:inline-block;width:2em;height:2em;background:@color-primary;position:relative;text-align:center;}
+#game section.games .filters li{display:inline-table;width:2em;height:2em;background:@color-primary;position:relative;text-align:center;}
 #game section.games .filters li::before{content:"";position:absolute;left:-1px;top:20%;bottom:20%;border-left:2px solid @color-secundary-65;}
 #game section.games .filters li:first-child::before{border:none;}
 #game section.games .filters li:last-child::before{border:none;}
@@ -122,61 +123,7 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #game section.games .loan-view .final-costs span.big-value{color:@color-primary;font-size:2.4em;text-transform:uppercase;margin-left:3%;}
 #game section.games .loan-view .final-costs span.big-value .bigger{font-size:2.7em;}
 #game section.games .loan-view .final-costs .foot-note{color:@color-tertiary;font-size:1.2em;margin-top:-8px;}
+#game section.games .loan-view .rating-container{display:inline-block;}
 
 #game section.loan-footer {background-color:@color-tertiary;padding:1.5% 0%;}
 #game section.loan-footer button.btn-secundary{color:@color-secundary;}
-
-// #game section.games .final-shipping{margin-top:4%;margin-bottom:3%;}
-// #game section.games .final-shipping h1.title{font-weight:bold;text-transform:uppercase;font-size:1.2em;color:@color-tertiary;margin-bottom: -2.5%;}
-// #game section.games .final-shipping h1.title1{font-weight:bold;text-transform:lowercase;font-size:1.2em;color:@color-tertiary;}
-// #game section.games .final-shipping .title-upper{font-weight:bold;font-size:1.2em;color:@color-tertiary;}
-
-
-
-// #game section.games .loan-view div.col-md-9{display:-webkit-box;padding-left:2%;margin-bottom:1.5%;}
-//#game section.games .loan-view label{text-transform:uppercase;font-size:1.2em;color:rgb(7,20,40);}
-// #game section.games .loan-view .value{display:table-cell;color:#FFFFFF;text-transform:uppercase;padding-left:15px;font-size:1.1em;}
-// #game section.games .subtitle.top-space{margin-top:3%;}
-// #game section.games .loan-view div.loan-cost{display:initial;}
-// #game section.games .loan-view div.loan-cost .value{display:initial;}
-// #game section.games .loan-view div.loan-cost .value.big{font-weight:bold;font-size:1.8em;}
-// #game section.games .loan-view div.loan-cost .value.black{font-weight:bold;color:rgb(7,20,40);}
-
-
-
-
-// #game section.games .payment-view{background-color:@color-primary-alt; padding:2% 0%;display:none;}
-// #game section.games .payment-view label{text-transform:uppercase;color:white;}
-// #game section.games .payment-view div .box{transform: translate(0%, 7px);cursor:pointer;position:relative;width:1.5em;height:1.5em;display:inline-block;border:3px solid @color-tertiary;margin-right:3%;color:@color-primary;}
-// #game section.games .payment-view div .box.checked::after{content:"";background:url("../img/check.svg") no-repeat center center;position:absolute;left:1px;bottom:-2px;background-size:100%;width:1.5em;height:1.5em;}
-// #game section.games .payment-view input.card-showcase{background-color:@color-tertiary;padding:5px 2%;border-radius:7px;text-align:center;font-weight:700;font-size:0.7em;width:50%}
-// #game section.games .payment-view button.remove-card{font-size:0.6em;padding:5px 2%;background-color:@color-primary;margin:0;margin-left:3%;border:transparent;}
-// #game section.games .payment-view .left-decoration{border-left:3px solid white;}
-
-// #game section.games .payment-view .new-payment{padding:0;}
-// #game section.games .payment-view .new-payment .name,#game section.games .payment-view .new-payment .card-number,#game section.games .payment-view .new-payment .expiry,#game section.games .payment-view .new-payment .cvc
-// {border-bottom:1px solid @color-tertiary;padding:1% 10% 0;margin:1% 0;}
-// #game section.games .payment-view .new-payment input::-webkit-input-placeholder{color:@color-primary-40;}
-// #game section.games .payment-view .new-payment input::-moz-placeholder{color:@color-primary-40;}
-// #game section.games .payment-view .new-payment input::-ms-input-placeholder{color:@color-primary-40;}
-// #game section.games .payment-view .new-payment div.name,#game section.games .payment-view .new-payment div.card-number,#game section.games .payment-view .new-payment div.expiry
-// {padding-right:0;}
-// #game section.games .payment-view .new-payment div.name::before,#game section.games .payment-view .new-payment div.card-number::before,#game section.games .payment-view .new-payment div.expiry::before,#game section.games .payment-view .new-payment div.cvc::before
-// {font-family:gameclub;position:absolute;left:0.5em;bottom:0;color:white;}
-// #game section.games .payment-view .new-payment div.cvc::after{font-family:gameclub;position:absolute;right:0.5em;bottom:0;color:white;}
-// #game section.games .payment-view .new-payment div.name>div{padding-right:0;}
-// #game section.games .payment-view .new-payment div.name>div:first-child{padding-left:0;}
-// #game section.games .payment-view .new-payment div.name::before{content:"\E019";}
-// #game section.games .payment-view .new-payment div.card-number::before{content:"\E006";}
-// #game section.games .payment-view .new-payment div.expiry{margin-right:1em;}
-// #game section.games .payment-view .new-payment div.expiry::before{content:"\E005";}
-// #game section.games .payment-view .new-payment div.cvc::before{content:"\E014";}
-// #game section.games .payment-view .new-payment div.cvc::after{content:"\E011";}
-// #game section.games .payment-view .new-payment button{padding:1% 12%;font-size:0.65em;margin:4% auto 1%;}
-
-// #game section.games .payment-view h1.title{margin-top: 1em;margin-left: 0.7em;text-transform:uppercase;font-size:1.6em;font-family:@font-family-josefinsans;color:@color-tertiary;}
-// #game section.games .payment-view .sub-title h2{margin-top: 0%;text-transform:uppercase;font-size:1em;font-family:@font-family-josefinsans;color:@color-tertiary;margin-right: -10%;}
-// #game section.games .payment-view h3.int-number-balance{font-weight: bold;margin-top: -47px;margin-bottom: 19px;margin-left: 22%;font-size:1.6em;font-family:@font-family-josefinsans;color:@color-primary;}
-// #game section.games .payment-view h3.flb-number-balance{font-weight: bold;margin-top: -40px;margin-bottom: 19px;margin-left: 27%;font-size:1em;font-family:@font-family-josefinsans;color:@color-primary;}
-// #game section.games .payment-view .sub-title h3.int-number-slider{font-weight: bold;margin-top: 3px; margin-bottom: -22px;margin-left: 22%;font-size:1.6em;font-family:@font-family-josefinsans;color:@color-primary;}
-// #game section.games .payment-view h3.flb-number-slider{font-weight: bold;margin-top: -40px;margin-bottom: 19px;margin-left: 27%;font-size:1em;font-family:@font-family-josefinsans;color:@color-primary;}

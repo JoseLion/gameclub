@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,5 +32,11 @@ public class SettingOpenController {
 			settingsList.put(setting.getCode(), setting);
 		}
 		return new ResponseEntity<Map<String, Setting>>(settingsList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="findByCode/{code}", method=RequestMethod.GET)
+	public ResponseEntity<?> findByCode(@PathVariable String code) throws ServletException {
+		Setting setting = settingsService.getSettingsRepo().findByCode(code);
+		return new ResponseEntity<>(setting, HttpStatus.OK);
 	}
 }

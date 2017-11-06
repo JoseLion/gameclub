@@ -135,9 +135,10 @@ public class LoanService extends BaseService<Loan> {
 
 		if (wasAccepted) {
 			loan.setAcceptedDate(new Date());
-
-			loan.getPublicUserGame().setIsBorrowed(true);
-			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
+			PublicUserGame publicUserGame = loan.getPublicUserGame();
+			publicUserGame.setIsBorrowed(Boolean.TRUE);
+			publicUserGame = publicUserGameRepo.save(publicUserGame);
+			loan.setPublicUserGame(publicUserGame);
 		}
 
 		loan = loanRepo.save(loan);
@@ -218,6 +219,7 @@ public class LoanService extends BaseService<Loan> {
 	@Transactional
 	public LoanLite save(Loan loan) throws ServletException, GeneralSecurityException, IOException, KushkiException {
 		Loan previous = loanRepo.findOne(loan.getId());
+		MessageRepo repoMessage = ApplicationContextHolder.getContext().getBean(MessageRepo.class);
 
 		if (!loan.getShippingStatus().equals(previous.getShippingStatus()) || (loan.getShippingNote() != null
 				&& !loan.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
@@ -259,13 +261,17 @@ public class LoanService extends BaseService<Loan> {
 						public void run() {
 							Catalog noTracking = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
 							Restore restore = new Restore(taskLoan);
+							taskLoan.getLenderMessage().setRead(Boolean.FALSE);
 							restore.setLenderMessage(taskLoan.getLenderMessage());
+							taskLoan.getGamerMessage().setRead(Boolean.FALSE);
 							restore.setGamerMessage(taskLoan.getGamerMessage());
 							restore.setPublicUserGame(taskLoan.getPublicUserGame());
 							restore.setGamer(taskLoan.getGamer());
 							restore.setShippingStatus(noTracking);
 
 							restoreRepo.save(restore);
+							repoMessage.save(restore.getLoan().getGamerMessage());
+							repoMessage.save(restore.getLoan().getLenderMessage());
 
 							try {
 								sendRemindingMails(taskLoan, false);
@@ -366,16 +372,18 @@ public class LoanService extends BaseService<Loan> {
 							public void run() {
 								Catalog noTracking = repoCatalog.findByCode(Code.SHIPPING_NO_TRACKING);
 								Restore restore = new Restore(loan);
+								restore.getGamerMessage().setRead(Boolean.FALSE);
 								restore.setLenderMessage(loan.getLenderMessage());
+								
+								restore.getLenderMessage().setRead(Boolean.FALSE);
 								restore.setGamerMessage(loan.getGamerMessage());
 								restore.setPublicUserGame(loan.getPublicUserGame());
 								restore.setGamer(loan.getGamer());
 								restore.setShippingStatus(noTracking);
 
+								
 								repoRestore.save(restore);
-								restore.getGamerMessage().setRead(Boolean.FALSE);
 								repoMessage.save(restore.getLoan().getGamerMessage());
-								restore.getLenderMessage().setRead(Boolean.FALSE);
 								repoMessage.save(restore.getLoan().getLenderMessage());
 
 								try {

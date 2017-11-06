@@ -9,7 +9,7 @@
                 <div class="col-md-9">
                     <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
                     <div class="col-md-12 no-padding-left no-padding-right">
-                        <div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+                        <div class="connection">última vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <div class="col-md-2 col-xs-0"></div>
             <div class="col-md-4 col-xs-12">
                 <div class="col-md-12 col-xs-12">
-                    <h2 class="subtitle">N&deg; de Kits</h2>
+                    <h2 class="subtitle">Nº de Kits</h2>
                     <span class="value">{{quantity.value | currency:'':0}}</span>
                 </div>
                 <div class="col-md-2 col-xs-0"></div>
@@ -61,7 +61,7 @@
     <form role="form" class="form-horizontal" novalidate on-submit="completePayment()">
         <payment-method total-balance="currentUser.shownBalance" payment-methods="currentUser.paymentMethods" balance="balance" total-to-pay="totalToPay" card-selected="cardSelected" class="row" />
         <section class="row submit-button">
-            <button type="submit" class="btn btn-secundary">Ordenar y confirmar direcci&oacute;n de entrega</button>
+            <button type="submit" class="btn btn-secundary">Ordenar y confirmar dirección de entrega</button>
         </section>
     </form>
 </div>

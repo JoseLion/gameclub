@@ -44,7 +44,7 @@
     <section class="row information">
         <div class="col-md-9 data">
             <div class="description ">
-                <span class="col-md-12 subtitle">Descripci&oacute;n:</span>
+                <span class="col-md-12 subtitle">Descripción:</span>
                 <p ng-if="!showMore">{{game.description | limitTo: 400}}...</p>
                 <p ng-if="showMore">{{game.description}}</p>
                 <div class="text-right" ng-if="game.description.length > 400">
@@ -66,7 +66,7 @@
                             <stars ng-model="cross.rating" solid="light"></stars>
                         </div>
                         <div class="col-md-12">
-                            <a ng-href="{{cross.url}}" target="_blank">Leer m&aacute;s</a>
+                            <a ng-href="{{cross.url}}" target="_blank">Leer más</a>
                         </div>
                         <div class="clearfix"></div>
                     </li>
@@ -238,7 +238,7 @@
                         <div class="col-md-9 col-xs-12 information-separation">
                             <label class="icon" ng-click="openMapsModal()"><i class="gc gc-address"></i></label>
                             <img class="geo-check" src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
-                            <input placeholder="Aprieta el bot&oacute;n de GEOLOCALIZACI&Oacute;N" readonly="true" disabled="true" />
+                            <input placeholder="Aprieta el botón de GEOLOCALIZACIóN" readonly="true" disabled="true" />
                         </div>
                         <div class="clearfix"></div>
 
@@ -258,7 +258,7 @@
 
                     <div class="col-md-12 col-xs-12 information-separation">
                         <label class="title dark">Costo shipping = {{loanGame.shippingCost * 2.0 | currency:'$ ':2}}</label>
-                        <span class="title-help">(Ida y vuelta, incluye seguro de env&iacute;o)</span>
+                        <span class="title-help">(Ida y vuelta, incluye seguro de envío)</span>
                     </div>
                     <div class="clearfix"></div>
                 </div>

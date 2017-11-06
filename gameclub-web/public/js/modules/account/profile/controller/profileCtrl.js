@@ -1,4 +1,4 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, ciValidation, $location, $uibModal) {
+angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, $location, $uibModal) {
 
     $scope.file = {};
     let tempUserInfo;
@@ -33,22 +33,13 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
 
     $scope.save = function() {
         let isValid = true;
-        var younger1 = false;
-        if($scope.currentUserTemp.document == null || $scope.currentUserTemp.document == '') {
-            isValid = true;
-        } else if($scope.currentUserTemp.document != null && $scope.currentUserTemp.document.length != 10 ) {
-            isValid = false;
-            notif.danger('Tu número de cédula debe tener 10 dígitos');
-        } else if(!ciValidation($scope.currentUserTemp.document)) {
-            isValid = false;
-            notif.danger('Ingresa un número de cédula válido');
-        } if($scope.currentUserTemp.birthDate == null) {
-            isValid = false;
-            notif.danger('Ingresa fecha de nacimiento');
-        } if(younger($scope.currentUserTemp.birthDate)) {
+        
+        if (younger($scope.currentUserTemp.birthDate)) {
             $scope.currentUserTemp.hasRuc = true;
-        } if($scope.currentUserTemp.hasRuc) {
-            if(younger($scope.currentUserTemp.birthDate) && ($scope.currentUserTemp.documentRuc == null && dataRuc())){
+        }
+
+        if ($scope.currentUserTemp.hasRuc) {
+            if (younger($scope.currentUserTemp.birthDate) && ($scope.currentUserTemp.documentRuc == null && dataRuc())) {
                 var str1 = 'Según tu información de contacto, eres menor de edad.\n';
                 var str2 = 'Debes obligatoriamente llenar el campo de RUC con \n';
                 var str3 = 'los datos de tu representante legal para poder continuar.\n\n';
@@ -58,20 +49,9 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                 sweet.default(total, function() {
                     sweet.close();
                 });
-            } else if(dataRuc()){
-                isValid = false;
-                notif.danger('Todos los datos para el RUC son requeridos');
-            } else if($scope.currentUserTemp.documentRuc != null ){
-                if(!ciValidation($scope.currentUserTemp.documentRuc)){
-                    isValid = false;
-                    notif.danger('Ingresa un número de RUC válido');
-                }
             }
-
-        } if($scope.currentUserTemp.province != null && $scope.currentUserTemp.location == null) {
-            isValid = false;
-            notif.danger('Completa tu ciudad');
         }
+        
         if(isValid) {
             sweet.save(function() {
                 rest('publicUser/save').post($scope.currentUserTemp, function(data) {

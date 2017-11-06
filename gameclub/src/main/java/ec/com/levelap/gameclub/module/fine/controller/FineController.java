@@ -40,14 +40,12 @@ public class FineController {
 	}
 
 	@RequestMapping(value = "notApplyFine", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> save(@RequestBody Fine fineObj)
-			throws ServletException, IOException, GeneralSecurityException {
+	public ResponseEntity<?> save(@RequestBody Fine fineObj) throws ServletException, IOException, GeneralSecurityException {
 		return fineService.save(fineObj, Boolean.FALSE);
 	}
 
 	@RequestMapping(value = "applyFine", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> saveFineBalance(@RequestBody Fine fineObj)
-			throws ServletException, IOException, GeneralSecurityException {
+	public ResponseEntity<?> saveFineBalance(@RequestBody Fine fineObj) throws ServletException, IOException, GeneralSecurityException {
 		return fineService.save(fineObj, Boolean.TRUE);
 	}
 

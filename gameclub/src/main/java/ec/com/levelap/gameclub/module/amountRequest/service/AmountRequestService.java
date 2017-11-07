@@ -103,6 +103,7 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 		File key = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
 		if(amountRequest.getRequestStatus().getCode().equals("PGSPGD") && user.getShownBalance() > 0) {
+			user.setIsRequestingBalance(Boolean.FALSE);
 			amountRequest.setPublicUser(user);
 			amountRequest.setAmount(user.getBalance());
 			transaction.setDebitBalanceEnc(user.getBalance());

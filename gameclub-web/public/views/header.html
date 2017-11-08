@@ -76,8 +76,8 @@
             <span class="label label-default notification visible-xs" ng-if="currentUser.unreadMessages > 0">{{currentUser.unreadMessages}}</span>
         </div>
         <div ng-if="currentUser" class="col-md-12 col-xs-12 text-right coins hidden-xs">
-            <span class="text">{{currentUser.shownBalance | currency: '$': 2}}</span>
             <i class="gc gc-usd-o"></i>
+            <span class="text">{{currentUser.shownBalance | currency: '': 2}}</span>
         </div>
         <div class="clearfix"></div>
     </section>

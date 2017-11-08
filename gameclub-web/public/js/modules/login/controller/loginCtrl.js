@@ -56,6 +56,12 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				}
 			}
 		});
+
+		modal.result.then(function(success) {
+			if (success) {
+				$scope.user = {};
+			}
+		});
 	};
 
 	$scope.login = function() {

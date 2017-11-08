@@ -58,8 +58,7 @@ public class FineService extends BaseService<Fine> {
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public ResponseEntity<?> save(Fine fineObj, Boolean isApply)
-			throws ServletException, IOException, GeneralSecurityException {
+	public ResponseEntity<?> save(Fine fineObj, Boolean isApply) throws ServletException, IOException, GeneralSecurityException {
 		fineObj = fineRepo.findOne(fineObj.getId());
 		fineObj.setApply(isApply);
 		if (isApply) {

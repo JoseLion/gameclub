@@ -102,15 +102,18 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 		
 		File key = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
-		if(amountRequest.getRequestStatus().getCode().equals("PGSPGD") && user.getShownBalance() > 0) {
-			user.setIsRequestingBalance(Boolean.FALSE);
+		if(amountRequest.getRequestStatus().getCode().equals(Code.PAYMENT_PAYED) && user.getShownBalance() > 0) {
 			amountRequest.setPublicUser(user);
 			amountRequest.setAmount(user.getBalance());
 			transaction.setDebitBalanceEnc(user.getBalance());
 			transaction.setOwner(amountRequest.getPublicUser());
 			transaction.setTransaction("Retiro Balance");
 			transaction = transactionRepo.save(transaction);
+			
 			user = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), user.getShownBalance());
+			user.setIsRequestingBalance(Boolean.FALSE);
+			user = publicUserService.getPublicUserRepo().save(user);
+			
 			message.setIsLoan(false);
 			message.setIsLoan(Boolean.FALSE);
 			message.setIsFine(Boolean.FALSE);
@@ -121,7 +124,7 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 			message = messageRepo.save(message);
 			
 			amountRequest.setMessage(message);
-		} else if(amountRequest.getRequestStatus().getCode().equals("PGSNVS") || amountRequest.getRequestStatus().getCode().equals("PGSPRS")){
+		} else if(amountRequest.getRequestStatus().getCode().equals(Code.PAYMENT_NEW_REQUEST) || amountRequest.getRequestStatus().getCode().equals("PGSPRS")){
 			if(user.getShownBalance() > 0) {
 				amountRequest.setAmount(cryptoService.encrypt(Double.toString(user.getShownBalance()), key));
 			} else {

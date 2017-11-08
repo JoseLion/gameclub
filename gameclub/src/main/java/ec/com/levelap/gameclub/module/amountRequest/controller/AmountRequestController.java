@@ -2,7 +2,6 @@ package ec.com.levelap.gameclub.module.amountRequest.controller;
 
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
@@ -100,6 +99,7 @@ public class AmountRequestController {
 		
 	}
 	private static class Search {
+		
 		public String name = "";
 		
 		public String lastName = "";

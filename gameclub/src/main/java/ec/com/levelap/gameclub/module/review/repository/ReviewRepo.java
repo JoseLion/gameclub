@@ -17,13 +17,18 @@ public interface ReviewRepo extends JpaRepository<Review, Long> {
 			"ORDER BY r.creationDate DESC")
 	public Page<Review> findReviewsOfUser(@Param("id") Long id, Pageable page);
 	
-	public Long countByGamerAcceptedIsTrueAndLoanGamerId(Long gamerId);
+	public Long countByLoanGamerId(Long gamerId);
 	
-	public Long countByLenderAcceptedIsTrueAndLoanPublicUserGamePublicUserId(Long lenderId);
+	public Long countByLoanPublicUserGamePublicUserId(Long lenderId);
 	
-	@Query(value="SELECT AVG(r.gamer_score) FROM gameclub.review r LEFT JOIN gameclub.loan l ON r.loan=l.id WHERE r.gamer_accepted=TRUE AND l.gamer=?1", nativeQuery=true)
-	public Double getGamerAverageScore(Long gamerId);
+	@Query(value="SELECT (CASE WHEN AVG(r.gamer_score) IS NOT NULL THEN AVG(r.gamer_score) ELSE 0.0 END) FROM gameclub.review r " +
+					"LEFT JOIN gameclub.loan l ON r.loan=l.id " +
+				"WHERE l.gamer=?1", nativeQuery=true)
+	public Double getGamingAverageOfUser(Long gamerId);
 	
-	@Query(value="SELECT AVG(r.lender_score) FROM gameclub.review r LEFT JOIN gameclub.loan l ON r.loan=l.id LEFT JOIN gameclub.public_user_game pg ON l.public_user_game=pg.id WHERE r.lender_accepted=TRUE AND pg.public_user=?1", nativeQuery=true)
-	public Double getLenderAverageScore(Long lenderId);
+	@Query(value="SELECT (CASE WHEN AVG(r.lender_score) IS NOT NULL THEN AVG(r.lender_score) ELSE 0.0 END) FROM gameclub.review r " +
+					"LEFT JOIN gameclub.loan l ON r.loan=l.id " +
+					"LEFT JOIN gameclub.public_user_game pg ON l.public_user_game=pg.id " +
+				"WHERE pg.public_user=?1", nativeQuery=true)
+	public Double getLendingAverageOfUser(Long lenderId);
 }

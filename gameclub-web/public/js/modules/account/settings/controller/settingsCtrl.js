@@ -10,7 +10,7 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
     $scope.numberCards = false;
     $scope.card = true;
 
-    if($rootScope.currentUser != null && $rootScope.currentUser.paymentMethods.length>0){
+    if ($rootScope.currentUser != null && $rootScope.currentUser.paymentMethods.length>0){
         var j = 0;
         for(i = 0; i < $rootScope.currentUser.paymentMethods.length; i++){
             j++;
@@ -18,7 +18,6 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
                 $scope.numberCards = true;
                 $scope.card = false;
             }
-            // j++;
         }
     } else{
         $scope.numberCards = false;

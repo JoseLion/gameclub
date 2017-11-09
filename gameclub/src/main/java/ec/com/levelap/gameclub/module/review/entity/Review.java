@@ -29,8 +29,8 @@ public class Review extends BaseEntity {
 	@JoinColumn(name="loan", foreignKey=@ForeignKey(name="loan_fk"))
 	private Loan loan;
 	
-	@Column(name="gamer_reviwed_on")
-	private Date gamerReviwedOn;
+	@Column(name="gamer_review_date")
+	private Date gamerReviewDate;
 	
 	@Column(name="gamer_score")
 	private Integer gamerScore;
@@ -38,23 +38,14 @@ public class Review extends BaseEntity {
 	@Column(name="gamer_comment", columnDefinition="VARCHAR")
 	private String gamerComment;
 	
-	@Column(name="lender_reviwed_on")
-	private Date lenderReviwedOn;
+	@Column(name="lender_review_date")
+	private Date lenderReviewDate;
 	
 	@Column(name="lender_score")
 	private Integer lenderScore;
 	
 	@Column(name="lender_comment", columnDefinition="VARCHAR")
 	private String lenderComment;
-	
-	@Column(name="gamer_accepted")
-	private Boolean gamerAccepted;
-	
-	@Column(name="lender_accepted")
-	private Boolean lenderAccepted;
-	
-	@Transient
-	private Boolean finished = false;
 	
 	@Transient
 	private PublicUser gamer;
@@ -73,12 +64,12 @@ public class Review extends BaseEntity {
 		this.loan = loan;
 	}
 
-	public Date getGamerReviwedOn() {
-		return gamerReviwedOn;
+	public Date getGamerReviewDate() {
+		return gamerReviewDate;
 	}
 
-	public void setGamerReviwedOn(Date gamerReviwedOn) {
-		this.gamerReviwedOn = gamerReviwedOn;
+	public void setGamerReviewDate(Date gamerReviewDate) {
+		this.gamerReviewDate = gamerReviewDate;
 	}
 
 	public Integer getGamerScore() {
@@ -97,12 +88,12 @@ public class Review extends BaseEntity {
 		this.gamerComment = gamerComment;
 	}
 
-	public Date getLenderReviwedOn() {
-		return lenderReviwedOn;
+	public Date getLenderReviewDate() {
+		return lenderReviewDate;
 	}
 
-	public void setLenderReviwedOn(Date lenderReviwedOn) {
-		this.lenderReviwedOn = lenderReviwedOn;
+	public void setLenderReviewDate(Date lenderReviewDate) {
+		this.lenderReviewDate = lenderReviewDate;
 	}
 
 	public Integer getLenderScore() {
@@ -119,34 +110,6 @@ public class Review extends BaseEntity {
 
 	public void setLenderComment(String lenderComment) {
 		this.lenderComment = lenderComment;
-	}
-
-	public Boolean getGamerAccepted() {
-		return gamerAccepted;
-	}
-
-	public void setGamerAccepted(Boolean gamerAccepted) {
-		this.gamerAccepted = gamerAccepted;
-	}
-
-	public Boolean getLenderAccepted() {
-		return lenderAccepted;
-	}
-
-	public void setLenderAccepted(Boolean lenderAccepted) {
-		this.lenderAccepted = lenderAccepted;
-	}
-
-	public Boolean getFinished() {
-		if (gamerScore != null && lenderScore != null) {
-			finished = true;
-		}
-		
-		return finished;
-	}
-
-	public void setFinished(Boolean finished) {
-		this.finished = finished;
 	}
 
 	public PublicUser getGamer() {

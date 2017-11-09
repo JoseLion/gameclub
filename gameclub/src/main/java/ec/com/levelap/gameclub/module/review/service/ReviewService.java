@@ -40,87 +40,46 @@ public class ReviewService {
 	private PublicUserGameRepo publicUserGameRepo;
 	
 	@Transactional
-	public Loan sendReview(Review review) throws ServletException {
-		Loan loan = loanRepo.findOne(review.getLoanId());
+	public Loan save(Loan loan) throws ServletException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		
 		if (currentUser.getId().longValue() == loan.getGamer().getId().longValue()) {
-			review.setLenderReviwedOn(new Date());
-			
+			loan.getReview().setLenderReviewDate(new Date());
 			loan.getPublicUserGame().setIsBorrowed(false);
-			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
-		} else {
-			review.setGamerReviwedOn(new Date());
-		}
-		
-		review = reviewRepo.saveAndFlush(review);
-		
-		if (review.getFinished()) {
-			loan.getGamerMessage().setRead(false);
+			publicUserGameRepo.save(loan.getPublicUserGame());
+			
 			loan.getLenderMessage().setRead(false);
-			messageRepo.save(loan.getGamerMessage());
 			messageRepo.save(loan.getLenderMessage());
+			
+			Double gamingAverage = reviewRepo.getGamingAverageOfUser(currentUser.getId());
+			Double lendingAverage = reviewRepo.getLendingAverageOfUser(currentUser.getId());
+			
+			loan.getPublicUserGame().getPublicUser().setRating((gamingAverage + lendingAverage) / 2.0);
+			publicUserService.getPublicUserRepo().save(loan.getPublicUserGame().getPublicUser());
+		} else {
+			loan.getReview().setGamerReviewDate(new Date());
+			
+			loan.getGamerMessage().setRead(false);
+			messageRepo.save(loan.getGamerMessage());
+			
+			Double gamerAverage = reviewRepo.getGamingAverageOfUser(loan.getPublicUserGame().getPublicUser().getId());
+			Double lenderAverage = reviewRepo.getLendingAverageOfUser(loan.getPublicUserGame().getPublicUser().getId());
+			
+			loan.getGamer().setRating((gamerAverage + lenderAverage) / 2.0);
+			publicUserService.getPublicUserRepo().save(loan.getGamer());
 		}
 		
-		loan.setReview(review);
 		loan = loanRepo.save(loan);
-		return loan;
-	}
-	
-	@Transactional
-	public Loan acceptReview(Long id) throws ServletException {
-		Review review = reviewRepo.findOne(id);
-		PublicUser currentUser = publicUserService.getCurrentUser();
-		
-		if (currentUser.getId().longValue() == review.getLoan().getGamer().getId().longValue()) {
-			review.setGamerAccepted(true);
-		} else {
-			review.setLenderAccepted(true);
-		}
-		
-		review = reviewRepo.save(review);
-		Loan loan = loanRepo.findOne(review.getLoan().getId());
-		loan.setReview(review);
-		
-		if (currentUser.getId().longValue() == review.getLoan().getGamer().getId().longValue()) {
-			Double gamerAverage = reviewRepo.getGamerAverageScore(currentUser.getId());
-			Double lenderAverage = reviewRepo.getLenderAverageScore(currentUser.getId());
-			
-			if (gamerAverage == null) {
-				currentUser.setRating(lenderAverage.doubleValue());
-			} else if (lenderAverage == null) {
-				currentUser.setRating(gamerAverage.doubleValue());
-			} else {
-				currentUser.setRating((gamerAverage.doubleValue() + lenderAverage.doubleValue()) / 2.0);
-			}
-			
-			publicUserService.getPublicUserRepo().save(currentUser);
-		} else {
-			Double gamerAverage = reviewRepo.getGamerAverageScore(review.getLoan().getPublicUserGame().getPublicUser().getId());
-			Double lenderAverage = reviewRepo.getLenderAverageScore(review.getLoan().getPublicUserGame().getPublicUser().getId());
-			
-			if (gamerAverage == null) {
-				gamerAverage = 0.0;
-			}
-			
-			if (lenderAverage == null) {
-				lenderAverage = 0.0;
-			}
-			
-			review.getLoan().getPublicUserGame().getPublicUser().setRating((gamerAverage.doubleValue() + lenderAverage.doubleValue()) / 2.0);
-			publicUserService.getPublicUserRepo().save(review.getLoan().getPublicUserGame().getPublicUser());
-		}
-		
 		return loan;
 	}
 	
 	@Transactional
 	public Map<String, Object> getReviewsOfUser(Long userId, Integer page) throws ServletException {
 		Page<Review> reviews = reviewRepo.findReviewsOfUser(userId, new PageRequest(page, Const.TABLE_SIZE));
-		Long gamerReviews = reviewRepo.countByGamerAcceptedIsTrueAndLoanGamerId(userId);
-		Long lenderReviews = reviewRepo.countByLenderAcceptedIsTrueAndLoanPublicUserGamePublicUserId(userId);
-		Double gamerAverage = reviewRepo.getGamerAverageScore(userId);
-		Double lenderAverage = reviewRepo.getLenderAverageScore(userId);
+		Long gamerReviews = reviewRepo.countByLoanGamerId(userId);
+		Long lenderReviews = reviewRepo.countByLoanPublicUserGamePublicUserId(userId);
+		Double gamerAverage = reviewRepo.getGamingAverageOfUser(userId);
+		Double lenderAverage = reviewRepo.getLendingAverageOfUser(userId);
 		
 		Map<String, Object> response = new HashMap<>();
 		response.put("reviews", reviews);

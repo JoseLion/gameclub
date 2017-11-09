@@ -138,7 +138,7 @@ public class Loan extends BaseEntity {
 	private Restore restore;
 
 	@JsonManagedReference("LoanReview")
-	@OneToOne(mappedBy = "loan", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "loan", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private Review review;
 
 	@Transient

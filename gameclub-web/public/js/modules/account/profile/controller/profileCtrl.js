@@ -94,14 +94,23 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     };
 
     /********* Funcion para validad edad Gamer ***************/
-    $scope.younger = false;
-    function younger(birthDay){
-        var date = new Date();
-        var dateB = new Date(birthDay);
-        var age = date.getFullYear() - dateB.getFullYear();
-        var month = date.getMonth() - dateB.getMonth();
-        if (month < 0 || (month === 0 && date.getDate() < dateB.getDate())) {age--;}
-        if (age<18){$scope.younger = true;return true;}else{$scope.younger = false;return false;}
+    function younger(birthMillis) {
+        let today = new Date();
+        let birthday = new Date(birthMillis)
+        
+        if ((today.getFullYear() - birthday.getFullYear()) < 18) {
+            return true;
+        } else {
+            if (today.getMonth() < birthday.getMonth()) {
+                return true;
+            }
+
+            if (today.getDate() < birthday.getDate()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     function dataRuc () {

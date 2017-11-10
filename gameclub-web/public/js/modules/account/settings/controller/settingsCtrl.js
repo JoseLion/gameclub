@@ -1,4 +1,4 @@
-angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, rest, sweet, notif, forEach) {
+angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, rest, sweet, notif, forEach, Const, $location) {
     reviews.$promise.then(function(data) {
         $scope.gamerAverage = data.gamerAverage * 100.0 / 5.0;
         $scope.lenderAverage = data.lenderAverage * 100.0 / 5.0;
@@ -30,6 +30,34 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
         rest("review/getReviewsOfCurrentUser/:page").get({page: $scope.page}, function(data) {
             setPagedData(data.reviews);
         });
+    }
+
+    $scope.addCard = function() {
+        let today = new Date();
+        let token = "application_code=" + Const.paymentez.appCode +
+                    "&email=" + encodeURIComponent($rootScope.currentUser.username) +
+                    "&failure_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
+                    "&response_type=redirect" +
+                    "&session_id=" + 1234 +
+                    "&success_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
+                    "&uid=" + $rootScope.currentUser.id +
+                    "&" + today.getTime() +
+                    "&" + Const.paymentez.appKey;
+
+        let url = Const.paymentez.baseUrl + "/api/cc/add/?" +
+                "application_code=" + Const.paymentez.appCode +
+                "&uid=" + $rootScope.currentUser.id +
+                "&email=" + encodeURIComponent($rootScope.currentUser.username) +
+                "&session_id=" + 1234 +
+                "&auth_timestamp=" + today.getTime() +
+                "&auth_token=" + sha256(token) +
+                "&response_type=redirect" +
+                "&success_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
+                "&failure_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
+                "&buyer_phone=0998591484";
+
+        console.log("token: ", token);
+        console.log("url: ", url);
     }
 
     $scope.removeMethod = function(method) {

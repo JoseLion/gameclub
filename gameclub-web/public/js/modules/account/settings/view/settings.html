@@ -44,7 +44,10 @@
             </div>
             <div class="col-md-12 col-xs-12 total" ng-if="currentUser.paymentMethods.length < 2">
                 <h2 class="subtitle">Ingresar forma de pago:</h2>
-                <kushki class="col-md-7 new-payment" />
+                <!-- <kushki class="col-md-7 new-payment" /> -->
+                <div class="col-md-7">
+                    <button type="button" class="btn btn-secundary full small" ng-click="addCard()">Agregar Tarjeta</button>
+                </div>
             </div>
         </div>
         <div class="clearfix"></div>

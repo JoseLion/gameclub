@@ -18,6 +18,7 @@ import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.repository.GameRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
+import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.mail.MailParameters;
 
 @Component
@@ -43,7 +44,7 @@ public class GameScheduledTasks {
 		gameRepo.save(games);
 		
 		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
+		mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String, String> params = new HashMap<>();
 		params.put("date", df.format(new Date()));

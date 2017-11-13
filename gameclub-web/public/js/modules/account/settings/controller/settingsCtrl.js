@@ -1,4 +1,4 @@
-angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, rest, sweet, notif, forEach, Const, $location) {
+angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, rest, sweet, notif, forEach, Const, $location, $cookies) {
     reviews.$promise.then(function(data) {
         $scope.gamerAverage = data.gamerAverage * 100.0 / 5.0;
         $scope.lenderAverage = data.lenderAverage * 100.0 / 5.0;
@@ -38,7 +38,7 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
                     "&email=" + encodeURIComponent($rootScope.currentUser.username) +
                     "&failure_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
                     "&response_type=redirect" +
-                    "&session_id=" + 1234 +
+                    "&session_id=" + $cookies.get(Const.cookieToken) +
                     "&success_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
                     "&uid=" + $rootScope.currentUser.id +
                     "&" + today.getTime() +
@@ -48,7 +48,7 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
                 "application_code=" + Const.paymentez.appCode +
                 "&uid=" + $rootScope.currentUser.id +
                 "&email=" + encodeURIComponent($rootScope.currentUser.username) +
-                "&session_id=" + 1234 +
+                "&session_id=" + $cookies.get(Const.cookieToken) +
                 "&auth_timestamp=" + today.getTime() +
                 "&auth_token=" + sha256(token) +
                 "&response_type=redirect" +
@@ -58,6 +58,8 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
 
         console.log("token: ", token);
         console.log("url: ", url);
+
+        window.open(url, "_self");
     }
 
     $scope.removeMethod = function(method) {

@@ -13,12 +13,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
-import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
-import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
+import ec.com.levelap.gameclub.module.loan.service.LoanService;
+import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.review.entity.Review;
 import ec.com.levelap.gameclub.module.review.repository.ReviewRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
-import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -28,16 +27,13 @@ public class ReviewService {
 	private ReviewRepo reviewRepo;
 	
 	@Autowired
-	private LoanRepo loanRepo;
+	private LoanService loanService;
 	
 	@Autowired
-	private MessageRepo messageRepo;
+	private MessageService messageService;
 	
 	@Autowired
 	private PublicUserService publicUserService;
-	
-	@Autowired
-	private PublicUserGameRepo publicUserGameRepo;
 	
 	@Transactional
 	public Loan save(Loan loan) throws ServletException {
@@ -46,30 +42,32 @@ public class ReviewService {
 		if (currentUser.getId().longValue() == loan.getGamer().getId().longValue()) {
 			loan.getReview().setLenderReviewDate(new Date());
 			loan.getPublicUserGame().setIsBorrowed(false);
-			publicUserGameRepo.save(loan.getPublicUserGame());
+			publicUserService.getPublicUserGameRepo().save(loan.getPublicUserGame());
 			
 			loan.getLenderMessage().setRead(false);
-			messageRepo.save(loan.getLenderMessage());
+			messageService.getMessageRepo().save(loan.getLenderMessage());
 			
 			Double gamingAverage = reviewRepo.getGamingAverageOfUser(currentUser.getId());
 			Double lendingAverage = reviewRepo.getLendingAverageOfUser(currentUser.getId());
 			
-			loan.getPublicUserGame().getPublicUser().setRating((gamingAverage + lendingAverage) / 2.0);
-			publicUserService.getPublicUserRepo().save(loan.getPublicUserGame().getPublicUser());
+			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
+			lender.setRating((gamingAverage + lendingAverage) / 2.0);
+			publicUserService.getPublicUserRepo().save(lender);
 		} else {
 			loan.getReview().setGamerReviewDate(new Date());
 			
 			loan.getGamerMessage().setRead(false);
-			messageRepo.save(loan.getGamerMessage());
+			messageService.getMessageRepo().save(loan.getGamerMessage());
 			
 			Double gamerAverage = reviewRepo.getGamingAverageOfUser(loan.getPublicUserGame().getPublicUser().getId());
 			Double lenderAverage = reviewRepo.getLendingAverageOfUser(loan.getPublicUserGame().getPublicUser().getId());
 			
-			loan.getGamer().setRating((gamerAverage + lenderAverage) / 2.0);
-			publicUserService.getPublicUserRepo().save(loan.getGamer());
+			PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
+			gamer.setRating((gamerAverage + lenderAverage) / 2.0);
+			publicUserService.getPublicUserRepo().save(gamer);
 		}
 		
-		loan = loanRepo.save(loan);
+		loan = loanService.getLoanRepo().save(loan);
 		return loan;
 	}
 	

@@ -372,8 +372,7 @@ public class Loan extends BaseEntity {
 
 	public Date getReturnDate() {
 		if (deliveryDate != null) {
-			boolean realTimes = Boolean.parseBoolean(
-					ApplicationContextHolder.getContext().getEnvironment().getProperty("game-club.real-times"));
+			boolean realTimes = Boolean.parseBoolean(ApplicationContextHolder.getContext().getEnvironment().getProperty("game-club.real-times"));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(deliveryDate);
 

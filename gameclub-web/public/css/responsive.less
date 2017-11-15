@@ -28,7 +28,7 @@
 	header#main-header .navbar-default .navbar-collapse, header#main-header .navbar-default .navbar-form{border-color:transparent;border-top:unset;position:absolute;left:-100%;width:200%;padding:0%;background-color:@color-primary;}
 
 	footer#main-footer{padding-top:5%;}
-	footer#main-footer .logo img{width:35%;}
+	footer#main-footer .logo img{width:25%;}
 	footer#main-footer .copyright{font-size:1em;margin-top:1em;}
 	footer#main-footer .top-space{margin-top:0.8em;}
 
@@ -36,24 +36,6 @@
 	#most-played .header{font-size:0.8em;}
 	#most-played .games .left, #most-played .games .right{padding-top:25%;padding-left:0%;padding-right:0%;}
 	#most-played .games .left .btn-most-played, #most-played .games .right .btn-most-played{font-size:0.5em;padding:0%;}
-
-	/* FAQs page: */
-	#faqs{margin-top:25%;}
-	#faqs section.faqs-title{margin-top:auto;padding-top:5%;padding-bottom: 2.5%;}
-	#faqs section.faqs-title .line-1::before,{left:-1%;top:5%;}
-	#faqs section.faqs-title .line-1::after{left:0%;top:20%;}
-	#faqs section.faqs-title .line-2::before{right:-1%;bottom:25%;}
-	#faqs section.faqs-title .line-2::after{right:-2%;bottom:10%;}
-	#faqs section.body .questions{border:none;min-height:auto;}
-	#faqs section.body .questions::before{content:"";height:4px;position:absolute;left:0;right:0;background:@color-primary;
-	background:-webkit-linear-gradient(left, @color-secundary 35%, @color-primary-alt 65%);
-	background:-o-linear-gradient(right, @color-secundary 35%, @color-primary-alt 65%);
-	background:-moz-linear-gradient(right, @color-secundary 35%, @color-primary-alt 65%);
-	background:linear-gradient(to right, @color-secundary 35%, @color-primary-alt 65%);}
-
-	/* Account settings page: */
-	#account #settings section.reviews .lender,#account #settings section.reviews .gamer{float:none;margin:auto;text-align:center;width:100%;}
-	#account #settings section.reviews .lender>.header,#account #settings section.reviews .gamer>.header{padding:5% 0;}
 
 	/* Account my games page: */
 	#account #games section.header .coins,
@@ -71,38 +53,13 @@
 	#games .banner .search form > div{text-align:center !important;padding:1%;}
 	#games .banner .search.white-search .btn-tertiary{width:2em;height:2em;font-size:0.75em;padding:14px;}
 
-	/* Account messages page: */
-	#account #messages section.header .coins,
-	#account #messages section.header .total{padding-left:10%;padding-right:10%;}
-	#account #messages section.header .coins::before,
-	#account #messages section.header .total::before{left:2.5em;}
-	#account #messages section.header .total .description{padding:0;}
-	#account #messages section.header{padding-bottom:0;}
-	#account #messages section.messages .inbox{padding:4px;}
-	#account #messages section.messages .inbox .list{padding:0;padding-bottom:4px;}
-	#account #messages section.messages .inbox .list .head{margin-bottom:4px;}
-	#account #messages section.messages .inbox .list .search{padding:3%;height:auto;position:relative;}
-	#account #messages section.messages .inbox .list .search::before{top:auto;}
-	#account #messages section.messages .inbox .list .scrollable{position:relative;}
-	#account #messages section.messages .inbox .list .scrollable .no-messages{top:0;left:0;right:0;transform:none;text-align:center;width:100%;}
-	#account #messages section.messages .inbox .detail{padding:0;}
-	#account #messages section.messages .inbox .detail .head{margin-bottom:4px;}
-	#account #messages section.messages .inbox .detail .canvas{height:96vw;}
-
-	/* Referred page: */
-	#account #referred section.header{padding-bottom:5%;}
-	// #account #referred section.header .name{margin-bottom:20%;}
-	// #account #referred section.header .name img{margin-bottom:10%;}
-	#account #referred{background-position-x:center;background-size:auto;}
-	#account #referred section.header::before{width:100%;background-position:right;background-position-y:bottom;background-position-x:7em;opacity:0.5;}
-	#account #referred section.header .banner-information{padding-top:0;margin-left:0;padding-left:2em;}
-	#account #referred section.header .banner-information::after{width:80%;left:10%;}
-	#account #referred section.gamers img{margin:0;}
-
 	#most-seen > hr.subtitle, #blog hr.subtitle{width:22%!important;}
 
 	#notify.cg-notify-message.notify{width:75%;}
 	.responsive-margin-bottom{margin-bottom:7%;}
 	.responsive-padding-h-10{padding-left:10%;padding-right:10%;}
 
+	#game-item .information{font-size:0.75em;}
+	#game-item .rating img.platform{height:12px;}
+	#game-item .rating .content-rating img{width:100%;}
 }

@@ -11,7 +11,7 @@ angular.module('Messages').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Messages',
-					files: ['js/modules/account/messages/controller/messagesCtrl.js', 'js/modules/account/messages/style/messages.less']
+					files: ['js/modules/account/messages/controller/messagesCtrl.js', 'js/modules/account/messages/style/messages.less', 'js/modules/account/messages/style/messages.responsive.less']
 				}]);
 			},
 

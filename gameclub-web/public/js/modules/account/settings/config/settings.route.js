@@ -11,7 +11,7 @@ angular.module('Settings').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Settings',
-					files: ['js/modules/account/settings/controller/settingsCtrl.js', 'js/modules/account/settings/style/settings.less']
+					files: ['js/modules/account/settings/controller/settingsCtrl.js', 'js/modules/account/settings/style/settings.less', 'js/modules/account/settings/style/settings.responsive.less']
 				}]);
 			},
 

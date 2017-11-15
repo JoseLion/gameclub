@@ -8,11 +8,10 @@ angular.module('Settings').config(function($stateProvider) {
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'SettingsCtrl',
 		resolve: {
-			loadPlugin: function($ocLazyLoad, lessLoad) {
-				lessLoad.add('css/resources/settings.less');
+			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Settings',
-					files: ['js/modules/account/settings/controller/settingsCtrl.js']
+					files: ['js/modules/account/settings/controller/settingsCtrl.js', 'js/modules/account/settings/style/settings.less']
 				}]);
 			},
 

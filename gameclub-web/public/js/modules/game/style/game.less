@@ -1,29 +1,20 @@
-/********** GAME-PAGE **********/
 @import url("/css/variables.less");
 
 #game section.banner{padding-top:20%;position:relative;background-color:@color-secundary-alt;}
 #game section.banner>div{position:absolute;width:100%;height:100%;opacity:0.5;top:0;right:0;bottom:0;left:0;}
 #game section.banner::after{content:"";position:absolute;display:block;background:@color-secundary-30;top:0;right:0;bottom:0;left:0;}
-
 #game section.header{background:@color-tertiary-alt;}
-
 #game section.header .cover{margin-top:-7em;}
 #game section.header .cover #game-rating{width:80%;margin:auto;}
 #game section.header .cover #game-rating .game-container .background::after{cursor:default;}
-#game section.header .cover #game-rating .game-container .background:hover::before{
-background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
--webkit-background-clip:text;}
+#game section.header .cover #game-rating .game-container .background:hover::before{background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
 #game section.header .principal{padding:0;}
 #game section.header .principal .title{text-transform:none;font-size:1.2em;font-weight:700;margin-top:0.5em;margin-bottom:0;padding:0;font-family:@font-family-jaapokki;letter-spacing:1px;}
 #game section.header .principal .rating-container{padding:0;}
 #game section.header .principal .rating-container i::before{font-size:1.2em;color:@color-primary-s;}
-#game section.header .principal .rating-container i.yes::before{-webkit-text-fill-color:transparent;
-background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);
--webkit-background-clip:text;}
+#game section.header .principal .rating-container i.yes::before{-webkit-text-fill-color:transparent;background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
 #game section.header .principal .video{padding:0;font-family:@font-family-jaapokki;font-size:1.2em;}
-#game section.header .principal .video i::before{font-size:1.6em;-webkit-text-fill-color:transparent;
-background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);
--webkit-background-clip:text;}
+#game section.header .principal .video i::before{font-size:1.6em;-webkit-text-fill-color:transparent;background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
 #game section.header .rating{margin-top:-5em;}
 #game section.header .rating .content-rating img{height:4em;margin-bottom:1em;}
 #game section.header .rating .platform img{height:1.7em;}
@@ -71,9 +62,7 @@ background:@color-primary;background:linear-gradient(0deg,@color-secundary,@colo
 #game section.games .games-availables .table-container table tr td.red{color:@color-secundary;}
 #game section.games .games-availables .table-container table tr td.game-status{font-weight:700;color:@color-secundary;}
 #game section.games .games-availables .table-container table tr td i::before{font-size:1.2em;color:@color-primary-s;}
-#game section.games .games-availables .table-container table tr td i.yes::before{-webkit-text-fill-color:transparent;
-background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);
--webkit-background-clip:text;}
+#game section.games .games-availables .table-container table tr td i.yes::before{-webkit-text-fill-color:transparent;background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
 #game section.games .games-availables .table-container table tr td img{height:1em;}
 #game section.games .games-availables .table-container table tr td button.dark{background:@color-primary;color:@color-tertiary;white-space:normal;font-weight:400;font-size:0.6em;}
 #game section.games .filters li{display:inline-table;width:2em;height:2em;background:@color-primary;position:relative;text-align:center;}
@@ -87,7 +76,7 @@ background:@color-primary;background:linear-gradient(90deg,@color-secundary,@col
 #game section.games .filters li>a.active{color:@color-primary-alt;}
 #game section.games div > button{margin:-1% 1% 0% 1%;padding-left:1%;padding-right:1%;}
 
-#game #most-played>div.separator{display:none;}
+#game #most-played > div.separator{display:none;}
 
 #game section.final{height:2em;width:100%;background:@color-primary-alt;}
 

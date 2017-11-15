@@ -9,11 +9,10 @@ angular.module('Profile').config(function($stateProvider) {
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'ProfileCtrl',
 		resolve: {
-			loadPlugin: function($ocLazyLoad, lessLoad) {
-				lessLoad.add('css/resources/profile.less');
+			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Profile',
-					files: ['js/modules/account/profile/controller/profileCtrl.js']
+					files: ['js/modules/account/profile/controller/profileCtrl.js', '/js/modules/account/profile/style/profile.less']
 				}]);
 			},
 

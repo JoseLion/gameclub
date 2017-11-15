@@ -13,7 +13,7 @@ angular.module('Login').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Login',
-					files: ['js/modules/login/controller/loginCtrl.js']
+					files: ['js/modules/login/controller/loginCtrl.js', 'js/modules/login/style/login.less', 'js/modules/login/style/login.responsive.less']
 				}]);
 			},
 

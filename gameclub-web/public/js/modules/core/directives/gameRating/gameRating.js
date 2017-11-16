@@ -1,7 +1,8 @@
-angular.module('Core').directive('gameRating', function() {
+angular.module('Core').directive('gameRating', function($ocLazyLoad) {
+	$ocLazyLoad.load('js/modules/core/directives/gameRating/gameRating.less');
 	return {
 		restrict: 'E',
-		templateUrl: 'js/modules/core/directives/gameRating.html',
+		templateUrl: 'js/modules/core/directives/gameRating/gameRating.html',
 		scope: {
 			src: '=?',
 			rating: '=',

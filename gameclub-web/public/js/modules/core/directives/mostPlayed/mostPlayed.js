@@ -1,7 +1,9 @@
-angular.module('Core').directive('mostPlayed', function($state, $rootScope, friendlyUrl) {
+angular.module('Core').directive('mostPlayed', function($state, $rootScope, friendlyUrl, $ocLazyLoad) {
+	$ocLazyLoad.load(['js/modules/core/directives/mostPlayed/mostPlayed.less', 'js/modules/core/directives/mostPlayed/mostPlayed.responsive.less']);
+
 	return {
 		restrict: 'E',
-		templateUrl: 'js/modules/core/directives/mostPlayed.html',
+		templateUrl: 'js/modules/core/directives/mostPlayed/mostPlayed.html',
 		scope: {
 			games: '=',
 			previous: '&',

@@ -1,8 +1,10 @@
-angular.module('Core').directive('blogPaging', function() {
+angular.module('Core').directive('ballPaging', function($ocLazyLoad) {
+	$ocLazyLoad.load('js/modules/core/directives/ballPaging/ballPaging.less');
+
 	return {
 		restrict: 'E',
 		require: 'ngModel',
-		templateUrl: 'js/modules/core/directives/blogPaging.html',
+		templateUrl: 'js/modules/core/directives/ballPaging/ballPaging.html',
 		scope: {
 			pages: '=',
 			ngModel: '='

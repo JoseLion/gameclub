@@ -1,4 +1,4 @@
-angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, rest, sweet, notif, forEach, Const, $location, $cookies) {
+angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, addCardError, cardsList, rest, sweet, notif, forEach, Const, $location, $cookies) {
     reviews.$promise.then(function(data) {
         $scope.gamerAverage = data.gamerAverage * 100.0 / 5.0;
         $scope.lenderAverage = data.lenderAverage * 100.0 / 5.0;
@@ -6,6 +6,12 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
         $scope.lenderReviews = data.lenderReviews;
         setPagedData(data.reviews);
     });
+
+    if (addCardError != null) {
+        $scope.addCardError = addCardError;
+    }
+
+    console.log("cardsList: ", cardsList);
 
     $scope.numberCards = false;
     $scope.card = true;
@@ -55,9 +61,6 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
                 "&success_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
                 "&failure_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
                 "&buyer_phone=0998591484";
-
-        console.log("token: ", token);
-        console.log("url: ", url);
 
         window.open(url, "_self");
     }

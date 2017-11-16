@@ -37,7 +37,9 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                         baseSrc.concat('resources/articlePreview.js'),
                         baseSrc.concat('resources/mostSeen.js'),
                         baseSrc.concat('resources/blogNavigation.js'),
-                        baseSrc.concat('resources/svgSrc.js')
+                        baseSrc.concat('resources/svgSrc.js'),
+                        baseSrc.concat('style/blog.less'),
+                        baseSrc.concat('style/blog.responsive.less')
                     ]
                 }]);
             },

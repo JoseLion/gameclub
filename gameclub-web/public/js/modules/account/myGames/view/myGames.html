@@ -75,7 +75,7 @@
                 <game-item ng-model="cross.game" console="cross.console" inverse="true" is-editable="true" on-edit="editGame(cross)" show-coins="true" coins="cross.cost"></game-item>
                 <div class="separator" ng-if="$index+1 < gamesList.length"></div>
             </div>
-            <blog-paging pages="totalPages" ng-model="$parent.filter.page" class="paging" ng-change="pageChanged()"></blog-paging>
+            <ball-paging pages="totalPages" ng-model="$parent.filter.page" class="paging" ng-change="pageChanged()"></ball-paging>
         </div>
     </section>
     <div id="game" ng-if="showGame" class="my-game">

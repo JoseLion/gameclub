@@ -35,6 +35,8 @@ public class GameScheduledTasks {
 				Double newPrice = gameService.getAvailablePrice(priceCharting);
 				
 				if (newPrice != null) {
+					String percentage = gameRepo.priceChartinNationalitation();
+					newPrice = (double) Math.round(((newPrice*Double.parseDouble(percentage)/100)+newPrice)*100)/100;
 					game.setUploadPayment(newPrice);
 				}
 			}

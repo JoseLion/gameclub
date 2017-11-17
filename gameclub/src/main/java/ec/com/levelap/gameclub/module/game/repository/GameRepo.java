@@ -15,6 +15,7 @@ import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameLite;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
+import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Repository
@@ -94,5 +95,8 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 	public Page<GameOpen> findMostPlayed(Pageable page);
 	
 	public Page<GameOpen> findAllByOrderByName(Pageable page);
+	
+	@Query("SELECT s.value FROM Setting s WHERE s.code='" + Code.SETTING_NATIONALIZACION + "'")
+	public String priceChartinNationalitation();
 	
 }

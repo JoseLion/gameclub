@@ -100,20 +100,40 @@ public class LoanService extends BaseService<Loan> {
 	private KushkiService kushkiService;
 
 	@Transactional
-	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart)
+	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart, Double shippingCost, Double feeGameClub, Double taxes)
 			throws ServletException, MessagingException, IOException, GeneralSecurityException {
 		Map<String, Message> messages = messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
 		PublicUser gamer = publicUserService.getCurrentUser();
+		byte[] encrypted = null;
+		byte[] keyEncript = gamer.getPrivateKey();
+		loan.setPrivateKeyGamer(keyEncript);
 		File key = File.createTempFile("key", ".tmp");
-		FileUtils.writeByteArrayToFile(key, gamer.getPrivateKey());
+		FileUtils.writeByteArrayToFile(key, loan.getPrivateKeyGamer());
 
 		loan.setGamer(gamer);
 		loan.setGamerMessage(messages.get(Const.GAMER));
 		loan.setLenderMessage(messages.get(Const.LENDER));
-		loan.setCostEnc(cryptoService.encrypt(Double.toString(cost), key));
-		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(balancePart), key));
-		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(cardPart), key));
+		encrypted = cryptoService.encrypt(Double.toString(cost), key); 
+		loan.setCostEnc(encrypted);
+		encrypted = null;
+		encrypted = cryptoService.encrypt(Double.toString(balancePart), key);
+		loan.setBalancePartEnc(encrypted);
+		encrypted = null;
+		encrypted = cryptoService.encrypt(Double.toString(cardPart), key);
+		loan.setCardPartEnc(encrypted);
+		encrypted = null;
+		encrypted = cryptoService.encrypt(Double.toString(shippingCost), key);
+		loan.setShippningCostEnc(encrypted);
+		encrypted = null;
+		encrypted = cryptoService.encrypt(Double.toString(feeGameClub), key);
+		loan.setFeeGameClubEnc(encrypted);
+		encrypted = null;
+		encrypted = cryptoService.encrypt(Double.toString(taxes), key);
+		loan.setTaxesEnc(encrypted);
+		encrypted = null;
 		loan = loanRepo.save(loan);
+		
+		System.out.println(loan.getCost() + " " + loan.getShippningCost() + " " + loan.getFeeGameClub() + " " + loan.getTaxes());
 
 		PublicUserGame cross = publicUserGameRepo.findOne(loan.getPublicUserGame().getId());
 		loan.setPublicUserGame(cross);

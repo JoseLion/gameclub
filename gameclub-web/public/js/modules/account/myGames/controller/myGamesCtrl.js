@@ -41,15 +41,6 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             }
         });
 
-        /************* Calculo PriceChartin segun parámetros y valor juego *********************/
-        // if($rootScope.settings[Const.settings.priceChartingGames].type == "TOSPRC" && game.uploadPayment != null){
-        //     priceChartingGMLoan = ((($scope.myGame.game.uploadPayment*priceChartingGM)/100)+$scope.myGame.game.uploadPayment)/gameLoanPCH;
-        //     $scope.priceChartingGM = priceChartingGMLoan;
-        // } else if($rootScope.settings[Const.settings.priceChartingGames].type == "number" && game.uploadPayment != null){
-        //     priceChartingGMLoan = ($scope.myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH;
-        //     $scope.priceChartingGM = priceChartingGMLoan;
-        // }
-
         $scope.showGame = true;
     }
 
@@ -91,7 +82,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     $scope.save = function() {
         var priceChartingGMLoan1 = 0.0;
         if($rootScope.settings[Const.settings.priceChartingGames].type == "percentage" && $scope.myGame.game.uploadPayment != null){
-            priceChartingGMLoan1 = ((($scope.myGame.game.uploadPayment*$scope.priceChartingGM)/100)+$scope.myGame.game.uploadPayment)/$scope.gameLoanPCH;
+            priceChartingGMLoan1 = $scope.myGame.game.uploadPayment/$scope.gameLoanPCH;
         } else if($rootScope.settings[Const.settings.priceChartingGames].type == "number" && $scope.myGame.game.uploadPayment != null){
             priceChartingGMLoan1 = ($scope.myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH;
         }

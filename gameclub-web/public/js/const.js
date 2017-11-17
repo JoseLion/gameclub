@@ -15,6 +15,8 @@ angular.module('GameClub').constant('Const', {
 
 	ok: "OK",
 
+	iva: 0.12,
+
 	statePrefix: {
 		gameclub: 'gameclub.',
 		account: 'gameclub.account.'
@@ -69,7 +71,8 @@ angular.module('GameClub').constant('Const', {
 		priceChartingMax: 'STGPCHMAX',
 		priceChartingMin: 'STGPCHMIN',
 		weekShippingCost: 'STGRETWEK',
-		shippingKitValue: 'STGSHPKIT'
+		shippingKitValue: 'STGSHPKIT',
+		feeLoanGamer: 'STGFEEPLY'
 	},
 
 	tooltips: {

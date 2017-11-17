@@ -83,6 +83,27 @@ public class Loan extends BaseEntity {
 
 	@Transient
 	private Double cost;
+	
+	@JsonIgnore
+	@Column(name = "shippning_cost")
+	private byte[] shippningCostEnc;
+
+	@Transient
+	private Double shippningCost;
+	
+	@JsonIgnore
+	@Column(name = "fee_game_club")
+	private byte[] feeGameClubEnc;
+
+	@Transient
+	private Double feeGameClub;
+	
+	@JsonIgnore
+	@Column(name = "taxes")
+	private byte[] taxesEnc;
+	
+	@Transient
+	private Double taxes;
 
 	@JsonIgnore
 	@Column(name = "balance_part")
@@ -97,6 +118,10 @@ public class Loan extends BaseEntity {
 
 	@Transient
 	private Double cardPart;
+	
+	@JsonIgnore
+	@Column
+	private byte[] privateKeyGamer;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "payment", foreignKey = @ForeignKey(name = "payment_kushki_subscription_fk"))
@@ -477,4 +502,100 @@ public class Loan extends BaseEntity {
 		this.cardPart = cardPart;
 	}
 
+	public byte[] getShippningCostEnc() {
+		return shippningCostEnc;
+	}
+	
+	
+
+	public byte[] getPrivateKeyGamer() {
+		return privateKeyGamer;
+	}
+
+	public void setPrivateKeyGamer(byte[] privateKeyGamer) {
+		this.privateKeyGamer = privateKeyGamer;
+	}
+
+	public void setShippningCostEnc(byte[] shippningCostEnc) {
+		this.shippningCostEnc = shippningCostEnc;
+	}
+
+	public Double getShippningCost() throws IOException, GeneralSecurityException {
+		if (shippningCost != null)
+			return shippningCost;
+		if (gamer.getPrivateKey() != null && shippningCostEnc != null && shippningCostEnc.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
+					.getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, gamer.getPrivateKey());
+			String decypted = cryptoService.decrypt(shippningCostEnc, key);
+			shippningCost = Double.parseDouble(decypted);
+		} else {
+			shippningCost = 0D;
+		}
+		return shippningCost;
+	}
+
+	public void setShippningCost(Double shippningCost) {
+		this.shippningCost = shippningCost;
+	}
+
+	public byte[] getFeeGameClubEnc() {
+		return feeGameClubEnc;
+	}
+
+	public void setFeeGameClubEnc(byte[] feeGameClubEnc) {
+		this.feeGameClubEnc = feeGameClubEnc;
+	}
+
+	public Double getFeeGameClub() throws IOException, GeneralSecurityException {
+		
+		if (feeGameClub != null)
+			return feeGameClub;
+		if (gamer.getPrivateKey() != null && feeGameClubEnc != null && feeGameClubEnc.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
+					.getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, gamer.getPrivateKey());
+			String decypted = cryptoService.decrypt(feeGameClubEnc, key);
+			feeGameClub = Double.parseDouble(decypted);
+		} else {
+			feeGameClub = 0D;
+		}
+		return feeGameClub;
+	}
+
+	public void setFeeGameClub(Double feeGameClub) {
+		this.feeGameClub = feeGameClub;
+	}
+
+	public byte[] getTaxesEnc() {
+		return taxesEnc;
+	}
+
+	public void setTaxesEnc(byte[] taxesEnc) {
+		this.taxesEnc = taxesEnc;
+	}
+
+	public Double getTaxes() throws IOException, GeneralSecurityException {
+		
+		if (taxes != null)
+			return taxes;
+		if (gamer.getPrivateKey() != null && taxesEnc != null && taxesEnc.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
+					.getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, gamer.getPrivateKey());
+			String decypted = cryptoService.decrypt(taxesEnc, key);
+			taxes = Double.parseDouble(decypted);
+		} else {
+			taxes = 0D;
+		}
+		return taxes;
+	}
+
+	public void setTaxes(Double taxes) {
+		this.taxes = taxes;
+	}
+	
 }

@@ -136,87 +136,6 @@ footer#main-footer .designed{background-color:@color-secundary;color:@color-tert
 footer#main-footer .designed span{letter-spacing:1px;}
 /****************************/
 
-/********** DATE-SELECTOR **********/
-#date-selector{display:inline-block;}
-#date-selector div.selector{border-right:1px solid @color-tertiary;cursor:pointer;display:inline;padding-right:3px;padding-top:5%!important;position:relative;}
-#date-selector div.selector.disabled{cursor:not-allowed;}
-#date-selector div.selector>input{text-align:right;cursor:pointer;}
-#date-selector div.selector.disabled>input{cursor:not-allowed;}
-#date-selector div.selector ul.dropdown{padding:0;text-align:right;position:absolute;width:100%;left:0;right:0;background:@color-primary;height:10.9em;overflow-y:scroll;z-index:10;border:5px solid @color-primary;}
-#date-selector div.selector ul.dropdown{border-bottom-left-radius:5px;border-bottom-right-radius:5px;}
-#date-selector div.selector ul.dropdown::-webkit-scrollbar{width:5px;background-color:@color-secundary;}
-#date-selector div.selector ul.dropdown::-webkit-scrollbar-thumb{background-color:white;}
-#date-selector div.selector ul.dropdown li{display:block;padding:1px 5px 0;}
-#date-selector div.selector ul.dropdown li:hover{background:@color-secundary;}
-#date-selector div.calendar-icon{display:inline;position:relative;}
-#date-selector div.calendar-icon>i{font-size:1.7em;position:relative;cursor:pointer;margin-left:0.3em;}
-#date-selector div.calendar-icon.disabled>i{cursor:not-allowed;}
-#date-selector div.calendar-icon table{position:absolute;z-index:10;text-align:center;width:16em;color:@color-primary;background:@color-tertiary;border:3px solid @color-primary;border-radius:10px;border-collapse:separate;}
-#date-selector div.calendar-icon table>thead>tr>th,#date-selector div.calendar-icon table>tbody>tr>td{text-align:center;padding:0.25em;}
-#date-selector div.calendar-icon table>thead>tr{background:@color-tertiary;}
-#date-selector div.calendar-icon table>thead>tr:first-child{background:@color-primary;color:@color-tertiary;}
-#date-selector div.calendar-icon table>thead>tr:first-child>th{padding-top:0.5em;padding-bottom:0.5em;cursor:pointer;}
-#date-selector div.calendar-icon table>thead>tr:first-child>th:first-child{text-align:left;padding-left:1em;color:@color-secundary;}
-#date-selector div.calendar-icon table>thead>tr:first-child>th:last-child{text-align:right;padding-right:1em;color:@color-secundary;}
-#date-selector div.calendar-icon table>thead>tr:last-child>th:first-child,#date-selector div.calendar-icon table>thead>tr:last-child>th:last-child{width:0.7em;}
-#date-selector div.calendar-icon table>thead>tr>th{color:@color-tertiary-alt;}
-#date-selector div.calendar-icon table>tbody{font-size:0.7em;}
-#date-selector div.calendar-icon table>tbody>tr>td>div{width:2em;height:2em;padding:0.5em;border-radius:50%;margin:auto;cursor:pointer;}
-#date-selector div.calendar-icon table>tbody>tr>td>div.active{background:@color-secundary;color:@color-tertiary;}
-#date-selector div.calendar-icon table>tfoot>tr>td{padding-bottom:0.5em;}
-/***********************************/
-
-/********** TIME-SELECTOR **********/
-#time-selector{text-align:center;font-weight:700;display:inline;padding:0;}
-#time-selector div.selector{position:relative;display:inline;cursor:pointer;}
-#time-selector div.selector.disabled{cursor:not-allowed;}
-#time-selector div.selector>input{width:100%;text-align:left;cursor:pointer;}
-#time-selector div.selector.disabled>input{cursor:not-allowed;}
-#time-selector div.selector>i{position:absolute;right:0.2em;top:-0.2em;}
-#time-selector div.selector.disabled>i{cursor:not-allowed;}
-
-.clockpicker-popover.popover{background-color:@color-tertiary!important;border-color:@color-tertiary!important;}
-.clockpicker-popover .popover-title{border-bottom-color:@color-tertiary!important};
-.clockpicker-popover .popover.bottom>.arrow:after{border-bottom-color:@color-primary;}
-.clockpicker-popover .popover-title,.clockpicker-popover .popover-content{background-color:@color-primary!important;color:@color-tertiary!important;}
-.clockpicker-popover .popover-title .text-primary{color:@color-secundary!important;}
-.clockpicker-popover .popover-content .clockpicker-plate{background-color:@color-primary!important;border-color:@color-tertiary!important;}
-.clockpicker-popover .popover-content .clockpicker-dial .clockpicker-tick{color:@color-tertiary!important;}
-.clockpicker-canvas line{stroke:@color-secundary!important;}
-.clockpicker-canvas-bearing, .clockpicker-canvas-fg{fill:@color-secundary!important;}
-.clockpicker-canvas-bg{fill:@color-secundary!important;}
-.clockpicker-canvas-bearing, .clockpicker-canvas-fg{fill:@color-secundary!important;}
-/***********************************/
-
-/********** GAME-ITEM **********/
-#game-item{padding:3% 0;}
-#game-item .cover{padding:0;height:6.5em;}
-#game-item .cover .background{padding:0;}
-#game-item .cover .background::before{top:-0.5em;font-size:9em;}
-#game-item .cover .background::after{top:-2em;}
-#game-item .cover .background img{top:-1.7em;}
-#game-item .information{padding-bottom:1%;padding-top:2%;}
-#game-item .information span.description{font-weight:700;font-size:1.2em;display:block;font-family:@font-family-jaapokki;letter-spacing:1px;}
-#game-item .information div.rating-container img{width:1em;}
-#game-item .information span.price{text-transform:uppercase;display:block;font-size:1em;font-weight:700;margin-top:1%;}
-#game-item .information span.price span.light{margin-left:1em;color:@color-secundary;letter-spacing:1px;}
-#game-item .information button{background:@color-tertiary;border-width:3px;padding-left:3%;padding-right:3%;letter-spacing:0.5px;}
-#game-item .rating{padding-top:3%;padding-left:0;padding-right:0}
-#game-item .rating div.platform{padding-left:0;padding-right:0;}
-#game-item .rating img.platform{height:17px;margin-bottom:5%;}
-#game-item .rating .types img{display:inline-block;margin-left:2%;margin-right:2%;width:2.5em;height:2.5em;border:2px solid @color-primary;border-radius:50%;}
-#game-item .rating .content-rating img{width:85%;margin-top:1em;}
-/*******************************/
-
-/********** NOTIFY **********/
-#notify.cg-notify-message.notify{background:@color-primary-65;border:none;color:@color-tertiary;padding:10px 3% 6px;right:0;box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);-webkit-box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);-moz-box-shadow:0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);}
-#notify.cg-notify-message.notify.alert-danger{border-left:6px solid @color-secundary;}
-#notify.cg-notify-message.notify.alert-warning{border-left:6px solid @color-tertiary-alt;}
-#notify.cg-notify-message.notify.alert-success{border-left:6px solid @color-primary-alt;}
-#notify.cg-notify-message.notify.alert-info{border-left:6px solid @color-tertiary;}
-#notify.cg-notify-message button.cg-notify-close{background:transparent;border:none;font-size:0.7em;font-weight:400;color:@color-tertiary;text-shadow:none;opacity:1;right:0.5em;top:1em;line-height:1;}
-/****************************/
-
 /********** MODAL **********/
 .modal-content{background:@color-primary;border:5px solid @color-tertiary;color:@color-tertiary;}
 .modal-content .modal-heading,.modal-content .modal-header{color:@color-secundary;text-transform:uppercase;padding:2em 0 1em;text-align:center;}
@@ -250,21 +169,7 @@ footer#main-footer .designed span{letter-spacing:1px;}
 #maps-modal .modal-body button.btn-primary{color:#FFFFFF;padding-left:5%;padding-right:5%;}
 /*******************************/
 
-/************** MOST SEEN ***************/
-#most-seen{background:@color-tertiary-alt!important;box-shadow:5px 10px 25px 5px @color-primary-30!important;padding:1% 10% 0.25em!important;}
-#most-seen > h2{color:@color-primary-alt!important;font-family:@font-family-jaapokki;font-weight:400!important;}
-#most-seen > hr.subtitle{width:8%!important;border-color:@color-primary-alt!important;}
-#most-seen .article-row .blog-preview .info a::after{content:"\e013";color:@color-primary;font-family:gameclub;font-size:1.5em;position:absolute;top:-0.4em;right:-1.25em;}
-#most-seen .article-row{margin-top:1em!important;width:100%!important;}
-#most-seen .article-row .blog-preview .info h2{color:@color-primary!important;font-weight:400!important;text-transform:none!important;}
-#most-seen .article-row .blog-preview .info p{color:@color-primary-alt!important;}
-#most-seen .article-row .blog-preview .info a{color:@color-secundary!important;text-transform:none!important;}
-#most-seen .article-row .blog-preview .picture .post-date{background:@color-secundary!important;border:none!important;color:@color-tertiary!important;font-size:0.8em!important;height:4.5em!important;width:4.5em!important;}
-#most-seen .article-row .blog-preview .info, #most-seen .article-row .blog-preview .picture{background:@color-tertiary!important;}
-#most-seen .pagging .page-button{border-color:@color-primary-alt!important;}
-#most-seen .pagging .page-button.page-active{background:@color-secundary!important;border-color:transparent!important;}
-
-/********** rz-slider directive: **********/
+/********** RZSLIDER **********/
 .rzslider .rz-pointer{outline:none!important;}
 .rzslider .rz-pointer::after{width:28px!important;height:28px!important;left:2px!important;top:2px!important;border-radius:100%!important;}
 .rzslider.rz-slider-primary .rz-pointer{background:@color-tertiary!important;}
@@ -273,61 +178,4 @@ footer#main-footer .designed span{letter-spacing:1px;}
 .rzslider.rz-slider-secundary .rz-pointer{background:@color-tertiary!important;}
 .rzslider.rz-slider-secundary .rz-bar,.rzslider.rz-slider-secundary .rz-selection{background:@color-tertiary!important;}
 .rzslider.rz-slider-secundary .rz-pointer::after,.rz-slider-secundary .rzslider .rz-pointer:hover::after{background-color:@color-secundary!important;}
-/********** rz-slider directive: **********/
-
-/********** kushki directive: **********/
-#kushki-payment input{width:100%;}
-#kushki-payment.new-payment .card-name,
-#kushki-payment.new-payment .card-number,
-#kushki-payment.new-payment .expiry,
-#kushki-payment.new-payment .cvc{border-bottom:1px solid @color-tertiary;padding:1% 10% 0;margin:1% 0;}
-#kushki-payment.new-payment input::-webkit-input-placeholder{color:@color-primary-40;}
-#kushki-payment.new-payment input::-moz-placeholder{color:@color-primary-40;}
-#kushki-payment.new-payment input::-ms-input-placeholder{color:@color-primary-40;}
-#kushki-payment.new-payment div.card-name,
-#kushki-payment.new-payment div.card-number,
-#kushki-payment.new-payment div.expiry{padding-right:0;}
-#kushki-payment.new-payment div.card-name::before,
-#kushki-payment.new-payment div.card-number::before,
-#kushki-payment.new-payment div.expiry::before,
-#kushki-payment.new-payment div.cvc::before,
-#kushki-payment.new-payment div.cvc::after{font-family:gameclub;position:absolute;left:0.5em;bottom:0;}
-#kushki-payment.new-payment div.cvc::after{left:auto;right:0.5em;}
-#kushki-payment.new-payment div.card-name>div{padding-right:0;}
-#kushki-payment.new-payment div.card-name>div:first-child{padding-left:0;}
-#kushki-payment.new-payment div.card-name::before{content:"\E019";}
-#kushki-payment.new-payment div.card-number::before{content:"\E006";}
-#kushki-payment.new-payment div.expiry{margin-right:1em;}
-#kushki-payment.new-payment div.expiry::before{content:"\E005";}
-#kushki-payment.new-payment div.cvc::before{content:"\E014";}
-#kushki-payment.new-payment div.cvc::after{content:"\E011";}
-#kushki-payment.new-payment button{padding:2% 12% 1%;font-size:0.8em;margin:4% auto 1%;}
-/********** kushki directive: **********/
-
-/********** payment-section directive: **********/
-section.payment-view{background:@color-primary-alt;color:@color-tertiary;padding-bottom:3%;padding-top:1%;}
-section.payment-view .value{color:@color-primary;font-size:2em;}
-section.payment-view .title{font-size:1.5em;font-weight:400;}
-section.payment-view .title::after{content:":";font-size:1.5em;}
-section.payment-view .balance{position:relative;text-transform:uppercase;margin-bottom:5%;}
-section.payment-view .balance::before{content:"";position:absolute;left:-2em;bottom:0;width:5em;height:2px;background:@color-tertiary;}
-section.payment-view .balance .subtitle{font-size:1.5em;}
-section.payment-view .balance .subtitle::after{content:":";font-size:1.5em;}
-section.payment-view .balance .value{padding-left:5%;}
-section.payment-view .slider{border-left:2px solid @color-tertiary;padding-bottom:5%;}
-section.payment-view .slider .difference .value{font-size:3em;}
-section.payment-view .text-tooltip,#shippingKit section.payment-view .text-tooltip-or{display:block;font-size:0.8em;text-align:left;text-transform:uppercase;}
-section.payment-view .text-tooltip-or{color:@color-primary;}
-section.payment-view .payment{border-left:2px solid @color-tertiary;}
-section.payment-view .payment .text-tooltip-or{padding:1em 0;font-weight:700;}
-section.payment-view .payment .table-payments{display:table;width:100%;}
-section.payment-view .payment .table-payments .table-row{display:table-row;}
-section.payment-view .payment .table-payments .table-row .table-cell{display:table-cell;text-align:center;vertical-align:middle;}
-section.payment-view .payment .table-payments .table-row .table-cell.check .box{width: 18px;height:18px;border: 2px solid @color-tertiary;cursor:pointer;position:relative;}
-section.payment-view .payment .table-payments .table-row .table-cell.check .box.check::before{content:"\f00c";font-family:FontAwesome;font-size:2.5em;color:@color-secundary;position:absolute;left:-0.2em;top:-0.6em;z-index:0;}
-section.payment-view .payment .table-payments .table-row .table-cell.check .box.check::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;}
-section.payment-view .payment .table-payments .table-row .table-cell.card-number{width:65%;padding-bottom:2%;padding-top:2%;}
-section.payment-view .payment .table-payments .table-row .table-cell.card-number .card-showcase{width:90%;outline:none;box-shadow:none;background:transparent;border: 2px solid @color-tertiary;text-align:center;font-size:0.7em;padding:5px 0;color:@color-primary;border-radius:7px;}
-section.payment-view .payment .table-payments .table-row .table-cell.remove-card{width:30%;}
-section.payment-view .payment .table-payments .table-row .table-cell.remove-card>button{padding:0;padding-left:7%;padding-right:7%;border-radius:7px;font-size:0.8em;padding-top:2%;padding-bottom:3%;}
-/********** payment-section directive: **********/
+/******************************/

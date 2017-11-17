@@ -1,5 +1,5 @@
 angular.module('Core').directive('gameRating', function($ocLazyLoad) {
-	$ocLazyLoad.load('js/modules/core/directives/gameRating/gameRating.less');
+	$ocLazyLoad.load(['js/modules/core/directives/gameRating/gameRating.less', 'js/modules/core/directives/gameRating/gameRating.responsive.less']);
 	return {
 		restrict: 'E',
 		templateUrl: 'js/modules/core/directives/gameRating/gameRating.html',

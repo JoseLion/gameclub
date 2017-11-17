@@ -1,4 +1,15 @@
 angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, addCardError, cardsList, rest, sweet, notif, forEach, Const, $location, $cookies) {
+    rest("paymentez/deleteCard/:cardReference").delete({cardReference: "12680100941731713551"}, function(data) {
+        console.log("data: ", data);
+    });
+
+
+
+
+
+
+
+
     reviews.$promise.then(function(data) {
         $scope.gamerAverage = data.gamerAverage * 100.0 / 5.0;
         $scope.lenderAverage = data.lenderAverage * 100.0 / 5.0;
@@ -11,7 +22,9 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
         $scope.addCardError = addCardError;
     }
 
-    console.log("cardsList: ", cardsList);
+    cardsList.$promise.then(function(data) {
+        console.log("Card List: ", data);
+    });
 
     $scope.numberCards = false;
     $scope.card = true;

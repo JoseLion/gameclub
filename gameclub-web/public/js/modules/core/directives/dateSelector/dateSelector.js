@@ -1,7 +1,9 @@
-angular.module('Core').directive('dateSelector', function($filter) {
+angular.module('Core').directive('dateSelector', function($filter, $ocLazyLoad) {
+	$ocLazyLoad.load('js/modules/core/directives/dateSelector/dateSelector.less');
+
 	return {
 		restrict: 'E',
-		templateUrl: 'js/modules/core/directives/dateSelector.html',
+		templateUrl: 'js/modules/core/directives/dateSelector/dateSelector.html',
 		required: 'ngModel',
 		scope: {
 			ngModel: '=',

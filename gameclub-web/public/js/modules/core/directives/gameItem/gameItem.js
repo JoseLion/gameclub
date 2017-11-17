@@ -1,7 +1,9 @@
-angular.module('Core').directive('gameItem', function($state, friendlyUrl) {
+angular.module('Core').directive('gameItem', function($state, friendlyUrl, $ocLazyLoad) {
+	$ocLazyLoad.load(['js/modules/core/directives/gameItem/gameItem.less', 'js/modules/core/directives/gameItem/gameItem.responsive.less']);
+
 	return {
 		restrict: 'E',
-		templateUrl: 'js/modules/core/directives/gameItem.html',
+		templateUrl: 'js/modules/core/directives/gameItem/gameItem.html',
 		required: 'ngModel',
 		scope: {
             ngModel: '=',

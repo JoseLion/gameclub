@@ -4,7 +4,7 @@ angular.module('ShippingKit').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'shippingKit', {
-		url: '/account/shipping-kit',
+		url: '/account/shipping-kit?error_value',
 		templateUrl: 'js/modules/shippingKit/view/shippingKit.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'ShippingKitCtrl',
@@ -20,6 +20,10 @@ angular.module('ShippingKit').config(function($stateProvider) {
 				return rest('settings/findOneByCode/:code').get({code: Const.settings.shippingKitValue}, function(data) {
 					return data;
 				});
+			},
+
+			addCardError: function($stateParams) {
+				return $stateParams.error_value;
 			}
 		}
 	});

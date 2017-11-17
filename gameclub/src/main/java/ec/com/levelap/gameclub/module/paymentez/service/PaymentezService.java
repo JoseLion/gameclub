@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -65,14 +66,13 @@ public class PaymentezService {
 		return response.getBody();
 	}
 	
-	public ResponseEntity<?> deleteCard(HttpSession session, String cardReference) throws ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, RestClientException, URISyntaxException {
+	public HttpStatus deleteCard(HttpSession session, String cardReference) throws ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, RestClientException, URISyntaxException {
 		MessageDigest messageDigest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_256);
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		Date today = new Date();
 		String plainText = "application_code=" + APP_CODE +
-				"&email=" + URLEncoder.encode(currentUser.getUsername(), StandardCharsets.UTF_8.name()) +
-				"&session_id=" + session.getId() +
 				"&card_reference=" + cardReference +
+				"&session_id=" + session.getId() +
 				"&uid=" + currentUser.getId() +
 				"&" + today.getTime() +
 				"&" + APP_KEY;
@@ -81,16 +81,16 @@ public class PaymentezService {
 		String token = String.format("%064x", new BigInteger(1, digestToken));
 		
 		String url = BASE_URL + "/api/cc/delete" +
-				"?card_reference=" + cardReference +
-				"&application_code=" + APP_CODE +
-				"&uid=" + currentUser.getId() +
-				"&email=" + URLEncoder.encode(currentUser.getUsername(), StandardCharsets.UTF_8.name()) + 
+				"?application_code=" + APP_CODE +
+				"&card_reference=" + cardReference +
 				"&session_id=" + session.getId() +
+				"&uid=" + currentUser.getId() +
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
 		
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<?> response = restTemplate.postForEntity(new URI(url), null, Object.class);
-		return response;
+		//RequestEntity<?> request = RequestEntity.post(new URI(url)).build();
+		ResponseEntity<String> response = restTemplate.postForEntity(new URI(url), null, String.class);
+		return response.getStatusCode();
 	}
 }

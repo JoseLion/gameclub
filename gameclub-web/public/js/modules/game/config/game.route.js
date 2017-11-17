@@ -4,7 +4,7 @@ angular.module('Game').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'game', {
-		url: '/game/:id/:consoleId/:name',
+		url: '/game/:id/:consoleId/:name?error_value',
 		params: {id: null, consoleId: null, name: null},
 		templateUrl: 'js/modules/game/view/game.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
@@ -36,6 +36,10 @@ angular.module('Game').config(function($stateProvider) {
 
 			mostPlayed: function(openRest) {
 				return openRest("game/findMostPlayed", true).post();
+			},
+
+			addCardError: function($stateParams) {
+				return $stateParams.error_value;
 			}
 		}
 	});

@@ -31,20 +31,19 @@
         <div class="col-md-8 col-xs-12 responsive-padding-h-10">
             <div class="col-md-12 col-xs-12 payment total" ng-if="currentUser.paymentMethods.length > 0">
                 <h2 class="subtitle">Formas de pago:</h2>
-                <div ng-repeat="method in currentUser.paymentMethods">
+                <div ng-repeat="card in cardsList">
                     <div class="col-md-12 card-info">
                         <div class="col-md-4">
-                            <input value="xxxx xxxx xxxx {{method.cardFinale}}" readonly />
+                            <input value="xxxx xxxx xxxx {{card.termination}}" readonly />
                         </div>
                         <div class="col-md-3" >
-                            <button class="btn btn-secundary full small" ng-click="removeMethod(method)" ng-if="currentUser.paymentMethods.length > 1">Borrar tarjeta</button>
+                            <button class="btn btn-secundary full small" ng-click="removeCard(card)" ng-if="cardsList.length > 1">Borrar tarjeta</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-xs-12 total" ng-if="currentUser.paymentMethods.length < 2">
+            <div class="col-md-12 col-xs-12 total" ng-if="cardsList.length < 2">
                 <h2 class="subtitle">Ingresar forma de pago:</h2>
-                <!-- <kushki class="col-md-7 new-payment" /> -->
                 <div class="col-md-12">
                     <button type="button" class="btn btn-secundary full small" ng-click="addCard()">Agregar Tarjeta</button>
                     <span ng-if="addCardError">{{addCardError}}</span>

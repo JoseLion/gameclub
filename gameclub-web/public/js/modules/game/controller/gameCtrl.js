@@ -1,7 +1,11 @@
-angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, mostPlayed, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
+angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, mostPlayed, addCardError, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
     let currentPage = 0;
     let priceChartingGMLoan = 0.0;
     $scope.validCards = [];
+
+    if (addCardError != null) {
+        $scope.addCardError = addCardError;
+    }
 
     $scope.balance = {
         value: 0.0,

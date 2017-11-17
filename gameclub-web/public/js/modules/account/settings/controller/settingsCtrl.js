@@ -1,15 +1,4 @@
-angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, addCardError, cardsList, rest, sweet, notif, forEach, Const, $location, $cookies) {
-    /*rest("paymentez/deleteCard/:cardReference").delete({cardReference: "12680100941731713551"}, function(data) {
-        console.log("data: ", data);
-    });*/
-
-
-
-
-
-
-
-
+angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, addCardError, cardsList, rest, sweet, notif, forEach, addPaymentezCard) {
     reviews.$promise.then(function(data) {
         $scope.gamerAverage = data.gamerAverage * 100.0 / 5.0;
         $scope.lenderAverage = data.lenderAverage * 100.0 / 5.0;
@@ -23,7 +12,7 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
     }
 
     cardsList.$promise.then(function(data) {
-        console.log("Card List: ", data);
+        $scope.cardsList = data;
     });
 
     $scope.numberCards = false;
@@ -52,36 +41,14 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
     }
 
     $scope.addCard = function() {
-        let today = new Date();
-        let token = "application_code=" + Const.paymentez.appCode +
-                    "&email=" + encodeURIComponent($rootScope.currentUser.username) +
-                    "&failure_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
-                    "&response_type=redirect" +
-                    "&session_id=" + $cookies.get(Const.cookieToken) +
-                    "&success_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
-                    "&uid=" + $rootScope.currentUser.id +
-                    "&" + today.getTime() +
-                    "&" + Const.paymentez.appKey;
-
-        let url = Const.paymentez.baseUrl + "/api/cc/add/?" +
-                "application_code=" + Const.paymentez.appCode +
-                "&uid=" + $rootScope.currentUser.id +
-                "&email=" + encodeURIComponent($rootScope.currentUser.username) +
-                "&session_id=" + $cookies.get(Const.cookieToken) +
-                "&auth_timestamp=" + today.getTime() +
-                "&auth_token=" + sha256(token) +
-                "&response_type=redirect" +
-                "&success_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
-                "&failure_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
-                "&buyer_phone=0998591484";
-
-        window.open(url, "_self");
+        addPaymentezCard();
     }
 
-    $scope.removeMethod = function(method) {
+    $scope.removeCard = function(card) {
         sweet.default("Se eliminará la forma de pago permanentemente", function() {
-            rest("publicUser/deletePaymentMethod/:subscriptionId").get({subscriptionId: method.id}, function(data) {
-                $rootScope.currentUser = data;
+            rest("paymentez/deleteCard/:cardReference").delete({cardReference: card.card_reference}, function() {
+                let index = $scope.cardsList.indexOf(card);
+                $scope.cardsList.splice(index, 1);
                 notif.success("Forma de pago eliminada con éxito");
                 sweet.close();
             }, function(error) {

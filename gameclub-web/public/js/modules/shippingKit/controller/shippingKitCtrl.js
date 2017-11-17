@@ -1,5 +1,4 @@
-angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope, $scope, notif, Const, $state, $filter, forEach, sweet, rest, $state, shippingKitValue) {
-
+angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope, $scope, shippingKitValue, addCardError, notif, Const, $state, $filter, forEach, sweet, rest, $state) {
     $scope.quantity = {
         value: 1,
         options: {
@@ -32,6 +31,10 @@ angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope,
         $scope.shippingKitValue = parseFloat(data.value);
         calculateTotalToPay();
     });
+
+    if (addCardError != null) {
+        $scope.addCardError = addCardError;
+    }
 
     $scope.amountBalance = 0;
     $scope.amountCard = 0;

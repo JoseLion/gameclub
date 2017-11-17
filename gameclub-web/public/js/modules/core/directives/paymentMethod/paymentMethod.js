@@ -1,4 +1,4 @@
-angular.module('Core').directive('paymentMethod', function(Const, notif, $rootScope, rest, forEach, sweet, $ocLazyLoad) {
+angular.module('Core').directive('paymentMethod', function(Const, notif, $rootScope, rest, forEach, sweet, $ocLazyLoad, addPaymentezCard) {
     $ocLazyLoad.load('js/modules/core/directives/paymentMethod/paymentMethod.less');
     
     return {
@@ -13,33 +13,46 @@ angular.module('Core').directive('paymentMethod', function(Const, notif, $rootSc
             cardSelected: '='
 		},
         link: function($scope, element, attrs, ctrl) {
+            if ($scope.cardsList == null) {
+                rest("paymentez/listCards", true).get(function(data) {
+                    $scope.cardsList = data;
+                });
+            }
+
             $scope.balance.options.onChange = function() {
                 if($scope.cardSelected != null && $scope.totalToPay - $scope.balance.value == 0) {
                     $scope.cardSelected.isSelected = false;
                     $scope.cardSelected = null;
                 }
             };
-            $scope.chooseCard = function(paymentMethod) {
-                forEach($scope.paymentMethods, function(value, key) {
-                    if(paymentMethod.id == value.id) {
-                        value.isSelected = true;
-                        $scope.cardSelected = value;
+
+            $scope.chooseCard = function(card) {
+                forEach($scope.cardsList, function(cc) {
+                    if (card.card_reference == cc.card_reference) {
+                        cc.isSelected = true;
+                        $scope.cardSelected = cc;
                     } else {
-                        value.isSelected = false;
+                        cc.isSelected = false;
                     }
                 });
             };
 
-            $scope.removeCard = function(paymentMethod) {
-                sweet.default('Esta acción eliminara la tarjeta asociada', function() {
-                    rest("publicUser/deletePaymentMethod/:subscriptionId").get({subscriptionId: paymentMethod.id}, function(data) {
-                        $rootScope.currentUser = data;
-                        notif.success(Const.messages.success);
+            $scope.addCard = function() {
+                addPaymentezCard();
+            }
+
+            $scope.deleteCard = function(card) {
+                sweet.default("Se eliminará la forma de pago permanentemente", function() {
+                    rest("paymentez/deleteCard/:cardReference").delete({cardReference: card.card_reference}, function() {
+                        let index = $scope.cardsList.indexOf(card);
+                        $scope.cardsList.splice(index, 1);
+                        notif.success("Forma de pago eliminada con éxito");
+                        sweet.close();
+                    }, function(error) {
                         sweet.close();
                     });
                 });
             }
-
         }
     };
 });

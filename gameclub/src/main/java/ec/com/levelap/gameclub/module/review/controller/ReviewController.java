@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
-import ec.com.levelap.gameclub.module.review.entity.Review;
 import ec.com.levelap.gameclub.module.review.service.ReviewService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
@@ -29,19 +28,10 @@ public class ReviewController {
 	@Autowired
 	private PublicUserService publicUserService;
 	
-	@RequestMapping(value="sendReview", method=RequestMethod.POST)
-	public ResponseEntity<Loan> sendReview(@RequestBody Review review) throws ServletException {
-		Loan loan = reviewService.sendReview(review);
-		loan = reviewService.acceptReview(loan.getReview().getId());
-		
-		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
+	@RequestMapping(value="save", method=RequestMethod.POST)
+	public ResponseEntity<Loan> save(@RequestBody Loan loan) throws ServletException {
+		return new ResponseEntity<Loan>(reviewService.save(loan), HttpStatus.OK);
 	}
-	
-	/*@RequestMapping(value="acceptReview/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Loan> acceptReview(@PathVariable Long id) throws ServletException {
-		Loan loan = reviewService.acceptReview(id);
-		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
-	}*/
 	
 	@RequestMapping(value="getReviewsOfCurrentUser/{page}", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getReviewsOfCurrentUser(@PathVariable Integer page) throws ServletException {

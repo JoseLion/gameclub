@@ -179,7 +179,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 	@Transactional
 	public void sendContactUs(ContactUs contactUs) throws ServletException, MessagingException {
 		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
+		mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
 		Map<String, String> params = new HashMap<>();
 		params.put("name", contactUs.name);
 		params.put("email", contactUs.email);
@@ -291,7 +291,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		publicUserRepo.save(publicUser);
 		
 		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
+		mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String, String> params = new HashMap<>();
 		params.put("name", publicUser.getName() + " " + publicUser.getLastName());

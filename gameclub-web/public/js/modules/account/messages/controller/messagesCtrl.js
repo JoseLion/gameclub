@@ -423,8 +423,6 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 				rest("restore/confirmLender").post($scope.loan.restore, function(data) {
 					$scope.loan = data;
-					console.log($scope.loan);
-					//$rootScope.currentUser.shownBalance += $scope.loan.;
 					$scope.loan.restore.isDisabled = true;
 					notif.success("Dirección de entrega confirmada");
 					sweet.close();
@@ -449,62 +447,17 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	}
 
 	$scope.sendReview = function() {
-		let isValid = true;
-
-		if ($scope.loan.review == null) {
-			isValid = false;
-		} else {
-			if ($scope.loan.gamer.id == $rootScope.currentUser.id) {
-				if ($scope.loan.review.lenderScore == null || $scope.loan.review.lenderScore < 1) {
-					notif.danger("Debes dar una calificación para continuar");
-					isValid = false;
-				}
-
-				if ($scope.loan.review.lenderComment == null || $scope.loan.review.lenderComment == '') {
-					notif.danger("Debes dejar un comentario para continuar");
-					isValid = false;
-				}
-			} else {
-				if ($scope.loan.review.gamerScore == null || $scope.loan.review.gamerScore < 1) {
-					notif.danger("Debes dar una calificación para continuar");
-					isValid = false;
-				}
-
-				if ($scope.loan.review.gamerComment == null || $scope.loan.review.gamerComment == '') {
-					notif.danger("Debes dejar un comentario para continuar");
-					isValid = false;
-				}
-			}
-		}
-
-		if (isValid) {
-			sweet.default("Se enviará tu calificación y comentario", function() {
-				$scope.loan.review.loan = {id: $scope.loan.id};
-
-				rest("review/sendReview").post($scope.loan.review, function(data) {
-					$scope.loan = data;
-					notif.success("Calificación enviada con éxito");
-					sweet.close();
-					canvasToBottom();
-				}, function(error) {
-					sweet.close();
-				});
-			});
-		}
-	}
-
-	/*$scope.acceptReview = function(id) {
-		sweet.default("El review aparecerá en tu perfíl público", function() {
-			rest("review/acceptReview/:id").get({id: id}, function(data) {
+		sweet.default("Se enviará tu calificación y comentario", function() {
+			rest("review/save").post($scope.loan, function(data) {
 				$scope.loan = data;
-				notif.success("Se ha aceptado el review con éxito");
+				notif.success("Calificación enviada con éxito");
 				sweet.close();
 				canvasToBottom();
 			}, function(error) {
 				sweet.close();
 			});
 		});
-	}*/
+	}
 
 	$scope.showLendDay = function(acceptedDate) {
 		let lendDay = new Date(acceptedDate);

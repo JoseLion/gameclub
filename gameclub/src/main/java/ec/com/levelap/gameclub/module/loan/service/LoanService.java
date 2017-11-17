@@ -21,28 +21,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
-import ec.com.levelap.commons.catalog.CatalogRepo;
+import ec.com.levelap.commons.catalog.CatalogService;
 import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.fine.entity.Fine;
-import ec.com.levelap.gameclub.module.fine.repository.FineRepo;
+import ec.com.levelap.gameclub.module.fine.service.FineService;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.message.entity.Message;
-import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
-import ec.com.levelap.gameclub.module.restore.repository.RestoreRepo;
+import ec.com.levelap.gameclub.module.restore.service.RestoreService;
 import ec.com.levelap.gameclub.module.settings.service.SettingService;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
-import ec.com.levelap.gameclub.module.transaction.repository.TransactionRepo;
+import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
-import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
@@ -52,10 +49,7 @@ import ec.com.levelap.mail.MailParameters;
 import ec.com.levelap.taskScheduler.LevelapTaskScheduler;
 
 @Service
-public class LoanService extends BaseService<Loan> {
-	public LoanService() {
-		super(Loan.class);
-	}
+public class LoanService {
 
 	@Autowired
 	private LoanRepo loanRepo;
@@ -67,16 +61,13 @@ public class LoanService extends BaseService<Loan> {
 	private PublicUserService publicUserService;
 
 	@Autowired
-	private PublicUserGameRepo publicUserGameRepo;
+	private CatalogService catalogService;
 
 	@Autowired
-	private CatalogRepo catalogRepo;
+	private RestoreService restoreService;
 
 	@Autowired
-	private RestoreRepo restoreRepo;
-
-	@Autowired
-	private FineRepo fineRepo;
+	private FineService fineService;
 
 	@Autowired
 	private SettingService settingService;
@@ -87,17 +78,17 @@ public class LoanService extends BaseService<Loan> {
 	@Autowired
 	private MailService mailService;
 
-	@Value("${game-club.real-times}")
-	private boolean realTimes;
-
 	@Autowired
 	private LevelapCryptography cryptoService;
 
 	@Autowired
-	private TransactionRepo transactionRepo;
+	private TransactionService transactionService;
 
 	@Autowired
 	private KushkiService kushkiService;
+	
+	@Value("${game-club.real-times}")
+	private boolean realTimes;
 
 	@Transactional
 	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart, Double shippingCost, Double feeGameClub, Double taxes)
@@ -135,7 +126,7 @@ public class LoanService extends BaseService<Loan> {
 		
 		System.out.println(loan.getCost() + " " + loan.getShippningCost() + " " + loan.getFeeGameClub() + " " + loan.getTaxes());
 
-		PublicUserGame cross = publicUserGameRepo.findOne(loan.getPublicUserGame().getId());
+		PublicUserGame cross = publicUserService.getPublicUserGameRepo().findOne(loan.getPublicUserGame().getId());
 		loan.setPublicUserGame(cross);
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
@@ -157,7 +148,7 @@ public class LoanService extends BaseService<Loan> {
 			loan.setAcceptedDate(new Date());
 			PublicUserGame publicUserGame = loan.getPublicUserGame();
 			publicUserGame.setIsBorrowed(Boolean.TRUE);
-			publicUserGame = publicUserGameRepo.save(publicUserGame);
+			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
 			loan.setPublicUserGame(publicUserGame);
 		}
 
@@ -168,13 +159,11 @@ public class LoanService extends BaseService<Loan> {
 
 		return loan;
 	}
-
-	// TODO
+	
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Loan confirmLoan(Loan loan, boolean isGamer)
-			throws ServletException, KushkiException, GeneralSecurityException, IOException {
-		Catalog noTracking = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
+	public Loan confirmLoan(Loan loan, boolean isGamer) throws ServletException, KushkiException, GeneralSecurityException, IOException {
+		Catalog noTracking = catalogService.getCatalogRepo().findByCode(Code.SHIPPING_NO_TRACKING);
 		loan.setShippingStatus(noTracking);
 
 		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
@@ -213,7 +202,7 @@ public class LoanService extends BaseService<Loan> {
 			Transaction transaction = new Transaction(connected, "JUGASTE",
 					loan.getPublicUserGame().getGame().getName(), loan.getWeeks(), null, loan.getBalancePartEnc(),
 					loan.getCardPartEnc());
-			transactionRepo.save(transaction);
+			transactionService.getTransactionRepo().save(transaction);
 
 		} else {
 			loan.setLenderConfirmed(Boolean.TRUE);
@@ -227,19 +216,17 @@ public class LoanService extends BaseService<Loan> {
 					loan.getWeeks(), cryptoService
 							.encrypt(Double.toString(loan.getPublicUserGame().getCost() * loan.getWeeks()), keyLender),
 					null, null);
-			transactionRepo.save(transaction);
+			transactionService.getTransactionRepo().save(transaction);
 
 		}
 		loan = loanRepo.save(loan);
 		
 		return loan;
 	}
-
-	// TODO
+	
 	@Transactional
 	public LoanLite save(Loan loan) throws ServletException, GeneralSecurityException, IOException, KushkiException {
 		Loan previous = loanRepo.findOne(loan.getId());
-		MessageRepo repoMessage = ApplicationContextHolder.getContext().getBean(MessageRepo.class);
 
 		if (!loan.getShippingStatus().equals(previous.getShippingStatus()) || (loan.getShippingNote() != null
 				&& !loan.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
@@ -262,102 +249,12 @@ public class LoanService extends BaseService<Loan> {
 				publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(),
 						loan.getPublicUserGame().getCost());
 			}
-
-			final Loan taskLoan = loan;
-			Calendar calendar = Calendar.getInstance();
+			
 			loan.setDeliveryDate(new Date());
 
-			if (realTimes) {
-				calendar.setTime(loan.getReturnDate());
-				calendar.add(Calendar.DATE, -3);
-			} else {
-				calendar.setTime(loan.getDeliveryDate());
-				calendar.add(Calendar.MINUTE, 1);
-			}
-
-			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(),
-					Loan.class.getSimpleName() + "-R1-" + loan.getId(), new Runnable() {
-						@Override
-						public void run() {
-							Catalog noTracking = catalogRepo.findByCode(Code.SHIPPING_NO_TRACKING);
-							Restore restore = new Restore(taskLoan);
-							taskLoan.getLenderMessage().setRead(Boolean.FALSE);
-							restore.setLenderMessage(taskLoan.getLenderMessage());
-							taskLoan.getGamerMessage().setRead(Boolean.FALSE);
-							restore.setGamerMessage(taskLoan.getGamerMessage());
-							restore.setPublicUserGame(taskLoan.getPublicUserGame());
-							restore.setGamer(taskLoan.getGamer());
-							restore.setShippingStatus(noTracking);
-
-							restoreRepo.save(restore);
-							repoMessage.save(restore.getLoan().getGamerMessage());
-							repoMessage.save(restore.getLoan().getLenderMessage());
-
-							try {
-								sendRemindingMails(taskLoan, false);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					});
-
-			if (realTimes) {
-				calendar.setTime(loan.getReturnDate());
-				calendar.add(Calendar.DATE, -1);
-			} else {
-				calendar.setTime(loan.getDeliveryDate());
-				calendar.add(Calendar.MINUTE, 2);
-			}
-
-			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(),
-					Loan.class.getSimpleName() + "-R2-" + loan.getId(), new Runnable() {
-						@Override
-						public void run() {
-							try {
-								sendRemindingMails(taskLoan, true);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					});
-
-			levelapTaskScheduler.scheduleTaskAtDate(loan.getReturnDate(),
-					Loan.class.getSimpleName() + "-R3-" + loan.getId(), new Runnable() {
-						@Override
-						public void run() {
-							try {
-								Restore restore = restoreRepo.findByLoan(taskLoan);
-
-								if (!restore.getGamerConfirmed()) {
-									restore.setGamerAddress(taskLoan.getGamerAddress());
-									restore.setGamerGeolocation(taskLoan.getGamerGeolocation());
-									restore.setGamerReceiver(taskLoan.getGamerReceiver());
-									restore.setGamerConfirmDate(new Date());
-								}
-
-								if (!restore.getLenderConfirmed()) {
-									restore.setLenderAddress(taskLoan.getLenderAddress());
-									restore.setLenderGeolocation(taskLoan.getLenderGeolocation());
-									restore.setLenderReceiver(taskLoan.getLenderReceiver());
-									restore.setLenderConfirmDate(new Date());
-								}
-
-								if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
-									restore = restoreRepo.save(restore);
-								}
-
-								restore.getLoan().getGamerMessage().setRead(false);
-								restore.getLoan().getLenderMessage().setRead(false);
-
-								messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
-								messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
-
-								sendFinishedMails(restore);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					});
+			scheduleThreeDaysBefore(loan);
+			scheduleOneDayBefore(loan);
+			scheduleOnFinishDay(loan);
 		} else {
 			createFines(loan);
 		}
@@ -367,193 +264,160 @@ public class LoanService extends BaseService<Loan> {
 
 		return loanLite;
 	}
+	
+	@Transactional
+	private void scheduleThreeDaysBefore(final Loan loan) {
+		Calendar calendar = Calendar.getInstance();
+		
+		if (realTimes) {
+			calendar.setTime(loan.getReturnDate());
+			calendar.add(Calendar.DATE, -3);
+		} else {
+			calendar.setTime(loan.getDeliveryDate());
+			calendar.add(Calendar.MINUTE, 1);
+		}
+
+		levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(), Loan.class.getSimpleName() + "-R1-" + loan.getId(), new Runnable() {
+			@Override
+			public void run() {
+				Catalog noTracking = catalogService.getCatalogRepo().findByCode(Code.SHIPPING_NO_TRACKING);
+				Restore restore = new Restore(loan);
+				loan.getLenderMessage().setRead(Boolean.FALSE);
+				restore.setLenderMessage(loan.getLenderMessage());
+				loan.getGamerMessage().setRead(Boolean.FALSE);
+				restore.setGamerMessage(loan.getGamerMessage());
+				restore.setPublicUserGame(loan.getPublicUserGame());
+				restore.setGamer(loan.getGamer());
+				restore.setShippingStatus(noTracking);
+
+				restoreService.getRestoreRepo().save(restore);
+				messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
+				messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
+
+				try {
+					sendRemindingMails(loan, false);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	@Transactional
+	private void scheduleOneDayBefore(final Loan loan) {
+		Calendar calendar = Calendar.getInstance();
+		
+		if (realTimes) {
+			calendar.setTime(loan.getReturnDate());
+			calendar.add(Calendar.DATE, -1);
+		} else {
+			calendar.setTime(loan.getDeliveryDate());
+			calendar.add(Calendar.MINUTE, 2);
+		}
+
+		levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(), Loan.class.getSimpleName() + "-R2-" + loan.getId(), new Runnable() {
+			@Override
+			public void run() {
+				try {
+					sendRemindingMails(loan, true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	@Transactional
+	private void scheduleOnFinishDay(final Loan loan) {
+		levelapTaskScheduler.scheduleTaskAtDate(loan.getReturnDate(), Loan.class.getSimpleName() + "-R3-" + loan.getId(), new Runnable() {
+			@Override
+			public void run() {
+				Restore restore = restoreService.getRestoreRepo().findByLoan(loan);
+				
+				restore.getLoan().getGamerMessage().setRead(false);
+				restore.getLoan().getLenderMessage().setRead(false);
+
+				messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
+				messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
+				
+				if (!restore.getGamerConfirmed().booleanValue()) {
+					restore.setGamerAddress(loan.getGamerAddress());
+					restore.setGamerGeolocation(loan.getGamerGeolocation());
+					restore.setGamerReceiver(loan.getGamerReceiver());
+					restore.setGamerConfirmDate(new Date());
+					restore = restoreService.getRestoreRepo().save(restore);
+				}
+				
+				if (!restore.getLenderConfirmed().booleanValue()) {
+					restore.setLenderAddress(loan.getLenderAddress());
+					restore.setLenderGeolocation(loan.getLenderGeolocation());
+					restore.setLenderReceiver(loan.getLenderReceiver());
+					restore.setLenderConfirmDate(new Date());
+					restore = restoreService.getRestoreRepo().save(restore);
+				}
+				
+				try {
+					sendFinishedMails(restore);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	@Transactional
 	public void rescheduleTasks() {
-		LoanRepo repoLoan = ApplicationContextHolder.getContext().getBean(LoanRepo.class);
-		RestoreRepo repoRestore = ApplicationContextHolder.getContext().getBean(RestoreRepo.class);
-		CatalogRepo repoCatalog = ApplicationContextHolder.getContext().getBean(CatalogRepo.class);
-		MessageRepo repoMessage = ApplicationContextHolder.getContext().getBean(MessageRepo.class);
-		List<Loan> loans = repoLoan.findByShippingStatusCode(Code.SHIPPING_DELIVERED);
+		if (loanRepo == null) {
+			loanRepo = ApplicationContextHolder.getContext().getBean(LoanRepo.class);
+		}
+		
+		if (restoreService == null) {
+			restoreService = ApplicationContextHolder.getContext().getBean(RestoreService.class);
+		}
+		
+		if (catalogService == null) {
+			catalogService = ApplicationContextHolder.getContext().getBean(CatalogService.class);
+		}
+		
+		if (messageService == null) {
+			messageService = ApplicationContextHolder.getContext().getBean(MessageService.class);
+		}
+		
+		
+		List<Loan> loans = loanRepo.findByShippingStatusCode(Code.SHIPPING_DELIVERED);
 		Date today = new Date();
 		Calendar threeDays = Calendar.getInstance();
 		Calendar oneDay = Calendar.getInstance();
 
 		for (Loan loan : loans) {
-			threeDays.setTime(loan.getReturnDate());
-			threeDays.add(Calendar.DATE, -3);
-			oneDay.setTime(loan.getReturnDate());
-			oneDay.add(Calendar.DATE, -1);
+			if (realTimes) {
+				threeDays.setTime(loan.getReturnDate());
+				threeDays.add(Calendar.DATE, -3);
+				oneDay.setTime(loan.getReturnDate());
+				oneDay.add(Calendar.DATE, -1);
+			} else {
+				threeDays.setTime(loan.getDeliveryDate());
+				threeDays.add(Calendar.MINUTE, 1);
+				oneDay.setTime(loan.getDeliveryDate());
+				oneDay.add(Calendar.MINUTE, 2);
+			}
 
 			if (today.before(threeDays.getTime())) {
-				levelapTaskScheduler.scheduleTaskAtDate(threeDays.getTime(),
-						Loan.class.getSimpleName() + "-R1-" + loan.getId(), new Runnable() {
-							@Override
-							public void run() {
-								Catalog noTracking = repoCatalog.findByCode(Code.SHIPPING_NO_TRACKING);
-								Restore restore = new Restore(loan);
-								restore.getGamerMessage().setRead(Boolean.FALSE);
-								restore.setLenderMessage(loan.getLenderMessage());
-								
-								restore.getLenderMessage().setRead(Boolean.FALSE);
-								restore.setGamerMessage(loan.getGamerMessage());
-								restore.setPublicUserGame(loan.getPublicUserGame());
-								restore.setGamer(loan.getGamer());
-								restore.setShippingStatus(noTracking);
-
-								
-								repoRestore.save(restore);
-								repoMessage.save(restore.getLoan().getGamerMessage());
-								repoMessage.save(restore.getLoan().getLenderMessage());
-
-								try {
-									sendRemindingMails(loan, false);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						});
-
-				levelapTaskScheduler.scheduleTaskAtDate(oneDay.getTime(),
-						Loan.class.getSimpleName() + "-R2-" + loan.getId(), new Runnable() {
-							@Override
-							public void run() {
-								try {
-									sendRemindingMails(loan, true);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						});
-
-				levelapTaskScheduler.scheduleTaskAtDate(loan.getReturnDate(),
-						Loan.class.getSimpleName() + "-R3-" + loan.getId(), new Runnable() {
-							@Override
-							public void run() {
-								try {
-									Restore restore = repoRestore.findByLoan(loan);
-
-									if (!restore.getGamerConfirmed()) {
-										restore.setGamerAddress(loan.getGamerAddress());
-										restore.setGamerGeolocation(loan.getGamerGeolocation());
-										restore.setGamerReceiver(loan.getGamerReceiver());
-										restore.setGamerConfirmDate(new Date());
-									}
-
-									if (!restore.getLenderConfirmed()) {
-										restore.setLenderAddress(loan.getLenderAddress());
-										restore.setLenderGeolocation(loan.getLenderGeolocation());
-										restore.setLenderReceiver(loan.getLenderReceiver());
-										restore.setLenderConfirmDate(new Date());
-									}
-
-									if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
-										restore = repoRestore.save(restore);
-									}
-
-									restore.getLoan().getGamerMessage().setRead(false);
-									restore.getLoan().getLenderMessage().setRead(false);
-
-									repoMessage.save(restore.getLoan().getGamerMessage());
-									repoMessage.save(restore.getLoan().getLenderMessage());
-
-									sendFinishedMails(restore);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						});
+				scheduleThreeDaysBefore(loan);
+				scheduleOneDayBefore(loan);
+				scheduleOnFinishDay(loan);
+				return;
 			}
 
 			if (today.before(oneDay.getTime()) && today.after(threeDays.getTime())) {
-				levelapTaskScheduler.scheduleTaskAtDate(oneDay.getTime(),
-						Loan.class.getSimpleName() + "-R2-" + loan.getId(), new Runnable() {
-							@Override
-							public void run() {
-								try {
-									sendRemindingMails(loan, true);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						});
-
-				levelapTaskScheduler.scheduleTaskAtDate(loan.getReturnDate(),
-						Loan.class.getSimpleName() + "-R3-" + loan.getId(), new Runnable() {
-							@Override
-							public void run() {
-								try {
-									Restore restore = repoRestore.findByLoan(loan);
-
-									if (!restore.getGamerConfirmed()) {
-										restore.setGamerAddress(loan.getGamerAddress());
-										restore.setGamerGeolocation(loan.getGamerGeolocation());
-										restore.setGamerReceiver(loan.getGamerReceiver());
-										restore.setGamerConfirmDate(new Date());
-									}
-
-									if (!restore.getLenderConfirmed()) {
-										restore.setLenderAddress(loan.getLenderAddress());
-										restore.setLenderGeolocation(loan.getLenderGeolocation());
-										restore.setLenderReceiver(loan.getLenderReceiver());
-										restore.setLenderConfirmDate(new Date());
-									}
-
-									if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
-										restore = repoRestore.save(restore);
-									}
-
-									restore.getLoan().getGamerMessage().setRead(false);
-									restore.getLoan().getLenderMessage().setRead(false);
-
-									repoMessage.save(restore.getLoan().getGamerMessage());
-									repoMessage.save(restore.getLoan().getLenderMessage());
-
-									sendFinishedMails(restore);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						});
+				scheduleOneDayBefore(loan);
+				scheduleOnFinishDay(loan);
+				return;
 			}
 
 			if (today.before(loan.getReturnDate()) && today.after(oneDay.getTime())) {
-				levelapTaskScheduler.scheduleTaskAtDate(loan.getReturnDate(),
-						Loan.class.getSimpleName() + "-R3-" + loan.getId(), new Runnable() {
-							@Override
-							public void run() {
-								try {
-									Restore restore = repoRestore.findByLoan(loan);
-									restore.getLoan().getGamerMessage().setRead(false);
-									restore.getLoan().getLenderMessage().setRead(false);
-
-									if (!restore.getGamerConfirmed()) {
-										restore.setGamerAddress(loan.getGamerAddress());
-										restore.setGamerGeolocation(loan.getGamerGeolocation());
-										restore.setGamerReceiver(loan.getGamerReceiver());
-										restore.setGamerConfirmDate(new Date());
-									}
-
-									if (!restore.getLenderConfirmed()) {
-										restore.setLenderAddress(loan.getLenderAddress());
-										restore.setLenderGeolocation(loan.getLenderGeolocation());
-										restore.setLenderReceiver(loan.getLenderReceiver());
-										restore.setLenderConfirmDate(new Date());
-									}
-
-									if (!restore.getGamerConfirmed() || !restore.getLenderConfirmed()) {
-										restore = repoRestore.save(restore);
-									}
-
-									repoMessage.save(restore.getLoan().getGamerMessage());
-									repoMessage.save(restore.getLoan().getLenderMessage());
-
-									sendFinishedMails(restore);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						});
+				scheduleOnFinishDay(loan);
+				return;
 			}
 		}
 	}
@@ -611,8 +475,7 @@ public class LoanService extends BaseService<Loan> {
 			mailService.sendMailWihTemplate(mailParameters, "MSGGUR", params);
 		}
 	}
-
-	// TODO
+	
 	@SuppressWarnings("unchecked")
 	@Transactional
 	private void createFines(Loan loan) throws ServletException, GeneralSecurityException, IOException, KushkiException {
@@ -626,7 +489,7 @@ public class LoanService extends BaseService<Loan> {
 
 		Transaction transaction;
 
-		Catalog shippingStatus = catalogRepo.findByCode(loan.getShippingStatus().getCode());
+		Catalog shippingStatus = catalogService.getCatalogRepo().findByCode(loan.getShippingStatus().getCode());
 
 		Double totalToDebit = loan.getPublicUserGame().getCost() * loan.getWeeks();
 		if (shippingStatus.getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
@@ -652,7 +515,7 @@ public class LoanService extends BaseService<Loan> {
 			}
 
 			loan.getPublicUserGame().setIsBorrowed(Boolean.FALSE);
-			loan.setPublicUserGame(publicUserGameRepo.save(loan.getPublicUserGame()));
+			loan.setPublicUserGame(publicUserService.getPublicUserGameRepo().save(loan.getPublicUserGame()));
 
 			Double shippingCost = loan.getCost() - (loan.getPublicUserGame().getCost() * loan.getWeeks());
 
@@ -660,15 +523,15 @@ public class LoanService extends BaseService<Loan> {
 			fine.setOwner(loan.getPublicUserGame().getPublicUser());
 			fine.setAmountEnc(cryptoService.encrypt(Double.toString(shippingCost), keyLender));
 			fine.setDescription(shippingStatus.getName());
-			fineRepo.save(fine);
+			fineService.getFineRepo().save(fine);
 
 			transaction = new Transaction(gamer, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
 					loan.getWeeks(), cryptoService.encrypt(Double.toString((loan.getCost())), keyGamer), null, null);
-			transactionRepo.save(transaction);
+			transactionService.getTransactionRepo().save(transaction);
 
 			transaction = new Transaction(lender, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
 					loan.getWeeks(), null, toBalance, toCard);
-			transactionRepo.save(transaction);
+			transactionService.getTransactionRepo().save(transaction);
 
 		} else if (shippingStatus.getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)) {
 			Double value = Double.valueOf(settingService.getSettingValue(Code.SETTING_GAMER_DIDNT_RECEIVE));
@@ -677,12 +540,12 @@ public class LoanService extends BaseService<Loan> {
 
 			transaction = new Transaction(gamer, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
 					loan.getWeeks(), cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer), null, null);
-			transactionRepo.save(transaction);
+			transactionService.getTransactionRepo().save(transaction);
 
 			transaction = new Transaction(gamer, "MULTA - " + shippingStatus.getName(),
 					loan.getPublicUserGame().getGame().getName(), loan.getWeeks(), null,
 					cryptoService.encrypt(Double.toString(value), keyGamer), null);
-			transactionRepo.save(transaction);
+			transactionService.getTransactionRepo().save(transaction);
 
 			Double totalBalanceLender = lender.getShownBalance() - totalToDebit;
 			byte[] toBalance = null;
@@ -704,11 +567,11 @@ public class LoanService extends BaseService<Loan> {
 			}
 			transaction = new Transaction(lender, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
 					loan.getWeeks(), null, toBalance, toCard);
-			transactionRepo.save(transaction);
+			transactionService.getTransactionRepo().save(transaction);
 
 			transaction = new Transaction(lender, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
 					loan.getWeeks(), cryptoService.encrypt(Double.toString(value), keyLender), null, null);
-			transactionRepo.save(transaction);
+			transactionService.getTransactionRepo().save(transaction);
 
 		}
 	}

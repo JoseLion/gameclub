@@ -321,21 +321,28 @@
 								<div ng-if="loan.restore.shippingNote != null && loan.restore.shippingNote != ''">
 									<span>Observaciones: </span><span class="text-black">{{loan.restore.shippingNote}}</span>
 								</div>
-								<form ng-if="loan.restore.shippingStatus.code == Const.code.shippingDelivered">
+								<form on-submit="sendReview()" novalidate ng-if="loan.restore.shippingStatus.code == Const.code.shippingDelivered">
 									<br>
 									<br>
-									<span>Califica a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}. por este préstamo: </span><score ng-model="loan.review.lenderScore" ng-disabled="loan.review.lenderReviwedOn"></score>
+									<span>Califica a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}. por este préstamo: </span>
+									<span class="valid-group">
+										<label ng-show="false">Calificación</label>
+										<score validation ng-model="loan.review.lenderScore" ng-disabled="loan.review.lenderReviewDate" required></score>
+									</span>
 									<br>
 									<span>y escribe una opinion:</span>
 									<br>
-									<textarea type="text" class="review-comment" ng-model="loan.review.lenderComment" rows="3" ng-disabled="loan.lenderReviwedOn"></textarea>
+									<span class="valid-group">
+										<label ng-show="false">Comentario</label>
+										<textarea validation type="text" class="review-comment" ng-model="loan.review.lenderComment" rows="3" ng-disabled="loan.lenderReviewDate" required></textarea>
+									</span>
 									<br>
-									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="sendReview()" ng-if="!loan.review.lenderReviwedOn">Validar Calificación</button>
+									<button type="submit" class="btn btn-xs btn-tertiary full" ng-if="!loan.review.lenderReviewDate">Validar Calificación</button>
 								</form>
 							</div>
 
-							<div class="date" ng-if="loan.review.lenderReviwedOn">{{loan.review.lenderReviwedOn | date: 'dd/MM/yy - HH:mm'}}</div>
-							<div class="blue-box small-box text-center" ng-if="loan.review.lenderReviwedOn">
+							<div class="date" ng-if="loan.review.lenderReviewDate">{{loan.review.lenderReviewDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="loan.review.lenderReviewDate">
 								<div class="box-label col-md-12">
 									<span>OK</span>
 								</div>
@@ -343,31 +350,14 @@
 								<div class="clearfix"></div>
 							</div>
 
-							<div class="date" ng-if="loan.review.finished">{{loan.review.gamerReviwedOn | date: 'dd/MM/yy - HH:mm'}}</div>
-							<div class="red-box medium-box" ng-if="loan.review.finished">
+							<div class="date" ng-if="loan.review.gamerScore && loan.review.lenderReviewDate">{{loan.review.gamerReviewDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box medium-box" ng-if="loan.review.gamerScore && loan.review.lenderReviewDate">
 								<span>{{loan.publicUserGame.publicUser.name}} te dio una calificación de: </span><score ng-model="loan.review.gamerScore" disabled></score>
 								<br>
 								<span>y escribió una opinión:</span>
 								<br>
 								<span class="text-black">{{loan.review.gamerComment}}</span>
-								<!-- <br>
-								<br>
-								<span>Una vez aceptado el review este aparecerá en tu perfil.</span>
-								<br>
-								<span>Puedes ignorarlo y no aparecerá en tu perfil o denunciarlo.</span>
-								<br>
-								<br>
-								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptReview(loan.review.id)" ng-if="loan.review.gamerAccepted == null">Aceptar review</button> -->
 							</div>
-
-							<!-- <div class="date" ng-if="loan.review.gamerAccepted == true">{{loan.review.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
-							<div class="blue-box small-box text-center" ng-if="loan.review.gamerAccepted == true">
-								<div class="box-label col-md-12">
-									<span>Review aceptado</span>
-								</div>
-
-								<div class="clearfix"></div>
-							</div> -->
 						</div>
 						<!-- ************************ END - GAMER MESSAGE FLOW ************************ -->
 
@@ -604,21 +594,28 @@
 								<div ng-if="loan.restore.shippingNote != null && loan.restore.shippingNote != ''">
 									<span>Observaciones: </span><span class="text-black">{{loan.restore.shippingNote}}</span>
 								</div>
-								<form ng-if="loan.restore.shippingStatus.code == Const.code.shippingDelivered">
+								<form on-submit="sendReview()" novalidate ng-if="loan.restore.shippingStatus.code == Const.code.shippingDelivered">
 									<br>
 									<br>
-									<span>Califica a {{loan.gamer.name}} {{loan.gamer.lastName | limitTo: 1}}. por este préstamo: </span><score ng-model="loan.review.gamerScore" ng-disabled="loan.review.gamerReviwedOn"></score>
+									<span>Califica a {{loan.gamer.name}} {{loan.gamer.lastName | limitTo: 1}}. por este préstamo: </span>
+									<span class="valid-group">
+										<label ng-show="false">Calificación</label>
+										<score validation ng-model="loan.review.gamerScore" ng-disabled="loan.review.gamerReviewDate" required></score>
+									</span>
 									<br>
 									<span>y escribe una opinion:</span>
 									<br>
-									<textarea type="text" class="review-comment" ng-model="loan.review.gamerComment" rows="3" ng-disabled="loan.review.gamerReviwedOn"></textarea>
+									<span class="valid-group">
+										<label ng-show="false">Comentario</label>
+										<textarea validation type="text" class="review-comment" ng-model="loan.review.gamerComment" rows="3" ng-disabled="loan.review.gamerReviewDate" required></textarea>
+									</span>
 									<br>
-									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="sendReview()" ng-if="!loan.review.gamerReviwedOn">Validar Calificación</button>
+									<button type="submit" class="btn btn-xs btn-tertiary full" ng-if="!loan.review.gamerReviewDate">Validar Calificación</button>
 								</form>
 							</div>
 
-							<div class="date" ng-if="loan.review.gamerReviwedOn">{{loan.review.gamerReviwedOn | date: 'dd/MM/yy - HH:mm'}}</div>
-							<div class="blue-box small-box text-center" ng-if="loan.review.gamerReviwedOn">
+							<div class="date" ng-if="loan.review.gamerReviewDate">{{loan.review.gamerReviewDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="loan.review.gamerReviewDate">
 								<div class="box-label col-md-12">
 									<span>OK</span>
 								</div>
@@ -626,30 +623,14 @@
 								<div class="clearfix"></div>
 							</div>
 
-							<div class="date" ng-if="loan.review.finished">{{loan.review.lenderReviwedOn | date: 'dd/MM/yy - HH:mm'}}</div>
-							<div class="red-box medium-box" ng-if="loan.review.finished">
+							<div class="date" ng-if="loan.review.lenderScore && loan.review.gamerReviewDate">{{loan.review.lenderReviewDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box medium-box" ng-if="loan.review.lenderScore && loan.review.gamerReviewDate">
 								<span>{{loan.gamer.name}} te dio una calificación de: </span><score ng-model="loan.review.lenderScore" disabled></score>
 								<br>
 								<span>y escribió una opinión:</span>
 								<br>
 								<span class="text-black">{{loan.review.lenderComment}}</span>
-								<!-- <br>
-								<br>
-								<span>Una vez aceptado el review este aparecerá en tu perfil.</span>
-								<br>
-								<span>Puedes ignorarlo y no aparecerá en tu perfil o denunciarlo.</span>
-								<br>
-								<br>
-								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptReview(loan.review.id)" ng-if="loan.review.lenderAccepted == null">Aceptar review</button> -->
 							</div>
-							<!-- <div class="date" ng-if="loan.review.lenderAccepted == true">{{loan.review.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
-							<div class="blue-box small-box text-center" ng-if="loan.review.lenderAccepted == true">
-								<div class="box-label col-md-12">
-									<span>Review aceptado</span>
-								</div>
-
-								<div class="clearfix"></div>
-							</div> -->
 						</div>
 						<!-- ************************ END - LENDER MESSAGE FLOW ************************ -->
 					</div>

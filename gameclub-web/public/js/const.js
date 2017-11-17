@@ -90,6 +90,12 @@ angular.module('GameClub').constant('Const', {
 	google: {
 		maps: "AIzaSyBiUXqwBImDoqoRBlvtAAVgnkP5yjMVwyY",
 		geolocation: "AIzaSyBC8pBwfSjl2ZTdN3dgByX__iOYGu8tlgU"
+	},
+
+	paymentez: {
+		baseUrl: "https://ccapi-stg.paymentez.com",
+		appCode: "TOMO-EC",
+		appKey: "LeqWG1P48IC8Cfj99DPW6rLGnh5wSC"
 	}
 
 });

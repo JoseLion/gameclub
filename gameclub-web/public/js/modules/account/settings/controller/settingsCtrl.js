@@ -1,7 +1,7 @@
 angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, addCardError, cardsList, rest, sweet, notif, forEach, Const, $location, $cookies) {
-    rest("paymentez/deleteCard/:cardReference").delete({cardReference: "12680100941731713551"}, function(data) {
+    /*rest("paymentez/deleteCard/:cardReference").delete({cardReference: "12680100941731713551"}, function(data) {
         console.log("data: ", data);
-    });
+    });*/
 
 
 

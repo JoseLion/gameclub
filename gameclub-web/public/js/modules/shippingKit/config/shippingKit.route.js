@@ -12,7 +12,7 @@ angular.module('ShippingKit').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'ShippingKit',
-					files: ['js/modules/shippingKit/controller/shippingKitCtrl.js', 'js/modules/shippingKit/style/shippingKit.less']
+					files: ['js/modules/shippingKit/controller/shippingKitCtrl.js', 'js/modules/shippingKit/style/shippingKit.less', 'js/modules/shippingKit/style/shippingKit.responsive.less']
 				}]);
 			},
 

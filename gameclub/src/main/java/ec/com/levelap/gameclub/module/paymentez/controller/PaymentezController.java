@@ -19,6 +19,8 @@ import org.springframework.web.client.RestClientException;
 
 import ec.com.levelap.gameclub.module.paymentez.service.PaymentezService;
 
+
+
 @RestController
 @RequestMapping(value="api/paymentez", produces=MediaType.APPLICATION_JSON_VALUE)
 public class PaymentezController {

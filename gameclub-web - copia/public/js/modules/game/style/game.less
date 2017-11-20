@@ -1,0 +1,118 @@
+@import url("/css/variables.less");
+
+#game section.banner{padding-top:20%;position:relative;background-color:@color-secundary-alt;}
+#game section.banner>div{position:absolute;width:100%;height:100%;opacity:0.5;top:0;right:0;bottom:0;left:0;}
+#game section.banner::after{content:"";position:absolute;display:block;background:@color-secundary-30;top:0;right:0;bottom:0;left:0;}
+#game section.header{background:@color-tertiary-alt;}
+#game section.header .cover{margin-top:-7em;}
+#game section.header .cover #game-rating{width:80%;margin:auto;}
+#game section.header .cover #game-rating .game-container .background::after{cursor:default;}
+#game section.header .cover #game-rating .game-container .background:hover::before{background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
+#game section.header .principal{padding:0;}
+#game section.header .principal .title{text-transform:none;font-size:1.2em;font-weight:700;margin-top:0.5em;margin-bottom:0;padding:0;font-family:@font-family-jaapokki;letter-spacing:1px;}
+#game section.header .principal .rating-container{padding:0;}
+#game section.header .principal .rating-container i::before{font-size:1.2em;color:@color-primary-s;}
+#game section.header .principal .rating-container i.yes::before{-webkit-text-fill-color:transparent;background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
+#game section.header .principal .video{padding:0;font-family:@font-family-jaapokki;font-size:1.2em;}
+#game section.header .principal .video i::before{font-size:1.6em;-webkit-text-fill-color:transparent;background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
+#game section.header .rating{margin-top:-5em;}
+#game section.header .rating .content-rating img{height:4em;margin-bottom:1em;}
+#game section.header .rating .platform img{height:1.7em;}
+#game.my-game section.header .rating .platform .selector{width:75%;margin-left:auto;position:relative;}
+#game.my-game section.header .rating .platform .selector::before{content:"";border-bottom:2px solid @color-secundary;position:absolute;left:0;right:0;bottom:20%;}
+#game section.header .rating .platform{height:3em;}
+#game section.header .rating .platform .selector .ui-select-match-text img{height:1.5em;right:15px;}
+#game section.header .rating .platform .selector i.caret.pull-right{color:@color-secundary;}
+#game section.header .rating .category{display:inline-block;width:15%;height:auto;border:2px solid @color-primary;border-radius:50%;padding:unset;float:right;margin:0% 1%;}
+#game section.header .rating .category img{width:100%;height:auto;padding:15%;}
+#game section.header .rating>div{margin-bottom:1em;}
+
+#game section.information{color:@color-secundary;background:@color-tertiary-alt;padding-bottom:1em;}
+#game section.information .data .subtitle{color:@color-primary-alt;padding-left:1.5em;font-family:@font-family-jaapokki;font-size:1.4em;text-transform:uppercase;position:relative;margin-bottom:1em;}
+#game section.information .data .subtitle::after{content:"";position:absolute;width:3em;left:0;bottom:0;border-bottom:2px solid @color-primary-alt;}
+#game section.information .data .subtitle span.red{color:@color-secundary;font-family:@font-family-josefinsans;font-size:0.7em;font-weight:700;}
+#game section.information .data .description p{line-height:1.3;padding-left:3em;font-size:0.8em;font-weight:700;}
+
+#game section.information .rating .reviews{position:absolute;background:@color-primary-alt;top:0;left:0;right:0;color:@color-tertiary;padding-top:0.5em;padding-bottom:0.5em;border-radius:7px;z-index:1;box-shadow:5px 10px 25px 5px @color-primary-30;}
+#game section.information .rating .reviews .subtitle{font-size:1.4em;font-family:@font-family-jaapokki;text-transform:uppercase;}
+#game section.information .rating .reviews ul{padding:0;padding-left:1em;margin:0;}
+#game section.information .rating .reviews ul li{display:block;position:relative;text-align:left;}
+#game section.information .rating .reviews ul li::before{content:"\E008";position:absolute;top:2.5em;left:0;font-size:0.4em;font-family:gameclub;}
+#game section.information .rating .reviews li>div>img{height:2.5em;}
+#game section.information .rating .reviews li>div.rating-container i{color:@color-primary-s;}
+#game section.information .rating .reviews li>div.rating-container i.yes{color:@color-tertiary;}
+#game section.information .rating .reviews li>div>a{color:@color-primary;text-decoration:none;font-size:0.8em;position:relative;}
+#game section.information .rating .reviews li>div>a::before{content:"";width:30%;height:1px;display:inline-block;background:@color-tertiary;position:absolute;top:40%;left:110%;}
+#game section.information .rating .reviews li>div>a::after{content:"";width:5px;height:5px;display:inline-block;background:@color-tertiary;position:absolute;top:20%;left:135%;border-radius:50%;}
+
+#game section.games{background:@color-secundary;padding-top:2%;padding-bottom:2%;}
+#game section.games .subtitle{color:@color-tertiary;padding-left:1.5em;font-family:@font-family-jaapokki;font-size:1.4em;text-transform:uppercase;position:relative;margin-bottom:1em;display:inline-block;}
+#game section.games .subtitle::after{content:"";position:absolute;width:3em;left:0;bottom:0;border-bottom:2px solid @color-tertiary;}
+#game section.games button.dark{background:@color-primary;color:@color-secundary;padding:4px 2% 1px;margin-left:3%;margin-top:-1%;font-size:0.6em;letter-spacing:1px;}
+#game section.games .games-availables{padding:10px;border:2px solid @color-primary;background:transparent;margin-bottom:1%;}
+#game section.games .games-availables .table-container{background:@color-tertiary;padding:5px;}
+#game section.games .games-availables .table-container table{border:none;color:@color-primary;text-transform:uppercase;font-size:0.8em;background:transparent;}
+#game section.games .games-availables .table-container table th,
+#game section.games .games-availables .table-container table td{padding:5px;text-align:center;border-right:2px solid @color-tertiary-alt;border-bottom:2px solid @color-tertiary-alt;}
+#game section.games .games-availables .table-container table th{border-bottom:2px solid @color-secundary;}
+#game section.games .games-availables .table-container table th:last-child,
+#game section.games .games-availables .table-container table td:last-child{border-right:none;}
+#game section.games .games-availables .table-container table tr:last-child td{border-bottom:none;}
+#game section.games .games-availables .table-container table tr td.blue{color:@color-primary-alt;}
+#game section.games .games-availables .table-container table tr td.red{color:@color-secundary;}
+#game section.games .games-availables .table-container table tr td.game-status{font-weight:700;color:@color-secundary;}
+#game section.games .games-availables .table-container table tr td i::before{font-size:1.2em;color:@color-primary-s;}
+#game section.games .games-availables .table-container table tr td i.yes::before{-webkit-text-fill-color:transparent;background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
+#game section.games .games-availables .table-container table tr td img{height:1em;}
+#game section.games .games-availables .table-container table tr td button.dark{background:@color-primary;color:@color-tertiary;white-space:normal;font-weight:400;font-size:0.6em;}
+#game section.games .filters li{display:inline-table;width:2em;height:2em;background:@color-primary;position:relative;text-align:center;}
+#game section.games .filters li::before{content:"";position:absolute;left:-1px;top:20%;bottom:20%;border-left:2px solid @color-secundary-65;}
+#game section.games .filters li:first-child::before{border:none;}
+#game section.games .filters li:last-child::before{border:none;}
+#game section.games .filters li:last-child{background:transparent;}
+#game section.games .filters li:last-child>a{color:@color-primary;padding:0;}
+#game section.games .filters li:last-child>a>i::before{font-size:1.4em;}
+#game section.games .filters li>a{position:absolute;left:0;right:0;top:0.25em;text-decoration:none;color:@color-tertiary;padding-top:10%;}
+#game section.games .filters li>a.active{color:@color-primary-alt;}
+#game section.games div > button{margin:-1% 1% 0% 1%;padding-left:1%;padding-right:1%;}
+
+#game #most-played > div.separator{display:none;}
+
+#game section.final{height:2em;width:100%;background:@color-primary-alt;}
+
+#game section.games .loan-view .information-separation{margin-bottom:1.5%;}
+#game section.games .loan-view .title{font-size:1.2em;color:@color-primary;padding-left:1.75em;}
+#game section.games .loan-view .value{color:@color-tertiary;text-transform:uppercase;padding-left:15px;font-size:1.1em;}
+#game section.games .loan-view .value.original-text{text-transform:unset;text-align:justify;}
+#game section.games .loan-view .value.dark{color:@color-primary;font-weight:700;}
+#game section.games .loan-view .value.big{font-size:1.8em;font-weight:700;}
+#game section.games .loan-view .selector{display:inline-block;width:auto;border-bottom:3px solid @color-primary;font-size:1.8em;padding:0;margin-left:3%;}
+#game section.games .loan-view .selector .caret{position:relative;top:50%!important;left:10%!important;color:@color-primary;}
+#game section.games .loan-view .selector ul.ui-select-choices{width:100%;margin-left:0%;font-weight:bold;transform:translate(0,-5%);cursor:pointer;}
+#game section.games .loan-view .title.dark{color:@color-primary;}
+#game section.games .loan-view .title.dark::after{content:none;}
+#game section.games .loan-view .shipping{border-left:2px solid @color-tertiary;margin-left:3em;margin-bottom:1em;}
+#game section.games .loan-view .shipping .address-title{color:@color-tertiary;font-size:1.2em;font-weight:700;margin-bottom:1%;}
+#game section.games .loan-view .shipping>div:first-child{padding-bottom:1em;}
+#game section.games .loan-view .shipping .information-separation{display:-webkit-box;padding-left:0;margin-bottom:1em;border-bottom:2px solid @color-tertiary;margin-left:15px;}
+#game section.games .loan-view .shipping .no-underline{border-bottom:none;display:inline-flex;}
+#game section.games .loan-view .shipping label{color:@color-tertiary;margin-left:6%;font-weight:700;font-size:0.8em;width:100%;}
+#game section.games .loan-view .shipping input{display:block;width:100%;padding-left:2%;font-weight:bold;}
+#game section.games .loan-view .shipping label.icon{font-size:1.1em;cursor:pointer;}
+#game section.games .loan-view .shipping label.icon::after{margin-left:3%;}
+#game section.games .loan-view .shipping label.icon i{border:3px solid @color-tertiary;padding:12%;border-radius:50%;}
+#game section.games .loan-view .shipping img.geo-check{display:block;height:1.5em;margin-left:2%;}
+#game section.games .loan-view .shipping .box{cursor:pointer;position:relative;width:1.5em;height:1.5em;display:inline-block;border:3px solid @color-tertiary;margin-right:2%;color:@color-primary;}
+#game section.games .loan-view .shipping .box.checked::after{content:"";background:url("/img/check.svg") no-repeat center center;position:absolute;left:1px;bottom:-2px;background-size:100%;width:1.5em;height:1.5em;}
+#game section.games .loan-view .shipping .checkbox-label{display:block;color:@color-tertiary;font-weight:700;cursor:pointer;}
+#game section.games .loan-view .title-help{font-size:0.9em;font-weight:700;color:@color-tertiary;display:block;padding-left:2.25em;}
+#game section.games .loan-view .final-costs{margin-top:4%;font-weight:700;margin-bottom:3%;}
+#game section.games .loan-view .final-costs .left-decoration{border-left:3px solid @color-tertiary;padding:0%;}
+#game section.games .loan-view .final-costs label.big{color:@color-tertiary;font-size:2em;}
+#game section.games .loan-view .final-costs span.big-value{color:@color-primary;font-size:2.4em;text-transform:uppercase;margin-left:3%;}
+#game section.games .loan-view .final-costs span.big-value .bigger{font-size:2.7em;}
+#game section.games .loan-view .final-costs .foot-note{color:@color-tertiary;font-size:1.2em;margin-top:-8px;}
+#game section.games .loan-view .rating-container{display:inline-block;}
+
+#game section.loan-footer {background-color:@color-tertiary;padding:1.5% 0%;}
+#game section.loan-footer button.btn-secundary{color:@color-secundary;}

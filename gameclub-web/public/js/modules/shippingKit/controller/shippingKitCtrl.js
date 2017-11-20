@@ -64,10 +64,7 @@ angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope,
     function calculateTotalToPay() {
         $scope.totalToPay = $scope.quantity.value * $scope.shippingKitValue;
         $scope.balance.value = 0;
-
-        if ($rootScope.currentUser != null) {
-            $scope.balance.options.ceil = ($scope.totalToPay > $rootScope.currentUser.shownBalance) ? $rootScope.currentUser.shownBalance : $scope.totalToPay;
-        }
+        $scope.balance.options.ceil = ($scope.totalToPay > $rootScope.currentUser.shownBalance) ? $rootScope.currentUser.shownBalance : $scope.totalToPay;
     }
 
 });

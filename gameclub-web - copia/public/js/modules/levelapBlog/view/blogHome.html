@@ -1,0 +1,19 @@
+<!-- BLOG HOME PAGE START -->
+<div class="blog-home">
+	<div class="article-section col-md-12">
+		<div class="col-md-4"></div>
+		<div class="col-md-8 col-xs-12">
+			<article-preview ng-repeat="article in blogs" ng-model="article" />
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="col-md-12 no-padding-h">
+		<div class="col-md-4"></div>
+		<div class="col-md-8 col-xs-12">
+			<blog-navigation pages="totalPagesHome" active-page="currentPageHome"/>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+<!-- BLOG HOME PAGE END -->

@@ -1,0 +1,73 @@
+<div id="date-selector">
+    <div class="selector" ng-class="disableSelectors ? 'disabled' : ''" ng-click="selection(0)">
+        <input class="date-number" placeholder="DD" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-model="day" />
+        <i class="gc gc-arrow-down"></i>
+        <ul id="day" class="dropdown" ng-if="dayFocused">
+            <li ng-repeat="number in numberSelector" ng-click="daySelected(number)">{{number}}</li>
+        </ul>
+    </div>
+    <div class="selector" ng-class="disableSelectors ? 'disabled' : ''" ng-click="selection(1)">
+        <input class="date-number" placeholder="MM" size="3" maxlength="2" ng-disabled="disableSelectors" readonly ng-model="month" />
+        <i class="gc gc-arrow-down"></i>
+        <ul id="day" class="dropdown" ng-if="monthFocused">
+            <li ng-repeat="number in numberSelector" ng-click="monthSelected(number)">{{number}}</li>
+        </ul>
+    </div>
+    <div class="selector" ng-class="disableSelectors ? 'disabled' : ''" ng-click="selection(2)">
+        <input class="date-number" placeholder="AAAA" size="5" maxlength="4" ng-disabled="disableSelectors" readonly ng-model="year" />
+        <i class="gc gc-arrow-down"></i>
+        <ul id="day" class="dropdown" ng-if="yearFocused">
+            <li ng-repeat="number in numberSelector" ng-click="yearSelected(number)">{{number}}</li>
+        </ul>
+    </div>
+    <div class="calendar-icon" ng-class="disableSelectors ? 'disabled' : ''" ng-click="calendarSelected()" ng-if="showCalendar">
+        <i class="gc gc-calendar"></i>
+        <table ng-if="calendarFocused">
+            <col>
+            <col width="2em">
+            <col width="2em">
+            <col width="2em">
+            <col width="2em">
+            <col width="2em">
+            <col width="2em">
+            <col width="2em">
+            <col>
+
+            <thead>
+                <tr>
+                    <th colspan="2" ng-click="changeMonth(-1)"><i class="fa fa-long-arrow-left"></i></th>
+                    <th colspan="5">{{calendarMonth}} {{calendarYear}}</th>
+                    <th colspan="2" ng-click="changeMonth(1)"><i class="fa fa-long-arrow-right"></i></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>DO</th>
+                    <th>LU</th>
+                    <th>MA</th>
+                    <th>MI</th>
+                    <th>JU</th>
+                    <th>VI</th>
+                    <th>SA</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="week in calendar">
+                    <td></td>
+                    <td ng-repeat="day in week track by $index"><div ng-click="dateSelected(day)" ng-if="day != ''" ng-class="day.active ? 'active' : ''">{{day.date | date:'dd'}}</div></td>
+                    <td></td>
+                </tr>
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="9"></td>
+                    <!-- <td colspan="3">C</td>
+                    <td colspan="3">H</td>
+                    <td colspan="3">B</td> -->
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

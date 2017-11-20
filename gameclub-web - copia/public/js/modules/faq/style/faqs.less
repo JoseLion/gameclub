@@ -1,0 +1,27 @@
+@import url("/css/variables.less");
+
+#faqs{background:url(/img/blog/blog-bg.png) repeat-y center top !important;background-size:100% !important;}
+#faqs section.faqs-title{margin-top:15%;text-align:center;text-transform:uppercase;color:white;font-weight:bold;font-size:3em;line-height:105%;}
+#faqs section.faqs-title .line-1{margin-left:-10%;color:@color-primary-alt;}
+#faqs section.faqs-title .line-1::before{content:"";position:absolute;width:10%;top:23.5%;left:20.5%;border-top:2px solid white;}
+#faqs section.faqs-title .line-1::after{content:"";position:absolute;width:8%;top:38.5%;left:21.5%;border-top:2px solid white;}
+#faqs section.faqs-title .line-2{margin-right:-10%;color:@color-secundary;}
+#faqs section.faqs-title .line-2::before{content:"";position:absolute;width:8%;bottom:23.5%;right:20.5%;border-top:2px solid white;}
+#faqs section.faqs-title .line-2::after{content:"";position:absolute;width:10%;bottom:8.5%;right:19.5%;border-top:2px solid white;}
+#faqs section.body{background-color:@color-tertiary-alt;margin-top:3%;font-size:1.1em;padding:2% 0%;}
+#faqs section.body .subtitle{font-size:2em;margin-bottom:4%;margin-left:6%;}
+#faqs section.body .categories{padding-left:5%;}
+#faqs section.body .categories .list{list-style:none;text-transform:uppercase;font-size:0.75em;line-height:150%;}
+#faqs section.body .categories .list .item{padding:1% 4%;margin:2% 0%;width:fit-content;cursor:pointer;}
+#faqs section.body .categories .list .item:hover{box-shadow:0px 0px 30px 2px @color-secundary;}
+#faqs section.body .categories .list .item.active{background-color:@color-secundary;color:white;}
+#faqs section.body .questions{font-size:1.2em;padding-left:4%;min-height:-webkit-fill-available;border-left-width:4px;border-left-style:solid;-webkit-border-image:-webkit-gradient(linear, 0 35%, 0 65%, from(@color-secundary), to(@color-primary-alt)) 1 100%;-webkit-border-image:-webkit-linear-gradient(@color-secundary 35%, @color-primary-alt 65%) 1 100%;-moz-border-image: -moz-linear-gradient(@color-secundary 35%, @color-primary-alt 65%) 1 100%;border-image: linear-gradient(to bottom, @color-secundary 35%, @color-primary-alt 65%) 1 100%;}
+#faqs section.body .questions img.question-gamepad{width:15%;margin:5% 42.5%;}
+#faqs section.body .questions .loading{position:absolute;top:85%;left:46%;}
+#faqs section.body .questions .list{list-style:none;padding-left:0%;}
+#faqs section.body .questions .list .item{cursor:pointer;padding-top:2%;}
+#faqs section.body .questions .list .item img.document-icon{width:4%;margin-right:3%;}
+#faqs section.body .questions .list .item:hover span.document{box-shadow: inset 0 -1px 0 0 @color-secundary;}
+#faqs section.body .answer{font-size:0.8em;line-height:125%;display:grid;}
+#faqs section.body .answer .head{font-weight:bold;text-transform:uppercase;text-align:center;}
+#faqs section.body .answer .body{white-space:pre-wrap;}

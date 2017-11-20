@@ -1,0 +1,37 @@
+<form id="avatar-choose" role="form" class="form-horizontal" on-submit="save()" novalidate>
+	<div class="inmodal">
+		<div class="modal-header">
+			<i class="tertiary gc gc-person modal-icon"></i>
+			<h2 class="modal-title">Cambia tu avatar</h2>
+		</div>
+		<div class="modal-body">
+			<div class="col-md-12 avatar-table-row" ng-repeat="avatar in avatars" ng-switch on="$index % 5" ng-if="$index % 5 == 0">
+                <div class="avatar-cell" ng-switch-when="0" ng-class="{empty: avatars[$index].image == null, choosen: indexTemp == $index}">
+                    <img archive="avatars[$index].image" class="avatar" ng-click="chooseThis($index)" />
+                </div>
+                <div class="avatar-cell" ng-switch-when="0" ng-class="{empty: avatars[$index+1].image == null, choosen: indexTemp == ($index+1)}">
+                    <img archive="avatars[$index + 1].image" class="avatar" ng-click="chooseThis($index + 1)" />
+                </div>
+                <div class="avatar-cell" ng-switch-when="0" ng-class="{empty: avatars[$index+2].image == null, choosen: indexTemp == ($index+2)}">
+                    <img archive="avatars[$index + 2].image" class="avatar" ng-click="chooseThis($index + 2)" />
+                </div>
+                <div class="avatar-cell" ng-switch-when="0" ng-class="{empty: avatars[$index+3].image == null, choosen: indexTemp == ($index+3)}">
+                    <img archive="avatars[$index + 3].image" class="avatar" ng-click="chooseThis($index + 3)" />
+                </div>
+                <div class="avatar-cell" ng-switch-when="0" ng-class="{empty: avatars[$index+4].image == null, choosen: indexTemp == ($index+4)}">
+                    <img archive="avatars[$index + 4].image" class="avatar" ng-click="chooseThis($index + 4)" />
+                </div>
+			</div>
+			<div class="clearfix"></div>
+        </div>
+		<div class="modal-footer">
+			<div class="col-md-12 text-center">
+                <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
+                <button type="submit" class="btn save" ng-disabled="isSaving">
+                    <span ng-if="!isSaving">Guardar</span>
+                    <loading showing="isSaving" inline width="1em">
+                </button>
+			</div>
+		</div>
+	</div>
+</form>

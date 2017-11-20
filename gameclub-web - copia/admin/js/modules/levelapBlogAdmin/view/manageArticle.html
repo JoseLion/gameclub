@@ -1,0 +1,184 @@
+<div class="col-md-12">
+	<div class="ibox">
+		<div class="ibox-content">
+			<form class="form-horizontal" role="form" on-submit="save()" novalidate>
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Destacado</label>
+					<div class="col-md-9">
+						<i class="fa fa-star-o fa-2x control-label" style="padding-top: 3px; cursor: pointer;" ng-click="article.isFeatured = !article.isFeatured" ng-if="!article.isFeatured"></i>
+						<i class="fa fa-star fa-2x control-label" style="padding-top: 3px; cursor: pointer; color: #ffd203;" ng-click="article.isFeatured = !article.isFeatured" ng-if="article.isFeatured"></i>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-3 control-label">Más Visto</label>
+					<div class="col-md-9">
+						<checkbox ng-model="article.timesSeen" ng-true="1" ng-false="0"></checkbox>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Autor</label>
+					<div class="col-md-9">
+						<input validation type="text" class="form-control" ng-model="article.author" required>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Título</label>
+					<div class="col-md-9">
+						<input validation type="text" class="form-control" ng-model="article.title" required>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Keywords SEO</label>
+					<div class="col-md-9">
+						<input validation type="text" class="form-control" ng-model="article.keywords" required>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Resumen</label>
+					<div class="col-md-9">
+						<textarea validation type="text" class="form-control" rows="7" ng-model="article.summary" required></textarea>
+					</div>
+				</div>
+
+				<div class="form-group to-validate" ng-if="BlogConst.config.hasCategories">
+					<label class="col-md-3 control-label">Categoría</label>
+					<div class="col-md-8">
+						<ui-select validation ng-model="article.category" theme="bootstrap">
+							<ui-select-match allow-clear placeholder="Seleccione...">{{$select.selected.text}}</ui-select-match>
+							<ui-select-choices repeat="category in categories | filter: $select.search">
+								<div ng-bind-html="category.text | highlight: $select.search"></div>
+							</ui-select-choices>
+						</ui-select>
+					</div>
+					<div class="col-md-1" style="padding-top: 7px;">
+						<button type="button" class="btn btn-xs btn-success" ng-click="addCategory()">
+							<i class="fa fa-plus"></i>
+						</button>
+					</div>
+				</div>
+
+				<div class="form-group to-validate" ng-if="BlogConst.config.hasTags">
+					<label class="col-md-3 control-label">Tags</label>
+					<div class="col-md-8">
+						<ui-select validation multiple ng-model="article.tags" theme="bootstrap">
+							<ui-select-match placeholder="Seleccione...">{{$item.text}}</ui-select-match>
+							<ui-select-choices repeat="tag in tags | filter: $select.search">
+								<!-- <div ng-bind-html="tag.text | highlight: $select.search"></div> -->
+								{{tag.text}}
+							</ui-select-choices>
+						</ui-select>
+					</div>
+					<div class="col-md-1" style="padding-top: 7px;">
+						<button type="button" class="btn btn-xs btn-success" ng-click="addTag()">
+							<i class="fa fa-plus"></i>
+						</button>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Contenido</label>
+					<div class="col-md-9">
+						<textarea validation ui-tinymce="tinymceOptions" ng-model="article.body" required></textarea>
+					</div>
+				</div>
+
+				<div class="form-group to-validate">
+					<label class="col-md-3 control-label">Imagen</label>
+					<div class="col-md-6">
+						<image-upload archive="article.banner" ng-model="banner"></image-upload>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-1 control-label">Corte Rombo</label>
+					<div class="col-md-5">
+						<div class="col-md-12">
+							<button type="button" class="btn btn-w-m btn-default" ng-click="cropImage('diamond')" ng-disabled="bannerBase64 == null || bannerBase64 == '//:0'">Recortar</button>
+						</div>
+						<div class="col-md-12">
+							<img class="cropped-img" archive-file="article.diamond" ng-model="diamondCropImage" ng-src="{{diamondCropImage}}">
+							<div  class="diamond-cover" ng-if="diamondCropImage != null && diamondCropImage != '//:0'">
+								<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+									<path d="M0 0 h100 v100 h-100 z M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" style="fill: rgba(255, 255, 255, 0.7);"></path>
+								</svg>
+							</div>
+						</div>
+					</div>
+					
+					<label class="col-md-1 control-label">Corte Cuadrado</label>
+					<div class="col-md-5">
+						<div class="col-md-12">
+							<button type="button" class="btn btn-w-m btn-default" ng-click="cropImage('square')" ng-disabled="bannerBase64 == null || bannerBase64 == '//:0'">Recortar</button>
+						</div>
+						<div class="col-md-12">
+							<img class="cropped-img" archive-file="article.square" ng-model="squareCropImage" ng-src="{{squareCropImage}}" style="max-width: 100%; margin-top: 5%;">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group" style="text-align: right;">
+					<div class="col-md-12">
+						<button type="submit" class="btn btn-w-m btn-primary">Guardar</button>
+						<button type="button" class="btn btn-w-m btn-default" ng-click="cancel()">Cancelar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="addExtraModal.html">
+	<div class="inmodal">
+		<form class="form-horizontal" role="form" on-submit="ok()" novalidate>
+			<div class="modal-header">
+				<h2><i class="fa fa-plus"></i> {{isTag ? 'Tag' : 'Categoría'}}</h2>
+			</div>
+
+			<div class="modal-body">
+				<div class="form-group to-validate">
+					<label class="col-md-12 control-label" style="text-align: left;">Nombre</label>
+					<div class="col-md-12">
+						<input validation type="text" class="form-control" ng-model="blogExtra.text" required>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<div class="form-group" style="text-align: center;">
+					<div class="col-md-12">
+						<button type="submit" class="btn btn-w-m btn-primary">Aceptar</button>
+						<button type="button" class="btn btn-w-m btn-default" ng-click="cancel()">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</script>
+
+<script type="text/ng-template" id="cropImage.html">
+	<div class="inmodal">
+		<div class="modal-body">
+			<div class="col-md-12 text-center" ng-if="shape == 'diamond'">
+				<canvas width="500" height="500" image-cropper image="crop.base64Image" crop-width="500" crop-height="500" min-width="100" min-height="100" keep-aspect="true" cropped-image="crop.croppedImage" shape="diamond"></canvas>
+			</div>
+
+			<div class="col-md-12 text-center" ng-if="shape != 'diamond'">
+				<canvas width="500" height="500" image-cropper image="crop.base64Image" crop-width="465" crop-height="500" min-width="93" min-height="100" keep-aspect="true" cropped-image="crop.croppedImage"></canvas>
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="modal-footer">
+			<div class="col-md-12 text-right">
+				<button type="button" class="btn btn-w-m btn-primary" ng-click="ok()">Aceptar</button>
+				<button type="button" class="btn btn-w-m btn-default" ng-click="cancel()">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</script>

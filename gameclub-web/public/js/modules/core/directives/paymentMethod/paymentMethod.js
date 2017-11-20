@@ -1,6 +1,4 @@
-angular.module('Core').directive('paymentMethod', function(Const, notif, $rootScope, rest, forEach, sweet, $ocLazyLoad) {
-    $ocLazyLoad.load('js/modules/core/directives/paymentMethod/paymentMethod.less');
-    
+angular.module('Core').directive('paymentMethod', function(Const, notif, $rootScope, rest, forEach, sweet) {
     return {
         restrict: 'E',
         templateUrl: 'js/modules/core/directives/paymentMethod/paymentMethod.html',

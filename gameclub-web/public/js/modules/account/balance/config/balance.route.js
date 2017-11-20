@@ -8,10 +8,11 @@ angular.module('Balance').config(function($stateProvider) {
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'BalanceCtrl',
 		resolve: {
-			loadPlugin: function($ocLazyLoad) {
+			loadPlugin: function($ocLazyLoad, lessLoad) {
+				lessLoad.add('css/resources/balance.less');
 				return $ocLazyLoad.load([{
 					name: 'Balance',
-					files: ['js/modules/account/balance/controller/balanceCtrl.js', 'js/modules/account/balance/style/balance.less']
+					files: ['js/modules/account/balance/controller/balanceCtrl.js']
 				}]);
 			}
 		}

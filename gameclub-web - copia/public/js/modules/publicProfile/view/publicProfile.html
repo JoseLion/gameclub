@@ -1,0 +1,71 @@
+<div id="public-profile">
+    <section class="banner">
+        <div class="col-md-12 col-xs-12">
+            <div class="col-md-6 col-xs-6 text-right">
+                <img class="avatar" archive="user.avatar.image" placeholder="img/contact-person.svg">
+            </div>
+            
+            <div class="col-md-6 col-xs-6">
+                <div class="user-name">{{user.name + ' ' + (user.lastName | limitTo: 1) + '.'}}</div>
+                <div class="connection">última vez conectado: <span>{{user.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </section>
+
+    <section class="reviews">
+        <h2 class="subtitle"><i class="gc gc-circle-small"></i> Tus reviews <i class="gc gc-rating"></i></h2>
+        <div class="lender">
+            <div class="header">
+                <h2 class="subtitle">Prestador</h2>
+                <stars ng-model="lenderAverage" solid="red"></stars>
+                <div><small>{{lenderReviews}} opiniones</small></div>
+            </div>
+
+            <div class="body" ng-if="lenderReviews > 0">
+                <div class="rating" ng-repeat="review in reviews" ng-if="review.lender.id == user.id">
+                    <div class="title">
+                        <span class="upper-case">{{review.lender.name}} {{review.lender.lastName | limitTo: 1}}.</span>
+                        <score ng-model="review.lenderScore" disabled></score>
+                    </div>
+                    <div class="description">{{review.lenderComment}}</div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="gamer">
+            <div class="header">
+                <h2 class="subtitle">Jugador</h2>
+                <stars ng-model="gamerAverage" solid="blue"></stars>
+                <div><small>{{gamerReviews}} opiniones</small></div>
+            </div>
+
+            <div class="body" ng-if="gamerReviews > 0">
+                <div class="rating" ng-repeat="review in reviews" ng-if="review.gamer.id == user.id">
+                    <div class="title">
+                        <span class="upper-case">{{review.gamer.name}} {{review.gamer.lastName | limitTo: 1}}.</span>
+                        <score ng-model="review.gamerScore" disabled></score>
+                    </div>
+                    <div class="description">{{review.gamerComment}}</div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="col-md-12 load-more" ng-if="!isLastPage">
+            <a href="" ng-click="loadMore()">Cargar más</a>
+        </div>
+
+        <div class="col-md-12 no-reviews" ng-if="lenderReviews <= 0 && gamerReviews <= 0">No tienes opiniones por el momento</div>
+
+        <div class="clearfix"></div>
+    </section>
+    
+    <section class="final"></section>
+</div>

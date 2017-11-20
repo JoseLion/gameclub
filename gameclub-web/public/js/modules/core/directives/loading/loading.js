@@ -1,6 +1,4 @@
-angular.module('Core').directive('loading', function($ocLazyLoad) {
-	$ocLazyLoad.load('js/modules/core/directives/loading/loading.less');
-
+angular.module('Core').directive('loading', function() {
 	return {
 		restrict: 'E',
 		template: '<div id="loading" ng-if="showing" ng-style="$parent.style"></div>',

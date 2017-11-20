@@ -8,10 +8,11 @@ angular.module('Messages').config(function($stateProvider) {
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'MessagesCtrl',
 		resolve: {
-			loadPlugin: function($ocLazyLoad) {
+			loadPlugin: function($ocLazyLoad, lessLoad) {
+				lessLoad.add('css/resources/messages.less');
 				return $ocLazyLoad.load([{
 					name: 'Messages',
-					files: ['js/modules/account/messages/controller/messagesCtrl.js', 'js/modules/account/messages/style/messages.less', 'js/modules/account/messages/style/messages.responsive.less']
+					files: ['js/modules/account/messages/controller/messagesCtrl.js']
 				}]);
 			},
 

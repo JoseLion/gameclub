@@ -1,0 +1,38 @@
+<nav class="navbar-default navbar-static-side" role="navigation" ng-if="navigationArray != null">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+
+                <div class="profile-element" uib-dropdown>
+                    <img alt="image" class="img-circle" src="img/profile_small.jpg"/>
+                    <span class="block m-t-xs">
+                        <strong class="font-bold">{{currentUser.fullName}}</strong>
+                    </span>
+                </div>
+                <div class="logo-element">
+                    <img src="favicon.ico" alt="favicon.ico"/>
+                </div>
+            </li>
+
+            <li ng-repeat="child in navigationArray" ng-class="{active: $state.includes('{{child.route}}')}" ng-include="'navigation_renderer.html'"></li>
+        </ul>
+
+    </div>
+</nav>
+
+<script type="text/ng-template" id="navigation_renderer.html">
+    <a href="" ng-if="child.isAbstract">
+        <i class="fa" ng-class="child.icon"></i>
+        <span class="nav-label" ng-if="child.level == 0">{{child.name}}</span>
+        <object ng-if="child.level != 0">{{child.name}}</object>
+        <span class="fa arrow"></span>
+    </a>
+
+    <ul class="nav {{child.isAbstract ? 'collapse' : ''}} {{setLevelClass(child.level)}}" ng-class="{in: $state.includes('{{child.route}}')}">
+        <li ng-repeat="child in child.children" ng-class="{active: $state.includes('{{child.route}}')}" ng-include="'navigation_renderer.html'" ng-if="child.isAbstract"></li>
+
+        <li ng-repeat="child in child.children" ui-sref-active="active" ng-if="!child.isAbstract">
+            <a ui-sref="{{child.route}}">{{child.name}}</a>
+        </li>
+    </ul>
+</script>

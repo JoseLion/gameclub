@@ -1,0 +1,128 @@
+<div class="inmodal">
+	<form class="form-horizontal" role="form" novalidate>
+		<div class="modal-header">
+			<i class="fa fa-eye modal-icon"></i>
+			<h4 class="modal-title">Préstamo</h4>
+		</div>
+
+		<div class="modal-body">
+			<div class="tabs-container">
+				<uib-tabset>
+					<uib-tab heading="Prestador">
+						<div class="panel-body">
+							<div class="form-group">
+								<label class="col-md-3 control-label">Nombre</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.publicUserGame.publicUser.name + ' ' + loan.publicUserGame.publicUser.lastName}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Documento</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.publicUserGame.publicUser.document}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Ubicación</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.publicUserGame.publicUser.location.parent.name + ', ' + loan.publicUserGame.publicUser.location.name}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Dirección</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.lenderAddress}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Teléfono</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.publicUserGame.publicUser.contactPhone}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Persona de Entrega</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.lenderReceiver}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Geolocalización</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.lenderGeolocation.x + ', ' + loan.lenderGeolocation.y}}</span>
+								</div>
+							</div>
+						</div>
+					</uib-tab>
+
+					<uib-tab heading="Jugador">
+						<div class="panel-body">
+							<div class="form-group">
+								<label class="col-md-3 control-label">Nombre</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamer.name + ' ' + loan.gamer.lastName}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Documento</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamer.document}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Ubicación</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamer.location.parent.name + ', ' + loan.gamer.location.name}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Dirección</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamerAddress}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Teléfono</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamer.contactPhone}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Persona de Entrega</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamerReceiver}}</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-md-3 control-label">Geolocalización</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamerGeolocation.x + ', ' + loan.gamerGeolocation.y}}</span>
+								</div>
+							</div>
+						</div>
+					</uib-tab>
+				</uib-tabset>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<div class="form-group">
+				<div class="col-md-12 text-right">
+					<button type="button" class="btn btn-w-m btn-info" ng-click="done()">Listo</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

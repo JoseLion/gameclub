@@ -1,0 +1,180 @@
+<div id="profile">
+    <section class="row header">
+        <div class="col-md-4 col-xs-5"></div>
+        <div class="col-md-8 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
+            <div class="col-md-10 name">
+                <div class="col-md-3 no-padding-left no-padding-right">
+                    <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+                </div>
+                <div class="col-md-9">
+                    <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
+                    <div class="col-md-12 no-padding-left no-padding-right">
+                        <div class="connection">última vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+                    </div>
+                    <button class="btn btn-tertiary full small" ng-click="chooseAvatar()">Cambiar avatar</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-md-4 col-xs-0"></div>
+        <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
+            <div class="col-md-12 completed">
+                Usuario completado: <span>{{getFullPercentaje()}}%</span>
+            </div>
+            <p class="col-md-12 description">
+                Completa los 3 niveles de registro para poder navegar en toda la plataforma, pedir prestado cualquier juego y ganar 100 coins mensuales.
+            </p>
+            <div class="col-md-12 check-list">
+                <li><div class="box" ng-class="getInfoPercentage() >= 100 ? 'checked' : ''"></div><span>Completa tu información de contacto</span></li>
+                <li><div class="box" ng-class="getIdentityPercentage() >= 100 ? 'checked' : ''"></div><span>Completa tu verificación de identidad</span></li>
+                <li><div class="box" ng-class="currentUser.numberOfGames > 0 ? 'checked' : ''"></div><span>Mantén mínimo un juego cargado en la WEB</span></li>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+    <form role="form" on-submit="save()" novalidate>
+        <section class="row contact-information">
+            <div class="completed">
+                <span class="col-md-12">Información de contacto</span>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-tertiary full small" ng-if="isEditable">Guardar perfil</button>
+                </div>
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-tertiary small" ng-click="editInfo()">{{isEditable ? 'Volver' : 'Editar perfil'}}</button>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-8 form">
+                <div class="col-md-12 col-xs-12 valid-group">
+                    <label>Número de cédula</label>
+                    <input validation type="text" ng-disabled="!isEditable" ng-model="currentUserTemp.document" required ci-required>
+                </div>
+                <div class="col-md-12 col-xs-12 valid-group">
+                    <label>Fecha de nacimiento</label>
+                    <date-selector validation ng-model="currentUserTemp.birthDate" ng-disabled="!isEditable" show-calendar="true" required></date-selector>
+                </div>
+                <div class="col-md-12 col-xs-12 valid-group">
+                    <label>Ocupación</label>
+                    <input validation type="text" class="ocupation" placeholder="Estudiante - Programador" ng-disabled="!isEditable" ng-model="currentUserTemp.profession">
+                </div>
+                <div class="col-md-8 col-xs-12 valid-group">
+                    <label class="col-xs-12 col-md-4">Provincia</label>
+                    <div class="col-xs-12 col-md-8">
+                        <ui-select validation ng-model="currentUserTemp.province" theme="bootstrap" class="selector" ng-disabled="!isEditable" ng-change="findCities()" required>
+                            <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                            <ui-select-choices repeat="province in provinces | filter: $select.search">
+                                <div ng-bind-html="province.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 valid-group">
+                    <label class="col-xs-12 col-md-4">Ciudad</label>
+                    <div class="col-xs-12 col-md-8">
+                        <ui-select validation ng-model="currentUserTemp.location" theme="bootstrap" class="selector" ng-disabled="!isEditable" required>
+                            <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                            <ui-select-choices repeat="city in locationCities | filter: $select.search">
+                                <div ng-bind-html="city.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12 col-xs-12 billing valid-group">
+                    <label class="col-xs-12 col-md-4">Dirección de domicilio</label>
+                    <div class="col-xs-12 col-md-12 billing-address">
+                        <textarea validation type="address" ng-disabled="!isEditable" ng-model="currentUserTemp.billingAddress" rows="2" maxlength="150" placeholder="Calle Principal - Numeración - Calle Secundaria - Sector - Referncia"></textarea>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12 col-xs-12 valid-group phone">
+                    <label>Teléfono de contacto</label>
+                    <div class="col-xs-7 col-md-8">
+                        <input type="phone" ng-disabled="!isEditable" ng-model="currentUserTemp.contactPhone" class="complete" />
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </section>
+        <section id="ruc-section" class="row contact-ruc">
+            <div class="completed">
+                <img id="warning_img" src="img/warning-icon.svg" height="42" width="42">
+                <br>
+                <span class="col-md-12">&#191;TIENES RUC&#63;</span>
+                <h6><span class="col-md-12"><B>Si posees Ruc es obligatorio registrarlo para poder facturar todas las transacciones que se hagan. Desde pagar prestamos hasta retirar tus ganancias.</B></span></h6>
+                <div class="box cursor-pointer" ng-class="currentUserTemp.hasRuc ? 'checked' : ''" ng-click="currentUserTemp.hasRuc = !currentUserTemp.hasRuc" readonly="younger"></div>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-8 form">
+                <div class="col-md-12 line valid-group">
+                    <label>NOMBRE</label>
+                    <input validation type="text" ng-model="currentUserTemp.nameRuc" ng-disabled="!currentUserTemp.hasRuc" ng-required="currentUserTemp.hasRuc">
+                </div>
+                <div class="col-md-12 line valid-group">
+                    <label>Nº DE RUC</label>
+                    <input validation type="text" ng-model="currentUserTemp.documentRuc" ng-disabled="!currentUserTemp.hasRuc" ng-required="currentUserTemp.hasRuc" ruc-required="currentUserTemp.hasRuc">
+                </div>
+                <div class="col-md-12 valid-group">
+                    <label>DIRECCIÓN DE FACTURACIÓN</label>
+                    <div class="col-xs-12 col-md-12 billing-address">
+                        <textarea validation type="address" ng-model="currentUserTemp.addressRuc" ng-disabled="!currentUserTemp.hasRuc" rows="0" maxlength="150" placeholder="Calle Principal - Numeración - Calle Secundaria - Sector - Referncia" ng-required="currentUserTemp.hasRuc"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12 line valid-group">
+                    <label>TELÉFONO</label>
+                    <input validation type="phone" ng-model="currentUserTemp.phoneRuc" ng-disabled="!currentUserTemp.hasRuc" ng-required="currentUserTemp.hasRuc">
+                </div>
+                <div class="col-md-12 rigth">
+                    <button type="submit" class="btn btn-secundary small" ng-if="currentUserTemp.hasRuc">GUARDAR INFORMACIÓN</button>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+        </section>
+    </form>
+    <section class="row contact-means">
+        <form role="form" ng-submit="changeMail()">
+            <div class="completed">
+                <div class="col-md-12 text-center">
+                    <span class="subtitle">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <i class="gc gc-mail"></i>
+                            <span ng-if="currentUser.token">Verifica tu correo</span>
+                            <span ng-if="!currentUser.token">Tu correo ha sido verificado</span>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="clearfix"></div>
+                    </span>
+                    <span class="description">Verifica que tu correo electrónico es correcto y funcional. Se te enviará un mail con un código de verificación.</span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="form">
+                <div class="col-xs-12 col-md-3"></div>
+                <div class="col-xs-12 col-md-6">
+                    <input placeholder="XXXX@MAIL.COM" ng-model="newUsername" ng-readonly="!isEditableMean">
+                    <button type="button" class="btn btn-primary full small" ng-click="resendMailVerification()" ng-if="currentUser.token">Verificar</button>
+                    <img class="verification-ok" src="img/verification-ok-icon.svg" ng-if="!currentUser.token">
+                </div>
+                <div class="col-xs-12 col-md-3"></div>
+                <div class="clearfix"></div>
+            </div>
+        </form>
+    </section>
+
+    <section class="row games">
+        <div class="col-xs-12 col-md-4">
+            <img src="img/books-icon.svg" />
+            <button class="btn btn-tertiary small" ng-click="$state.go('gameclub.account.myGames')">Cargar juego a tu biblioteca</button>
+        </div>
+        <div class="col-xs-12 col-md-8">
+            <span>Juegos cargados: <span class="quantity" ng-class="currentUser.numberOfGames > 0 ? 'more' : ''">{{currentUser.numberOfGames}}</span></span>
+            <p>Para poder pedir prestado cualquier juego, tu tienes que cargar un juego para que pueda ser pedido / prestado. Si prestas, juegas.</p>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+</div>

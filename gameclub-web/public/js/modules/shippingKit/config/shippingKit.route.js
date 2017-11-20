@@ -9,10 +9,11 @@ angular.module('ShippingKit').config(function($stateProvider) {
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'ShippingKitCtrl',
 		resolve: {
-			loadPlugin: function($ocLazyLoad) {
+			loadPlugin: function($ocLazyLoad, lessLoad) {
+				lessLoad.add('css/resources/shippingKit.less');
 				return $ocLazyLoad.load([{
 					name: 'ShippingKit',
-					files: ['js/modules/shippingKit/controller/shippingKitCtrl.js', 'js/modules/shippingKit/style/shippingKit.less', 'js/modules/shippingKit/style/shippingKit.responsive.less']
+					files: ['js/modules/shippingKit/controller/shippingKitCtrl.js']
 				}]);
 			},
 

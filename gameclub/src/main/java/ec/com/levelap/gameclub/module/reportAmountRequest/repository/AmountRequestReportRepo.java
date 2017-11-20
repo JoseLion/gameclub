@@ -1,7 +1,5 @@
 package ec.com.levelap.gameclub.module.reportAmountRequest.repository;
 
-
-
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;

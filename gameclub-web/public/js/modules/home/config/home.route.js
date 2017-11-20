@@ -14,7 +14,7 @@ angular.module('Home').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Home',
-					files: ['js/modules/home/controller/homeCtrl.js', 'js/modules/home/style/home.less', 'js/modules/home/style/home.responsive.less']
+					files: ['js/modules/home/controller/homeCtrl.js']
 				}, {
 					name: 'LevelapBlog',
 					files: ['js/modules/levelapBlog/resources/blog.css', 'js/modules/levelapBlog/resources/mostSeen.js']

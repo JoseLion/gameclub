@@ -3,6 +3,7 @@ package ec.com.levelap.gameclub.module.amountRequest.entity;
 import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -82,6 +83,9 @@ public class AmountRequest extends BaseEntity{
 	
 	@Column(name="contact_phone", columnDefinition="VARCHAR")
 	private String contactPhone;
+	
+	@Column(name="payment_date")
+	private Date paymentDate;
 	
 	@Transient
 	private Double showAmount;
@@ -192,6 +196,14 @@ public class AmountRequest extends BaseEntity{
 
 	public void setContactPhone(String contactPhone) {
 		this.contactPhone = contactPhone;
+	}
+
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
 	}
 
 	public Message getMessage() {

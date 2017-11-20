@@ -13,7 +13,7 @@ angular.module('Search').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Search',
-					files: ['js/modules/search/controller/searchCtrl.js', 'js/modules/search/style/search.less', 'js/modules/search/style/search.responsive.less']
+					files: ['js/modules/search/controller/searchCtrl.js']
 				}]);
 			},
 

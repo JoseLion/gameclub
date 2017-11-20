@@ -1,0 +1,40 @@
+<!-- ARTICLE COMMENTS FORM DIRECTIVE START -->
+<div id="article-comment">
+    <h2>Deja un <span class="normal">comentario</span></h2>
+    <hr class="subtitle"></hr>
+    <form id="comments-form-logged" ng-if="currentUser != null" ng-submit="submitComment($event)" novalidate>
+        <div class="comment-row">
+            <div class="avatar">
+                <img src="img/picture-holder.png" />
+            </div>
+            <div class="information">
+                <div class="comment-input">
+                    <label>Comentario</label>
+                    <textarea ng-model="form.comment" required rows="7"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="send">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+    </form>
+    <form id="comments-form" ng-if="currentUser == null" ng-submit="submitComment($event)" novalidate>
+        <span>Tu direcci&oacute;n de correo electr&oacute;nico no ser&aacute; publicada. Los campos obligatorios est&aacute;n marcados con *</span>
+        <div class="comment-input">
+            <label>Comentario</label>
+            <textarea ng-model="form.comment" required rows="7"></textarea>
+        </div>
+        <div class="name-input">
+            <label>Nombre</label>
+            <input ng-model="form.username" required />
+        </div>
+        <div class="email-input">
+            <label>Email</label>
+            <input ng-model="form.email" required />
+        </div>
+        <div class="send">
+            <button type="submit" class="btn btn-primary small">Enviar</button>
+        </div>
+    </form>
+</div>
+<!-- ARTICLE COMMENTS FORM DIRECTIVE END -->

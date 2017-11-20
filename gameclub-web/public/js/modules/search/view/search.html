@@ -17,7 +17,7 @@
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div class="col-xs-10 col-md-4 filter to-validate">
+                    <div class="col-xs-12 col-md-4 filter to-validate">
                         <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center">
                             <ui-select-match allow-clear placeholder="Consola...">
                                 <img ng-src="{{$select.selected.whiteBase64}}" class="gameConsole"/>
@@ -28,11 +28,8 @@
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div class="col-xs-2 text-left visible-xs">
-                        <button type="submit" class="btn btn-tertiary"><i class="gc gc-turn-on "></i></button>
-                    </div>
                 </div>
-                <div class="col-xs-12 col-md-2 text-left hidden-xs">
+                <div class="col-xs-12 col-md-2 text-left">
                     <button type="submit" class="btn btn-tertiary"><i class="gc gc-turn-on "></i></button>
                 </div>
             </form>
@@ -51,7 +48,7 @@
             <div class="separator" ng-if="$index+1 < games.length"></div>
         </div>
         <div class="clearfix"></div>
-        <ball-paging pages="totalPages" ng-model="currentPage" class="paging" ng-change="pageChanged()"></ball-paging>
+        <blog-paging pages="totalPages" ng-model="currentPage" class="paging" ng-change="pageChanged()"></blog-paging>
     </section>
     <section class="final"></section>
 </div>

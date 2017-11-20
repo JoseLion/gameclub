@@ -97,12 +97,10 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     function younger(birthMillis) {
         let today = new Date();
         let birthday = new Date(birthMillis)
-
+        
         if ((today.getFullYear() - birthday.getFullYear()) < 18) {
             return true;
-        }
-
-        if ((today.getFullYear() - birthday.getFullYear()) == 18) {
+        } else {
             if (today.getMonth() < birthday.getMonth()) {
                 return true;
             }
@@ -272,15 +270,8 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             size: 'lg',
             backdrop: 'static',
             templateUrl: 'js/modules/account/profile/view/chooseAvatar.html',
-            controller: 'ChooseAvatarCtrl',
+            controller: chooseAvatarCtrl,
             resolve: {
-                loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'Profile',
-                        files: ['js/modules/account/profile/controller/ChooseAvatarCtrl.js', '/js/modules/account/profile/style/chooseAvatar.less']
-                    }]);
-                },
-
                 avatars: function(openRest) {
                     return openRest('avatar/findAll', true).get(null, function(data) {
                         return data;
@@ -289,6 +280,35 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             }
         });
     };
+
+    let chooseAvatarCtrl = function($scope, $uibModalInstance, sweet, rest, avatars, $rootScope, getIndexOfArray) {
+        $scope.isSaving = false;
+        avatars.$promise.then(function(data) {
+            $scope.avatars = data;
+            if($rootScope.currentUser.avatar != null) {
+                $scope.indexTemp = getIndexOfArray(avatars, 'id', $rootScope.currentUser.avatar.id);
+            }
+        });
+        $scope.cancel = function() {
+            $uibModalInstance.close();
+        };
+        $scope.save = function() {
+            $rootScope.currentUser.avatar = $scope.avatars[$scope.indexTemp];
+            sweet.save(function() {
+                rest("publicUser/save").post($rootScope.currentUser, function(data) {
+                    sweet.success();
+                    sweet.close();
+                    $rootScope.currentUser = data;
+                    $uibModalInstance.close(data);
+                }, function(error) {
+                    sweet.error(error.data != null ? error.data.message : error);
+                });
+            });
+        };
+        $scope.chooseThis = function(index) {
+            $scope.indexTemp = index;
+        };
+    }
 
     var getMessage = function() {
         var message = $rootScope.currentUser.token;

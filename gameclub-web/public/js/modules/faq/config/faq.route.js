@@ -11,7 +11,7 @@ angular.module('Faq').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Faq',
-					files: ['js/modules/faq/controller/faqsCtrl.js', 'js/modules/faq/style/faqs.less', 'js/modules/faq/style/faqs.responsive.less']
+					files: ['js/modules/faq/controller/faqsCtrl.js']
 				}]);
 			},
 

@@ -1,0 +1,62 @@
+<header id="main-header">
+    <div class="row">
+        <section class="social-media col-md-6 col-xs-12">
+            <!-- <a href="https://www.facebook.com/gameclub.ec/" target="_blank"><i class="gc gc-facebook"></i></a>
+            <a href><i class="gc gc-instagram"></i></a>-->
+            <a href="https://my.playstation.com/gameclubec" target="_blank">
+                <img src="img/home/ps-logo.svg" height="15px" onmouseover="this.src='img/home/ps-white-logo.svg';" onmouseout="this.src='img/home/ps-logo.svg';" alt="PlayStation-Alquila-Juegos-Gana-Dinero" title="PlayStation-Alquila-Juegos-Gana-Dinero">
+            </a>
+            <a href="https://account.xbox.com/en-us/Profile?GamerTag=GameClubEC" target="_blank">
+                <img src="img/home/xbox-logo.svg" height="15px" onmouseover="this.src='img/home/xbox-white-logo.svg';" onmouseout="this.src='img/home/xbox-logo.svg';" alt="Xbox-Alquila-Juegos-Gana-Dinero" title="Xbox-Alquila-Juegos-Gana-Dinero">
+            </a>
+            <a href="http://www.nintendo.com/" target="_blank">
+                <img src="img/home/nintendo-logo.svg" height="15px" onmouseover="this.src='img/home/nintendo-white-logo.svg';" onmouseout="this.src='img/home/nintendo-logo.svg';" alt="Nintendo-Alquila-Juegos-Gana-Dinero" title="Nintendo-Alquila-Juegos-Gana-Dinero">
+            </a>
+        </section>
+        <section class="contacts col-md-6 col-xs-12">
+            <a href="mailto:info@gameclub.com.ec"><i class="gc gc-send-mail"></i><span>info@gameclub.com.ec</span></a>
+            <a href="https://www.facebook.com/gameclub.ec/?ref=bookmarks" target="_blank"><i class="gc gc-facebook"></i><span>gameclub.ec</span></a>
+        </section>
+    </div>
+    <section class="row shortcut-links">
+
+        <div class="col-md-4 col-xs-6">
+            <img src="img/gameclub-logo.svg" height="70px" ui-sref-active="active" ui-sref="gameclub.home" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
+        </div>
+
+
+        <div class="col-md-8 col-xs-6 links">
+            <nav class="navbar-default pull-right">
+
+                <div class="navbar-header">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <button class="btn btn-primary" ui-sref="{{link.shareAndPlay.route}}" ui-sref-active="active"><span class="spacing">{{link.shareAndPlay.name}}</span></button>
+                        </li>
+                        <!-- <li><button class="btn btn-primary" ><span class="upper-case">{{link.faq.name}}</span></button></li> -->
+                        <li>
+                            <button class="btn btn-primary" ui-sref="{{link.blog.route}}" ui-sref-active="active">
+                                <span class="upper-case">{{link.blog.name}}</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div ng-if="currentUser" class="col-md-12 text-right coins">
+            <span class="text">{{currentUser.coins}}</span>
+            <i class="gc gc-usd-o"></i>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+</header>

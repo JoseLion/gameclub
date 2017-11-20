@@ -1,0 +1,13 @@
+<div id="account">
+    <div ng-include="'views/accountLinks.html'"></div>
+
+    <div ui-view></div>
+
+    <section class="row security text-center">
+        <span class="subtitle">Seguridad <img src="img/lock-icon-w.svg" /></span>
+        <div class="buttons">
+            <button type="button" class="btn btn-secundary full small" ng-click="changePassword()">Cambiar contrase&ntilde;a</button>
+            <button type="button" class="btn btn-secundary small" ng-click="deleteAccount()">Eliminar cuenta</button>
+        </div>
+    </section>
+</div>

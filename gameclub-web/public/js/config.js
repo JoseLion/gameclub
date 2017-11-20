@@ -17,7 +17,7 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 					loadPlugin: function($ocLazyLoad) {
 						return $ocLazyLoad.load([{
 							name: 'GameClub',
-							files: ['js/modules/account/accountCtrl.js', 'css/account.less', 'css/accountLinks.less', 'css/account.responsive.less', 'css/accountLinks.responsive.less']
+							files: ['js/modules/account/accountCtrl.js']
 						}]);
 					},
 

@@ -1,0 +1,47 @@
+<div class="ibox">
+	<div class="ibox-content">
+		<div class="col-md-12 form-group" style="text-align: right;">
+			<button type="button" class="btn btn-w-m btn-primary" ng-click="addProfile()">
+				<i class="fa fa-plus" style="margin-right: 5px"></i>
+				<span>Agregar Perfíl</span>
+			</button>
+		</div>
+
+		<div class="col-md-12 form-group">
+			<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover">
+				<col width="20%">
+				<col width="50%">
+				<col width="10%">
+				<col width="20%">
+
+				<thead>
+					<tr>
+						<th>Perfil</th>
+						<th>Descripción</th>
+						<th>Estado</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-repeat="profile in profiles">
+						<td>{{profile.name}}</td>
+						<td>{{profile.description}}</td>
+						<td>{{profile.status ? 'Activo' : 'Inactivo'}}</td>
+						<td style="text-align: center;">
+							<button type="button" class="btn btn-xs btn-warning" ng-click="editProfile(profile)" tooltip="Editar Perfil" ng-disabled="profile.wildcard">
+								<i class="fa fa-pencil"></i>
+							</button>
+
+							<button type="button" class="btn btn-xs" ng-class="profile.status ? 'btn-success' : 'btn-primary'" ng-click="changeStatus(profile)" tooltip="Cambiar Estado" ng-disabled="profile.wildcard">
+								<i class="fa fa-power-off"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="clearfix"></div>
+	</div>
+</div>

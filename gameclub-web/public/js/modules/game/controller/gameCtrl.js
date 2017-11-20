@@ -2,6 +2,8 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     let currentPage = 0;
     let priceChartingGMLoan = 0.0;
     $scope.validCards = [];
+    let taxes = Const.iva;
+    let feeLoanGamerPercentage = parseFloat($rootScope.settings[Const.settings.feeLoanGamer].value);
 
     if (addCardError != null) {
         $scope.addCardError = addCardError;
@@ -134,6 +136,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                 $scope.loanGame = cross;
                 $scope.loanViewOpen = true;
                 $scope.paymentViewOpen = false;
+                $scope.shippingCost = $scope.loanGame.shippingCost * 2;
 
                 $scope.loan = {
                     publicUserGame: cross,
@@ -142,6 +145,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                     gamerGeolocation: $rootScope.currentUser.geolocation,
                     gamerReceiver: $rootScope.currentUser.receiver != null ? $rootScope.currentUser.receiver : ($rootScope.currentUser.name + ' ' + $rootScope.currentUser.lastName)
                 };
+                $scope.weekSelected();
             } else {
                 if (getInfoPercentage() < 100 && getIdentityPercentage() < 100) {
                     notif.danger("Primero debes completar tu información de contacto y verificar tu identidad para solicitar juegos");
@@ -308,7 +312,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             let gameLoanPCH = parseFloat($rootScope.settings[Const.settings.weekShippingCost].value);
 
             if (type === 'percentage') {
-                return (((game.uploadPayment * priceChartingGM) / 100.0) + game.uploadPayment) / gameLoanPCH;
+                return (game.uploadPayment / gameLoanPCH);
             }
 
             if (type === 'number') {
@@ -371,7 +375,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         }
 
         Array.prototype.push.apply($scope.availableGames, data.content);
-        console.log($scope.availableGames);
         $scope.lastPage = data.last;
         currentPage = data.number;
     }
@@ -396,6 +399,14 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         openRest("game/getAvailableGames").post(filter, function(data) {
             setPagedAvailableGames(data);
         });
+    }
+
+    $scope.weekSelected = function(){
+        $scope.loan.shippningCost = $scope.shippingCost;
+        $scope.loan.feeGameClub = (($scope.loanGame.cost * $scope.loan.weeks) + $scope.loan.shippningCost) * feeLoanGamerPercentage/100;
+        $scope.subtotal = ($scope.loanGame.cost * $scope.loan.weeks) + $scope.loan.shippningCost + $scope.loan.feeGameClub;
+        $scope.loan.taxes = $scope.subtotal * taxes;
+        $scope.loan.cost = $scope.subtotal + $scope.loan.taxes;
     }
 
 

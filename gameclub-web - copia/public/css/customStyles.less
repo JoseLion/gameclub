@@ -1,0 +1,181 @@
+@import url("/css/variables.less");
+
+/********** PRINCIPAL **********/
+html{background-color:@color-primary;}
+body{background-color:transparent;}
+input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill{transition:all 5000s ease-in-out 0s;}
+h2{margin:0;}
+/*******************************/
+
+/********** GENERAL **********/
+.game-font{font-family:@font-family-jaapokki;}
+.game-font-blue{color:@color-primary-alt;/*NEW FONT*/}
+.game-font-white{color:@color-tertiary;/*NEW FONT*/}
+.game-font-light-red{color:@color-secundary;/*NEW FONT*/}
+.game-font-dark-blue{color:@color-primary;/*NEW FONT*/}
+.game-font-light-blue{color:@color-primary-alt;/*NEW FONT*/}
+.white-search{background:@color-tertiary-50;padding-top:10px;padding-bottom:10px;text-transform:uppercase;margin-top:10px;}
+.btn,.btn:hover,.btn:visited,.btn:focus,.btn:active,.btn:active:focus,.btn:active:hover{border-width:2px;border-style:solid;background:transparent;text-transform:uppercase;padding:5px 30px 2.5px;border-radius:12px;font-weight:700;box-shadow:none;}
+.btn.active,.btn.active:hover,.btn.active:visited,.btn.active:focus,.btn.active:active,.btn.active:active:focus,.btn.active:active:hover{border-width:2px;border-style:solid;background:transparent;box-shadow:none;}
+.btn-primary,.btn-primary:hover,.btn-primary:visited,.btn-primary:focus,.btn-primary:active,.btn-primary:active:focus,.btn-primary:active:hover,
+.btn-primary.active,.btn-primary.active:hover,.btn-primary.active:visited,.btn-primary.active:focus,.btn-primary.active:active,.btn-primary.active:active:focus,.btn-primary.active:active:hover{color:@color-primary;border-color:@color-secundary;}
+.btn-primary.full,.btn-primary.full:hover,.btn-primary.full:visited,.btn-primary.full:focus,.btn-primary.full:active,.btn-primary.full:active:focus,.btn-primary.full:active:hover,
+.btn-primary.full.active,.btn-primary.full.active:hover,.btn-primary.full.active:visited,.btn-primary.full.active:focus,.btn-primary.full.active:active,.btn-primary.full.active:active:focus,.btn-primary.full.active:active:hover{color:@color-primary;background:@color-secundary;}
+.btn-primary-alt,.btn-primary-alt:hover,.btn-primary-alt:visited,.btn-primary-alt:focus,.btn-primary-alt:active,.btn-primary-alt:active:focus,.btn-primary-alt:active:hover,
+.btn-primary-alt.active,.btn-primary-alt.active:hover,.btn-primary-alt.active:visited,.btn-primary-alt.active:focus,.btn-primary-alt.active:active,.btn-primary-alt.active:active:focus,.btn-primary-alt.active:active:hover{color:@color-primary;border-color:@color-primary-alt;}
+.btn-secundary,.btn-secundary:hover,.btn-secundary:visited,.btn-secundary:focus,.btn-secundary:active,.btn-secundary:active:focus,.btn-secundary:active:hover{color:@color-tertiary;border-color:@color-primary;}
+.btn-secundary.full,.btn-secundary.full:hover,.btn-secundary.full:visited,.btn-secundary.full:focus,.btn-secundary.full:active,.btn-secundary.full:active:focus,.btn-secundary.full:active:hover{color:@color-tertiary;background:@color-primary;}
+.btn-tertiary,.btn-tertiary:hover,.btn-tertiary:visited,.btn-tertiary:focus,.btn-tertiary:active,.btn-tertiary:active:focus,.btn-tertiary:active:hover{color:@color-primary;border-color:@color-tertiary;}
+.btn-tertiary.full,.btn-tertiary.full:hover,.btn-tertiary.full:visited,.btn-tertiary.full:focus,.btn-tertiary.full:active,.btn-tertiary.full:active:focus,.btn-tertiary.full:active:hover{color:@color-primary;background:@color-tertiary;}
+.btn-tertiary-alt,.btn-tertiary-alt:hover,.btn-tertiary-alt:visited,.btn-tertiary-alt:focus,.btn-tertiary-alt:active,.btn-tertiary-alt:active:focus,.btn-tertiary-alt:active:hover{color:@color-primary;border-color:black;}
+.btn-tertiary-alt.full,.btn-tertiary-alt.full:hover,.btn-tertiary-alt.full:visited,.btn-tertiary-alt.full:focus,.btn-tertiary-alt.full:active,.btn-tertiary-alt.full:active:focus,.btn-tertiary-alt.full:active:hover{color:@color-primary;background:@color-tertiary;border-color:black;}
+button.small,button.small:hover,button.small:visited,button.small:focus,button.small:active,button.small:active:focus,button.small:active:hover{border-radius:5px;padding:3px 6% 0;font-size:0.7em;margin-top:1%;}
+.ui-select-toggle .btn,.ui-select-toggle .btn:hover,.ui-select-toggle .btn:visited,.ui-select-toggle .btn:focus,.ui-select-toggle .btn:active,.ui-select-toggle .btn:active:focus,.ui-select-toggle .btn:active:hover{padding:0;}
+.row-left{margin-left:0;margin-right:0;padding-left:20%;}
+.row-right{margin-left:0;margin-right:0;padding-right:20%;}
+.title{font-size:2em;text-transform:uppercase;font-weight:700;}
+.cursor-pointer{cursor:pointer !important;}
+.cursor-no-drop{cursor:no-drop !important;}
+.no-padding{padding:unset;}
+.no-padding-h{padding-left:unset;padding-right:unset}
+.no-padding-v{padding-top:unset;padding-bottom:unset}
+.no-padding-l{padding-left:unset;}
+.no-padding-r{padding-right:unset;}
+.no-padding-t{padding-top:unset;}
+.no-padding-b{padding-bottom:unset;}
+.terms-form .legal a{color:@color-tertiary;text-decoration:underline;}
+form label::after{content:":";}
+form label.control-label{text-align:right;}
+form input,form textarea{background:transparent;border:none;outline:none;box-shadow:none;}
+form input.complete,form textarea.complete{width:100%;}
+form .selector{width:100%;padding:5px 0;color:inherit;background:transparent;color:@color-tertiary;border:none;}
+form .selector span{font-size:1em;}
+form .selector .ui-select-match>span{padding:0px!important;border:none!important;}
+form .selector .ui-select-match>span .caret.pull-right{top:40%!important;right:0px!important;}
+form .selector .ui-select-match.btn-default-focus{color:@color-tertiary;background-color:transparent;border:none;outline:none;box-shadow:none;}
+form .selector .ui-select-search{font-size:1em;padding:0px;height:21px;border:none;box-shadow:none;width:100%;}
+form .selector .glyphicon-remove{color:@color-tertiary;}
+form .selector .ui-select-match>span,form .selector .ui-select-match>span>span,form .selector .ui-select-match .ui-select-placeholder,form .selector input{background:transparent;color:@color-tertiary;border:none;box-shadow:none;}
+form .selector .ui-select-match .ui-select-match-text img.gameConsole{height:100%;position:absolute;}
+form .ui-select-match .ui-select-placeholder{text-transform:none;}
+form .selector .ui-select-choices{background:@color-primary;color:@color-tertiary;border:1px solid @color-primary;border-radius:10px;border-top-left-radius:0px;border-top-right-radius:0px;width:120%;margin-left:-10%;overflow-y:scroll;margin-top:5px;max-height:205px;}
+form .selector.direction-up .ui-select-choices{border-bottom-left-radius:0px;border-bottom-right-radius:0px;}
+form .selector .ui-select-choices::-webkit-scrollbar{background:transparent;width:0.5em!important;}
+form .selector .ui-select-choices::-webkit-scrollbar-track{background:transparent;}
+form .selector .ui-select-choices::-webkit-scrollbar-thumb{background:@color-secundary;}
+form .selector .ui-select-choices .ui-select-choices-row{text-transform:uppercase;padding-left:15px;padding-right:15px;font-size:1em;padding-top:5px;position:relative;padding-bottom:5px;max-height:55px;}
+form .selector .ui-select-choices .ui-select-choices-row img.category{height:1em;position:absolute;top:5px;right:10px;}
+form .selector .ui-select-choices .ui-select-choices-row img.gameConsole{max-height: 45px;max-width:75%;}
+form .selector .ui-select-choices .ui-select-choices-row:hover{background:@color-secundary;margin-left:5px;margin-right:5px;padding-left:10px;padding-right:10px;}
+form .selector .ui-select-choices .ui-select-choices-row:hover img.category{right:5px;}
+form .selector .ui-select-choices::-webkit-scrollbar{width:0px;}
+form input[type="checkbox"]{-webkit-appearance:none;border:none;background:#071428;border-radius:5px;display:inline-block;position:relative;width:15px;height:15px;outline:none!important;margin-right:1em;}
+form input[type="checkbox"]:checked::after{content:"\f00c";position:absolute;top:-0.5em;left:0;color:@color-secundary;font-size:2em;}
+form ul.dropdown-menu{padding:2%;background:@color-primary;}
+form ul.dropdown-menu a{color:@color-tertiary;}
+form ul.dropdown-menu>.active>a,form ul.dropdown-menu>.active>a:focus,form ul.dropdown-menu>.active>a:hover{background:@color-secundary;}
+/*****************************/
+
+/********** HEADER **********/
+header#main-header{background:@color-primary;font-weight:700;}
+header#main-header .social-media{text-align:left;padding-top:5px;}
+header#main-header .social-media a{margin:0px 0.2em;font-size:1.2em;color:@color-secundary;text-decoration:none;}
+header#main-header .social-media a i{font-weight:700;}
+header#main-header .social-media a:hover{color:@color-tertiary;}
+header#main-header .social-media img{margin-right: 3px;margin-top:3px;}
+header#main-header .contacts{text-align:right;font-size:0.7em;}
+header#main-header .contacts a{position:relative;display:inline-block;color:@color-secundary;text-decoration:none;padding:10px 0 5px 30px;margin-left:10px;}
+header#main-header .contacts a::before{content:"";position:absolute;top:0;bottom:-25%;left:0;border-left:1px solid @color-header-separator;z-index:5;}
+header#main-header .contacts a:first-child::before{border-left:0px;}
+header#main-header .contacts a i{font-size:1.6em;position:absolute;left:0.5em;top:0.5em;}
+header#main-header .contacts a:hover span{color:@color-tertiary;}
+header#main-header .contacts a i:hover{color:@color-secundary;}
+header#main-header .shortcut-links .navbar-default{background-color:initial;border-color:initial;}
+header#main-header .shortcut-links{position:absolute;font-size:18px;padding-top:1%;padding-bottom:1%;font-weight:700;left:0;right:0;z-index:20;background:@color-primary-85;background:linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);background:-webkit-linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);background:-o-linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);background:-moz-linear-gradient(@color-primary 5%,@color-primary-85 10%,transparent);}
+header#main-header .shortcut-links img{cursor:pointer;}
+header#main-header .shortcut-links .links{padding:1.5em 0;}
+header#main-header .shortcut-links .spacing{letter-spacing:1.5px;text-transform:lowercase;}
+header#main-header .shortcut-links .links nav li{display:inline;border-left:1px solid @color-secundary;padding:6px 10px 6px 12px;}
+header#main-header .shortcut-links .links nav li:first-child{border-left:none;}
+header#main-header .shortcut-links .links nav li.account span.name{text-transform:capitalize;}
+header#main-header .shortcut-links .links nav li.account span.last-name{text-transform:uppercase;}
+header#main-header .shortcut-links .links nav li.account img.avatar{height:70%;position:absolute;transform:translate(-50%,50%);bottom:50%;right:-38px;}
+header#main-header .shortcut-links .links nav li.account span.notification{background-color:@color-secundary;color: white;font-weight:bold;font-size:1em;border-radius:15px;padding:5px 8px;position:absolute;transform:translate(50%,-50%);top:20%;right:-20%;}
+header#main-header .shortcut-links .links nav button.btn{border-radius:7px;text-transform:none;padding:1% 2% 0.5%;font-size:0.6em;}
+header#main-header .shortcut-links .links nav button.btn-primary{color:@color-tertiary;border-color:transparent;padding:5px 10px;}
+header#main-header .shortcut-links .links nav button.btn-primary:hover{border-color:@color-secundary;}
+header#main-header .shortcut-links .links nav button.btn-primary.active{border-color:@color-secundary;}
+header#main-header .shortcut-links .coins{margin-top:-1%;font-size:0.8em;color:#FFFFFF;padding-right:0;}
+header#main-header .shortcut-links .coins .text{position:absolute;left:97.5%;}
+header#main-header .shortcut-links .coins i.gc{font-size:1.5em;margin-right:3.5%;}
+/****************************/
+
+/********** FOOTER **********/
+footer#main-footer{background:@color-primary;font-weight:700;font-size:1em;}
+footer#main-footer section.row{margin:1% auto;}
+footer#main-footer .logo{text-align:center;}
+footer#main-footer .logo img{cursor:pointer;width:15vh;}
+footer#main-footer .logo, footer#main-footer .links-text{padding:1%;}
+footer#main-footer .links-text{margin-top:1em;}
+footer#main-footer .links a{color:@color-tertiary;text-decoration:none;margin-bottom:2.5%;font-size:1.2em;}
+footer#main-footer .contacts-shares .contacts{font-size:0.9em;}
+footer#main-footer .contacts-shares .contacts a{position:relative;display:inline-block;color:@color-secundary;text-decoration:none;padding-left:15%;}
+footer#main-footer .contacts-shares .contacts a i,footer#main-footer .contacts-shares .contacts a img{font-size:1.5em;position:absolute;left:3%;top:0;}
+footer#main-footer .contacts-shares .contacts a img{width:0.9em;left:3%;}
+footer#main-footer .contacts-shares .contacts a:hover span{color:@color-tertiary;}
+footer#main-footer .contacts-shares .contacts a i:hover{color:@color-secundary;}
+footer#main-footer .contacts-shares .social-media img{margin-left:0px;margin-right:0.25em;cursor:pointer;height:1em;}
+footer#main-footer .contacts-shares .social-media{text-align:left;padding-top:5px;}
+footer#main-footer .contacts-shares .social-media a{margin:0px 0.2em;font-size:1.2em;color:@color-secundary;}
+footer#main-footer .contacts-shares .social-media a:hover{color:@color-tertiary;}
+footer#main-footer .copyright{color:@color-secundary;margin-top:40px;font-size:1.2em;}
+footer#main-footer .copyright span.title{text-transform:uppercase;font-size:1em;}
+footer#main-footer .spacing{letter-spacing:2.5px;}
+footer#main-footer .top-space{margin-top:5px;}
+footer#main-footer .designed{background-color:@color-secundary;color:@color-tertiary;text-align:center;padding-top:8px;font-size:14px;}
+footer#main-footer .designed span{letter-spacing:1px;}
+/****************************/
+
+/********** MODAL **********/
+.modal-content{background:@color-primary;border:5px solid @color-tertiary;color:@color-tertiary;}
+.modal-content .modal-heading,.modal-content .modal-header{color:@color-secundary;text-transform:uppercase;padding:2em 0 1em;text-align:center;}
+.modal-content .modal-heading .tertiary{color:@color-tertiary;}
+.modal-content .modal-header i.modal-icon{color:@color-tertiary;font-size:3em;}
+.modal-content .modal-header .modal-title{font-size:2em;font-family:@font-family-jaapokki;padding-top:0.5em;}
+.modal-content button.btn,.modal-content button.btn:hover,.modal-content button.btn:visited,.modal-content button.btn:focus,.modal-content button.btn:active,.modal-content button.btn:active:focus,.modal-content button.btn:active:hover,.modal-content button.btn.active,.modal-content button.btn.active:hover,.modal-content button.btn.active:visited,.modal-content button.btn.active:focus,.modal-content button.btn.active:active,.modal-content button.btn.active:active:focus,.modal-content button.btn.active:active:hover{padding-left:1em;padding-right:1em;}
+.modal-content button.save.btn,.modal-content button.save.btn:hover,.modal-content button.save.btn:visited,.modal-content button.save.btn:focus,.modal-content button.save.btn:active,.modal-content button.save.btn:active:focus,.modal-content button.save.btn:active:hover,.modal-content button.save.btn.active,.modal-content button.save.btn.active:hover,.modal-content button.save.btn.active:visited,.modal-content button.save.btn.active:focus,.modal-content button.save.btn.active:active,.modal-content button.save.btn.active:active:focus,.modal-content button.save.btn.active:active:hover{border-color:@color-secundary;background:@color-tertiary;color:@color-primary;}
+.modal-content button.cancel.btn,.modal-content button.cancel.btn:hover,.modal-content button.cancel.btn:visited,.modal-content button.cancel.btn:focus,.modal-content button.cancel.btn:active,.modal-content button.cancel.btn:active:focus,.modal-content button.cancel.btn:active:hover,.modal-content button.cancel.btn.active,.modal-content button.cancel.btn.active:hover,.modal-content button.cancel.btn.active:visited,.modal-content button.cancel.btn.active:focus,.modal-content button.cancel.btn.active:active,.modal-content button.cancel.btn.active:active:focus,.modal-content button.cancel.btn.active:active:hover{border-color:@color-secundary;background:transparent;color:@color-tertiary;}
+.modal-content form input{border:2px solid @color-tertiary;padding:2px;color:@color-primary-alt;}
+/***************************/
+
+/********** SWEET-ALERT **********/
+.sweet-alert{background-color:@color-primary!important;border:5px solid @color-tertiary!important;}
+.sweet-alert .sa-icon.sa-info{border-color:@color-tertiary!important;}
+.sweet-alert .sa-icon.sa-info::before,.sweet-alert .sa-icon.sa-info::after{background-color:@color-tertiary!important;}
+.sweet-alert .sa-icon.sa-success::before, .sweet-alert .sa-icon.sa-success::after{background:none!important;}
+.sweet-alert .sa-icon.sa-success .sa-fix{background:none!important;}
+.sweet-alert h2{color:@color-secundary!important;font-family:@font-family-jaapokki;font-weight:400!important;}
+.sweet-alert p{color:@color-tertiary!important;}
+.sweet-alert .sa-button-container button{border-width:2px;border-style:solid;background:transparent;border-radius:12px;font-weight:700;box-shadow:none;}
+.sweet-alert .sa-button-container button.cancel{border-color:@color-secundary!important;background:transparent!important;color:@color-tertiary!important;}
+.sweet-alert .sa-button-container .sa-confirm-button-container button.confirm{border-color:@color-secundary!important;background:@color-tertiary!important;color:@color-primary!important;}
+/*********************************/
+
+/********** MAPS MODAL ************/
+#maps-modal .modal-body span.dismiss{color:#FFFFFF;font-weight:bold;font-size:1.5em;position:absolute;top:0%;right:1%;}
+#maps-modal .modal-body span.dismiss:hover{color:rgba(255,255,255,0.6);}
+#maps-modal .modal-body div.map{margin-top:3%;}
+#maps-modal .modal-body div.done{margin-top:4%;}
+#maps-modal .modal-body button.btn-primary{color:#FFFFFF;padding-left:5%;padding-right:5%;}
+/*******************************/
+
+/********** RZSLIDER **********/
+.rzslider .rz-pointer{outline:none!important;}
+.rzslider .rz-pointer::after{width:28px!important;height:28px!important;left:2px!important;top:2px!important;border-radius:100%!important;}
+.rzslider.rz-slider-primary .rz-pointer{background:@color-tertiary!important;}
+.rzslider.rz-slider-primary .rz-bar,.rzslider.rz-slider-primary .rz-selection{background:@color-primary!important;}
+.rzslider.rz-slider-primary .rz-pointer::after,.rz-slider-primary .rzslider .rz-pointer:hover::after{background-color:@color-primary!important;}
+.rzslider.rz-slider-secundary .rz-pointer{background:@color-tertiary!important;}
+.rzslider.rz-slider-secundary .rz-bar,.rzslider.rz-slider-secundary .rz-selection{background:@color-tertiary!important;}
+.rzslider.rz-slider-secundary .rz-pointer::after,.rz-slider-secundary .rzslider .rz-pointer:hover::after{background-color:@color-secundary!important;}
+/******************************/

@@ -1,0 +1,233 @@
+<form class="form-horizontal" role="from" on-submit="save()" novalidate>
+	<div class="col-md-12">
+		<div class="tabs-container">
+			<uib-tabset>
+				<uib-tab heading="{{tabs[0].name}}" active="tabs[0].active">
+					<div class="panel-body">
+						<div class="col-md-12">
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Nombre</label>
+								<div class="col-md-9">
+									<input validation type="text" class="form-control" ng-model="game.name" required>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Descripción</label>
+								<div class="col-md-9">
+									<textarea validation type="text" class="form-control" ng-model="game.description" required style="resize: vertical;" rows="7"></textarea>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Fecha de Lanzamiento</label>
+								<div class="col-md-3">
+									<input validation type="datetime" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="game.releaseDate" is-open="openDate" ng-click="openDate = true" data-mask="99-99-9999" required>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Restricción de Contenido</label>
+								<div class="col-md-3">
+									<ui-select id="image-select" ng-model="game.contentRating" theme="bootstrap">
+										<ui-select-match allow-clear placeholder="Seleccione...">
+											<img ng-src="{{$select.selected.other}}" style="max-width: 50%;">
+										</ui-select-match>
+										<ui-select-choices repeat="content in contentRatings">
+											<img ng-src="{{content.other}}" style="max-width: 50%;">
+										</ui-select-choices>
+									</ui-select>
+								</div>
+							</div>
+
+							<div class="form-group" ng-repeat="gameMagazine in game.magazineRatings">
+								<div class="to-validate">
+									<label class="col-md-3 control-label">Rating {{gameMagazine.magazine.name}}</label>
+									<div class="col-md-3">
+										<div id="rating-slider-{{$index}}" ion-range-slider range-options="getSliderOptions(gameMagazine)"></div>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<img ng-src="{{gameMagazine.magazine.other}}" style="max-width: 100%;">
+								</div>
+
+								<div class="to-validate">
+									<label class="col-md-1 control-label">URL</label>
+									<div class="col-md-3">
+										<input validation type="url" class="form-control" ng-model="gameMagazine.url" required>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Consolas</label>
+								<div class="col-md-4">
+									<multi-select validation id="image-multi-select" ng-model="game.consoles" list="consoles" property="console" match-template="consoleMatch.html" choice-template="consoleChoice.html" required></multi-select>
+									<script type="text/ng-template" id="consoleMatch.html">
+										<img ng-src="{{$item.base64}}" style="max-width: 100%; width: 100%;">
+									</script>
+									<script type="text/ng-template" id="consoleChoice.html">
+										<img ng-src="{{item.base64}}" style="max-width: 100%;">
+									</script>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Categorias</label>
+								<div class="col-md-4">
+									<multi-select validation ng-model="game.categories" list="categories" property="category" match-template="categoryMatch.html" choice-template="categoryChoice.html" required></multi-select>
+									<script type="text/ng-template" id="categoryMatch.html">
+										<div style="display: inline-block; vertical-align: middle; padding: 2%;">
+											<div class="col-md-2">
+												<img ng-src="{{$item.base64}}" style="max-width: 100%;">
+											</div>
+											<div class="col-md-10">
+												{{$item.name}}
+											</div>
+										</div>
+									</script>
+									<script type="text/ng-template" id="categoryChoice.html">
+										<div class="row">
+											<div class="col-md-2">
+												<img ng-src="{{item.base64}}" style="max-width: 100%;">
+											</div>
+											<div class="col-md-10">
+												{{item.name}}
+											</div>
+										</div>
+									</script>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Price Chartind Id</label>
+								<div class="col-md-3">
+									<div class="input-group">
+										<input validation type="number" class="form-control" ng-model="game.priceChartingId" required min="0">
+										<span class="input-group-addon">
+											<button type="button" class="btn btn-xs btn-warning" ng-click="getPriceCharting()" style="font-size: 11px;" ng-disabled="game.priceChartingId == null || game.priceChartingId == ''">
+												<i class="fa fa-plug"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group to-validate">
+								<label class="col-md-3 control-label">Precio Price Charting</label>
+								<div class="col-md-3">
+									<div class="input-group">
+										<input type="number" class="form-control" ng-model="game.uploadPayment" disabled>
+										<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</uib-tab>
+
+				<uib-tab heading="{{tabs[1].name}}" active="tabs[1].active">
+					<div class="panel-body">
+						<div class="form-group to-validate">
+							<label class="col-md-3 control-label">Banner</label>
+							<div class="col-md-5">
+								<image-upload ng-model="images.banner" archive="game.banner" required></image-upload>
+							</div>
+						</div>
+
+						<div class="form-group to-validate">
+							<label class="col-md-3 control-label">Cover</label>
+							<div class="col-md-5">
+								<image-upload ng-model="images.cover" archive="game.cover" required></image-upload>
+							</div>
+						</div>
+
+						<div class="form-group to-validate">
+							<label class="col-md-3 control-label">Corte Rombo</label>
+							<div class="col-md-5">
+								<div class="col-md-12">
+									<button type="button" class="btn btn-w-m btn-default" ng-click="cropImage('diamond')" ng-disabled="coverBase64 == null || coverBase64 == '//:0'">Recortar</button>
+								</div>
+								<div class="col-md-12">
+									<img validation class="cropped-img" archive-file="game.diamond" ng-model="images.diamond" ng-src="{{images.diamond}}" image-required="true">
+									<div  class="diamond-cover" ng-if="images.diamond != null && images.diamond != '//:0'">
+										<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+											<path d="M0 0 h100 v100 h-100 z M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" style="fill: rgba(255, 255, 255, 0.7);"></path>
+										</svg>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label">Url del Trailer</label>
+							<div class="col-md-8">
+								<div class="input-group">
+									<input validation type="url" class="form-control" ng-model="game.trailerUrl">
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-w-m btn-default" ng-click="changeVideo()">
+											<i class="fa fa-youtube fa-lg" style="margin-right: 5%"></i>
+											<span>Aplicar</span>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-1"></div>
+
+							<div class="col-md-10" style="text-align: center;">
+								<iframe id="video-frame" width="100%" height="{{getVideoHeight()}}" frameborder="0" allowfullscreen ng-src="{{url}}" ng-if="url != null && url != ''"></iframe>
+							</div>
+						</div>
+					</div>
+				</uib-tab>
+			</uib-tabset>
+		</div>
+
+		<div class="ibox">
+			<div class="ibox-content">
+				<div class="col-md-12" style="text-align: right;">
+					<button type="submit" class="btn btn-w-m btn-primary">Guardar</button>
+					<button type="button" class="btn btn-w-m btn-default" ng-click="cancel()">Cancel</button>
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<style type="text/css">
+	#image-select .ui-select-choices-row-inner {
+		text-align: center;
+	}
+
+	#image-select .ui-select-match-text {
+		text-align: center;
+	}
+
+	#image-select .form-control {
+		height: auto !important;
+		display: inline-block;
+	}
+
+	#image-select .ui-select-toggle > i {
+		top: 15px;
+	}
+
+	#image-select .ui-select-toggle > a {
+		position: absolute;
+		top: 5%;
+		right: 10px;
+		margin-top: -2px;
+	}
+
+	.crop-image {
+		position: absolute;
+		top: 0em;
+		left: 0em;
+	}
+</style>

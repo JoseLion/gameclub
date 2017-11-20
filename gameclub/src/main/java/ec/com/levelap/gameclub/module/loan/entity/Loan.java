@@ -120,7 +120,7 @@ public class Loan extends BaseEntity {
 	private Double cardPart;
 	
 	@JsonIgnore
-	@Column
+	@Column(name="privateKey_gamer")
 	private byte[] privateKeyGamer;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)

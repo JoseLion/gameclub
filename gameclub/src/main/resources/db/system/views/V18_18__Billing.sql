@@ -18,7 +18,8 @@ SELECT
 	bill.weeks,
 	bill.shipping_cost,
 	bill.fee_game_Club,
-	bill.taxes
+	bill.taxes,
+	bill.privateKey_gamer
 FROM (SELECT	pu.id AS id,
 				pu.name || '' || pu.last_name AS full_name,
 				'Cédula' AS document_type,
@@ -35,7 +36,8 @@ FROM (SELECT	pu.id AS id,
 				l.weeks AS weeks,
 				l.shippning_cost AS shipping_cost,
 				l.fee_game_club AS fee_game_Club,
-				l.taxes AS taxes
+				l.taxes AS taxes,
+				l.privateKey_gamer AS privateKey_gamer
 		FROM	gameclub.loan l
 				INNER JOIN gameclub.public_user_game pug ON
 					l.public_user_game=pug.id

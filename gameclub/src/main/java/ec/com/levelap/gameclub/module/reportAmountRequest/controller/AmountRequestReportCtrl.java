@@ -27,6 +27,7 @@ public class AmountRequestReportCtrl {
 	@RequestMapping(value="amountRequestAll", method=RequestMethod.POST)
 	public ResponseEntity<List<AmountRequestReport>> amountRequestAll() throws ServletException, IOException, GeneralSecurityException {
 		List<AmountRequestReport> AmountsRequestsReport = amtRqRpRepo.findAll();
+//		List<AmountRequestReport> AmountsRequestsReport1 = amtRqRpRepo.findAllAMR();
 		return new ResponseEntity<List<AmountRequestReport>>(AmountsRequestsReport, HttpStatus.OK);
 	}
 	

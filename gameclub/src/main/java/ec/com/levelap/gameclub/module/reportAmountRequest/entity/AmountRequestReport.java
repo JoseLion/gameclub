@@ -91,13 +91,13 @@ public class AmountRequestReport {
 	}
 
 	public byte[] getAmount() {
-		try {
-			getShownAmount();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (GeneralSecurityException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			getShownAmount();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} catch (GeneralSecurityException e) {
+//			e.printStackTrace();
+//		}
 		return amount;
 	}
 

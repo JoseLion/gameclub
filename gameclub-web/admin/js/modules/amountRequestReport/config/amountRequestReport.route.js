@@ -18,7 +18,6 @@ angular.module("AmountRequestReport").config(function($stateProvider){
 
 			amountRequests: function(rest) {
 				return rest("amountRequestReport/amountRequestAll", true).post(function(data) {
-					console.log(data);
 					return data;
 				});
 			}

@@ -2,6 +2,8 @@ package ec.com.levelap.gameclub.module.reportAmountRequest.repository;
 
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,5 +16,8 @@ public interface AmountRequestReportRepo extends JpaRepository<AmountRequestRepo
 	
 	@Query("SELECT pu.privateKey FROM PublicUser pu WHERE pu.id=:userId")
 	public byte[] userKey(@Param("userId") Long userId);
+	
+	@Query("SELECT amr FROM AmountRequestReport amr")
+	public List<AmountRequestReport> findAllAMR();
 
 }

@@ -1,7 +1,9 @@
-angular.module('AmountRequestReport').controller('AmountRequestReportCtrl', function($scope, $rootScope, amountRequests) {
+angular.module('AmountRequestReport').controller('AmountRequestReportCtrl', function($scope, $rootScope, amountRequests, getDTOptions) {
 
+	$scope.dtOptions = getDTOptions.unpaged("fTgitp");
+	$scope.dtColumnDefs = getDTOptions.notSortableAll(3);
+	
 	amountRequests.$promise.then(function(data) {
-		console.log(data);
 		$scope.amountRequests = data;
 	});
 });

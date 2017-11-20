@@ -2,16 +2,17 @@ DROP TABLE IF EXISTS gameclub.registered_users;
 
 CREATE OR REPLACE VIEW gameclub.registered_users AS
 SELECT	
-	ug.public_user,
-	ug.total_games, 
-	ug.total_requested_rentals,
-	ug.total_rent_aceppted,
-	ug.total_rent_requested,
-	ug.total_applications_received,
-	ug.total_request_accepted,
-	ug.total_request_rejected,
-	ug.loan_creation_date
-FROM 	(SELECT  pu.id AS public_user,
+	regus.public_user_id,
+	regus.total_games, 
+	regus.total_requested_rentals,
+	regus.total_rent_aceppted,
+	regus.total_rent_requested,
+	regus.total_applications_received,
+	regus.total_request_accepted,
+	regus.total_request_rejected,
+	regus.loan_creation_date
+FROM 	(SELECT  
+		pu.id AS public_user_id,
 		(SELECT COUNT(pug.id) FROM public_user_game pug WHERE pug.public_user=pu.id) AS total_games,
 
 		(SELECT	COUNT(l.id) FROM loan l WHERE l.gamer=pu.id) AS total_requested_rentals,
@@ -47,4 +48,4 @@ FROM 	(SELECT  pu.id AS public_user,
 			pug.id=l.public_user_game
 
 	ORDER BY pu.name)
-AS ug;
+AS regus;

@@ -14,8 +14,11 @@ angular.module('Core').directive('paymentMethod', function(Const, notif, $rootSc
 		},
         link: function($scope, element, attrs, ctrl) {
             if ($scope.cardsList == null) {
+                $scope.cardsList = [];
+
                 rest("paymentez/listCards", true).get(function(data) {
                     $scope.cardsList = data;
+                    $scope.cardsLoaded = true;
                 });
             }
 

@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 col-xs-12 payment">
+    <div class="col-md-6 col-xs-12 payment" ng-if="cardsLoaded">
         <div class="col-md-12 col-xs-12 no-padding-left no-padding-right" ng-if="cardsList.length > 0">
             <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
                 <span class="text-tooltip">Pago con tarjeta</span>
@@ -49,5 +49,6 @@
             </div>
         </div>
     </div>
+    <loading showing="!cardsLoaded"></loading>
     <div class="clearfix"></div>
 </section>

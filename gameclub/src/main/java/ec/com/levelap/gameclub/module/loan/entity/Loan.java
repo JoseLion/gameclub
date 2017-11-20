@@ -101,6 +101,9 @@ public class Loan extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "payment", foreignKey = @ForeignKey(name = "payment_kushki_subscription_fk"))
 	private KushkiSubscription payment;
+	
+	@Column(name="card_reference", columnDefinition="VARCHAR")
+	private String cardReference;
 
 	@Column(name = "was_accepted", columnDefinition = "BOOLEAN DEFAULT NULL")
 	private Boolean wasAccepted;
@@ -244,6 +247,14 @@ public class Loan extends BaseEntity {
 
 	public void setPayment(KushkiSubscription payment) {
 		this.payment = payment;
+	}
+
+	public String getCardReference() {
+		return cardReference;
+	}
+
+	public void setCardReference(String cardReference) {
+		this.cardReference = cardReference;
 	}
 
 	public Boolean getWasAccepted() {

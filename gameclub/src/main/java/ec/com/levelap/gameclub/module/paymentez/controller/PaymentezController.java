@@ -33,7 +33,7 @@ public class PaymentezController {
 	}
 	
 	@RequestMapping(value="deleteCard/{cardReference}", method=RequestMethod.DELETE)
-	public ResponseEntity<?> deleteCard(@PathVariable String cardReference, HttpSession session) throws ServletException, RestClientException, NoSuchAlgorithmException, UnsupportedEncodingException, URISyntaxException {
+	public ResponseEntity<?> deleteCard(@PathVariable String cardReference, HttpSession session) throws ServletException, RestClientException, NoSuchAlgorithmException, URISyntaxException {
 		HttpStatus status = paymentezService.deleteCard(session, cardReference);
 		return new ResponseEntity<>(status);
 	}

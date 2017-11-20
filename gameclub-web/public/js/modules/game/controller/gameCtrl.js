@@ -253,7 +253,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             notif.danger("Por favor seleccione una forma de pago");
             failedValidation = true;
         } else {
-            $scope.loan.payment = $scope.cardSelected;
+            $scope.loan.cardReference = $scope.cardSelected.card_reference;
         }
 
         if (!failedValidation) {

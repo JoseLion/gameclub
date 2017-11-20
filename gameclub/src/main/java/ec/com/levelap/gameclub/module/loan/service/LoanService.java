@@ -2,6 +2,7 @@ package ec.com.levelap.gameclub.module.loan.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,12 +15,15 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogService;
@@ -33,6 +37,7 @@ import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
+import ec.com.levelap.gameclub.module.paymentez.service.PaymentezService;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.service.RestoreService;
 import ec.com.levelap.gameclub.module.settings.service.SettingService;
@@ -87,6 +92,9 @@ public class LoanService {
 	@Autowired
 	private KushkiService kushkiService;
 	
+	@Autowired
+	private PaymentezService paymentezService;
+	
 	@Value("${game-club.real-times}")
 	private boolean realTimes;
 
@@ -140,9 +148,8 @@ public class LoanService {
 		return loan;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Transactional
-	public Loan confirmLoan(Loan loan, boolean isGamer) throws ServletException, KushkiException, GeneralSecurityException, IOException {
+	public Loan confirmLoan(Loan loan, boolean isGamer, HttpSession session, HttpServletRequest request) throws ServletException, KushkiException, GeneralSecurityException, IOException, RestClientException, URISyntaxException {
 		Catalog noTracking = catalogService.getCatalogRepo().findByCode(Code.SHIPPING_NO_TRACKING);
 		loan.setShippingStatus(noTracking);
 
@@ -170,13 +177,17 @@ public class LoanService {
 				connected = publicUserService.substractFromUserBalance(connected.getId(), loan.getBalancePart());
 			}
 			if (totalToCard > 0) {
-				Map<String, Object> kushkiSubscription = new HashMap<>();
+				String description = "Préstamo del juego " + loan.getPublicUserGame().getGame().getName() + " durante " + loan.getWeeks() + " semana(s)";
+				Map<String, String> response = paymentezService.debitFromCard(session, request.getRemoteAddr(), loan.getCardReference(), totalToCard, 0.0, description);
+				System.out.println("DEBIT RESPONSE: " + response);
+				
+				/*Map<String, Object> kushkiSubscription = new HashMap<>();
 				kushkiSubscription.put("amount", totalToCard);
 				try {
 					kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), kushkiSubscription);
 				} catch (KushkiException ex) {
 					throw new KushkiException(ex);
-				}
+				}*/
 			}
 
 			Transaction transaction = new Transaction(connected, "JUGASTE",

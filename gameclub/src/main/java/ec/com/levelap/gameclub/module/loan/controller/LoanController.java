@@ -1,11 +1,14 @@
 package ec.com.levelap.gameclub.module.loan.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.Date;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
 
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
@@ -88,14 +92,14 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="confirmLender", method=RequestMethod.POST)
-	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan) throws ServletException, KushkiException, GeneralSecurityException, IOException {
-		loan = loanService.confirmLoan(loan, false);
+	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, KushkiException, GeneralSecurityException, IOException, URISyntaxException {
+		loan = loanService.confirmLoan(loan, false, session, request);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="confirmGamer", method=RequestMethod.POST)
-	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan) throws ServletException, KushkiException, GeneralSecurityException, IOException {
-		loan = loanService.confirmLoan(loan, true);
+	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, KushkiException, GeneralSecurityException, IOException, URISyntaxException {
+		loan = loanService.confirmLoan(loan, true, session, request);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	

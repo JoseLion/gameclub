@@ -1,10 +1,29 @@
-angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, rest, sweet, notif, forEach, Const, $location, $cookies) {
+angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, addCardError, cardsList, rest, sweet, notif, forEach, Const, $location, $cookies) {
+    /*rest("paymentez/deleteCard/:cardReference").delete({cardReference: "12680100941731713551"}, function(data) {
+        console.log("data: ", data);
+    });*/
+
+
+
+
+
+
+
+
     reviews.$promise.then(function(data) {
         $scope.gamerAverage = data.gamerAverage * 100.0 / 5.0;
         $scope.lenderAverage = data.lenderAverage * 100.0 / 5.0;
         $scope.gamerReviews = data.gamerReviews;
         $scope.lenderReviews = data.lenderReviews;
         setPagedData(data.reviews);
+    });
+
+    if (addCardError != null) {
+        $scope.addCardError = addCardError;
+    }
+
+    cardsList.$promise.then(function(data) {
+        console.log("Card List: ", data);
     });
 
     $scope.numberCards = false;
@@ -55,9 +74,6 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
                 "&success_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
                 "&failure_url=" + encodeURIComponent($location.$$protocol + "://" + $location.$$host + "/gameclub/account/settings") +
                 "&buyer_phone=0998591484";
-
-        console.log("token: ", token);
-        console.log("url: ", url);
 
         window.open(url, "_self");
     }

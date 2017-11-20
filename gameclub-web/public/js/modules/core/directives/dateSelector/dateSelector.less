@@ -1,0 +1,28 @@
+@import url("/css/variables.less");
+
+#date-selector{display:inline-block;}
+#date-selector div.selector{border-right:1px solid @color-tertiary;cursor:pointer;display:inline;padding-right:3px;padding-top:5%!important;position:relative;}
+#date-selector div.selector.disabled{cursor:not-allowed;}
+#date-selector div.selector>input{text-align:right;cursor:pointer;}
+#date-selector div.selector.disabled>input{cursor:not-allowed;}
+#date-selector div.selector ul.dropdown{padding:0;text-align:right;position:absolute;width:100%;left:0;right:0;background:@color-primary;height:10.9em;overflow-y:scroll;z-index:10;border:5px solid @color-primary;}
+#date-selector div.selector ul.dropdown{border-bottom-left-radius:5px;border-bottom-right-radius:5px;}
+#date-selector div.selector ul.dropdown::-webkit-scrollbar{width:5px;background-color:@color-secundary;}
+#date-selector div.selector ul.dropdown::-webkit-scrollbar-thumb{background-color:white;}
+#date-selector div.selector ul.dropdown li{display:block;padding:1px 5px 0;}
+#date-selector div.selector ul.dropdown li:hover{background:@color-secundary;}
+#date-selector div.calendar-icon{display:inline;position:relative;}
+#date-selector div.calendar-icon>i{font-size:1.7em;position:relative;cursor:pointer;margin-left:0.3em;}
+#date-selector div.calendar-icon.disabled>i{cursor:not-allowed;}
+#date-selector div.calendar-icon table{position:absolute;z-index:10;text-align:center;width:16em;color:@color-primary;background:@color-tertiary;border:3px solid @color-primary;border-radius:10px;border-collapse:separate;}
+#date-selector div.calendar-icon table > thead > tr > th,#date-selector div.calendar-icon table > tbody > tr > td{text-align:center;padding:0.25em;}
+#date-selector div.calendar-icon table > thead > tr{background:@color-tertiary;}
+#date-selector div.calendar-icon table > thead > tr:first-child{background:@color-primary;color:@color-tertiary;}
+#date-selector div.calendar-icon table > thead > tr:first-child > th{padding-top:0.5em;padding-bottom:0.5em;cursor:pointer;}
+#date-selector div.calendar-icon table > thead > tr:first-child > th:first-child{text-align:left;padding-left:1em;color:@color-secundary;}
+#date-selector div.calendar-icon table > thead > tr:first-child > th:last-child{text-align:right;padding-right:1em;color:@color-secundary;}
+#date-selector div.calendar-icon table > thead > tr:last-child > th:first-child,#date-selector div.calendar-icon table > thead > tr:last-child > th:last-child{width:0.7em;}
+#date-selector div.calendar-icon table > thead > tr > th{color:@color-tertiary-alt;}
+#date-selector div.calendar-icon table > tbody{font-size:0.7em;}
+#date-selector div.calendar-icon table > tbody > tr > td > div{width:2em;height:2em;padding:0.5em;border-radius:50%;margin:auto;cursor:pointer;} #date-selector div.calendar-icon table > tbody > tr > td > div.active{background:@color-secundary;color:@color-tertiary;}
+#date-selector div.calendar-icon table > tfoot > tr > td{padding-bottom:0.5em;}

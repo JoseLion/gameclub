@@ -10,11 +10,10 @@ angular.module('Referred').config(function($stateProvider) {
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
-					name: 'Referred'
-					,files: ['js/modules/account/referred/controller/referredCtrl.js']
+					name: 'Referred',
+					files: ['js/modules/account/referred/controller/referredCtrl.js', 'js/modules/account/referred/style/referred.less', 'js/modules/account/referred/style/referred.responsive.less']
 				}]);
 			}
 		}
 	});
-
 });

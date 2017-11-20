@@ -43,6 +43,10 @@ levelap:
     important-size: 3
     most-seen-size: 4
     search-size: 10
+  paymentez:
+    base-url: https://ccapi-stg.paymentez.com
+    app-code: TOMO-EC
+    app-key: LeqWG1P48IC8Cfj99DPW6rLGnh5wSC
 
 flyway:
   enabled: true

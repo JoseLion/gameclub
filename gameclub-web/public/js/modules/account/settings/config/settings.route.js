@@ -3,21 +3,28 @@ angular.module('Settings').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'settings', {
-		url: '/settings',
+		url: '/settings?error_value',
 		templateUrl: 'js/modules/account/settings/view/settings.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'SettingsCtrl',
 		resolve: {
-			loadPlugin: function($ocLazyLoad, lessLoad) {
-				lessLoad.add('css/resources/settings.less');
+			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Settings',
-					files: ['js/modules/account/settings/controller/settingsCtrl.js']
+					files: ['js/modules/account/settings/controller/settingsCtrl.js', 'js/modules/account/settings/style/settings.less', 'js/modules/account/settings/style/settings.responsive.less']
 				}]);
 			},
 
 			reviews: function(rest) {
 				return rest("review/getReviewsOfCurrentUser/:page").get({page: 0});
+			},
+
+			addCardError: function($stateParams) {
+				return $stateParams.error_value;
+			},
+
+			cardsList: function(rest) {
+				return rest("paymentez/listCards", true).get();
 			}
 		}
 	});

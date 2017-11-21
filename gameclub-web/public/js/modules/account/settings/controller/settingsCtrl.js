@@ -18,9 +18,9 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
     $scope.numberCards = false;
     $scope.card = true;
 
-    if ($rootScope.currentUser != null && $rootScope.currentUser.paymentMethods.length>0){
+    if ($scope.cardsList != null && $scope.cardsList.length > 0){
         var j = 0;
-        for(i = 0; i < $rootScope.currentUser.paymentMethods.length; i++){
+        for(i = 0; i < $scope.cardsList.length; i++){
             j++;
             if (j == 2) {
                 $scope.numberCards = true;

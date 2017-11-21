@@ -20,7 +20,6 @@ import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,8 +34,6 @@ import org.springframework.stereotype.Service;
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.cryptography.LevelapCryptography;
-import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
-import ec.com.levelap.gameclub.module.kushki.repository.KushkiSubscriptionRepo;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.settings.entity.Setting;
@@ -49,10 +46,6 @@ import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.kushki.KushkiException;
-import ec.com.levelap.kushki.object.KushkiAmount;
-import ec.com.levelap.kushki.object.KushkiContact;
-import ec.com.levelap.kushki.service.KushkiService;
 import ec.com.levelap.mail.MailParameters;
 
 @Service
@@ -69,12 +62,6 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Autowired
 	private MailService mailService;
-
-	@Autowired
-	private KushkiSubscriptionRepo kushkiSubscriptionRepo;
-
-	@Autowired
-	private KushkiService kushkiService;
 	
 	@Autowired
 	private MessageService messageService;
@@ -234,51 +221,6 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 		publicUserRepo.save(user);
 	}
-
-	/*private String getRevokedUsername(String username, int i) {
-		if (i == 0) {
-			username += "(Revoked)";
-		} else {
-			int index = username.indexOf("(");
-			username = username.substring(0, index) + "(Revoked#" + i + ")";
-		}
-		
-		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(username);
-		
-		if (found != null) {
-			i++;
-			username = getRevokedUsername(username, i);
-		}
-
-		return username;
-	}*/
-	
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public PublicUser addKushkiSubscription(KushkiSubscription subscription) throws ServletException, KushkiException {
-		PublicUser currentUser = getCurrentUser();
-		String subscriptionId = kushkiService.subscriptionCreate(subscription.getSubscriptionId(), Const.KUSHKI_PLAN_NAME, Const.KUSHKI_PERIODICITY, new KushkiContact(subscription.getFirstName(), subscription.getLastName(), subscription.getEmail()), new KushkiAmount());
-		
-		subscription.setSubscriptionId(subscriptionId);
-		subscription.setPublicUser(currentUser);
-		kushkiSubscriptionRepo.saveAndFlush(subscription);
-		currentUser = getCurrentUser();
-		
-		return currentUser;
-	}
-
-	@Transactional
-	public PublicUser removeKushkiSubscription(Long subscriptionId) throws ServletException  {
-		try {
-			kushkiSubscriptionRepo.delete(subscriptionId);
-		} catch (ConstraintViolationException ex) {
-			ex.printStackTrace();
-			KushkiSubscription method = kushkiSubscriptionRepo.findOne(subscriptionId);
-			method.setStatus(Boolean.FALSE);
-			kushkiSubscriptionRepo.save(method);
-		}
-		return getCurrentUser();
-	}
 	
 	@Transactional
 	public ResponseEntity<?> saveSubscriber(PublicUser publicUser) throws ServletException, MessagingException {
@@ -392,9 +334,4 @@ public class PublicUserService extends BaseService<PublicUser> {
 	public PublicUserGameRepo getPublicUserGameRepo() {
 		return publicUserGameRepo;
 	}
-
-	public KushkiSubscriptionRepo getKushkiSubscriptionRepo() {
-		return kushkiSubscriptionRepo;
-	}
-
 }

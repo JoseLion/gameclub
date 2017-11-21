@@ -2,26 +2,28 @@ package ec.com.levelap.gameclub.module.welcomeKit.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 
-import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
 import ec.com.levelap.cryptography.LevelapCryptography;
-import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
-import ec.com.levelap.gameclub.module.kushki.repository.KushkiSubscriptionRepo;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.repository.MessageRepo;
+import ec.com.levelap.gameclub.module.paymentez.service.PaymentezService;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.repository.TransactionRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -32,14 +34,9 @@ import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKitLite;
 import ec.com.levelap.gameclub.module.welcomeKit.repository.WelcomeKitRepo;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.kushki.KushkiException;
-import ec.com.levelap.kushki.service.KushkiService;
 
 @Service
-public class WelcomeKitService extends BaseService<WelcomeKit> {
-	public WelcomeKitService() {
-		super(WelcomeKit.class);
-	}
+public class WelcomeKitService {
 
 	@Autowired
 	private WelcomeKitRepo welcomeKitRepo;
@@ -60,13 +57,10 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 	private LevelapCryptography cryptoService;
 
 	@Autowired
-	private KushkiService kushkiService;
-
-	@Autowired
-	private KushkiSubscriptionRepo kushkiSubscriptionRepo;
-
-	@Autowired
 	private TransactionRepo transactionRepo;
+	
+	@Autowired
+	private PaymentezService paymentezService;
 
 	@Transactional
 	public WelcomeKit confirmWelcomeKit(WelcomeKit welcomeKit) throws ServletException {
@@ -103,7 +97,7 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 	}
 
 	@Transactional
-	public PublicUser saveShippingKit(Integer quantity, Double amountBalance, Double amountCard, Long paymentId)
+	public PublicUser saveShippingKit(Integer quantity, Double amountBalance, Double amountCard, String cardReference)
 			throws ServletException, IOException, GeneralSecurityException {
 		PublicUser publicUser = publicUserService.getCurrentUser();
 		File key = File.createTempFile("key", ".tmp");
@@ -122,7 +116,7 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 		welcomeKit.setQuantity(quantity);
 		welcomeKit.setAmountBalance(cryptoService.encrypt(Double.toString(amountBalance), key));
 		welcomeKit.setAmountCard(cryptoService.encrypt(Double.toString(amountCard), key));
-		welcomeKit.setPaymentId(paymentId);
+		welcomeKit.setCardReference(cardReference);
 		welcomeKitRepo.save(welcomeKit);
 
 		return publicUserService.getCurrentUser();
@@ -143,9 +137,7 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 	}
 
 	@Transactional
-	@SuppressWarnings("unchecked")
-	public WelcomeKitLite sendShippingKit(Long shippingKitId, String tracking, String shippingNote)
-			throws ServletException, IOException, NumberFormatException, GeneralSecurityException {
+	public WelcomeKitLite sendShippingKit(Long shippingKitId, String tracking, String shippingNote, HttpSession session, HttpServletRequest request) throws ServletException, IOException, NumberFormatException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
 		WelcomeKit shippingKit = welcomeKitRepo.findOne(shippingKitId);
 		PublicUser publicUser = publicUserService.getPublicUserRepo().findOne(shippingKit.getPublicUser().getId());
 
@@ -168,15 +160,10 @@ public class WelcomeKitService extends BaseService<WelcomeKit> {
 		}
 
 		if (amountCard > 0) {
-			try {
-				Map<String, Object> kushkiSubscription = new HashMap<>();
-				kushkiSubscription.put("amount", amountCard);
-				KushkiSubscription subscription = kushkiSubscriptionRepo.findOne(shippingKit.getPaymentId());
-				kushkiService.subscriptionCharge(subscription.getSubscriptionId(), kushkiSubscription);
-			} catch (KushkiException ex) {
-				ex.printStackTrace();
-				throw new ServletException(ex);
-			}
+			String description = "Shipping Kits de GameClub (" + shippingKit.getQuantity() + ")";
+			String response = paymentezService.debitFromCard(session, request.getRemoteAddr(), shippingKit.getCardReference(), amountCard, 0.0, description);
+			JSONObject json = new JSONObject(response);
+			shippingKit.setTransactionId(json.getString("transaction_id"));
 		}
 
 		Catalog shippingStatus = catalogRepo.findByCode(Code.SHIPPING_DELIVERED);

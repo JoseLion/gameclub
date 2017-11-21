@@ -2,17 +2,19 @@ package ec.com.levelap.gameclub.module.restore.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
@@ -20,6 +22,7 @@ import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
+import ec.com.levelap.gameclub.module.paymentez.service.PaymentezService;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.entity.RestoreLite;
 import ec.com.levelap.gameclub.module.restore.repository.RestoreRepo;
@@ -30,8 +33,6 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
-import ec.com.levelap.kushki.KushkiException;
-import ec.com.levelap.kushki.service.KushkiService;
 
 @Service
 public class RestoreService {
@@ -58,21 +59,18 @@ public class RestoreService {
 
 	@Autowired
 	private CatalogRepo catalogRepo;
-
+	
 	@Autowired
-	private KushkiService kushkiService;
+	private PaymentezService paymentezService;
 
 	@Transactional
-	@SuppressWarnings("unchecked")
-	public RestoreLite save(Restore restore)
-			throws ServletException, GeneralSecurityException, IOException, KushkiException {
+	public RestoreLite save(Restore restore, HttpSession session, HttpServletRequest request) throws ServletException, GeneralSecurityException, IOException, RestClientException, URISyntaxException {
 		Restore previous = restoreRepo.findOne(restore.getId());
 		restore.setLoan(previous.getLoan());
 
 		Catalog shippingStatus = catalogRepo.findByCode(restore.getShippingStatus().getCode());
 
-		if (!shippingStatus.equals(previous.getShippingStatus()) || (restore.getShippingNote() != null
-				&& !restore.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
+		if (!shippingStatus.equals(previous.getShippingStatus()) || (restore.getShippingNote() != null && !restore.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
 			restore.setLenderStatusDate(new Date());
 			restore.setGamerStatusDate(new Date());
 
@@ -102,14 +100,8 @@ public class RestoreService {
 			byte[] toCard = null;
 			if (totalBalanceGamer < 0) {
 				gamer = publicUserService.setUserBalance(gamer.getId(), 0D);
-				Map<String, Object> kushkiSubscription = new HashMap<>();
-				kushkiSubscription.put("amount", (Double) Math.abs(totalBalanceGamer));
-				try {
-					kushkiService.subscriptionCharge(restore.getLoan().getPayment().getSubscriptionId(),
-							kushkiSubscription);
-				} catch (KushkiException ex) {
-					throw new KushkiException(ex);
-				}
+				String description = "Multa GameClub - " + shippingStatus.getName();
+				paymentezService.debitFromCard(session, request.getRemoteAddr(), restore.getLoan().getCardReference(), Math.abs(totalBalanceGamer), 0.0, description);
 				toBalance = cryptoService.encrypt(Double.toString(gamer.getShownBalance()), keyGamer);
 				toCard = cryptoService.encrypt(Double.toString(Math.abs(totalBalanceGamer)), keyGamer);
 			} else {
@@ -142,16 +134,8 @@ public class RestoreService {
 				toCard = cryptoService.encrypt(Double.toString(Math.abs(totalBalanceGamer)), keyGamer);
 				
 				gamer = publicUserService.setUserBalance(gamer.getId(), 0D);
-				Map<String, Object> kushkiSubscription = new HashMap<>();
-				kushkiSubscription.put("amount", (Double) Math.abs(totalBalanceGamer));
-				Loan loan = loanRepo.findOne(restore.getLoan().getId());
-				
-				try {
-					kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), kushkiSubscription);
-				} catch (KushkiException ex) {
-					throw new KushkiException(ex);
-				}
-				
+				String description = "Multa GameClub - " + shippingStatus.getName();
+				paymentezService.debitFromCard(session, request.getRemoteAddr(), restore.getLoan().getCardReference(), Math.abs(totalBalanceGamer), 0.0, description);
 			} else {
 				gamer = publicUserService.substractFromUserBalance(gamer.getId(), value);
 				toBalance = cryptoService.encrypt(Double.toString(value), keyGamer);

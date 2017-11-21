@@ -83,10 +83,13 @@ public class WelcomeKit extends BaseEntity {
 	@Transient
 	private Double amountCardValue;
 
-	@Column(name = "payment_id")
-	private Long paymentId;
+	@Column(name="card_reference", columnDefinition="VARCHAR")
+	private String cardReference;
 	
-	@Column(name = "quantity", columnDefinition = "INTEGER DEFAULT 0")
+	@Column(name="transaction_id", columnDefinition="VARCHAR")
+	private String transactionId;
+	
+	@Column(columnDefinition="INTEGER DEFAULT 0")
 	private Integer quantity = 0;
 
 	public Message getMessage() {
@@ -229,12 +232,20 @@ public class WelcomeKit extends BaseEntity {
 		this.amountCardValue = amountCardValue;
 	}
 
-	public Long getPaymentId() {
-		return paymentId;
+	public String getCardReference() {
+		return cardReference;
 	}
 
-	public void setPaymentId(Long paymentId) {
-		this.paymentId = paymentId;
+	public void setCardReference(String cardReference) {
+		this.cardReference = cardReference;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
 	}
 
 	public Integer getQuantity() {

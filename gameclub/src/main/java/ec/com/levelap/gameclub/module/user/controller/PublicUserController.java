@@ -27,13 +27,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.base.entity.ErrorControl;
-import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserLite;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.kushki.KushkiException;
 
 @RestController
 @RequestMapping(value = "api/publicUser", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -90,18 +88,6 @@ public class PublicUserController {
 	public ResponseEntity<?> deleteAccount() throws ServletException {
 		publicUserService.deleteAccount();
 		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "addKushkiSubscription", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PublicUser> addKushkiSubscription(@RequestBody KushkiSubscription subscription) throws ServletException, KushkiException {
-		PublicUser currentUser = publicUserService.addKushkiSubscription(subscription);
-		return new ResponseEntity<PublicUser>(currentUser, HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "deletePaymentMethod/{subscriptionId}", method = RequestMethod.GET)
-	public ResponseEntity<PublicUser> removeKushkiSubscription(@PathVariable Long subscriptionId) throws ServletException, KushkiException {
-		PublicUser publicUser = publicUserService.removeKushkiSubscription(subscriptionId);
-		return new ResponseEntity<PublicUser>(publicUser, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "findPublicUsers", method = RequestMethod.POST)

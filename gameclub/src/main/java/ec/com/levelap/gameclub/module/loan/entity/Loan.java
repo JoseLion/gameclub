@@ -28,7 +28,6 @@ import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
-import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.review.entity.Review;
@@ -122,13 +121,12 @@ public class Loan extends BaseEntity {
 	@JsonIgnore
 	@Column(name="privateKey_gamer")
 	private byte[] privateKeyGamer;
-
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "payment", foreignKey = @ForeignKey(name = "payment_kushki_subscription_fk"))
-	private KushkiSubscription payment;
 	
 	@Column(name="card_reference", columnDefinition="VARCHAR")
 	private String cardReference;
+	
+	@Column(name = "transaction_id", columnDefinition = "VARCHAR")
+	private String transactionId;
 
 	@Column(name = "was_accepted", columnDefinition = "BOOLEAN DEFAULT NULL")
 	private Boolean wasAccepted;
@@ -154,9 +152,6 @@ public class Loan extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "shipping_status", foreignKey = @ForeignKey(name = "shipping_status_catalog_fk"))
 	private Catalog shippingStatus;
-
-	@Column(name = "transaction_ticket", columnDefinition = "VARCHAR")
-	private String transactionTicket;
 
 	@Column(name = "delivery_date")
 	private Date deliveryDate;
@@ -266,20 +261,20 @@ public class Loan extends BaseEntity {
 		this.lenderReceiver = lenderReceiver;
 	}
 
-	public KushkiSubscription getPayment() {
-		return payment;
-	}
-
-	public void setPayment(KushkiSubscription payment) {
-		this.payment = payment;
-	}
-
 	public String getCardReference() {
 		return cardReference;
 	}
 
 	public void setCardReference(String cardReference) {
 		this.cardReference = cardReference;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
 	}
 
 	public Boolean getWasAccepted() {
@@ -344,14 +339,6 @@ public class Loan extends BaseEntity {
 
 	public void setShippingStatus(Catalog shippingStatus) {
 		this.shippingStatus = shippingStatus;
-	}
-
-	public String getTransactionTicket() {
-		return transactionTicket;
-	}
-
-	public void setTransactionTicket(String transactionTicket) {
-		this.transactionTicket = transactionTicket;
 	}
 
 	public Date getDeliveryDate() {
@@ -534,8 +521,7 @@ public class Loan extends BaseEntity {
 		if (shippningCost != null)
 			return shippningCost;
 		if (gamer.getPrivateKey() != null && shippningCostEnc != null && shippningCostEnc.length > 0) {
-			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
-					.getBean(LevelapCryptography.class);
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");
 			FileUtils.writeByteArrayToFile(key, gamer.getPrivateKey());
 			String decypted = cryptoService.decrypt(shippningCostEnc, key);

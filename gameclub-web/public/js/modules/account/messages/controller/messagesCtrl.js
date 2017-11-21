@@ -55,6 +55,14 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					$scope.loan = data;
 					$scope.loan.isDisabled = true;
 
+					rest("paymentez/listCards", true).get(function(data) {
+						forEach(data, function(card) {
+							if (card.card_reference ===  $scope.loan.cardReference) {
+								$scope.loan.cardFinale = card.termination;
+							}
+						});
+					});
+
 					if ($rootScope.currentUser.id != $scope.loan.gamer.id) {
 						$scope.loan.lenderAddress = $scope.loan.lenderAddress != null ? $scope.loan.lenderAddress : $rootScope.currentUser.billingAddress;
 						$scope.loan.lenderGeolocation = $scope.loan.lenderGeolocation != null ? $scope.loan.lenderGeolocation : $rootScope.currentUser.geolocation;
@@ -287,6 +295,8 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					notif.success("Préstamo confirmado");
 					sweet.close();
 					canvasToBottom();
+				}, function(error) {
+					sweet.close();
 				});
 
 				if ($scope.loan.saveChanges == true) {
@@ -331,6 +341,8 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					notif.success("Pago realizado con éxito");
 					sweet.close();
 					canvasToBottom();
+				}, function(error) {
+					sweet.close();
 				});
 
 				if ($scope.loan.saveChanges == true) {

@@ -12,6 +12,7 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
     }
 
     cardsList.$promise.then(function(data) {
+        console.log("data: ", data);
         $scope.cardsList = data;
     });
 

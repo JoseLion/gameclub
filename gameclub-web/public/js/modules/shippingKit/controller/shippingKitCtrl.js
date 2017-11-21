@@ -51,9 +51,11 @@ angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope,
                 amountBalance: $scope.balance.value,
                 amountCard: $scope.totalToPay - $scope.balance.value
             };
+
             if($scope.cardSelected != null) {
-                kit.paymentId = $scope.cardSelected.id;
+                kit.cardReference = $scope.cardSelected.card_reference;
             }
+            
             rest("welcomeKit/requestShippingKit").post(kit, function(data) {
                 $rootScope.currentUser = data;
                 $state.go('gameclub.account.myGames');

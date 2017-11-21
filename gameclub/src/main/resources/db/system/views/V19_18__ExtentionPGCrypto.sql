@@ -1,3 +1,1 @@
-CREATE EXTENSION pgcrypto
-   SCHEMA gameclub
-   VERSION "1.2"
+CREATE EXTENSION IF NOT EXISTS pgcrypto SCHEMA gameclub;

@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +31,6 @@ import ec.com.levelap.gameclub.module.loan.service.LoanService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.kushki.KushkiException;
 
 @RestController
 @RequestMapping(value="api/loan", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -58,8 +58,8 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<LoanLite> save(@RequestBody Loan loan) throws ServletException, GeneralSecurityException, IOException, KushkiException {
-		LoanLite loanLite = loanService.save(loan);
+	public ResponseEntity<LoanLite> save(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, GeneralSecurityException, IOException, URISyntaxException {
+		LoanLite loanLite = loanService.save(loan, session, request);
 		return new ResponseEntity<LoanLite>(loanLite, HttpStatus.OK);
 	}
 	
@@ -92,13 +92,13 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="confirmLender", method=RequestMethod.POST)
-	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, KushkiException, GeneralSecurityException, IOException, URISyntaxException {
+	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException {
 		loan = loanService.confirmLoan(loan, false, session, request);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="confirmGamer", method=RequestMethod.POST)
-	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, KushkiException, GeneralSecurityException, IOException, URISyntaxException {
+	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException {
 		loan = loanService.confirmLoan(loan, true, session, request);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}

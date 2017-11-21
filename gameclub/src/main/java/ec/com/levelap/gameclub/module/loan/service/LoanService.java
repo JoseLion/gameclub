@@ -20,6 +20,8 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -48,8 +50,6 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.kushki.KushkiException;
-import ec.com.levelap.kushki.service.KushkiService;
 import ec.com.levelap.mail.MailParameters;
 import ec.com.levelap.taskScheduler.LevelapTaskScheduler;
 
@@ -88,9 +88,6 @@ public class LoanService {
 
 	@Autowired
 	private TransactionService transactionService;
-
-	@Autowired
-	private KushkiService kushkiService;
 	
 	@Autowired
 	private PaymentezService paymentezService;
@@ -169,7 +166,7 @@ public class LoanService {
 	}
 	
 	@Transactional
-	public Loan confirmLoan(Loan loan, boolean isGamer, HttpSession session, HttpServletRequest request) throws ServletException, KushkiException, GeneralSecurityException, IOException, RestClientException, URISyntaxException {
+	public Loan confirmLoan(Loan loan, boolean isGamer, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
 		Catalog noTracking = catalogService.getCatalogRepo().findByCode(Code.SHIPPING_NO_TRACKING);
 		loan.setShippingStatus(noTracking);
 
@@ -196,18 +193,12 @@ public class LoanService {
 			} else {
 				connected = publicUserService.substractFromUserBalance(connected.getId(), loan.getBalancePart());
 			}
+			
 			if (totalToCard > 0) {
 				String description = "Préstamo del juego " + loan.getPublicUserGame().getGame().getName() + " durante " + loan.getWeeks() + " semana(s)";
-				Map<String, String> response = paymentezService.debitFromCard(session, request.getRemoteAddr(), loan.getCardReference(), totalToCard, 0.0, description);
-				System.out.println("DEBIT RESPONSE: " + response);
-				
-				/*Map<String, Object> kushkiSubscription = new HashMap<>();
-				kushkiSubscription.put("amount", totalToCard);
-				try {
-					kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), kushkiSubscription);
-				} catch (KushkiException ex) {
-					throw new KushkiException(ex);
-				}*/
+				String response = paymentezService.debitFromCard(session, request.getRemoteAddr(), loan.getCardReference(), totalToCard, loan.getTaxes(), description);
+				JSONObject json = new JSONObject(response);
+				loan.setTransactionId(json.getString("transaction_id"));
 			}
 
 			Transaction transaction = new Transaction(connected, "JUGASTE",
@@ -236,7 +227,7 @@ public class LoanService {
 	}
 	
 	@Transactional
-	public LoanLite save(Loan loan) throws ServletException, GeneralSecurityException, IOException, KushkiException {
+	public LoanLite save(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, GeneralSecurityException, IOException, RestClientException, URISyntaxException {
 		Loan previous = loanRepo.findOne(loan.getId());
 
 		if (!loan.getShippingStatus().equals(previous.getShippingStatus()) || (loan.getShippingNote() != null
@@ -267,7 +258,7 @@ public class LoanService {
 			scheduleOneDayBefore(loan);
 			scheduleOnFinishDay(loan);
 		} else {
-			createFines(loan);
+			createFines(loan, session, request);
 		}
 
 		loan = loanRepo.save(loan);
@@ -487,9 +478,8 @@ public class LoanService {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Transactional
-	private void createFines(Loan loan) throws ServletException, GeneralSecurityException, IOException, KushkiException {
+	private void createFines(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException {
 		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
 		File keyGamer = File.createTempFile("keyGamer", ".tmp");
 		FileUtils.writeByteArrayToFile(keyGamer, gamer.getPrivateKey());
@@ -511,13 +501,8 @@ public class LoanService {
 			byte[] toCard = null;
 			if (totalBalanceLender < 0) {
 				lender = publicUserService.setUserBalance(lender.getId(), 0D);
-				Map<String, Object> kushkiSubscription = new HashMap<>();
-				kushkiSubscription.put("amount", (Double) Math.abs(totalBalanceLender));
-				try {
-					kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), kushkiSubscription);
-				} catch (KushkiException ex) {
-					throw new KushkiException(ex);
-				}
+				String description = "Multa GameClub - " + shippingStatus.getName();
+				paymentezService.debitFromCard(session, request.getRemoteAddr(), loan.getCardReference(), Math.abs(totalBalanceLender), 0.0, description);
 				toBalance = cryptoService.encrypt(Double.toString(lender.getShownBalance()), keyLender);
 				toCard = cryptoService.encrypt(Double.toString(Math.abs(totalBalanceLender)), keyLender);
 			} else {
@@ -563,13 +548,8 @@ public class LoanService {
 			byte[] toCard = null;
 			if (totalBalanceLender < 0) {
 				lender = publicUserService.setUserBalance(lender.getId(), 0D);
-				Map<String, Object> kushkiSubscription = new HashMap<>();
-				kushkiSubscription.put("amount", (Double) Math.abs(totalBalanceLender));
-				try {
-					kushkiService.subscriptionCharge(loan.getPayment().getSubscriptionId(), kushkiSubscription);
-				} catch (KushkiException ex) {
-					throw new KushkiException(ex);
-				}
+				String description = "Multa GameClub - " + shippingStatus.getName();
+				paymentezService.debitFromCard(session, request.getRemoteAddr(), loan.getCardReference(), Math.abs(totalBalanceLender), 0.0, description);
 				toBalance = cryptoService.encrypt(Double.toString(lender.getShownBalance()), keyLender);
 				toCard = cryptoService.encrypt(Double.toString(Math.abs(totalBalanceLender)), keyLender);
 			} else {

@@ -20,19 +20,16 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.io.FileUtils;
-import org.hibernate.annotations.Where;
 import org.postgresql.geometric.PGpoint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.location.Location;
 import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.avatar.entity.Avatar;
-import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -113,11 +110,6 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(name="is_subscriber", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean isSubscriber = false;
-	
-	@Where(clause="status")
-	@JsonManagedReference("publicUserKushkiSubscription")
-	@OneToMany(mappedBy="publicUser", fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
-	private List<KushkiSubscription> paymentMethods = new ArrayList<>();
 	
 	@Column(columnDefinition="DECIMAL(5, 2) DEFAULT 0.0")
 	private Double rating = 0.0;
@@ -348,14 +340,6 @@ public class PublicUser extends BaseEntity {
 
 	public void setIsSubscriber(Boolean isSubscriber) {
 		this.isSubscriber = isSubscriber;
-	}
-
-	public List<KushkiSubscription> getPaymentMethods() {
-		return paymentMethods;
-	}
-
-	public void setPaymentMethods(List<KushkiSubscription> paymentMethods) {
-		this.paymentMethods = paymentMethods;
 	}
 	
 	public Double getRating() {

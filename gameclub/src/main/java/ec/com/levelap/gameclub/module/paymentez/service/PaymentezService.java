@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
@@ -94,45 +93,47 @@ public class PaymentezService {
 		return response.getStatusCode();
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Map<String, String> debitFromCard(HttpSession session, String ipAddress, String cardReference, Double amount, Double taxes, String description) throws ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, RestClientException, URISyntaxException {
+	public String debitFromCard(HttpSession session, String ipAddress, String cardReference, Double amount, Double taxes, String description) throws ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, RestClientException, URISyntaxException {
 		MessageDigest messageDigest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_256);
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		Date today = new Date();
 		String plainText = "application_code=" + APP_CODE +
 				"&card_reference=" + cardReference +
-				"&session_id=" + session.getId() +
-				"&uid=" + currentUser.getId() +
+				"&dev_reference=" + currentUser.getId() + "-" + cardReference + "-" + today.getTime() +
 				"&email=" + URLEncoder.encode(currentUser.getUsername(), StandardCharsets.UTF_8.name()) +
+				"&ip_address=" + ipAddress +
 				"&product_amount=" + String.format("%1.2f", amount.doubleValue()) +
 				"&product_description=" + URLEncoder.encode(description, StandardCharsets.UTF_8.name()) +
-				"&dev_reference=" + currentUser.getId() + "-" + cardReference + "-" + today.getTime() +
+				"&session_id=" + session.getId() +
+				"&uid=" + currentUser.getId() +
 				"&vat=" + String.format("%1.2f", taxes.doubleValue()) +
-				"&ip_address=" + ipAddress +
 				"&" + today.getTime() +
 				"&" + APP_KEY;
 		messageDigest.update(plainText.getBytes(StandardCharsets.UTF_8));
 		byte[] digestToken = messageDigest.digest();
 		String token = String.format("%064x", new BigInteger(1, digestToken));
 		
-		String url = BASE_URL + "/api/cc/delete" +
+		String url = BASE_URL + "/api/cc/debit" +
 				"?application_code=" + APP_CODE +
 				"&card_reference=" + cardReference +
-				"&session_id=" + session.getId() +
-				"&uid=" + currentUser.getId() +
+				"&dev_reference=" + currentUser.getId() + "-" + cardReference + "-" + today.getTime() +
 				"&email=" + URLEncoder.encode(currentUser.getUsername(), StandardCharsets.UTF_8.name()) +
+				"&ip_address=" + ipAddress +
 				"&product_amount=" + String.format("%1.2f", amount.doubleValue()) +
 				"&product_description=" + URLEncoder.encode(description, StandardCharsets.UTF_8.name()) +
-				"&dev_reference=" + currentUser.getId() + "-" + cardReference + "-" + today.getTime() +
+				"&session_id=" + session.getId() +
+				"&uid=" + currentUser.getId() +
 				"&vat=" + String.format("%1.2f", taxes.doubleValue()) +
-				"&ip_address=" + ipAddress +
 				"&buyer_fiscal_number=" + currentUser.getDocument() +
 				"&buyer_phone=" + currentUser.getContactPhone() +
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
 		
+		System.out.println("PLAIN TEXT: " + plainText);
+		System.out.println("URL: " + url);
+		
 		RestTemplate restTemplate = new RestTemplate();
-		Map<String, String> response = restTemplate.postForObject(new URI(url), null, Map.class);
-		return response;
+		ResponseEntity<String> response = restTemplate.postForEntity(new URI(url), null, String.class);
+		return response.getBody();
 	}
 }

@@ -882,14 +882,18 @@
                     $delegate._broadcast('ocLazyLoad.fileLoaded', path);
 
                     if (isLess) {
-                        less.sheets.push(el);
-                        less.refresh();
+                        let index = less.sheets.indexOf(el);
+                        if (index == -1) {
+                            less.sheets.push(el);
+                            less.refresh();
+                        }
                     }
 
                     deferred.resolve(el);
                 };
                 el.onerror = function () {
                     filesCache.remove(path);
+                    console.error("Unable to load " + path);
                     deferred.reject(new Error('Unable to load ' + path));
                 };
                 el.async = params.serie ? 0 : 1;
@@ -938,6 +942,14 @@
                         var tries = 1000; // * 20 = 20000 miliseconds
                         var interval = $interval(function () {
                             try {
+                                if (isLess) {
+                                    let index = less.sheets.indexOf(el);
+                                    if (index == -1) {
+                                        less.sheets.push(el);
+                                        less.refresh();
+                                    }
+                                }
+                                
                                 el.sheet.cssRules;
                                 $interval.cancel(interval);
                                 el.onload();

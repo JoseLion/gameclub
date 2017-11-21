@@ -1,10 +1,13 @@
 package ec.com.levelap.gameclub.module.restore.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
 
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
@@ -24,7 +28,6 @@ import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.entity.RestoreLite;
 import ec.com.levelap.gameclub.module.restore.service.RestoreService;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.kushki.KushkiException;
 
 @RestController
 @RequestMapping(value="api/restore", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -49,8 +52,8 @@ public class RestoreController {
 	}
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<RestoreLite> save(@RequestBody Restore restore) throws ServletException, GeneralSecurityException, IOException, KushkiException {
-		RestoreLite restoreLite = restoreService.save(restore);
+	public ResponseEntity<RestoreLite> save(@RequestBody Restore restore, HttpSession session, HttpServletRequest request) throws ServletException, GeneralSecurityException, IOException, RestClientException, URISyntaxException {
+		RestoreLite restoreLite = restoreService.save(restore, session, request);
 		return new ResponseEntity<RestoreLite>(restoreLite, HttpStatus.OK);
 	}
 	

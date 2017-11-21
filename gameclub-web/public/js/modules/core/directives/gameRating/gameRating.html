@@ -2,7 +2,7 @@
     <div class="game-container">
         <div class="{{bgColor}} background no-hover">
             <div class="diamond-image">
-                <!-- <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style="overflow: visible;">
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style="overflow: visible;">
                     <defs>
                         <pattern id="border" patternUnits="userSpaceOnUse" width="100" height="100">
                             <image xlink:href="img/diamond-border.svg" width="100" height="100" />
@@ -11,11 +11,11 @@
                             <image xlink:href="" ng-href="{{RestUrl + '/open/archive/download/' + imageArchive.id}}" width="100" height="100" ng-if="imageArchive != null"></image>
                         </pattern>
                     </defs>
-                    <path d="M47 3 L3 47 C3 47 0 50 3 53 L47 97 C47 97 50 100 53 97 L97 53 C97 53 100 50 97 47 L53 3 C53 3 50 0 47 3 z" style="fill: url(#border);"></path>
-                    <path d="M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" style="fill: url(#cropped_{{$id}})" ng-style="!noSelection ? {'cursor': 'pointer'} : {}"></path>
-                </svg> -->
+                    <path d="M47 3 L3 47 C3 47 0 50 3 53 L47 97 C47 97 50 100 53 97 L97 53 C97 53 100 50 97 47 L53 3 C53 3 50 0 47 3 z" style="fill:url('#border');"></path>
+                    <path d="M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" style="fill:url('#cropped_{{$id}}')" ng-style="!noSelection ? {'cursor': 'pointer'} : {}"></path>
+                </svg>
 
-                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <!-- <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
                     <clipPath id="diamond">
                         <path d="M45 10 L10 45 C10 45 5 50 10 55 L45 90 C45 90 50 95 55 90 L90 55 C90 55 95 50 90 45 L55 10 C55 10 50 5 45 10 z" fill="rgba(255, 255, 255, 0)"></path>
                     </clipPath>
@@ -24,7 +24,7 @@
                     </clipPath>
                     <image width="100" height="100" xlink:href="img/diamond-border.svg" style="cursor:pointer;clip-path:url(#border);-webkit-clip-path:url(#border);"></image>
                     <image width="100" height="100" xlink:href ng-href="{{RestUrl + '/open/archive/download/' + imageArchive.id}}" style="cursor:pointer;clip-path:url(#diamond);-webkit-clip-path:url(#diamond);"></image>
-                </svg>
+                </svg> -->
             </div>
 
             <div class="stars" ng-if="!hideRating">

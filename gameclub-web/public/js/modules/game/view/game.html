@@ -257,7 +257,7 @@
                     <div class="clearfix"></div>
 
                     <div class="col-md-12 col-xs-12 information-separation">
-                        <label class="title dark">Costo shipping = {{shippingCost | currency:'$ ':2}}</label>
+                        <label class="title dark">Costo shipping = {{loanGame.shippingCost * 2.0 | currency:'$ ':2}}</label>
                         <span class="title-help">(Ida y vuelta, incluye seguro de envío)</span>
                     </div>
                     <div class="clearfix"></div>
@@ -269,7 +269,7 @@
                     <div class="col-md-8 col-xs-12 left-decoration">
                         <div class="col-md-12 col-xs-12">
                             <label class="big">Costo final total</label>
-                            <span class="big-value">{{loan.cost | currency: '$ ': 2}}</span>
+                            <span class="big-value">{{(loan.cost = (loanGame.cost * loan.weeks) + (loanGame.shippingCost * 2.0)) | currency: '$ ': 2}}</span>
                         </div>
                         <div class="clearfix"></div>
                         <div class="col-md-12 col-xs-12 foot-note">

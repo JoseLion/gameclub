@@ -10,11 +10,10 @@ angular.module('Game').config(function($stateProvider) {
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'GameCtrl',
 		resolve: {
-			loadPlugin: function($ocLazyLoad, lessLoad) {
-				lessLoad.add('css/resources/game.less');
+			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Game',
-					files: ['js/modules/game/controller/gameCtrl.js']
+					files: ['js/modules/game/controller/gameCtrl.js', 'js/modules/game/style/game.less']
 				}]);
 			},
 
@@ -44,5 +43,4 @@ angular.module('Game').config(function($stateProvider) {
 			}
 		}
 	});
-
 });

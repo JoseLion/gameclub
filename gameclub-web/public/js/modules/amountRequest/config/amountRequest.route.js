@@ -10,11 +10,10 @@ angular.module('AmountRequest').config(function($stateProvider) {
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'AmountRequestCtrl',
 		resolve: {
-			loadPlugin: function($ocLazyLoad, lessLoad) {
-				lessLoad.add('css/resources/amountRequest.less');
+			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'AmountRequest',
-					files: ['js/modules/amountRequest/controller/amountRequestCtrl.js']
+					files: ['js/modules/amountRequest/controller/amountRequestCtrl.js', 'js/modules/amountRequest/style/amountRequest.less']
 				}]);
 			},
 

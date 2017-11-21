@@ -22,14 +22,14 @@
         <link href="css/style.css" rel="stylesheet">
     	<link href="css/customStyles.less" rel="stylesheet/less">
     	<link href="css/responsive.less" rel="stylesheet/less">
+        <link href="css/notify.less" rel="stylesheet/less">
+        <link href="css/notify.responsive.less" rel="stylesheet/less">
     	<link href="css/select.min.css" rel="stylesheet">
         <link href="js/core/plugins/sweetalert/sweetalert.css" rel="stylesheet">
         <link href="js/core/plugins/angular-notify/angular-notify.min.css" rel="stylesheet">
         <link href="css/gameclub-font.css" rel="stylesheet">
-        <link href="js/modules/core/directives/loading/loading.css" rel="stylesheet">
-        <link href="css/clockpicker.css" rel="stylesheet">
-        <link href="css/rzslider.css" rel="stylesheet"/>
-        <link href="css/rzslider.less" rel="stylesheet/less">
+        <link href="js/core/plugins/rzslider/rzslider.css" rel="stylesheet"/>
+        <link href="js/core/plugins/rzslider/rzslider.less" rel="stylesheet/less">
 
         <!-- MAIN DEPENDENCIES -->
         <script src="js/core/jquery-2.1.1.min.js"></script>
@@ -48,11 +48,10 @@
         <script src="js/core/plugins/sweetalert/angular-sweetalert.min.js"></script>
         <script src="js/core/ui-bootstrap-tpls/ui-bootstrap-tpls-2.5.0.min.js"></script>
         <script src="js/core/plugins/angular-notify/angular-notify.min.js"></script>
-        <script src="js/core/clockpicker.js"></script>
         <script src="js/core/jasny-bootstrap.min.js"></script>
         <script src="js/modules/levelapBlog/levelapBlog.js"></script>
         <script src="js/core/angular-socialshare.min.js"></script>
-        <script src="js/core/rzslider.min.js"></script>
+        <script src="js/core/plugins/rzslider/rzslider.min.js"></script>
         <script src="js/core/plugins/js-sha256/sha256.min.js"></script>
 
         <!-- Anglar App Script -->
@@ -101,19 +100,17 @@
         <!-- Directives -->
         <script src="js/modules/core/directives/onSubmit.js"></script>
         <script src="js/modules/core/directives/validation.js"></script>
-        <script src="js/modules/core/directives/gameRating.js"></script>
+        <script src="js/modules/core/directives/gameRating/gameRating.js"></script>
         <script src="js/modules/core/directives/blogPreview.js"></script>
-        <script src="js/modules/core/directives/blogPaging.js"></script>
-        <script src="js/modules/core/directives/mostPlayed.js"></script>
-        <script src="js/modules/core/directives/dateSelector.js"></script>
-        <script src="js/modules/core/directives/timeSelector.js"></script>
-        <script src="js/modules/core/directives/gameItem.js"></script>
+        <script src="js/modules/core/directives/ballPaging/ballPaging.js"></script>
+        <script src="js/modules/core/directives/mostPlayed/mostPlayed.js"></script>
+        <script src="js/modules/core/directives/dateSelector/dateSelector.js"></script>
+        <script src="js/modules/core/directives/gameItem/gameItem.js"></script>
         <script src="js/modules/core/directives/archive.js"></script>
         <script src="js/modules/core/directives/fileModel.js"></script>
         <script src="js/modules/core/directives/ciRequired.js"></script>
         <script src="js/modules/core/directives/rucRequired.js"></script>
         <script src="js/modules/core/directives/loading/loading.js"></script>
-        <script src="js/modules/core/directives/angular-clockpicker.js"></script>
         <script src="js/modules/core/directives/kushki/kushki.js"></script>
         <script src="js/modules/core/directives/stars.js"></script>
         <script src="js/modules/core/directives/score.js"></script>
@@ -133,7 +130,6 @@
         <script src="js/modules/core/services/changePassword.js"></script>
         <script src="js/modules/core/services/ciValidation.js"></script>
         <script src="js/modules/core/services/geolocation.js"></script>
-        <script src="js/modules/core/services/lessLoad.js"></script>
         <script src="js/modules/core/services/openReport.js"></script>
         <script src="js/modules/core/services/addPaymentezCard.js"></script>
 
@@ -208,14 +204,14 @@
         <!-- DO NOT MODIFY -->
         <!-- End Facebook Pixel Code -->
 
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
             function initSessionID(sessionID) {
                 //alert("Callback This is the loaded sessionID: " + sessionID);
                 window.paymentezSessionID = sessionID;
             }
         </script>
 
-        <script class="paymentez-session-id-js" src="https://ccapi-stg.paymentez.com/js/paymentez-session-id.js?onload=initSessionID"></script>
+        <script class="paymentez-session-id-js" src="https://ccapi-stg.paymentez.com/js/paymentez-session-id.js?onload=initSessionID"></script> -->
     </head>
 
     <body ng-controller="MainCtrl as main">

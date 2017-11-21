@@ -80,22 +80,22 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     }
 
     $scope.save = function() {
-        var priceChartingGMLoan1 = 0.0;
+        let priceChartingGMLoan = 0.0;
         if($rootScope.settings[Const.settings.priceChartingGames].type == "percentage" && $scope.myGame.game.uploadPayment != null){
-            priceChartingGMLoan1 = $scope.myGame.game.uploadPayment/$scope.gameLoanPCH;
+            priceChartingGMLoan = $scope.myGame.game.uploadPayment/$scope.gameLoanPCH;
         } else if($rootScope.settings[Const.settings.priceChartingGames].type == "number" && $scope.myGame.game.uploadPayment != null){
-            priceChartingGMLoan1 = ($scope.myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH;
+            priceChartingGMLoan = ($scope.myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH;
         }
 
         let isValid = true;
         let minPrice = 0.0;
         let maxPrice = 0.0;
         if($rootScope.settings[Const.settings.priceChartingMin].type == 'percentage' && $rootScope.settings[Const.settings.priceChartingMax].type == 'percentage'){
-           minPrice = priceChartingGMLoan1-((priceChartingGMLoan1*parseFloat($rootScope.settings[Const.settings.priceChartingMin].value))/100);
-           maxPrice = priceChartingGMLoan1+((priceChartingGMLoan1*parseFloat($rootScope.settings[Const.settings.priceChartingMax].value))/100);
+           minPrice = priceChartingGMLoan-((priceChartingGMLoan*parseFloat($rootScope.settings[Const.settings.priceChartingMin].value))/100);
+           maxPrice = priceChartingGMLoan+((priceChartingGMLoan*parseFloat($rootScope.settings[Const.settings.priceChartingMax].value))/100);
         } else if($rootScope.settings[Const.settings.priceChartingMin].type == 'number' && $rootScope.settings[Const.settings.priceChartingMax].type == 'number'){
-           minPrice = priceChartingGMLoan1-parseFloat($rootScope.settings[Const.settings.priceChartingMin].value);
-           maxPrice = priceChartingGMLoan1+parseFloat($rootScope.settings[Const.settings.priceChartingMax].value);
+           minPrice = priceChartingGMLoan-parseFloat($rootScope.settings[Const.settings.priceChartingMin].value);
+           maxPrice = priceChartingGMLoan+parseFloat($rootScope.settings[Const.settings.priceChartingMax].value);
         }
         if($scope.myGame.status == null) {
             isValid = false;

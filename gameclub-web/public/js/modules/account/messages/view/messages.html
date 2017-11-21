@@ -151,7 +151,7 @@
 									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
 									<br>
 									<br>
-									<span ng-if="loan.cardPart > 0.0"><span class="upper-case">Pago con tarjeta: {{loan.cardPart | currency: '$': 2}}</span><span class="payment">XXXX XXXX XXXX {{loan.cardFinale}}</span></span>
+									<span ng-if="loan.cardPart > 0.0"><span class="upper-case">Pago con tarjeta: {{loan.cardPart | currency: '$': 2}}</span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span></span>
 									<br>
 									<br>
 									<div class="alert-icon">
@@ -206,7 +206,7 @@
 									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
 									<br>
 									<br>
-									<span ng-if="loan.cardPart > 0.0"><span class="upper-case">Pago con tarjeta: {{loan.cardPart | currency: '$': 2}}</span><span class="payment">XXXX XXXX XXXX {{loan.cardFinale}}</span></span>
+									<span ng-if="loan.cardPart > 0.0"><span class="upper-case">Pago con tarjeta: {{loan.cardPart | currency: '$': 2}}</span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span></span>
 									<br>
 									<br>
 									<span>Estado del envío: </span><span class="text-black">{{loan.shippingStatus.name}}</span>

@@ -55,7 +55,7 @@ angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope,
             if($scope.cardSelected != null) {
                 kit.cardReference = $scope.cardSelected.card_reference;
             }
-            
+
             rest("welcomeKit/requestShippingKit").post(kit, function(data) {
                 $rootScope.currentUser = data;
                 $state.go('gameclub.account.myGames');
@@ -69,7 +69,10 @@ angular.module('ShippingKit').controller('ShippingKitCtrl', function($rootScope,
     function calculateTotalToPay() {
         $scope.totalToPay = $scope.quantity.value * $scope.shippingKitValue;
         $scope.balance.value = 0;
-        $scope.balance.options.ceil = ($scope.totalToPay > $rootScope.currentUser.shownBalance) ? $rootScope.currentUser.shownBalance : $scope.totalToPay;
+
+        if ($rootScope.currentUser != null) {
+            $scope.balance.options.ceil = ($scope.totalToPay > $rootScope.currentUser.shownBalance) ? $rootScope.currentUser.shownBalance : $scope.totalToPay;
+        }
     }
 
 });

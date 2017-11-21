@@ -145,6 +145,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                     gamerGeolocation: $rootScope.currentUser.geolocation,
                     gamerReceiver: $rootScope.currentUser.receiver != null ? $rootScope.currentUser.receiver : ($rootScope.currentUser.name + ' ' + $rootScope.currentUser.lastName)
                 };
+
                 $scope.weekSelected();
             } else {
                 if (getInfoPercentage() < 100 && getIdentityPercentage() < 100) {
@@ -408,6 +409,4 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         $scope.loan.taxes = $scope.subtotal * taxes;
         $scope.loan.cost = $scope.subtotal + $scope.loan.taxes;
     }
-
-
 });

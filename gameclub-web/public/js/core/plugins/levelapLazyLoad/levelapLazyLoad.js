@@ -863,7 +863,12 @@
                     case 'css':
                         el = $window.document.createElement('link');
                         el.type = 'text/css';
-                        el.rel = isLess ? 'prefetch' : 'stylesheet';
+                        el.relList.add('stylesheet');
+
+                        if (isLess) {
+                            el.relList.add('less');
+                        }
+
                         el.href = params.cache === false ? cacheBuster(path) : path;
                         break;
                     case 'js':
@@ -942,14 +947,6 @@
                         var tries = 1000; // * 20 = 20000 miliseconds
                         var interval = $interval(function () {
                             try {
-                                if (isLess) {
-                                    let index = less.sheets.indexOf(el);
-                                    if (index == -1) {
-                                        less.sheets.push(el);
-                                        less.refresh();
-                                    }
-                                }
-                                
                                 el.sheet.cssRules;
                                 $interval.cancel(interval);
                                 el.onload();

@@ -13,12 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.com.levelap.archive.Archive;
+import ec.com.levelap.archive.ArchiveService;
 import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.base.service.BaseService;
-import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogService;
-import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.repository.AmountRequestRepo;
@@ -54,7 +54,7 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 	private CatalogService catalogService;
 	
 	@Autowired
-	private DocumentService documentService;
+	private ArchiveService archiveService;
 	
 	@Autowired
 	private LevelapCryptography cryptoService;
@@ -63,7 +63,7 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 	public PublicUser requestBalance(AmountRequest request, MultipartFile identityPhoto, MultipartFile billPhoto) throws ServletException, IOException, GeneralSecurityException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		Catalog requestStatus = catalogService.getCatalogRepo().findByCode(Code.PAYMENT_NEW_REQUEST);
-		FileData identityFileData = documentService.saveFile(identityPhoto, AmountRequest.class.getSimpleName());
+		FileData identityFileData = archiveService.saveFile(identityPhoto, AmountRequest.class.getSimpleName());
 		Archive identity = new Archive();
 		File key = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(key, currentUser.getPrivateKey());
@@ -78,7 +78,7 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 		request.setIdentityPhoto(identity);
 		
 		if (billPhoto != null) {
-			FileData billFileData = documentService.saveFile(billPhoto, AmountRequest.class.getSimpleName());
+			FileData billFileData = archiveService.saveFile(billPhoto, AmountRequest.class.getSimpleName());
 			Archive bill = new Archive();
 			bill.setModule(AmountRequest.class.getSimpleName());
 			bill.setName(billFileData.getName());

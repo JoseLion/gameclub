@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import ec.com.levelap.commons.archive.Archive;
+import ec.com.levelap.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
 
 public interface GameOpen {

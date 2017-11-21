@@ -21,8 +21,8 @@ import org.apache.commons.io.FileUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import ec.com.levelap.archive.Archive;
 import ec.com.levelap.base.entity.BaseEntity;
-import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.location.Location;
 import ec.com.levelap.cryptography.LevelapCryptography;

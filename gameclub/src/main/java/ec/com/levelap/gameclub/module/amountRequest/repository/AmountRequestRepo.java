@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import ec.com.levelap.commons.archive.Archive;
+import ec.com.levelap.archive.Archive;
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 
 @Repository

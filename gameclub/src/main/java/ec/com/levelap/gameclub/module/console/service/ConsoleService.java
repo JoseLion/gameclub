@@ -11,11 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.com.levelap.archive.Archive;
+import ec.com.levelap.archive.ArchiveService;
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.base.service.BaseService;
-import ec.com.levelap.commons.archive.Archive;
-import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.console.repository.ConsoleRepo;
 
@@ -29,7 +29,7 @@ public class ConsoleService extends BaseService<Console> {
 	private ConsoleRepo consoleRepo;
 	
 	@Autowired
-	public DocumentService documentService;
+	public ArchiveService archiveService;
 	
 	@Transactional
 	public ResponseEntity<?> save(Console console, MultipartFile whiteLogo, MultipartFile blackLogo) throws ServletException, IOException {
@@ -53,11 +53,11 @@ public class ConsoleService extends BaseService<Console> {
 			
 			if (console.getId() != null) {
 				Console original = consoleRepo.findOne(console.getId());
-				documentService.deleteFile(original.getWhiteLogo().getName(), Console.class.getSimpleName());
+				archiveService.deleteFile(original.getWhiteLogo().getName(), Console.class.getSimpleName());
 				archive = original.getWhiteLogo();
 			}
 			
-			FileData fileData = documentService.saveFile(whiteLogo, Console.class.getSimpleName());
+			FileData fileData = archiveService.saveFile(whiteLogo, Console.class.getSimpleName());
 			
 			archive.setModule(Console.class.getSimpleName());
 			archive.setName(fileData.getName());
@@ -70,11 +70,11 @@ public class ConsoleService extends BaseService<Console> {
 			
 			if (console.getId() != null) {
 				Console original = consoleRepo.findOne(console.getId());
-				documentService.deleteFile(original.getBlackLogo().getName(), Console.class.getSimpleName());
+				archiveService.deleteFile(original.getBlackLogo().getName(), Console.class.getSimpleName());
 				archive = original.getBlackLogo();
 			}
 			
-			FileData fileData = documentService.saveFile(blackLogo, Console.class.getSimpleName());
+			FileData fileData = archiveService.saveFile(blackLogo, Console.class.getSimpleName());
 			
 			archive.setModule(Console.class.getSimpleName());
 			archive.setName(fileData.getName());

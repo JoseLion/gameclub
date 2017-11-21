@@ -19,8 +19,8 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import ec.com.levelap.archive.Archive;
 import ec.com.levelap.base.entity.BaseEntity;
-import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.gameclub.utils.Const;
 

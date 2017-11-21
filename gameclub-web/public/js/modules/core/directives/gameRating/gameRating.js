@@ -1,4 +1,4 @@
-angular.module('Core').directive('gameRating', function($ocLazyLoad) {
+angular.module('Core').directive('gameRating', function($ocLazyLoad, urlRestPath) {
 	$ocLazyLoad.load(['js/modules/core/directives/gameRating/gameRating.less', 'js/modules/core/directives/gameRating/gameRating.responsive.less']);
 	return {
 		restrict: 'E',
@@ -13,6 +13,7 @@ angular.module('Core').directive('gameRating', function($ocLazyLoad) {
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
+			$scope.RestUrl = urlRestPath.url;
 			$scope.hideRating = false;
 
 			if (attrs.noRating == '' || attrs.noRating) {

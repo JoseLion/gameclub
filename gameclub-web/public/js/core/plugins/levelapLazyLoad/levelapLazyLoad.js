@@ -885,15 +885,6 @@
                     el.onload = el['onreadystatechange'] = null;
                     loaded = 1;
                     $delegate._broadcast('ocLazyLoad.fileLoaded', path);
-
-                    if (isLess) {
-                        let index = less.sheets.indexOf(el);
-                        if (index == -1) {
-                            less.sheets.push(el);
-                            less.refresh();
-                        }
-                    }
-
                     deferred.resolve(el);
                 };
                 el.onerror = function () {
@@ -911,7 +902,16 @@
                     }
                 }
 
-                insertBeforeElem.parentNode.insertBefore(el, insertBeforeElem);
+                if (isLess) {
+                    let index = less.sheets.indexOf(el);
+                    if (index == -1) {
+                        less.sheets.push(el);
+                        less.refresh();
+                        el.onload();
+                    }
+                } else {
+                    insertBeforeElem.parentNode.insertBefore(el, insertBeforeElem);
+                }
 
                 /*
                  The event load or readystatechange doesn't fire in:

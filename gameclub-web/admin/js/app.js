@@ -29,6 +29,7 @@ angular.module("Gameclub", [
 	'Fine',
 	'AmountRequest',
 	'UserGames',
+	'Reports',
 	'AmountRequestReport',
 	'RegisteredUsers'
 ]).config(["$locationProvider" ,"$httpProvider", function($locationProvider, $httpProvider, $http) {

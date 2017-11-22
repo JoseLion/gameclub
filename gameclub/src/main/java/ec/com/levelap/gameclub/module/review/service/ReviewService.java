@@ -1,23 +1,30 @@
 package ec.com.levelap.gameclub.module.review.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.service.LoanService;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.review.entity.Review;
 import ec.com.levelap.gameclub.module.review.repository.ReviewRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
+import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -35,9 +42,16 @@ public class ReviewService {
 	@Autowired
 	private PublicUserService publicUserService;
 	
+	@Autowired
+	private LevelapCryptography cryptoService;
+	
+	@Autowired
+	private PublicUserRepo publicUserRepo;
+	
 	@Transactional
-	public Loan save(Loan loan) throws ServletException {
+	public Loan save(Loan loan) throws ServletException, IOException, GeneralSecurityException, MessagingException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
+		byte[] keyEncript = publicUserRepo.findKey(loan.getGamer().getId());
 		
 		if (currentUser.getId().longValue() == loan.getGamer().getId().longValue()) {
 			loan.getReview().setLenderReviewDate(new Date());
@@ -66,6 +80,17 @@ public class ReviewService {
 			gamer.setRating((gamerAverage + lenderAverage) / 2.0);
 			publicUserService.getPublicUserRepo().save(gamer);
 		}
+		
+		File keyGamer = File.createTempFile("keyGamer", ".tmp");
+		FileUtils.writeByteArrayToFile(keyGamer, keyEncript);
+
+		loan.setCostEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
+		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getBalancePart()), keyGamer));
+		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(loan.getCardPart()), keyGamer));
+		
+		loan.setShippningCostEnc(cryptoService.encrypt(Double.toString(loan.getShippningCost()), keyGamer));
+		loan.setFeeGameClubEnc(cryptoService.encrypt(Double.toString(loan.getFeeGameClub()), keyGamer));
+		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(loan.getTaxes()), keyGamer));
 		
 		loan = loanService.getLoanRepo().save(loan);
 		return loan;

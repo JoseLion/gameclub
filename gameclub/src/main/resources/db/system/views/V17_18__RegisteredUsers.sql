@@ -13,7 +13,7 @@ SELECT
 	regus.total_request_rejected
 	
 FROM 	(SELECT  
-		pu.id AS id,
+		DISTINCT(pu.id) AS id,
 		pu.id AS public_user_id,
 		(SELECT COUNT(pug.id) FROM public_user_game pug WHERE pug.public_user=pu.id) AS total_games,
 
@@ -47,5 +47,5 @@ FROM 	(SELECT
 		LEFT JOIN gameclub.loan l ON
 			pug.id=l.public_user_game
 
-	ORDER BY pu.name)
+	ORDER BY pu.id)
 AS regus;

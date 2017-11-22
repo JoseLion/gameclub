@@ -405,8 +405,8 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     $scope.weekSelected = function(){
         $scope.loan.shippningCost = $scope.shippingCost;
         $scope.loan.feeGameClub = (($scope.loanGame.cost * $scope.loan.weeks) + $scope.loan.shippningCost) * feeLoanGamerPercentage/100;
-        $scope.subtotal = ($scope.loanGame.cost * $scope.loan.weeks) + $scope.loan.shippningCost + $scope.loan.feeGameClub;
-        $scope.loan.taxes = $scope.subtotal * taxes;
-        $scope.loan.cost = $scope.subtotal + $scope.loan.taxes;
+        $scope.loan.subtotal = ($scope.loanGame.cost * $scope.loan.weeks) + $scope.loan.shippningCost + $scope.loan.feeGameClub;
+        $scope.loan.taxes = $scope.loan.subtotal * taxes;
+        $scope.loan.cost = $scope.loan.subtotal + $scope.loan.taxes;
     }
 });

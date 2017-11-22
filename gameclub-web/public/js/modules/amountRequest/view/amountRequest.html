@@ -176,7 +176,7 @@
                 <div class="clearfix"></div>
         </section>
 
-        <section class="row how-to" ng-if="rucOpened">
+        <section class="row how-to" ng-if="!rucOpened">
             <div class="col-md-2 col-xs-0"></div>
             <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
                 <div class="col-md-12 col-xs-12 div-section div-title">
@@ -184,12 +184,11 @@
                 </div>
 
                 <div class="col-md-8 col-xs-8">
-                    <p>Te damos un ejemplo d ecomo tienes que</p>
-                    <p>llenar tu factura correctamente para retirar</p>
-                    <p>tu saldo.</p>
+                    <p>Te damos un ejemplo d ecomo tienes que llenar tu factura correctamente para retirar tu saldo.</p>
                     <p>Éste es un ejemplo con $100.</p>
                     <p>Debes hacerlo con tu saldo actual</p>
                 </div>
+
                 <div class="col-md-4 col-xs-4">
                     <div class="bill-number">
                         <p>Factura</p>
@@ -220,6 +219,8 @@
                         <div class="col-md-12 col-xs-12">
                             <span class="bill-label">Email:</span> <span class="bill-dotted">pagos@tomorrowlabs.com.ec</span>
                         </div>
+
+                        <div class="clearfix"></div>
                     </div>
                 </div>
 
@@ -242,25 +243,25 @@
 
                             <tbody>
                                 <tr>
-                                    <td class="text-center bill-number">1</td>
+                                    <td class="text-center bill-currency">1</td>
                                     <td class="text-left">LOREM IPSUM DOLOR SIT AMET, CON-SECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS</td>
-                                    <td class="text-center bill-number">$100</td>
-                                    <td class="text-center bill-number">$100</td>
+                                    <td class="text-center bill-currency">$100</td>
+                                    <td class="text-center bill-currency">$100</td>
                                 </tr>
 
                                 <tr>
                                     <td class="no-border text-right bill-label" colspan="3">Subtotal</td>
-                                    <td class="text-center bill-number">$100</td>
+                                    <td class="text-center bill-currency">$100</td>
                                 </tr>
 
                                 <tr>
                                     <td class="no-border text-right bill-label" colspan="3">IVA 12%</td>
-                                    <td class="text-center bill-number">$12</td>
+                                    <td class="text-center bill-currency">$12</td>
                                 </tr>
 
                                 <tr>
                                     <td class="no-border text-right bill-label" colspan="3">Total USD</td>
-                                    <td class="text-center bill-number">$112</td>
+                                    <td class="text-center bill-currency">$112</td>
                                 </tr>
                             </tbody>
                         </table>

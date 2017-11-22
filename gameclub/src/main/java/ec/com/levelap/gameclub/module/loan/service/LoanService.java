@@ -95,7 +95,6 @@ public class LoanService {
 			throws ServletException, MessagingException, IOException, GeneralSecurityException {
 		Map<String, Message> messages = messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
 		PublicUser gamer = publicUserService.getCurrentUser();
-		byte[] encrypted = null;
 		byte[] keyEncript = gamer.getPrivateKey();
 		loan.setPrivateKeyGamer(keyEncript);
 		File key = File.createTempFile("key", ".tmp");
@@ -104,27 +103,14 @@ public class LoanService {
 		loan.setGamer(gamer);
 		loan.setGamerMessage(messages.get(Const.GAMER));
 		loan.setLenderMessage(messages.get(Const.LENDER));
-		encrypted = cryptoService.encrypt(Double.toString(cost), key); 
-		loan.setCostEnc(encrypted);
-		encrypted = null;
-		encrypted = cryptoService.encrypt(Double.toString(balancePart), key);
-		loan.setBalancePartEnc(encrypted);
-		encrypted = null;
-		encrypted = cryptoService.encrypt(Double.toString(cardPart), key);
-		loan.setCardPartEnc(encrypted);
-		encrypted = null;
-		encrypted = cryptoService.encrypt(Double.toString(shippingCost), key);
-		loan.setShippningCostEnc(encrypted);
-		encrypted = null;
-		encrypted = cryptoService.encrypt(Double.toString(feeGameClub), key);
-		loan.setFeeGameClubEnc(encrypted);
-		encrypted = null;
-		encrypted = cryptoService.encrypt(Double.toString(taxes), key);
-		loan.setTaxesEnc(encrypted);
-		encrypted = null;
-		loan = loanRepo.save(loan);
+		loan.setCostEnc(cryptoService.encrypt(Double.toString(cost), key));
+		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(balancePart), key));
+		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(cardPart), key));
+		loan.setShippningCostEnc(cryptoService.encrypt(Double.toString(shippingCost), key));
+		loan.setFeeGameClubEnc(cryptoService.encrypt(Double.toString(feeGameClub), key));
+		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(taxes), key));
 		
-		System.out.println(loan.getCost() + " " + loan.getShippningCost() + " " + loan.getFeeGameClub() + " " + loan.getTaxes());
+		loan = loanRepo.save(loan);
 
 		PublicUserGame cross = publicUserService.getPublicUserGameRepo().findOne(loan.getPublicUserGame().getId());
 		loan.setPublicUserGame(cross);
@@ -174,6 +160,11 @@ public class LoanService {
 		loan.setCostEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
 		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getBalancePart()), keyGamer));
 		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(loan.getCardPart()), keyGamer));
+		
+		loan.setShippningCostEnc(cryptoService.encrypt(Double.toString(loan.getShippningCost()), keyGamer));
+		loan.setFeeGameClubEnc(cryptoService.encrypt(Double.toString(loan.getFeeGameClub()), keyGamer));
+		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(loan.getTaxes()), keyGamer));
+		
 
 		if (isGamer) {
 			loan.setGamerConfirmed(Boolean.TRUE);
@@ -227,6 +218,7 @@ public class LoanService {
 	@Transactional
 	public LoanLite save(Loan loan) throws ServletException, GeneralSecurityException, IOException, KushkiException {
 		Loan previous = loanRepo.findOne(loan.getId());
+		byte[] keyEncript = previous.getGamer().getPrivateKey();
 
 		if (!loan.getShippingStatus().equals(previous.getShippingStatus()) || (loan.getShippingNote() != null
 				&& !loan.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
@@ -258,6 +250,17 @@ public class LoanService {
 		} else {
 			createFines(loan);
 		}
+		
+		File keyGamer = File.createTempFile("keyGamer", ".tmp");
+		FileUtils.writeByteArrayToFile(keyGamer, keyEncript);
+
+		loan.setCostEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
+		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getBalancePart()), keyGamer));
+		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(loan.getCardPart()), keyGamer));
+		
+		loan.setShippningCostEnc(cryptoService.encrypt(Double.toString(loan.getShippningCost()), keyGamer));
+		loan.setFeeGameClubEnc(cryptoService.encrypt(Double.toString(loan.getFeeGameClub()), keyGamer));
+		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(loan.getTaxes()), keyGamer));
 
 		loan = loanRepo.save(loan);
 		LoanLite loanLite = loanRepo.findById(loan.getId());

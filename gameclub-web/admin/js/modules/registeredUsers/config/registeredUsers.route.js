@@ -14,12 +14,6 @@ angular.module("RegisteredUsers").config(function($stateProvider){
 					name: 'RegisteredUsers',
 					files: ['js/modules/registeredUsers/controller/registeredUsersCtrl.js']
 				}]);
-			},
-
-			registeredUsersAll: function(rest) {
-				return rest("registeredUsers/registeredUsersAll", true).post(function(data) {
-					return data;
-				});
 			}
 		}
 

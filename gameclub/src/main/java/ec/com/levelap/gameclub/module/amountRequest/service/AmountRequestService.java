@@ -99,18 +99,20 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 		Message message = new Message();
 		PublicUser user = publicUserService.getPublicUserRepo().findOne(amountRequest.getPublicUser().getId());
 		Transaction transaction = new Transaction();
-		
 		File key = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
 		if(amountRequest.getRequestStatus().getCode().equals(Code.PAYMENT_PAYED) && user.getShownBalance() > 0) {
+			amountRequest.setAmount(user.getBalance());
+			
+			transaction.setDebitBalanceEnc(user.getBalance());
+			
 			user = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), user.getShownBalance());
 			user.setIsRequestingBalance(Boolean.FALSE);
 			user = publicUserService.getPublicUserRepo().save(user);
 			
 			amountRequest.setPublicUser(user);
-			amountRequest.setAmount(user.getBalance());
 			amountRequest.setPaymentDate(new Date());
-			transaction.setDebitBalanceEnc(user.getBalance());
+			
 			transaction.setOwner(amountRequest.getPublicUser());
 			transaction.setTransaction("Retiro Balance");
 			transaction = transactionRepo.save(transaction);	

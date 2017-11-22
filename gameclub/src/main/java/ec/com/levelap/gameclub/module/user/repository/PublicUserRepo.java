@@ -43,4 +43,7 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 	public Long countGamesToReturn(@Param("id") Long id);
 	
 	public PublicUser findByUrlToken(String urlToken);
+	
+	@Query("SELECT pu.privateKey FROM PublicUser pu WHERE pu.id=:id ")
+	public byte[] findKey(@Param("id") Long id);
 }

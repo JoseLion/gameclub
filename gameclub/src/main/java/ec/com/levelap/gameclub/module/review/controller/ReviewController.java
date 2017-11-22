@@ -1,7 +1,10 @@
 package ec.com.levelap.gameclub.module.review.controller;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,7 @@ public class ReviewController {
 	private PublicUserService publicUserService;
 	
 	@RequestMapping(value="save", method=RequestMethod.POST)
-	public ResponseEntity<Loan> save(@RequestBody Loan loan) throws ServletException {
+	public ResponseEntity<Loan> save(@RequestBody Loan loan) throws ServletException, IOException, GeneralSecurityException, MessagingException {
 		return new ResponseEntity<Loan>(reviewService.save(loan), HttpStatus.OK);
 	}
 	

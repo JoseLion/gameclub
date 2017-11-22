@@ -43,6 +43,7 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 }).run(function($rootScope, $state, Const, $location, $anchorScroll, $http, urlRestPath, rest) {
 	$rootScope.$state = $state;
 	$rootScope.Const = Const;
+	$rootScope.RestUrl = urlRestPath.url;
 
 	$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, options) {
 		$http.get(urlRestPath.url + "/api/token").then(function() {

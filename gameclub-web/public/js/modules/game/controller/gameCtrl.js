@@ -254,12 +254,12 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
         $scope.loan.balancePart = $scope.balance.value;
         $scope.loan.cardPart = $scope.loan.cost - $scope.balance.value;
-        if ($scope.loan.cardPart > 0 && $scope.cardSelected == null) {
-            notif.danger("Por favor seleccione una forma de pago");
-            failedValidation = true;
-        } else {
-            $scope.loan.cardReference = $scope.cardSelected.card_reference;
-        }
+        // if ($scope.loan.cardPart > 0 && $scope.cardSelected == null) {
+        //     notif.danger("Por favor seleccione una forma de pago");
+        //     failedValidation = true;
+        // } else {
+        //     $scope.loan.cardReference = $scope.cardSelected.card_reference;
+        // }
 
         if (!failedValidation) {
             sweet.default("Se enviará una solicitud de prestamo al propietario del juego", function() {
@@ -324,13 +324,13 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         return null;
     }
 
-    // $scope.$watch("loan.cost", function(newValue) {
-    //     $scope.slider.value = 0.0;
-    //
-    //     if (newValue != null && $rootScope.currentUser != null && $scope.loan != null && $scope.paymentViewOpen) {
-    //         $scope.slider.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= newValue ? newValue : parseFloat($rootScope.currentUser.shownBalance));
-    //     }
-    // });
+    $scope.$watch("loan.cost", function(newValue) {
+        $scope.slider.value = 0.0;
+    
+        if (newValue != null && $rootScope.currentUser != null && $scope.loan != null && $scope.paymentViewOpen) {
+            $scope.slider.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= newValue ? newValue : parseFloat($rootScope.currentUser.shownBalance));
+        }
+    });
 
     function getInfoPercentage() {
         let percent = 0;

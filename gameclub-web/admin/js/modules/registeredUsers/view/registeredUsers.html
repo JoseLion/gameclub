@@ -29,7 +29,7 @@
 			</div>
 		</div>
 
-		<div class="col-md-12 form-group">
+		<div class="col-md-12 form-group table-responsive">
 			<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover">
 				<col width="15%">
 				<col width="20%">
@@ -64,14 +64,14 @@
 						<td>{{regUsrs.publicUserId.lastName}}</td>
 						<td style="text-align: center;">{{regUsrs.publicUserId.status ? 'Activo' : 'Inactivo'}}</td>
 						<td>{{regUsrs.publicUserId.creationDate  | date: 'dd-MM-yyyy'}}</td>
-						<td>{{regUsrs.publicUserId.document}}</td>
-						<td>{{regUsrs.totalGames}}</td>
-						<td>{{regUsrs.totalRequestedRentals}}</td>
-						<td>{{regUsrs.totalRentAceppted}}</td>
-						<td>{{regUsrs.totalRentRequested}}</td>
-						<td>{{regUsrs.totalApplicationsReceived}}</td>
-						<td>{{regUsrs.totalRequestAccepted}}</td>
-						<td>{{regUsrs.totalRequestRejected}}</td>
+						<td style="text-align: center;">{{regUsrs.publicUserId.document}}</td>
+						<td style="text-align: center;">{{regUsrs.totalGames}}</td>
+						<td style="text-align: center;">{{regUsrs.totalRequestedRentals}}</td>
+						<td style="text-align: center;">{{regUsrs.totalRentAceppted}}</td>
+						<td style="text-align: center;">{{regUsrs.totalRentRequested}}</td>
+						<td style="text-align: center;">{{regUsrs.totalApplicationsReceived}}</td>
+						<td style="text-align: center;">{{regUsrs.totalRequestAccepted}}</td>
+						<td style="text-align: center;">{{regUsrs.totalRequestRejected}}</td>
 					</tr>
 				</tbody>
 			</table>

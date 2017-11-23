@@ -1,7 +1,10 @@
 package ec.com.levelap.gameclub.module.reports.logTracking.entity;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -22,13 +25,13 @@ public class LogTracking {
 	private Long id;
 	
 	@Column(name="box_number")
-	private Long boxNumber;
+	private String boxNumber;
 	
 	@Column
 	private String game;
 	
 	@Column(name="referral_guide")
-	private String referralGuide = "";
+	private String referralGuide;
 	
 	@Column
 	private String name;
@@ -86,11 +89,11 @@ public class LogTracking {
 		this.id = id;
 	}
 
-	public Long getBoxNumber() {
+	public String getBoxNumber() {
 		return boxNumber;
 	}
 
-	public void setBoxNumber(Long boxNumber) {
+	public void setBoxNumber(String boxNumber) {
 		this.boxNumber = boxNumber;
 	}
 

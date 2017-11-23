@@ -164,8 +164,8 @@
                     <!--<span class="form-cell text-left">
                         (Recomendación del juego: <B>&#36;{{priceChartingGM| number:2}}</B> )
                     </span>-->
-                    <span class="form-cell text-left" ng-if="settings[Const.settings.priceChartingGames].type == 'percentage'">(Recomendación del juego: <B>&#36;{{((((myGame.game.uploadPayment*priceChartingGM)/100)+myGame.game.uploadPayment)/gameLoanPCH) | number:2}}</B> )</span>
-                    <span class="form-cell text-left" ng-if="settings[Const.settings.priceChartingGames].type == 'number'">(Recomendación del juego: <B>&#36;{{((myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH) | number:2}}</B> )</span>
+                    <span class="form-cell text-left" ng-if="settings[Const.settings.priceChartingGames].type == 'percentage'">(Recomendación del juego: <B>&#36;{{(myGame.game.uploadPayment)/gameLoanPCH | number:2}}</B> )</span>
+                    <!-- <span class="form-cell text-left" ng-if="settings[Const.settings.priceChartingGames].type == 'number'">(Recomendación del juego: <B>&#36;{{((myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH) | number:2}}</B> )</span> -->
             </span>
                 </div>
 

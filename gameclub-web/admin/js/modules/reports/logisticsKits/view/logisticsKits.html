@@ -1,0 +1,86 @@
+<div class="col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Filtro de B&uacute;squeda</strong>
+		</div>
+
+		<div class="panel-body">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-md-12">
+						<p><b>Descripci&oacute;n</b></p>
+						<p>Reporte de log&iacute;stica de Shipping Kits y Welcome Kids.</p>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12">
+					<p><b>Total de Shipping Kits Enviados: {{shippingKidsDelivered}}</b></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12">
+					<p><b>Total de Welcome Kits Enviados: {{welcomeKitsDelivered}}</b></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12">
+					<p><b>Total de Shipping Kits Vendidos: {{totalShippingKidsSold}}</b></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ibox">
+	<div class="ibox-content">
+		<div class="form-group">
+			<div class="col-md-12 text-center">
+				<button  class="btn btn-w-m btn-success" disabled>Exportar</button>
+			</div>
+		</div>
+
+		<div class="col-md-12 form-group">
+			<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover">
+				<col width="15%">
+				<col width="8%">
+				<col width="10%">
+				<col width="10%">
+				<col width="10%">
+				<col width="10%">
+				<col width="10%">
+				<col width="10%">
+				<col width="10%">
+
+				<thead>
+					<tr>
+						<th>Nombre(s)</th>
+						<th>Apellido(s)</th>
+						<th>Ciudad</th>
+						<th>Direcci&oacute;n</th>
+						<th>Direcci&oacute;n Mail</th>
+						<th>C&eacute;dula</th>
+						<th>N&#176; Tel&eacute;fono</th>
+						<th>Transacci&oacute;n</th>
+						<th>Estado</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-repeat="billing in logisticsKits">
+						<td >{{billing.name}}</td>
+						<td >{{billing.lastName}}</td>
+						<td >{{billing.city}}</td>
+						<td >{{billing.address}}</td>
+						<td >{{billing.mail}}</td>
+						<td >{{billing.document}}</td>
+						<td >{{billing.contactPhone}}</td>
+						<td >{{billing.transactionType}}</td>
+						<td >{{billing.status}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="clearfix"></div>
+	</div>
+</div>

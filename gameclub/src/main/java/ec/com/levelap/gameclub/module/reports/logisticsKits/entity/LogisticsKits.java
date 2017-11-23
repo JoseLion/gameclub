@@ -22,31 +22,31 @@ public class LogisticsKits {
 	private Long id;
 		
 	@Column
-	private Long name;
+	private String name;
+	
+	@Column(name="last_name")
+	private String lastName;
 	
 	@Column
-	private Long lastName;
+	private String city;
 	
 	@Column
-	private Long city;
-	
-	@Column
-	private Long address;
+	private String address;
 
 	@Column
-	private Long mail;
+	private String mail;
 	
 	@Column
-	private Long document;
+	private String document;
 
 	@Column(name="contact_phone")
-	private Long contactPhone;
+	private String contactPhone;
 	
 	@Column(name="transaction_type")
-	private Long transactionType;
+	private String transactionType;
 	
 	@Column
-	private Long status;
+	private String status;
 
 	public Long getId() {
 		return id;
@@ -56,77 +56,76 @@ public class LogisticsKits {
 		this.id = id;
 	}
 
-	public Long getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(Long name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public Long getLastName() {
+	public String getLastName() {
 		return lastName;
 	}
 
-	public void setLastName(Long lastName) {
+	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-	public Long getCity() {
+	public String getCity() {
 		return city;
 	}
 
-	public void setCity(Long city) {
+	public void setCity(String city) {
 		this.city = city;
 	}
 
-	public Long getAddress() {
+	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(Long address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public Long getMail() {
+	public String getMail() {
 		return mail;
 	}
 
-	public void setMail(Long mail) {
+	public void setMail(String mail) {
 		this.mail = mail;
 	}
 
-	public Long getDocument() {
+	public String getDocument() {
 		return document;
 	}
 
-	public void setDocument(Long document) {
+	public void setDocument(String document) {
 		this.document = document;
 	}
 
-	public Long getContactPhone() {
+	public String getContactPhone() {
 		return contactPhone;
 	}
 
-	public void setContactPhone(Long contactPhone) {
+	public void setContactPhone(String contactPhone) {
 		this.contactPhone = contactPhone;
 	}
 
-	public Long getTransactionType() {
+	public String getTransactionType() {
 		return transactionType;
 	}
 
-	public void setTransactionType(Long transactionType) {
+	public void setTransactionType(String transactionType) {
 		this.transactionType = transactionType;
 	}
 
-	public Long getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Long status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 	
 }

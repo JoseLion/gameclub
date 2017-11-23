@@ -1,8 +1,10 @@
 DROP TABLE IF EXISTS gameclub.log_tracking;
 
+CREATE SEQUENCE IF NOT EXISTS log_tracking_seq START 1;
+
 CREATE OR REPLACE VIEW gameclub.log_tracking AS
 SELECT
-	lt.id,	
+	NEXTVAL('log_tracking_seq') AS id,	
 	lt.box_number,
 	lt.game,
 	lt.referral_guide,
@@ -23,7 +25,7 @@ SELECT
 	lt.transaction_type,
 	lt.status
 FROM (
-		SELECT	l.id AS id,	
+		SELECT		
 			l.box_number AS box_number,
 			g.name AS game,
 			'' AS referral_guide,
@@ -61,7 +63,7 @@ FROM (
 				l.shipping_status=ca.id
 		UNION
 		
-		SELECT	r.id AS id,
+		SELECT	
 			lr.box_number AS box_number,
 			gr.name AS game,
 			'' AS referral_guide,

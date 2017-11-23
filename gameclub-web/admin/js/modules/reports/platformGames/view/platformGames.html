@@ -1,0 +1,82 @@
+<div class="col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Filtro de B&uacute;squeda</strong>
+		</div>
+
+		<div class="panel-body">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-md-12">
+						<p><b>Descripci&oacute;n</b></p>
+						<p>Reporte de todos los juegos cargados por los usuarios en la plataforma y detalles de cada juego cargado.</p>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12">
+					<p><b>Total Juegos: {{totalGames}}</b></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ibox">
+	<div class="ibox-content">
+		<div class="form-group">
+			<div class="col-md-12 text-center">
+				<button  class="btn btn-w-m btn-success" disabled>Exportar</button>
+			</div>
+		</div>
+
+		<div class="col-md-12 form-group table-responsive">
+			<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover">
+				<col width="20%">
+				<col width="15%">
+				<col width="10%">
+				<col width="10%">
+				<col width="10%">
+				<col width="10%">
+				<col width="7%">
+				<col width="10%">
+				<col width="10%">
+				<col width="10%">
+				<col width="10%">
+
+				<thead>
+					<tr>
+						<th>Juego</th>
+						<th>Consola</th>
+						<th>Fecha Lanzamiento</th>
+						<th>Usuario</th>
+						<th>Fecha Carga</th>
+						<th>Estado</th>
+						<th>Precio Recomendado</th>
+						<th>Precio Usuario</th>
+						<th>Solicitudes Recibidas</th>
+						<th>Solicitudes Aceptadas</th>
+						<th>Solicitudes Rechazadas</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-repeat="platGm in platformGames">
+						<td style="text-align: center;">{{platGm.game}}</td>
+						<td>{{platGm.console}}</td>
+						<td>{{platGm.releaseDate | date: 'dd-MM-yyyy'}}</td>
+						<td >{{platGm.fullName}}</td>
+						<td style="text-align: center;">{{platGm.uploadDate | date: 'dd-MM-yyyy'}}</td>
+						<td style="text-align: center;">{{platGm.status ? 'Activo' : 'Inactivo'}}</td>
+						<td style="text-align: center;">{{platGm.recommended_price | currency:'$ ':2}}</td>
+						<td style="text-align: center;" >{{platGm.cost | currency:'$ ':2}}</td>
+						<td style="text-align: center;" >{{platGm.totalRequestedRentals}}</td>
+						<td style="text-align: center;" >{{platGm.totalRentAceppted}}</td>
+						<td style="text-align: center;" >{{platGm.totalRentRequested}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="clearfix"></div>
+	</div>
+</div>

@@ -11,7 +11,7 @@ angular.module('Balance').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Balance',
-					files: ['js/modules/account/balance/controller/balanceCtrl.js', 'js/modules/account/balance/style/balance.less']
+					files: ['js/modules/account/balance/controller/balanceCtrl.js', 'js/modules/account/balance/style/balance.less', 'js/modules/account/balance/style/balance.responsive.less']
 				}]);
 			}
 		}

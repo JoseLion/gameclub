@@ -45,6 +45,7 @@
                 <i class="gc gc-address cursor-pointer" ng-click="openMap(kit)" ng-if="!kit.wasConfirmed"></i>
                 <i class="gc gc-address cursor-no-drop" ng-if="kit.wasConfirmed"></i>
                 <img class="geo-check" src="/img/check.svg" ng-if="kit.geolocation != null">
+                <span ng-if="!kit.geolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
             </div>
             <div class="form-row col-md-12">
                 <button type="button" class="btn btn-tertiary full btn-xs" ng-click="confirmKit(kit)" ng-if="!kit.wasConfirmed">Confirmar envío</button>

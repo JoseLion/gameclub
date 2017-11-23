@@ -112,6 +112,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             isValid = false;
             sweet.error('El precio de alquiler de ' + $scope.myGame.game.name + ' debe ser entre $' + minPrice.toFixed(2) + ' y $' + maxPrice.toFixed(2));
         }
+        
         if(isValid == true){
             sweet.save(function() {
                 $scope.myGame.console = $scope.search.console.console;
@@ -129,9 +130,11 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
                     sweet.close();
                 });
             });
-        } else {
-            // notif.danger('Error al guardar juego.');
         }
+    }
+
+    $scope.goBack = function() {
+        $scope.showGame = false;
     }
 
     $scope.pageChanged = function() {

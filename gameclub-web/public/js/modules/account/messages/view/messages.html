@@ -131,6 +131,7 @@
 										<div class="form-group geolocation" ng-class="{'disabled': loan.isDisabled}">
 											<label><i class="gc gc-address" ng-click="!loan.isDisabled ? openMap(loan, 'gamerGeolocation') : null"></i></label>
 											<img src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
+											<span ng-if="!loan.gamerGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
 										<div class="form-group receiver" ng-class="{'disabled': loan.isDisabled}">
@@ -191,6 +192,7 @@
 										<div class="form-group geolocation">
 											<label class="cursor-no-drop"><i class="gc gc-address"></i></label>
 											<img src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
+											<span ng-if="!loan.gamerGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
 										<div class="form-group receiver">
@@ -267,8 +269,11 @@
 										</div>
 
 										<div class="form-group geolocation" ng-class="{'disabled': loan.restore.isDisabled}">
-											<label><i class="gc gc-address" ng-click="!loan.restore.isDisabled ? openMap(loan.restore, 'gamerGeolocation') : null"></i></label>
+											<label>
+												<i class="gc gc-address" ng-click="!loan.restore.isDisabled ? openMap(loan.restore, 'gamerGeolocation') : null"></i>
+											</label>
 											<img src="/img/check.svg" ng-if="loan.restore.gamerGeolocation != null">
+											<span ng-if="!loan.restore.gamerGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
 										<div class="form-group receiver" ng-class="{'disabled': loan.restore.isDisabled}">
@@ -414,6 +419,7 @@
 										<div class="form-group geolocation" ng-class="{'disabled': loan.isDisabled}">
 											<label><i class="gc gc-address" ng-click="!loan.isDisabled ? openMap(loan, 'lenderGeolocation') : null"></i></label>
 											<img src="/img/check.svg" ng-if="loan.lenderGeolocation != null">
+											<span ng-if="!loan.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
 										<div class="form-group receiver" ng-class="{'disabled': loan.isDisabled}">
@@ -474,6 +480,7 @@
 										<div class="form-group geolocation">
 											<label class="cursor-no-drop"><i class="gc gc-address"></i></label>
 											<img src="/img/check.svg" ng-if="loan.lenderGeolocation != null">
+											<span ng-if="!loan.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
 										<div class="form-group receiver">
@@ -542,8 +549,11 @@
 										</div>
 
 										<div class="form-group geolocation" ng-class="{'disabled': loan.restore.isDisabled}">
-											<label><i class="gc gc-address" ng-click="!loan.restore.isDisabled ? openMap(loan.restore, 'lenderGeolocation') : null"></i></label>
+											<label>
+												<i class="gc gc-address" ng-click="!loan.restore.isDisabled ? openMap(loan.restore, 'lenderGeolocation') : null"></i>
+											</label>
 											<img src="/img/check.svg" ng-if="loan.restore.lenderGeolocation != null">
+											<span ng-if="!loan.restore.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
 										<div class="form-group receiver" ng-class="{'disabled': loan.restore.isDisabled}">

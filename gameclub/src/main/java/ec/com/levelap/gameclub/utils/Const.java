@@ -42,6 +42,8 @@ public interface Const {
 	
 	public static final String SBJ_AMOUNT_REQUEST = "Retiro saldo";
 	
+	public static final String SBJ_SHIPPING_KIT = "SHIPPING KIT";
+	
 	public static final String GAMER = "GAMER";
 	
 	public static final String LENDER = "LENDER";
@@ -52,6 +54,6 @@ public interface Const {
 	
 	public static final String SETTINGS_NUMBER = "number";
 	
-	public static final String SBJ_SHIPPING_KIT = "SHIPPING KIT";
+	public static final String TRS_REFFERED_BONUS = "BONO POR REFERIDO";
 	
 }

@@ -86,10 +86,24 @@
 #amountRequest section.how-to .title{font-size:1.5em;}
 #amountRequest section.how-to .title::before{content:"";height:3px;position:absolute;left:15px;bottom:0;background:@color-primary;;width:10%;}
 #amountRequest section.how-to .bill-number{font-size:1.3em;text-transform:uppercase;text-align:center;border:2px solid black;border-radius:7px;padding:7% 0%;}
-#amountRequest section.how-to .bill-header{display:table;margin-top:3%;font-weight:bold;text-transform:uppercase;border:2px solid black;border-radius:7px;padding:1%;}
-#amountRequest section.how-to .bill-header div{display:table-row;}
-#amountRequest section.how-to .bill-header div .bill-label{display:table-cell;}
-#amountRequest section.how-to .bill-header div .bill-dotted{display:table-cell;width:inherit;font-size:0.8em;color:#e43345;border-bottom:1px dotted black;padding-left:1%;}
+#amountRequest section.how-to .bill-header{display:table;margin-top:3%;font-weight:bold;text-transform:uppercase;border:2px solid black;border-radius:7px;padding:2%;}
+#amountRequest section.how-to .bill-header div{display:table-row;padding:unset;}
+#amountRequest section.how-to .bill-header div .bill-label{display:table-cell;white-space:nowrap;}
+#amountRequest section.how-to .bill-header div .bill-dotted{display:table-cell;font-size:0.8em;color:@color-secundary;border-bottom:1px dotted black;padding:0% 1.5%;width:100%;}
+
+#amountRequest section.how-to .bill-body{margin-top:3%;text-transform:uppercase;font-weight:bold;}
+#amountRequest section.how-to .bill-body table{border-collapse:separate;}
+#amountRequest section.how-to .bill-body table thead tr th{border:2px solid black;padding:1% 2%;border-right-style:hidden;text-align:center;}
+#amountRequest section.how-to .bill-body table thead tr th:first-child{border-top-left-radius:7px;}
+#amountRequest section.how-to .bill-body table thead tr th:last-child{border-top-right-radius:7px;border-right-style:solid;}
+#amountRequest section.how-to .bill-body table tbody{color:@color-secundary;font-size:0.8em;}
+#amountRequest section.how-to .bill-body table tbody tr td{border:2px solid black;padding:1%;border-right-style:hidden;border-top-style:hidden;}
+#amountRequest section.how-to .bill-body table tbody tr td:last-child{border-right-style:solid;}
+#amountRequest section.how-to .bill-body table tbody tr td.bill-currency{font-size:1.7em;}
+#amountRequest section.how-to .bill-body table tbody tr td.no-border{border-left-style:hidden;border-bottom-style:hidden;color:black;font-size:1.2em;}
+#amountRequest section.how-to .bill-body table tbody tr.last-item td:first-child{border-bottom-left-radius:7px;}
+#amountRequest section.how-to .bill-body table tbody tr:last-child td:last-child{border-bottom-left-radius:7px;border-bottom-right-radius:7px;}
+
 #amountRequest section.how-to .load-bill{padding-bottom:1%;padding-top:2%;}
 #amountRequest section.how-to .load-bill p{line-height:0.75em;font-size:1.2em;font-weight:700;}
 #amountRequest section.how-to .load-bill button{border-radius:7px;margin-top:2%;}

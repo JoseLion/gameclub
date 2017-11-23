@@ -1,6 +1,7 @@
 angular.module('AmountRequest').controller('AmountRequestCtrl', function($scope, $rootScope, provinces, notif, sweet, rest, SweetAlert, $state) {
     $scope.request = {};
     $scope.file = {};
+    $scope.today = new Date();
 
     provinces.$promise.then(function(data) {
         $scope.provinces = data;

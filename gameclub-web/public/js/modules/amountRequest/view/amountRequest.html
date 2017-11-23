@@ -183,14 +183,13 @@
                     <h2 class="title">Como llenar tu factura</h2>
                 </div>
 
-                <div class="col-md-8 col-xs-8">
-                    <p>Te damos un ejemplo d ecomo tienes que</p>
-                    <p>llenar tu factura correctamente para retirar</p>
-                    <p>tu saldo.</p>
+                <div class="col-md-8 col-xs-6">
+                    <p>Te damos un ejemplo d ecomo tienes que llenar tu factura correctamente para retirar tu saldo.</p>
                     <p>Éste es un ejemplo con $100.</p>
                     <p>Debes hacerlo con tu saldo actual</p>
                 </div>
-                <div class="col-md-4 col-xs-4">
+
+                <div class="col-md-4 col-xs-6">
                     <div class="bill-number">
                         <p>Factura</p>
                         <p>N.-0000001</p>
@@ -203,23 +202,25 @@
                             <span class="bill-label">Señores:</span> <span class="bill-dotted">Tomorrowlabs S.A.</span>
                         </div>
                         
-                        <div class="col-md-8">
+                        <div class="col-md-8 col-xs-8">
                             <span class="bill-label">RUC / C.I.:</span> <span class="bill-dotted">1792738865001</span>
                         </div>
-                        <div class="col-md-4 col-md-4">
+                        <div class="col-md-4 col-xs-4">
                             <span class="bill-label">Teléfono:</span> <span class="bill-dotted">0999176170</span>
                         </div>
 
-                        <div class="col-md-8">
-                            <span class="bill-label">Dirección</span> <span class="bill-dotted">Av. Siena 214 y Miguel Angel ' Ed. Mater</span>
+                        <div class="col-md-8 col-xs-8">
+                            <span class="bill-label">Dirección:</span> <span class="bill-dotted">Av. Siena 214 y Miguel Angel ' Ed. Mater</span>
                         </div>
-                        <div class="col-md-4 col-md-4">
-                            <span class="bill-label">Fecha:</span> <span class="bill-dotted">01/01/2017</span>
+                        <div class="col-md-4 col-xs-4">
+                            <span class="bill-label">Fecha:</span> <span class="bill-dotted">{{today | date: 'dd/MM/yyyy'}}</span>
                         </div>
 
                         <div class="col-md-12 col-xs-12">
                             <span class="bill-label">Email:</span> <span class="bill-dotted">pagos@tomorrowlabs.com.ec</span>
                         </div>
+
+                        <div class="clearfix"></div>
                     </div>
                 </div>
 
@@ -242,25 +243,53 @@
 
                             <tbody>
                                 <tr>
-                                    <td class="text-center bill-number">1</td>
-                                    <td class="text-left">LOREM IPSUM DOLOR SIT AMET, CON-SECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS</td>
-                                    <td class="text-center bill-number">$100</td>
-                                    <td class="text-center bill-number">$100</td>
+                                    <td class="text-center bill-currency">5</td>
+                                    <td class="text-left">Alquiler Zelda Breath of the Wild</td>
+                                    <td class="text-center bill-currency">{{2.90 | currency: '$'}}</td>
+                                    <td class="text-center bill-currency">{{14.50 | currency: '$'}}</td>
                                 </tr>
 
                                 <tr>
+                                    <td class="text-center bill-currency">7</td>
+                                    <td class="text-left">Alquiler FIFA 18</td>
+                                    <td class="text-center bill-currency">{{3.15 | currency: '$'}}</td>
+                                    <td class="text-center bill-currency">{{22.05 | currency: '$'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-center bill-currency">13</td>
+                                    <td class="text-left">Alquiler Super Mario Odyssey</td>
+                                    <td class="text-center bill-currency">{{3.50 | currency: '$'}}</td>
+                                    <td class="text-center bill-currency">{{45.50 | currency: '$'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-center bill-currency">7</td>
+                                    <td class="text-left">Alquiler Assassins Creed Origins</td>
+                                    <td class="text-center bill-currency">{{3.50 | currency: '$'}}</td>
+                                    <td class="text-center bill-currency">{{24.50 | currency: '$'}}</td>
+                                </tr>
+
+                                <tr class="last-item">
+                                    <td class="text-center bill-currency">3</td>
+                                    <td class="text-left">Alquiler FIFA 18 (Es otro item porque cambio tu valor unitario)</td>
+                                    <td class="text-center bill-currency">{{2.50 | currency: '$'}}</td>
+                                    <td class="text-center bill-currency">{{7.50 | currency: '$'}}</td>
+                                </tr>                               
+
+                                <tr>
                                     <td class="no-border text-right bill-label" colspan="3">Subtotal</td>
-                                    <td class="text-center bill-number">$100</td>
+                                    <td class="text-center bill-currency">{{114.05 | currency: '$'}}</td>
                                 </tr>
 
                                 <tr>
                                     <td class="no-border text-right bill-label" colspan="3">IVA 12%</td>
-                                    <td class="text-center bill-number">$12</td>
+                                    <td class="text-center bill-currency">{{13.69 | currency: '$'}}</td>
                                 </tr>
 
                                 <tr>
                                     <td class="no-border text-right bill-label" colspan="3">Total USD</td>
-                                    <td class="text-center bill-number">$112</td>
+                                    <td class="text-center bill-currency">{{127.74 | currency: '$'}}</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -13,7 +13,7 @@ angular.module('AmountRequest').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'AmountRequest',
-					files: ['js/modules/amountRequest/controller/amountRequestCtrl.js', 'js/modules/amountRequest/style/amountRequest.less']
+					files: ['js/modules/amountRequest/controller/amountRequestCtrl.js', 'js/modules/amountRequest/style/amountRequest.less', 'js/modules/amountRequest/style/amountRequest.responsive.less']
 				}]);
 			},
 

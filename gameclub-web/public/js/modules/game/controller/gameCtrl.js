@@ -324,13 +324,13 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         return null;
     }
 
-    // $scope.$watch("loan.cost", function(newValue) {
-    //     $scope.slider.value = 0.0;
-    //
-    //     if (newValue != null && $rootScope.currentUser != null && $scope.loan != null && $scope.paymentViewOpen) {
-    //         $scope.slider.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= newValue ? newValue : parseFloat($rootScope.currentUser.shownBalance));
-    //     }
-    // });
+    $scope.$watch("loan.cost", function(newValue) {
+        $scope.slider.value = 0.0;
+    
+        if (newValue != null && $rootScope.currentUser != null && $scope.loan != null && $scope.paymentViewOpen) {
+            $scope.slider.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= newValue ? newValue : parseFloat($rootScope.currentUser.shownBalance));
+        }
+    });
 
     function getInfoPercentage() {
         let percent = 0;

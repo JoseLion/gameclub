@@ -86,7 +86,7 @@ public class FineService extends BaseService<Fine> {
 				publicUser = publicUserService.substractFromUserBalance(publicUser.getId(), fine.getAmount());
 			}
 
-			Transaction transaction = new Transaction(publicUser, "MULTA - ", "-", 0, null, fine.getBalancePartEnc(),
+			Transaction transaction = new Transaction(publicUser, "MULTA - ", "-", "-", 0, null, fine.getBalancePartEnc(),
 					fine.getCardPartEnc());
 			transactionService.getTransactionRepo().save(transaction);
 

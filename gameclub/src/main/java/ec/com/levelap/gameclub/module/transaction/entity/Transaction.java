@@ -39,6 +39,9 @@ public class Transaction extends BaseEntity {
 
 	@Column(columnDefinition = "VARCHAR")
 	private String game = "";
+	
+	@Column(columnDefinition = "VARCHAR")
+	private String console = "";
 
 	@Column(columnDefinition = "INTEGER DEFAULT 0")
 	private Integer weeks = 0;
@@ -67,11 +70,12 @@ public class Transaction extends BaseEntity {
 	public Transaction() {
 	}
 
-	public Transaction(PublicUser owner, String transaction, String game, Integer weeks, byte[] balancePartEnc,
+	public Transaction(PublicUser owner, String transaction, String game, String console, Integer weeks, byte[] balancePartEnc,
 			byte[] debitBalanceEnc, byte[] debitCardEnc) {
 		this.owner = owner;
 		this.transaction = transaction;
 		this.game = game;
+		this.console = console;
 		this.weeks = weeks;
 		this.balancePartEnc = balancePartEnc;
 		this.debitBalanceEnc = debitBalanceEnc;
@@ -100,6 +104,14 @@ public class Transaction extends BaseEntity {
 
 	public void setGame(String game) {
 		this.game = game;
+	}
+
+	public String getConsole() {
+		return console;
+	}
+
+	public void setConsole(String console) {
+		this.console = console;
 	}
 
 	public Integer getWeeks() {

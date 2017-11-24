@@ -112,11 +112,13 @@ public class RestoreService {
 			lender = publicUserService.addToUserBalance(restore.getPublicUserGame().getPublicUser().getId(), value);
 
 			transaction = new Transaction(gamer, "MULTA - " + shippingStatus.getName(),
+					restore.getPublicUserGame().getConsole().getName(),
 					restore.getPublicUserGame().getGame().getName(), restore.getLoan().getWeeks(), null, toBalance,
 					toCard);
 			transactionRepo.save(transaction);
 
 			transaction = new Transaction(lender, "DEVOLICION", restore.getPublicUserGame().getGame().getName(),
+					restore.getPublicUserGame().getConsole().getName(),
 					restore.getLoan().getWeeks(), cryptoService.encrypt(Double.toString(value), keyLender), null, null);
 			transactionRepo.save(transaction);
 
@@ -142,6 +144,7 @@ public class RestoreService {
 			}
 
 			transaction = new Transaction(gamer, "MULTA - " + shippingStatus.getName(),
+					restore.getPublicUserGame().getConsole().getName(),
 					restore.getPublicUserGame().getGame().getName(), restore.getLoan().getWeeks(), null, toBalance,
 					toCard);
 			transactionRepo.save(transaction);

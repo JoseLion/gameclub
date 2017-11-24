@@ -193,7 +193,7 @@ public class LoanService {
 			}
 
 			Transaction transaction = new Transaction(connected, "JUGASTE",
-					loan.getPublicUserGame().getGame().getName(), loan.getWeeks(), null, loan.getBalancePartEnc(),
+					loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), null, loan.getBalancePartEnc(),
 					loan.getCardPartEnc());
 			transactionService.getTransactionRepo().save(transaction);
 
@@ -205,7 +205,7 @@ public class LoanService {
 			FileUtils.writeByteArrayToFile(keyLender, connected.getPrivateKey());
 
 			Transaction transaction = new Transaction(connected, "ALQUILASTE",
-					loan.getPublicUserGame().getGame().getName(),
+					loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(),
 					loan.getWeeks(), cryptoService
 							.encrypt(Double.toString(loan.getPublicUserGame().getCost() * loan.getWeeks()), keyLender),
 					null, null);
@@ -525,10 +525,12 @@ public class LoanService {
 			fineService.getFineRepo().save(fine);
 
 			transaction = new Transaction(gamer, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
+					loan.getPublicUserGame().getConsole().getName(),
 					loan.getWeeks(), cryptoService.encrypt(Double.toString((loan.getCost())), keyGamer), null, null);
 			transactionService.getTransactionRepo().save(transaction);
 
 			transaction = new Transaction(lender, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
+					loan.getPublicUserGame().getConsole().getName(),
 					loan.getWeeks(), null, toBalance, toCard);
 			transactionService.getTransactionRepo().save(transaction);
 
@@ -538,10 +540,12 @@ public class LoanService {
 			lender = publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), value);
 
 			transaction = new Transaction(gamer, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
+					loan.getPublicUserGame().getConsole().getName(),
 					loan.getWeeks(), cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer), null, null);
 			transactionService.getTransactionRepo().save(transaction);
 
 			transaction = new Transaction(gamer, "MULTA - " + shippingStatus.getName(),
+					loan.getPublicUserGame().getConsole().getName(),
 					loan.getPublicUserGame().getGame().getName(), loan.getWeeks(), null,
 					cryptoService.encrypt(Double.toString(value), keyGamer), null);
 			transactionService.getTransactionRepo().save(transaction);
@@ -560,10 +564,12 @@ public class LoanService {
 				toBalance = cryptoService.encrypt(Double.toString(Math.abs(totalToDebit)), keyLender);
 			}
 			transaction = new Transaction(lender, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
+					loan.getPublicUserGame().getConsole().getName(),
 					loan.getWeeks(), null, toBalance, toCard);
 			transactionService.getTransactionRepo().save(transaction);
 
 			transaction = new Transaction(lender, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
+					loan.getPublicUserGame().getConsole().getName(),
 					loan.getWeeks(), cryptoService.encrypt(Double.toString(value), keyLender), null, null);
 			transactionService.getTransactionRepo().save(transaction);
 

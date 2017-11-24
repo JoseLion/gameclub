@@ -182,7 +182,7 @@ public class WelcomeKitService {
 		Transaction transaction = new Transaction(
 				publicUser,
 				"SHIPPING KIT",
-				"-",
+				"-","-",
 				0,
 				null,
 				shippingKit.getAmountBalance(),

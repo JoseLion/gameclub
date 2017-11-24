@@ -6,10 +6,6 @@ public interface Const {
 
 	public static final String PACKAGE_NAMING = "ec.com.levelap";
 
-	public static final String JNDI_DATA_BASE = "java:jboss/jdbc/GameClubDS";
-
-	public static final String JNDI_MAIL = "java:jboss/mail/GameClub";
-
 	public static final String PASSWORD_SYMBOLS = "1234567890abcdefghijklmnopqrstuvwxyz0987654321";
 
 	public static final int ENCODER_STRENGTH = 12;

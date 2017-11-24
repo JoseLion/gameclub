@@ -4,6 +4,11 @@ spring:
   jpa:
     generate-ddl: true
     show-sql: false
+    
+wildfly:
+  jndi:
+    data-base: java:jboss/jdbc/GameClubDS
+    mail: java:jboss/mail/GameClub
 
 server:
   session:

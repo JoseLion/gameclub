@@ -15,7 +15,7 @@ FROM (
 			ar.creation_date AS application_date,
 			pu.name || ' ' || pu.last_name AS full_name,
 			pu.document AS document,
-			ar.amount AS amount,	
+			(bytea_to_decimal(ar.amount, (SELECT p.private_key FROM gameclub.public_user p WHERE p.id=pu.id))) AS amount,	
 			ca.name AS status,
 			ar.payment_date AS payment_date,
 			pu.id AS id_user

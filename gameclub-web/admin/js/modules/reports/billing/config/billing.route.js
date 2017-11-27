@@ -15,13 +15,6 @@ angular.module("Reports").config(function($stateProvider){
 					files: ['js/modules/reports/billing/controller/billingCtrl.js']
 				}]);
 			}
-
-			// billings: function(rest) {
-			// 	return rest("report/billing", true).post(function(data) {
-			// 		console.log(data);
-			// 		return data;
-			// 	});
-			// }
 		}
 
 	});

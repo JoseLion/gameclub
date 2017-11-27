@@ -1,8 +1,5 @@
 package ec.com.levelap.gameclub.module.reports.amountRequestReport.entity;
 
-import java.io.File;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,15 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.io.FileUtils;
 import org.hibernate.annotations.Immutable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ec.com.levelap.cryptography.LevelapCryptography;
-import ec.com.levelap.gameclub.application.ApplicationContextHolder;
-import ec.com.levelap.gameclub.module.reports.amountRequestReport.repository.AmountRequestReportRepo;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
@@ -41,9 +33,8 @@ public class AmountRequestReport {
 	@Column
 	private String document;
 	
-	@JsonIgnore
 	@Column
-	private byte[] amount;
+	private Double amount;
 	
 	@Column
 	private String status;
@@ -89,18 +80,11 @@ public class AmountRequestReport {
 		this.document = document;
 	}
 
-	public byte[] getAmount() {
-//		try {
-//			getShownAmount();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (GeneralSecurityException e) {
-//			e.printStackTrace();
-//		}
+	public Double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(byte[] amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 
@@ -126,21 +110,6 @@ public class AmountRequestReport {
 
 	public void setIdUser(Long idUser) {
 		this.idUser = idUser;
-	}
-
-	public Double getShownAmount() throws IOException, GeneralSecurityException {
-		AmountRequestReportRepo amtRqRpRepo = ApplicationContextHolder.getContext().getBean(AmountRequestReportRepo.class);
-		byte[] privateKey = amtRqRpRepo.userKey(getIdUser());
-		
-		if (privateKey != null && amount.length > 0) {
-			LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
-			File key = File.createTempFile("key", ".tmp");
-			FileUtils.writeByteArrayToFile(key, privateKey);
-			String decypted = cryptoService.decrypt(amount, key);
-			shownAmount = Double.parseDouble(decypted);
-		}
-		
-		return shownAmount;
 	}
 	
 }

@@ -33,16 +33,22 @@ import ec.com.levelap.gameclub.utils.Const;
 @EnableConfigurationProperties
 public class GameClubConfiguration extends SpringBootServletInitializer {
 
+	@Value("${wildfly.jndi.data-base}")
+	private String JNDI_DATA_BASE;
+	
+	@Value("${wildfly.jndi.mail}")
+	private String JNDI_MAIL;
+	
 	@Value("${spring.jpa.generate-ddl}")
-	private Boolean generateDll;
+	private Boolean GENERATE_DDL;
 
 	@Value("${spring.jpa.show-sql}")
-	private Boolean showSql;
+	private Boolean SHOW_SQL;
 
 	@Bean
 	public DataSource dataBaseDataSource() throws NamingException {
 		JndiTemplate jndiTemplate = new JndiTemplate();
-		DataSource dataSource = (DataSource) jndiTemplate.lookup(Const.JNDI_DATA_BASE);
+		DataSource dataSource = (DataSource) jndiTemplate.lookup(JNDI_DATA_BASE);
 		return dataSource;
 	}
 
@@ -56,15 +62,15 @@ public class GameClubConfiguration extends SpringBootServletInitializer {
 
 	private Session getMailSession() throws NamingException {
 		JndiTemplate template = new JndiTemplate();
-		Session session = (Session) template.lookup(Const.JNDI_MAIL);
+		Session session = (Session) template.lookup(JNDI_MAIL);
 		return session;
 	}
 
 	@Bean
 	public EntityManagerFactory entityManagerFactory() throws NamingException {
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		vendorAdapter.setGenerateDdl(this.generateDll);
-		vendorAdapter.setShowSql(this.showSql);
+		vendorAdapter.setGenerateDdl(GENERATE_DDL);
+		vendorAdapter.setShowSql(SHOW_SQL);
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
 		factory.setPackagesToScan(Const.PACKAGE_NAMING);

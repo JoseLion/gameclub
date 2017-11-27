@@ -1,11 +1,18 @@
 package ec.com.levelap.gameclub.module.transaction.controller;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +30,16 @@ import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.engine.util.JRSaver;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsxExporterConfiguration;
 
 @RestController
 @RequestMapping(value = "api/transaction", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,5 +71,32 @@ public class TransactionController {
 		transactions = transactionService.getTransactionRepo().findAll(publicUser);
 		return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
 	}
-
+	
+	@Autowired
+	private DataSource dataBaseDataSource;
+	
+	@RequestMapping(value="getTransactionsReport", method=RequestMethod.GET)
+	public void getTransactionsReport(HttpServletResponse response) throws ServletException, JRException, SQLException, IOException {
+		InputStream transactionsStream = getClass().getResourceAsStream("/jasper/transaction.jrxml");
+		JasperReport report = JasperCompileManager.compileReport(transactionsStream);
+		JRSaver.saveObject(report, "transaction.jasper");
+		
+		JasperPrint jasperPrint = JasperFillManager.fillReport(report, null, dataBaseDataSource.getConnection());
+		File file = File.createTempFile("transacciones", ".xlsx");
+		
+		JRXlsxExporter exporter = new JRXlsxExporter();
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(file));
+		SimpleXlsxExporterConfiguration reportConfig = new SimpleXlsxExporterConfiguration();
+		
+		exporter.setConfiguration(reportConfig);
+		exporter.exportReport();
+		
+		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("Content-Disposition", String.format("inline; filename=\""+ file.getName() + "\""));
+		response.setContentLengthLong(file.length());
+		
+		InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+		FileCopyUtils.copy(inputStream, response.getOutputStream());
+	}
 }

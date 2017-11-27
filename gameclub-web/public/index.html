@@ -141,7 +141,9 @@
         <script type="text/javascript">
             window.fbAsyncInit = function() {
                 FB.init({
-                    appId: '1276214205809718',
+                    appId: '1819533121697152',
+                    status: true,
+                    cookie: true,
                     xfbml: true,
                     version: 'v2.9'
                 });
@@ -150,13 +152,14 @@
             };
 
             (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
+                let js, fjs = d.getElementsByTagName(s)[0];
 
                 if (d.getElementById(id)) {
                     return;
                 }
 
-                js = d.createElement(s); js.id = id;
+                js = d.createElement(s);
+                js.id = id;
                 js.src = "//connect.facebook.net/es_LA/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             } (document, 'script', 'facebook-jssdk'));
@@ -204,15 +207,6 @@
         <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=253372378492245&ev=PageView&noscript=1"/></noscript>
         <!-- DO NOT MODIFY -->
         <!-- End Facebook Pixel Code -->
-
-        <!-- <script type="text/javascript">
-            function initSessionID(sessionID) {
-                //alert("Callback This is the loaded sessionID: " + sessionID);
-                window.paymentezSessionID = sessionID;
-            }
-        </script>
-
-        <script class="paymentez-session-id-js" src="https://ccapi-stg.paymentez.com/js/paymentez-session-id.js?onload=initSessionID"></script> -->
     </head>
 
     <body ng-controller="MainCtrl as main">

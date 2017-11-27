@@ -31,9 +31,9 @@ FROM (SELECT	l.id AS id,
 				l.creation_date AS loan_date,
 				pug.cost AS cost,
 				l.weeks AS weeks,
-				CAST((encode(gameclub.decrypt(l.shippning_cost, (SELECT p.private_key FROM gameclub.public_user p WHERE p.id=l.gamer), 'aes'), 'escape')) AS DOUBLE PRECISION) AS shipping_cost,
-				CAST((encode(gameclub.decrypt(l.fee_game_club, (SELECT p.private_key FROM gameclub.public_user p WHERE p.id=l.gamer), 'aes'), 'escape')) AS DOUBLE PRECISION) AS fee_game_Club,
-				CAST((encode(gameclub.decrypt(l.taxes, (SELECT p.private_key FROM gameclub.public_user p WHERE p.id=l.gamer), 'aes'), 'escape')) AS DOUBLE PRECISION) AS taxes
+				(bytea_to_decimal(l.shippning_cost, (SELECT p.private_key FROM gameclub.public_user p WHERE p.id=l.gamer))) AS shipping_cost,
+				(bytea_to_decimal(l.fee_game_club, (SELECT p.private_key FROM gameclub.public_user p WHERE p.id=l.gamer))) AS fee_game_Club,
+				(bytea_to_decimal(l.taxes, (SELECT p.private_key FROM gameclub.public_user p WHERE p.id=l.gamer))) AS taxes
 		FROM	gameclub.loan l
 				INNER JOIN gameclub.public_user_game pug ON
 					l.public_user_game=pug.id

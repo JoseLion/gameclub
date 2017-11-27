@@ -2,7 +2,6 @@ package ec.com.levelap.gameclub.module.reports.logTracking.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 

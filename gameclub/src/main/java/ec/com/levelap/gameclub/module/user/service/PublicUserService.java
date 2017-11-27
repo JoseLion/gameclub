@@ -107,8 +107,8 @@ public class PublicUserService extends BaseService<PublicUser> {
 					
 					File referrerKey = File.createTempFile("referrerKey", ".tmp");
 					FileUtils.writeByteArrayToFile(referrerKey, refferer.getPrivateKey());
-					Transaction reffererTransaction = new Transaction(refferer, Const.TRS_REFFERED_BONUS, null, null, cryptoService.encrypt(setting.getValue(), referrerKey), null, null);
-					Transaction transaction = new Transaction(publicUser, Const.TRS_REFFERED_BONUS, null, null, cryptoService.encrypt(setting.getValue(), key), null, null);
+					Transaction reffererTransaction = new Transaction(refferer, Const.TRS_REFFERED_BONUS, null, null, null, cryptoService.encrypt(setting.getValue(), referrerKey), null, null);
+					Transaction transaction = new Transaction(publicUser, Const.TRS_REFFERED_BONUS, null, null, null, cryptoService.encrypt(setting.getValue(), key), null, null);
 					
 					transactionService.getTransactionRepo().save(reffererTransaction);
 					transactionService.getTransactionRepo().save(transaction);

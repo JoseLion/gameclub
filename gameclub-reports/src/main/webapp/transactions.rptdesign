@@ -32,7 +32,9 @@
         <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="TransactionDS" id="61"
  extends="gameclub.TransactionDS">
             <property name="odaDriverClass">org.postgresql.Driver</property>
-            <property name="odaURL">jdbc:postgresql://localhost:5432/gameclub</property>
+            <property name="odaURL">jdbc:postgresql://local.gameclub:5432/gameclub</property>
+            <property name="odaUser">gameclub</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">bDN2M2w0cC4wMA==</encrypted-property>
             <property name="odaJndiName">java:jboss/jdbc/GameClubDS</property>
         </oda-data-source>
     </data-sources>

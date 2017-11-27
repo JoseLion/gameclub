@@ -85,7 +85,9 @@
             </div>
         </div>
         <div class="center">
-            <button class="btn btn-tertiary small" ng-click="viewHistorial()">Descarga todo tu historial</button>
+            <!-- <button class="btn btn-tertiary small" ng-click="viewHistorial()">Descarga todo tu historial</button> -->
+            <a ng-href="{{RestUrl}}/api/transaction/getTransactionsReport" class="btn btn-tertiary small">Descarga todo tu historial</a>
+            <pre>{{RestUrl}}/api/transaction/getTransactionsReport</pre>
         </div>
     </section>
     <section class="row foother">

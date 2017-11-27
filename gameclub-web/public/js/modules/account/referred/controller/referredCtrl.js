@@ -1,6 +1,7 @@
-angular.module('Referred').controller('ReferredCtrl', function($scope, $rootScope, rest, sweet, notif, $location) {
+angular.module('Referred').controller('ReferredCtrl', function($scope, $rootScope, rest, sweet, notif, $location, Const) {
 	$scope.reffer = {};
 	let baseUrl = $location.$$protocol + '://' + $location.$$host + "/gameclub/login/";
+	$scope.costReferred = parseFloat($rootScope.settings[Const.settings.costReferred].value);
 
 	if ($rootScope.currentUser.urlToken) {
 		$scope.reffer.link = baseUrl + $rootScope.currentUser.urlToken;

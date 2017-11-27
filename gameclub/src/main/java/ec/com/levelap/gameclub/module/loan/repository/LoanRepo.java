@@ -35,7 +35,7 @@ public interface LoanRepo extends JpaRepository<Loan, Long> {
 				"(UPPER(p.name) LIKE UPPER('%' || :lender || '%') OR UPPER(p.lastName) LIKE UPPER('%' || :lender || '%') OR UPPER(p.name || ' ' || p.lastName) LIKE ('%' || :lender || '%')) AND " +
 				"(UPPER(g.name) LIKE UPPER('%' || :gamer || '%') OR UPPER(g.lastName) LIKE UPPER('%' || :gamer || '%') OR UPPER(g.name || ' ' || g.lastName) LIKE ('%' || :gamer || '%')) AND " +
 				"(:shippingStatus IS NULL OR l.shippingStatus=:shippingStatus) AND " +
-				"(l.tracking IS NULL OR UPPER(l.tracking) LIKE UPPER('%' || :tracking || '%')) AND " +
+				"UPPER(l.tracking) LIKE UPPER('%' || :tracking || '%') AND " +
 				"DATE(l.creationDate) BETWEEN DATE(:startDate) AND DATE(:endDate) " +
 			"ORDER BY l.creationDate DESC")
 	public Page<LoanLite> findLoans(@Param("lender") String lender,

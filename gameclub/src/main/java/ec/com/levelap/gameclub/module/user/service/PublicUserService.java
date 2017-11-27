@@ -37,7 +37,9 @@ import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.module.mail.service.MailService;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.settings.entity.Setting;
-import ec.com.levelap.gameclub.module.settings.repository.SettingRepo;
+import ec.com.levelap.gameclub.module.settings.service.SettingService;
+import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
+import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserController.Password;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserOpenController.ContactUs;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -58,13 +60,16 @@ public class PublicUserService extends BaseService<PublicUser> {
 	private PublicUserGameRepo publicUserGameRepo;
 	
 	@Autowired
-	private SettingRepo settingRepo;
+	private SettingService settingService;
 
 	@Autowired
 	private MailService mailService;
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private TransactionService transactionService;
 	
 	@Autowired
 	private LevelapCryptography cryptoService;
@@ -96,9 +101,17 @@ public class PublicUserService extends BaseService<PublicUser> {
 				PublicUser refferer = publicUserRepo.findByUrlToken(token);
 				
 				if (refferer != null) {
-					Setting setting = settingRepo.findByCode(Code.SETTING_REFFERED_REWARD);
+					Setting setting = settingService.getSettingsRepo().findByCode(Code.SETTING_REFFERED_REWARD);
 					addToUserBalance(refferer.getId(), Double.parseDouble(setting.getValue()));
 					publicUser = addToUserBalance(publicUser.getId(), Double.parseDouble(setting.getValue()));
+					
+					File referrerKey = File.createTempFile("referrerKey", ".tmp");
+					FileUtils.writeByteArrayToFile(referrerKey, refferer.getPrivateKey());
+					Transaction reffererTransaction = new Transaction(refferer, Const.TRS_REFFERED_BONUS, null, null, cryptoService.encrypt(setting.getValue(), referrerKey), null, null);
+					Transaction transaction = new Transaction(publicUser, Const.TRS_REFFERED_BONUS, null, null, cryptoService.encrypt(setting.getValue(), key), null, null);
+					
+					transactionService.getTransactionRepo().save(reffererTransaction);
+					transactionService.getTransactionRepo().save(transaction);
 				}
 			}
 		} else {

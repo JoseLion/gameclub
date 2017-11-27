@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
+import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 
 @RestController
 @RequestMapping(value = "api/transaction", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,11 +29,14 @@ public class TransactionController {
 
 	@Autowired
 	private TransactionService transactionService;
+	
+	@Autowired
+	private PublicUserService publicUserService;
 
 	@RequestMapping(value = "lastFiveTransactions", method = RequestMethod.GET)
 	public ResponseEntity<?> lastFiveTransactions()
 			throws ServletException, IOException, NumberFormatException, GeneralSecurityException {
-		PublicUser publicUser = transactionService.getPublicUserService().getCurrentUser();
+		PublicUser publicUser = publicUserService.getCurrentUser();
 		Page<Transaction> transactions = transactionService.getTransactionRepo().findFiveTransactions(publicUser.getId(), new PageRequest(0, 5));
 		return new ResponseEntity<>(transactions, HttpStatus.OK);
 	}

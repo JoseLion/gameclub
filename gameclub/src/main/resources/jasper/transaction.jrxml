@@ -1,12 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transaction" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="625bb4b2-fd18-4b47-9442-847b132fef89">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="242"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="747"/>
+	<subDataset name="GameClub Dataset" uuid="b42d682f-c1a6-43df-a1fa-f91b1e18a30c">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM gameclub.game g LEFT JOIN gameclub.game_console gc ON gc.game=g.id]]>
+		</queryString>
+		<field name="creation_date" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.label" value="creation_date"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="game"/>
+		</field>
+		<field name="name" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="name"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="game"/>
+		</field>
+		<field name="console" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.label" value="console"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="game_console"/>
+		</field>
+	</subDataset>
+	<parameter name="console" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="name" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
-		<![CDATA[SELECT * FROM gameclub.game]]>
+		<![CDATA[SELECT
+	g.creation_date,
+	g.name,
+	(SELECT c.name FROM gameclub.console c WHERE c.id=gc.console) AS console
+FROM gameclub.game g
+	LEFT JOIN gameclub.game_console gc ON gc.game=g.id
+WHERE
+	($P{console} IS NULL OR  $P{console}=CAST(gc.console AS TEXT))
+ORDER BY g.creation_date]]>
 	</queryString>
 	<field name="creation_date" class="java.util.Date"/>
 	<field name="name" class="java.lang.String"/>
+	<field name="console" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -29,24 +62,32 @@
 	<columnHeader>
 		<band height="63" splitType="Stretch">
 			<staticText>
-				<reportElement x="9" y="33" width="100" height="30" uuid="0c5fc496-0940-496c-994f-02195a7ffc18"/>
+				<reportElement x="0" y="20" width="80" height="22" uuid="0c5fc496-0940-496c-994f-02195a7ffc18"/>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="140" y="34" width="50" height="21" uuid="1e35022e-058e-4c8e-af1e-fd3a700ddbaa"/>
+				<reportElement x="100" y="21" width="80" height="21" uuid="1e35022e-058e-4c8e-af1e-fd3a700ddbaa"/>
 				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="21" width="80" height="21" uuid="3bd9ea1d-625f-4707-9c4e-64e81d9ba92f"/>
+				<text><![CDATA[Consola]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="44" splitType="Stretch">
 			<textField>
-				<reportElement x="10" y="10" width="100" height="30" uuid="3ceb7f46-8524-42dd-8176-8ef92763cb89"/>
+				<reportElement x="0" y="10" width="80" height="21" uuid="3ceb7f46-8524-42dd-8176-8ef92763cb89"/>
 				<textFieldExpression><![CDATA[$F{creation_date}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="140" y="10" width="100" height="30" uuid="d82b50ee-f973-41bb-adc1-906a59ae629e"/>
+				<reportElement x="100" y="10" width="80" height="21" uuid="d82b50ee-f973-41bb-adc1-906a59ae629e"/>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="10" width="80" height="21" uuid="969c1534-16f9-4fc8-be84-3cab632e8131"/>
+				<textFieldExpression><![CDATA[$F{console}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -30,6 +30,9 @@ public class Income {
 	@Column(name="last_name")
 	private String lastName;
 	
+	@Column(name="billing_address") 
+	private String billingAddress;
+	
 	@Column
 	private String document;
 	
@@ -79,6 +82,14 @@ public class Income {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getBillingAddress() {
+		return billingAddress;
+	}
+
+	public void setBillingAddress(String billingAddress) {
+		this.billingAddress = billingAddress;
 	}
 
 	public String getDocument() {

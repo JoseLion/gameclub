@@ -7,6 +7,7 @@ SELECT
 	NEXTVAL('log_tracking_seq') AS id,	
 	lt.box_number,
 	lt.game,
+	lt.price_game,
 	lt.referral_guide,
 	lt.name,
 	lt.last_name,
@@ -28,6 +29,11 @@ FROM (
 		SELECT		
 			l.box_number AS box_number,
 			g.name AS game,
+			(SELECT	gs.upload_payment
+            FROM	gameclub.public_user_game pugs
+                    INNER JOIN gameclub.game gs ON
+                        pugs.game=gs.id
+            WHERE	pugs.id=pug.id) AS price_game,
 			'' AS referral_guide,
 			pu.name AS name,
 			pu.last_name AS last_name,
@@ -66,6 +72,11 @@ FROM (
 		SELECT	
 			lr.box_number AS box_number,
 			gr.name AS game,
+            (SELECT	gs.upload_payment
+            FROM	gameclub.public_user_game pugs
+                    INNER JOIN gameclub.game gs ON
+                        pugs.game=gs.id
+            WHERE	pugs.id=pugr.id) AS price_game,
 			'' AS referral_guide,
 			pulr.name AS name,
 			pulr.last_name AS last_name,

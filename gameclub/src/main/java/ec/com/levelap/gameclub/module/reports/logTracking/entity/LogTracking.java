@@ -27,6 +27,9 @@ public class LogTracking {
 	@Column
 	private String game;
 	
+	@Column(name="price_game")
+	private String priceGame;
+	
 	@Column(name="referral_guide")
 	private String referralGuide;
 	
@@ -96,6 +99,14 @@ public class LogTracking {
 
 	public String getGame() {
 		return game;
+	}
+
+	public String getPriceGame() {
+		return priceGame;
+	}
+
+	public void setPriceGame(String priceGame) {
+		this.priceGame = priceGame;
 	}
 
 	public void setGame(String game) {

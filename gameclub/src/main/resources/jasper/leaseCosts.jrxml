@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="leaseCosts" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6d1b9fe9-139f-455f-abaa-3515773e3571">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="513"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="473"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT	name, last_name, billing_address, document, contact_phone, transaction, game, console, total, creation_date
+FROM	gameclub.lease_costs
+WHERE	(creation_date BETWEEN to_timestamp('28-11-2017 00:00:00','dd-mm-yyyy HH24:MI:SS') AND to_timestamp('28-11-2017 23:59:59','dd-mm-yyyy HH24:MI:SS'))]]>
+	</queryString>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lease_costs"/>
+	</field>
+	<field name="last_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="last_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lease_costs"/>
+	</field>
+	<field name="billing_address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="billing_address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lease_costs"/>
+	</field>
+	<field name="document" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="document"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lease_costs"/>
+	</field>
+	<field name="contact_phone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="contact_phone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lease_costs"/>
+	</field>
+	<field name="transaction" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="transaction"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lease_costs"/>
+	</field>
+	<field name="game" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="game"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lease_costs"/>
+	</field>
+	<field name="console" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="console"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lease_costs"/>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lease_costs"/>
+	</field>
+	<field name="creation_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="creation_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lease_costs"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" mode="Transparent" x="0" y="30" width="802" height="30" uuid="0bff186c-5365-4754-9273-50c071db09c6"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Costos de Arriendo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Transparent" x="1" y="1" width="802" height="28" uuid="d23a4c54-2114-4294-a8a7-1dc7e641ddfa"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[GameClub]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="640" y="0" width="108" height="13" uuid="6c6a8a12-cdec-445b-8abf-a10c7ab6d227"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="0" y="0" width="100" height="14" uuid="3d8602d6-9144-4f2c-9828-03c6d3379f9c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+			<staticText>
+				<reportElement x="0" y="0" width="90" height="26" uuid="ca2b8e8b-9d3e-4e08-881a-c3e0bfb00a6e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="0" width="89" height="26" uuid="7f1459c3-2048-4162-99c2-356c7ff45d6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="0" width="89" height="26" uuid="915fad1e-2ba5-4517-bad5-6d3408e6674c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="0" width="89" height="26" uuid="b05abd99-1c7f-4392-b480-f2ef489b100e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="0" width="89" height="26" uuid="580dd20a-fa48-44f8-ba3b-0bea00c175d9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="0" width="89" height="26" uuid="dac41fce-8639-45b6-a426-57820d0875a1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transacción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="535" y="0" width="89" height="26" uuid="b0df8ac9-e80a-4eb8-9608-5a3861afe19c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Juego]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="624" y="0" width="89" height="26" uuid="246e7450-6f09-48f5-ad7e-741a21beca42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Consola]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="713" y="0" width="89" height="26" uuid="22427d05-1b0a-415d-8486-3141e6215bdb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+			<textField>
+				<reportElement x="0" y="0" width="90" height="33" uuid="bd8da8dd-56d7-4b5d-a9b6-f71c808c4abb"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="89" height="33" uuid="2b2c4a1d-9fc9-458d-a293-0c56f895540a"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{last_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="179" y="0" width="89" height="33" uuid="cea2d95b-d027-4e7b-99ff-913da64eba37"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{billing_address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="0" width="89" height="33" uuid="14a30e29-2305-4c0b-8d6d-969dae11c0a4"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="357" y="0" width="89" height="33" uuid="9e51f3fb-2aa7-4e7c-bc26-7fa68086095b"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{contact_phone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="0" width="89" height="33" uuid="89df7473-1155-4dd3-a23a-258f9e9f4a64"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{transaction}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="535" y="0" width="89" height="33" uuid="a89dd093-bf3f-4d55-9a69-28b63e6670aa"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{game}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="624" y="0" width="89" height="33" uuid="e3b9bbf3-3725-4348-9512-b20bfc6ce987"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{console}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="713" y="0" width="89" height="33" uuid="c0edd0cc-9c49-4a05-a43e-484b48da2832"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

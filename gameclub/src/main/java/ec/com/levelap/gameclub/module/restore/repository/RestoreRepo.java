@@ -33,7 +33,7 @@ public interface RestoreRepo extends JpaRepository<Restore, Long> {
 				"(UPPER(p.name) LIKE UPPER('%' || :lender || '%') OR UPPER(p.lastName) LIKE UPPER('%' || :lender || '%') OR UPPER(p.name || ' ' || p.lastName) LIKE ('%' || :lender || '%')) AND " +
 				"(UPPER(g.name) LIKE UPPER('%' || :gamer || '%') OR UPPER(g.lastName) LIKE UPPER('%' || :gamer || '%') OR UPPER(g.name || ' ' || g.lastName) LIKE ('%' || :gamer || '%')) AND " +
 				"(:shippingStatus IS NULL OR r.shippingStatus=:shippingStatus) AND " +
-				"UPPER(r.tracking) LIKE UPPER('%' || :tracking || '%') AND " +
+				"(r.tracking IS NULL OR UPPER(r.tracking) LIKE UPPER('%' || :tracking || '%')) AND " +
 				"DATE(r.creationDate) BETWEEN DATE(:startDate) AND DATE(:endDate) " +
 			"ORDER BY r.creationDate DESC")
 	public Page<RestoreLite> findRestores(@Param("lender") String lender,

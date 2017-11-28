@@ -33,6 +33,7 @@
 			<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover">
 				<col width="15%">
 				<col width="20%">
+				<col width="15%">
 				<col width="20%">
 				<col width="20%">
 				<col width="20%">
@@ -55,6 +56,7 @@
 					<tr>
 						<th>C&oacute;digo Caja</th>
 						<th>Juego</th>
+						<th>Valor Juego</th>
 						<th>Gu&iacute;a de Remisi&oacute;n</th>
 						<th>Nombre</th>
 						<th>Apellido</th>
@@ -79,6 +81,7 @@
 					<tr ng-repeat="logTracking in logTrackings">
 						<td >{{logTracking.boxNumber}}</td>
 						<td >{{logTracking.game}}</td>
+						<td >{{logTracking.priceGame | currency:'$ ':2}}</td>
 						<td >{{logTracking.referralGuide}}</td>
 						<td >{{logTracking.name}}</td>
 						<td >{{logTracking.lastName}}</td>

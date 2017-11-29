@@ -1,4 +1,4 @@
-angular.module('AmountRequestReport').controller('AmountRequestReportCtrl', function($scope, $rootScope, amountRequests, getDTOptions, Const, rest, urlRestPath, urlParams) {
+angular.module('AmountRequestReport').controller('AmountRequestReportCtrl', function($scope, amountRequests, getDTOptions, Const, rest, urlRestPath, urlParams) {
 	$scope.search = {};
 	$scope.totalElements;
 	$scope.beginning;

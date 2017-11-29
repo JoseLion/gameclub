@@ -14,6 +14,14 @@ angular.module("Reports").config(function($stateProvider){
 					name: 'Reports',
 					files: ['js/modules/reports/billing/controller/billingCtrl.js']
 				}]);
+			},
+
+			billing: function(rest) {
+				return rest("report/billing/find").post();
+			},
+
+			totalBilling: function(rest) {
+				return rest("report/billing/getTotal").get();
 			}
 		}
 

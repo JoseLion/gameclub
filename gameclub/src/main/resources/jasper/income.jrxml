@@ -2,26 +2,48 @@
 <!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="income" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eb0dd645-d2d9-4028-9f70-6b00cb21e647">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="201"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="792"/>
-	<parameter name="name" class="java.lang.String"/>
-	<parameter name="document" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="document" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="totatStart" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("0")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="totalEnd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String(""+Double.MAX_VALUE)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateStart" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date(0))]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateEnd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date())]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
-		<![CDATA[SELECT income.name,
-	income.last_name,
-	income.billing_address,
-	income.document,
-	income.contact_phone,
-	income.transaction,
-	income.game,
-	income.console,
-	income.subtotal,
-	income.iva,
-	income.total,
-	income.creation_date
-FROM income
-WHERE ($P{name} IS NULL OR upper(income.name) like upper('%' || $P{name} || '%')) AND ($P{document} IS NULL OR income.document=$P{document})]]>
+		<![CDATA[SELECT
+	i.name,
+	i.last_name,
+	i.billing_address,
+	i.document,
+	i.contact_phone,
+	i.transaction,
+	i.game,
+	i.console,
+	i.subtotal,
+	i.iva,
+	i.total,
+	i.creation_date
+FROM income i
+WHERE
+	UPPER(i.name) LIKE UPPER('%' || $P{name} || '%') AND
+	(i.document IS NULL OR UPPER(i.document) LIKE UPPER('%' || $P{document} || '%')) AND
+	(i.total BETWEEN $P{totatStart}::decimal AND $P{totalEnd}::decimal) AND
+	(DATE(i.creation_date) BETWEEN TO_DATE($P{dateStart}, 'dd-MM-yyyy') AND TO_DATE($P{dateEnd}, 'dd-MM-yyyy'))
+ORDER BY i.creation_date DESC]]>
 	</queryString>
 	<field name="name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="name"/>

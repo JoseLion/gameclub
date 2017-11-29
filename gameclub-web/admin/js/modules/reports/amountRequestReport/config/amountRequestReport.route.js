@@ -5,14 +5,14 @@ angular.module("AmountRequestReport").config(function($stateProvider){
 	$stateProvider
 	.state(prefix + 'amountRequestReport',{
 		url: "/amount-request",
-		templateUrl: "js/modules/amountRequestReport/view/amountRequestReport.html",
+		templateUrl: "js/modules/reports/amountRequestReport/view/amountRequestReport.html",
 		data: {displayName: 'Retiro de Saldo'},
 		controller: 'AmountRequestReportCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad){
 				return $ocLazyLoad.load([{
 					name: 'AmountRequestReport',
-					files: ['js/modules/amountRequestReport/controller/amountRequestReportCtrl.js']
+					files: ['js/modules/reports/amountRequestReport/controller/amountRequestReportCtrl.js']
 				}]);
 			},
 

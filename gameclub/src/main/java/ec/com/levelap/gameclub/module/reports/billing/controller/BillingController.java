@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.reports.amountRequest.controller;
+package ec.com.levelap.gameclub.module.reports.billing.controller;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -27,20 +27,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.gameclub.module.jasper.JasperService;
-import ec.com.levelap.gameclub.module.reports.amountRequest.entity.AmountRequestReport;
-import ec.com.levelap.gameclub.module.reports.amountRequest.repository.AmountRequestReportRepo;
+import ec.com.levelap.gameclub.module.reports.billing.entity.Billing;
+import ec.com.levelap.gameclub.module.reports.billing.repository.BillingRepo;
 import ec.com.levelap.gameclub.utils.Const;
 import net.sf.jasperreports.engine.JRException;
 
 @RestController
-@RequestMapping(value="api/report/amountRequest", produces=MediaType.APPLICATION_JSON_VALUE)
-public class AmountRequestReportController {
-
-	@Autowired
-	private AmountRequestReportRepo amountRequestReportRepo;
+@RequestMapping(value="api/report/billing", produces=MediaType.APPLICATION_JSON_VALUE)
+public class BillingController {
 	
 	@Autowired
-	private JasperService jasperService;
+	private BillingRepo billingRepo;
+	
+	@Autowired JasperService jasperService;
 	
 	@RequestMapping(value="find", method=RequestMethod.POST)
 	public ResponseEntity<?> find(@RequestBody(required=false) Search search) throws ServletException, IOException, GeneralSecurityException {
@@ -48,16 +47,22 @@ public class AmountRequestReportController {
 			search = new Search();
 		}
 		
-		Page<AmountRequestReport> AmountsRequestsReport = amountRequestReportRepo.findAmountRequests(search.name, search.document, search.dateStart, search.dateEnd, search.amountStart, search.amountEnd, new PageRequest(search.page, Const.TABLE_SIZE));
-		return new ResponseEntity<>(AmountsRequestsReport, HttpStatus.OK);
+		Page<Billing> billings = billingRepo.findBilling(search.name, search.document, search.mail, search.dateStart, search.dateEnd, new PageRequest(search.page, Const.TABLE_SIZE));
+		return new ResponseEntity<>(billings, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="getTotal", method=RequestMethod.GET)
+	public ResponseEntity<?> getTotal() throws ServletException, IOException, GeneralSecurityException {
+		Double totalBilling = billingRepo.getTotal();
+		return new ResponseEntity<>(totalBilling, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="getExcelReport", method=RequestMethod.GET)
 	public void getExcelReport(@RequestParam(required=false) Map<String, Object> params, HttpServletResponse response) throws ServletException, JRException, SQLException, IOException {
-		File report = jasperService.createExcelReport("/jasper/amountRequest.jrxml", params);
+		File report = jasperService.createExcelReport("/jasper/billing.jrxml", params);
 		
 		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-Disposition", String.format("inline; filename=\"retiros-saldo.xlsx\""));
+		response.setHeader("Content-Disposition", String.format("inline; filename=\"facturacion.xlsx\""));
 		response.setContentLengthLong(report.length());
 		
 		InputStream inputStream = new BufferedInputStream(new FileInputStream(report));
@@ -66,10 +71,10 @@ public class AmountRequestReportController {
 	
 	@RequestMapping(value="getPdfReport", method=RequestMethod.GET)
 	public void getPdfReport(@RequestParam(required=false) Map<String, Object> params, HttpServletResponse response) throws ServletException, JRException, SQLException, IOException {
-		File report = jasperService.createPdfReport("/jasper/amountRequest.jrxml", params);
+		File report = jasperService.createPdfReport("/jasper/billing.jrxml", params);
 		
 		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", String.format("inline; filename=\"retiros-saldo.pdf\""));
+		response.setHeader("Content-Disposition", String.format("inline; filename=\"facturacion.pdf\""));
 		response.setContentLengthLong(report.length());
 		
 		InputStream inputStream = new BufferedInputStream(new FileInputStream(report));
@@ -85,9 +90,7 @@ public class AmountRequestReportController {
 		
 		public Date dateEnd = new Date();
 		
-		public Double amountStart = 0.0;
-		
-		public Double amountEnd = Double.MAX_VALUE;
+		public String mail = "";
 		
 		public Integer page = 0;
 	}

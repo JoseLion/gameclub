@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.reports.amountRequestReport.entity;
+package ec.com.levelap.gameclub.module.reports.amountRequest.entity;
 
 import java.util.Date;
 

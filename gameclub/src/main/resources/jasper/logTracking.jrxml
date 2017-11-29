@@ -125,7 +125,7 @@ FROM log_tracking]]>
 				<textElement textAlignment="Center">
 					<font size="20" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Logística de Kits]]></text>
+				<text><![CDATA[GameClub]]></text>
 			</staticText>
 		</band>
 	</title>

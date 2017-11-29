@@ -64,14 +64,14 @@ FROM logistics_kits]]>
 				<textElement textAlignment="Center">
 					<font size="20" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Logística de Kits]]></text>
+				<text><![CDATA[GameClub]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" mode="Transparent" x="0" y="30" width="802" height="26" uuid="854a0c32-56bb-42ac-962d-3a824c69f0a3"/>
 				<textElement textAlignment="Center">
 					<font size="16" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Retiro de Saldo]]></text>
+				<text><![CDATA[Logística de Kits]]></text>
 			</staticText>
 		</band>
 	</title>

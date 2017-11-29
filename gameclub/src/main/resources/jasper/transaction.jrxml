@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transaction" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="625bb4b2-fd18-4b47-9442-847b132fef89">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="242"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="747"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
 	<subDataset name="GameClub Dataset" uuid="b42d682f-c1a6-43df-a1fa-f91b1e18a30c">
 		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
@@ -24,8 +24,8 @@
 			<property name="com.jaspersoft.studio.field.tree.path" value="game_console"/>
 		</field>
 	</subDataset>
-	<parameter name="console" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="name" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="console" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
 	g.creation_date,

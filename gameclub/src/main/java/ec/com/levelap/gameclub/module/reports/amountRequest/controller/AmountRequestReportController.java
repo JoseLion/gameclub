@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.reports.amountRequestReport.controller;
+package ec.com.levelap.gameclub.module.reports.amountRequest.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.com.levelap.gameclub.module.reports.amountRequestReport.entity.AmountRequestReport;
-import ec.com.levelap.gameclub.module.reports.amountRequestReport.repository.AmountRequestReportRepo;
+import ec.com.levelap.gameclub.module.reports.amountRequest.entity.AmountRequest;
+import ec.com.levelap.gameclub.module.reports.amountRequest.repository.AmountRequestReportRepo;
 import ec.com.levelap.gameclub.utils.Const;
 
 @RestController
 @RequestMapping(value="api/amountRequestReport", produces=MediaType.APPLICATION_JSON_VALUE)
-public class AmountRequestReportCtrl {
+public class AmountRequestReportController {
 
 	@Autowired
 	private AmountRequestReportRepo amtRqRpRepo;
 	
 	@RequestMapping(value="amountRequestAll", method=RequestMethod.GET)
 	public ResponseEntity<?> amountRequestAll() throws ServletException, IOException, GeneralSecurityException {
-		Page<AmountRequestReport> AmountsRequestsReport = amtRqRpRepo.amountRequestPage(new PageRequest(0, Const.TABLE_SIZE));
+		Page<AmountRequest> AmountsRequestsReport = amtRqRpRepo.amountRequestPage(new PageRequest(0, Const.TABLE_SIZE));
 		return new ResponseEntity<>(AmountsRequestsReport, HttpStatus.OK);
 	}
 	

@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.reports.amountRequestReport.entity;
+package ec.com.levelap.gameclub.module.reports.amountRequest.entity;
 
 import java.util.Date;
 
@@ -15,10 +15,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
-@Table(schema=Const.SCHEMA, name="amount_request_report")
+@Table(schema=Const.SCHEMA, name="amount_request")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Immutable
-public class AmountRequestReport {
+public class AmountRequest {
 
 	@Id
 	@Column

@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS gameclub.amount_request_report;
+DROP TABLE IF EXISTS gameclub.amount_request;
 
-CREATE OR REPLACE VIEW gameclub.amount_request_report AS
+CREATE OR REPLACE VIEW gameclub.amount_request AS
 SELECT
 	am.id,
 	am.application_date,

@@ -61,6 +61,7 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 				"LEFT JOIN g.categories ct " +
 				"LEFT JOIN gm.magazine m " +
 			"WHERE " +
+				"g.status=TRUE AND " +
 				"(gm.game=g AND m.name='" + Const.RATING_MAGAZINE + "') AND " +
 				"UPPER(g.name) LIKE UPPER('%' || :name || '%') AND " +
 				"(:categoryId IS NULL OR ct.category.id=:categoryId) AND " +
@@ -68,9 +69,9 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 			"ORDER BY g.name DESC")
 	public Page<GameOpen> findGamesOpen(@Param("name") String name, @Param("categoryId") Long categoryId, @Param("consoleId") Long consoleId, Pageable page);
 	
-	public List<GameOpen> findByCategoriesCategoryIdOrderByName(Long categoryId);
+	public List<GameOpen> findByStatusIsTrueAndCategoriesCategoryIdOrderByName(Long categoryId);
 	
-	@Query("SELECT DISTINCT g.name FROM Game g WHERE UPPER(g.name) LIKE '%' || UPPER(?1) || '%'")
+	@Query("SELECT DISTINCT g.name FROM Game g WHERE g.status=TRUE AND UPPER(g.name) LIKE '%' || UPPER(?1) || '%'")
 	public List<String> findAutocomplete(String name);
 	
 	@Query(	"SELECT " +
@@ -89,12 +90,13 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 				"LEFT JOIN g.diamond d " +
 				"LEFT JOIN gm.magazine m " +
 			"WHERE " +
+				"g.status=TRUE AND " +
 				"(gm.game=g AND m.name='" + Const.RATING_MAGAZINE + "') " +
 				"GROUP BY g, gm, r, c, d " +
 			"ORDER BY COUNT(g) DESC")
 	public Page<GameOpen> findMostPlayed(Pageable page);
 	
-	public Page<GameOpen> findAllByOrderByName(Pageable page);
+	public Page<GameOpen> findByStatusIsTrueOrderByName(Pageable page);
 	
 	@Query("SELECT s.value FROM Setting s WHERE s.code='" + Code.SETTING_NATIONALIZACION + "'")
 	public String priceChartinNationalitation();

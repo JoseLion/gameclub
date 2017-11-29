@@ -4,6 +4,8 @@ angular.module("Faq").controller('FaqsCtrl', function($scope, categories, openRe
 	});
 
 	$scope.categorySelected = function(category) {
+		$scope.questionSelected = false;
+		
 		if (!category.selected) {
 			forEach($scope.categories, function(cat) {
 				if (cat.selected) {

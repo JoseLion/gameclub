@@ -16,7 +16,7 @@ public interface IncomeRepo extends JpaRepository<Income, Long>  {
 	
 	@Query(	"SELECT i FROM Income i WHERE " +
 				"(UPPER(i.name) LIKE UPPER('%' || :name || '%') OR "+
-				"UPPER(i.lastName) LIKE UPPER('%' || :lastName || '%') OR " +
+				"UPPER(i.lastName) LIKE UPPER('%' || :name || '%') OR " +
 				"UPPER(i.name || ' ' || i.lastName) LIKE UPPER('%' || :name || '%')) AND " +
 				"UPPER(i.document) LIKE UPPER('%' || :document || '%') AND " +
 				"(i.total BETWEEN :totalStart AND :totalEnd) AND " +

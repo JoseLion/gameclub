@@ -14,6 +14,10 @@ angular.module("AmountRequestReport").config(function($stateProvider){
 					name: 'AmountRequestReport',
 					files: ['js/modules/amountRequestReport/controller/amountRequestReportCtrl.js']
 				}]);
+			},
+
+			amountRequests: function(rest) {
+				return rest("report/amountRequest/find").post();
 			}
 		}
 

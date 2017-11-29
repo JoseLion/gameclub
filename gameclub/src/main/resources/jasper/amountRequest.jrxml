@@ -5,16 +5,22 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="188"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="804"/>
-	<parameter name="name" class="java.lang.String"/>
-	<parameter name="document" class="java.lang.String"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="633"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="353"/>
+	<parameter name="name" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="document" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
 	<parameter name="dateStart" class="java.lang.String">
-		<defaultValueExpression><![CDATA[DATEFORMAT(new Date(0) ,"dd-MM-yyyy")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date(0))]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dateEnd" class="java.lang.String">
-		<defaultValueExpression><![CDATA[DATEFORMAT(new Date(), "dd-MM-yyyy")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date())]]></defaultValueExpression>
 	</parameter>
 	<parameter name="amountStart" class="java.lang.String">
-		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new String("0")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="amountEnd" class="java.lang.String">
 		<defaultValueExpression><![CDATA[new String(""+Double.MAX_VALUE)]]></defaultValueExpression>
@@ -27,12 +33,12 @@
 	ar.amount,
 	ar.status,
 	ar.payment_date
-FROM gameclub.amount_request ar
+FROM gameclub.amount_request_report ar
 WHERE
-	($P{name} IS NULL OR UPPER(ar.full_name) LIKE UPPER('%' || $P{name} || '%')) AND
-	($P{document} IS NULL OR UPPER(ar.document) LIKE UPPER('%' || $P{document} || '%')) AND
+	UPPER(ar.full_name) LIKE UPPER('%' || $P{name} || '%') AND
+	UPPER(ar.document) LIKE UPPER('%' || $P{document} || '%') AND
 	(ar.amount BETWEEN $P{amountStart}::decimal AND $P{amountEnd}::decimal) AND
-	(ar.application_date BETWEEN TO_DATE($P{dateStart}, 'dd-MM-yyyy') AND TO_DATE($P{dateEnd}, 'dd-MM-yyyy'))
+	(DATE(ar.application_date) BETWEEN TO_DATE($P{dateStart}, 'dd-MM-yyyy') AND TO_DATE($P{dateEnd}, 'dd-MM-yyyy'))
 ORDER BY ar.application_date DESC]]>
 	</queryString>
 	<field name="application_date" class="java.sql.Timestamp">
@@ -59,7 +65,6 @@ ORDER BY ar.application_date DESC]]>
 		<property name="com.jaspersoft.studio.field.label" value="payment_date"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="amount_request_report"/>
 	</field>
-	<filterExpression><![CDATA[DOUBLE_VALUE($P{amountStart})]]></filterExpression>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

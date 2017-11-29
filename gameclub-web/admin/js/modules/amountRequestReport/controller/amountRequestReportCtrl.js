@@ -1,4 +1,4 @@
-angular.module('AmountRequestReport').controller('AmountRequestReportCtrl', function($scope, $rootScope, amountRequests, getDTOptions, Const, rest, urlRestPath) {
+angular.module('AmountRequestReport').controller('AmountRequestReportCtrl', function($scope, $rootScope, amountRequests, getDTOptions, Const, rest, urlRestPath, urlParams) {
 	$scope.search = {};
 	$scope.totalElements;
 	$scope.beginning;
@@ -31,9 +31,11 @@ angular.module('AmountRequestReport').controller('AmountRequestReportCtrl', func
 	}
 
 	$scope.getExcelReportUrl = function() {
-		let url = urlRestPath.url + "/api/report/amountRequest/getExcelReport?";
+		return urlParams(urlRestPath.url + "/api/report/amountRequest/getExcelReport", $scope.search);
+	}
 
-		return url;
+	$scope.getPdfReportUrl = function() {
+		return urlParams(urlRestPath.url + "/api/report/amountRequest/getPdfReport", $scope.search);
 	}
 
 	function setPagedData(data) {

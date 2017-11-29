@@ -24,8 +24,8 @@
 			<property name="com.jaspersoft.studio.field.tree.path" value="game_console"/>
 		</field>
 	</subDataset>
-	<parameter name="console" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="name" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="console" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
 	g.creation_date,

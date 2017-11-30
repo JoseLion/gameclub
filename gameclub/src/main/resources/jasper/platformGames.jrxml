@@ -23,10 +23,10 @@
 	<queryString language="SQL">
 		<![CDATA[SELECT platform_games.game,
 	platform_games.console,
-	platform_games.release_date,
+	TO_CHAR(platform_games.release_date,'dd-MM-yyyy') AS release_date,
 	platform_games.full_name,
-	platform_games.upload_date,
-	platform_games.status,
+	TO_CHAR(platform_games.upload_date,'dd-MM-yyyy') AS upload_date,
+	(CASE WHEN (platform_games.status = TRUE) THEN 'Activo' ELSE 'Inactivo' END) AS status,
     platform_games.recommended_price,
 	platform_games.cost,
 	platform_games.total_requested_rentals,
@@ -49,7 +49,7 @@ ORDER BY platform_games.creation_date DESC]]>
 		<property name="com.jaspersoft.studio.field.label" value="console"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="platform_games"/>
 	</field>
-	<field name="release_date" class="java.sql.Timestamp">
+	<field name="release_date" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="release_date"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="platform_games"/>
 	</field>
@@ -57,11 +57,11 @@ ORDER BY platform_games.creation_date DESC]]>
 		<property name="com.jaspersoft.studio.field.label" value="full_name"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="platform_games"/>
 	</field>
-	<field name="upload_date" class="java.sql.Timestamp">
+	<field name="upload_date" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="upload_date"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="platform_games"/>
 	</field>
-	<field name="status" class="java.lang.Boolean">
+	<field name="status" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="status"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="platform_games"/>
 	</field>
@@ -83,6 +83,10 @@ ORDER BY platform_games.creation_date DESC]]>
 	</field>
 	<field name="total_rent_requested" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="total_rent_requested"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="platform_games"/>
+	</field>
+	<field name="creation_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="creation_date"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="platform_games"/>
 	</field>
 	<background>

@@ -1,7 +1,9 @@
-package ec.com.levelap.gameclub.module.registeredUsers.controller;
+package ec.com.levelap.gameclub.module.reports.registeredUsers.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 
@@ -11,16 +13,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.com.levelap.gameclub.module.registeredUsers.entity.RegisteredUsers;
-import ec.com.levelap.gameclub.module.registeredUsers.repository.RegisteredUsersRepo;
+import ec.com.levelap.gameclub.module.reports.registeredUsers.entity.RegisteredUsers;
+import ec.com.levelap.gameclub.module.reports.registeredUsers.repository.RegisteredUsersRepo;
 import ec.com.levelap.gameclub.utils.Const;
 
 @RestController
-@RequestMapping(value="api/registeredUsers", produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="api/report", produces=MediaType.APPLICATION_JSON_VALUE)
 public class RegisteredUsersCtrl {
 	
 	@Autowired
@@ -38,4 +41,26 @@ public class RegisteredUsersCtrl {
 		return new ResponseEntity<>(totalUsers, HttpStatus.OK);
 	}
 
+	@RequestMapping(value="findRegisteredUsers", method=RequestMethod.POST)
+	public ResponseEntity<List<RegisteredUsers>> findRegisteredUsers(@RequestBody(required=false) Search search) throws ServletException {
+		if (search == null) {
+			search = new Search();
+		}
+		
+		List<RegisteredUsers> logPlatformGames = registeredUsersRepo.findRegisteredUsers(search.name, search.document, search.username, search.startDate, search.endDate);
+		return new ResponseEntity<List<RegisteredUsers>>(logPlatformGames, HttpStatus.OK);
+	}
+	
+	private static class Search {
+		
+		public String name = "";
+		
+		public String document = "";
+		
+		public String username = "";
+		
+		public Date startDate = new Date(0);
+		
+		public Date endDate = new Date();
+	}
 }

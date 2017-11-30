@@ -24,7 +24,8 @@ SELECT
 	lt.document_lender,
 	lt.contact_phone_lender,
 	lt.transaction_type,
-	lt.status
+	lt.status,
+	lt.creation_date
 FROM (
 		SELECT		
 			l.box_number AS box_number,
@@ -50,7 +51,8 @@ FROM (
 			pul.document AS document_lender,
 			pul.contact_phone AS contact_phone_lender,
 			'préstamo' AS transaction_type,
-			ca.name AS status
+			ca.name AS status,
+			l.creation_date AS creation_date
 			
 		FROM	gameclub.loan l
 			INNER JOIN gameclub.public_user_game pug ON
@@ -93,7 +95,8 @@ FROM (
 			pur.document AS document_lender,
 			pulr.contact_phone AS contact_phone_lender,
 			'devolución' AS transaction_type,
-			car.name AS status
+			car.name AS status,
+			lr.creation_date AS creation_date
 		FROM	gameclub.restore r
 			INNER JOIN gameclub.loan lr ON
 				r.loan=lr.id

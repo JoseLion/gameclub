@@ -2,6 +2,7 @@ angular.module('Reports').controller('LogisticsKitsCtrl', function($scope, $root
 
 	$scope.dtOptions = getDTOptions.unpaged("fTgitp");
 	$scope.dtColumnDefs = getDTOptions.notSortableAll(3);
+	$scope.amountRequests = {};
 
 	rest("report/logisticsKits").get(function(data) {
 		$scope.logisticsKits = data.content;
@@ -18,4 +19,17 @@ angular.module('Reports').controller('LogisticsKitsCtrl', function($scope, $root
 	rest("report/welcomeKitsDelivered").get(function(data) {
 		$scope.welcomeKitsDelivered = data;
 	});
+
+	$scope.find = function() {
+		rest("report/findLogisticsKits", true).post($scope.search, function(data) {
+			$scope.logisticsKits = data;
+		});
+	}
+	
+	$scope.clean = function() {
+		$scope.search = {};
+		rest("report/logisticsKits").get(function(data) {
+			$scope.logisticsKits = data.content;
+		});
+	}
 });

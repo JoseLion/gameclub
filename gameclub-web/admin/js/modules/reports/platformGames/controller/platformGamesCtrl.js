@@ -10,4 +10,17 @@ angular.module('Reports').controller('PlatformGamesCtrl', function($scope, $root
 	rest("report/totalGames").get(function(data) {
 		$scope.totalGames = data;
 	});
+
+	$scope.find = function() {
+		rest("report/findPlatformGames", true).post($scope.search, function(data) {
+			$scope.platformGames = data;
+		});
+	}
+	
+	$scope.clean = function() {
+		$scope.search = {};
+		rest("report/platformGames").get(function(data) {
+			$scope.platformGames = data.content;
+		});
+	}
 });

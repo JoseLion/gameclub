@@ -13,7 +13,8 @@ SELECT
 	pg.cost,
 	pg.total_requested_rentals,
 	pg.total_rent_aceppted,
-	pg.total_rent_requested
+	pg.total_rent_requested,
+	pg.creation_date
 FROM (SELECT	pug.id,
 				g.name AS game,
 				c.name AS console,
@@ -25,7 +26,8 @@ FROM (SELECT	pug.id,
 				pug.cost AS cost,
 				(SELECT	COUNT(l.id) FROM loan l WHERE l.gamer=pu.id) AS total_requested_rentals,
 				(SELECT	COUNT(l.id) FROM loan l WHERE l.gamer=pu.id AND l.was_accepted=TRUE) AS total_rent_aceppted,
-				(SELECT	COUNT(l.id) FROM loan l WHERE l.gamer=pu.id AND l.status=FALSE) AS total_rent_requested
+				(SELECT	COUNT(l.id) FROM loan l WHERE l.gamer=pu.id AND l.status=FALSE) AS total_rent_requested,
+				pug.creation_date AS creation_date
 				
 			FROM	gameclub.public_user_game pug
 				INNER JOIN gameclub.game g ON

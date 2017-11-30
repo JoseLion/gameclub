@@ -10,7 +10,8 @@ SELECT
 	regus.total_rent_requested,
 	regus.total_applications_received,
 	regus.total_request_accepted,
-	regus.total_request_rejected
+	regus.total_request_rejected,
+	regus.creation_date
 	
 FROM 	(SELECT  
 		DISTINCT(pu.id) AS id,
@@ -39,7 +40,9 @@ FROM 	(SELECT
 		FROM	loan l
 			INNER JOIN public_user_game pug ON
 				l.public_user_game=pug.id
-		WHERE	pug.public_user=pu.id AND l.was_accepted=FALSE) AS total_request_rejected
+		WHERE	pug.public_user=pu.id AND l.was_accepted=FALSE) AS total_request_rejected,
+		
+		pu.creation_date AS creation_date
 		
 	FROM	gameclub.public_user pu
 		LEFT JOIN gameclub.public_user_game pug ON

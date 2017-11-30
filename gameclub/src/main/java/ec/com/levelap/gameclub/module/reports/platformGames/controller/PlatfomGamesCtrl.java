@@ -2,6 +2,8 @@ package ec.com.levelap.gameclub.module.reports.platformGames.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 
@@ -11,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +39,28 @@ public class PlatfomGamesCtrl {
 	public ResponseEntity<?> totalGames() throws ServletException, IOException, GeneralSecurityException {
 		Long totalGames = platformGamesRepo.totalGames();
 		return new ResponseEntity<>(totalGames, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="findPlatformGames", method=RequestMethod.POST)
+	public ResponseEntity<List<PlatformGames>> findPlatformGames(@RequestBody(required=false) Search search) throws ServletException {
+		if (search == null) {
+			search = new Search();
+		}
+		
+		List<PlatformGames> logPlatformGames = platformGamesRepo.findPlatformGames(search.name, search.game, search.console, search.startDate, search.endDate);
+		return new ResponseEntity<List<PlatformGames>>(logPlatformGames, HttpStatus.OK);
+	}
+	
+	private static class Search {
+		
+		public String name = "";
+		
+		public String game = "";
+		
+		public String console = "";
+		
+		public Date startDate = new Date(0);
+		
+		public Date endDate = new Date();
 	}
 }

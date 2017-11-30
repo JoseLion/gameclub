@@ -6,6 +6,61 @@
 
 		<div class="panel-body">
 			<div class="col-md-12">
+				<form class="form-horizontal" role="form" on-submit="find()" novalidate>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-md-3 control-label">N° C&eacute;dula</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" ng-model="search.document">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label">Nombres y Apellidos</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" ng-model="search.name">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-md-3 control-label">Juego</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" ng-model="search.game">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Fecha</label>
+							<div class="col-md-9">
+								<div class="row">
+									<div class="to-validate col-md-6">
+										<input validation placeholder="Desde" type="datetime" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="search.startDate" is-open="openStart" ng-click="openStart = true" data-mask="99-99-9999">
+									</div>
+
+									<div class="to-validate col-md-6">
+										<input validation placeholder="Hasta" type="datetime" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="search.endDate" is-open="openEnd" ng-click="openEnd = true" data-mask="99-99-9999">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="form-group" style="text-align: right;">
+							<button type="submit" class="btn btn-w-m btn-primary">Buscar</button>
+							<button type="button" class="btn btn-w-m btn-default" ng-click="clean()">Limpiar</button>
+						</div>
+					</div>
+				</form>
+					<div class="form-group">
+						<div class="col-md-12">
+							<p><b>Descripci&oacute;n</b></p>
+							<p>Reporte de log&iacute;stica de Shipping Kits y Welcome Kids.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
 				<div class="form-group">
 					<div class="col-md-12">
 						<p><b>Descripci&oacute;n</b></p>

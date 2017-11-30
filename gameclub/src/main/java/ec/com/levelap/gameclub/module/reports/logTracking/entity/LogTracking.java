@@ -1,5 +1,7 @@
 package ec.com.levelap.gameclub.module.reports.logTracking.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -80,6 +82,9 @@ public class LogTracking {
 	
 	@Column
 	private String status;
+	
+	@Column(name="creation_date")
+	private Date creationDate;
 
 	public Long getId() {
 		return id;
@@ -247,6 +252,14 @@ public class LogTracking {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
 }

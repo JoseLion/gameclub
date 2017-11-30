@@ -15,6 +15,10 @@ angular.module("Reports").config(function($stateProvider){
 					files: ['js/modules/reports/registeredUsers/controller/registeredUsersCtrl.js']
 				}]);
 			}
+			// ,
+			// registeredUsersAll: function(rest) {
+			// 	return rest("report/registeredUsers/registeredUsersAll").post();
+			// }
 		}
 
 	});

@@ -15,6 +15,10 @@ angular.module("Reports").config(function($stateProvider){
 					files: ['js/modules/reports/logTracking/controller/logTrackingCtrl.js']
 				}]);
 			}
+			// ,
+			// logTrackins: function(rest) {
+			// 	return rest("report/amountRequest/find").post();
+			// }
 		}
 
 	});

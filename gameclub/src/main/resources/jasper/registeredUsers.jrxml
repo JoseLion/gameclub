@@ -2,17 +2,29 @@
 <!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registeredUsers" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f50e9772-9979-4dfd-9b67-5414bf4a7c43">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="231"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="760"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="160"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="833"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
-	<parameter name="name" class="java.lang.String"/>
-	<parameter name="last_name" class="java.lang.String"/>
-	<parameter name="status" class="java.lang.Boolean"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="673"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="313"/>
+	<parameter name="name" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="startDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date(0))]]></defaultValueExpression>
+	</parameter>
+	<parameter name="endDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="document" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="username" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
-		<![CDATA[/*SELECT id, creation_date, creation_user, status, update_date, update_user, code, name, other, parent
-	FROM commons.location;*/
-    
-    SELECT pu.name,
+		<![CDATA[SELECT pu.name,
 	pu.last_name,
 	pu.username,
 	pu.status,
@@ -21,8 +33,8 @@
 	pu.document_ruc,
 	pu.birth_date,
 	pu.profession,
-	(SELECT lc.name FROM commons.location lc WHERE lc.id=l.parent) AS province,
-	l.name AS city,
+	(SELECT lp.name FROM commons.location l INNER JOIN public_user pus ON pus.location=l.id INNER JOIN commons.location lp ON l.parent=lp.id WHERE pus.id=pu.id) AS province,
+	(SELECT l.name FROM commons.location l INNER JOIN public_user pus ON pus.location=l.id WHERE pus.id=pu.id) AS city,
 	pu.address_ruc,
 	pu.phone_ruc,
 	ru.total_games,
@@ -33,12 +45,16 @@
 	ru.total_request_accepted,
 	ru.total_request_rejected
 FROM registered_users ru
-	INNER JOIN public_user pu ON 
+	LEFT JOIN public_user pu ON 
 	 pu.id = ru.public_user_id
-	 INNER JOIN commons.location l ON
-	 pu.location=l.id
-WHERE (($P{name} IS NULL OR upper(pu.name) like upper('%'|| $P{name} || '%') ) AND ($P{last_name} IS NULL OR upper(pu.last_name) like upper('%'|| $P{last_name} || '%') ))
-              AND ( $P{status} IS NULL OR pu.status= $P{status} )]]>
+WHERE 
+				(UPPER(pu.name) LIKE UPPER('%' ||  $P{name}  || '%') OR 
+				UPPER(pu.last_name) LIKE UPPER('%' || $P{name} || '%') OR 
+				UPPER(pu.name || ' ' || pu.last_name) LIKE UPPER('%' || $P{name} || '%')) AND 
+				(UPPER(pu.document) LIKE UPPER('%' || $P{document} || '%')) AND 
+				(UPPER(pu.username) LIKE UPPER('%' || $P{username} || '%')) AND 
+				(DATE(pu.creation_date) BETWEEN TO_DATE( $P{startDate},'dd-MM-yyyy') AND TO_DATE( $P{endDate},'dd-MM-yyyy'))
+ORDER BY pu.creation_date DESC]]>
 	</queryString>
 	<field name="name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="name"/>
@@ -468,7 +484,7 @@ WHERE (($P{name} IS NULL OR upper(pu.name) like upper('%'|| $P{name} || '%') ) A
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[IF($F{status},"ACTIVO","INACTIVO")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="162" y="0" width="40" height="50" uuid="fac0cb4a-eec7-4a1c-a623-c7e5993c09b0"/>

@@ -5,6 +5,21 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="189"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="804"/>
+	<parameter name="name" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="document" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="game" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="startDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date(0))]]></defaultValueExpression>
+	</parameter>
+	<parameter name="endDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date())]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT log_tracking.box_number,
 	log_tracking.game,
@@ -25,8 +40,17 @@
 	log_tracking.document_lender,
 	log_tracking.contact_phone_lender,
 	log_tracking.transaction_type,
-	log_tracking.status
-FROM log_tracking]]>
+	log_tracking.status,
+	log_tracking.creation_date
+FROM log_tracking
+WHERE 
+				(UPPER(log_tracking.name) LIKE UPPER('%' ||  $P{name}  || '%') OR  
+				UPPER(log_tracking.last_name) LIKE UPPER('%' || $P{name} || '%') OR 
+				UPPER(log_tracking.name || ' ' || log_tracking.last_name) LIKE UPPER('%' || $P{name} || '%')) AND 
+				(log_tracking.document like UPPER('%' || $P{document} || '%')) AND 
+				(UPPER(log_tracking.game) like UPPER('%' || $P{game} || '%')) AND 
+				(DATE(log_tracking.creation_date) BETWEEN TO_DATE( $P{startDate}, 'dd-MM-yyyy') AND TO_DATE( $P{endDate}, 'dd-MM-yyyy' ))
+ORDER BY log_tracking.creation_date DESC]]>
 	</queryString>
 	<field name="box_number" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="box_number"/>
@@ -106,6 +130,10 @@ FROM log_tracking]]>
 	</field>
 	<field name="status" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="log_tracking"/>
+	</field>
+	<field name="creation_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="creation_date"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="log_tracking"/>
 	</field>
 	<background>

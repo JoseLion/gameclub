@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="logisticsKits" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="74de984e-d8e5-44b2-8897-56729dbe1c87">
-	<property name="com.jaspersoft.studio.data.sql.tables">
-		<![CDATA[bG9naXN0aWNzX2tpdHMgQVMgLDEyMCwxNDYsNDU0NWIwZTktZjM2Ni00ZjA2LTgzMDktN2ZlYTk5
-Y2FjMThjOw==]]>
-	</property>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="234"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="759"/>
+	<parameter name="name" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="document" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="transaction" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="startDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date(0))]]></defaultValueExpression>
+	</parameter>
+	<parameter name="endDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date())]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT logistics_kits.name,
 	logistics_kits.last_name,
@@ -15,8 +29,17 @@ Y2FjMThjOw==]]>
 	logistics_kits.document,
 	logistics_kits.contact_phone,
 	logistics_kits.transaction_type,
-	logistics_kits.status
-FROM logistics_kits]]>
+	logistics_kits.status,
+	logistics_kits.creation_date
+FROM logistics_kits
+WHERE 
+				(UPPER(logistics_kits.name) LIKE UPPER('%' ||  $P{name}  || '%') OR 
+				UPPER(	logistics_kits.last_name) LIKE UPPER('%' || $P{name} || '%') OR 
+				UPPER(logistics_kits.name || ' ' || 	logistics_kits.last_name) LIKE UPPER('%' || $P{name} || '%')) AND 
+				(logistics_kits.document like  UPPER('%' || $P{document}  || '%')) AND  
+				(logistics_kits.transaction_type like  UPPER('%' || $P{transaction}  || '%')) AND
+				(DATE(logistics_kits.creation_date) BETWEEN TO_DATE($P{startDate},  'dd-MM-yyyy' ) AND TO_DATE( $P{endDate} , 'dd-MM-yyyy' ))
+ORDER BY logistics_kits.creation_date DESC]]>
 	</queryString>
 	<field name="name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="name"/>

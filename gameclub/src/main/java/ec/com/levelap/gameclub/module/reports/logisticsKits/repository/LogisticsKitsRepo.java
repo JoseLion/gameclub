@@ -34,7 +34,8 @@ public interface LogisticsKitsRepo extends JpaRepository<LogisticsKits, Long> {
 			"		UPPER(lk.name || ' ' || lk.lastName) LIKE UPPER('%' || :name || '%')) AND " +
 			"		(:document IS NULL OR lk.document like ('%' || :document || '%')) AND" +
 			"		(:transaction IS NULL OR UPPER(lk.transactionType) like UPPER('%' || :transaction || '%')) AND" +
-			"		(DATE(lk.creationDate) BETWEEN DATE(:startDate) AND DATE(:endDate)) " 
+			"		(DATE(lk.creationDate) BETWEEN DATE(:startDate) AND DATE(:endDate)) " +
+			"ORDER BY lk.creationDate DESC "
 			)
 	public List<LogisticsKits> findLogisticsKit(
 									  @Param("name") String name,

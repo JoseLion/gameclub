@@ -22,7 +22,7 @@ public interface RegisteredUsersRepo extends JpaRepository<RegisteredUsers, Long
 	@Query("SELECT ru FROM RegisteredUsers ru ORDER BY ru.id DESC")
 	public Page<RegisteredUsers> registeredUsersPage(Pageable page);
 	
-	@Query("SELECT ru FROM RegisteredUsers ru WHERE " +
+	@Query("SELECT ru FROM RegisteredUsers ru JOIN ru.publicUserId pu WHERE " +
 			"		(UPPER(ru.publicUserId.name) LIKE UPPER('%' || :name || '%') OR  "+
 			"		UPPER(ru.publicUserId.lastName) LIKE UPPER('%' || :name || '%') OR " +
 			"		UPPER(ru.publicUserId.name || ' ' || ru.publicUserId.lastName) LIKE UPPER('%' || :name || '%')) AND " +

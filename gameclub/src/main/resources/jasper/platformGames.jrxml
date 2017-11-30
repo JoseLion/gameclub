@@ -3,6 +3,23 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="platformGames" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0f466a5d-270f-4d03-a886-0d43398e774d">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="260"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="732"/>
+	<parameter name="name" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="game" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="console" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="startDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date(0))]]></defaultValueExpression>
+	</parameter>
+	<parameter name="endDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date())]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT platform_games.game,
 	platform_games.console,
@@ -14,8 +31,15 @@
 	platform_games.cost,
 	platform_games.total_requested_rentals,
 	platform_games.total_rent_aceppted,
-	platform_games.total_rent_requested
-FROM platform_games]]>
+	platform_games.total_rent_requested,
+	platform_games.creation_date
+FROM platform_games
+WHERE
+				(UPPER(platform_games.full_name) LIKE UPPER('%' ||  $P{name}  || '%')) AND 
+				(UPPER(platform_games.game) like UPPER('%' || $P{game} || '%')) AND 
+				(UPPER(platform_games.console) like UPPER('%' || $P{console} || '%')) AND 
+				(DATE(platform_games.creation_date) BETWEEN TO_DATE( $P{startDate}, 'dd-MM-yyyy' ) AND TO_DATE( $P{endDate}, 'dd-MM-yyyy' ))
+ORDER BY platform_games.creation_date DESC]]>
 	</queryString>
 	<field name="game" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="game"/>

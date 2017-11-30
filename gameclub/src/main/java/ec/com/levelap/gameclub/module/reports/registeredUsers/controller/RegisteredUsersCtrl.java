@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -43,26 +42,20 @@ public class RegisteredUsersCtrl {
 	@Autowired
 	private JasperService jasperService;
 	
-	@RequestMapping(value="registeredUsersAll", method=RequestMethod.GET)
-	public ResponseEntity<?> registeredUsersAll() throws ServletException, IOException, GeneralSecurityException {
-		Page<RegisteredUsers> registeredUsersAll = registeredUsersRepo.registeredUsersPage(new PageRequest(0, Const.TABLE_SIZE));
-		return new ResponseEntity<>(registeredUsersAll, HttpStatus.OK);
+	@RequestMapping(value="find", method=RequestMethod.POST)
+	public ResponseEntity<Page<RegisteredUsers>> find(@RequestBody(required=false) Search search) throws ServletException {
+		if (search == null) {
+			search = new Search();
+		}
+		
+		Page<RegisteredUsers> logPlatformGames = registeredUsersRepo.findRegisteredUsers(search.name, search.document, search.username, search.startDate, search.endDate, new PageRequest(search.page, Const.TABLE_SIZE));
+		return new ResponseEntity<Page<RegisteredUsers>>(logPlatformGames, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="totalUsers", method=RequestMethod.GET)
 	public ResponseEntity<?> totalUsers() throws ServletException, IOException, GeneralSecurityException {
 		Long totalUsers = registeredUsersRepo.totalUsers();
 		return new ResponseEntity<>(totalUsers, HttpStatus.OK);
-	}
-
-	@RequestMapping(value="findRegisteredUsers", method=RequestMethod.POST)
-	public ResponseEntity<List<RegisteredUsers>> findRegisteredUsers(@RequestBody(required=false) Search search) throws ServletException {
-		if (search == null) {
-			search = new Search();
-		}
-		
-		List<RegisteredUsers> logPlatformGames = registeredUsersRepo.findRegisteredUsers(search.name, search.document, search.username, search.startDate, search.endDate);
-		return new ResponseEntity<List<RegisteredUsers>>(logPlatformGames, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="getExcelReport", method=RequestMethod.GET)
@@ -100,5 +93,7 @@ public class RegisteredUsersCtrl {
 		public Date startDate = new Date(0);
 		
 		public Date endDate = new Date();
+		
+		public Integer page = 0;
 	}
 }

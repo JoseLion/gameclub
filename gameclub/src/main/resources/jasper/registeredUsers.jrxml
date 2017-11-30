@@ -4,9 +4,9 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="160"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="833"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="673"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="313"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
 	<parameter name="name" class="java.lang.String">
 		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
 	</parameter>
@@ -51,7 +51,7 @@ WHERE
 				(UPPER(pu.name) LIKE UPPER('%' ||  $P{name}  || '%') OR 
 				UPPER(pu.last_name) LIKE UPPER('%' || $P{name} || '%') OR 
 				UPPER(pu.name || ' ' || pu.last_name) LIKE UPPER('%' || $P{name} || '%')) AND 
-				(UPPER(pu.document) LIKE UPPER('%' || $P{document} || '%')) AND 
+				(pu.document IS NULL OR UPPER(pu.document) LIKE UPPER('%' || $P{document} || '%')) AND 
 				(UPPER(pu.username) LIKE UPPER('%' || $P{username} || '%')) AND 
 				(DATE(pu.creation_date) BETWEEN TO_DATE( $P{startDate},'dd-MM-yyyy') AND TO_DATE( $P{endDate},'dd-MM-yyyy'))
 ORDER BY pu.creation_date DESC]]>

@@ -105,26 +105,27 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="regUsrs in registeredUsersAll">
+					<tr ng-repeat="regUsrs in registeredUsers">
 						<td>{{regUsrs.publicUserId.name}}</td>
 						<td>{{regUsrs.publicUserId.lastName}}</td>
-						<td style="text-align: center;">{{regUsrs.publicUserId.status ? 'Activo' : 'Inactivo'}}</td>
-						<td>{{regUsrs.publicUserId.creationDate  | date: 'dd-MM-yyyy'}}</td>
-						<td style="text-align: center;">{{regUsrs.publicUserId.document}}</td>
-						<td style="text-align: center;">{{regUsrs.totalGames}}</td>
-						<td style="text-align: center;">{{regUsrs.totalRequestedRentals}}</td>
-						<td style="text-align: center;">{{regUsrs.totalRentAceppted}}</td>
-						<td style="text-align: center;">{{regUsrs.totalRentRequested}}</td>
-						<td style="text-align: center;">{{regUsrs.totalApplicationsReceived}}</td>
-						<td style="text-align: center;">{{regUsrs.totalRequestAccepted}}</td>
-						<td style="text-align: center;">{{regUsrs.totalRequestRejected}}</td>
+						<td class="text-center">{{regUsrs.publicUserId.status ? 'Activo' : 'Inactivo'}}</td>
+						<td class="white-space-nowrap">{{regUsrs.publicUserId.creationDate  | date: 'dd-MM-yyyy'}}</td>
+						<td class="text-center">{{regUsrs.publicUserId.document}}</td>
+						<td class="text-center">{{regUsrs.totalGames}}</td>
+						<td class="text-center">{{regUsrs.totalRequestedRentals}}</td>
+						<td class="text-center">{{regUsrs.totalRentAceppted}}</td>
+						<td class="text-center">{{regUsrs.totalRentRequested}}</td>
+						<td class="text-center">{{regUsrs.totalApplicationsReceived}}</td>
+						<td class="text-center">{{regUsrs.totalRequestAccepted}}</td>
+						<td class="text-center">{{regUsrs.totalRequestRejected}}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<!-- <div class="col-md-12 text-right">
+
+		<div class="col-md-12 text-right">
 			<uib-pagination total-items="totalPages * 10" ng-model="currentPage" max-size="3" class="pagination-sm" boundary-links="true" ng-change="pageChanged()"></uib-pagination>
-		</div> -->
+		</div>
 
 		<div class="clearfix"></div>
 	</div>

@@ -14,11 +14,15 @@ angular.module("Reports").config(function($stateProvider){
 					name: 'Reports',
 					files: ['js/modules/reports/registeredUsers/controller/registeredUsersCtrl.js']
 				}]);
+			},
+
+			registeredUsers: function(rest) {
+				return rest("report/registeredUsers/find").post();
+			},
+
+			totalUsers: function(rest) {
+				return rest("report/registeredUsers/totalUsers").get();
 			}
-			// ,
-			// registeredUsersAll: function(rest) {
-			// 	return rest("report/registeredUsers/registeredUsersAll").post();
-			// }
 		}
 
 	});

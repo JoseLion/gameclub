@@ -67,3 +67,5 @@ table tbody tr td {
 
 .modal-backdrop{background-color:rgba(0,0,0,0.5);}
 .modal-backdrop.in{opacity:1 !important;}
+
+.white-space-nowrap{white-space:nowrap;}

@@ -1,4 +1,4 @@
-def sprintVersion = '0.0.17'
+def sprintVersion = '0.0.18'
 def packageName = 'ec.com.levelap'
 def projectName = 'gameclub'
 

@@ -27,16 +27,16 @@
 		<![CDATA[SELECT pu.name,
 	pu.last_name,
 	pu.username,
-	pu.status,
+	(CASE WHEN (pu.status = TRUE) THEN 'Activo' ELSE 'Inactivo' END) AS status,
 	pu.creation_date,
 	pu.document,
-	pu.document_ruc,
+	(CASE WHEN (pu.document_ruc IS NULL) THEN '' ELSE (pu.document_ruc) END) AS document_ruc,
 	pu.birth_date,
 	pu.profession,
 	(SELECT lp.name FROM commons.location l INNER JOIN public_user pus ON pus.location=l.id INNER JOIN commons.location lp ON l.parent=lp.id WHERE pus.id=pu.id) AS province,
 	(SELECT l.name FROM commons.location l INNER JOIN public_user pus ON pus.location=l.id WHERE pus.id=pu.id) AS city,
-	pu.address_ruc,
-	pu.phone_ruc,
+	(CASE WHEN (pu.address_ruc IS NULL) THEN '' ELSE (pu.address_ruc) END) AS address_ruc,
+	(CASE WHEN (pu.phone_ruc IS NULL) THEN '' ELSE (pu.phone_ruc) END) AS phone_ruc,
 	ru.total_games,
 	ru.total_requested_rentals,
 	ru.total_rent_aceppted,
@@ -68,8 +68,8 @@ ORDER BY pu.creation_date DESC]]>
 		<property name="com.jaspersoft.studio.field.label" value="username"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
 	</field>
-	<field name="status" class="java.lang.Boolean">
-		<property name="com.jaspersoft.studio.field.label" value="status"/>
+	<field name="document_ruc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="document_ruc"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
 	</field>
 	<field name="creation_date" class="java.sql.Timestamp">
@@ -78,10 +78,6 @@ ORDER BY pu.creation_date DESC]]>
 	</field>
 	<field name="document" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="document"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
-	</field>
-	<field name="document_ruc" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="document_ruc"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
 	</field>
 	<field name="birth_date" class="java.sql.Timestamp">
@@ -135,6 +131,7 @@ ORDER BY pu.creation_date DESC]]>
 		<property name="com.jaspersoft.studio.field.label" value="total_request_rejected"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="registered_users"/>
 	</field>
+	<field name="status" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

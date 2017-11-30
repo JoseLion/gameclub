@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import ec.com.levelap.gameclub.module.reports.platformGames.entity.PlatformGames;
 import ec.com.levelap.gameclub.module.reports.registeredUsers.entity.RegisteredUsers;
 
 @Repository

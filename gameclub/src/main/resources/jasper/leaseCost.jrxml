@@ -2,28 +2,48 @@
 <!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="leaseCosts" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f962de6d-94de-4eea-8729-1285b2546749">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
-	<parameter name="fch_in" class="java.lang.String"/>
-	<parameter name="fch_end" class="java.lang.String"/>
-	<parameter name="name" class="java.lang.String"/>
-	<parameter name="document" class="java.lang.String"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
+	<parameter name="dateStart" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date(0))]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateEnd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="name" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="document" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="totalStart" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("0")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="totalEnd" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String(""+Double.MAX_VALUE)]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
-		<![CDATA[SELECT lease_costs.name,
-	lease_costs.last_name,
-	lease_costs.billing_address,
-	lease_costs.document,
-	lease_costs.contact_phone,
-	lease_costs.game,
-	lease_costs.transaction,
-	lease_costs.console,
-	lease_costs.total,
-	lease_costs.creation_date
-FROM lease_costs
-WHERE ( (lease_costs.creation_date BETWEEN to_timestamp($P{fch_in}||' 00:00:00','dd-mm-yyyy HH24:MI:SS') AND to_timestamp($P{fch_end} ||' 23:59:59','dd-mm-yyyy HH24:MI:SS')))  
-				AND (upper(lease_costs.name) like upper('%'|| $P{name} ||'%') OR upper(lease_costs.last_name) like upper('%'|| $P{name} ||'%')) AND
-				( $P{document} IS NULL OR lease_costs.document= $P{document} )]]>
+		<![CDATA[SELECT
+	lc.name,
+	lc.last_name,
+	lc.billing_address,
+	lc.document,
+	lc.contact_phone,
+	lc.game,
+	lc.transaction,
+	lc.console,
+	lc.total,
+	lc.creation_date
+FROM gameclub.lease_cost lc
+WHERE 
+	(UPPER(lc.name) LIKE UPPER('%' || $P{name} || '%') OR 
+	UPPER(lc.last_name) LIKE UPPER('%' || $P{name} || '%') OR
+	UPPER(lc.name || ' ' || lc.last_name) LIKE UPPER('%' || $P{name} || '%')) AND
+	(lc.document IS NULL OR UPPER(lc.document) LIKE UPPER('%' || $P{document} || '%')) AND
+	(lc.total BETWEEN $P{totalStart}::decimal AND $P{totalEnd}::decimal) AND
+	(DATE(lc.creation_date) BETWEEN TO_DATE($P{dateStart}, 'dd-MM-yyyy') AND TO_DATE($P{dateEnd}, 'dd-MM-yyyy'))
+ORDER BY lc.creation_date]]>
 	</queryString>
 	<field name="name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="name"/>

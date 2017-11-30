@@ -55,6 +55,9 @@ public class PlatformGames {
     
 	@Column(name="total_rent_requested")
 	private Double totalRentRequested;
+	
+	@Column(name="creation_date")
+	private Date creationDate;
 
 	public Long getId() {
 		return id;
@@ -152,4 +155,12 @@ public class PlatformGames {
 		this.totalRentRequested = totalRentRequested;
 	}
 
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	
 }

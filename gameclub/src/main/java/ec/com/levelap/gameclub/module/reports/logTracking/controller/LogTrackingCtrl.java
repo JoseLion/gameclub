@@ -2,6 +2,8 @@ package ec.com.levelap.gameclub.module.reports.logTracking.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 
@@ -11,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,4 +40,27 @@ public class LogTrackingCtrl {
 //		Double totalBilling = billingRepo.total();
 //		return new ResponseEntity<>(totalBilling, HttpStatus.OK);
 //	}
+	
+	@RequestMapping(value="findLogTracking", method=RequestMethod.POST)
+	public ResponseEntity<List<LogTracking>> findLogTracking(@RequestBody(required=false) Search search) throws ServletException {
+		if (search == null) {
+			search = new Search();
+		}
+		
+		List<LogTracking> logTracking = logTrackingRepo.findLogTracking(search.name, search.document, search.game, search.startDate, search.endDate);
+		return new ResponseEntity<List<LogTracking>>(logTracking, HttpStatus.OK);
+	}
+	
+	private static class Search {
+		
+		public String name = "";
+		
+		public String document = "";
+		
+		public String game = "";
+		
+		public Date startDate = new Date(0);
+		
+		public Date endDate = new Date();
+	}
 }

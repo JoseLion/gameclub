@@ -1,4 +1,6 @@
-package ec.com.levelap.gameclub.module.registeredUsers.entity;
+package ec.com.levelap.gameclub.module.reports.registeredUsers.entity;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,6 +52,9 @@ public class RegisteredUsers {
 	
 	@Column(name="total_request_rejected")
 	private Double totalRequestRejected;
+	
+	@Column(name="creation_date")
+	private Date creationDate;
 
 	public Long getId() {
 		return id;
@@ -121,6 +126,14 @@ public class RegisteredUsers {
 
 	public void setTotalRequestRejected(Double totalRequestRejected) {
 		this.totalRequestRejected = totalRequestRejected;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 	
 }

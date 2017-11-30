@@ -41,7 +41,7 @@ WHERE
 	UPPER(lc.last_name) LIKE UPPER('%' || $P{name} || '%') OR
 	UPPER(lc.name || ' ' || lc.last_name) LIKE UPPER('%' || $P{name} || '%')) AND
 	(lc.document IS NULL OR UPPER(lc.document) LIKE UPPER('%' || $P{document} || '%')) AND
-	(lc.total BETWEEN $P{totalStart}::decimal AND $P{totalEnd}::decimal) AND
+	(lc.total BETWEEN CAST($P{totalStart} AS decimal) AND CAST($P{totalEnd} AS decimal)) AND
 	(DATE(lc.creation_date) BETWEEN TO_DATE($P{dateStart}, 'dd-MM-yyyy') AND TO_DATE($P{dateEnd}, 'dd-MM-yyyy'))
 ORDER BY lc.creation_date]]>
 	</queryString>

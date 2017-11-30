@@ -41,7 +41,7 @@ FROM income i
 WHERE
 	UPPER(i.name) LIKE UPPER('%' || $P{name} || '%') AND
 	(i.document IS NULL OR UPPER(i.document) LIKE UPPER('%' || $P{document} || '%')) AND
-	(i.total BETWEEN $P{totatStart}::decimal AND $P{totalEnd}::decimal) AND
+	(i.total BETWEEN CAST($P{totatStart} AS decimal) AND CAST($P{totalEnd} AS decimal)) AND
 	(DATE(i.creation_date) BETWEEN TO_DATE($P{dateStart}, 'dd-MM-yyyy') AND TO_DATE($P{dateEnd}, 'dd-MM-yyyy'))
 ORDER BY i.creation_date DESC]]>
 	</queryString>

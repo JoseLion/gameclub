@@ -44,13 +44,7 @@ public class LeaseCostsController {
 	
 	@RequestMapping(value="find", method=RequestMethod.POST)
 	public ResponseEntity<Page<LeaseCost>> find(@RequestBody(required=false) Search search, HttpServletRequest request) throws ServletException {
-		System.out.println("getRemoteAddr: " + request.getRemoteAddr());
-		System.out.println("getRemoteHost: " + request.getRemoteHost());
-		System.out.println("getRemotePort: " + request.getRemotePort());
-		System.out.println("*****************************************");
-		System.out.println("getLocalAddr: " + request.getLocalAddr());
-		System.out.println("getLocalName: " + request.getLocalName());
-		System.out.println("getLocalPort: " + request.getLocalPort());
+		System.out.println("REFERRER: " + request.getHeader("referer"));
 		
 		if (search == null) {
 			search = new Search();

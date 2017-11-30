@@ -1,8 +1,17 @@
 angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath, openReport) {
 
 	$scope.transactions = [];
+	$scope.idUser=0;
 	rest("transaction/lastFiveTransactions").get(function(data) {
 		$scope.transactions = data.content;
+		if(data.content.length>0 ){
+			var i=0;
+			console.log(data.content);
+			for (i=0;i< data.content.length;i++) { 
+			   	$scope.idUser=data.content[i].owner.id;
+			   	break;
+			}
+		}
 	});
 
 	$scope.takeYourBalance = function() {

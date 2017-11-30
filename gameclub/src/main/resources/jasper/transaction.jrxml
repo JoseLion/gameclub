@@ -1,57 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transaction" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="625bb4b2-fd18-4b47-9442-847b132fef89">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transaction" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b3e27ab5-c4cc-4b36-90da-11cdabaee54b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="703"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="283"/>
-	<subDataset name="GameClub Dataset" uuid="b42d682f-c1a6-43df-a1fa-f91b1e18a30c">
-		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
-		<queryString language="SQL">
-			<![CDATA[SELECT * FROM gameclub.game g LEFT JOIN gameclub.game_console gc ON gc.game=g.id]]>
-		</queryString>
-		<field name="creation_date" class="java.sql.Timestamp">
-			<property name="com.jaspersoft.studio.field.label" value="creation_date"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="game"/>
-		</field>
-		<field name="name" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.label" value="name"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="game"/>
-		</field>
-		<field name="console" class="java.lang.Long">
-			<property name="com.jaspersoft.studio.field.label" value="console"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="game_console"/>
-		</field>
-	</subDataset>
-	<parameter name="ide" class="java.lang.Long"/>
-	<queryString>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="196"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="797"/>
+	<parameter name="id" class="java.lang.String"/>
+	<queryString language="SQL">
 		<![CDATA[SELECT 
-	pu.name,
-	pu.last_name,
+	INITCAP(pu.name|| ' ' ||	pu.last_name) AS full_name,
 	pu.document,
     t.creation_date,
     t.transaction,
     t.game,
     t.console,
     t.weeks,
-	bytea_to_decimal(t.balance_part,pu.private_key) AS balance_part,
-	bytea_to_decimal(t.debit_balance,pu.private_key) AS debit_balance,
-	bytea_to_decimal(t.debit_card,pu.private_key) AS debit_card
+    (CASE WHEN (t.balance_part IS NULL) THEN 0.0 ELSE (bytea_to_decimal(t.balance_part,pu.private_key)) END) AS balance_part,
+	(CASE WHEN (t.debit_balance IS NULL) THEN 0.0 ELSE (bytea_to_decimal(t.debit_balance,pu.private_key)) END) AS debit_balance,
+	(CASE WHEN (t.debit_card IS NULL) THEN 0.0 ELSE (bytea_to_decimal(t.debit_card,pu.private_key)) END) AS debit_card
 FROM public_user pu
 	INNER JOIN transaction t ON 
 	 t.public_user_transaction = pu.id
-WHERE pu.id= $P{ide}]]>
+WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 	</queryString>
-	<field name="name" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="name"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
-	</field>
-	<field name="last_name" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="last_name"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
+	<field name="full_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="full_name"/>
 	</field>
 	<field name="document" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="document"/>
@@ -90,70 +63,68 @@ WHERE pu.id= $P{ide}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="56" splitType="Stretch">
+		<band height="59" splitType="Stretch">
 			<staticText>
-				<reportElement positionType="Float" mode="Transparent" x="0" y="1" width="555" height="28" uuid="082fd657-c659-48f9-91d5-af1cb0956d36"/>
+				<reportElement positionType="Float" mode="Transparent" x="0" y="30" width="555" height="26" uuid="b8d1621e-ab02-4ae6-a73a-fa0164c80ee1"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Registro de Transacciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Transparent" x="0" y="1" width="555" height="28" uuid="806a68b2-aad0-448c-84ac-6c0bb7f15499"/>
 				<textElement textAlignment="Center">
 					<font size="20" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[GameClub]]></text>
 			</staticText>
-			<staticText>
-				<reportElement positionType="Float" mode="Transparent" x="0" y="30" width="555" height="26" uuid="7d4796f2-864e-4619-a951-364ccb259637"/>
-				<textElement textAlignment="Center">
-					<font size="16" isBold="true" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[Reporte de Transacciones]]></text>
-			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="95" splitType="Stretch">
-			<textField>
-				<reportElement x="447" y="1" width="108" height="13" uuid="32e59359-d939-4f65-909d-980acf5ec85d"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="2" y="39" width="110" height="18" uuid="042c533b-a5db-4fb2-a23d-36953466301c"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[N° Documento:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="114" y="20" width="151" height="18" uuid="7fc9e779-8445-4733-a654-5e13ce3c5985"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[UPPER($F{name}) + ' ' + UPPER($F{last_name})]]></textFieldExpression>
-			</textField>
+		<band height="73" splitType="Stretch">
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="0" y="4" width="100" height="14" uuid="82f6ae30-2bf6-4b68-a958-ab2a8b4eb3d0"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="0" y="0" width="120" height="14" uuid="14c53376-d146-4f24-9b70-eb249fa8ff9a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="3" y="20" width="110" height="18" uuid="7c9f3673-0e2e-43d4-8a00-11bdd4cd32db"/>
+			<textField>
+				<reportElement x="430" y="0" width="125" height="13" uuid="f1b01aac-47ac-4f62-b8a1-802734d9e0c6"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nombres y Apellidos:]]></text>
+				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="20" width="176" height="17" uuid="fa8010a9-0acf-42e4-aa09-6bf85286e69b"/>
+				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="57" height="16" uuid="ea0051d3-5c20-4277-9e25-c524374839fc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="37" width="56" height="16" uuid="e4066c0f-a51c-45ab-8ec1-2876041bbc69"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Cédula:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="115" y="38" width="96" height="18" uuid="cf44486c-f4bb-4cf1-b51a-d25f950f513d"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="57" y="37" width="176" height="17" uuid="7e104edc-7f9e-41a0-94af-f576102ecba1"/>
 				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="28" splitType="Stretch">
+		<band height="31" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<staticText>
-				<reportElement x="0" y="0" width="81" height="28" uuid="f5642dbe-8f51-45ac-b31d-fdb8d7369e1c"/>
+				<reportElement x="0" y="0" width="81" height="31" uuid="5e2fa3fb-e07a-4fae-9904-1cae35a6c30e"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -161,12 +132,12 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="81" y="0" width="79" height="28" uuid="0bb8f0fe-aa8e-453c-948f-be6921308195"/>
+				<reportElement x="81" y="0" width="79" height="31" uuid="1eb043ad-fcc9-4855-a121-b5990098208d"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -174,12 +145,12 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[TRANSACCIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="160" y="0" width="79" height="28" uuid="3065bb78-b617-45e3-a6b2-f677b6070dff"/>
+				<reportElement x="160" y="0" width="79" height="31" uuid="647e910d-6929-4acf-9f95-80bd9205522d"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -187,12 +158,12 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[JUEGO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="239" y="0" width="79" height="28" uuid="abb5289b-a00e-4d13-9230-fd56b8381361"/>
+				<reportElement x="239" y="0" width="79" height="31" uuid="c5797503-f783-4039-834f-df57315f47e5"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -200,13 +171,13 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[TIEMPO
 (X SEMANA)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="318" y="0" width="79" height="28" uuid="1bcb66ce-ba18-4d99-86fb-8657171c5d67"/>
+				<reportElement x="318" y="0" width="79" height="31" uuid="f1bdc9bd-2b43-41bd-bc9d-0eaba73b52ee"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -214,12 +185,12 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[CREDITO SALDO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="397" y="0" width="79" height="28" uuid="3cddc852-39e0-47d7-8055-55f4a52b9d96"/>
+				<reportElement x="397" y="0" width="79" height="31" uuid="21d8d579-9fd8-4d64-b7f1-78e5bcccdf0f"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -227,12 +198,12 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[DÉBITO SALDO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="476" y="0" width="79" height="28" uuid="0af9bd11-e6e2-40b3-a7df-be4503d548f1"/>
+				<reportElement x="476" y="0" width="79" height="31" uuid="c2bdfb3e-d8e1-43f8-9e26-d6d8c1a2b072"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -240,17 +211,17 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[DÉBITO TARJETA]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="19" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<textField>
-				<reportElement x="0" y="0" width="81" height="19" uuid="2d94b34b-3cbe-494e-a3fc-0544db355a2a"/>
+				<reportElement x="0" y="0" width="81" height="22" uuid="1beafb46-b13e-4578-a612-b6737aba1bf6"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -258,10 +229,10 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{creation_date})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{creation_date}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="81" y="0" width="79" height="19" uuid="53e3c5b3-370f-440f-bc5b-f39521adb8c9"/>
+				<reportElement x="81" y="0" width="79" height="22" uuid="6e59f29d-0070-432b-91c4-8f1a8e2f8da8"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -272,7 +243,7 @@ WHERE pu.id= $P{ide}]]>
 				<textFieldExpression><![CDATA[$F{transaction}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="0" width="79" height="19" uuid="bd68dc02-1a0a-47a0-8891-7837bca9fdf1"/>
+				<reportElement x="160" y="0" width="79" height="22" uuid="e19934d8-fd7f-43c7-a4b9-9cc040ef281f"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -280,10 +251,10 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[IF($F{game} == null || TRIM($F{game})=="","-",$F{game})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{game}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="239" y="0" width="79" height="19" uuid="e1c24fb1-a670-4719-9a4e-c72cc97b99cf"/>
+				<reportElement x="239" y="0" width="79" height="22" uuid="389c0651-4c0d-4f23-8286-a7c7c6c78343"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -294,7 +265,7 @@ WHERE pu.id= $P{ide}]]>
 				<textFieldExpression><![CDATA[$F{weeks}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="318" y="0" width="79" height="19" uuid="c076394d-faf1-4b48-953b-42a9e6238358"/>
+				<reportElement x="318" y="0" width="79" height="22" uuid="b9e75955-05f6-4ea3-a030-44f7fa392780"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -302,10 +273,10 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[IF($F{balance_part} == null,FLOAT_VALUE("0.0"),$F{balance_part})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{balance_part}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="397" y="0" width="79" height="19" uuid="af7f233c-9f70-4af2-903f-d5c05f25b34a"/>
+				<reportElement x="397" y="0" width="79" height="22" uuid="81ce1efc-7733-4706-95ab-f7293ef3cda9"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -313,10 +284,10 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[IF($F{debit_balance} == null,FLOAT_VALUE("0.0"),$F{debit_balance})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{debit_balance}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="476" y="0" width="79" height="19" uuid="c991c274-49a6-4d13-8e69-db3176767003"/>
+				<reportElement x="476" y="0" width="79" height="22" uuid="c59e87a8-0135-4062-bf5e-41cd939ea939"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -324,10 +295,16 @@ WHERE pu.id= $P{ide}]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[IF($F{debit_card} == null,FLOAT_VALUE("0.0"),$F{debit_card})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{debit_card}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
 	</summary>

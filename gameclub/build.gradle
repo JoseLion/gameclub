@@ -70,8 +70,8 @@ dependencies {
 	compile('org.postgresql:postgresql')
 	compile('org.apache.httpcomponents:httpclient')
 	compile('org.springframework.ws:spring-ws-core')
-	compile('net.sf.jasperreports:jasperreports:6.4.3')
 	compile('com.lowagie:itext:2.1.7')
+	compile('net.sf.jasperreports:jasperreports:6.4.3')
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 

@@ -1,16 +1,16 @@
-package ec.com.levelap.gameclub.module.reports.amountRequest.controller;
+package ec.com.levelap.gameclub.module.reports.leaseCosts.controller;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,37 +27,45 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.gameclub.module.jasper.JasperService;
-import ec.com.levelap.gameclub.module.reports.amountRequest.entity.AmountRequestReport;
-import ec.com.levelap.gameclub.module.reports.amountRequest.repository.AmountRequestReportRepo;
+import ec.com.levelap.gameclub.module.reports.leaseCosts.entity.LeaseCost;
+import ec.com.levelap.gameclub.module.reports.leaseCosts.repository.LeaseCostRepo;
 import ec.com.levelap.gameclub.utils.Const;
 import net.sf.jasperreports.engine.JRException;
 
 @RestController
-@RequestMapping(value="api/report/amountRequest", produces=MediaType.APPLICATION_JSON_VALUE)
-public class AmountRequestReportController {
-
+@RequestMapping(value="api/report/leaseCost", produces=MediaType.APPLICATION_JSON_VALUE)
+public class LeaseCostsController {
+	
 	@Autowired
-	private AmountRequestReportRepo amountRequestReportRepo;
+	private LeaseCostRepo leaseCostRepo;
 	
 	@Autowired
 	private JasperService jasperService;
 	
 	@RequestMapping(value="find", method=RequestMethod.POST)
-	public ResponseEntity<?> find(@RequestBody(required=false) Search search) throws ServletException, IOException, GeneralSecurityException {
+	public ResponseEntity<Page<LeaseCost>> find(@RequestBody(required=false) Search search, HttpServletRequest request) throws ServletException {
+		System.out.println("getRemoteAddr: " + request.getRemoteAddr());
+		System.out.println("getRemoteHost: " + request.getRemoteHost());
+		System.out.println("getRemotePort: " + request.getRemotePort());
+		System.out.println("*****************************************");
+		System.out.println("getLocalAddr: " + request.getLocalAddr());
+		System.out.println("getLocalName: " + request.getLocalName());
+		System.out.println("getLocalPort: " + request.getLocalPort());
+		
 		if (search == null) {
 			search = new Search();
 		}
 		
-		Page<AmountRequestReport> AmountsRequestsReport = amountRequestReportRepo.findAmountRequests(search.name, search.document, search.dateStart, search.dateEnd, search.amountStart, search.amountEnd, new PageRequest(search.page, Const.TABLE_SIZE));
-		return new ResponseEntity<>(AmountsRequestsReport, HttpStatus.OK);
+		Page<LeaseCost> leaseCosts = leaseCostRepo.findLeaseCosts(search.name, search.document, search.totalStart, search.totalEnd, search.dateStart, search.dateEnd, new PageRequest(search.page, Const.TABLE_SIZE));
+		return new ResponseEntity<Page<LeaseCost>>(leaseCosts, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="getExcelReport", method=RequestMethod.GET)
 	public void getExcelReport(@RequestParam(required=false) Map<String, Object> params, HttpServletResponse response) throws ServletException, JRException, SQLException, IOException {
-		File report = jasperService.createExcelReport("/jasper/amountRequest.jrxml", params);
+		File report = jasperService.createExcelReport("/jasper/leaseCost.jrxml", params);
 		
 		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-Disposition", String.format("inline; filename=\"retiros-saldo.xlsx\""));
+		response.setHeader("Content-Disposition", String.format("inline; filename=\"costos-arriendo.xlsx\""));
 		response.setContentLengthLong(report.length());
 		
 		InputStream inputStream = new BufferedInputStream(new FileInputStream(report));
@@ -66,10 +74,10 @@ public class AmountRequestReportController {
 	
 	@RequestMapping(value="getPdfReport", method=RequestMethod.GET)
 	public void getPdfReport(@RequestParam(required=false) Map<String, Object> params, HttpServletResponse response) throws ServletException, JRException, SQLException, IOException {
-		File report = jasperService.createPdfReport("/jasper/amountRequest.jrxml", params);
+		File report = jasperService.createPdfReport("/jasper/leaseCost.jrxml", params);
 		
 		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", String.format("inline; filename=\"retiros-saldo.pdf\""));
+		response.setHeader("Content-Disposition", String.format("inline; filename=\"costos-arriendo.pdf\""));
 		response.setContentLengthLong(report.length());
 		
 		InputStream inputStream = new BufferedInputStream(new FileInputStream(report));
@@ -85,9 +93,9 @@ public class AmountRequestReportController {
 		
 		public Date dateEnd = new Date();
 		
-		public Double amountStart = 0.0;
+		public Double totalStart = 0.0;
 		
-		public Double amountEnd = Double.MAX_VALUE;
+		public Double totalEnd = Double.MAX_VALUE;
 		
 		public Integer page = 0;
 	}

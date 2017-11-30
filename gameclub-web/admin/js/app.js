@@ -29,8 +29,7 @@ angular.module("Gameclub", [
 	'Fine',
 	'AmountRequest',
 	'UserGames',
-	'Reports',
-	'AmountRequestReport'
+	'Reports'
 ]).config(["$locationProvider" ,"$httpProvider", function($locationProvider, $httpProvider, $http) {
 	$httpProvider.defaults.withCredentials = true;
 

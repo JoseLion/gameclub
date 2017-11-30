@@ -14,6 +14,10 @@ angular.module("Reports").config(function($stateProvider){
 					name: 'Reports',
 					files: ['js/modules/reports/income/controller/incomeCtrl.js']
 				}]);
+			},
+
+			incomes: function(rest) {
+				return rest("report/income/find").post();
 			}
 		}
 

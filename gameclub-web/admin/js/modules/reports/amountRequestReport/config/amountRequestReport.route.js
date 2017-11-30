@@ -1,18 +1,18 @@
-angular.module("AmountRequestReport").config(function($stateProvider){
+angular.module("Reports").config(function($stateProvider){
 
 	let prefix = 'reports.'
 
 	$stateProvider
 	.state(prefix + 'amountRequestReport',{
 		url: "/amount-request",
-		templateUrl: "js/modules/amountRequestReport/view/amountRequestReport.html",
+		templateUrl: "js/modules/reports/amountRequestReport/view/amountRequestReport.html",
 		data: {displayName: 'Retiro de Saldo'},
 		controller: 'AmountRequestReportCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad){
 				return $ocLazyLoad.load([{
-					name: 'AmountRequestReport',
-					files: ['js/modules/amountRequestReport/controller/amountRequestReportCtrl.js']
+					name: 'Reports',
+					files: ['js/modules/reports/amountRequestReport/controller/amountRequestReportCtrl.js']
 				}]);
 			},
 
@@ -20,6 +20,5 @@ angular.module("AmountRequestReport").config(function($stateProvider){
 				return rest("report/amountRequest/find").post();
 			}
 		}
-
 	});
 });

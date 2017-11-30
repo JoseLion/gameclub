@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS gameclub.lease_costs;
+DROP TABLE IF EXISTS gameclub.lease_cost;
 
-CREATE OR REPLACE VIEW gameclub.lease_costs AS
+CREATE OR REPLACE VIEW gameclub.lease_cost AS
 SELECT
 	lc.id,
 	lc.name,

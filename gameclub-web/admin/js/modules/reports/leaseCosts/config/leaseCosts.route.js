@@ -14,6 +14,10 @@ angular.module("Reports").config(function($stateProvider){
 					name: 'Reports',
 					files: ['js/modules/reports/leaseCosts/controller/leaseCostsCtrl.js']
 				}]);
+			},
+
+			leaseCosts: function(rest) {
+				return rest("report/leaseCost/find").post();
 			}
 		}
 

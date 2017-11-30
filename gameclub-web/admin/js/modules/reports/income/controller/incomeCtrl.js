@@ -1,25 +1,48 @@
-angular.module('Reports').controller('IncomeCtrl', function($scope, $rootScope, getDTOptions,rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath) {
-
-	$scope.dtOptions = getDTOptions.unpaged("fTgitp");
-	$scope.dtColumnDefs = getDTOptions.notSortableAll(3);
-
+angular.module('Reports').controller('IncomeCtrl', function($scope, incomes, getDTOptions, Const, rest, urlRestPath, urlParams) {
 	$scope.search = {};
+	$scope.totalElements;
+	$scope.beginning;
+	$scope.end;
 
-	rest("report/incomePage").get(function(data) {
-		$scope.incomeList = data.content;
+	$scope.dtOptions = getDTOptions.paged().withOption('infoCallback', function(settings, start, end, max, total, pre) {
+		return getDTOptions.infoCallback($scope.totalElements, $scope.beginning, $scope.end);
+	});
+
+	$scope.dtColumnDefs = getDTOptions.notSortableAll(6);
+
+	incomes.$promise.then(function(data) {
+		setPagedData(data);
 	});
 
 	$scope.find = function() {
-		rest("report/findIncome", true).post($scope.search, function(data) {
-			$scope.incomeList = data;
+		rest("report/income/find").post($scope.search, function(data) {
+			setPagedData(data);
 		});
 	}
 
-	$scope.clean = function() {
+	$scope.clear = function() {
 		$scope.search = {};
-		rest("report/incomePage").get(function(data) {
-			$scope.incomeList = data.content;
-		});
+		$scope.find();
 	}
 
+	$scope.pageChanged = function() {
+		$scope.search.page = $scope.currentPage - 1;
+		$scope.find();
+	}
+
+	$scope.getExcelReportUrl = function() {
+		return urlParams(urlRestPath.url + "/api/report/income/getExcelReport", $scope.search);
+	}
+
+	$scope.getPdfReportUrl = function() {
+		return urlParams(urlRestPath.url + "/api/report/income/getPdfReport", $scope.search);
+	}
+
+	function setPagedData(data) {
+		$scope.incomes = data.content;
+		$scope.totalElements = data.totalElements;
+		$scope.beginning = (Const.tableSize * data.number) + 1;
+		$scope.end = $scope.beginning + data.numberOfElements - 1;
+		$scope.totalPages = data.totalPages;
+	}
 });

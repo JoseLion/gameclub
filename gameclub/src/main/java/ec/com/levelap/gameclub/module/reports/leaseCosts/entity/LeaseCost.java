@@ -15,10 +15,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
-@Table(schema=Const.SCHEMA, name="lease_costs")
+@Table(schema=Const.SCHEMA, name="lease_cost")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Immutable
-public class LeaseCosts {
+public class LeaseCost {
 
 	@Id
 	@Column

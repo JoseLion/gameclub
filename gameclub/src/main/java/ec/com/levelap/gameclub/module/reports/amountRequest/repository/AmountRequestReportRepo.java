@@ -16,7 +16,7 @@ public interface AmountRequestReportRepo extends JpaRepository<AmountRequestRepo
 	
 	@Query(	"SELECT ar FROM AmountRequestReport ar WHERE " +
 				"UPPER(ar.fullName) LIKE UPPER('%' || :name || '%') AND " +
-				"UPPER(ar.document) LIKE UPPER('%' || :document || '%') AND " +
+				"(ar.document IS NULL OR UPPER(ar.document) LIKE UPPER('%' || :document || '%')) AND " +
 				"(DATE(ar.applicationDate) BETWEEN DATE(:dateStart) AND DATE(:dateEnd)) AND " +
 				"(ar.amount BETWEEN :amontStart AND :amountEnd) " +
 			"ORDER BY ar.applicationDate")

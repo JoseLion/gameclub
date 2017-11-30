@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.reports.amountRequest.controller;
+package ec.com.levelap.gameclub.module.reports.income.controller;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -27,37 +27,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.gameclub.module.jasper.JasperService;
-import ec.com.levelap.gameclub.module.reports.amountRequest.entity.AmountRequestReport;
-import ec.com.levelap.gameclub.module.reports.amountRequest.repository.AmountRequestReportRepo;
+import ec.com.levelap.gameclub.module.reports.income.entity.Income;
+import ec.com.levelap.gameclub.module.reports.income.repository.IncomeRepo;
 import ec.com.levelap.gameclub.utils.Const;
 import net.sf.jasperreports.engine.JRException;
 
 @RestController
-@RequestMapping(value="api/report/amountRequest", produces=MediaType.APPLICATION_JSON_VALUE)
-public class AmountRequestReportController {
+@RequestMapping(value="api/report/income", produces=MediaType.APPLICATION_JSON_VALUE)
+public class IncomeController {
 
 	@Autowired
-	private AmountRequestReportRepo amountRequestReportRepo;
+	private IncomeRepo incomeRepo;
 	
 	@Autowired
 	private JasperService jasperService;
 	
 	@RequestMapping(value="find", method=RequestMethod.POST)
-	public ResponseEntity<?> find(@RequestBody(required=false) Search search) throws ServletException, IOException, GeneralSecurityException {
+	public ResponseEntity<Page<Income>> find(@RequestBody(required=false) Search search) throws ServletException, IOException, GeneralSecurityException {
 		if (search == null) {
 			search = new Search();
 		}
 		
-		Page<AmountRequestReport> AmountsRequestsReport = amountRequestReportRepo.findAmountRequests(search.name, search.document, search.dateStart, search.dateEnd, search.amountStart, search.amountEnd, new PageRequest(search.page, Const.TABLE_SIZE));
-		return new ResponseEntity<>(AmountsRequestsReport, HttpStatus.OK);
+		Page<Income> incomeList = incomeRepo.findIncome(search.name, search.document, search.dateStart, search.dateEnd, search.totalStart, search.totalEnd, new PageRequest(search.page, Const.TABLE_SIZE));
+		return new ResponseEntity<>(incomeList, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="getExcelReport", method=RequestMethod.GET)
 	public void getExcelReport(@RequestParam(required=false) Map<String, Object> params, HttpServletResponse response) throws ServletException, JRException, SQLException, IOException {
-		File report = jasperService.createExcelReport("/jasper/amountRequest.jrxml", params);
+		File report = jasperService.createExcelReport("/jasper/income.jrxml", params);
 		
 		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-Disposition", String.format("inline; filename=\"retiros-saldo.xlsx\""));
+		response.setHeader("Content-Disposition", String.format("inline; filename=\"ingresos.xlsx\""));
 		response.setContentLengthLong(report.length());
 		
 		InputStream inputStream = new BufferedInputStream(new FileInputStream(report));
@@ -66,10 +66,10 @@ public class AmountRequestReportController {
 	
 	@RequestMapping(value="getPdfReport", method=RequestMethod.GET)
 	public void getPdfReport(@RequestParam(required=false) Map<String, Object> params, HttpServletResponse response) throws ServletException, JRException, SQLException, IOException {
-		File report = jasperService.createPdfReport("/jasper/amountRequest.jrxml", params);
+		File report = jasperService.createPdfReport("/jasper/income.jrxml", params);
 		
 		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", String.format("inline; filename=\"retiros-saldo.pdf\""));
+		response.setHeader("Content-Disposition", String.format("inline; filename=\"ingresos.pdf\""));
 		response.setContentLengthLong(report.length());
 		
 		InputStream inputStream = new BufferedInputStream(new FileInputStream(report));
@@ -85,9 +85,9 @@ public class AmountRequestReportController {
 		
 		public Date dateEnd = new Date();
 		
-		public Double amountStart = 0.0;
+		public Double totalStart = 0.0;
 		
-		public Double amountEnd = Double.MAX_VALUE;
+		public Double totalEnd = Double.MAX_VALUE;
 		
 		public Integer page = 0;
 	}

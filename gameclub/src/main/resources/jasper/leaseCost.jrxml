@@ -34,7 +34,7 @@
 	lc.transaction,
 	lc.console,
 	lc.total,
-	lc.creation_date
+	TO_CHAR(lc.creation_date, 'dd-MM-yyyy') AS creation_date
 FROM gameclub.lease_cost lc
 WHERE 
 	(UPPER(lc.name) LIKE UPPER('%' || $P{name} || '%') OR 

@@ -167,7 +167,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="0" y="0" width="100" height="14" uuid="a6e2ac3a-1187-4d99-9c72-9466ea2831d6"/>
+				<reportElement x="0" y="0" width="130" height="14" uuid="a6e2ac3a-1187-4d99-9c72-9466ea2831d6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>

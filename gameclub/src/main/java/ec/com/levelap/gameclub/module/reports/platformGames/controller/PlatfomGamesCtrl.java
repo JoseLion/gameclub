@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -43,26 +42,20 @@ public class PlatfomGamesCtrl {
 	@Autowired
 	private JasperService jasperService;
 	
-	@RequestMapping(value="platformGames", method=RequestMethod.GET)
-	public ResponseEntity<?> platformGames() throws ServletException, IOException, GeneralSecurityException {
-		Page<PlatformGames> platformGames = platformGamesRepo.platformGamesPage(new PageRequest(0, Const.TABLE_SIZE));
-		return new ResponseEntity<>(platformGames, HttpStatus.OK);
+	@RequestMapping(value="find", method=RequestMethod.POST)
+	public ResponseEntity<Page<PlatformGames>> find(@RequestBody(required=false) Search search) throws ServletException {
+		if (search == null) {
+			search = new Search();
+		}
+		
+		Page<PlatformGames> logPlatformGames = platformGamesRepo.find(search.name, search.game, search.console, search.startDate, search.endDate, new PageRequest(search.page, Const.TABLE_SIZE));
+		return new ResponseEntity<Page<PlatformGames>>(logPlatformGames, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="totalGames", method=RequestMethod.GET)
 	public ResponseEntity<?> totalGames() throws ServletException, IOException, GeneralSecurityException {
 		Long totalGames = platformGamesRepo.totalGames();
 		return new ResponseEntity<>(totalGames, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="findPlatformGames", method=RequestMethod.POST)
-	public ResponseEntity<List<PlatformGames>> findPlatformGames(@RequestBody(required=false) Search search) throws ServletException {
-		if (search == null) {
-			search = new Search();
-		}
-		
-		List<PlatformGames> logPlatformGames = platformGamesRepo.findPlatformGames(search.name, search.game, search.console, search.startDate, search.endDate);
-		return new ResponseEntity<List<PlatformGames>>(logPlatformGames, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="getExcelReport", method=RequestMethod.GET)
@@ -100,5 +93,7 @@ public class PlatfomGamesCtrl {
 		public Date startDate = new Date(0);
 		
 		public Date endDate = new Date();
+		
+		public Integer page = 0;
 	}
 }

@@ -14,6 +14,14 @@ angular.module("Reports").config(function($stateProvider){
 					name: 'Reports',
 					files: ['js/modules/reports/platformGames/controller/platformGamesCtrl.js']
 				}]);
+			},
+
+			platformGames: function(rest) {
+				return rest("report/platformGames/find").post();
+			},
+
+			totalGames: function(rest) {
+				return rest("report/platformGames/totalGames").get();
 			}
 		}
 

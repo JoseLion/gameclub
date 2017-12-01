@@ -14,11 +14,11 @@ angular.module("Reports").config(function($stateProvider){
 					name: 'Reports',
 					files: ['js/modules/reports/logTracking/controller/logTrackingCtrl.js']
 				}]);
-			}
-			// ,
-			// logTrackins: function(rest) {
-			// 	return rest("report/amountRequest/find").post();
-			// }
+			},
+			
+			logTrackings: function(rest) {
+				return rest("report/logTracking/find").post();
+			},
 		}
 
 	});

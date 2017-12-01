@@ -1,27 +1,33 @@
-angular.module('Reports').controller('PlatformGamesCtrl', function($scope, $rootScope, getDTOptions, rest, urlParams, Const, urlRestPath) {
+angular.module('Reports').controller('PlatformGamesCtrl', function($scope, platformGames, totalGames, getDTOptions, rest, urlParams, Const, urlRestPath) {
 
-	$scope.dtOptions = getDTOptions.unpaged("fTgitp");
-	$scope.dtColumnDefs = getDTOptions.notSortableAll(3);
+	$scope.search = {};
+	$scope.totalElements;
+	$scope.beginning;
+	$scope.end;
 
-	rest("report/platformGames/platformGames").get(function(data) {
-		$scope.platformGames = data.content;
+	$scope.dtOptions = getDTOptions.paged().withOption('infoCallback', function(settings, start, end, max, total, pre) {
+		return getDTOptions.infoCallback($scope.totalElements, $scope.beginning, $scope.end);
 	});
 
-	rest("report/platformGames/totalGames").get(function(data) {
+	$scope.dtColumnDefs = getDTOptions.notSortableAll(11);
+
+	platformGames.$promise.then(function(data) {
+		setPagedData(data);
+	});
+
+	totalGames.$promise.then(function(data) {
 		$scope.totalGames = data;
 	});
 
 	$scope.find = function() {
-		rest("report/platformGames/findPlatformGames", true).post($scope.search, function(data) {
-			$scope.platformGames = data;
+		rest("report/platformGames/find").post($scope.search, function(data) {
+			setPagedData(data);
 		});
 	}
 	
 	$scope.clean = function() {
 		$scope.search = {};
-		rest("report/platformGames/platformGames").get(function(data) {
-			$scope.platformGames = data.content;
-		});
+		$scope.find();
 	}
 
 	$scope.pageChanged = function() {
@@ -38,7 +44,7 @@ angular.module('Reports').controller('PlatformGamesCtrl', function($scope, $root
 	}
 
 	function setPagedData(data) {
-		$scope.amountRequests = data.content;
+		$scope.platformGames = data.content;
 		$scope.totalElements = data.totalElements;
 		$scope.beginning = (Const.tableSize * data.number) + 1;
 		$scope.end = $scope.beginning + data.numberOfElements - 1;

@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -44,10 +43,14 @@ public class LogisticsKitsCtrl {
 	@Autowired
 	private JasperService jasperService;
 	
-	@RequestMapping(value="logisticsKits", method=RequestMethod.GET)
-	public ResponseEntity<?> logisticsKits() throws ServletException, IOException, GeneralSecurityException {
-		Page<LogisticsKits> logTracking = logisticsKitsRepo.logisticsKits(new PageRequest(0, Const.TABLE_SIZE));
-		return new ResponseEntity<>(logTracking, HttpStatus.OK);
+	@RequestMapping(value="find", method=RequestMethod.POST)
+	public ResponseEntity<Page<LogisticsKits>> find(@RequestBody(required=false) Search search) throws ServletException {
+		if (search == null) {
+			search = new Search();
+		}
+		
+		Page<LogisticsKits> logisticsKits = logisticsKitsRepo.find(search.name, search.document, search.transaction, search.startDate, search.endDate, new PageRequest(search.page, Const.TABLE_SIZE));
+		return new ResponseEntity<Page<LogisticsKits>>(logisticsKits, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="totalShippingKidsSold", method=RequestMethod.GET)
@@ -66,16 +69,6 @@ public class LogisticsKitsCtrl {
 	public ResponseEntity<?> welcomeKitsDelivered() throws ServletException, IOException, GeneralSecurityException {
 		Long welcomeKitsDelivered = logisticsKitsRepo.totalShippingKitsSold();
 		return new ResponseEntity<>(welcomeKitsDelivered, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="findLogisticsKits", method=RequestMethod.POST)
-	public ResponseEntity<List<LogisticsKits>> findLogisticsKits(@RequestBody(required=false) Search search) throws ServletException {
-		if (search == null) {
-			search = new Search();
-		}
-		
-		List<LogisticsKits> logisticsKits = logisticsKitsRepo.findLogisticsKit(search.name, search.document, search.transaction, search.startDate, search.endDate);
-		return new ResponseEntity<List<LogisticsKits>>(logisticsKits, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="getExcelReport", method=RequestMethod.GET)
@@ -113,5 +106,7 @@ public class LogisticsKitsCtrl {
 		public Date startDate = new Date(0);
 		
 		public Date endDate = new Date();
+		
+		public Integer page = 0;
 	}
 }

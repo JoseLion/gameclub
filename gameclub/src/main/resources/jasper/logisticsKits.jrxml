@@ -36,8 +36,8 @@ WHERE
 				(UPPER(logistics_kits.name) LIKE UPPER('%' ||  $P{name}  || '%') OR 
 				UPPER(	logistics_kits.last_name) LIKE UPPER('%' || $P{name} || '%') OR 
 				UPPER(logistics_kits.name || ' ' || 	logistics_kits.last_name) LIKE UPPER('%' || $P{name} || '%')) AND 
-				(logistics_kits.document like  UPPER('%' || $P{document}  || '%')) AND  
-				(logistics_kits.transaction_type like  UPPER('%' || $P{transaction}  || '%')) AND
+				(logistics_kits.document IS NULL OR UPPER(logistics_kits.document) like  UPPER('%' || $P{document}  || '%')) AND  
+				(logistics_kits.transaction_type IS NULL OR UPPER(logistics_kits.transaction_type) like  UPPER('%' || $P{transaction}  || '%')) AND
 				(DATE(logistics_kits.creation_date) BETWEEN TO_DATE($P{startDate},  'dd-MM-yyyy' ) AND TO_DATE( $P{endDate} , 'dd-MM-yyyy' ))
 ORDER BY logistics_kits.creation_date DESC]]>
 	</queryString>
@@ -75,6 +75,10 @@ ORDER BY logistics_kits.creation_date DESC]]>
 	</field>
 	<field name="status" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="logistics_kits"/>
+	</field>
+	<field name="creation_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="creation_date"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="logistics_kits"/>
 	</field>
 	<background>
@@ -117,66 +121,66 @@ ORDER BY logistics_kits.creation_date DESC]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="20" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<staticText>
-				<reportElement x="0" y="0" width="90" height="20" uuid="db935719-923e-4d84-bcfd-aee13417c2ef"/>
+				<reportElement x="0" y="0" width="90" height="38" uuid="db935719-923e-4d84-bcfd-aee13417c2ef"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre(s)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="90" y="0" width="89" height="20" uuid="f2616a8d-e5ae-4178-b115-8f88d96a6d99"/>
+				<reportElement x="90" y="0" width="89" height="38" uuid="f2616a8d-e5ae-4178-b115-8f88d96a6d99"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Apellido(s)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="179" y="0" width="89" height="20" uuid="b9abdbdd-9861-470e-a2db-2e30cb669525"/>
+				<reportElement x="179" y="0" width="89" height="38" uuid="b9abdbdd-9861-470e-a2db-2e30cb669525"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ciudad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="268" y="0" width="89" height="20" uuid="6a7b49c3-85ee-438d-9cfc-9cb017864a63"/>
+				<reportElement x="268" y="0" width="89" height="38" uuid="6a7b49c3-85ee-438d-9cfc-9cb017864a63"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Dirección]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="357" y="0" width="89" height="20" uuid="854191c0-997f-48f6-ac0e-3deaef457b04"/>
+				<reportElement x="357" y="0" width="89" height="38" uuid="854191c0-997f-48f6-ac0e-3deaef457b04"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mail]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="446" y="0" width="89" height="20" uuid="529cda46-08f8-46b7-8a3c-f630f4f0e921"/>
+				<reportElement x="446" y="0" width="89" height="38" uuid="529cda46-08f8-46b7-8a3c-f630f4f0e921"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° Documento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="535" y="0" width="89" height="20" uuid="2dad22c5-dc6b-4df6-966f-2047d78bdb6b"/>
+				<reportElement x="535" y="0" width="89" height="38" uuid="2dad22c5-dc6b-4df6-966f-2047d78bdb6b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° Teléfono]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="624" y="0" width="89" height="20" uuid="88aa8c23-3861-4726-ba0d-ae7a9e54d438"/>
+				<reportElement x="624" y="0" width="89" height="38" uuid="88aa8c23-3861-4726-ba0d-ae7a9e54d438"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Transacción]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="713" y="0" width="89" height="20" uuid="cb79952b-0392-45e4-9cbf-06e830ebce34"/>
+				<reportElement x="713" y="0" width="89" height="38" uuid="cb79952b-0392-45e4-9cbf-06e830ebce34"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>

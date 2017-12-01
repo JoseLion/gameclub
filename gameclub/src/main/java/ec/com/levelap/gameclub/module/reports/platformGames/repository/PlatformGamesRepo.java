@@ -1,7 +1,6 @@
 package ec.com.levelap.gameclub.module.reports.platformGames.repository;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +17,7 @@ public interface PlatformGamesRepo extends JpaRepository<PlatformGames, Long> {
 	@Query("SELECT pg FROM PlatformGames pg ORDER BY pg.id DESC")
 	public Page<PlatformGames> platformGamesPage(Pageable page);
 	
-	@Query("SELECT COUNT(g) FROM Game g ")
+	@Query("SELECT COUNT(g) FROM PlatformGames g ")
 	public Long totalGames();
 	
 	@Query("SELECT pg FROM PlatformGames pg WHERE " +
@@ -28,11 +27,12 @@ public interface PlatformGamesRepo extends JpaRepository<PlatformGames, Long> {
 			"		(DATE(pg.creationDate) BETWEEN DATE(:startDate) AND DATE(:endDate)) " +
 			"ORDER BY pg.creationDate DESC " 
 			)
-	public List<PlatformGames> findPlatformGames(
+	public Page<PlatformGames> find(
 									  @Param("name") String name,
 									  @Param("game") String game,
 									  @Param("console") String console,
 									  @Param("startDate") Date startDate,
-									  @Param("endDate") Date endDate
+									  @Param("endDate") Date endDate,
+									  Pageable page
 									  );
 }

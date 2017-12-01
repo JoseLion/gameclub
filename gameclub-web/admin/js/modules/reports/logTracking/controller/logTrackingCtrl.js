@@ -1,27 +1,29 @@
-angular.module('Reports').controller('LogTrackingCtrl', function($scope, $rootScope, getDTOptions,rest, urlParams, Const, urlRestPath) {
+angular.module('Reports').controller('LogTrackingCtrl', function($scope, logTrackings, getDTOptions,rest, urlParams, Const, urlRestPath) {
 
-	$scope.dtOptions = getDTOptions.unpaged("fTgitp");
-	$scope.dtColumnDefs = getDTOptions.notSortableAll(3);
+	$scope.search = {};
+	$scope.totalElements;
+	$scope.beginning;
+	$scope.end;
 
-	rest("report/logTracking/logTracking").get(function(data) {
-		$scope.logTrackings = data.content;
+	$scope.dtOptions = getDTOptions.paged().withOption('infoCallback', function(settings, start, end, max, total, pre) {
+		return getDTOptions.infoCallback($scope.totalElements, $scope.beginning, $scope.end);
 	});
 
-	// rest("report/totalGames").get(function(data) {
-	// 	$scope.totalGames = data;
-	// });
+	$scope.dtColumnDefs = getDTOptions.notSortableAll(3);
+
+	logTrackings.$promise.then(function(data) {
+		setPagedData(data);
+	});
 
 	$scope.find = function() {
-		rest("report/logTracking/findLogTracking", true).post($scope.search, function(data) {
-			$scope.logTrackings = data;
+		rest("report/logTracking/find").post($scope.search, function(data) {
+			setPagedData(data);
 		});
 	}
 	
 	$scope.clean = function() {
 		$scope.search = {};
-		rest("report/logTracking/logTracking").get(function(data) {
-			$scope.logTrackings = data.content;
-		});
+		$scope.find();
 	}
 
 	$scope.pageChanged = function() {
@@ -38,7 +40,7 @@ angular.module('Reports').controller('LogTrackingCtrl', function($scope, $rootSc
 	}
 
 	function setPagedData(data) {
-		$scope.amountRequests = data.content;
+		$scope.logTrackings = data.content;
 		$scope.totalElements = data.totalElements;
 		$scope.beginning = (Const.tableSize * data.number) + 1;
 		$scope.end = $scope.beginning + data.numberOfElements - 1;

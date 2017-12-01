@@ -1,7 +1,6 @@
 package ec.com.levelap.gameclub.module.reports.logisticsKits.repository;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,11 +36,12 @@ public interface LogisticsKitsRepo extends JpaRepository<LogisticsKits, Long> {
 			"		(DATE(lk.creationDate) BETWEEN DATE(:startDate) AND DATE(:endDate)) " +
 			"ORDER BY lk.creationDate DESC "
 			)
-	public List<LogisticsKits> findLogisticsKit(
+	public Page<LogisticsKits> find(
 									  @Param("name") String name,
 									  @Param("document") String document,
 									  @Param("transaction") String transaction,
 									  @Param("startDate") Date startDate,
-									  @Param("endDate") Date endDate
+									  @Param("endDate") Date endDate,
+									  Pageable page
 									  );
 }

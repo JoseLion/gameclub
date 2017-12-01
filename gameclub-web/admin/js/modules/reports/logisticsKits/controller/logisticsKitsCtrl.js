@@ -1,36 +1,43 @@
-angular.module('Reports').controller('LogisticsKitsCtrl', function($scope, $rootScope, getDTOptions,rest, urlParams,  $state, Const, urlRestPath) {
+angular.module('Reports').controller('LogisticsKitsCtrl', function($scope, logisticsKits, totalShippingKidsSold, shippingKidsDelivered, welcomeKitsDelivered, getDTOptions,rest, urlParams,  $state, Const, urlRestPath) {
 
-	$scope.dtOptions = getDTOptions.unpaged("fTgitp");
-	$scope.dtColumnDefs = getDTOptions.notSortableAll(3);
-	$scope.amountRequests = {};
+	$scope.search = {};
+	$scope.totalElements;
+	$scope.beginning;
+	$scope.end;
 
-	rest("report/logisticsKits/logisticsKits").get(function(data) {
-		$scope.logisticsKits = data.content;
+	$scope.dtOptions = getDTOptions.paged().withOption('infoCallback', function(settings, start, end, max, total, pre) {
+		return getDTOptions.infoCallback($scope.totalElements, $scope.beginning, $scope.end);
 	});
 
-	rest("report/logisticsKits/totalShippingKidsSold").get(function(data) {
+	$scope.dtColumnDefs = getDTOptions.notSortableAll(9);
+
+	logisticsKits.$promise.then(function(data) {
+		setPagedData(data);
+	});
+
+	totalShippingKidsSold.$promise.then(function(data) {
 		$scope.totalShippingKidsSold = data;
 	});
-	
-	rest("report/logisticsKits/shippingKidsDelivered").get(function(data) {
+
+	shippingKidsDelivered.$promise.then(function(data) {
 		$scope.shippingKidsDelivered = data;
 	});
-	
-	rest("report/logisticsKits/welcomeKitsDelivered").get(function(data) {
+
+	welcomeKitsDelivered.$promise.then(function(data) {
 		$scope.welcomeKitsDelivered = data;
 	});
 
 	$scope.find = function() {
-		rest("report/logisticsKits/findLogisticsKits", true).post($scope.search, function(data) {
-			$scope.logisticsKits = data;
+		console.log("Entra");
+		rest("report/logisticsKits/find").post($scope.search, function(data) {
+			console.log(data);
+			setPagedData(data);
 		});
 	}
 	
 	$scope.clean = function() {
 		$scope.search = {};
-		rest("report/logisticsKits/logisticsKits").get(function(data) {
-			$scope.logisticsKits = data.content;
-		});
+		$scope.find();
 	}
 
 	$scope.pageChanged = function() {
@@ -47,7 +54,7 @@ angular.module('Reports').controller('LogisticsKitsCtrl', function($scope, $root
 	}
 
 	function setPagedData(data) {
-		$scope.amountRequests = data.content;
+		$scope.logisticsKits = data.content;
 		$scope.totalElements = data.totalElements;
 		$scope.beginning = (Const.tableSize * data.number) + 1;
 		$scope.end = $scope.beginning + data.numberOfElements - 1;

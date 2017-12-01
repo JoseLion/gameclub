@@ -6,6 +6,7 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="804"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="610"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="376"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
 	<parameter name="name" class="java.lang.String">
 		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
 	</parameter>
@@ -25,13 +26,13 @@
 		<defaultValueExpression><![CDATA[new String(""+Double.MAX_VALUE)]]></defaultValueExpression>
 	</parameter>
 	<queryString language="SQL">
-		<![CDATA[SELECT
-	ar.application_date,
-	ar.full_name,
-	ar.document,
-	ar.amount,
-	ar.status,
-	ar.payment_date
+		<![CDATA[SELECT TO_CHAR(ar.application_date,  'dd-MM-yyyy') AS application_date,
+			  ar.full_name,
+			  ar.document,
+			  ar.amount,
+			  ar.status, 
+			  (CASE WHEN (TO_CHAR(ar.payment_date, 'dd-MM-yyyy') IS NULL) THEN '' ELSE (TO_CHAR(ar.payment_date, 'dd-MM-yyyy')) END) AS payment_date
+			  
 FROM gameclub.amount_request_report ar
 WHERE
 	UPPER(ar.full_name) LIKE UPPER('%' || $P{name} || '%') AND
@@ -40,7 +41,7 @@ WHERE
 	(DATE(ar.application_date) BETWEEN TO_DATE($P{dateStart}, 'dd-MM-yyyy') AND TO_DATE($P{dateEnd}, 'dd-MM-yyyy'))
 ORDER BY ar.application_date DESC]]>
 	</queryString>
-	<field name="application_date" class="java.sql.Timestamp">
+	<field name="application_date" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="application_date"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="amount_request_report"/>
 	</field>
@@ -60,9 +61,8 @@ ORDER BY ar.application_date DESC]]>
 		<property name="com.jaspersoft.studio.field.label" value="status"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="amount_request_report"/>
 	</field>
-	<field name="payment_date" class="java.sql.Timestamp">
+	<field name="payment_date" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="payment_date"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="amount_request_report"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>

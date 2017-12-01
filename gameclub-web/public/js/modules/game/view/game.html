@@ -277,7 +277,7 @@
         <payment-method total-balance="currentUser.shownBalance" payment-methods="currentUser.paymentMethods" balance="balance" total-to-pay="loan.cost" card-selected="$parent.cardSelected" class="row payment-view"  ng-if="paymentViewOpen"/>
         <section class="row loan-footer" ng-if="loanViewOpen">
             <div class="col-md-12 text-center">
-                <button type="button" class="btn btn-secundary" ng-click="continueRequest()" ng-if="!paymentViewOpen">Continuar con soliciud de préstamo</button><!-- ng-if="paymentViewOpen" -->
+                <button type="button" class="btn btn-secundary" ng-click="continueRequest()" ng-if="!paymentViewOpen">Continuar con soliciud de préstamo</button>
                 <button type="submit" class="btn btn-secundary" ng-if="paymentViewOpen">Realizar pedido de prestamo</button>
             </div>
             <div class="clearfix"></div>

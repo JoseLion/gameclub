@@ -14,6 +14,18 @@ angular.module("Reports").config(function($stateProvider){
 					name: 'Reports',
 					files: ['js/modules/reports/logisticsKits/controller/logisticsKitsCtrl.js']
 				}]);
+			},
+			logisticsKits: function(rest) {
+				return rest("report/logisticsKits/find").post();
+			},
+			totalShippingKidsSold: function(rest) {
+				return rest("report/logisticsKits/totalShippingKidsSold").get();
+			},
+			shippingKidsDelivered: function(rest) {
+				return rest("report/logisticsKits/shippingKidsDelivered").get();
+			},
+			welcomeKitsDelivered: function(rest) {
+				return rest("report/logisticsKits/welcomeKitsDelivered").get();
 			}
 		}
 

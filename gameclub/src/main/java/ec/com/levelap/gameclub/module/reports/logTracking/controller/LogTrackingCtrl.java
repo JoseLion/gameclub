@@ -5,10 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -43,17 +41,15 @@ public class LogTrackingCtrl {
 	@Autowired
 	private JasperService jasperService;
 	
-	@RequestMapping(value="logTracking", method=RequestMethod.GET)
-	public ResponseEntity<?> logTracking() throws ServletException, IOException, GeneralSecurityException {
-		Page<LogTracking> logTracking = logTrackingRepo.logTrackingPage(new PageRequest(0, Const.TABLE_SIZE));
-		return new ResponseEntity<>(logTracking, HttpStatus.OK);
+	@RequestMapping(value="find", method=RequestMethod.POST)
+	public ResponseEntity<Page<LogTracking>> find(@RequestBody(required=false) Search search) throws ServletException {
+		if (search == null) {
+			search = new Search();
+		}
+		
+		Page<LogTracking> logTrackings = logTrackingRepo.findLogTracking(search.name, search.document, search.game, search.startDate, search.endDate, new PageRequest(search.page, Const.TABLE_SIZE));
+		return new ResponseEntity<Page<LogTracking>>(logTrackings, HttpStatus.OK);
 	}
-	
-//	@RequestMapping(value="totalBilling", method=RequestMethod.GET)
-//	public ResponseEntity<?> totalBilling() throws ServletException, IOException, GeneralSecurityException {
-//		Double totalBilling = billingRepo.total();
-//		return new ResponseEntity<>(totalBilling, HttpStatus.OK);
-//	}
 	
 	@RequestMapping(value="getExcelReport", method=RequestMethod.GET)
 	public void getExcelReport(@RequestParam(required=false) Map<String, Object> params, HttpServletResponse response) throws ServletException, JRException, SQLException, IOException {
@@ -79,16 +75,6 @@ public class LogTrackingCtrl {
 		FileCopyUtils.copy(inputStream, response.getOutputStream());
 	}
 	
-	@RequestMapping(value="findLogTracking", method=RequestMethod.POST)
-	public ResponseEntity<List<LogTracking>> findLogTracking(@RequestBody(required=false) Search search) throws ServletException {
-		if (search == null) {
-			search = new Search();
-		}
-		
-		List<LogTracking> logTracking = logTrackingRepo.findLogTracking(search.name, search.document, search.game, search.startDate, search.endDate);
-		return new ResponseEntity<List<LogTracking>>(logTracking, HttpStatus.OK);
-	}
-	
 	private static class Search {
 		
 		public String name = "";
@@ -100,5 +86,7 @@ public class LogTrackingCtrl {
 		public Date startDate = new Date(0);
 		
 		public Date endDate = new Date();
+		
+		public Integer page = 0;
 	}
 }

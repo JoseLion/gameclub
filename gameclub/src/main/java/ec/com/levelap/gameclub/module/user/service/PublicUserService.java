@@ -3,6 +3,8 @@ package ec.com.levelap.gameclub.module.user.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -16,6 +18,7 @@ import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
@@ -79,7 +82,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 	}
 
 	@Transactional
-	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl, String token) throws ServletException, MessagingException, IOException, GeneralSecurityException {
+	public ResponseEntity<?> signIn(PublicUser publicUser, String token, HttpServletRequest request) throws ServletException, MessagingException, IOException, GeneralSecurityException {
 		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(publicUser.getUsername());
 		
 		if (found != null && found.getStatus()) {
@@ -118,13 +121,14 @@ public class PublicUserService extends BaseService<PublicUser> {
 			found.setStatus(true);
 			publicUser = publicUserRepo.save(found);
 		}
-
+		
+		URL referrer = new URL(request.getHeader("referer"));
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		params.put("link", baseUrl + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
+		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
 
-		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
+		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params, request);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -138,29 +142,31 @@ public class PublicUserService extends BaseService<PublicUser> {
 	}
 
 	@Transactional
-	public void resendVerification(String baseUrl) throws ServletException, MessagingException {
+	public void resendVerification(HttpServletRequest request) throws ServletException, MessagingException, MalformedURLException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PublicUser publicUser = publicUserRepo.findByUsernameIgnoreCase(auth.getName());
 		publicUser.setToken(UUID.randomUUID().toString());
 		publicUser = publicUserRepo.save(publicUser);
-
+		
+		URL referrer = new URL(request.getHeader("referer"));
 		MailParameters mailParameters = new MailParameters();
 		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		params.put("link", baseUrl + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
+		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
 
-		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
+		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params, request);
 	}
 
 	@Transactional
-	public ResponseEntity<?> save(PublicUser publicUser, String... baseUrl) throws ServletException {
-		if (baseUrl.length > 0) {
+	public ResponseEntity<?> save(PublicUser publicUser, Boolean sendVerification, HttpServletRequest request) throws ServletException, MalformedURLException {
+		if (sendVerification) {
 			try {
+				URL referrer = new URL(request.getHeader("referer"));
 				MailParameters mailParameters = new MailParameters();
 				mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 				Map<String, String> params = new HashMap<>();
-				params.put("link", baseUrl[0] + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
-				mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
+				params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
+				mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params, request);
 			} catch (MessagingException ex) {
 				return new ResponseEntity<>(new ErrorControl("No se pudo enviar el código al correo indicado, por favor vuelve a intentarlo", true), HttpStatus.INTERNAL_SERVER_ERROR);
 			}

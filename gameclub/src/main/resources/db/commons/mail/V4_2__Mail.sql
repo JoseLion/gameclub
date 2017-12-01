@@ -1,33 +1,33 @@
 INSERT INTO commons.mail(acronym, content, subject)
 VALUES('ACNVRF',
 '<div id="gc-welcome">
-	<img src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-top.png" width="100%"/>
-	<img src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-middle.png" width="100%"/>
+	<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-top.png" width="100%"/>
+	<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-middle.png" width="100%"/>
 	<a class="verify" href="{{link}}">
-		<img src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-click.png"/>
+		<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-click.png"/>
 	</a>
-	<img src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-bottom.png" width="100%"/>
+	<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-bottom.png" width="100%"/>
 	<div class="networks">
 		<a href="https://www.facebook.com/gameclub.ec/">
-			<img src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-facebook.png"/>
+			<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-facebook.png"/>
 		</a>
 		<a href="https://my.playstation.com/gameclubec">
-			<img src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-ps.svg" height="25px"/>
+			<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-ps.svg" height="25px"/>
 		</a>
 		<a href="https://account.xbox.com/en-us/Profile?GamerTag=GameClubEC">
-			<img src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-xbox.svg" height="25px"/>
+			<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-xbox.svg" height="25px"/>
 		</a>
 		<a href="http://www.nintendo.com/">
-			<img src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-nintendo.svg" height="25px"/>
+			<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-nintendo.svg" height="25px"/>
 		</a>
 	</div>
 	<div class="links">
 		<a href="mailto:info@gameclub.com.ec">
-			<img src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-mail.png" height="30px"/>
+			<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-mail.png" height="30px"/>
 		</a>
-		<img class="separation" src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-separation.png"/>
-		<a href="http://local.gameclub">
-			<img src="http://local.gameclub:8090/gameclub/open/util/getImage?name=welcome-web.png" height="30px"/>
+		<img class="separation" src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-separation.png"/>
+		<a href="{{baseUrl}}">
+			<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=welcome-web.png" height="30px"/>
 		</a>
 	</div>
 	<style>

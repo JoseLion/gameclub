@@ -6,4 +6,4 @@ VALUES('PCHUDT',
 	<p></p>
 	<p>Atentamente,</p>
 	<p>El equipo de Game Club</p>',
-'Actualización de precios de PriceCharting');
+'ActualizaciÃ³n de precios de PriceCharting');

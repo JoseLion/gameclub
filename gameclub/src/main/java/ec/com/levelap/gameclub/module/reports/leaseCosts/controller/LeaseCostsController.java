@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +42,7 @@ public class LeaseCostsController {
 	private JasperService jasperService;
 	
 	@RequestMapping(value="find", method=RequestMethod.POST)
-	public ResponseEntity<Page<LeaseCost>> find(@RequestBody(required=false) Search search, HttpServletRequest request) throws ServletException {
-		System.out.println("REFERRER: " + request.getHeader("referer"));
-		
+	public ResponseEntity<Page<LeaseCost>> find(@RequestBody(required=false) Search search) throws ServletException {
 		if (search == null) {
 			search = new Search();
 		}

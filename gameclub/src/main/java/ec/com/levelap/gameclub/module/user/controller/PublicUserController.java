@@ -1,6 +1,7 @@
 package ec.com.levelap.gameclub.module.user.controller;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +49,14 @@ public class PublicUserController {
 	}
 
 	@RequestMapping(value = "resendVerification", method = RequestMethod.POST)
-	public ResponseEntity<?> resendVerification(@RequestBody Object baseUrl) throws ServletException, MessagingException {
-		publicUserService.resendVerification((String) baseUrl);
+	public ResponseEntity<?> resendVerification(HttpServletRequest request) throws ServletException, MessagingException, MalformedURLException {
+		publicUserService.resendVerification(request);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> save(@RequestBody PublicUser user) throws ServletException, IOException {
-		return this.publicUserService.save(user);
+	public ResponseEntity<?> save(@RequestBody PublicUser user, HttpServletRequest request) throws ServletException, IOException {
+		return this.publicUserService.save(user, false, request);
 	}
 
 	@RequestMapping(value = "getGamesList", method = RequestMethod.POST)
@@ -115,7 +117,7 @@ public class PublicUserController {
 	}
 
 	@RequestMapping(value = "changeMail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> changeMail(@RequestBody ChangeUsernameObj usernameObj) throws ServletException, MessagingException {
+	public ResponseEntity<?> changeMail(@RequestBody ChangeUsernameObj usernameObj, HttpServletRequest request) throws ServletException, MessagingException, MalformedURLException {
 		PublicUser publicUser = this.publicUserService.getPublicUserRepo().findByUsernameIgnoreCase(usernameObj.newUsername);
 		if (publicUser != null) {
 			return new ResponseEntity<ErrorControl>(new ErrorControl("El correo ingresado ya se encuentra registrado", true), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -123,7 +125,7 @@ public class PublicUserController {
 		publicUser = this.publicUserService.getPublicUserRepo().findByUsernameIgnoreCase(usernameObj.oldUsername);
 		publicUser.setToken(UUID.randomUUID().toString());
 		publicUser.setUsername(usernameObj.newUsername);
-		return this.publicUserService.save(publicUser, usernameObj.baseUrl);
+		return this.publicUserService.save(publicUser, true, request);
 	}
 	
 	@RequestMapping(value="getGamesSummary", method=RequestMethod.GET)
@@ -179,8 +181,6 @@ public class PublicUserController {
 		public String oldUsername;
 
 		public String newUsername;
-
-		public String baseUrl;
 	}
 
 }

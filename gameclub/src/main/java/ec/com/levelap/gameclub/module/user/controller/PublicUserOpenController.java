@@ -5,6 +5,7 @@ import java.security.GeneralSecurityException;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class PublicUserOpenController {
 	private PublicUserService publicUserService;
 	
 	@RequestMapping(value="signIn", method=RequestMethod.POST)
-	public ResponseEntity<?> signIn(@RequestBody SignObj signObj) throws ServletException, MessagingException, IOException, GeneralSecurityException {
-		return publicUserService.signIn(signObj.publicUser, signObj.baseUrl, signObj.token);
+	public ResponseEntity<?> signIn(@RequestBody SignObj signObj, HttpServletRequest request) throws ServletException, MessagingException, IOException, GeneralSecurityException {
+		return publicUserService.signIn(signObj.publicUser, signObj.token, request);
 	}
 	
 	@RequestMapping(value="verifyAccount/{token}/{id}", method=RequestMethod.GET)
@@ -74,9 +75,8 @@ public class PublicUserOpenController {
 	}
 	
 	private static class SignObj {
-		public PublicUser publicUser;
 		
-		public String baseUrl;
+		public PublicUser publicUser;
 		
 		public String token;
 	}

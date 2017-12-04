@@ -9,6 +9,7 @@ angular.module("ContactUs").controller('ContactUsCtrl', function($scope, blogsPr
 		sweet.default("Nos enviará un correo con su mensaje e información", function() {
 			openRest("publicUser/sendContactUs").post($scope.contactUs, function() {
 				notif.success("El correo se envió con éxito");
+				$scope.ContactUs = {};
 				sweet.close();
 			}, function(error) {
 				sweet.close();

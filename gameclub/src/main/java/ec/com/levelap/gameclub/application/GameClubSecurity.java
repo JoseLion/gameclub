@@ -16,14 +16,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import ec.com.levelap.gameclub.module.mail.service.MailService;
+import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.module.user.entity.AdminUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.repository.AdminUserRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.mail.MailParameters;
+import ec.com.levelap.mail.entity.LevelapMail;
 import ec.com.levelap.security.SecurityConfig;
 
 public class GameClubSecurity implements SecurityConfig {
@@ -170,7 +170,7 @@ public class GameClubSecurity implements SecurityConfig {
 	@Override
 	public boolean resetUserPassword(String username, String extra) {
 		if (extra != null) {
-			MailService mail = ApplicationContextHolder.getContext().getBean(MailService.class);
+			GameClubMailService mail = ApplicationContextHolder.getContext().getBean(GameClubMailService.class);
 			
 			if (extra.equals(Const.ADMIN_USER)) {
 				AdminUserRepo adminUserRepo = ApplicationContextHolder.getContext().getBean(AdminUserRepo.class);
@@ -189,13 +189,13 @@ public class GameClubSecurity implements SecurityConfig {
 					user.setPassword(encodedPassword);
 					user.setHasTempPassword(true);
 					
-					MailParameters mailParameters = new MailParameters();
-					mailParameters.setRecipentTO(Arrays.asList(user.getUsername()));
+					LevelapMail levelapMail = new LevelapMail();
+					levelapMail.setRecipentTO(Arrays.asList(user.getUsername()));
 					Map<String, String> params = new HashMap<>();
 					params.put("password", randomPassword);
 					
 					try {
-						mail.sendMailWihTemplate(mailParameters, "TMPWRD", params);
+						mail.sendMailWihTemplate(levelapMail, "TMPWRD", params);
 					} catch (MessagingException e) {
 						e.printStackTrace();
 					}
@@ -222,13 +222,13 @@ public class GameClubSecurity implements SecurityConfig {
 					user.setPassword(encodedPassword);
 					user.setHasTempPassword(true);
 					
-					MailParameters mailParameters = new MailParameters();
-					mailParameters.setRecipentTO(Arrays.asList(user.getUsername()));
+					LevelapMail levelapMail = new LevelapMail();
+					levelapMail.setRecipentTO(Arrays.asList(user.getUsername()));
 					Map<String, String> params = new HashMap<>();
 					params.put("password", randomPassword);
 					
 					try {
-						mail.sendMailWihTemplate(mailParameters, "TMPWRD", params);
+						mail.sendMailWihTemplate(levelapMail, "TMPWRD", params);
 					} catch (MessagingException e) {
 						e.printStackTrace();
 					}

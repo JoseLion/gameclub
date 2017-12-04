@@ -54,13 +54,4 @@ angular.module('GameClub', [
 	}
 
 	return {url: $location.$$protocol + '://' + $location.$$host + ':' + port + '/gameclub'};
-})
-.service('urlReportsPath', function($location) {
-	let port = '8090';
-
-	if ($location.$$port == 443) {
-		port = '8390';
-	}
-
-	return {url: $location.$$protocol + '://' + $location.$$host + ':' + port + '/gameclub-reports/frameset?__report='};
 });

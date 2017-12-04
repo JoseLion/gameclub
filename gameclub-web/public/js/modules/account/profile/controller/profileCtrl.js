@@ -102,7 +102,9 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         
         if ((today.getFullYear() - birthday.getFullYear()) < 18) {
             return true;
-        } else {
+        }
+
+        if ((today.getFullYear() - birthday.getFullYear()) == 18) {
             if (today.getMonth() < birthday.getMonth()) {
                 return true;
             }
@@ -268,7 +270,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     };
 
     $scope.chooseAvatar = function() {
-        let modal = $uibModal.open({
+        $uibModal.open({
             size: 'lg',
             backdrop: 'static',
             templateUrl: 'js/modules/account/profile/view/chooseAvatar.html',
@@ -312,7 +314,5 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         if (!$scope.currentUserTemp.documentRuc) {
             $scope.currentUserTemp.documentRuc = null;
         }
-        
-        console.log("ruc: ", $scope.currentUserTemp.documentRuc);
     }
 });

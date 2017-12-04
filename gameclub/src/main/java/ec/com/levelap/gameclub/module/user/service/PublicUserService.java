@@ -33,11 +33,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.cryptography.LevelapCryptography;
-import ec.com.levelap.gameclub.module.mail.service.MailService;
+import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.settings.entity.Setting;
 import ec.com.levelap.gameclub.module.settings.service.SettingService;
@@ -51,7 +52,7 @@ import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.mail.MailParameters;
+import ec.com.levelap.mail.entity.LevelapMail;
 
 @Service
 public class PublicUserService extends BaseService<PublicUser> {
@@ -66,7 +67,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 	private SettingService settingService;
 
 	@Autowired
-	private MailService mailService;
+	private GameClubMailService mailService;
 	
 	@Autowired
 	private MessageService messageService;
@@ -123,12 +124,12 @@ public class PublicUserService extends BaseService<PublicUser> {
 		}
 		
 		URL referrer = new URL(request.getHeader("referer"));
-		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
 		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
 
-		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params, request);
+		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params, request);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -149,12 +150,12 @@ public class PublicUserService extends BaseService<PublicUser> {
 		publicUser = publicUserRepo.save(publicUser);
 		
 		URL referrer = new URL(request.getHeader("referer"));
-		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
 		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
 
-		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params, request);
+		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params, request);
 	}
 
 	@Transactional
@@ -162,11 +163,11 @@ public class PublicUserService extends BaseService<PublicUser> {
 		if (sendVerification) {
 			try {
 				URL referrer = new URL(request.getHeader("referer"));
-				MailParameters mailParameters = new MailParameters();
-				mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
+				LevelapMail levelapMail = new LevelapMail();
+				levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 				Map<String, String> params = new HashMap<>();
 				params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
-				mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params, request);
+				mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params, request);
 			} catch (MessagingException ex) {
 				return new ResponseEntity<>(new ErrorControl("No se pudo enviar el código al correo indicado, por favor vuelve a intentarlo", true), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
@@ -184,8 +185,9 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Transactional
 	public void sendContactUs(ContactUs contactUs) throws ServletException, MessagingException {
-		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		
 		Map<String, String> params = new HashMap<>();
 		params.put("name", contactUs.name);
 		params.put("email", contactUs.email);
@@ -197,7 +199,23 @@ public class PublicUserService extends BaseService<PublicUser> {
 			params.put("phone", "N/A");
 		}
 
-		mailService.sendMailWihTemplate(mailParameters, "CNCTUS", params);
+		mailService.sendMailWihTemplate(levelapMail, "CNCTUS", params);
+	}
+	
+	public void sendWorkForUs(Map<String, String> work, MultipartFile file) throws ServletException, MessagingException, IllegalStateException, IOException {
+		File attachment = new File(file.getOriginalFilename());
+		file.transferTo(attachment);
+		
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		levelapMail.setAttachments(Arrays.asList(attachment));
+		
+		Map<String, String> params = new HashMap<>();
+		params.put("name", work.get("name"));
+		params.put("email", work.get("email"));
+		params.put("message", work.get("message"));
+
+		mailService.sendMailWihTemplate(levelapMail, "WRKWUS", params);
 	}
 
 	@Transactional
@@ -251,8 +269,8 @@ public class PublicUserService extends BaseService<PublicUser> {
 		
 		publicUserRepo.save(publicUser);
 		
-		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String, String> params = new HashMap<>();
 		params.put("name", publicUser.getName() + " " + publicUser.getLastName());
@@ -261,7 +279,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		params.put("province", publicUser.getLocation().getParent().getName());
 		params.put("city", publicUser.getLocation().getName());
 
-		mailService.sendMailWihTemplate(mailParameters, "SUBCBR", params);
+		mailService.sendMailWihTemplate(levelapMail, "SUBCBR", params);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -19,11 +19,11 @@ import org.springframework.stereotype.Service;
 
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.service.BaseService;
-import ec.com.levelap.gameclub.module.mail.service.MailService;
+import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.module.user.entity.AdminUser;
 import ec.com.levelap.gameclub.module.user.repository.AdminUserRepo;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.mail.MailParameters;
+import ec.com.levelap.mail.entity.LevelapMail;
 
 @Service
 public class AdminUserService extends BaseService<AdminUser> {
@@ -35,7 +35,7 @@ public class AdminUserService extends BaseService<AdminUser> {
 	private AdminUserRepo adminUserRepo;
 	
 	@Autowired
-	private MailService mail;
+	private GameClubMailService mail;
 	
 	@Transactional
 	public AdminUser getCurrentUser() throws ServletException {
@@ -89,13 +89,13 @@ public class AdminUserService extends BaseService<AdminUser> {
 			adminUser.setPassword(encodedPassword);
 			adminUser.setHasTempPassword(true);
 			
-			MailParameters mailParameters = new MailParameters();
-			mailParameters.setRecipentTO(Arrays.asList(adminUser.getUsername()));
+			LevelapMail levelapMail = new LevelapMail();
+			levelapMail.setRecipentTO(Arrays.asList(adminUser.getUsername()));
 			Map<String, String> params = new HashMap<>();
 			params.put("password", randomPassword);
 			
 			try {
-				mail.sendMailWihTemplate(mailParameters, "TMPWRD", params);
+				mail.sendMailWihTemplate(levelapMail, "TMPWRD", params);
 			} catch (MessagingException e) {
 				e.printStackTrace();
 				adminUserRepo.save(adminUser);
@@ -122,13 +122,13 @@ public class AdminUserService extends BaseService<AdminUser> {
 		adminUser.setPassword(encodedPassword);
 		adminUser.setHasTempPassword(true);
 		
-		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList(adminUser.getUsername()));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(adminUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
 		params.put("password", randomPassword);
 		
 		try {
-			mail.sendMailWihTemplate(mailParameters, "TMPWRD", params);
+			mail.sendMailWihTemplate(levelapMail, "TMPWRD", params);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}

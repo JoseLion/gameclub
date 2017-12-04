@@ -270,7 +270,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
             size: 'lg',
             backdrop: 'static',
             templateUrl: 'js/modules/account/profile/view/chooseAvatar.html',
-            controller: chooseAvatarCtrl,
+            controller: 'ChooseAvatarCtrl',
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
                     return $ocLazyLoad.load([{

@@ -4,7 +4,7 @@
 		<div class="col-md-8 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
 			<div class="col-md-10 name">
 				<div class="col-md-3 no-padding-left no-padding-right">
-					<img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+					<img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" src="img/contact-person.svg">
 				</div>
 				<div class="col-md-9">
 					<h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
@@ -58,7 +58,7 @@
 					<div class="inbox-cell" ng-class="{'unread': !message.read, 'selected': message.selected}" ng-repeat="message in messages" ng-click="messageSelected(message)">
 						<div class="image col-md-3">
 							<img src="img/messages/gameclub-icon.svg" ng-if="!message.isLoan">
-							<img class="avatar" archive="message.fromUser ? message.fromUser.avatar.image : message.toUser.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="message.isLoan">
+							<img class="avatar" ng-src="{{getMessageAvatar(message)}}" ng-if="message.isLoan">
 						</div>
 						<div class="labels col-md-6">
 							<span id="from">{{getFromTo(message)}}</span>

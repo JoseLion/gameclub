@@ -11,10 +11,10 @@
     </div>
     <div class="col-xs-4 col-md-3 rating">
         <div class="col-md-8 col-xs-7 text-right platform">
-            <img archive="inverse ? ngModel.consoles[0].console.blackLogo : ngModel.consoles[0].console.whiteLogo" src="" class="platform" ng-if="console == null">
-            <img archive="inverse ? console.blackLogo : console.whiteLogo" src="" class="platform" ng-if="console != null">
+            <img ng-src="{{inverse ? $archiveUrl + ngModel.consoles[0].console.blackLogo.id : $archiveUrl + ngModel.consoles[0].console.whiteLogo.id}}" class="platform" ng-if="console == null">
+            <img ng-src="{{inverse ? $archiveUrl + console.blackLogo.id : $archiveUrl + console.whiteLogo}}" class="platform" ng-if="console != null">
             <div class="types">
-                <img ng-repeat="category in ngModel.categories" archive="inverse ? category.category.blackVector : category.category.whiteVector" src="">
+                <img ng-repeat="category in ngModel.categories" ng-src="{{inverse ? $archiveUrl + category.category.blackVector.id : $archiveUrl + category.category.whiteVector.id}}" src="">
             </div>
         </div>
         <div class="col-md-4 col-xs-5 text-center content-rating">

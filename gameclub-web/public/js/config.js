@@ -44,6 +44,7 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 	$rootScope.$state = $state;
 	$rootScope.Const = Const;
 	$rootScope.RestUrl = urlRestPath.url;
+	$rootScope.$archiveUrl = urlRestPath.url + "/open/archive/download/";
 
 	$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, options) {
 		$http.get(urlRestPath.url + "/api/token").then(function() {

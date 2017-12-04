@@ -4,7 +4,7 @@
         <div class="col-md-8 col-xs-10 no-padding-left no-padding-right responsive-margin-bottom">
             <div class="col-md-10 col-xs-12 name">
                 <div class="col-md-3 col-xs-4 no-padding-left no-padding-right">
-                    <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+                    <img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" src="img/contact-person.svg">
                 </div>
                 <div class="col-md-9 col-xs-8">
                     <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>

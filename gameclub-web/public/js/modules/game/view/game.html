@@ -32,12 +32,12 @@
                     </ui-select-match>
                     <ui-select-choices repeat="cross in game.consoles | filter: $select.console" class="text-center">
                         <div ng-bind-html="'' | highlight: $select.console"></div>
-                        <img archive="cross.console.whiteLogo" >
+                        <img ng-src="{{$archiveUrl + cross.console.whiteLogo.id}}">
                     </ui-select-choices>
                 </ui-select>
             </form>
             <div class="col-md-12 category" ng-repeat="cross in game.categories">
-                <img archive="cross.category.blackVector" src="" >
+                <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}">
             </div>
         </div>
     </section>

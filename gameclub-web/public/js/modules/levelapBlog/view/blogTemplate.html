@@ -51,7 +51,7 @@
                                         <path d="M47 3 L3 47 C3 47 0 50 3 53 L47 97 C47 97 50 100 53 97 L97 53 C97 53 100 50 97 47 L53 3 C53 3 50 0 47 3 z" fill="rgba(255, 255, 255, 0)"></path>
                                     </clipPath>
                                     <image width="100" height="100" xlink:href ng-href="{{diamondBorderImg}}" ng-style="getClipPath('border')" style="cursor: pointer;" ng-click="goToDetails(article)"></image>
-                                    <image width="100" height="100" xlink:href archive="article.diamond" ng-style="getClipPath('diamond')" style="cursor: pointer;" ng-click="goToDetails(article)">
+                                    <image width="100" height="100" xlink:href ng-src="{{$archiveUrl + article.diamond.id}}" ng-style="getClipPath('diamond')" style="cursor: pointer;" ng-click="goToDetails(article)">
                                 </svg> -->
                             </div>
 

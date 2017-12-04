@@ -1,4 +1,4 @@
-angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http, urlRestPath, openReport) {
+angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http) {
 
 	$scope.transactions = [];
 	$scope.idUser=0;
@@ -47,10 +47,6 @@ angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope,
 				}
 			}
 		});
-	};
-
-	$scope.viewHistorial = function() {
-		openReport.excel('transactions', {owner: $rootScope.currentUser.id});
 	};
 
 	function goToProfileRuc() {

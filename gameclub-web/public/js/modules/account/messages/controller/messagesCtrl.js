@@ -485,7 +485,25 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				break;
 		}
 		return lendDay;
-	};
+	}
+
+	$scope.getMessageAvatar = function(message) {
+		if (message.fromUser || message.toUser) {
+			if (message.fromUser) {
+				return $rootScope.$archiveUrl + message.fromUser.avatar.image.id;
+			}
+
+			if (message.toUser) {
+				return $rootScope.$archiveUrl + message.toUser.avatar.image.id;
+			}
+		} else {
+			if (message.read && !message.selected) {
+				return 'img/contact-person-black.svg';
+			} else {
+				return 'img/contact-person.svg';
+			}
+		}
+	}
 
 	function clearCanvas() {
 		$scope.kit = null;

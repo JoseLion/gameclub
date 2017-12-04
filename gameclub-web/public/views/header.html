@@ -60,7 +60,7 @@
                                     <span class="name">{{currentUser.name}}</span> <span class="last-name">{{currentUser.lastName}}</span>
                                 </span>
 
-                                <img archive="currentUser.avatar.image" placeholder="img/contact-person.svg" class="avatar">
+                                <img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" src="img/contact-person.svg" class="avatar">
                                 <span class="label label-default notification" ng-if="currentUser.unreadMessages > 0">{{currentUser.unreadMessages}}</span>
                             </button>
 

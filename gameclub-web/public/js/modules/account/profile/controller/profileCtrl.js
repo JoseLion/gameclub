@@ -277,7 +277,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
                 loadPlugin: function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
                         name: 'Profile',
-                        files: ['js/modules/account/profile/controller/ChooseAvatarCtrl.js', '/js/modules/account/profile/style/chooseAvatar.less']
+                        files: ['js/modules/account/profile/controller/chooseAvatarCtrl.js', '/js/modules/account/profile/style/chooseAvatar.less']
                     }]);
                 },
 

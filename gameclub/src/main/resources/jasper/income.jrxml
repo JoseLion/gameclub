@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="income" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eb0dd645-d2d9-4028-9f70-6b00cb21e647">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="201"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="792"/>
 	<parameter name="name" class="java.lang.String">
@@ -97,7 +97,7 @@ ORDER BY i.creation_date DESC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="56" splitType="Stretch">
+		<band height="106" splitType="Stretch">
 			<staticText>
 				<reportElement positionType="Float" mode="Transparent" x="0" y="30" width="802" height="26" uuid="292d99f4-c403-4634-afea-4ff46668bc2d"/>
 				<textElement textAlignment="Center">
@@ -112,109 +112,22 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<text><![CDATA[GameClub]]></text>
 			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch">
-			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="0" y="0" width="100" height="14" uuid="31aecd8f-4836-4a27-bd0d-612d7ee13a0e"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement x="640" y="0" width="108" height="13" uuid="a9939c45-9004-4b26-a573-9f984e260207"/>
+				<reportElement x="642" y="56" width="108" height="13" uuid="a9939c45-9004-4b26-a573-9f984e260207"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-		</band>
-	</pageHeader>
-	<columnHeader>
-		<band height="25" splitType="Stretch">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
-			<staticText>
-				<reportElement x="0" y="0" width="82" height="25" uuid="941e935d-f24a-40c4-aa1a-c42eeeed29d7"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="2" y="56" width="128" height="14" uuid="31aecd8f-4836-4a27-bd0d-612d7ee13a0e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nombre(s)]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="82" y="0" width="80" height="25" uuid="2ffd4ce1-9b7a-4498-ae76-42a2ce7d8dd4"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Apellidos(s)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="162" y="0" width="80" height="25" uuid="02d69cbd-296f-4967-b327-8890f3848b0c"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Dirección]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="242" y="0" width="80" height="25" uuid="ed047234-c9fa-476a-b024-3cb62eebdb1f"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[N° Cédula]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="322" y="0" width="80" height="25" uuid="a6c7f3df-cd76-4c28-92a6-2fc478a23bbe"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Transacción]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="402" y="0" width="80" height="25" uuid="c41400f1-d4df-4740-9b66-ba51a57e08fe"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Juego]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="482" y="0" width="80" height="25" uuid="16a656cf-4f7e-4e21-b668-ee1551f8fc03"/>
+				<reportElement x="482" y="81" width="80" height="25" uuid="16a656cf-4f7e-4e21-b668-ee1551f8fc03"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -227,20 +140,7 @@ ORDER BY i.creation_date DESC]]>
 				<text><![CDATA[Consola]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="562" y="0" width="80" height="25" uuid="d6c857f8-ce24-45e6-a7d6-25e6a0c728e1"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[SubTotal]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="642" y="0" width="80" height="25" uuid="8ca2bbfc-5e9e-4ec7-a1fa-e9d1e6dfb9cd"/>
+				<reportElement x="642" y="81" width="80" height="25" uuid="8ca2bbfc-5e9e-4ec7-a1fa-e9d1e6dfb9cd"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -253,7 +153,85 @@ ORDER BY i.creation_date DESC]]>
 				<text><![CDATA[IVA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="722" y="0" width="80" height="25" uuid="6747b2eb-c39f-4f42-af13-cd4e5003a380"/>
+				<reportElement x="162" y="81" width="80" height="25" uuid="02d69cbd-296f-4967-b327-8890f3848b0c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="81" width="80" height="25" uuid="a6c7f3df-cd76-4c28-92a6-2fc478a23bbe"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transacción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="81" width="80" height="25" uuid="2ffd4ce1-9b7a-4498-ae76-42a2ce7d8dd4"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="562" y="81" width="80" height="25" uuid="d6c857f8-ce24-45e6-a7d6-25e6a0c728e1"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SubTotal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="81" width="82" height="25" uuid="941e935d-f24a-40c4-aa1a-c42eeeed29d7"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="81" width="80" height="25" uuid="ed047234-c9fa-476a-b024-3cb62eebdb1f"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="722" y="81" width="80" height="25" uuid="6747b2eb-c39f-4f42-af13-cd4e5003a380"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -265,8 +243,21 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="402" y="81" width="80" height="25" uuid="c41400f1-d4df-4740-9b66-ba51a57e08fe"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Juego]]></text>
+			</staticText>
 		</band>
-	</columnHeader>
+	</title>
 	<detail>
 		<band height="25" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
@@ -279,7 +270,7 @@ ORDER BY i.creation_date DESC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
@@ -293,7 +284,7 @@ ORDER BY i.creation_date DESC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{last_name}]]></textFieldExpression>
@@ -307,7 +298,7 @@ ORDER BY i.creation_date DESC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{billing_address}]]></textFieldExpression>
@@ -321,7 +312,7 @@ ORDER BY i.creation_date DESC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
@@ -335,7 +326,7 @@ ORDER BY i.creation_date DESC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{transaction}]]></textFieldExpression>
@@ -349,7 +340,7 @@ ORDER BY i.creation_date DESC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{game}]]></textFieldExpression>
@@ -363,7 +354,7 @@ ORDER BY i.creation_date DESC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{console}]]></textFieldExpression>
@@ -377,7 +368,7 @@ ORDER BY i.creation_date DESC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
@@ -391,7 +382,7 @@ ORDER BY i.creation_date DESC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{iva}]]></textFieldExpression>
@@ -405,20 +396,11 @@ ORDER BY i.creation_date DESC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

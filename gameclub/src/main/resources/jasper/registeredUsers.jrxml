@@ -6,8 +6,14 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="833"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="673"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="313"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
 	<parameter name="name" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="document" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="username" class="java.lang.String">
 		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="startDate" class="java.lang.String">
@@ -16,25 +22,18 @@
 	<parameter name="endDate" class="java.lang.String">
 		<defaultValueExpression><![CDATA[(new SimpleDateFormat("dd-MM-yyyy")).format(new Date())]]></defaultValueExpression>
 	</parameter>
-	<parameter name="document" class="java.lang.String">
-		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
-	</parameter>
-	<parameter name="username" class="java.lang.String">
-		<defaultValueExpression><![CDATA[new String("")]]></defaultValueExpression>
-	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT pu.name,
 	pu.last_name,
 	pu.username,
 	(CASE WHEN (pu.status = TRUE) THEN 'Activo' ELSE 'Inactivo' END) AS status,
 	pu.creation_date,
-	pu.document,
+	(CASE WHEN (pu.document  IS NULL) THEN '' ELSE pu.document END) AS document,
 	(CASE WHEN (pu.document_ruc IS NULL) THEN '' ELSE (pu.document_ruc) END) AS document_ruc,
-	pu.birth_date,
-	pu.profession,
-	(SELECT lp.name FROM commons.location l INNER JOIN public_user pus ON pus.location=l.id INNER JOIN commons.location lp ON l.parent=lp.id WHERE pus.id=pu.id) AS province,
-	(SELECT l.name FROM commons.location l INNER JOIN public_user pus ON pus.location=l.id WHERE pus.id=pu.id) AS city,
+	(CASE WHEN (TO_CHAR(pu.birth_date, 'dd-MM-yyyy') IS NULL) THEN '' ELSE (TO_CHAR(pu.birth_date, 'dd-MM-yyyy')) END) AS birth_date,
+	(CASE WHEN (pu.profession IS NULL) THEN '' ELSE (pu.profession) END) AS profession,
+	(CASE WHEN ((SELECT lp.name FROM commons.location l INNER JOIN public_user pus ON pus.location=l.id INNER JOIN commons.location lp ON l.parent=lp.id WHERE pus.id=pu.id) IS NULL) THEN '' ELSE (SELECT lp.name FROM commons.location l INNER JOIN public_user pus ON pus.location=l.id INNER JOIN commons.location lp ON l.parent=lp.id WHERE pus.id=pu.id) END) AS province ,
+	(CASE WHEN ((SELECT l.name FROM commons.location l INNER JOIN public_user pus ON pus.location=l.id WHERE pus.id=pu.id) IS NULL) THEN '' ELSE (SELECT l.name FROM commons.location l INNER JOIN public_user pus ON pus.location=l.id WHERE pus.id=pu.id) END) AS city,
 	(CASE WHEN (pu.address_ruc IS NULL) THEN '' ELSE (pu.address_ruc) END) AS address_ruc,
 	(CASE WHEN (pu.phone_ruc IS NULL) THEN '' ELSE (pu.phone_ruc) END) AS phone_ruc,
 	ru.total_games,
@@ -45,15 +44,15 @@
 	ru.total_request_accepted,
 	ru.total_request_rejected
 FROM registered_users ru
-	LEFT JOIN public_user pu ON 
+	INNER JOIN public_user pu ON 
 	 pu.id = ru.public_user_id
 WHERE 
-				(UPPER(pu.name) LIKE UPPER('%' ||  $P{name}  || '%') OR 
+				(UPPER(pu.name) LIKE UPPER('%' || $P{name} || '%') OR 
 				UPPER(pu.last_name) LIKE UPPER('%' || $P{name} || '%') OR 
 				UPPER(pu.name || ' ' || pu.last_name) LIKE UPPER('%' || $P{name} || '%')) AND 
 				(pu.document IS NULL OR UPPER(pu.document) LIKE UPPER('%' || $P{document} || '%')) AND 
 				(UPPER(pu.username) LIKE UPPER('%' || $P{username} || '%')) AND 
-				(DATE(pu.creation_date) BETWEEN TO_DATE( $P{startDate},'dd-MM-yyyy') AND TO_DATE( $P{endDate},'dd-MM-yyyy'))
+				(DATE(pu.creation_date) BETWEEN TO_DATE( $P{startDate} ,'dd-MM-yyyy') AND TO_DATE( $P{endDate} ,'dd-MM-yyyy'))
 ORDER BY pu.creation_date DESC]]>
 	</queryString>
 	<field name="name" class="java.lang.String">
@@ -68,9 +67,8 @@ ORDER BY pu.creation_date DESC]]>
 		<property name="com.jaspersoft.studio.field.label" value="username"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
 	</field>
-	<field name="document_ruc" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="document_ruc"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
+	<field name="status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
 	</field>
 	<field name="creation_date" class="java.sql.Timestamp">
 		<property name="com.jaspersoft.studio.field.label" value="creation_date"/>
@@ -80,7 +78,11 @@ ORDER BY pu.creation_date DESC]]>
 		<property name="com.jaspersoft.studio.field.label" value="document"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
 	</field>
-	<field name="birth_date" class="java.sql.Timestamp">
+	<field name="document_ruc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="document_ruc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
+	</field>
+	<field name="birth_date" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="birth_date"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="public_user"/>
 	</field>
@@ -131,12 +133,11 @@ ORDER BY pu.creation_date DESC]]>
 		<property name="com.jaspersoft.studio.field.label" value="total_request_rejected"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="registered_users"/>
 	</field>
-	<field name="status" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="166" splitType="Stretch">
 			<staticText>
 				<reportElement positionType="Float" mode="Transparent" x="1" y="1" width="802" height="28" uuid="1869e2c1-a931-483b-b989-d84321fbec61"/>
 				<textElement textAlignment="Center">
@@ -151,31 +152,22 @@ ORDER BY pu.creation_date DESC]]>
 				</textElement>
 				<text><![CDATA[Usuarios Registrados]]></text>
 			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch">
-			<textField>
-				<reportElement x="640" y="0" width="108" height="13" uuid="f56aec37-ac28-4afe-a81a-9da06da4e4a7"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="0" y="0" width="130" height="14" uuid="bb3d0ccc-e9b4-4ce1-936a-79e54577e7e9"/>
+				<reportElement x="0" y="59" width="130" height="14" uuid="bb3d0ccc-e9b4-4ce1-936a-79e54577e7e9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-		</band>
-	</pageHeader>
-	<columnHeader>
-		<band height="86" splitType="Stretch">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+			<textField>
+				<reportElement x="670" y="60" width="108" height="13" uuid="f56aec37-ac28-4afe-a81a-9da06da4e4a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="42" height="86" uuid="275d8cbe-b17d-42cd-ae9b-8be3f0762a2f"/>
+				<reportElement x="762" y="80" width="40" height="86" uuid="c7df331b-00a4-4b9a-b20f-c3f2fcece466"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -185,153 +177,10 @@ ORDER BY pu.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nombre(s)]]></text>
+				<text><![CDATA[N° Solicitudes Rechazadas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="42" y="0" width="40" height="86" uuid="998bc46d-c07b-4a44-84e2-acec6ac0151f"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Apellido(s)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="82" y="0" width="40" height="86" uuid="65d5f920-2cd0-4f91-8b02-fe40db7e484a"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Mail]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="122" y="0" width="40" height="86" uuid="825c5331-509f-4e41-8548-a4b2476896e0"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Estado]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="162" y="0" width="40" height="86" uuid="02384dcc-9619-4501-acaa-cedba933ccdc"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fecha Creación]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="202" y="0" width="40" height="86" uuid="d17bcace-3ba5-4ff3-9469-3fb0fe6dff0f"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[N° Cédula]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="242" y="0" width="40" height="86" uuid="b71f1841-0f43-4936-a083-24bbb756b778"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[N° RUC]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="282" y="0" width="40" height="86" uuid="6409a1b5-7ba0-4dbf-ad55-5c1ce3450018"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fecha Nacimiento]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="322" y="0" width="40" height="86" uuid="cac7e787-25be-4d43-8fce-728142e1d005"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Ocupación]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="362" y="0" width="40" height="86" uuid="fb76513a-890b-4e26-be30-ccf4757bbe26"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Provincia]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="402" y="0" width="40" height="86" uuid="40fd8a60-8e8c-4d28-bb28-fb9fe24b6fb8"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Ciudad]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="442" y="0" width="40" height="86" uuid="a00e670d-4dd0-4fa5-9f38-a569722dbcec"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Dirección RUC]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="482" y="0" width="40" height="86" uuid="538fc353-d70b-4d56-9bc2-3e9459ee0803"/>
+				<reportElement x="482" y="80" width="40" height="86" uuid="ea5ccf13-4915-4344-a8ad-0afc1a728b76"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -344,7 +193,7 @@ ORDER BY pu.creation_date DESC]]>
 				<text><![CDATA[N° Teléfono RUC]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="522" y="0" width="40" height="86" uuid="0ef8796a-0b46-469a-a08c-d9b231a1744d"/>
+				<reportElement x="42" y="80" width="40" height="86" uuid="5557c04e-04a2-4b17-9009-5f9fa54876af"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -354,62 +203,10 @@ ORDER BY pu.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Juegos Cargados]]></text>
+				<text><![CDATA[Apellido(s)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="562" y="0" width="40" height="86" uuid="8ee318ac-dd15-42cc-9558-0d99d52d2c5f"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[N° Alquileres Solicitados]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="602" y="0" width="40" height="86" uuid="0cba8745-1785-4aed-b72d-57e105fa585c"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[N° Alquileres Aceptados]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="642" y="0" width="40" height="86" uuid="c164ee95-4cf9-4a24-8f98-798636a4c624"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[N° Alquileres Rechazados]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="682" y="0" width="40" height="86" uuid="5f873526-0777-48d8-ae13-f2804407e9e2"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[N° Solicitudes Recibidas]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="722" y="0" width="40" height="86" uuid="47e591fc-17a8-4471-8298-4937cdc6536f"/>
+				<reportElement x="722" y="80" width="40" height="86" uuid="e62b3273-a7c7-4a27-82ec-cbe45ad99960"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -422,7 +219,358 @@ ORDER BY pu.creation_date DESC]]>
 				<text><![CDATA[N° Solicitudes Aceptadas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="762" y="0" width="40" height="86" uuid="74748a9c-9fae-4dc4-bfc3-b03afd0cd04d"/>
+				<reportElement x="282" y="80" width="40" height="86" uuid="0a3c8358-d11f-445c-aafe-066683a50e95"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="80" width="40" height="86" uuid="a38863f7-9802-4811-9629-f555cff0aaa7"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="80" width="40" height="86" uuid="c25bd6e9-ce13-47a8-b24b-1a2df9537d30"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="722" y="80" width="40" height="86" uuid="0473a490-c5b1-4629-8b42-5e23848125cb"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Solicitudes Aceptadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="80" width="40" height="86" uuid="56266728-eae3-44b8-8dba-120904118a10"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Creación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="80" width="40" height="86" uuid="f2c16547-a9b0-4786-88d8-b2b6b99c7158"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="522" y="80" width="40" height="86" uuid="17b6290c-8c92-45c8-b392-80cc31832ca6"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Juegos Cargados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="42" height="86" uuid="3f151678-5606-4dbf-aeba-ab4bcaba46df"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="602" y="80" width="40" height="86" uuid="6757f157-afa1-4998-8527-5a96f7b13c64"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Alquileres Aceptados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="642" y="80" width="40" height="86" uuid="e0f9c297-b712-4e61-b6e5-2844677b0b99"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Alquileres Rechazados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="562" y="80" width="40" height="86" uuid="3827b932-d571-4898-a0b1-a5213b11c19e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Alquileres Solicitados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="80" width="40" height="86" uuid="9ed45445-d84d-45e3-84bc-c1da83d499c0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="42" height="86" uuid="bc34a734-51be-4132-91bd-37ae5a5ab157"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="80" width="40" height="86" uuid="92a06e00-0d57-4769-a1c3-76366254e98c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ocupación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="80" width="40" height="86" uuid="9ac6bb1c-7e1a-4af9-aacb-1da168bab789"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Creación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="80" width="40" height="86" uuid="2e0f725e-ff72-4228-a486-c6284a9cd6ac"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Creación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="562" y="80" width="40" height="86" uuid="b490f2d8-47c8-41eb-8775-27f4eaf4a787"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Alquileres Solicitados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="362" y="80" width="40" height="86" uuid="439efc9e-a348-4b77-9ccd-f3e0683b31b6"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Provincia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="80" width="40" height="86" uuid="3a9e7e77-556e-46b3-9f6c-8a89253fed2e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Teléfono RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="42" height="86" uuid="b0be6125-dfc6-4ef4-b3d2-080c263a0087"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="80" width="40" height="86" uuid="4269e42a-53c8-45fa-8a85-9d7f2f83edcc"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="362" y="80" width="40" height="86" uuid="3cae617d-c8dc-4618-a2c0-addb380a1aa0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Provincia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="80" width="40" height="86" uuid="40c69d18-13a0-4f61-b78c-d0be345acf50"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ocupación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="80" width="40" height="86" uuid="1ccdd65c-dd6f-4298-81c3-6d2e33f6d714"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="80" width="40" height="86" uuid="1ea46e43-f88c-4190-9376-2f4bc795972d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="722" y="80" width="40" height="86" uuid="a9697e6e-8a27-413f-a1e6-7ca154a411d6"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Solicitudes Aceptadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="80" width="40" height="86" uuid="c482b8f6-ac47-4b40-a704-2c5db2741fc3"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="762" y="80" width="40" height="86" uuid="1e7fc8d2-05f1-4e7c-b9ea-76eaec8a086f"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -434,8 +582,372 @@ ORDER BY pu.creation_date DESC]]>
 				</textElement>
 				<text><![CDATA[N° Solicitudes Rechazadas]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="82" y="80" width="40" height="86" uuid="661beec6-69a8-483b-a84a-3ec15105b63b"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="402" y="80" width="40" height="86" uuid="95a3d38d-991e-4744-98a9-3904f4f6cbde"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ciudad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="762" y="80" width="40" height="86" uuid="d7a9e408-055c-44a0-ad31-f636f91a8455"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Solicitudes Rechazadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="522" y="80" width="40" height="86" uuid="67975a89-0dfc-4d72-8aea-6ae0895af108"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Juegos Cargados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="402" y="80" width="40" height="86" uuid="df8f6080-3b59-4696-8d4a-bb71b6318ac4"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ciudad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="642" y="80" width="40" height="86" uuid="e516a993-3096-47d1-bbf6-4ccfd6d18be2"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Alquileres Rechazados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="682" y="80" width="40" height="86" uuid="bb5fa305-8034-42f4-ad22-3d2a23489a2c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Solicitudes Recibidas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="522" y="80" width="40" height="86" uuid="28e777ce-0617-4008-807e-e07f16975101"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Juegos Cargados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="80" width="40" height="86" uuid="ad035950-69a3-469d-be2d-1376990b9910"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="282" y="80" width="40" height="86" uuid="be80e90f-d48d-4324-afc7-53aacabfb785"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="562" y="80" width="40" height="86" uuid="5cd85a29-ec85-4314-aa6c-0694738eb75f"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Alquileres Solicitados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="80" width="40" height="86" uuid="7d372a5c-4d65-48c5-a1e5-ee4b6cb001c9"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ocupación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="80" width="40" height="86" uuid="d92f0a36-a5c5-4351-b38f-a18fd1d2bb47"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="602" y="80" width="40" height="86" uuid="2e9c3b14-71ac-4338-ba89-2c17d33e409d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Alquileres Aceptados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="80" width="40" height="86" uuid="e43110bc-8c8d-446d-a2ac-1b6c835855d1"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="80" width="40" height="86" uuid="f02b4df9-5b83-4bfe-b652-42126993911d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="402" y="80" width="40" height="86" uuid="bcdadd8f-c57c-48cc-9910-87acca41ac01"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ciudad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="80" width="40" height="86" uuid="a7d04f67-9421-4866-912b-48bc38a52674"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Teléfono RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="362" y="80" width="40" height="86" uuid="09cbff5c-f360-4fbc-9465-d753aaf3e16f"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Provincia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="80" width="40" height="86" uuid="a2f3bf39-20c3-4d88-a3b2-f9d0e8544f25"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="80" width="40" height="86" uuid="b7fe1881-fb7b-40f1-ac90-75b5c7459bf9"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="80" width="40" height="86" uuid="682e6869-5f3b-4d14-ba7e-670018a4cf1f"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="682" y="80" width="40" height="86" uuid="579ab2c7-1fcc-4989-aa10-3bfbd9a23cba"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Solicitudes Recibidas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="282" y="80" width="40" height="86" uuid="2502723c-d3a7-41b0-91b1-6c409dab7b2d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="682" y="80" width="40" height="86" uuid="886d6973-3483-4b76-b01a-eee62d74035d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Solicitudes Recibidas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="602" y="80" width="40" height="86" uuid="7adc2164-f4b6-4332-9960-29a50132ae30"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Alquileres Aceptados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="80" width="40" height="86" uuid="fcd4647c-0cf9-450c-852d-630901ddfe3d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="642" y="80" width="40" height="86" uuid="cb97b114-92a1-4f50-9634-1be5742a4b5b"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Alquileres Rechazados]]></text>
+			</staticText>
 		</band>
-	</columnHeader>
+	</title>
 	<detail>
 		<band height="59" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
@@ -661,13 +1173,4 @@ ORDER BY pu.creation_date DESC]]>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

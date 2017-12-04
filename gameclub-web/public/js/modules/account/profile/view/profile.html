@@ -103,32 +103,34 @@
             <div class="completed">
                 <img id="warning_img" src="img/warning-icon.svg" height="42" width="42">
                 <br>
-                <span class="col-md-12">&#191;TIENES RUC&#63;</span>
-                <h6><span class="col-md-12"><B>Si posees Ruc es obligatorio registrarlo para poder facturar todas las transacciones que se hagan. Desde pagar prestamos hasta retirar tus ganancias.</B></span></h6>
+                <div class="col-md-12">&#191;TIENES RUC&#63;</div>
+                <div class="col-md-12 ruc-info">Si posees Ruc es obligatorio registrarlo para poder facturar todas las transacciones que se hagan. Desde pagar prestamos hasta retirar tus ganancias.</div>
                 <div class="box cursor-pointer" ng-class="currentUserTemp.hasRuc ? 'checked' : ''" ng-click="currentUserTemp.hasRuc = !currentUserTemp.hasRuc" readonly="younger"></div>
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-8 form">
                 <div class="col-md-12 line valid-group">
                     <label>NOMBRE</label>
-                    <input validation type="text" ng-model="currentUserTemp.nameRuc" ng-disabled="!currentUserTemp.hasRuc" ng-required="currentUserTemp.hasRuc">
+                    <input validation type="text" ng-model="currentUserTemp.nameRuc" ng-disabled="!currentUserTemp.editingRuc" ng-required="currentUserTemp.hasRuc">
                 </div>
                 <div class="col-md-12 line valid-group">
                     <label>Nº DE RUC</label>
-                    <input validation type="text" ng-model="currentUserTemp.documentRuc" ng-disabled="!currentUserTemp.hasRuc" ng-required="currentUserTemp.hasRuc" ruc-required="currentUserTemp.hasRuc">
+                    <input validation type="text" ng-model="currentUserTemp.documentRuc" ng-disabled="!currentUserTemp.editingRuc" ng-required="currentUserTemp.hasRuc" ruc-required="currentUserTemp.hasRuc">
                 </div>
-                <div class="col-md-12 valid-group">
+                <div class="col-md-12 address valid-group">
                     <label>DIRECCIÓN DE FACTURACIÓN</label>
                     <div class="col-xs-12 col-md-12 billing-address">
-                        <textarea validation type="address" ng-model="currentUserTemp.addressRuc" ng-disabled="!currentUserTemp.hasRuc" rows="0" maxlength="150" placeholder="Calle Principal - Numeración - Calle Secundaria - Sector - Referncia" ng-required="currentUserTemp.hasRuc"></textarea>
+                        <textarea validation type="address" ng-model="currentUserTemp.addressRuc" ng-disabled="!currentUserTemp.editingRuc" rows="0" maxlength="150" placeholder="Calle Principal - Numeración - Calle Secundaria - Sector - Referncia" ng-required="currentUserTemp.hasRuc"></textarea>
                     </div>
                 </div>
                 <div class="col-md-12 line valid-group">
                     <label>TELÉFONO</label>
-                    <input validation type="phone" ng-model="currentUserTemp.phoneRuc" ng-disabled="!currentUserTemp.hasRuc" ng-required="currentUserTemp.hasRuc">
+                    <input validation type="phone" ng-model="currentUserTemp.phoneRuc" ng-disabled="!currentUserTemp.editingRuc" ng-required="currentUserTemp.hasRuc">
                 </div>
-                <div class="col-md-12 rigth">
-                    <button type="submit" class="btn btn-secundary small" ng-if="currentUserTemp.hasRuc">GUARDAR INFORMACIÓN</button>
+                <div class="col-md-12 rigth no-padding-h">
+                    <button type="button" class="btn btn-secundary small" ng-if="currentUserTemp.hasRuc && !currentUserTemp.editingRuc" ng-click="editRuc()">Editar información</button>
+                    <button type="button" class="btn btn-secundary small" ng-if="currentUserTemp.editingRuc" ng-click="cancelRucEdit()">Cancelar</button>
+                    <button type="submit" class="btn btn-secundary small" ng-if="currentUserTemp.editingRuc">Guardar información</button>
                 </div>
             </div>
 

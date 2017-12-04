@@ -12,7 +12,7 @@ angular.module('Profile').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Profile',
-					files: ['js/modules/account/profile/controller/profileCtrl.js', '/js/modules/account/profile/style/profile.less']
+					files: ['js/modules/account/profile/controller/profileCtrl.js', '/js/modules/account/profile/style/profile.less', '/js/modules/account/profile/style/profile.responsive.less']
 				}]);
 			},
 

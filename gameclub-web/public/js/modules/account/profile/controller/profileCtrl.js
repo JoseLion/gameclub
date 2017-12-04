@@ -1,7 +1,9 @@
 angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, $location, $uibModal, SweetAlert) {
     $scope.file = {};
-    let tempUserInfo;
     $scope.younger = false;
+    $scope.checkboxRuc = true;
+    let tempUserInfo;
+    let rucInfo;
 
     provinces.$promise.then(function(data) {
         $scope.provinces = data;
@@ -299,8 +301,18 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         return message;
     }
 
-    $scope.checkboxRuc = true;
-    $scope.chechRuc = function(){
-        console.log("entra al check: ");
+    $scope.editRuc = function() {
+        rucInfo = angular.copy($scope.currentUserTemp);
+        $scope.currentUserTemp.editingRuc = true;
+    }
+
+    $scope.cancelRucEdit = function() {
+        $scope.currentUserTemp = rucInfo;
+
+        if (!$scope.currentUserTemp.documentRuc) {
+            $scope.currentUserTemp.documentRuc = null;
+        }
+        
+        console.log("ruc: ", $scope.currentUserTemp.documentRuc);
     }
 });

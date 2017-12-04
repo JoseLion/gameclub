@@ -18,7 +18,7 @@ angular.module("GameClub").controller('AccountCtrl', function($scope, $rootScope
 	}
 
 	$scope.deleteAccount = function() {
-		sweet.default("Se eliminará su cuenta completamente. Este porceso es irreversible", function() {
+		sweet.default("Se eliminará su cuenta completamente. Este proceso es irreversible", function() {
 			rest("publicUser/deleteAccount").delete(function() {
 				let request = {
 					method: 'POST',

@@ -268,7 +268,7 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     };
 
     $scope.chooseAvatar = function() {
-        let modal = $uibModal.open({
+        $uibModal.open({
             size: 'lg',
             backdrop: 'static',
             templateUrl: 'js/modules/account/profile/view/chooseAvatar.html',

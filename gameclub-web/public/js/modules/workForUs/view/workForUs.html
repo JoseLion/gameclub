@@ -1,39 +1,44 @@
 <div id="work-for-us">
     <section class="contact-form">
         <div class="row">
-            <form class="col-md-12 contact-form" role="form">
-                <h2 class="title">&iquest;Quieres trabajar con <span class="game-font game-font-white">Game</span><span class="game-font-dark-blue">Club</span>?</h2>
-                <h2 class="title">&iquest;Quieres crecer con nosotros?</h2>
-                <h2 class="title">&iquest;Quieres crear una alianza?</h2>
+            <form class="col-md-12 contact-form" role="form" on-submit="send()" novalidate>
+                <h2 class="title">¿Quieres trabajar con <span class="game-font game-font-white">Game</span><span class="game-font-dark-blue">Club</span>?</h2>
+                <h2 class="title">¿Quieres crecer con nosotros?</h2>
+                <h2 class="title">¿Quieres crear una alianza?</h2>
                 <span class="description">Déjanos tu información y nosotros te contactaremos</span>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <input name="name" placeholder="Nombre..." />
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Nombre</label>
+                    <input validation name="name" placeholder="Nombre..." ng-model="work.name" required/>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <input name="email" placeholder="E-mail..." />
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">E-mail</label>
+                    <input validation name="email" placeholder="E-mail..." ng-model="work.email" required/>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <textarea name="message" placeholder="Mensaje..." rows="6"></textarea>
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Mensaje</label>
+                    <textarea validation name="message" placeholder="Mensaje..." rows="6" ng-model="work.message" required></textarea>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Archivo</label>
                     <div class="file-upload" name="file">
-                        <button class="btn btn-secundary small full">Choose file</button>
-                        <span>No file choosen</span>
+                        <button class="btn btn-secundary small full" ng-click="chooseFile()">Archivo</button>
+                        <span>{{work.file ? work.file.name : 'Selecciona un archivo'}}</span>
+                        <input validation id="work-for-us-file" type="file" ng-show="false" file-model="work.file" ng-model="work.file" required>
                     </div>
                 </div>
                 <div class="col-md-3"></div>

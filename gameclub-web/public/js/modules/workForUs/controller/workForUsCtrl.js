@@ -1,4 +1,6 @@
 angular.module('WorkForUs').controller('WorkForUsCtrl', function($scope, $rootScope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview, notif, Const) {
+    $scope.work = {};
+
     if (anchor != null) {
         $location.hash(anchor);
         //$anchorScroll.yOffset = angular.element('#fixedbar')[0].offsetHeight;
@@ -28,4 +30,7 @@ angular.module('WorkForUs').controller('WorkForUsCtrl', function($scope, $rootSc
         $scope.totalPagesMostSeen = data.totalPages;
     }
 
+    $scope.chooseFile = function() {
+        angular.element("#work-for-us-file").trigger('click');
+    }
 });

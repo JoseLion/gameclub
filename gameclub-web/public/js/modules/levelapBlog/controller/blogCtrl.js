@@ -1,11 +1,3 @@
-/*!
- * blogCtrl.js - v0.1
- * http://www.levelapsoftware.com
- * License: MIT
- * Requirements:
- * - RESTful Web Services
- * - openRest factory
- */
 angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope, $state, importantBlogs, categories, tags, blogsPreview, openRest, friendlyUrl, $location, $window) {
     importantBlogs.$promise.then(function(data) {
         $scope.importantBlogs = data.content;

@@ -1,4 +1,4 @@
-INSERT INTO commons.mail(acronym, content, subject)
+INSERT INTO commons.mail_template(code, content, subject)
 VALUES('ACNVRF',
 '<div class="col-md-1 col-xs-0"></div>
 <div class="col-md-10 col-xs-12" style="text-align:center;">

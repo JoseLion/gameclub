@@ -1,4 +1,4 @@
-INSERT INTO commons.mail(acronym, content, subject)
+INSERT INTO commons.mail_template(code, content, subject)
 VALUES('TMPWRD',
 	'<p>Sistema Game Club.</p>
 	<p></p>

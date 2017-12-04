@@ -1,4 +1,4 @@
-INSERT INTO commons.mail(acronym, content, subject)
+INSERT INTO commons.mail_template(code, content, subject)
 VALUES('MSGREQ',
 	'<p>Sistema Game Club.</p>
 	<p></p>

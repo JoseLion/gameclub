@@ -2,6 +2,7 @@ package ec.com.levelap.gameclub.module.user.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -62,6 +65,12 @@ public class PublicUserOpenController {
 	@RequestMapping(value="saveSubscriber", method=RequestMethod.POST)
 	public ResponseEntity<?> saveSubscriber(@RequestBody PublicUser publicUser) throws ServletException, MessagingException {
 		return publicUserService.saveSubscriber(publicUser);
+	}
+	
+	@RequestMapping(value="sendWorkForUs", method=RequestMethod.POST)
+	public ResponseEntity<?> sendWorkForUs(@RequestPart Map<String, String> work, @RequestPart MultipartFile file) throws ServletException, IllegalStateException, MessagingException, IOException {
+		publicUserService.sendWorkForUs(work, file);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	public static class ContactUs {

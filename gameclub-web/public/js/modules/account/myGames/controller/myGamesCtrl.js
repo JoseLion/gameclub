@@ -51,14 +51,17 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
                 background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
             };
         });
+
         forEach($scope.myGame.game.consoles, function(gameConsole) {
             openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
                 gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
             });
-            if(consoleSelected == gameConsole){
+
+            if ($scope.myGame.console.id == gameConsole.console.id) {
                 $scope.search = {console: gameConsole};
             }
         });
+
         $scope.showGame = true;
     }
 

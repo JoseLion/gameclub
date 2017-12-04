@@ -63,7 +63,7 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="59" splitType="Stretch">
+		<band height="159" splitType="Stretch">
 			<staticText>
 				<reportElement positionType="Float" mode="Transparent" x="0" y="30" width="555" height="26" uuid="b8d1621e-ab02-4ae6-a73a-fa0164c80ee1"/>
 				<textElement textAlignment="Center">
@@ -78,92 +78,44 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				</textElement>
 				<text><![CDATA[GameClub]]></text>
 			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="73" splitType="Stretch">
-			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="0" y="0" width="120" height="14" uuid="14c53376-d146-4f24-9b70-eb249fa8ff9a"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="430" y="0" width="125" height="13" uuid="f1b01aac-47ac-4f62-b8a1-802734d9e0c6"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="57" y="20" width="176" height="17" uuid="fa8010a9-0acf-42e4-aa09-6bf85286e69b"/>
-				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="0" y="20" width="57" height="16" uuid="ea0051d3-5c20-4277-9e25-c524374839fc"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Usuario:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="37" width="56" height="16" uuid="e4066c0f-a51c-45ab-8ec1-2876041bbc69"/>
+				<reportElement x="1" y="96" width="56" height="16" uuid="e4066c0f-a51c-45ab-8ec1-2876041bbc69"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° Cédula:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="57" y="37" width="176" height="17" uuid="7e104edc-7f9e-41a0-94af-f576102ecba1"/>
+				<reportElement x="57" y="79" width="176" height="17" uuid="fa8010a9-0acf-42e4-aa09-6bf85286e69b"/>
+				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="96" width="176" height="17" uuid="7e104edc-7f9e-41a0-94af-f576102ecba1"/>
 				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
 			</textField>
-		</band>
-	</pageHeader>
-	<columnHeader>
-		<band height="31" splitType="Stretch">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<staticText>
-				<reportElement x="0" y="0" width="81" height="31" uuid="5e2fa3fb-e07a-4fae-9904-1cae35a6c30e"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="0" y="79" width="57" height="16" uuid="ea0051d3-5c20-4277-9e25-c524374839fc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[FECHA]]></text>
+				<text><![CDATA[Usuario:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="81" y="0" width="79" height="31" uuid="1eb043ad-fcc9-4855-a121-b5990098208d"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="0" y="59" width="150" height="14" uuid="14c53376-d146-4f24-9b70-eb249fa8ff9a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[TRANSACCIÓN]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="160" y="0" width="79" height="31" uuid="647e910d-6929-4acf-9f95-80bd9205522d"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="59" width="125" height="13" uuid="f1b01aac-47ac-4f62-b8a1-802734d9e0c6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[JUEGO]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="239" y="0" width="79" height="31" uuid="c5797503-f783-4039-834f-df57315f47e5"/>
+				<reportElement x="239" y="128" width="79" height="31" uuid="c5797503-f783-4039-834f-df57315f47e5"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -177,7 +129,33 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 (X SEMANA)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="318" y="0" width="79" height="31" uuid="f1bdc9bd-2b43-41bd-bc9d-0eaba73b52ee"/>
+				<reportElement x="0" y="128" width="81" height="31" uuid="5e2fa3fb-e07a-4fae-9904-1cae35a6c30e"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="476" y="128" width="79" height="31" uuid="c2bdfb3e-d8e1-43f8-9e26-d6d8c1a2b072"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DÉBITO TARJETA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="128" width="79" height="31" uuid="f1bdc9bd-2b43-41bd-bc9d-0eaba73b52ee"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -190,7 +168,33 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				<text><![CDATA[CREDITO SALDO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="397" y="0" width="79" height="31" uuid="21d8d579-9fd8-4d64-b7f1-78e5bcccdf0f"/>
+				<reportElement x="160" y="128" width="79" height="31" uuid="647e910d-6929-4acf-9f95-80bd9205522d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[JUEGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="128" width="79" height="31" uuid="1eb043ad-fcc9-4855-a121-b5990098208d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRANSACCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="128" width="79" height="31" uuid="21d8d579-9fd8-4d64-b7f1-78e5bcccdf0f"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -202,21 +206,8 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				</textElement>
 				<text><![CDATA[DÉBITO SALDO]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="476" y="0" width="79" height="31" uuid="c2bdfb3e-d8e1-43f8-9e26-d6d8c1a2b072"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[DÉBITO TARJETA]]></text>
-			</staticText>
 		</band>
-	</columnHeader>
+	</title>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
@@ -299,13 +290,4 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

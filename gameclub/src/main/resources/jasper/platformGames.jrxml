@@ -93,7 +93,7 @@ ORDER BY platform_games.creation_date DESC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="127" splitType="Stretch">
+		<band height="57" splitType="Stretch">
 			<staticText>
 				<reportElement positionType="Float" mode="Transparent" x="0" y="30" width="802" height="26" uuid="893a52bd-310f-45a7-be07-fb93f5509b10"/>
 				<textElement textAlignment="Center">
@@ -108,48 +108,31 @@ ORDER BY platform_games.creation_date DESC]]>
 				</textElement>
 				<text><![CDATA[GameClub]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="640" y="56" width="108" height="13" uuid="fe5a8f59-6cc4-495b-a48e-46657f9c3262"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="0" y="56" width="130" height="14" uuid="1a102d49-e0d7-42ca-a116-789b7ff6dc64"/>
+				<reportElement x="0" y="0" width="130" height="14" uuid="1a102d49-e0d7-42ca-a116-789b7ff6dc64"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="298" y="81" width="72" height="46" uuid="8297d67e-b664-458c-9bee-9c9becb003b6"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
+			<textField>
+				<reportElement x="640" y="0" width="108" height="13" uuid="fe5a8f59-6cc4-495b-a48e-46657f9c3262"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Fecha Registro]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} +" de " +$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<staticText>
-				<reportElement x="226" y="81" width="72" height="46" uuid="4d480816-8502-47fa-a01a-d9ef8e4fe4f6"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Usuario]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="81" width="82" height="46" uuid="a1505d81-1990-4332-9a36-b70cfa9f4180"/>
+				<reportElement x="0" y="0" width="82" height="46" uuid="a1505d81-1990-4332-9a36-b70cfa9f4180"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -162,33 +145,7 @@ ORDER BY platform_games.creation_date DESC]]>
 				<text><![CDATA[Juego]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="658" y="81" width="72" height="46" uuid="21aa6beb-0482-4200-83ce-6049c684abce"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Solicitudes Aceptadas]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="514" y="81" width="72" height="46" uuid="69d40c66-10b2-45f0-8a38-5f4e0d3dc0f8"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Precio Usuario]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="82" y="81" width="72" height="46" uuid="1078e428-8dcb-49c2-afca-b8c98a73cab0"/>
+				<reportElement x="82" y="0" width="72" height="46" uuid="1078e428-8dcb-49c2-afca-b8c98a73cab0"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -201,33 +158,7 @@ ORDER BY platform_games.creation_date DESC]]>
 				<text><![CDATA[Consola]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="442" y="81" width="72" height="46" uuid="62ad33e4-d2de-4fa8-8e16-995eda82d8cf"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Precio Recomendado]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="730" y="81" width="72" height="46" uuid="12c1dbdc-ca3a-4063-bef3-7abfb1af1e69"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Solicitudes Rechazadas]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="154" y="81" width="72" height="46" uuid="f062d270-fda9-4ee5-8d7a-a9f308fc7dde"/>
+				<reportElement x="154" y="0" width="72" height="46" uuid="f062d270-fda9-4ee5-8d7a-a9f308fc7dde"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -240,7 +171,72 @@ ORDER BY platform_games.creation_date DESC]]>
 				<text><![CDATA[Fecha Lanzamiento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="586" y="81" width="72" height="46" uuid="a14b00d3-3969-4101-ac65-955a73e1d621"/>
+				<reportElement x="226" y="0" width="72" height="46" uuid="4d480816-8502-47fa-a01a-d9ef8e4fe4f6"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="0" width="72" height="46" uuid="8297d67e-b664-458c-9bee-9c9becb003b6"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Registro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="72" height="46" uuid="5782d423-8e36-4583-bc8b-18e08313f910"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="0" width="72" height="46" uuid="62ad33e4-d2de-4fa8-8e16-995eda82d8cf"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio Recomendado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="514" y="0" width="72" height="46" uuid="69d40c66-10b2-45f0-8a38-5f4e0d3dc0f8"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio Usuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="586" y="0" width="72" height="46" uuid="a14b00d3-3969-4101-ac65-955a73e1d621"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -253,7 +249,7 @@ ORDER BY platform_games.creation_date DESC]]>
 				<text><![CDATA[Solicitudes Recibidas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="370" y="81" width="72" height="46" uuid="5782d423-8e36-4583-bc8b-18e08313f910"/>
+				<reportElement x="658" y="0" width="72" height="46" uuid="21aa6beb-0482-4200-83ce-6049c684abce"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -263,10 +259,23 @@ ORDER BY platform_games.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Estado]]></text>
+				<text><![CDATA[Solicitudes Aceptadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="730" y="0" width="72" height="46" uuid="12c1dbdc-ca3a-4063-bef3-7abfb1af1e69"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Solicitudes Rechazadas]]></text>
 			</staticText>
 		</band>
-	</title>
+	</columnHeader>
 	<detail>
 		<band height="42" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
@@ -395,4 +404,13 @@ ORDER BY platform_games.creation_date DESC]]>
 			</textField>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
 </jasperReport>

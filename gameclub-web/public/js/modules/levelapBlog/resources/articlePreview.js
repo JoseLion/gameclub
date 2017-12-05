@@ -1,4 +1,4 @@
-angular.module('LevelapBlog').directive('articlePreview', function(openRest, $location, $state, friendlyUrl, BlogConst) {
+angular.module('LevelapBlog').directive('articlePreview', function(openRest, $location, $state, friendlyUrl, BlogConst, urlRestPath) {
 	let baseSrc;
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
         let script = angular.element(document.getElementsByTagName("script")[i]);
@@ -18,6 +18,7 @@ angular.module('LevelapBlog').directive('articlePreview', function(openRest, $lo
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
+			$scope.$archiveUrl = urlRestPath.url + "/open/archive/download/";
 			$scope.BlogConst = BlogConst;
 			$scope.socialShareUrl = $location.$$absUrl;
 			$scope.socialShareUrlDomain = $location.$$protocol + "://" + $location.$$host;

@@ -324,13 +324,10 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         return null;
     }
 
-    // $scope.$watch("loan.cost", function(newValue) {
-    //     $scope.slider.value = 0.0;
-    
-    //     if (newValue != null && $rootScope.currentUser != null && $scope.loan != null && $scope.paymentViewOpen) {
-    //         $scope.slider.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= newValue ? newValue : parseFloat($rootScope.currentUser.shownBalance));
-    //     }
-    // });
+    $scope.getGameCost = function(cross) {
+        let cost = cross.cost + (cross.shippingCost * 2);
+        return cost + (cost * (feeLoanGamerPercentage/100.0));
+    }
 
     function getInfoPercentage() {
         let percent = 0;

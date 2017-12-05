@@ -1,8 +1,3 @@
-/*!
- * blogNavigation.js - v0.1
- * http://www.levelapsoftware.com
- * License: MIT
- */
 angular.module('LevelapBlog').directive('blogNavigation', function($window) {
 	let baseSrc;
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {

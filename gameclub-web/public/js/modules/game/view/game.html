@@ -88,17 +88,16 @@
                 <div class="games-availables">
                     <div class="table-container">
                         <table width="100%">
-                            <col width="17%">
-                            <col width="15%">
-                            <col width="17%">
-                            <col width="15%">
-                            <col width="16%">
-                            <col width="13%">
-                            <col width="5%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="10%">
+                            <col width="10%">
+
                             <thead>
                                 <tr>
                                     <th>Disponibilidad</th>
-                                    <th>Costo shipping</th>
                                     <th>Ciudad</th>
                                     <th>Costo</th>
                                     <th>Rating usuario</th>
@@ -109,9 +108,8 @@
                             <tbody>
                                 <tr ng-repeat="cross in availableGames">
                                     <td ng-class="cross.status ? 'blue' : 'red'">{{!cross.isBorrowed ? 'Disponible' : 'Prestado'}}</td>
-                                    <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
                                     <td>{{cross.publicUser.location.name}}</td>
-                                    <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 2}}</td>
+                                    <td ng-class="cross.status ? 'blue' : 'red'">{{getGameCost(cross) | currency: '$': 2}}</td>
                                     <td>
                                         <stars class="cursor-pointer" ng-model="cross.publicUser.rating" ng-click="viewOwnerRating(cross.publicUser)" ng-if="cross.publicUser.rating > 0"></stars>
                                         <span ng-if="cross.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>

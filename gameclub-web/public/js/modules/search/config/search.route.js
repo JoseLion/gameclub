@@ -4,8 +4,8 @@ angular.module('Search').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'search', {
-		url: '/search/:title?name&categoryId&consoleId&page',
-		params: {name: null, categoryId: null, consoleId: null, page: null, title: null},
+		url: '/search?name&categoryId&consoleId&page',
+		params: {name: null, categoryId: null, consoleId: null, page: null},
 		templateUrl: 'js/modules/search/view/search.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'SearchCtrl',

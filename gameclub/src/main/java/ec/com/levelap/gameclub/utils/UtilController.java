@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value="open/util", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -24,7 +25,10 @@ public class UtilController {
 	
 	@RequestMapping(value="getImage", method=RequestMethod.GET)
 	public void getImage(@RequestParam String name, HttpServletResponse response) throws ServletException, IOException {
-		File image = File.createTempFile(name, "." + FilenameUtils.getExtension(name));
+		ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
+		System.out.println("URL: " + builder.build().toUriString());
+		
+		File image = File.createTempFile(name + "-temp-file-", "." + FilenameUtils.getExtension(name));
 		FileCopyUtils.copy(FileCopyUtils.copyToByteArray(getClass().getResourceAsStream("/img/" + name)), image);
 		String contentType = Files.probeContentType(image.toPath());
 		

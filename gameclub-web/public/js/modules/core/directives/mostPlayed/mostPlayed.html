@@ -9,15 +9,6 @@
                 <h2 class="col-xs-12 col-md-8 title" ng-if="title != null && title != ''">{{title}}</span></h2>
                 <div class="col-md-2"></div>
             </div>
-            <div class="col-xs-4 col-md-3 no-padding-right text-right">
-                <ui-select ng-model="gameConsole.selected" theme="bootstrap" class="selector">
-                    <ui-select-match><img ng-src="{{$select.selected.whiteBase64}}" class="gameConsole"/></ui-select-match>
-                    <ui-select-choices repeat="console in consoles | filter: $select.search.name" class="text-center">
-                        <div ng-bind-html="'' | highlight: $select.search.name"></div>
-                        <img ng-src="{{console.whiteBase64}}" class="gameConsole"/>
-                    </ui-select-choices>
-                </ui-select>
-            </div>
             <div class="clearfix"></div>
         </div>
         <div class="games col-md-12 col-xs-12">

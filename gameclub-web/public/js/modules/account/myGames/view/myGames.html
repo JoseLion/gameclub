@@ -4,7 +4,7 @@
         <div class="col-md-8 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
             <div class="col-md-10 name">
                 <div class="col-md-3 no-padding-left no-padding-right">
-                    <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+                    <img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" onerror="this.src='img/contact-person.svg'">
                 </div>
                 <div class="col-md-9">
                     <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
@@ -105,13 +105,13 @@
                             </ui-select-match>
                             <ui-select-choices repeat="cross in myGame.game.consoles | filter: $select.search" class="text-center">
                                 <div ng-bind-html="'' | highlight: $select.search"></div>
-                                <img archive="cross.console.whiteLogo" >
+                                <img ng-src="{{$archiveUrl + cross.console.whiteLogo.id}}" >
                             </ui-select-choices>
                         </ui-select>
                     </form>
                 </div>
                 <div class="col-md-12 category" ng-repeat="cross in myGame.game.categories">
-                    <img archive="cross.category.blackVector" src="" >
+                    <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}">
                 </div>
             </div>
         </section>

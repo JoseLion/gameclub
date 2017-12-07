@@ -13,7 +13,7 @@ angular.module('Game').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Game',
-					files: ['js/modules/game/controller/gameCtrl.js', 'js/modules/game/style/game.less']
+					files: ['js/modules/game/controller/gameCtrl.js', 'js/modules/game/style/game.less', 'js/modules/game/style/game.responsive.less']
 				}]);
 			},
 

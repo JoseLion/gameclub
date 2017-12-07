@@ -55,7 +55,8 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 				"gm.rating AS rating, " +
 				"g.contentRating AS contentRating, " +
 				"g.cover AS cover, " +
-				"g.diamond AS diamond " +
+				"g.diamond AS diamond, " +
+				"g.releaseDate AS releaseDate " +
 			"FROM Game g, GameMagazine gm " +
 				"LEFT JOIN g.consoles cn " +
 				"LEFT JOIN g.categories ct " +
@@ -66,7 +67,7 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 				"UPPER(g.name) LIKE UPPER('%' || :name || '%') AND " +
 				"(:categoryId IS NULL OR ct.category.id=:categoryId) AND " +
 				"cn.console.id=:consoleId " +
-			"ORDER BY g.name DESC")
+			"ORDER BY g.releaseDate DESC, g.name ASC")
 	public Page<GameOpen> findGamesOpen(@Param("name") String name, @Param("categoryId") Long categoryId, @Param("consoleId") Long consoleId, Pageable page);
 	
 	public List<GameOpen> findByStatusIsTrueAndCategoriesCategoryIdOrderByName(Long categoryId);

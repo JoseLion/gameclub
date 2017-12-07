@@ -192,6 +192,7 @@ public class GameClubSecurity implements SecurityConfig {
 					LevelapMail levelapMail = new LevelapMail();
 					levelapMail.setRecipentTO(Arrays.asList(user.getUsername()));
 					Map<String, String> params = new HashMap<>();
+					params.put("name", user.getFullName());
 					params.put("password", randomPassword);
 					
 					try {
@@ -225,6 +226,7 @@ public class GameClubSecurity implements SecurityConfig {
 					LevelapMail levelapMail = new LevelapMail();
 					levelapMail.setRecipentTO(Arrays.asList(user.getUsername()));
 					Map<String, String> params = new HashMap<>();
+					params.put("name", user.getName());
 					params.put("password", randomPassword);
 					
 					try {

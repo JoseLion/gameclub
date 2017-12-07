@@ -66,8 +66,8 @@ public class PublicUser extends BaseEntity {
 	@Column(columnDefinition = "VARCHAR")
 	private String token;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "avatar", foreignKey = @ForeignKey(name = "avatar_archive_fk"))
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="avatar", foreignKey=@ForeignKey(name="avatar_archive_fk"))
 	private Avatar avatar;
 
 	@Column(name = "last_connection")

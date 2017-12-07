@@ -92,6 +92,7 @@ public class AdminUserService extends BaseService<AdminUser> {
 			LevelapMail levelapMail = new LevelapMail();
 			levelapMail.setRecipentTO(Arrays.asList(adminUser.getUsername()));
 			Map<String, String> params = new HashMap<>();
+			params.put("name", adminUser.getFullName());
 			params.put("password", randomPassword);
 			
 			try {
@@ -125,6 +126,7 @@ public class AdminUserService extends BaseService<AdminUser> {
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setRecipentTO(Arrays.asList(adminUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
+		params.put("name", adminUser.getFullName());
 		params.put("password", randomPassword);
 		
 		try {

@@ -2,7 +2,7 @@
     <form role="form" class="form-horizontal" novalidate on-submit="requestBalance()">
         <section class="row header">
             <div class="col-md-2 col-xs-5 name">
-                <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+                <img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" onerror="this.src='img/contact-person.svg'">
             </div>
             <div class="col-md-10 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
                 <div class="col-md-10 name">

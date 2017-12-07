@@ -25,24 +25,24 @@
             <div class="col-md-12 content-rating">
                 <img ng-src="{{game.contentRating.other}}">
             </div>
-            <form class="col-md-12 platform">
+            <form class="col-md-12 col-xs-6 platform">
                 <ui-select ng-model="console.selected" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
                     <ui-select-match placeholder="Consola...">
                         <img ng-src="{{$select.selected.console.blackLogoBase64}}" class="gameConsole">
                     </ui-select-match>
                     <ui-select-choices repeat="cross in game.consoles | filter: $select.console" class="text-center">
                         <div ng-bind-html="'' | highlight: $select.console"></div>
-                        <img archive="cross.console.whiteLogo" >
+                        <img ng-src="{{$archiveUrl + cross.console.whiteLogo.id}}">
                     </ui-select-choices>
                 </ui-select>
             </form>
-            <div class="col-md-12 category" ng-repeat="cross in game.categories">
-                <img archive="cross.category.blackVector" src="" >
+            <div class="col-md-12 col-xs-6 category" ng-repeat="cross in game.categories">
+                <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}">
             </div>
         </div>
     </section>
     <section class="row information">
-        <div class="col-md-9 data">
+        <div class="col-md-9 col-xs-12 data">
             <div class="description ">
                 <span class="col-md-12 subtitle">Descripción:</span>
                 <p ng-if="!showMore">{{game.description | limitTo: 400}}...</p>
@@ -54,7 +54,7 @@
             <span class="col-md-12 subtitle">Fecha de lanzamiento: <span class="red">{{game.releaseDate | date: 'dd-MM-yyyy'}}</span></span>
             <span class="col-md-12 subtitle">Costo promedio por semana: <span class="red">{{getWeeklyCost(game) | currency: '$': 2}}</span></span>
         </div>
-        <div class="col-md-3 rating">
+        <div class="col-md-3 col-xs-12 rating">
             <div class="reviews text-center">
                 <span class="subtitle">Los reviews</span>
                 <ul>
@@ -86,19 +86,18 @@
                     </li>
                 </div>
                 <div class="games-availables">
-                    <div class="table-container">
+                    <div class="table-container table-responsive">
                         <table width="100%">
-                            <col width="17%">
-                            <col width="15%">
-                            <col width="17%">
-                            <col width="15%">
-                            <col width="16%">
-                            <col width="13%">
-                            <col width="5%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="10%">
+                            <col width="10%">
+
                             <thead>
                                 <tr>
                                     <th>Disponibilidad</th>
-                                    <th>Costo shipping</th>
                                     <th>Ciudad</th>
                                     <th>Costo</th>
                                     <th>Rating usuario</th>
@@ -109,9 +108,8 @@
                             <tbody>
                                 <tr ng-repeat="cross in availableGames">
                                     <td ng-class="cross.status ? 'blue' : 'red'">{{!cross.isBorrowed ? 'Disponible' : 'Prestado'}}</td>
-                                    <td>{{cross.shippingCost != null ? (cross.shippingCost | currency:'$ ':2) : 'N/A'}}</td>
                                     <td>{{cross.publicUser.location.name}}</td>
-                                    <td ng-class="cross.status ? 'blue' : 'red'">{{cross.cost | currency: '$': 2}}</td>
+                                    <td ng-class="cross.status ? 'blue' : 'red'">{{getGameCost(cross) | currency: '$': 2}}</td>
                                     <td>
                                         <stars class="cursor-pointer" ng-model="cross.publicUser.rating" ng-click="viewOwnerRating(cross.publicUser)" ng-if="cross.publicUser.rating > 0"></stars>
                                         <span ng-if="cross.publicUser.rating <= 0">Este usuario todavía no tiene calificaciones</span>
@@ -126,7 +124,7 @@
                             </tbody>
                             <tfoot ng-if="availableGames.length == 0">
                                 <tr class="text-center">
-                                    <td colspan="7">No hay juegos disponibles</td>
+                                    <td colspan="7">{{!console.selected ? 'Selecciona una consola para ver los juegos disponibles' : 'No hay juegos disponibles'}}</td>
                                 </tr>
                             </tfoot>
                         </table>

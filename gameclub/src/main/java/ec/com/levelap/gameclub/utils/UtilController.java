@@ -24,7 +24,7 @@ public class UtilController {
 	
 	@RequestMapping(value="getImage", method=RequestMethod.GET)
 	public void getImage(@RequestParam String name, HttpServletResponse response) throws ServletException, IOException {
-		File image = File.createTempFile(name, "." + FilenameUtils.getExtension(name));
+		File image = File.createTempFile(name + "-temp-file-", "." + FilenameUtils.getExtension(name));
 		FileCopyUtils.copy(FileCopyUtils.copyToByteArray(getClass().getResourceAsStream("/img/" + name)), image);
 		String contentType = Files.probeContentType(image.toPath());
 		

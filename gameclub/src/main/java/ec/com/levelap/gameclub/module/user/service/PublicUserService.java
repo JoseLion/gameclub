@@ -129,7 +129,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		Map<String, String> params = new HashMap<>();
 		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
 
-		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params, request);
+		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -155,7 +155,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		Map<String, String> params = new HashMap<>();
 		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
 
-		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params, request);
+		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params);
 	}
 
 	@Transactional
@@ -167,7 +167,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 				levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 				Map<String, String> params = new HashMap<>();
 				params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
-				mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params, request);
+				mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params);
 			} catch (MessagingException ex) {
 				return new ResponseEntity<>(new ErrorControl("No se pudo enviar el código al correo indicado, por favor vuelve a intentarlo", true), HttpStatus.INTERNAL_SERVER_ERROR);
 			}

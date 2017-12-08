@@ -4,7 +4,7 @@ angular.module('Login').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'login', {
-		url: '/login/:token',
+		url: '/login?token',
 		params: {redirect: null, token: null},
 		templateUrl: 'js/modules/login/view/login.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
@@ -28,7 +28,7 @@ angular.module('Login').config(function($stateProvider) {
 	})
 
 	.state(prefix + 'validate', {
-		url: '/validate/:token/:id',
+		url: '/validate?token&id',
 		params: {token: null, id: null},
 		templateUrl: 'js/modules/login/view/validate.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},

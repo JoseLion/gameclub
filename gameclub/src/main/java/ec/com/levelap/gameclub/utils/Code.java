@@ -31,6 +31,8 @@ public interface Code {
 	
 	public static final String SETTING_NATIONALIZACION = "STGPCHNAP";
 	
+	public static final String SETTING_FEE_LENDER = "STGFEELND";
+	
 	public static final String PAYMENT_NEW_REQUEST = "PGSNVS";
 	
 	public static final String PAYMENT_PAYED = "PGSPGD";

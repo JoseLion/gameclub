@@ -127,7 +127,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
+		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate?token=" + publicUser.getToken() + "&id=" + publicUser.getId());
 
 		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params);
 
@@ -186,7 +186,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 	@Transactional
 	public void sendContactUs(ContactUs contactUs) throws ServletException, MessagingException {
 		LevelapMail levelapMail = new LevelapMail();
-		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
 		
 		Map<String, String> params = new HashMap<>();
 		params.put("name", contactUs.name);
@@ -207,7 +207,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		file.transferTo(attachment);
 		
 		LevelapMail levelapMail = new LevelapMail();
-		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
 		levelapMail.setAttachments(Arrays.asList(attachment));
 		
 		Map<String, String> params = new HashMap<>();
@@ -252,7 +252,6 @@ public class PublicUserService extends BaseService<PublicUser> {
 	@Transactional
 	public void deleteAccount() throws ServletException {
 		PublicUser user = this.getCurrentUser();
-		//user.setUsername(getRevokedUsername(user.getUsername(), 0));
 		user.setPassword("");
 		user.setStatus(false);
 
@@ -270,7 +269,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		publicUserRepo.save(publicUser);
 		
 		LevelapMail levelapMail = new LevelapMail();
-		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String, String> params = new HashMap<>();
 		params.put("name", publicUser.getName() + " " + publicUser.getLastName());

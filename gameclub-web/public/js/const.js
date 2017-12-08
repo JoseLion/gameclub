@@ -73,7 +73,8 @@ angular.module('GameClub').constant('Const', {
 		weekShippingCost: 'STGRETWEK',
 		shippingKitValue: 'STGSHPKIT',
 		feeLoanGamer: 'STGFEEPLY',
-		costReferred: 'STGREFREW'
+		costReferred: 'STGREFREW',
+		feeLoanLender: 'STGFEELND',
 	},
 
 	tooltips: {

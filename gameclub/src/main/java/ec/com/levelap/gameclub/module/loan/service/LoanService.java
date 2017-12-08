@@ -42,6 +42,7 @@ import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.paymentez.service.PaymentezService;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.service.RestoreService;
+import ec.com.levelap.gameclub.module.settings.entity.Setting;
 import ec.com.levelap.gameclub.module.settings.service.SettingService;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
@@ -96,8 +97,7 @@ public class LoanService {
 	private boolean realTimes;
 
 	@Transactional
-	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart, Double shippingCost, Double feeGameClub, Double taxes)
-			throws ServletException, MessagingException, IOException, GeneralSecurityException {
+	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart, Double shippingCost, Double feeGameClub, Double taxes) throws ServletException, MessagingException, IOException, GeneralSecurityException {
 		Map<String, Message> messages = messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
 		PublicUser gamer = publicUserService.getCurrentUser();
 		byte[] keyEncript = gamer.getPrivateKey();
@@ -118,14 +118,18 @@ public class LoanService {
 		loan = loanRepo.save(loan);
 
 		PublicUserGame cross = publicUserService.getPublicUserGameRepo().findOne(loan.getPublicUserGame().getId());
+		Setting feeLender = settingService.getSettingsRepo().findByCode(Code.SETTING_FEE_LENDER);
 		loan.setPublicUserGame(cross);
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
+		
 		Map<String, String> params = new HashMap<>();
+		params.put("name", loan.getPublicUserGame().getPublicUser().getName());
 		params.put("user", loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
 		params.put("game", loan.getPublicUserGame().getGame().getName());
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
-		params.put("cost", "" + loan.getPublicUserGame().getCost());
+		params.put("weeks", "" + loan.getWeeks());
+		params.put("cost", "" + ((loan.getPublicUserGame().getCost() * loan.getWeeks()) - (loan.getPublicUserGame().getCost() * loan.getWeeks() * Double.parseDouble(feeLender.getValue()))));
 
 		mailService.sendMailWihTemplate(levelapMail, "MSGREQ", params);
 	}
@@ -206,9 +210,7 @@ public class LoanService {
 
 			Transaction transaction = new Transaction(connected, "ALQUILASTE",
 					loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(),
-					loan.getWeeks(), cryptoService
-							.encrypt(Double.toString(loan.getPublicUserGame().getCost() * loan.getWeeks()), keyLender),
-					null, null);
+					loan.getWeeks(), cryptoService.encrypt(Double.toString(loan.getPublicUserGame().getCost() * loan.getWeeks()), keyLender), null, null);
 			transactionService.getTransactionRepo().save(transaction);
 
 		}
@@ -432,7 +434,7 @@ public class LoanService {
 		Map<String, String> params = new HashMap<>();
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
-		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_LOGISTICS));
 		params.put("lender", loan.getPublicUserGame().getPublicUser().getName() + " "
 				+ loan.getPublicUserGame().getPublicUser().getLastName());
 		params.put("gamer", loan.getGamer().getName() + " " + loan.getGamer().getLastName());
@@ -466,17 +468,17 @@ public class LoanService {
 				restore.getGamerStatusDate() != null ? df.format(restore.getGamerStatusDate()) : "SIN CONFIRMAR");
 
 		if (restore.getLenderStatusDate() == null || restore.getGamerStatusDate() == null) {
-			levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+			levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_LOGISTICS));
 			mailService.sendMailWihTemplate(levelapMail, "MSGAUR", params);
 		}
 
 		if (restore.getLenderStatusDate() == null) {
-			levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+			levelapMail.setRecipentTO(Arrays.asList(restore.getPublicUserGame().getPublicUser().getUsername()));
 			mailService.sendMailWihTemplate(levelapMail, "MSGLUR", params);
 		}
 
 		if (restore.getGamerStatusDate() == null) {
-			levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+			levelapMail.setRecipentTO(Arrays.asList(restore.getGamer().getUsername()));
 			mailService.sendMailWihTemplate(levelapMail, "MSGGUR", params);
 		}
 	}

@@ -44,7 +44,9 @@ public interface Const {
 	
 	public static final String LENDER = "LENDER";
 	
-	public static final String SYSTEM_ADMIN_EMAIL = "info@gameclub.com.ec";
+	public static final String EMAIL_INFO = "info@gameclub.com.ec";
+	
+	public static final String EMAIL_LOGISTICS = "logistica@gameclub.com.ec";
 	
 	public static final String SETTINGS_PERCENTAGE = "percentage";
 	

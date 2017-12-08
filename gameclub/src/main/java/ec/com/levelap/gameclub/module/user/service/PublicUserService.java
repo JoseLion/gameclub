@@ -186,7 +186,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 	@Transactional
 	public void sendContactUs(ContactUs contactUs) throws ServletException, MessagingException {
 		LevelapMail levelapMail = new LevelapMail();
-		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
 		
 		Map<String, String> params = new HashMap<>();
 		params.put("name", contactUs.name);
@@ -207,7 +207,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		file.transferTo(attachment);
 		
 		LevelapMail levelapMail = new LevelapMail();
-		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
 		levelapMail.setAttachments(Arrays.asList(attachment));
 		
 		Map<String, String> params = new HashMap<>();
@@ -270,7 +270,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		publicUserRepo.save(publicUser);
 		
 		LevelapMail levelapMail = new LevelapMail();
-		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String, String> params = new HashMap<>();
 		params.put("name", publicUser.getName() + " " + publicUser.getLastName());

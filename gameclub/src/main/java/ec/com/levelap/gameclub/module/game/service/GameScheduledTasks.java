@@ -46,7 +46,7 @@ public class GameScheduledTasks {
 		gameRepo.save(games);
 		
 		LevelapMail levelapMail = new LevelapMail();
-		levelapMail.setRecipentTO(Arrays.asList(Const.SYSTEM_ADMIN_EMAIL));
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String, String> params = new HashMap<>();
 		params.put("date", df.format(new Date()));

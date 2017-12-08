@@ -127,7 +127,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
+		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate?token=" + publicUser.getToken() + "&id=" + publicUser.getId());
 
 		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params);
 
@@ -252,7 +252,6 @@ public class PublicUserService extends BaseService<PublicUser> {
 	@Transactional
 	public void deleteAccount() throws ServletException {
 		PublicUser user = this.getCurrentUser();
-		//user.setUsername(getRevokedUsername(user.getUsername(), 0));
 		user.setPassword("");
 		user.setStatus(false);
 

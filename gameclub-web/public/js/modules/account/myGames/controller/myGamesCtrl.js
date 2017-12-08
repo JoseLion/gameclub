@@ -7,7 +7,6 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     $scope.priceChartingGM = parseFloat($rootScope.settings[Const.settings.priceChartingGames].value);
     $scope.priceChartingGMLoan = 0.0;
     $scope.gameLoanPCH = parseFloat($rootScope.settings[Const.settings.weekShippingCost].value);
-
     gamesList.$promise.then(function(data) {
         setPagedData(data);
     });

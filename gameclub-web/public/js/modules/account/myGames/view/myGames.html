@@ -155,7 +155,14 @@
 
                 <div class="col-md-12 help to-validate">
                     <label class="form-cell">Valor de mercado del juego</label>
-                    <div class="form-cell">{{(myGame.game.uploadPayment) | number:2}}</div>
+                    <div class="form-cell">{{(myGame.game.uploadPayment) | currency: '$': 2}}</div>
+                </div>
+
+                <div class="col-md-12 relax">
+                    <div class="form-cell">
+                    <span class="second-text">Costo de Seguro + Fee de GameClub =</span>
+                    </div>
+                    <div class="form-cell">{{settings[Const.settings.feeLoanLender].value}}%</div>
                 </div>
 
                 <div class="col-md-12 help to-validate">

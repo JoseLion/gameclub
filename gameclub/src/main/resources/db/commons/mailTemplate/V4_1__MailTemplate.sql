@@ -17,7 +17,7 @@ VALUES('TMPWRD',
 		</div>
 	</div>
 	<div style="display: -webkit-inline-box; width: 100%; text-align: left; margin-top: 5%; background: linear-gradient(transparent 0%, black 100%)">
-		<div style="width: 35%; padding: 2%;">
+		<div style="width: 35%; padding: 0%; 2%;">
 			<a href="https://www.facebook.com/gameclub.ec/" style="cursor: pointer; margin: 0% 0.5%;">
 				<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
 			</a>
@@ -31,13 +31,12 @@ VALUES('TMPWRD',
 				<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
 			</a>
 		</div>
-		<div style="text-align: right; width: 55%; padding: 2%;">
+		<div style="text-align: right; width: 55%; padding: 1%; 2%;">
 			<a href="mailto:info@gameclub.com.ec" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none;">
           		<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
 				<span>info@gameclub.com.ec</span>
 			</a>
-			<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-separation.png" alt="mail-separation.png" style="margin: 0px 10px -25px 10px;" />
-			<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none;">
+			<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
           		<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
 				<span>info@gameclub.com.ec</span>
 			</a>

@@ -129,7 +129,7 @@ public class LoanService {
 		params.put("game", loan.getPublicUserGame().getGame().getName());
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
 		params.put("weeks", "" + loan.getWeeks());
-		params.put("cost", "" + ((loan.getPublicUserGame().getCost() * loan.getWeeks()) - (loan.getPublicUserGame().getCost() * loan.getWeeks() * Double.parseDouble(feeLender.getValue()))));
+		params.put("cost", "$" + ((loan.getPublicUserGame().getCost() * loan.getWeeks()) - (loan.getPublicUserGame().getCost() * loan.getWeeks() * Double.parseDouble(feeLender.getValue()))));
 
 		mailService.sendMailWihTemplate(levelapMail, "MSGREQ", params);
 	}

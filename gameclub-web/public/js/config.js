@@ -11,6 +11,7 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 		})
 			.state('gameclub.account', {
 				url: '/account',
+				abstract: true,
 				templateUrl: 'views/account.html',
 				controller: "AccountCtrl",
 				resolve: {

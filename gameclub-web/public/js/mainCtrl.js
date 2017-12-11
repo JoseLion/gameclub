@@ -81,7 +81,7 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 	$scope.goToAccount = function() {
 		angular.element('#myNavbar').collapse('hide');
 		if (!$state.includes("gameclub.account")) {
-			$state.go("gameclub.account");
+			$state.go("gameclub.account.profile");
 		}
 	}
 

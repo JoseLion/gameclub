@@ -3,10 +3,6 @@ angular.module("GameClub").controller('AccountCtrl', function($scope, $rootScope
 		if (data.status == 403) {
 			$state.go(Const.mainState);
 		} else {
-			if ($state.current.name == 'gameclub.account') {
-				$state.go('gameclub.account.profile');
-			}
-
 			gamesSummary.$promise.then(function(data) {
 				$scope.summary = data;
 			});

@@ -37,7 +37,14 @@ angular.module('WorkForUs').controller('WorkForUsCtrl', function($scope, blogsPr
 
     $scope.send = function() {
         sweet.default("Nos enviarás un correo con tu información y tu mensaje", function() {
-            openRest("publicUser/sendWorkForUs").post(formData, function() {
+            let formData = {
+                work: angular.copy($scope.work),
+                file: angular.copy($scope.work.file)
+            };
+
+            delete formData.work.file;
+
+            openRest("publicUser/sendWorkForUs").multipart(formData, function() {
                 notif.success("Información enviada con éxito");
                 $scope.work = {};
                 sweet.close();

@@ -216,34 +216,38 @@
     <most-seen ng-model="blogsPreview" pages="totalPagesMostSeen" active-page="currentPageMostSeen" class="most-seen" title="Blog" size="100"></most-seen>
     <section class="contact-us">
         <div class="row">
-            <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()">
+            <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()" novalidate>
                 <h2 class="title">&iquest;Quieres saber más de <span class="game-font game-font-white">Game</span>Club?</h2>
                 <span class="description">Déjanos tu mail y nosotros te contactamos</span>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Nombre</label>
                     <input validation name="name" placeholder="Nombre..." ng-model="contactUs.name" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">E-mail</label>
                     <input validation name="email" placeholder="E-mail..." ng-model="contactUs.email" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <input name="phone" placeholder="Teléfono..." ng-model="contactUs.phone">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Teléfono</label>
+                    <input validation name="phone" placeholder="Teléfono..." ng-model="contactUs.phone">
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Mensaje</label>
                     <textarea validation name="message" placeholder="Mensaje..." rows="6" ng-model="contactUs.message" required></textarea>
                 </div>
                 <div class="col-md-3"></div>
@@ -254,7 +258,6 @@
                     <button type="submit" class="btn btn-secundary">Enviar</button>
                 </div>
                 <div class="col-md-4"></div>
-
             </form>
         </div>
     </section>

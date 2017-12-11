@@ -153,7 +153,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate?token=" + publicUser.getToken() + "/" + publicUser.getId());
+		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate?token=" + publicUser.getToken() + "&id=" + publicUser.getId());
 
 		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params);
 	}
@@ -166,7 +166,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 				LevelapMail levelapMail = new LevelapMail();
 				levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 				Map<String, String> params = new HashMap<>();
-				params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate?token=" + publicUser.getToken() + "/" + publicUser.getId());
+				params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate?token=" + publicUser.getToken() + "&id=" + publicUser.getId());
 				mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params);
 			} catch (MessagingException ex) {
 				return new ResponseEntity<>(new ErrorControl("No se pudo enviar el código al correo indicado, por favor vuelve a intentarlo", true), HttpStatus.INTERNAL_SERVER_ERROR);

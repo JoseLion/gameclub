@@ -42,7 +42,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 							$scope.isSaving = false;
 						});
 					} else {
-						notif.warning(Const.messages.acceptTerms);
+						notif.danger(Const.messages.acceptTerms);
 					}
 				};
 
@@ -76,16 +76,17 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 			backdrop: true,
 			templateUrl: "facebookSignIn.html",
 			controller: function($scope, $uibModalInstance, notif, Const) {
-				$scope.terms = {};
+				$scope.user = {};
 				$scope.isSaving = false;
 				$scope.isFacebook = true;
+
 				$scope.ok = function() {
 					$scope.isSaving = true;
-					if ($scope.terms.status) {
+					if ($scope.user.terms) {
 						$uibModalInstance.close();
 					} else {
 						$scope.isSaving = false;
-						notif.warning(Const.messages.acceptTerms);
+						notif.danger(Const.messages.acceptTerms);
 					}
 				}
 
@@ -102,7 +103,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 					FB.api('/me', {fields: 'name, email'}, function(me) {
 						if (me.email == null) {
 							FB.logout(function(logoutResponse) {
-								notif.warning("El correo electrónico es necesario para crea una cuenta en Smartbid. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
+								notif.danger("El correo electrónico es necesario para crea una cuenta en Smartbid. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
 								$scope.isFbSingIn = false;
 							}, response.authResponse.accessToken);
 						} else {
@@ -126,6 +127,8 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				scope: 'public_profile,email',
 				auth_type: 'rerequest'
 			});
+
+			$scope.isFbSingIn = false;
 		}, function() {
 			$scope.isFbSingIn = false;
 		});
@@ -139,7 +142,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				FB.api('/me', {fields: 'name, email'}, function(me) {
 					if (me.email == null) {
 						FB.logout(function(logoutResponse) {
-							notif.warning("El correo electrónico es necesario para crea una cuenta en GameClub. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
+							notif.danger("El correo electrónico es necesario para crea una cuenta en GameClub. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
 							$scope.isFbLogIn = false;
 						}, response.authResponse.accessToken);
 					} else {

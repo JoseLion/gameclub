@@ -36,4 +36,8 @@ angular.module("Faq").controller('FaqsCtrl', function($scope, categories, openRe
 	$scope.setQuestion = function(faq) {
 		$scope.questionSelected = faq;
 	}
+
+	$scope.getMinHeight = function() {
+		return {'min-height': angular.element("#faq-categories")[0].offsetHeight};
+	}
 });

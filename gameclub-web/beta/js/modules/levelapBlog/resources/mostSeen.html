@@ -1,4 +1,3 @@
-<!-- MOST SEEN DIRECTIVE START -->
 <section id="most-seen">
     <h2>{{title}}</h2>
     <hr class="subtitle" />
@@ -10,7 +9,7 @@
                     <h2 class="visible-xs" title="{{preview.title}}">{{preview.title | limitTo:12}}{{preview.title.length > 12 ? '...' : ''}}</h2>
                     <p class="hidden-xs">{{preview.summary | limitTo:filterSize}}{{preview.summary.length > filterSize ? '...' : ''}}</p>
                     <p class="visible-xs">{{preview.summary | limitTo:filterSize*0.75}}{{preview.summary.length > filterSize*0.75 ? '...' : ''}}</p>
-                    <a href ng-click="goToArticle(preview)">Leer m&aacute;s</a>
+                    <a href ng-click="goToArticle(preview)">Leer más</a>
                 </div>
                 <div class="col-md-5 col-xs-5 picture">
                     <div class="image-section">
@@ -20,7 +19,7 @@
                             </div>
                         </div>
                         <div class="image-cropped">
-                            <img class="cursor-pointer" ng-click="goToArticle(preview)" archive="preview.square"/>
+                            <img class="cursor-pointer" ng-click="goToArticle(preview)" ng-src="{{$archiveUrl + preview.square.id}}">
                         </div>
                     </div>
                 </div>
@@ -32,4 +31,3 @@
         <div ng-repeat="page in pageList" ng-class="page.active ? 'page-active' : ''" ng-click="changePage(page)" class="page-button"></div>
     </div>
 </section>
-<!-- MOST SEEN DIRECTIVE END -->

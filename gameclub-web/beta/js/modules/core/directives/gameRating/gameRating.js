@@ -1,31 +1,27 @@
-angular.module('Core').directive('gameRating', function() {
+angular.module('Core').directive('gameRating', function($ocLazyLoad, urlRestPath, $location) {
+	$ocLazyLoad.load(['js/modules/core/directives/gameRating/gameRating.less', 'js/modules/core/directives/gameRating/gameRating.responsive.less']);
 	return {
 		restrict: 'E',
-		templateUrl: 'js/modules/core/directives/gameRating.html',
+		templateUrl: 'js/modules/core/directives/gameRating/gameRating.html',
 		scope: {
 			src: '=?',
 			rating: '=',
 			bgColor: '@',
 			ngClick: '&',
 			noSelection: '=',
-			imageArchive: '=?',
-			crop: '='
+			imageArchive: '=?'
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
+			$scope.RestUrl = urlRestPath.url;
+			$scope.baseUrl = $location.$$protocol + '://' + $location.$$host + "/" + this.templateUrl;
 			$scope.hideRating = false;
-			if(attrs.noRating == '' || attrs.noRating) {
+
+			if (attrs.noRating == '' || attrs.noRating) {
 				$scope.hideRating = true;
 			}
-			$scope.$watch('crop', function(newValue, oldValue) {
-				if(newValue != null) {
-					$scope.finalCrop = {
-	                    transform: 'translate(' + newValue.a + 'px,' + newValue.b + 'px)',
-						zoom: (newValue.c / 2)
-	                };
-				}
-			});
-			if($scope.noSelection == null || $scope.noSelection == '' || !$scope.noSelection) {
+
+			if ($scope.noSelection == null || $scope.noSelection == '' || !$scope.noSelection) {
 				element.find('.background').after().mouseover(function(e) {
 					element.find('.background').removeClass('no-hover');
 					element.find('.background').addClass('hover');

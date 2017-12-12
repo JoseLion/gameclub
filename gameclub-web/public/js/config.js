@@ -1,7 +1,17 @@
-angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $locationProvider) {
+angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $locationProvider, UIRouterMetatagsProvider) {
 	$urlRouterProvider.otherwise('/gameclub/home');
 	$ocLazyLoadProvider.config({debug: false});
 	$locationProvider.html5Mode(true);
+
+	UIRouterMetatagsProvider.setTitlePrefix('Game Club | ')
+							.setDefaultTitle('Game Club')
+							.setDefaultDescription('Intercambia juegos con la comunidad gamer más grande del Ecuador')
+							.setDefaultKeywords('gamers,juegos,intercambio,ecuador,consolas')
+							.setStaticProperties({
+								'fb:app_id': '1819533121697152',
+								'og:site_name': 'www.gameclub.com.ec'
+							})
+							.setOGURL(true);
 
 	$stateProvider
 		.state('gameclub', {

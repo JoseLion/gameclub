@@ -1,5 +1,6 @@
 angular.module('GameClub', [
 	'ui.router',
+	'ui.router.metatags',
 	'oc.lazyLoad',
 	'ui.select',
 	'ngSanitize',

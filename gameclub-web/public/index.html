@@ -4,8 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="{{$state.current.data.description}}">
-    	<meta name="keywords" content="{{$state.current.data.keywords}}">
+        <title ng-bind="MetaTags.title">Game Club</title>
+        <meta name="description" content="{{MetaTags.description}}">
+        <meta name="keywords" content="{{MetaTags.keywords}}">
+        <meta name="prerender-status-code" content="{{MetaTags.prerender.statusCode}}">
+        <meta name="prerender-header" ng-if="MetaTags.prerender.header" content="{{MetaTags.prerender.header}}">
         <meta property="og:url" content="">
         <meta property="og:title" content="">
         <meta property="og:type" content="article">
@@ -15,8 +18,7 @@
         <meta property="fb:app_id" content="1819533121697152">
 
         <base href="/">
-
-        <title>GameClub</title>
+        
         <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -54,6 +56,7 @@
         <script src="js/core/angular-socialshare.min.js"></script>
         <script src="js/core/plugins/rzslider/rzslider.min.js"></script>
         <script src="js/core/plugins/js-sha256/sha256.min.js"></script>
+        <script src="js/core/plugins/ui-router-metatags/ui-router-metatags.min.js"></script>
 
         <!-- Anglar App Script -->
         <script src="js/app.js"></script>

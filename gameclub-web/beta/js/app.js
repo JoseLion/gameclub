@@ -12,13 +12,6 @@ angular.module('GameClub', [
 	'720kb.socialshare',
 	'Core',
 	'Home',
-	/*'Login',
-	'Search',
-	'Settings',
-	'Profile',
-	'MyGames',
-	'Game',
-	'TermsConditions',*/
 	'LevelapBlog'
 ])
 .config(['$locationProvider' ,'$httpProvider', function($locationProvider, $httpProvider, $http) {

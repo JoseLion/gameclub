@@ -65,21 +65,9 @@ flyway:
   baseline-on-migrate: true
   encoding: UTF-8
   out-of-order: true
-  
-kushki-configuration:
-  show-log: true
-  private-merchant-id: 10000002423281133314149322144567
-  end-point:
-    path: https://api-uat.kushkipagos.com/v1
     
 priceCharting-configuration:
   url: http://www.pricecharting.com/api/product
-  
-tcc-configuration:
-  key: PRECLIENTESPRUEBA
-  url: http://clientes.tcc.com.co/preservicios
-  account: 6019000
-  nit: 1792738865001
 
 game-club:
   real-times: false

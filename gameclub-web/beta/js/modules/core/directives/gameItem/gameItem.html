@@ -1,0 +1,25 @@
+<div id="game-item">
+    <div class="col-xs-3 col-md-2 cover">
+        <game-rating image-archive="ngModel.diamond" no-rating ng-click="viewDetails()"></game-rating>
+    </div>
+    <div class="col-xs-5 col-md-7 information">
+        <span class="description">{{ngModel.name}}</span>
+        <stars ng-model="ngModel.rating"></stars>
+        <span class="price" ng-if="showCoins">Costo prestamo por semana: <span class="light">{{coins | number:2}} &#36;</span></span>
+        <br>
+        <button class="btn btn-primary small" ng-click="viewDetails()">{{isEditable ? 'Editar' : 'Ver juego'}}</button>
+    </div>
+    <div class="col-xs-4 col-md-3 rating">
+        <div class="col-md-8 col-xs-7 text-right platform">
+            <img ng-src="{{inverse ? $archiveUrl + ngModel.consoles[0].console.blackLogo.id : $archiveUrl + ngModel.consoles[0].console.whiteLogo.id}}" class="platform" ng-if="console == null">
+            <img ng-src="{{inverse ? $archiveUrl + console.blackLogo.id : $archiveUrl + console.whiteLogo.id}}" class="platform" ng-if="console != null">
+            <div class="types">
+                <img ng-repeat="category in ngModel.categories" ng-src="{{inverse ? $archiveUrl + category.category.blackVector.id : $archiveUrl + category.category.whiteVector.id}}" src="">
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-5 text-center content-rating">
+            <img ng-src="{{ngModel.contentRating.other}}">
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

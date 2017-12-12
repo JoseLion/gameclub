@@ -1,5 +1,5 @@
-angular.module('LevelapBlog').directive('mostSeen', function($state, friendlyUrl, BlogConst) {
-	let baseSrc;
+angular.module('LevelapBlog').directive('mostSeen', function($state, friendlyUrl, BlogConst, urlRestPath) {
+    let baseSrc;
 
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
         let script = angular.element(document.getElementsByTagName("script")[i]);
@@ -18,22 +18,23 @@ angular.module('LevelapBlog').directive('mostSeen', function($state, friendlyUrl
             ngModel: '=',
             pages: '=',
             activePage: '=',
-			title: '@',
-			size: '='
+            title: '@',
+            size: '='
         },
         replace: true,
         link: function($scope, element, attrs, ctrl) {
+            $scope.$archiveUrl = urlRestPath.url + "/open/archive/download/";
             $scope.BlogConst = BlogConst;
             
             if ($scope.activePage == null) {
                 $scope.activePage = 0;
             }
 
-			if ($scope.size == null) {
-				$scope.filterSize = 200;
-			} else {
-				$scope.filterSize = $scope.size;
-			}
+            if ($scope.size == null) {
+                $scope.filterSize = 200;
+            } else {
+                $scope.filterSize = $scope.size;
+            }
 
             $scope.changePage = function(page) {
                 $scope.pageList[$scope.activePage].active = false;

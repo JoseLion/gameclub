@@ -3,18 +3,19 @@
         <div class="row">
             <!-- <button type="button" class="btn btn-primary" ng-click="testTcc()">TEST TCC</button> -->
             <hr class="title-up"/>
-            <h2 class="upper-case title">Si prestas, juegas</h2>
+            <h2 class="upper-case title">Alquila, juega y gana dinero</h2>
             <hr class="title-down"/>
             <span class="description">Comparte y juega millones de juegos para todas las consolas</span>
         </div>
         <div class="row search white-search">
-            <div class="col-xs-12 col-md-1"></div>
+            <div class="col-md-1"></div>
             <form class="col-xs-12 col-md-11" role="form" on-submit="find()" novalidate>
-                <div class="col-xs-12 col-md-10 search-params">
-                    <div class="col-xs-12 col-md-4 filter">
-                        <input placeholder="T&iacute;tulo..." ng-model="search.name" uib-typeahead="state for state in nameAutocomplete | filter:$viewValue">
+                <div class="col-xs-10 col-md-10 search-params">
+                    <div class="col-xs-4 col-md-4 filter">
+                        <input placeholder="Título..." ng-model="search.name" uib-typeahead="state for state in nameAutocomplete | filter:$viewValue">
                     </div>
-                    <div class="col-xs-12 col-md-4 filter">
+
+                    <div class="col-xs-4 col-md-4 filter">
                         <ui-select ng-model="search.category" theme="bootstrap" class="selector">
                             <ui-select-match allow-clear placeholder="Categoría...">
                                 {{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}
@@ -25,7 +26,8 @@
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div class="col-xs-12 col-md-4 filter to-validate">
+
+                    <div class="col-xs-4 col-md-4 filter to-validate">
                         <ui-select validation ng-model="search.console" theme="bootstrap" class="selector text-center">
                             <ui-select-match allow-clear placeholder="Consola...">
                                 <img ng-src="{{$select.selected.whiteBase64}}" class="gameConsole"/>
@@ -37,11 +39,12 @@
                         </ui-select>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-2 text-left">
+
+                <div class="col-xs-2 col-md-2 text-left">
                     <button type="submit" class="btn btn-tertiary"><i class="gc gc-turn-on"></i></button>
                 </div>
             </form>
-            <div class="col-xs-12 col-md-1"></div>
+            <div class="col-md-1"></div>
         </div>
     </section>
 
@@ -50,141 +53,148 @@
     <section id="how-it-works" class="how-it-works">
         <div class="separator"></div>
         <div class="row">
-            <div class="col-md-6 path-right path-4h"></div>
-            <div class="col-md-6 path-left path-4h">
+            <div class="col-md-6 col-xs-6 path-right path-4h"></div>
+            <div class="col-md-6 col-xs-6 path-left path-4h">
                 <div class="square-box first"></div>
             </div>
             <div class="clearfix"></div>
 
-            <h2 class="col-md-12 title">&iquest; C&oacute;mo <span class="game-font game-font-white">funciona</span> ?</h2>
+            <h2 class="col-md-12 title">&iquest; Cómo <span class="game-font game-font-white">funciona</span> ?</h2>
 
-            <div class="col-md-6 path-right path-3h complete-2px-br"></div>
-            <div class="col-md-2 path-left path-bottom path-3h complete-1px-br"></div>
-            <div class="col-md-4"></div>
+            <div class="col-md-6 col-xs-6 path-right path-3h complete-2px-br"></div>
+            <div class="col-md-2 col-xs-4 path-left path-bottom path-3h complete-1px-br"></div>
+            <div class="col-md-4 col-xs-2"></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-4"></div>
-            <div class="col-md-2"><div class="square-box second"></div></div>
-            <div class="col-md-2 path-right path-top path-2h"></div>
-            <div class="col-md-4 path-left path-2h complete-1px-bl"></div>
+            <div class="col-md-4 col-xs-4"></div>
+            <div class="col-md-2 col-xs-2"><div class="square-box second"></div></div>
+            <div class="col-md-2 col-xs-4 path-right path-top path-2h"></div>
+            <div class="col-md-4 col-xs-2 path-left path-2h complete-1px-bl"></div>
             <div class="clearfix"></div>
         </div>
         <div class="step first-step">
-            <div class="col-md-6">
+            <div class="col-md-6 col-xs-5">
                 <div class="image"></div>
             </div>
-            <div class="col-md-6 right-blue-box text-left">
+            <div class="col-md-6 col-xs-7 right-blue-box text-left">
                 <h2 class="title">
                     <div class="number-container"><img src="img/step-first.png" /></div>
-                    Consigue <span class="game-font game-font-white">coins</span>
+                    Alquila tus <span class="game-font game-font-white">juegos</span>
                 </h2>
                 <ul>
-                    <li>Registra tus juegos para prestarlos. Gana COINS.</li>
-                    <li>Presta tus juegos. Gana COINS.</li>
-                    <li>Refiere a tus amigos para que se unan. Gana COINS.</li>
+                    <li>Registra tus juegos para que puedas alquilarlos.</li>
+                    <li>Alquila tus juegos y gana DINERO.</li>
                 </ul>
             </div>
             <div class="clearfix"></div>
         </div>
         <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4 path-right path-bottom path-2h complete-1px-bl complete-1px-br"></div>
-            <div class="col-md-4 path-left path-2h complete-1px-bl"></div>
+            <div class="col-md-4 col-xs-2"></div>
+            <div class="col-md-4 col-xs-8 path-right path-bottom path-3h complete-1px-bl complete-1px-br"></div>
+            <div class="col-md-4 col-xs-2 path-left path-3h complete-1px-bl"></div>
             <div class="clearfix"></div>
-            <div class="col-md-4 path-right path-4h complete-1px-br"></div>
-            <div class="col-md-4 path-left path-top path-4h complete-1px-tr"></div>
-            <div class="col-md-4"></div>
+            <div class="col-md-4 col-xs-2 path-right path-2h complete-1px-br"></div>
+            <div class="col-md-4 col-xs-8 path-left path-top path-2h complete-1px-tr"></div>
+            <div class="col-md-4 col-xs-2"></div>
             <div class="clearfix"></div>
         </div>
         <div class="step second-step">
-            <div class="col-md-6 left-blue-box text-left">
+            <div class="col-md-6 col-xs-8 left-blue-box text-left">
                 <h2 class="title">
                     <div class="number-container"><img src="img/step-second.png" /></div>
                     Juega <span class="game-font game-font-white">nuevos</span> juegos
                 </h2>
                 <ul>
-                    <li>Registra tus juegos para prestarlos. Gana COINS.</li>
-                    <li>Presta tus juegos. Gana COINS.</li>
-                    <li>Refiere a tus amigos para que se unan. Gana COINS.</li>
+                    <li>Puedes pedir alquilado cualquier juego que esté registrado.</li>
+                    <li>Paga el alquiler con tu saldo o tu tarjeta.</li>
                 </ul>
             </div>
-            <div class="col-md-6"><div class="rectangle-box third"></div></div>
+            <div class="col-md-6 col-xs-4">
+                <div class="rectangle-box third"></div>
+            </div>
             <div class="clearfix"></div>
         </div>
         <div class="row">
-            <div class="col-md-4 path-right path-3h complete-1px-br"></div>
-            <div class="col-md-2 path-left path-bottom path-3h complete-1px-br"></div>
-            <div class="col-md-2"></div>
-            <div class="col-md-4"></div>
+            <div class="col-md-4 col-xs-2 path-right path-3h complete-1px-br"></div>
+            <div class="col-md-2 col-xs-4 path-left path-bottom path-3h complete-1px-br"></div>
+            <div class="col-md-2 col-xs-2"></div>
+            <div class="col-md-4 col-xs-4"></div>
             <div class="clearfix"></div>
-            <div class="col-md-4 path-right"></div>
-            <div class="col-md-2 path-right path-top path-2h"></div>
-            <div class="col-md-2 path-left path-2h complete-1px-bl"></div>
-            <div class="col-md-4"></div>
+            <div class="col-md-4 col-xs-2 path-right"></div>
+            <div class="col-md-2 col-xs-4 path-right path-top path-4h"></div>
+            <div class="col-md-2 col-xs-2 path-left path-4h complete-1px-bl"></div>
+            <div class="col-md-4 col-xs-4"></div>
             <div class="clearfix"></div>
-            <div class="col-md-12">
+            <div class="col-md-12 col-xs-12">
                 <div class="mini-separator"></div>
             </div>
         </div>
         <div class="step third-step">
             <div class="row">
-                <div class="col-md-2"><div class="rectangle-box fourth"></div></div>
-                <div class="col-md-8">
+                <div class="col-md-2 col-xs-1"></div>
+                <div class="col-md-8 col-xs-10">
                     <h2 class="title">
                         <div class="number-container ib"><img src="img/step-third.png" /></div>
                         <span class="game-font game-font-light-red">Relax</span>
                     </h2>
 
-                    <div class="col-md-12 description white">
+                    <div class="col-md-12 col-xs-12 description white no-padding-h">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10">
+                        <div class="col-md-10 col-xs-12 no-padding-h">
                             <div class="col-md-1"></div>
-                            <div class="col-md-10">Nosotros nos encargamos de que los juegos lleguen a su destino.</div>
+                            <div class="col-md-10 col-xs-12 no-padding-h">Nosotros nos encargamos de que los juegos lleguen a su destino.</div>
                             <div class="col-md-1"></div>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
 
-                    <div class="col-md-12"><img src="img/home/how-it-works-send.svg" width="30px"/></div>
-                    <div class="col-md-12 description">
+                    <div class="col-md-12 col-xs-3">
+                        <img src="img/home/how-it-works-send.svg" width="30px"/>
+                    </div>
+                    <div class="col-md-12 col-xs-9 no-padding-h description">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10">Hacemos seguimiento con courrier inteligente.</div>
+                        <div class="col-md-10 col-xs-12 no-padding-h">Hacemos seguimiento con courrier inteligente de puerta a puerta</div>
                         <div class="col-md-1"></div>
                     </div>
 
-                    <div class="col-md-12"><img src="img/home/how-it-works-smart-courier.svg" width="25px"/></div>
-                    <div class="col-md-12 description">
+                    <div class="col-md-12 col-xs-3">
+                        <img src="img/home/how-it-works-smart-courier.svg" width="25px"/>
+                    </div>
+                    <div class="col-md-12 col-xs-9 no-padding-h description">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10 text-center">
+                        <div class="col-md-10 col-xs-12 no-padding-h text-center">
                             Los prestamos pueden ser desde una semana hasta un mes.
                         </div>
                         <div class="col-md-1"></div>
                     </div>
 
-                    <div class="col-md-12"><img src="img/home/how-it-works-limit.svg" width="32px"/></div>
-                    <div class="col-md-12 description">
+                    <div class="col-md-12 col-xs-3">
+                        <img src="img/home/how-it-works-limit.svg" width="30px"/>
+                    </div>
+                    <div class="col-md-12 col-xs-9 no-padding-h description">
                         <div class="col-md-2"></div>
-                        <div class="col-md-8 no-padding-left no-padding-right">
+                        <div class="col-md-8 col-xs-12 no-padding-h">
                             Tu juegos están 100% asegurados desde que entran a la plataforma.
                         </div>
                         <div class="col-md-2"></div>
                     </div>
                 </div>
-                <div class="col-md-2"></div>
+                <div class="col-md-2 col-xs-1"></div>
             </div>
-            <div class="col-md-12 white-search">
+            <div class="col-md-12 col-xs-12 white-search">
                 <button type="button" class="btn btn-primary" ui-sref="^.login" ng-if="currentUser == null">Inicia sesión</button>
                 <button type="button" class="btn btn-primary" ui-sref="^.account.myGames" ng-if="currentUser != null">Carga tus juegos</button>
             </div>
+            <div class="rectangle-box fourth"></div>
             <div class="clearfix"></div>
         </div>
     </section>
     <section class="row choose-by-cat">
-        <div class="col-md-8 no-padding-left no-padding-right">
+        <div class="col-md-8 col-xs-8 no-padding-left no-padding-right">
             <div class="col-md-12 text-center no-padding-left">
                 <h2 class="title">
                     <span class="vertical"></span>
-                    Elije por <span class="game-font game-font-dark-blue">categor&iacute;a</span>
+                    Elije por <span class="game-font game-font-dark-blue">categoría</span>
                 </h2>
             </div>
             <div class="col-md-12 categories no-padding-left">
@@ -203,37 +213,41 @@
         </div>
         <div class="clearfix"></div>
     </section>
-    <most-seen ng-model="blogsPreview" pages="totalPagesMostSeen" active-page="currentPageMostSeen" class="most-seen" title="Blog" size="100" />
+    <most-seen ng-model="blogsPreview" pages="totalPagesMostSeen" active-page="currentPageMostSeen" class="most-seen" title="Blog" size="100"></most-seen>
     <section class="contact-us">
         <div class="row">
-            <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()">
-                <h2 class="title">&iquest;Quieres saber m&aacute;s de <span class="game-font game-font-white">Game</span>Club?</h2>
-                <span class="description">D&eacute;janos tu mail y nosotros te contactamos</span>
+            <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()" novalidate>
+                <h2 class="title">&iquest;Quieres saber más de <span class="game-font game-font-white">Game</span>Club?</h2>
+                <span class="description">Déjanos tu mail y nosotros te contactamos</span>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Nombre</label>
                     <input validation name="name" placeholder="Nombre..." ng-model="contactUs.name" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">E-mail</label>
                     <input validation name="email" placeholder="E-mail..." ng-model="contactUs.email" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <input name="phone" placeholder="Teléfono..." ng-model="contactUs.phone">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Teléfono</label>
+                    <input validation name="phone" placeholder="Teléfono..." ng-model="contactUs.phone">
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Mensaje</label>
                     <textarea validation name="message" placeholder="Mensaje..." rows="6" ng-model="contactUs.message" required></textarea>
                 </div>
                 <div class="col-md-3"></div>
@@ -244,7 +258,6 @@
                     <button type="submit" class="btn btn-secundary">Enviar</button>
                 </div>
                 <div class="col-md-4"></div>
-
             </form>
         </div>
     </section>

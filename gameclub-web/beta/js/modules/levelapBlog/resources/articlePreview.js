@@ -1,12 +1,15 @@
-angular.module('LevelapBlog').directive('articlePreview', function(openRest, $location, $state, friendlyUrl, BlogConst) {
+angular.module('LevelapBlog').directive('articlePreview', function(openRest, $location, $state, friendlyUrl, BlogConst, urlRestPath) {
 	let baseSrc;
-    for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
-        let script = angular.element(document.getElementsByTagName("script")[i]);
-        if (script.attr("src") != null && script.attr("src").indexOf("levelapBlog.js") > -1) {
-            baseSrc = script.attr("src").substring(0, script.attr("src").indexOf("levelapBlog.js"));
-            break;
-        }
-    }
+
+	for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
+		let script = angular.element(document.getElementsByTagName("script")[i]);
+
+		if (script.attr("src") != null && script.attr("src").indexOf("levelapBlog.js") > -1) {
+			baseSrc = script.attr("src").substring(0, script.attr("src").indexOf("levelapBlog.js"));
+			break;
+		}
+	}
+	
 	return {
 		restrict: 'E',
 		templateUrl: baseSrc.concat('resources/articlePreview.html'),
@@ -18,6 +21,7 @@ angular.module('LevelapBlog').directive('articlePreview', function(openRest, $lo
 		},
 		replace: true,
 		link: function($scope, element, attrs, ctrl) {
+			$scope.$archiveUrl = urlRestPath.url + "/open/archive/download/";
 			$scope.BlogConst = BlogConst;
 			$scope.socialShareUrl = $location.$$absUrl;
 			$scope.socialShareUrlDomain = $location.$$protocol + "://" + $location.$$host;

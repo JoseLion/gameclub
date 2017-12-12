@@ -1,4 +1,4 @@
-angular.module('LevelapBlog').directive('mostSeen', function($state, friendlyUrl, BlogConst) {
+angular.module('LevelapBlog').directive('mostSeen', function($state, friendlyUrl, BlogConst, urlRestPath) {
 	let baseSrc;
 
     for (let i = document.getElementsByTagName("script").length - 1; i >= 0; i--) {
@@ -23,6 +23,7 @@ angular.module('LevelapBlog').directive('mostSeen', function($state, friendlyUrl
         },
         replace: true,
         link: function($scope, element, attrs, ctrl) {
+            $scope.$archiveUrl = urlRestPath.url + "/open/archive/download/";
             $scope.BlogConst = BlogConst;
             
             if ($scope.activePage == null) {

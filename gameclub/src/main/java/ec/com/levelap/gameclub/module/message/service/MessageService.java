@@ -40,6 +40,7 @@ public class MessageService extends BaseService<Message> {
 			message.setIsLoan(false);
 			message.setOwner(user);
 			message.setSubject(Const.SBJ_WELCOME_KIT);
+			message.setIsWelcomeKit(Boolean.TRUE);
 			messageRepo.save(message);
 		}
 		

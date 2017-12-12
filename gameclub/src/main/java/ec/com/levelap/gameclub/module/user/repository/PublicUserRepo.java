@@ -36,5 +36,14 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 			@Param("startDate") Date startDate,
 			@Param("endDate") Date endDate,
 			Pageable page);
-
+	
+	public Long countByGamesIsBorrowedIsTrueAndId(Long id);
+	
+	@Query("SELECT COUNT(l.id) FROM Loan l WHERE l.gamer.id=:id AND l.review IS NULL")
+	public Long countGamesToReturn(@Param("id") Long id);
+	
+	public PublicUser findByUrlToken(String urlToken);
+	
+	@Query("SELECT pu.privateKey FROM PublicUser pu WHERE pu.id=:id ")
+	public byte[] findKey(@Param("id") Long id);
 }

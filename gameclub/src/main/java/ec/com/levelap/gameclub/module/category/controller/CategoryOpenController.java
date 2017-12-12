@@ -23,7 +23,7 @@ public class CategoryOpenController {
 	
 	@RequestMapping(value="findAll", method=RequestMethod.GET)
 	public ResponseEntity<List<Category>> findAll() throws ServletException {
-		List<Category> categories = categoryService.getCategoryRepo().findAllByOrderByName();
+		List<Category> categories = categoryService.getCategoryRepo().findByStatusIsTrueOrderByName();
 		return new ResponseEntity<List<Category>>(categories, HttpStatus.OK);
 	}
 }

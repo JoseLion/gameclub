@@ -15,6 +15,8 @@ angular.module('GameClub').constant('Const', {
 
 	ok: "OK",
 
+	iva: 0.12,
+
 	statePrefix: {
 		gameclub: 'gameclub.',
 		account: 'gameclub.account.'
@@ -39,7 +41,8 @@ angular.module('GameClub').constant('Const', {
 		maxlength: 'El texto sobrepasa la cantidad máxima de caracteres',
 		minlength: 'El texto no cumple con la cantidad mínima de caracteres',
 		tableRequired: 'La tabla debe contener al menos un elemento',
-		consoleRequired: 'Elije una consola para poder realizar tu búsqueda'
+		consoleRequired: 'Elije una consola para poder realizar tu búsqueda',
+		cardRequired: 'Debe seleccionar una tarjeta para completar realizar el pedido'
 	},
 
 	messages: {
@@ -57,7 +60,21 @@ angular.module('GameClub').constant('Const', {
 	},
 
 	code: {
-		faq: "FAQ"
+		country: 'EC',
+		faq: "FAQ",
+		shippingDelivered: "SHPETG",
+		integrity: 'ITG'
+	},
+
+	settings: {
+		priceChartingGames: 'STGPCHNAP',
+		priceChartingMax: 'STGPCHMAX',
+		priceChartingMin: 'STGPCHMIN',
+		weekShippingCost: 'STGRETWEK',
+		shippingKitValue: 'STGSHPKIT',
+		feeLoanGamer: 'STGFEEPLY',
+		costReferred: 'STGREFREW',
+		feeLoanLender: 'STGFEELND',
 	},
 
 	tooltips: {
@@ -75,6 +92,12 @@ angular.module('GameClub').constant('Const', {
 	google: {
 		maps: "AIzaSyBiUXqwBImDoqoRBlvtAAVgnkP5yjMVwyY",
 		geolocation: "AIzaSyBC8pBwfSjl2ZTdN3dgByX__iOYGu8tlgU"
+	},
+
+	paymentez: {
+		baseUrl: "https://ccapi-stg.paymentez.com",
+		appCode: "TOMO-EC",
+		appKey: "LeqWG1P48IC8Cfj99DPW6rLGnh5wSC"
 	}
 
 });

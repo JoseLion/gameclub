@@ -44,7 +44,19 @@ public class Message extends BaseEntity {
 	
 	@Column(name="is_loan", columnDefinition="BOOLEAN DEFAULT NULL")
 	private Boolean isLoan;
-
+	
+	@Column(name = "is_welcome_kit", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+	private Boolean isWelcomeKit = Boolean.FALSE;
+	
+	@Column(name = "is_shipping_kit", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+	private Boolean isShippingKit = Boolean.FALSE;
+	
+	@Column(name = "is_fine", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+	private Boolean isFine = Boolean.FALSE;
+	
+	@Column(name = "is_amountRequest", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+	private Boolean isAmountRequest = Boolean.FALSE;
+	
 	public PublicUser getOwner() {
 		return owner;
 	}
@@ -100,4 +112,38 @@ public class Message extends BaseEntity {
 	public void setIsLoan(Boolean isLoan) {
 		this.isLoan = isLoan;
 	}
+
+	public Boolean getIsWelcomeKit() {
+		return isWelcomeKit;
+	}
+
+	public void setIsWelcomeKit(Boolean isWelcomeKit) {
+		this.isWelcomeKit = isWelcomeKit;
+	}
+
+	public Boolean getIsShippingKit() {
+		return isShippingKit;
+	}
+
+	public void setIsShippingKit(Boolean isShippingKit) {
+		this.isShippingKit = isShippingKit;
+	}
+
+	public Boolean getIsFine() {
+		return isFine;
+	}
+
+	public void setIsFine(Boolean isFine) {
+		this.isFine = isFine;
+	}
+
+	public Boolean getIsAmountRequest() {
+		return isAmountRequest;
+	}
+
+	public void setIsAmountRequest(Boolean isAmountRequest) {
+		this.isAmountRequest = isAmountRequest;
+	}
+
+	
 }

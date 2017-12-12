@@ -11,7 +11,7 @@ angular.module('ContactUs').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'ContactUs',
-					files: ['js/modules/contactUs/controller/contactUsCtrl.js']
+					files: ['js/modules/contactUs/controller/contactUsCtrl.js', 'js/modules/contactUs/style/contactUs.less', 'js/modules/contactUs/style/contactUs.responsive.less']
 				}, {
 					name: 'LevelapBlog',
 					files: ['js/modules/levelapBlog/resources/blog.css', 'js/modules/levelapBlog/resources/mostSeen.js']

@@ -4,6 +4,11 @@ spring:
   jpa:
     generate-ddl: true
     show-sql: false
+    
+wildfly:
+  jndi:
+    data-base: java:jboss/jdbc/GameClubDS
+    mail: java:jboss/mail/GameClub
 
 server:
   session:
@@ -43,6 +48,10 @@ levelap:
     important-size: 3
     most-seen-size: 4
     search-size: 10
+  paymentez:
+    base-url: https://ccapi-stg.paymentez.com
+    app-code: TOMO-EC
+    app-key: LeqWG1P48IC8Cfj99DPW6rLGnh5wSC
 
 flyway:
   enabled: true
@@ -52,21 +61,13 @@ flyway:
   locations:
     - classpath:db/gameclub
     - classpath:db/commons
+    - classpath:db/system/views
   baseline-on-migrate: true
   encoding: UTF-8
   out-of-order: true
-  
-kushki-configuration:
-  show-log: true
-  private-merchant-id: 10000002423281133314149322144567
-  end-point:
-    path: https://api-uat.kushkipagos.com/v1
     
 priceCharting-configuration:
   url: http://www.pricecharting.com/api/product
-  
-tcc-configuration:
-  key: PRECLIENTESPRUEBA
-  url: http://clientes.tcc.com.co/preservicios
-  account: 6019000
-  nit: 1792738865001
+
+game-club:
+  real-times: false

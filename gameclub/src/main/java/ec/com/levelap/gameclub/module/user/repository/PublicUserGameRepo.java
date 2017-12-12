@@ -20,18 +20,20 @@ public interface PublicUserGameRepo extends JpaRepository<PublicUserGame, Long> 
 	@Query(	"SELECT " +
 				"pg.id AS id, " +
 				"pg.status AS status, " +
-				"lp.cost AS shippingCost, " +
+				"sp.cost AS shippingCost, " +
 				"pg.publicUser AS publicUser, " +
 				"pg.cost AS cost, " +
 				"pg.integrity AS integrity, " +
-				"pg.observations AS observations " +
-			"FROM PublicUserGame pg, LocationPrice lp " +
+				"pg.observations AS observations, " +
+				"pg.isBorrowed AS isBorrowed " +
+			"FROM PublicUserGame pg, ShippingPrice sp " +
 				"LEFT JOIN pg.publicUser p " +
 				"LEFT JOIN pg.console c " +
 				"LEFT JOIN pg.game g " +
 			"WHERE " +
-				"(:origin IS NULL OR (lp.origin=:origin AND lp.destination=p.location)) AND " +
+				"(sp.origin=:origin AND sp.destination=p.location) AND " +
 				"pg.status=TRUE AND " +
+				"p.isReady=TRUE AND " +
 				"(:publicUser IS NULL OR p<>:publicUser) AND " +
 				"g.id=:gameId AND " +
 				"c.id=:consoleId " +
@@ -45,13 +47,15 @@ public interface PublicUserGameRepo extends JpaRepository<PublicUserGame, Long> 
 			"pg.publicUser AS publicUser, " +
 			"pg.cost AS cost, " +
 			"pg.integrity AS integrity, " +
-			"pg.observations AS observations " +
+			"pg.observations AS observations, " +
+			"pg.isBorrowed AS isBorrowed " +
 		"FROM PublicUserGame pg " +
 			"LEFT JOIN pg.publicUser p " +
 			"LEFT JOIN pg.console c " +
 			"LEFT JOIN pg.game g " +
 		"WHERE " +
 			"pg.status=TRUE AND " +
+			"p.isReady=TRUE AND " +
 			"g.id=:gameId AND " +
 			"c.id=:consoleId " +
 		"ORDER BY pg.status DESC, p.rating DESC, pg.integrity DESC")

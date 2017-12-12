@@ -1,39 +1,47 @@
 <div id="messages">
 	<section class="row header">
-		<div class="col-md-4"></div>
-		<div class="col-md-8 no-padding-left no-padding-right">
+		<div class="col-md-4 col-xs-5"></div>
+		<div class="col-md-8 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
 			<div class="col-md-10 name">
 				<div class="col-md-3 no-padding-left no-padding-right">
-					<img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+					<img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" onerror="this.src='img/contact-person.svg'">
 				</div>
 				<div class="col-md-9">
 					<h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
 					<div class="col-md-12 no-padding-left no-padding-right">
-						<div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+						<div class="connection">última vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
 					</div>
 				</div>
 			</div>
 			<div class="clearfix"></div>
-			<div class="col-md-10 coins">
-				<div class="col-md-6 no-padding-left">
-					<span class="subtitle">Coins: <span class="dark">{{currentUser.coins}}</span> <i class="gc gc-usd-o"></i></span>
-				</div>
-				<div class="col-md-6 text-center">
-					<button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
-				</div>
-			</div>
-			<div class="clearfix"></div>
-			<div class="col-md-12 total">
-				<span class="subtitle">Resumen de estatus de juegos</span>
-				<div class="col-md-8 description">
-					<span>Juegos actualmente prestados: <span class="dark">0</span></span>
-					<div class="updated">&uacute;ltima actualizaci&oacute;n: <span>01-04-2017</span></div>
-				</div>
-				<div class="col-md-8 description">
-					<span>Juegos por devolver: <span class="dark">0</span></span>
-					<div class="updated">&uacute;ltima actualizaci&oacute;n: <span>01-04-2017</span></div>
-				</div>
-			</div>
+		</div>
+		<div class="clearfix"></div>
+
+        <div class="col-md-4 col-xs-0"></div>
+        <div class="col-md-8 col-xs-12">
+			<div class="col-md-10 col-xs-12 coins">
+                <div class="col-md-12 col-xs-12 no-padding-left">
+                    <span class="subtitle">Saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
+                </div>
+            </div>
+		</div>
+        <div class="clearfix"></div>
+
+		<div class="col-md-4 col-xs-0"></div>
+        <div class="col-md-8 col-xs-12">
+            <div class="col-md-12 col-xs-12 total">
+                <h2 class="subtitle">Resumen de status de juegos</h2>
+
+                <div class="col-md-12 col-xs-12 description">
+                    <div>Juegos actualmente alquilados: <span class="dark">{{summary.borrowed}}</span></div>
+                    <div class="updated">última actualización: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
+                </div>
+
+                <div class="col-md-12 col-xs-12 description">
+                    <div>Juegos por devolver: <span class="dark">{{summary.toReturn}}</span></div>
+                    <div class="updated">última actualización: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
+                </div>
+            </div>
 		</div>
 		<div class="clearfix"></div>
 	</section>
@@ -42,29 +50,23 @@
 		<div class="inbox col-md-12">
 			<div class="list col-md-4">
 				<div class="head">Mensajes</div>
-
 				<div class="search">
 					<input type="text" placeholder="Buscar en mensajes" ng-model="search">
 				</div>
-
 				<div class="scrollable">
 					<span class="no-messages" ng-if="messages.length == 0">No tienes ningún mensaje</span>
 					<div class="inbox-cell" ng-class="{'unread': !message.read, 'selected': message.selected}" ng-repeat="message in messages" ng-click="messageSelected(message)">
 						<div class="image col-md-3">
 							<img src="img/messages/gameclub-icon.svg" ng-if="!message.isLoan">
-							<img class="avatar" archive="message.fromUser ? message.fromUser.avatar.image : message.toUser.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="message.isLoan">
+							<img class="avatar" ng-src="{{getMessageAvatar(message)}}" ng-if="message.isLoan">
 						</div>
-
 						<div class="labels col-md-6">
 							<span id="from">{{getFromTo(message)}}</span>
-							<br>
 							<span>{{message.subject}}</span>
 						</div>
-
 						<div class="date col-md-3">
 							<span>{{getFormattedDate(message.date)}}</span>
 						</div>
-
 						<div class="clearfix"></div>
 					</div>
 				</div>
@@ -76,91 +78,17 @@
 				<div class="canvas">
 					<span class="no-content" ng-if="noSelected()">Selecciona un mensaje</span>
 
-					<div class="welcome-kit col-md-12" ng-repeat="kit in welcomeKits" ng-if="welcomeKits">
-						<div class="date">{{kit.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
-						<div class="red-box">
-							<form class="form-horizontal" role="form" novalidate>
-								<span class="body">Hola {{kit.publicUser.name}},</span>
-								<br>
-								<br>
-								<span class="body">GAME CLUB te da la bienvenida, te enviaremos un Welcome Kit para que puedas pedir y prestar juegos, por favor confirma tu información de recepción.</span>
-								<br>
-
-								<div class="form-row col-md-12">
-									<label class="col-md-3 control-label">Ciudad</label>
-									<div class="col-md-9">
-										<span>{{currentUser.location.name}}</span>
-									</div>
-								</div>
-
-								<div class="form-row col-md-12">
-									<label class="col-md-3 control-label">Dirección</label>
-									<div class="col-md-9">
-										<textarea type="text" class="address" ng-model="kit.address" required ng-init="kit.address = currentUser.billingAddress" rows="3" ng-disabled="kit.wasConfirmed"></textarea>
-									</div>
-								</div>
-
-								<div class="form-row col-md-12">
-									<label class="col-md-3 control-label">Teléfono</label>
-									<div class="col-md-9">
-										<input type="text" class="phone" ng-model="kit.phone" required ng-init="kit.phone = currentUser.contactPhone" onkeypress="return !isNaN(String.fromCharCode(event.charCode))" ng-disabled="kit.wasConfirmed">
-									</div>
-								</div>
-
-								<div class="form-row col-md-12">
-									<label class="col-md-5 control-label">Persona de entrega</label>
-									<div class="col-md-7">
-										<input type="text" class="receiver" ng-model="kit.receiver" required ng-init="kit.receiver = currentUser.name + ' ' + currentUser.lastName" ng-disabled="kit.wasConfirmed">
-									</div>
-								</div>
-
-								<div class="form-row col-md-12">
-									<label class="col-md-3 control-label"><i class="gc gc-address" ng-click="openMap(kit)"></i></label>
-									<div class="col-md-9">
-										<img class="geo-check" src="/img/check.svg" ng-if="kit.geolocation != null">
-									</div>
-								</div>
-
-								<div class="form-row col-md-12">
-									<button type="button" class="btn btn-tertiary full btn-xs" ng-click="confirmWelcomeKit(kit)" ng-if="!kit.wasConfirmed">Confirmar envío</button>
-								</div>
-
-								<div class="clearfix"></div>
-							</form>
-						</div>
-
-						<div class="date" ng-if="kit.wasConfirmed">{{kit.confirmationDate | date: 'dd/MM/yy - HH:mm'}}</div>
-						<div class="blue-box small-box text-center" ng-if="kit.wasConfirmed">
-							<div class="box-label col-md-12">
-								<span>Confirmado</span>
-							</div>
-							
-							<div class="clearfix"></div>
-						</div>
-
-						<div class="date" ng-if="kit.tracking != null && kit.tracking != ''">{{kit.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
-						<div class="red-box" ng-if="kit.tracking != null && kit.tracking != ''">
-							<span class="body">Hola {{kit.publicUser.name}},</span>
-							<br>
-							<br>
-							<span class="body">Tu Welcome Kit ha sido enviado a la dirección que nos has proporcionado.</span>
-							<br>
-							<br>
-							<span class="body">Estado del envío:</span> <span class="body text-black">{{kit.shippingStatus.name}}</span>
-							<div ng-if="kit.shippingNote != null && kit.shippingNote != ''">
-								<span>Observaciones: </span><span class="text-black">{{kit.shippingNote}}</span>
-							</div>
-						</div>
-					</div>
+					<div ng-include="'js/modules/account/messages/view/kitsSection.html'"></div>
 
 					<div class="loan col-md-12" ng-if="loan">
+						<!-- ************************ BEGIN - GAMER MESSAGE FLOW ************************ -->
 						<div ng-if="currentUser.id == loan.gamer.id">
 							<div class="date">{{loan.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="red-box">
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span class="text-black">Has pedido a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.name | limitTo: 1}}</span>
+								<span class="text-black">Has pedido a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}.</span>
 								<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goTouser(loan.publicUserGame.publicUser)">Ver ficha del usuario</button>
 								<br>
 								<span>el siguiente juego:</span>
@@ -171,7 +99,7 @@
 								<br>
 								<span>Durante <span class="text-black">{{loan.weeks}} semanas</span> desde la entrega del juego.</span>
 								<br>
-								<span>Pagarás un total de <span class="text-black">{{loan.publicUserGame.cost}} COINS</span> por este préstamo.</span>
+								<span>Pagarás un total de <span class="text-black">{{loan.cost | currency: '$': 2}}</span> por este préstamo.</span>
 								<br>
 								<span>Si el préstamo es rechazado volverán a acreditarse a tu cuenta.</span>
 								<br>
@@ -203,6 +131,7 @@
 										<div class="form-group geolocation" ng-class="{'disabled': loan.isDisabled}">
 											<label><i class="gc gc-address" ng-click="!loan.isDisabled ? openMap(loan, 'gamerGeolocation') : null"></i></label>
 											<img src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
+											<span ng-if="!loan.gamerGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
 										<div class="form-group receiver" ng-class="{'disabled': loan.isDisabled}">
@@ -217,10 +146,13 @@
 									</div>
 									<br>
 									<div class="final-cost">
-										<span class="text-lg upper-case">Costo shipping final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
+										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">{{loan.cost | currency:'$ ':2}}</span>
 									</div>
 									<br>
-									<span class="upper-case">Forma de pago: </span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span>
+									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
+									<br>
+									<br>
+									<span ng-if="loan.cardPart > 0.0"><span class="upper-case">Pago con tarjeta: {{loan.cardPart | currency: '$': 2}}</span><span class="payment">XXXX XXXX XXXX {{loan.cardFinale}}</span></span>
 									<br>
 									<br>
 									<div class="alert-icon">
@@ -260,6 +192,7 @@
 										<div class="form-group geolocation">
 											<label class="cursor-no-drop"><i class="gc gc-address"></i></label>
 											<img src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
+											<span ng-if="!loan.gamerGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
 										<div class="form-group receiver">
@@ -269,10 +202,13 @@
 									</div>
 									<br>
 									<div class="final-cost">
-										<span class="text-lg upper-case">Costo shipping final: </span><span class="text-bg text-black upper-case">${{loan.cost}}</span>
+										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">{{loan.cost | currency:'$ ':2}}</span>
 									</div>
 									<br>
-									<span class="upper-case">Forma de pago: </span><span class="payment">XXXX XXXX XXXX {{loan.payment.cardFinale}}</span>
+									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
+									<br>
+									<br>
+									<span ng-if="loan.cardPart > 0.0"><span class="upper-case">Pago con tarjeta: {{loan.cardPart | currency: '$': 2}}</span><span class="payment">XXXX XXXX XXXX {{loan.cardFinale}}</span></span>
 									<br>
 									<br>
 									<span>Estado del envío: </span><span class="text-black">{{loan.shippingStatus.name}}</span>
@@ -281,16 +217,163 @@
 									</div>
 								</form>
 							</div>
+
+							<div class="date" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">{{loan.gamerStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">
+								<span>Hola {{currentUser.name}},</span>
+								<br>
+								<br>
+								<span>Tu préstamo llegó exitosamente el día: </span><span class="text-black upper-case">{{loan.gamerStatusDate | date: 'EEEE d'}} </span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.gamerStatusDate | date: 'LLLL'}}</span>
+								<br>
+								<span>El préstamo durará: </span><span class="text-black">{{loan.weeks}} {{loan.weeks == 1 ? 'semana' : 'semanas'}}</span>
+								<br>
+								<span>Pasaremos a retirarlo: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
+								<br>
+								<br>
+								<span>En el caso de no haber recibido el juego, solicita ayuda a <a href>nuestro servicio al cliente</a>.</span>
+								<br>
+								<br>
+								<span class="text-lg">Timepo restante: </span>
+								<span class="text-black text-lg">
+									{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}}
+									{{timer.hours < 10 ? '0' : ''}}{{timer.hours}} {{timer.hours == 1 ? 'hora' : 'horas'}}
+									{{timer.mins < 10 ? '0' : ''}}{{timer.mins}} min
+									{{timer.secs < 10 ? '0' : ''}}{{timer.secs}} seg
+								</span>
+							</div>
+
+							<div class="date" ng-if="loan.restore != null">{{loan.restore.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box" ng-if="loan.restore != null">
+								<span>Hola {{currentUser.name}},</span>
+								<br>
+								<br>
+								<span>Iremos a buscar el juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date:'EEEE d'}} de {{showLendDay(loan.returnDate) | date:'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
+								<br>
+								<span>Hora: </span><span class="text-black">14H00</span><span> - </span><span class="text-black">18H00</span>
+								<br>
+								<br>
+								<div class="decorator-black">
+									<span>Caja GAME CLUB: </span><span class="text-black text-underline">nº <span class="upper-case">{{loan.boxNumber}}</span></span>
+								</div>
+								<br>
+								<br>
+								<form>
+									<div class="decorator" ng-class="{'disabled': loan.restore.isDisabled}">
+										<div class="form-group">
+											<span>Dirección de retiro actual:</span>
+										</div>
+
+										<div class="form-group address" ng-class="{'disabled': loan.disable.isDisabled}">
+											<label>Dirección</label>
+											<textarea type="text" ng-model="loan.restore.gamerAddress" rows="3" ng-disabled="loan.restore.isDisabled"></textarea>
+										</div>
+
+										<div class="form-group geolocation" ng-class="{'disabled': loan.restore.isDisabled}">
+											<label>
+												<i class="gc gc-address" ng-click="!loan.restore.isDisabled ? openMap(loan.restore, 'gamerGeolocation') : null"></i>
+											</label>
+											<img src="/img/check.svg" ng-if="loan.restore.gamerGeolocation != null">
+											<span ng-if="!loan.restore.gamerGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
+										</div>
+
+										<div class="form-group receiver" ng-class="{'disabled': loan.restore.isDisabled}">
+											<label>Persona de entrega</label>
+											<input type="text" ng-model="loan.restore.gamerReceiver" ng-disabled="loan.restore.isDisabled">
+										</div>
+
+										<div class="form-group check" ng-class="{'disabled': loan.restore.isDisabled}">
+											<div class="box" ng-class="loan.restore.saveChanges ? 'checked' : ''" ng-click="!loan.restore.isDisabled ? (loan.restore.saveChanges = !loan.restore.saveChanges) : null"></div>
+											<span class="text-black text-sm">Guardar información para siguiente préstamo</span>
+										</div>
+									</div>
+									<br>
+									<br>
+									<div class="alert-icon">
+										<img src="img/messages/alert.svg">
+									</div>
+									<div class="alert-text">
+										<span>Verifica o edita la información de entrega.</span>
+										<br>
+										<span>Y la caja en el caso que la cambies.</span>
+										<br>
+										<span>Si no es correcta no podremos recoger el juego.</span>
+									</div>
+									<br>
+									<br>
+									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href class="link">nuestro servicio al cliente</a>.</span>
+									<br>
+									<br>
+									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="gamerConfirmRestore()" ng-if="!loan.restore.gamerConfirmed">OK</button>
+									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.restore.isDisabled = !loan.restore.isDisabled" ng-if="!loan.restore.gamerConfirmed">Editar información retiro</button>
+								</form>
+							</div>
+
+							<div class="date" ng-if="loan.restore.gamerConfirmed">{{loan.restore.gamerConfirmDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="loan.restore.gamerConfirmed">
+								<div class="box-label col-md-12">
+									<span>OK</span>
+								</div>
+
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="date" ng-if="loan.restore.gamerStatusDate">{{loan.restore.gamerStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box medium-box" ng-if="loan.restore.gamerStatusDate">
+								<span>Hola {{currentUser.name}},</span>
+								<br>
+								<br>
+								<span>El retiro del juego se ha creado y su estado es: </span><span class="text-black">{{loan.restore.shippingStatus.name}}</span>
+								<div ng-if="loan.restore.shippingNote != null && loan.restore.shippingNote != ''">
+									<span>Observaciones: </span><span class="text-black">{{loan.restore.shippingNote}}</span>
+								</div>
+								<form on-submit="sendReview()" novalidate ng-if="loan.restore.shippingStatus.code == Const.code.shippingDelivered">
+									<br>
+									<br>
+									<span>Califica a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}. por este préstamo: </span>
+									<span class="valid-group">
+										<label ng-show="false">Calificación</label>
+										<score validation ng-model="loan.review.lenderScore" ng-disabled="loan.review.lenderReviewDate" required></score>
+									</span>
+									<br>
+									<span>y escribe una opinion:</span>
+									<br>
+									<span class="valid-group">
+										<label ng-show="false">Comentario</label>
+										<textarea validation type="text" class="review-comment" ng-model="loan.review.lenderComment" rows="3" ng-disabled="loan.lenderReviewDate" required></textarea>
+									</span>
+									<br>
+									<button type="submit" class="btn btn-xs btn-tertiary full" ng-if="!loan.review.lenderReviewDate">Validar Calificación</button>
+								</form>
+							</div>
+
+							<div class="date" ng-if="loan.review.lenderReviewDate">{{loan.review.lenderReviewDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="loan.review.lenderReviewDate">
+								<div class="box-label col-md-12">
+									<span>OK</span>
+								</div>
+
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="date" ng-if="loan.review.gamerScore && loan.review.lenderReviewDate">{{loan.review.gamerReviewDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box medium-box" ng-if="loan.review.gamerScore && loan.review.lenderReviewDate">
+								<span>{{loan.publicUserGame.publicUser.name}} te dio una calificación de: </span><score ng-model="loan.review.gamerScore" disabled></score>
+								<br>
+								<span>y escribió una opinión:</span>
+								<br>
+								<span class="text-black">{{loan.review.gamerComment}}</span>
+							</div>
 						</div>
+						<!-- ************************ END - GAMER MESSAGE FLOW ************************ -->
 
-
+						<!-- ************************ BEGIN - LENDER MESSAGE FLOW ************************ -->
 						<div ng-if="currentUser.id != loan.gamer.id">
 							<div class="date">{{loan.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="red-box">
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span class="text-black">{{loan.gamer.name}} {{loan.gamer.name | limitTo: 1}}</span>
+								<span class="text-black">{{loan.gamer.name}} {{loan.gamer.lastName | limitTo: 1}}.</span>
 								<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goTouser(loan.gamer)">Ver ficha del usuario</button>
 								<br>
 								<span>desea pedir prestado el siguiente juego:</span>
@@ -301,13 +384,13 @@
 								<br>
 								<span>Durante <span class="text-black">{{loan.weeks}} semanas</span> desde la entrega del juego.</span>
 								<br>
-								<span>Recibirás un total de <span class="text-black">{{loan.publicUserGame.cost}} COINS</span> por este préstamo.</span>
+								<span>Recibirás un total de <span class="text-black">{{(loan.publicUserGame.cost * loan.weeks) | currency: '$': 2}}</span> por este préstamo.</span>
 								<br>
 								<span>Una vez aceptado el préstamo, se te notificará la fecha exacta que tendrás tu juego de vuelta.</span>
 								<br>
 								<br>
-								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptLoan(loan)" ng-if="loan.wasAccepted == null">Aceptar préstamo</button>
-								<button type="button" class="btn btn-xs btn-tertiary" ng-click="rejectLoan(loan)" ng-if="loan.wasAccepted == null">Rechazar préstamo</button>
+								<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptLoan(loan)" ng-if="loan.wasAccepted == null && loan.status">Aceptar préstamo</button>
+								<button type="button" class="btn btn-xs btn-tertiary" ng-click="rejectLoan(loan)" ng-if="loan.wasAccepted == null && loan.status">Rechazar préstamo</button>
 							</div>
 
 							<div ng-include="'firstLoanAnswer.html'" scope="this"></div>
@@ -317,9 +400,9 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Retiraremos tu juego el día: </span><span class="text-black">XXXXX XX de Xxxxxx</span>
+								<span>Retiraremos tu juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.acceptedDate) | date:'EEEE d'}} de {{showLendDay(loan.acceptedDate) | date:'MMMM'}} del {{showLendDay(loan.acceptedDate) | date:'yyyy'}}</span>
 								<br>
-								<span>Hora de retiro: </span><span class="text-black">XXhXX</span><span> - </span><span class="text-black">XXhXX</span>
+								<span>Hora de retiro: </span><span class="text-black">14h00</span><span> - </span><span class="text-black">18:00</span>
 								<br>
 								<br>
 								<form>
@@ -336,6 +419,7 @@
 										<div class="form-group geolocation" ng-class="{'disabled': loan.isDisabled}">
 											<label><i class="gc gc-address" ng-click="!loan.isDisabled ? openMap(loan, 'lenderGeolocation') : null"></i></label>
 											<img src="/img/check.svg" ng-if="loan.lenderGeolocation != null">
+											<span ng-if="!loan.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
 										<div class="form-group receiver" ng-class="{'disabled': loan.isDisabled}">
@@ -373,11 +457,13 @@
 							<div class="date" ng-if="loan.lenderConfirmed">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="blue-box text-left" ng-if="loan.lenderConfirmed">
 								<span class="text-black text-lg upper-case">Préstamo en curso</span>
-								<br>
-								<br>
-								<span>Retiro de juego: </span><span class="text-black">XXXXX XX de Xxxxx</span>
-								<br>
-								<span>Hora: </span><span class="text-black">XXhXX</span><span> - </span><span class="text-black">XXhXX</span>
+								<div ng-if="loan.deliveryDate != null">
+									<br>
+									<br>
+									<span>Retiro de juego: </span><span class="text-black  upper-case">{{loan.deliveryDate | date:'EEEE d'}} de {{loan.deliveryDate | date:'d'}} de {{loan.deliveryDate | date:'MMMM'}} del {{loan.deliveryDate | date:'yyyy'}}</span>
+									<br>
+									<span>Hora: </span><span class="text-black">{{loan.deliveryDate | date:'HH'}}H{{loan.deliveryDate | date:'mm'}}</span>
+								</div>
 								<br>
 								<br>
 								<form>
@@ -394,6 +480,7 @@
 										<div class="form-group geolocation">
 											<label class="cursor-no-drop"><i class="gc gc-address"></i></label>
 											<img src="/img/check.svg" ng-if="loan.lenderGeolocation != null">
+											<span ng-if="!loan.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
 										<div class="form-group receiver">
@@ -414,9 +501,165 @@
 									</div>
 								</form>
 							</div>
+
+							<div class="date" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">
+								<span>Hola {{currentUser.name}},</span>
+								<br>
+								<br>
+								<span>Tu juego llegó exitosamente el día: </span><span class="text-black upper-case">{{loan.lenderStatusDate | date: 'EEEE d'}} </span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.lenderStatusDate | date: 'LLLL'}}</span>
+								<br>
+								<span>El préstamo durará: </span><span class="text-black">{{loan.weeks}} {{loan.weeks == 1 ? 'semana' : 'semanas'}}</span>
+								<br>
+								<span>Tu juego estará de vuelta el día: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
+								<br>
+								<br>
+								<span>Se acaban de acreditar a tu cuenta: </span><span class="text-black upper-case">{{(loan.publicUserGame.cost * loan.weeks) | currency: '$': 2}}</span>
+								<br>
+								<br>
+								<span class="text-lg">Timepo restante: </span>
+								<span class="text-black text-lg">
+									{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}}
+									{{timer.hours < 10 ? '0' : ''}}{{timer.hours}} {{timer.hours == 1 ? 'hora' : 'horas'}}
+									{{timer.mins < 10 ? '0' : ''}}{{timer.mins}} min
+									{{timer.secs < 10 ? '0' : ''}}{{timer.secs}} seg
+								</span>
+							</div>
+
+							<div class="date" ng-if="loan.restore != null">{{loan.restore.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box" ng-if="loan.restore != null">
+								<span>Hola {{currentUser.name}},</span>
+								<br>
+								<br>
+								<span>Iremos a buscar tu juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date:'EEEE d'}} de {{showLendDay(loan.returnDate) | date:'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
+								<br>
+								<br>
+								<span>Entregaremos tu juego el dia: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date: 'EEEE d'}} de {{showLendDay(loan.returnDate) | date: 'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
+								<br>
+								<br>
+								<form>
+									<div class="decorator" ng-class="{'disabled': loan.restore.isDisabled}">
+										<div class="form-group">
+											<span>Dirección de retiro actual: edita tu información si es necesario.</span>
+										</div>
+
+										<div class="form-group address" ng-class="{'disabled': loan.disable.isDisabled}">
+											<label>Dirección</label>
+											<textarea type="text" ng-model="loan.restore.lenderAddress" rows="3" ng-disabled="loan.restore.isDisabled"></textarea>
+										</div>
+
+										<div class="form-group geolocation" ng-class="{'disabled': loan.restore.isDisabled}">
+											<label>
+												<i class="gc gc-address" ng-click="!loan.restore.isDisabled ? openMap(loan.restore, 'lenderGeolocation') : null"></i>
+											</label>
+											<img src="/img/check.svg" ng-if="loan.restore.lenderGeolocation != null">
+											<span ng-if="!loan.restore.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
+										</div>
+
+										<div class="form-group receiver" ng-class="{'disabled': loan.restore.isDisabled}">
+											<label>Persona de entrega</label>
+											<input type="text" ng-model="loan.restore.lenderReceiver" ng-disabled="loan.restore.isDisabled">
+										</div>
+
+										<div class="form-group check" ng-class="{'disabled': loan.restore.isDisabled}">
+											<div class="box" ng-class="loan.restore.saveChanges ? 'checked' : ''" ng-click="!loan.restore.isDisabled ? (loan.restore.saveChanges = !loan.restore.saveChanges) : null"></div>
+											<span class="text-black text-sm">Guardar información para siguiente préstamo</span>
+										</div>
+									</div>
+									<br>
+									<br>
+									<div class="alert-icon">
+										<img src="img/messages/alert.svg">
+									</div>
+									<div class="alert-text">
+										<span>Verifica o edita la información de entrega.</span>
+										<br>
+										<span>Si no es correcta no podremos recoger el juego.</span>
+									</div>
+									<br>
+									<br>
+									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href class="link">nuestro servicio al cliente</a>.</span>
+									<br>
+									<br>
+									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="lenderConfirmRestore()" ng-if="!loan.restore.lenderConfirmed">OK</button>
+									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.restore.isDisabled = !loan.restore.isDisabled" ng-if="!loan.restore.lenderConfirmed">Editar información retiro</button>
+								</form>
+							</div>
+
+							<div class="date" ng-if="loan.restore.lenderConfirmed">{{loan.restore.lenderConfirmDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="loan.restore.lenderConfirmed">
+								<div class="box-label col-md-12">
+									<span>OK</span>
+								</div>
+
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="date" ng-if="loan.restore.gamerStatusDate">{{loan.restore.gamerStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box medium-box" ng-if="loan.restore.gamerStatusDate">
+								<span>Hola {{currentUser.name}},</span>
+								<br>
+								<br>
+								<span>El envío del juego se ha creado y su estado es: </span><span class="text-black">{{loan.restore.shippingStatus.name}}</span>
+								<div ng-if="loan.restore.shippingNote != null && loan.restore.shippingNote != ''">
+									<span>Observaciones: </span><span class="text-black">{{loan.restore.shippingNote}}</span>
+								</div>
+								<form on-submit="sendReview()" novalidate ng-if="loan.restore.shippingStatus.code == Const.code.shippingDelivered">
+									<br>
+									<br>
+									<span>Califica a {{loan.gamer.name}} {{loan.gamer.lastName | limitTo: 1}}. por este préstamo: </span>
+									<span class="valid-group">
+										<label ng-show="false">Calificación</label>
+										<score validation ng-model="loan.review.gamerScore" ng-disabled="loan.review.gamerReviewDate" required></score>
+									</span>
+									<br>
+									<span>y escribe una opinion:</span>
+									<br>
+									<span class="valid-group">
+										<label ng-show="false">Comentario</label>
+										<textarea validation type="text" class="review-comment" ng-model="loan.review.gamerComment" rows="3" ng-disabled="loan.review.gamerReviewDate" required></textarea>
+									</span>
+									<br>
+									<button type="submit" class="btn btn-xs btn-tertiary full" ng-if="!loan.review.gamerReviewDate">Validar Calificación</button>
+								</form>
+							</div>
+
+							<div class="date" ng-if="loan.review.gamerReviewDate">{{loan.review.gamerReviewDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="loan.review.gamerReviewDate">
+								<div class="box-label col-md-12">
+									<span>OK</span>
+								</div>
+
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="date" ng-if="loan.review.lenderScore && loan.review.gamerReviewDate">{{loan.review.lenderReviewDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box medium-box" ng-if="loan.review.lenderScore && loan.review.gamerReviewDate">
+								<span>{{loan.gamer.name}} te dio una calificación de: </span><score ng-model="loan.review.lenderScore" disabled></score>
+								<br>
+								<span>y escribió una opinión:</span>
+								<br>
+								<span class="text-black">{{loan.review.lenderComment}}</span>
+							</div>
 						</div>
+						<!-- ************************ END - LENDER MESSAGE FLOW ************************ -->
 					</div>
 
+					<div class="welcome-fine col-md-12" ng-if="fine.status != null">
+						<div class="date" >{{fine.message.date | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box medium-box" >
+								<span>Hola {{fine.owner.name}}, has sido cobrado el valor de {{fine.amount | currency: '$': 2}}, por {{fine.description}}, este saldo ha sido descontado de tu balance y/o tu tarjeta ingresada. </span>
+							</div>
+							<br>
+					</div>
+
+					<div class="welcome-amountrq col-md-12" ng-if="amountRequest.status != null">
+						<div class="date" >{{amountRequest.message.date | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="red-box medium-box" >
+								<span>Estimado {{amountRequest.publicUser.name}}, hemos realizado la transacción del retiro de tu saldo  por un valor de {{amountRequest.showAmount | currency: '$': 2}}. </span>
+							</div>
+							<br>
+					</div>
 					<div class="clearfix"></div>
 				</div>
 			</div>
@@ -432,7 +675,7 @@
 		<div class="box-label col-md-12">
 			<span>Préstamo Cancelado</span>
 		</div>
-		
+
 		<div class="clearfix"></div>
 	</div>
 
@@ -441,7 +684,7 @@
 		<div class="box-label col-md-12">
 			<span>Préstamo Aceptado</span>
 		</div>
-		
+
 		<div class="clearfix"></div>
 	</div>
 
@@ -450,7 +693,7 @@
 		<div class="box-label col-md-12">
 			<span>Préstamo Rechazado</span>
 		</div>
-		
+
 		<div class="clearfix"></div>
 	</div>
 </script>

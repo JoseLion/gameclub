@@ -128,7 +128,7 @@
 #most-seen .blog-preview .info h2{font-size:1.6em;}
 #most-seen .blog-preview .info a{color:#7BCABC;position:relative;text-transform:uppercase;}
 #most-seen .blog-preview .info p{padding-top:1em;}
-#most-seen .blog-preview .picture{background:#FFFFFF;border-radius:5%;bottom:0%;left:57%;padding:0;position:absolute;right:0;top:0;}
+#most-seen .blog-preview .picture{background:#FFFFFF;border-radius:5%;bottom:5%;left:57%;padding:0;position:absolute;right:0;top:0;}
 #most-seen .blog-preview .picture .post-date{background:#FFFFFF;border:2px solid #7BCABC;border-radius:50%;color:#7BCABC;display:table;font-weight:700;height:5em;left:-2em;padding:0;position:absolute;text-align:center;text-transform:uppercase;top:-1em;width:5em;z-index:1;}
 #most-seen .blog-preview .picture .post-date .post-date-content{display:table-cell;text-align:center;vertical-align:middle;}
 #most-seen .blog-preview .picture .post-date span{display:block;line-height:1;}

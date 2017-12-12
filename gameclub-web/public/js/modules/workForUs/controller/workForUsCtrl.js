@@ -1,13 +1,15 @@
-angular.module('WorkForUs').controller('WorkForUsCtrl', function($scope, $rootScope, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview, notif, Const) {
+angular.module('WorkForUs').controller('WorkForUsCtrl', function($scope, blogsPreview, anchor, $location, sweet, openRest, notif, forEach) {
+    $scope.work = {};
+
     if (anchor != null) {
         $location.hash(anchor);
-        //$anchorScroll.yOffset = angular.element('#fixedbar')[0].offsetHeight;
     }
 
     $scope.currentBlogPage = 0;
     blogsPreview.$promise.then(function(data) {
         setPageBlogsMostSeen(data);
     });
+
     $scope.$watch('currentPageMostSeen', function(newValue, oldValue) {
         if(newValue != null && newValue != oldValue) {
             openRest("levelapBlog/findArticles").post({isMostSeen: true, page: newValue}, function(data) {
@@ -15,6 +17,7 @@ angular.module('WorkForUs').controller('WorkForUsCtrl', function($scope, $rootSc
             });
         }
     });
+
     function setPageBlogsMostSeen(data) {
         $scope.blogsPreview = data.content;
         $scope.blogsPreview.forEach(function(preview) {
@@ -28,4 +31,26 @@ angular.module('WorkForUs').controller('WorkForUsCtrl', function($scope, $rootSc
         $scope.totalPagesMostSeen = data.totalPages;
     }
 
+    $scope.chooseFile = function() {
+        angular.element("#work-for-us-file").trigger('click');
+    }
+
+    $scope.send = function() {
+        sweet.default("Nos enviarás un correo con tu información y tu mensaje", function() {
+            let formData = {
+                work: angular.copy($scope.work),
+                file: angular.copy($scope.work.file)
+            };
+
+            delete formData.work.file;
+
+            openRest("publicUser/sendWorkForUs").multipart(formData, function() {
+                notif.success("Información enviada con éxito");
+                $scope.work = {};
+                sweet.close();
+            }, function(error) {
+                sweet.close();
+            });
+        });
+    }
 });

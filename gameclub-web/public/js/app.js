@@ -1,5 +1,6 @@
 angular.module('GameClub', [
 	'ui.router',
+	'ui.router.metatags',
 	'oc.lazyLoad',
 	'ui.select',
 	'ngSanitize',
@@ -9,6 +10,7 @@ angular.module('GameClub', [
 	'oitozero.ngSweetAlert',
 	'cgNotify',
 	'720kb.socialshare',
+	'rzModule',
 	'Core',
 	'Home',
 	'Login',
@@ -23,7 +25,11 @@ angular.module('GameClub', [
 	'PublicProfile',
 	'Messages',
 	'Faq',
-	'ContactUs'
+	'Balance',
+	'Referred',
+	'ContactUs',
+	'ShippingKit',
+	'AmountRequest'
 ])
 .config(['$locationProvider' ,'$httpProvider', function($locationProvider, $httpProvider, $http) {
 	$httpProvider.defaults.withCredentials = true;
@@ -47,6 +53,6 @@ angular.module('GameClub', [
 	if ($location.$$port == 443) {
 		port = '8390';
 	}
-	
+
 	return {url: $location.$$protocol + '://' + $location.$$host + ':' + port + '/gameclub'};
 });

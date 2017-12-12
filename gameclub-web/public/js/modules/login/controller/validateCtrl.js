@@ -5,7 +5,10 @@ angular.module('Login').controller('ValidateCtrl', function($scope, $rootScope, 
 		$state.go(Const.mainState);
 	} else {
 		openRest("publicUser/verifyAccount/:token/:id").get({token: token, id: id}, function(data) {
-			$rootScope.currentUser = data;
+			if ($rootScope.currentUser != null) {
+				$rootScope.currentUser = data;
+			}
+			
 			$scope.isLoading = false;
 		}, function(error) {
 			$scope.isLoading = false;

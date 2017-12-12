@@ -13,7 +13,7 @@ angular.module('MyGames').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'MyGames',
-					files: ['js/modules/account/myGames/controller/myGamesCtrl.js']
+					files: ['js/modules/account/myGames/controller/myGamesCtrl.js', 'js/modules/account/myGames/style/myGames.less', 'js/modules/account/myGames/style/myGames.responsive.less', 'js/modules/game/style/game.less']
 				}]);
 			},
 
@@ -31,8 +31,16 @@ angular.module('MyGames').config(function($stateProvider) {
 				return $stateParams.consoleSelected;
 			},
 
-			integrity: function(rest) {
-				return rest("catalog/findChildrenOf/:code", true).get({code: 'ITG'}, function(data) {
+			integrity: function(rest, Const) {
+				return rest("catalog/findChildrenOf/:code", true).get({code: Const.code.integrity});
+			},
+
+			mostPlayed: function(openRest) {
+				return openRest("game/findMostPlayed", true).post();
+			},
+
+			shippingKitValue: function(rest, Const) {
+				return rest('settings/findOneByCode/:code').get({code: Const.settings.shippingKitValue}, function(data) {
 					return data;
 				});
 			}

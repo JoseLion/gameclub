@@ -1,4 +1,4 @@
-angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, redirect, sweet, openRest, $state, Const, authenticate, rest, SweetAlert, $uibModal, notif, $location) {
+angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, redirect, token, sweet, openRest, $state, Const, authenticate, rest, SweetAlert, $uibModal, notif, $location) {
 	$scope.user = {};
 	$scope.credentials = {};
 	$scope.passRegex = '^(?=.*[0-9])(?=.*[A-Z])([0-9-a-zA-Z]+)$';
@@ -27,7 +27,8 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 						$scope.isSaving = true;
 						let signObj = {
 							baseUrl: $location.$$protocol + "://" + $location.$$host,
-							publicUser: user
+							publicUser: user,
+							token: token
 						};
 
 						openRest("publicUser/signIn").post(signObj, function() {
@@ -41,7 +42,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 							$scope.isSaving = false;
 						});
 					} else {
-						notif.warning(Const.messages.acceptTerms);
+						notif.danger(Const.messages.acceptTerms);
 					}
 				};
 
@@ -53,6 +54,12 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				user : function() {
 					return $scope.user;
 				}
+			}
+		});
+
+		modal.result.then(function(success) {
+			if (success) {
+				$scope.user = {};
 			}
 		});
 	};
@@ -69,16 +76,17 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 			backdrop: true,
 			templateUrl: "facebookSignIn.html",
 			controller: function($scope, $uibModalInstance, notif, Const) {
-				$scope.terms = {};
+				$scope.user = {};
 				$scope.isSaving = false;
 				$scope.isFacebook = true;
+
 				$scope.ok = function() {
 					$scope.isSaving = true;
-					if ($scope.terms.status) {
+					if ($scope.user.terms) {
 						$uibModalInstance.close();
 					} else {
 						$scope.isSaving = false;
-						notif.warning(Const.messages.acceptTerms);
+						notif.danger(Const.messages.acceptTerms);
 					}
 				}
 
@@ -95,7 +103,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 					FB.api('/me', {fields: 'name, email'}, function(me) {
 						if (me.email == null) {
 							FB.logout(function(logoutResponse) {
-								notif.warning("El correo electrónico es necesario para crea una cuenta en Smartbid. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
+								notif.danger("El correo electrónico es necesario para crea una cuenta en Smartbid. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
 								$scope.isFbSingIn = false;
 							}, response.authResponse.accessToken);
 						} else {
@@ -119,6 +127,8 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				scope: 'public_profile,email',
 				auth_type: 'rerequest'
 			});
+
+			$scope.isFbSingIn = false;
 		}, function() {
 			$scope.isFbSingIn = false;
 		});
@@ -132,7 +142,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				FB.api('/me', {fields: 'name, email'}, function(me) {
 					if (me.email == null) {
 						FB.logout(function(logoutResponse) {
-							notif.warning("El correo electrónico es necesario para crea una cuenta en GameClub. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
+							notif.danger("El correo electrónico es necesario para crea una cuenta en GameClub. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
 							$scope.isFbLogIn = false;
 						}, response.authResponse.accessToken);
 					} else {
@@ -223,7 +233,21 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				rest("publicUser/getCurrentUser").get(function(data) {
 					if (data != null) {
 						if (data.hasTempPassword) {
-							let modal = changePassword();
+							$rootScope.currentUser = data;
+							let modalInstance = $uibModal.open({
+							size: 'md',
+							backdrop: 'static',
+							templateUrl: 'js/modules/core/modals/changePassword.html',
+							controller: 'ChangePasswordCtrl',
+							resolve: {
+								loadPlugin: function($ocLazyLoad) {
+									return $ocLazyLoad.load([{
+										name: 'Core',
+										files: ['js/modules/core/modals/changePasswordCtrl.js']
+									}]);
+								}}});
+							console.log("Lanzo modal");
+							// let modal = changePassword();
 
 							modal.result.then(function(userData) {
 								$rootScope.currentUser = userData;
@@ -240,13 +264,16 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 
 					$scope.isLoginIn = false;
 					$scope.isFbLogIn = false;
+				}, function(error) {
+					$scope.isLoginIn = false;
+					$scope.isFbLogIn = false;
 				});
 			}
 		}, function(error) {
 			if (error.status == -1) {
 				notif.danger(Const.messages.unableToConnect);
 			} else {
-				notif.danger(error.data);
+				notif.danger("Usuario y/o contraseña incorrectos");
 			}
 
 			$scope.isLoginIn = false;

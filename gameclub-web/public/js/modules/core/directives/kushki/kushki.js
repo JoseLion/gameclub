@@ -1,14 +1,11 @@
 angular.module('Core').directive('kushki', function($window, $ocLazyLoad, Const, sweet, notif, $rootScope, rest) {
+    $ocLazyLoad.load(['https://p1.kushkipagos.com/kushki/kushki/kushki.min.js', 'js/modules/core/directives/kushki/kushki.less']);
+
     return {
         restrict: 'E',
         templateUrl: 'js/modules/core/directives/kushki/kushki.html',
         replace: true,
         link: function($scope, element, attrs, ctrl) {
-
-            $ocLazyLoad.load([{
-                files: ['https://p1.kushkipagos.com/kushki/kushki/kushki.min.js']
-            }]);
-
             $scope.ctrlDown = false;
             $scope.ctrlKey = 17;
             $scope.cmdKey = 91;

@@ -1,16 +1,28 @@
 package ec.com.levelap.gameclub.module.user.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,25 +33,26 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.service.BaseService;
-import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
-import ec.com.levelap.gameclub.module.kushki.repository.KushkiSubscriptionRepo;
-import ec.com.levelap.gameclub.module.mail.service.MailService;
+import ec.com.levelap.cryptography.LevelapCryptography;
+import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
+import ec.com.levelap.gameclub.module.settings.entity.Setting;
+import ec.com.levelap.gameclub.module.settings.service.SettingService;
+import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
+import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserController.Password;
 import ec.com.levelap.gameclub.module.user.controller.PublicUserOpenController.ContactUs;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
+import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.kushki.KushkiException;
-import ec.com.levelap.kushki.object.KushkiAmount;
-import ec.com.levelap.kushki.object.KushkiContact;
-import ec.com.levelap.kushki.service.KushkiService;
-import ec.com.levelap.mail.MailParameters;
+import ec.com.levelap.mail.entity.LevelapMail;
 
 @Service
 public class PublicUserService extends BaseService<PublicUser> {
@@ -49,42 +62,74 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Autowired
 	private PublicUserGameRepo publicUserGameRepo;
+	
+	@Autowired
+	private SettingService settingService;
 
 	@Autowired
-	private MailService mailService;
-
-	@Autowired
-	private KushkiSubscriptionRepo kushkiSubscriptionRepo;
-
-	@Autowired
-	private KushkiService kushkiService;
+	private GameClubMailService mailService;
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private TransactionService transactionService;
+	
+	@Autowired
+	private LevelapCryptography cryptoService;
 
 	public PublicUserService() {
 		super(PublicUser.class);
 	}
 
 	@Transactional
-	public ResponseEntity<?> signIn(PublicUser publicUser, String baseUrl) throws ServletException, MessagingException {
+	public ResponseEntity<?> signIn(PublicUser publicUser, String token, HttpServletRequest request) throws ServletException, MessagingException, IOException, GeneralSecurityException {
 		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(publicUser.getUsername());
 		
-		if (found != null) {
+		if (found != null && found.getStatus()) {
 			return new ResponseEntity<ErrorControl>(new ErrorControl("El correo ingresado ya se encuentra registrado", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
-		publicUser.setPassword(encoder.encode(publicUser.getPassword()));
-		publicUser.setToken(UUID.randomUUID().toString());
-		publicUser = publicUserRepo.save(publicUser);
-
-		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
+		
+		if (found == null) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(Const.ENCODER_STRENGTH);
+			publicUser.setPassword(encoder.encode(publicUser.getPassword()));
+			publicUser.setToken(UUID.randomUUID().toString());
+			
+			File key = cryptoService.generateKeyFile();
+			publicUser.setPrivateKey(IOUtils.toByteArray(new FileInputStream(key)));
+			publicUser.setBalance(cryptoService.encrypt("0.0", key));
+			
+			publicUser = publicUserRepo.save(publicUser);
+			
+			if (token != null && !token.isEmpty()) {
+				PublicUser refferer = publicUserRepo.findByUrlToken(token);
+				
+				if (refferer != null) {
+					Setting setting = settingService.getSettingsRepo().findByCode(Code.SETTING_REFFERED_REWARD);
+					addToUserBalance(refferer.getId(), Double.parseDouble(setting.getValue()));
+					publicUser = addToUserBalance(publicUser.getId(), Double.parseDouble(setting.getValue()));
+					
+					File referrerKey = File.createTempFile("referrerKey", ".tmp");
+					FileUtils.writeByteArrayToFile(referrerKey, refferer.getPrivateKey());
+					Transaction reffererTransaction = new Transaction(refferer, Const.TRS_REFFERED_BONUS, null, null, null, cryptoService.encrypt(setting.getValue(), referrerKey), null, null);
+					Transaction transaction = new Transaction(publicUser, Const.TRS_REFFERED_BONUS, null, null, null, cryptoService.encrypt(setting.getValue(), key), null, null);
+					
+					transactionService.getTransactionRepo().save(reffererTransaction);
+					transactionService.getTransactionRepo().save(transaction);
+				}
+			}
+		} else {
+			found.setStatus(true);
+			publicUser = publicUserRepo.save(found);
+		}
+		
+		URL referrer = new URL(request.getHeader("referer"));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		params.put("link", baseUrl + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
+		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate?token=" + publicUser.getToken() + "&id=" + publicUser.getId());
 
-		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
+		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -98,41 +143,51 @@ public class PublicUserService extends BaseService<PublicUser> {
 	}
 
 	@Transactional
-	public void resendVerification(String baseUrl) throws ServletException, MessagingException {
+	public void resendVerification(HttpServletRequest request) throws ServletException, MessagingException, MalformedURLException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PublicUser publicUser = publicUserRepo.findByUsernameIgnoreCase(auth.getName());
 		publicUser.setToken(UUID.randomUUID().toString());
 		publicUser = publicUserRepo.save(publicUser);
-
-		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
+		
+		URL referrer = new URL(request.getHeader("referer"));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 		Map<String, String> params = new HashMap<>();
-		params.put("link", baseUrl + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
+		params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate?token=" + publicUser.getToken() + "&id=" + publicUser.getId());
 
-		mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
+		mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params);
 	}
 
 	@Transactional
-	public ResponseEntity<?> save(PublicUser publicUser, String... baseUrl) throws ServletException {
-		if (baseUrl.length > 0) {
+	public ResponseEntity<?> save(PublicUser publicUser, Boolean sendVerification, HttpServletRequest request) throws ServletException, MalformedURLException {
+		if (sendVerification) {
 			try {
-				MailParameters mailParameters = new MailParameters();
-				mailParameters.setRecipentTO(Arrays.asList(publicUser.getUsername()));
+				URL referrer = new URL(request.getHeader("referer"));
+				LevelapMail levelapMail = new LevelapMail();
+				levelapMail.setRecipentTO(Arrays.asList(publicUser.getUsername()));
 				Map<String, String> params = new HashMap<>();
-				params.put("link", baseUrl[0] + "/gameclub/validate/" + publicUser.getToken() + "/" + publicUser.getId());
-				mailService.sendMailWihTemplate(mailParameters, "ACNVRF", params);
+				params.put("link", referrer.getProtocol() + "://" + referrer.getHost() + "/gameclub/validate?token=" + publicUser.getToken() + "&id=" + publicUser.getId());
+				mailService.sendMailWihTemplate(levelapMail, "ACNVRF", params);
 			} catch (MessagingException ex) {
 				return new ResponseEntity<>(new ErrorControl("No se pudo enviar el código al correo indicado, por favor vuelve a intentarlo", true), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
+		
+		if (publicUser.getId() != null) {
+			PublicUser original = publicUserRepo.findOne(publicUser.getId());
+			publicUser.setPrivateKey(original.getPrivateKey());
+			publicUser.setBalance(original.getBalance());
+		}
+		
 		publicUser = publicUserRepo.save(publicUser);
 		return new ResponseEntity<>(publicUser, HttpStatus.OK);
 	}
 
 	@Transactional
 	public void sendContactUs(ContactUs contactUs) throws ServletException, MessagingException {
-		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
+		
 		Map<String, String> params = new HashMap<>();
 		params.put("name", contactUs.name);
 		params.put("email", contactUs.email);
@@ -144,18 +199,35 @@ public class PublicUserService extends BaseService<PublicUser> {
 			params.put("phone", "N/A");
 		}
 
-		mailService.sendMailWihTemplate(mailParameters, "CNCTUS", params);
+		mailService.sendMailWihTemplate(levelapMail, "CNCTUS", params);
+	}
+	
+	public void sendWorkForUs(Map<String, String> work, MultipartFile file) throws ServletException, MessagingException, IllegalStateException, IOException {
+		File attachment = new File(file.getOriginalFilename());
+		file.transferTo(attachment);
+		
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
+		levelapMail.setAttachments(Arrays.asList(attachment));
+		
+		Map<String, String> params = new HashMap<>();
+		params.put("name", work.get("name"));
+		params.put("email", work.get("email"));
+		params.put("message", work.get("message"));
+
+		mailService.sendMailWihTemplate(levelapMail, "WRKWUS", params);
 	}
 
 	@Transactional
 	public Page<PublicUserGame> saveGame(PublicUserGame myGame) throws ServletException {
 		PublicUser user = this.getCurrentUser();
-		myGame.setPublicUser(user);
-		publicUserGameRepo.saveAndFlush(myGame);
 		
-		if (user.getGames().size() == 1) {
+		if (myGame.getId() == null && user.getGames().size() == 0) {
 			messageService.requestWelcomeKit(user, null);
 		}
+		
+		myGame.setPublicUser(user);
+		publicUserGameRepo.saveAndFlush(myGame);
 
 		Page<PublicUserGame> gameList = publicUserGameRepo.findMyGames(user, null, new PageRequest(0, Const.TABLE_SIZE, new Sort("game.name")));
 		return gameList;
@@ -180,60 +252,10 @@ public class PublicUserService extends BaseService<PublicUser> {
 	@Transactional
 	public void deleteAccount() throws ServletException {
 		PublicUser user = this.getCurrentUser();
-		user.setUsername(getRevokedUsername(user.getUsername(), 0));
-		user.setPassword("********************");
+		user.setPassword("");
 		user.setStatus(false);
 
 		publicUserRepo.save(user);
-	}
-
-	private String getRevokedUsername(String username, int i) {
-		if (i == 0) {
-			username += "(Revoked)";
-		} else {
-			int index = username.indexOf("(");
-			username = username.substring(0, index) + "(Revoked#" + i + ")";
-		}
-		
-		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(username);
-		
-		if (found != null) {
-			i++;
-			username = getRevokedUsername(username, i);
-		}
-
-		return username;
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public PublicUser addKushkiSubscription(KushkiSubscription subscription) throws ServletException, KushkiException {
-		PublicUser currentUser = getCurrentUser();
-		String subscriptionId = kushkiService.subscriptionCreate(subscription.getSubscriptionId(), Const.KUSHKI_PLAN_NAME, Const.KUSHKI_PERIODICITY, new KushkiContact(subscription.getFirstName(), subscription.getLastName(), subscription.getEmail()), new KushkiAmount());
-		
-		subscription.setSubscriptionId(subscriptionId);
-		subscription.setPublicUser(currentUser);
-		kushkiSubscriptionRepo.saveAndFlush(subscription);
-		currentUser = getCurrentUser();
-		
-		return currentUser;
-	}
-
-	@Transactional
-	@SuppressWarnings("unchecked")
-	public PublicUser removeKushkiSubscription(Long subscriptionId) throws ServletException, KushkiException {
-		PublicUser publicUser = getCurrentUser();
-		
-		for (KushkiSubscription method : publicUser.getPaymentMethods()) {
-			if (method.getId().longValue() == subscriptionId.longValue()) {
-				kushkiService.subscriptionCancel(method.getSubscriptionId());
-				publicUser.getPaymentMethods().remove(method);
-				break;
-			}
-		}
-		
-		publicUserRepo.save(publicUser);
-		return publicUser;
 	}
 	
 	@Transactional
@@ -246,8 +268,8 @@ public class PublicUserService extends BaseService<PublicUser> {
 		
 		publicUserRepo.save(publicUser);
 		
-		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String, String> params = new HashMap<>();
 		params.put("name", publicUser.getName() + " " + publicUser.getLastName());
@@ -256,9 +278,89 @@ public class PublicUserService extends BaseService<PublicUser> {
 		params.put("province", publicUser.getLocation().getParent().getName());
 		params.put("city", publicUser.getLocation().getName());
 
-		mailService.sendMailWihTemplate(mailParameters, "SUBCBR", params);
+		mailService.sendMailWihTemplate(levelapMail, "SUBCBR", params);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@Transactional
+	public PublicUser setUserPrivateKey(Long id) throws ServletException, NoSuchAlgorithmException, IOException {
+		PublicUser user = publicUserRepo.findOne(id);
+		
+		if (user.getPrivateKey() == null) {
+			File key = cryptoService.generateKeyFile();
+			user.setPrivateKey(IOUtils.toByteArray(new FileInputStream(key)));
+			user = publicUserRepo.save(user);
+		}
+		
+		return user;
+	}
+	
+	@Transactional
+	public PublicUser setUserBalance(Long id, Double balance) throws ServletException, GeneralSecurityException, IOException {
+		PublicUser user = publicUserRepo.findOne(id);
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		
+		byte[] encrypted = cryptoService.encrypt(Double.toString(balance), key);
+		user.setBalance(encrypted);
+		
+		user = publicUserRepo.save(user);
+		return user;
+	}
+	
+	@Transactional
+	public PublicUser addToUserBalance(Long id, Double ammount) throws ServletException, GeneralSecurityException, IOException {
+		PublicUser user = publicUserRepo.findOne(id);
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		
+		Double balance = Double.parseDouble(cryptoService.decrypt(user.getBalance(), key));
+		byte[] encrypted = cryptoService.encrypt(Double.toString(balance + ammount), key);
+		user.setBalance(encrypted);
+		
+		user = publicUserRepo.save(user);
+		return user;
+	}
+	
+	@Transactional
+	public PublicUser substractFromUserBalance(Long id, Double ammount) throws ServletException, GeneralSecurityException, IOException {
+		PublicUser user = publicUserRepo.findOne(id);
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		
+		Double balance = Double.parseDouble(cryptoService.decrypt(user.getBalance(), key));
+		byte[] encrypted = cryptoService.encrypt(Double.toString(balance - ammount), key);
+		user.setBalance(encrypted);
+		
+		user = publicUserRepo.save(user);
+		return user;
+	}
+	
+	@Transactional
+	public Map<String, Long> getGamesSummary() throws ServletException {
+		PublicUser currentUser = getCurrentUser();
+		Map<String, Long> summary = new HashMap<>();
+		Date today = new Date();
+		
+		summary.put("borrowed",publicUserRepo.countByGamesIsBorrowedIsTrueAndId(currentUser.getId()));
+		summary.put("toReturn", publicUserRepo.countGamesToReturn(currentUser.getId()));
+		summary.put("updateDate", today.getTime());
+		
+		return summary;
+	}
+	
+	@Transactional
+	public String generateUrlToken() throws ServletException {
+		PublicUser currentUser = getCurrentUser();
+		String token = UUID.randomUUID().toString();
+		Random random = new Random();
+		int pos = random.nextInt(token.length());
+		token = token.substring(0, pos) + currentUser.getId().toString() + token.substring(pos);
+		currentUser.setUrlToken(token);
+		publicUserRepo.save(currentUser);
+		
+		return token;
 	}
 
 	public PublicUserRepo getPublicUserRepo() {
@@ -268,9 +370,4 @@ public class PublicUserService extends BaseService<PublicUser> {
 	public PublicUserGameRepo getPublicUserGameRepo() {
 		return publicUserGameRepo;
 	}
-
-	public KushkiSubscriptionRepo getKushkiSubscriptionRepo() {
-		return kushkiSubscriptionRepo;
-	}
-
 }

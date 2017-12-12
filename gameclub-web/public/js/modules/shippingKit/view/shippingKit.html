@@ -1,0 +1,64 @@
+<div id="shippingKit">
+    <section class="row header">
+        <div class="col-md-4 col-xs-1"></div>
+        <div class="col-md-8 col-xs-10 no-padding-left no-padding-right responsive-margin-bottom">
+            <div class="col-md-10 col-xs-12 name">
+                <div class="col-md-3 col-xs-4 no-padding-left no-padding-right">
+                    <img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" onerror="this.src='img/contact-person.svg'">
+                </div>
+                <div class="col-md-9 col-xs-8">
+                    <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
+                    <div class="col-md-12 no-padding-left no-padding-right">
+                        <div class="connection">última vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="col-md-10 col-xs-12 coins">
+                <div class="col-md-12 col-xs-12 no-padding-left">
+                    <span class="subtitle">Saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+    <section class="row shipping">
+        <div class="col-md-12 col-xs-12 information">
+            <div class="title-section">
+                <img class="box-image" src="img/myGames/shipping-kit-box.svg" alt="shipping-kit-box"/>
+                <h2 class="title">Shipping Kit</h2>
+            </div>
+            <p>Cada SHIPPING KIT tiene un costo de {{shippingKitValue | currency:'$ ':2}} y contiene:</p>
+            <span>4 cajas</span>
+            <span>80 fundas (para 80 envíos)</span>
+        </div>
+        <div class="col-md-12 col-xs-12 quantity">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-4 col-xs-12">
+                <div class="col-md-12 col-xs-12">
+                    <h2 class="subtitle">Nº de Kits</h2>
+                    <span class="value">{{quantity.value | currency:'':0}}</span>
+                </div>
+                <div class="col-md-2 col-xs-0"></div>
+                <div class="col-md-8 col-xs-12">
+                    <rzslider rz-slider-model="quantity.value" rz-slider-options="quantity.options" class="rz-slider-secundary"></rzslider>
+                </div>
+                <div class="col-md-2 col-xs-0"></div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <h2 class="subtitle">Precio a Pagar</h2>
+                <span class="value">{{totalToPay | currency:'$ ':2}}</span>
+            </div>
+            <div class="col-md-2 col-xs-0"></div>
+        </div>
+    </section>
+    <form role="form" class="form-horizontal" novalidate on-submit="completePayment()">
+        <payment-method total-balance="currentUser.shownBalance" payment-methods="currentUser.paymentMethods" balance="balance" total-to-pay="totalToPay" card-selected="cardSelected" class="row" />
+        <section class="row submit-button">
+            <button type="submit" class="btn btn-secundary">Ordenar y confirmar dirección de entrega</button>
+        </section>
+    </form>
+</div>

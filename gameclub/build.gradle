@@ -1,4 +1,4 @@
-def sprintVersion = '0.0.7'
+def sprintVersion = '0.0.18'
 def packageName = 'ec.com.levelap'
 def projectName = 'gameclub'
 
@@ -26,7 +26,7 @@ tasks.withType(JavaCompile) {
 
 buildscript {
 	ext {
-		springBootVersion = '1.5.6.RELEASE'
+		springBootVersion = '1.5.9.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -44,6 +44,9 @@ war {
 
 repositories {
 	mavenCentral()
+	maven {
+		url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/"
+	}
 }
 
 configurations {
@@ -56,7 +59,7 @@ dependencies {
 		exclude module: 'hibernate-validator'
 	}
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile("org.springframework.boot:spring-boot-starter-batch")
+	compile('org.springframework.boot:spring-boot-starter-batch')
 	compile('org.springframework:spring-context-support')
 	compile('javax.servlet:javax.servlet-api:3.1.0')
 	compile('org.hibernate:hibernate-core')
@@ -69,7 +72,8 @@ dependencies {
 	compile('org.apache.poi:poi-ooxml:3.9')
 	compile('org.postgresql:postgresql')
 	compile('org.apache.httpcomponents:httpclient')
-	compile("org.springframework.ws:spring-ws-core")
+	compile('org.springframework.ws:spring-ws-core')
+	compile('net.sf.jasperreports:jasperreports:6.4.3')
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 

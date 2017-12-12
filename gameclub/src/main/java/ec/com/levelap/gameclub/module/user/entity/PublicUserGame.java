@@ -1,8 +1,5 @@
 package ec.com.levelap.gameclub.module.user.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,15 +22,15 @@ import ec.com.levelap.gameclub.utils.Const;
 @Table(schema=Const.SCHEMA, name="public_user_game")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PublicUserGame extends BaseEntity {
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="public_user", foreignKey=@ForeignKey(name="public_user_fk"))
 	private PublicUser publicUser;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="game", foreignKey=@ForeignKey(name="game_fk"))
 	private Game game;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="console", foreignKey=@ForeignKey(name="console_fk"))
 	private Console console;
 	
@@ -44,11 +41,11 @@ public class PublicUserGame extends BaseEntity {
 	@Column(columnDefinition="VARCHAR")
 	private String observations;
 	
-	@Column(columnDefinition="INTEGER DEFAULT 0")
-	private Integer cost = 0;
+	@Column(columnDefinition="DECIMAL(9, 2) DEFAULT 0.0")
+	private Double cost = 0.0;
 	
-	@Transient
-	private Map<String, Object> publicUserObj = new HashMap<>();
+	@Column(name="is_borrowed", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean isBorrowed = false;
 	
 	@Transient
 	private Double shippingCost;
@@ -93,23 +90,20 @@ public class PublicUserGame extends BaseEntity {
 		this.observations = observations;
 	}
 
-	public Integer getCost() {
+	public Double getCost() {
 		return cost;
 	}
 
-	public void setCost(Integer cost) {
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 
-	public Map<String, Object> getPublicUserObj() {
-		publicUserObj.put("location", publicUser.getLocation());
-		publicUserObj.put("rating", publicUser.getRating());
-		
-		return publicUserObj;
+	public Boolean getIsBorrowed() {
+		return isBorrowed;
 	}
 
-	public void setPublicUserObj(Map<String, Object> publicUserObj) {
-		this.publicUserObj = publicUserObj;
+	public void setIsBorrowed(Boolean isBorrewed) {
+		this.isBorrowed = isBorrewed;
 	}
 
 	public Double getShippingCost() {

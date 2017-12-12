@@ -1,5 +1,8 @@
 package ec.com.levelap.gameclub.module.user.entity;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,16 +19,17 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.io.FileUtils;
 import org.postgresql.geometric.PGpoint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.commons.location.Location;
+import ec.com.levelap.cryptography.LevelapCryptography;
+import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.avatar.entity.Avatar;
-import ec.com.levelap.gameclub.module.kushki.entity.KushkiSubscription;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.utils.Const;
 
@@ -50,15 +54,20 @@ public class PublicUser extends BaseEntity {
 
 	@Column(name = "is_facebook_user", columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean isFacebookUser = false;
-
-	@Column(columnDefinition = "INTEGER DEFAULT 0")
-	private Integer coins = 0;
+	
+	@JsonIgnore
+	@Column(name="private_key")
+	private byte[] privateKey;
+	
+	@JsonIgnore
+	@Column
+	private byte[] balance;
 
 	@Column(columnDefinition = "VARCHAR")
 	private String token;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "avatar", foreignKey = @ForeignKey(name = "avatar_archive_fk"))
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="avatar", foreignKey=@ForeignKey(name="avatar_archive_fk"))
 	private Avatar avatar;
 
 	@Column(name = "last_connection")
@@ -102,12 +111,8 @@ public class PublicUser extends BaseEntity {
 	@Column(name="is_subscriber", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean isSubscriber = false;
 	
-	@JsonManagedReference("publicUserKushkiSubscription")
-	@OneToMany(mappedBy="publicUser", fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
-	private List<KushkiSubscription> paymentMethods = new ArrayList<>();
-	
-	@Column(columnDefinition="INTEGER DEFAULT 0")
-	private Integer rating = 0;
+	@Column(columnDefinition="DECIMAL(5, 2) DEFAULT 0.0")
+	private Double rating = 0.0;
 	
 	@Column(name="games_limit", columnDefinition="INTEGER DEFAULT 5")
 	private Integer gamesLimit = 5;
@@ -115,12 +120,39 @@ public class PublicUser extends BaseEntity {
 	@JsonIgnore
 	@OneToMany(mappedBy="owner", fetch=FetchType.LAZY)
 	private List<Message> messages = new ArrayList<>();
+	
+	@Column(name="is_ready", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean isReady = false;
+	
+	@Column(name="document_ruc", columnDefinition = "VARCHAR")
+	private String documentRuc;
+	
+	@Column(name="name_ruc", columnDefinition = "VARCHAR")
+	private String nameRuc;
+	
+	@Column(name="address_ruc", columnDefinition = "VARCHAR")
+	private String addressRuc;
+	
+	@Column(name="phone_ruc", columnDefinition = "VARCHAR")
+	private String phoneRuc;
+	
+	@Column(name="has_ruc", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean hasRuc = false;
+	
+	@Column(name="url_token", columnDefinition="VARCHAR")
+	private String urlToken;
+	
+	@Column(name="is_requesting_balance", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean isRequestingBalance = false;
 
 	@Transient
 	private Integer numberOfGames;
 	
 	@Transient
 	private Integer unreadMessages = 0;
+	
+	@Transient
+	private Double shownBalance;
 
 	public String getUsername() {
 		return username;
@@ -170,12 +202,20 @@ public class PublicUser extends BaseEntity {
 		this.isFacebookUser = isFacebookUser;
 	}
 
-	public Integer getCoins() {
-		return coins;
+	public byte[] getPrivateKey() {
+		return privateKey;
 	}
 
-	public void setCoins(Integer coins) {
-		this.coins = coins;
+	public void setPrivateKey(byte[] privateKey) {
+		this.privateKey = privateKey;
+	}
+
+	public byte[] getBalance() {
+		return balance;
+	}
+
+	public void setBalance(byte[] balance) {
+		this.balance = balance;
 	}
 
 	public String getToken() {
@@ -301,20 +341,12 @@ public class PublicUser extends BaseEntity {
 	public void setIsSubscriber(Boolean isSubscriber) {
 		this.isSubscriber = isSubscriber;
 	}
-
-	public List<KushkiSubscription> getPaymentMethods() {
-		return paymentMethods;
-	}
-
-	public void setPaymentMethods(List<KushkiSubscription> paymentMethods) {
-		this.paymentMethods = paymentMethods;
-	}
 	
-	public Integer getRating() {
-		return rating;
+	public Double getRating() {
+		return rating * 100.0 / 5.0;
 	}
 
-	public void setRating(Integer rating) {
+	public void setRating(Double rating) {
 		this.rating = rating;
 	}
 
@@ -325,6 +357,78 @@ public class PublicUser extends BaseEntity {
 	public void setGamesLimit(Integer gamesLimit) {
 		this.gamesLimit = gamesLimit;
 	}
+	
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+
+	public Boolean getIsReady() {
+		return isReady;
+	}
+
+	public void setIsReady(Boolean isReady) {
+		this.isReady = isReady;
+	}
+	
+	public String getDocumentRuc() {
+		return documentRuc;
+	}
+
+	public void setDocumentRuc(String documentRuc) {
+		this.documentRuc = documentRuc;
+	}
+
+	public String getNameRuc() {
+		return nameRuc;
+	}
+
+	public void setNameRuc(String nameRuc) {
+		this.nameRuc = nameRuc;
+	}
+
+	public String getAddressRuc() {
+		return addressRuc;
+	}
+
+	public void setAddressRuc(String addressRuc) {
+		this.addressRuc = addressRuc;
+	}
+
+	public String getPhoneRuc() {
+		return phoneRuc;
+	}
+
+	public void setPhoneRuc(String phoneRuc) {
+		this.phoneRuc = phoneRuc;
+	}
+
+	public Boolean getHasRuc() {
+		return hasRuc;
+	}
+
+	public void setHasRuc(Boolean hasRuc) {
+		this.hasRuc = hasRuc;
+	}
+
+	public String getUrlToken() {
+		return urlToken;
+	}
+
+	public void setUrlToken(String urlToken) {
+		this.urlToken = urlToken;
+	}
+
+	public Boolean getIsRequestingBalance() {
+		return isRequestingBalance;
+	}
+
+	public void setIsRequestingBalance(Boolean isRequestingBalance) {
+		this.isRequestingBalance = isRequestingBalance;
+	}
 
 	public Integer getNumberOfGames() {
 		return this.games.size();
@@ -332,14 +436,6 @@ public class PublicUser extends BaseEntity {
 
 	public void setNumberOfGames(Integer numberOfGames) {
 		this.numberOfGames = numberOfGames;
-	}
-
-	public List<Message> getMessages() {
-		return messages;
-	}
-
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
 	}
 
 	public Integer getUnreadMessages() {
@@ -356,5 +452,21 @@ public class PublicUser extends BaseEntity {
 
 	public void setUnreadMessages(Integer unreadMessages) {
 		this.unreadMessages = unreadMessages;
+	}
+
+	public Double getShownBalance() throws IOException, GeneralSecurityException {
+		if (privateKey != null && balance.length > 0) {
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, privateKey);
+			String decypted = cryptoService.decrypt(balance, key);
+			shownBalance = Double.parseDouble(decypted);
+		}
+		
+		return shownBalance;
+	}
+
+	public void setShownBalance(Double shownBalance) {
+		this.shownBalance = shownBalance;
 	}
 }

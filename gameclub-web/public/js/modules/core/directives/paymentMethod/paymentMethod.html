@@ -1,0 +1,54 @@
+<section class="payment-view">
+    <div class="col-md-12 col-xs-12">
+        <h2 class="title">Forma de pago</h2>
+        <div class="balance">
+            <span class="subtitle">Saldo actual</span>
+            <span class="value">{{totalBalance - balance.value | currency:'$ ':2}}</span>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12 no-padding-left no-padding-right text-center slider">
+        <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
+            <div class="col-md-6 col-xs-12 with-balance">
+                <span class="text-tooltip">Paga con saldo</span>
+                <span class="value">{{balance.value | currency:'$ ':2}}</span>
+                <rzslider rz-slider-model="balance.value" rz-slider-options="balance.options" class="rz-slider-primary"></rzslider>
+            </div>
+            <div class="col-md-6 col-xs-12 difference">
+                <span class="text-tooltip">Monto restante a pagar</span>
+                <span class="value">{{totalToPay - balance.value | currency:'$ ':2}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12 payment" ng-if="cardsLoaded">
+        <div class="col-md-12 col-xs-12 no-padding-left no-padding-right" ng-if="cardsList.length > 0">
+            <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
+                <span class="text-tooltip">Pago con tarjeta</span>
+            </div>
+            <div class="col-md-12 col-xs-12 no-padding-left no-padding-right table-payments">
+                <div class="table-row" ng-repeat="card in cardsList">
+                    <div class="table-cell check">
+                        <div class="box" ng-class="{'check' : card.isSelected}" ng-click="chooseCard(card)" ng-if="totalToPay - balance.value > 0"></div>
+                    </div>
+                    <div class="table-cell card-number">
+                        <input class="card-showcase" type="text" value="xxxx xxxx xxxx {{card.termination}}" readonly />
+                    </div>
+                    <div class="table-cell remove-card">
+                        <button type="button" class="btn btn-secundary full" ng-if="cardsList.length > 1" ng-click="deleteCard(card)">Borrar tarjeta</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 no-padding-left no-padding-right" ng-if="cardsList.length < 2">
+                <span class="text-tooltip-or">O</span>
+            </div>
+        </div>
+        <div class="col-md-12 no-padding-left no-padding-right" ng-if="cardsList.length < 2">
+            <span class="text-tooltip">Ingresa otra forma de pago</span>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-secundary full small" ng-click="addCard()">Agregar Tarjeta</button>
+                <span ng-if="addCardError">{{addCardError}}</span>
+            </div>
+        </div>
+    </div>
+    <loading showing="!cardsLoaded"></loading>
+    <div class="clearfix"></div>
+</section>

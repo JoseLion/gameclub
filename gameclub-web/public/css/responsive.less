@@ -1,23 +1,40 @@
-@import url("variables.less");
+@import url("/css/variables.less");
 
-@media only screen and (max-width: 732px) {
+@media only screen and (max-width: 768px) {
+	.row{margin:0;padding:0;}
+	.row-left{margin:0;padding-left:0;}
+	.row-right{margin:0;padding-right:0;}
+	.responsive-margin-bottom{margin-bottom:7%;}
+	.responsive-padding-h-10{padding-left:10%;padding-right:10%;}
 
-.row{margin:0;padding:0;}
-.row-left{margin:0;padding-left:0;}
-.row-right{margin:0;padding-right:0;}
+	header .contacts{text-align:left;padding-left:0;}
+	header#main-header{margin-bottom:-5%;}
+	header#main-header .social-media,header#main-header .contacts{display:none;}
+	header#main-header .shortcut-links{background:@color-primary;padding:0;}
+	header#main-header .shortcut-links .navbar-default{margin-top:-3%;}
+	header#main-header .shortcut-links img{width:100%;}
+	header#main-header .shortcut-links .links{padding:2.5% 0%;}
+	header#main-header .shortcut-links .links nav li{display:block;border-left:unset !important;text-align:center;border-bottom:2px solid @color-secundary;margin-left:10%;margin-right:10%;}
+	header#main-header .shortcut-links .links nav li:last-child{border-bottom:unset;}
+	header#main-header .shortcut-links .links nav li.account img.avatar{height:55%;position:absolute;transform:translate(-50%,-50%);top:40%;left:100%;}
+	header#main-header .shortcut-links .coins{font-size:0.8em;color:#FFFFFF;float:left;margin-top:0.5%;margin-left:-13.5%;}
+	header#main-header .shortcut-links .coins .text{position:absolute;left:3%;}
+	header#main-header .shortcut-links .coins i.gc{font-size:1.4em;margin-left:50%;}
+	header#main-header .shortcut-links .links nav li.account span.notification{transform:translateX(-50%);right:unset;left:9%;top:5%;font-size:0.75em;}
+	header#main-header .shortcut-links span.notification{background-color:#E43345;color:@color-tertiary;font-weight:bold;font-size:0.6em;border-radius:15px;padding:4px 8px;position:absolute;transform:translate(50%,-50%);top:34%;right:11%;}
+	header#main-header .navbar-nav{margin:auto;}
+	header#main-header .navbar-default .navbar-toggle{border-color:transparent;}
+	header#main-header .navbar-default .navbar-toggle:focus, header#main-header .navbar-default .navbar-toggle:hover{background-color:transparent;}
+	header#main-header .navbar-default .navbar-toggle .icon-bar{background-color:white;}
+	header#main-header .navbar-default .navbar-toggle:focus .icon-bar, header#main-header .navbar-default .navbar-toggle:hover .icon-bar{background-color:@color-secundary;}
+	header#main-header .navbar-default .navbar-collapse, header#main-header .navbar-default .navbar-form{border-color:transparent;border-top:unset;position:absolute;left:-100%;width:200%;padding:0%;background-color:@color-primary;}
 
-header .contacts{text-align:left;padding-left:0;}
+	footer#main-footer{padding-top:5%;}
+	footer#main-footer .logo img{width:25%;}
+	footer#main-footer .copyright{font-size:1em;margin-top:1em;}
+	footer#main-footer .top-space{margin-top:0.8em;}
 
-#most-played .games .left,#most-played .games .right{padding-top:1%}
-#most-played .games .list>div{padding-left:35%;padding-right:35%;}
-
-#home .banner::before{background-size:65%;}
-#home .banner .search form>div{text-align:center;}
-#home .banner .search .search-params{border:2.5px solid @color-primary;border-radius:8px;font-size:1.1em;background-color:@color-secundary-65;font-weight:700;}
-#home .banner .search .search-params .filter{border:none;background-color:transparent;}
-
-#account #profile section.contact-information .completed{position:relative;top:0;left:0;right:0;bottom:0;}
-#account #profile section.contact-information form::before{border-left:none;}
-#account #profile section.contact-information form>div{border-bottom:none;}
-
+	form .selector .ui-select-match .ui-select-match-text img.gameConsole{height:55%;top:10%;}
+	form .selector .glyphicon-remove{font-size:0.8em;top:-2px;}
+	form .selector .ui-select-match > span, form .selector .ui-select-match > span > span, form .selector .ui-select-match .ui-select-placeholder, form .selector input{font-size:0.8em;margin-top:2.5px;}
 }

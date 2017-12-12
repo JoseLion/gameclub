@@ -1,9 +1,12 @@
 package ec.com.levelap.gameclub.module.user.controller;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -27,8 +32,8 @@ public class PublicUserOpenController {
 	private PublicUserService publicUserService;
 	
 	@RequestMapping(value="signIn", method=RequestMethod.POST)
-	public ResponseEntity<?> signIn(@RequestBody SignObj signObj) throws ServletException, MessagingException {
-		return publicUserService.signIn(signObj.publicUser, signObj.baseUrl);
+	public ResponseEntity<?> signIn(@RequestBody SignObj signObj, HttpServletRequest request) throws ServletException, MessagingException, IOException, GeneralSecurityException {
+		return publicUserService.signIn(signObj.publicUser, signObj.token, request);
 	}
 	
 	@RequestMapping(value="verifyAccount/{token}/{id}", method=RequestMethod.GET)
@@ -62,6 +67,12 @@ public class PublicUserOpenController {
 		return publicUserService.saveSubscriber(publicUser);
 	}
 	
+	@RequestMapping(value="sendWorkForUs", method=RequestMethod.POST)
+	public ResponseEntity<?> sendWorkForUs(@RequestPart Map<String, String> work, @RequestPart MultipartFile file) throws ServletException, IllegalStateException, MessagingException, IOException {
+		publicUserService.sendWorkForUs(work, file);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	public static class ContactUs {
 		public String name;
 		
@@ -73,8 +84,9 @@ public class PublicUserOpenController {
 	}
 	
 	private static class SignObj {
+		
 		public PublicUser publicUser;
 		
-		public String baseUrl;
+		public String token;
 	}
 }

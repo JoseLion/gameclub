@@ -1,37 +1,45 @@
 <div id="games">
     <section class="row header">
-        <div class="col-md-4"></div>
-        <div class="col-md-8 no-padding-left no-padding-right">
+        <div class="col-md-4 col-xs-5"></div>
+        <div class="col-md-8 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
             <div class="col-md-10 name">
                 <div class="col-md-3 no-padding-left no-padding-right">
-                    <img id="avatar_img" archive="currentUser.avatar.image" placeholder="img/contact-person.svg">
+                    <img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" onerror="this.src='img/contact-person.svg'">
                 </div>
                 <div class="col-md-9">
                     <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
                     <div class="col-md-12 no-padding-left no-padding-right">
-                        <div class="connection">&uacute;ltima vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+                        <div class="connection">última vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
                     </div>
                 </div>
             </div>
             <div class="clearfix"></div>
-            <div class="col-md-10 coins">
-                <div class="col-md-6 no-padding-left">
-                    <span class="subtitle">Coins: <span class="dark">{{currentUser.coins}}</span> <i class="gc gc-usd-o"></i></span>
-                </div>
-                <div class="col-md-6 text-center">
-                    <button class="btn btn-tertiary small">Obt&eacute;n <span class="light">coins</span> f&aacute;cil</button>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-md-4 col-xs-0"></div>
+        <div class="col-md-8 col-xs-12 responsive-padding-h-10">
+            <div class="col-md-10 col-xs-12 coins">
+                <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
+                    <span class="subtitle">Saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
                 </div>
             </div>
-            <div class="clearfix"></div>
-            <div class="col-md-12 total">
-                <span class="subtitle">Resumen de estatus de juegos</span>
-                <div class="col-md-8 description">
-                    <span>Juegos actualmente prestados: <span class="dark">0</span></span>
-                    <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>01-04-2017</span></div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-md-4 col-xs-0"></div>
+        <div class="col-md-8 col-xs-12 responsive-padding-h-10">
+            <div class="col-md-12 col-xs-12 total">
+                <h2 class="subtitle">Resumen de status de juegos</h2>
+
+                <div class="col-md-12 col-xs-12 description">
+                    <div>Juegos actualmente alquilados: <span class="dark">{{summary.borrowed}}</span></div>
+                    <div class="updated">última actualización: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
-                <div class="col-md-8 description">
-                    <span>Juegos por devolver: <span class="dark">0</span></span>
-                    <div class="updated">&uacute;ltima actualizaci&oacute;n: <span>01-04-2017</span></div>
+
+                <div class="col-md-12 col-xs-12 description">
+                    <div>Juegos por devolver: <span class="dark">{{summary.toReturn}}</span></div>
+                    <div class="updated">última actualización: <span>{{summary.updateDate | date: 'dd-MM-yyyy'}}</span></div>
                 </div>
             </div>
         </div>
@@ -67,7 +75,7 @@
                 <game-item ng-model="cross.game" console="cross.console" inverse="true" is-editable="true" on-edit="editGame(cross)" show-coins="true" coins="cross.cost"></game-item>
                 <div class="separator" ng-if="$index+1 < gamesList.length"></div>
             </div>
-            <blog-paging pages="totalPages" ng-model="$parent.filter.page" class="paging" ng-change="pageChanged()"></blog-paging>
+            <ball-paging pages="totalPages" ng-model="$parent.filter.page" class="paging" ng-change="pageChanged()"></ball-paging>
         </div>
     </section>
     <div id="game" ng-if="showGame" class="my-game">
@@ -82,7 +90,7 @@
                 <h2 class="col-md-12 title">{{myGame.game.name}}</h2>
                 <stars ng-model="myGame.game.rating"></stars>
                 <div class="col-md-12 no-padding-left no-padding-right">
-                    <button type="button" class="btn btn-primary small">Editar informaci&oacute;n</button>
+                    <button type="button" class="btn btn-primary small" ng-click="goBack()">Volver a mis juegos</button>
                 </div>
             </div>
             <div class="col-md-3 rating text-right">
@@ -97,13 +105,13 @@
                             </ui-select-match>
                             <ui-select-choices repeat="cross in myGame.game.consoles | filter: $select.search" class="text-center">
                                 <div ng-bind-html="'' | highlight: $select.search"></div>
-                                <img archive="cross.console.whiteLogo" >
+                                <img ng-src="{{$archiveUrl + cross.console.whiteLogo.id}}" >
                             </ui-select-choices>
                         </ui-select>
                     </form>
                 </div>
-                <div class="col-md-12 category">
-                    <img ng-repeat="cross in myGame.game.categories" archive="cross.category.blackVector" src="">
+                <div class="col-md-12 category" ng-repeat="cross in myGame.game.categories">
+                    <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}">
                 </div>
             </div>
         </section>
@@ -125,7 +133,7 @@
                 <div class="col-md-12 to-validate">
                     <label class="form-cell">Estado del juego</label>
                     <div class="form-cell">
-                        <ui-select validation ng-model="myGame.integrity" theme="bootstrap" class="selector integrity" required>
+                        <ui-select validation ng-model="myGame.integrity" theme="bootstrap" class="selector integrity" >
                             <ui-select-match placeholder="Seleccionar...">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="item in integrity | filter: $select.search">
                                 <div ng-bind-html="item.name | highlight: $select.search"></div>
@@ -146,16 +154,26 @@
                 </div>
 
                 <div class="col-md-12 help to-validate">
-                    <label class="form-cell">Costo prestamo por semana</label>
+                    <label class="form-cell">Valor de mercado del juego</label>
+                    <div class="form-cell">{{(myGame.game.uploadPayment) | currency: '$': 2}}</div>
+                </div>
+
+                <div class="col-md-12 relax">
                     <div class="form-cell">
-                        <input validation ng-model="myGame.cost" class="coins" type="number" min="0">
+                    <span class="second-text">Costo de Seguro + Fee de GameClub =</span>
+                    </div>
+                    <div class="form-cell">{{settings[Const.settings.feeLoanLender].value}}%</div>
+                </div>
+
+                <div class="col-md-12 help to-validate">
+                    <label class="form-cell">Costo préstamo por semana</label>
+                    <div class="form-cell">
+                        <input validation ng-model="myGame.cost" class="coins"  min="0" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
                     </div>
                     <div class="form-cell help">
-                        <span>Coins</span>
+                        <span>&#36;</span>
                     </div>
-                    <span class="form-cell text-left">
-                        (Recomendación del juego: {{myGame.game.uploadPayment/4 | number:2}} Coins)
-                    </span>
+                    <span class="form-cell text-left" ng-if="settings[Const.settings.priceChartingGames].type == 'percentage'">(Recomendación del juego: <B>&#36;{{(myGame.game.uploadPayment)/gameLoanPCH | number:2}}</B> )</span>
                 </div>
 
                 <div class="col-md-12 relax">
@@ -166,7 +184,7 @@
 
                 <div class="col-md-12">
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary small">Guardar informaci&oacute;n</button>
+                        <button type="submit" class="btn btn-primary small">Guardar información</button>
                     </div>
                 </div>
             </form>
@@ -175,9 +193,10 @@
     </div>
     <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" title="Tus juegos" ng-if="showGame"></most-played>
     <section class="row upload text-center" ng-if="!isSearching && !showGame">
-        <span class="subtitle">Carga tus juegos</span>
-        <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar COINS y poder pedir prestado otros juegos.</p>
-        <button class="btn btn-secundary small" ng-click="showSearch()">Subir juegos</button>
+        <span class="subtitle">Alquila tus juegos</span>
+        <p>Ingresa tus juegos a la plataforma para que otros usuarios puedan ALQUILARLOS y puedas ganar DINERO. Con ese DINERO puedes alquilar otros juegos o incluso comprar nuevos juegos.</p>
+        <!-- <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar DINERO y poder pedir prestado otros juegos.</p> -->
+        <button class="btn btn-secundary small" ng-click="showSearch()">Alquila tus juegos</button>
     </section>
     <section class="banner" ng-if="isSearching">
         <div class="row">
@@ -187,13 +206,13 @@
             <span class="description">Busca el juego que quieras subir</span>
         </div>
         <div class="row search white-search">
-            <div class="col-xs-12 col-md-1"></div>
-            <form class="col-xs-12 col-md-11" role="form" on-submit="find()" novalidate>
-                <div class="col-xs-12 col-md-10 search-params">
-                    <div class="col-xs-12 col-md-4 filter">
-                        <input placeholder="T&iacute;tulo..." ng-model="search.name" uib-typeahead="state for state in nameAutocomplete | filter:$viewValue">
+            <div class="col-md-1 col-xs-0"></div>
+            <form class="col-md-11 col-xs-12" role="form" on-submit="find()" novalidate>
+                <div class="col-md-10 col-xs-10 search-params">
+                    <div class="col-md-4 col-xs-4 filter">
+                        <input placeholder="Título..." ng-model="search.name" uib-typeahead="state for state in nameAutocomplete | filter:$viewValue">
                     </div>
-                    <div class="col-xs-12 col-md-4 filter">
+                    <div class="col-md-4 col-xs-4 filter">
                         <ui-select ng-model="search.category" theme="bootstrap" class="selector">
                             <ui-select-match allow-clear placeholder="Categoría...">
                                 {{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}
@@ -204,7 +223,7 @@
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div class="col-xs-12 col-md-4 filter">
+                    <div class="col-md-4 col-xs-4 filter">
                         <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center">
                             <ui-select-match allow-clear placeholder="Consola...">
                                 <img ng-src="{{$select.selected.whiteBase64}}" class="gameConsole"/>
@@ -216,11 +235,22 @@
                         </ui-select>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-2 text-left">
+                <div class="col-md-2 col-xs-2 text-left">
                     <button type="submit" class="btn btn-tertiary"><i class="gc gc-turn-on"></i></button>
                 </div>
             </form>
-            <div class="col-xs-12 col-md-1"></div>
+            <div class="col-md-1 col-xs-0"></div>
         </div>
+    </section>
+    <section class="row shipping-kit text-center">
+        <div class="title-section">
+            <img class="box-image" src="img/myGames/shipping-kit-box.svg" alt="shipping-kit-box"/>
+            <h2 class="title">Solicita tu Shipping Kit</h2>
+        </div>
+        <p>&iquest;Se te acabaron las cajas y fundas que tenías o quieres renovar tus cajas y fundas Game Club?</p>
+        <p>Te envíamos un kit completo con 4 cajas, fundas, etiquetas de seguridad y un adhesivo oficial.</p>
+        <span class="subtitle">Tiene un costo de {{shippingKitValue | currency:'$ ':2}}.</span>
+        <span class="dark-section">Solo con nuestras cajas y fundas podrás alquilar tus juegos.</span>
+        <button class="btn btn-primary" ng-click="askShippingKit()">Pedir Shipping Kit</button>
     </section>
 </div>

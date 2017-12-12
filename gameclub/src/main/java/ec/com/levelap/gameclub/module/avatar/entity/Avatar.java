@@ -10,8 +10,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import ec.com.levelap.archive.Archive;
 import ec.com.levelap.base.entity.BaseEntity;
-import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity

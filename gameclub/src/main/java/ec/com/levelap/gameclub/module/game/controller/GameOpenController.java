@@ -1,5 +1,6 @@
 package ec.com.levelap.gameclub.module.game.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
 import ec.com.levelap.gameclub.module.game.service.GameService;
@@ -60,7 +62,7 @@ public class GameOpenController {
 	
 	@RequestMapping(value="findGamesByCategory/{categoryId}", method=RequestMethod.GET)
 	public ResponseEntity<List<GameOpen>> findGamesByCategory(@PathVariable Long categoryId) throws ServletException {
-		List<GameOpen> games = gameService.getGameRepo().findByCategoriesCategoryIdOrderByName(categoryId);
+		List<GameOpen> games = gameService.getGameRepo().findByStatusIsTrueAndCategoriesCategoryIdOrderByName(categoryId);
 		return new ResponseEntity<List<GameOpen>>(games, HttpStatus.OK);
 	}
 	
@@ -75,13 +77,27 @@ public class GameOpenController {
 		PageRequest page = filter.sort.isEmpty() ? new PageRequest(filter.page, Const.TABLE_SIZE) : new PageRequest(filter.page, Const.TABLE_SIZE, new Sort(filter.desc ? Direction.DESC : Direction.ASC, filter.sort));
 		Page<PublicUserGameOpen> games;
 		
-		if (currentUser != null) {
-			games = gameService.getPublicUserGameRepo().findAvailableGames(currentUser, currentUser != null ? currentUser.getLocation() : null, filter.gameId, filter.consoleId, page);
+		if (currentUser != null && currentUser.getLocation() != null) {
+			games = gameService.getPublicUserGameRepo().findAvailableGames(currentUser, currentUser.getLocation(), filter.gameId, filter.consoleId, page);
 		} else {
 			games = gameService.getPublicUserGameRepo().findAvailableGamesOpen(filter.gameId, filter.consoleId, page);
 		}
 		
 		return new ResponseEntity<Page<PublicUserGameOpen>>(games, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="findMostPlayed", method=RequestMethod.POST)
+	public ResponseEntity<List<GameOpen>> findMostPlayed(@RequestBody(required=false) Console console) throws ServletException {
+		List<GameOpen> finalList = new ArrayList<>();
+		Page<GameOpen> mostPlayed = gameService.getGameRepo().findMostPlayed(new PageRequest(0, 12));
+		finalList.addAll(mostPlayed.getContent());
+		
+		if (finalList.size() < 12) {
+			Page<GameOpen> extras = gameService.getGameRepo().findByStatusIsTrueOrderByName(new PageRequest(0, 12 - finalList.size()));
+			finalList.addAll(extras.getContent());
+		}
+		
+		return new ResponseEntity<List<GameOpen>>(finalList, HttpStatus.OK);
 	}
 	
 	private static class Search {

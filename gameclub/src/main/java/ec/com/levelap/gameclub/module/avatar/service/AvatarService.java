@@ -11,11 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.com.levelap.archive.Archive;
+import ec.com.levelap.archive.ArchiveService;
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.base.service.BaseService;
-import ec.com.levelap.commons.archive.Archive;
-import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.module.avatar.entity.Avatar;
 import ec.com.levelap.gameclub.module.avatar.repository.AvatarRepo;
 
@@ -30,7 +30,7 @@ public class AvatarService extends BaseService<Avatar> {
 	private AvatarRepo avatarRepo;
 
 	@Autowired
-	private DocumentService documentService;
+	private ArchiveService archiveService;
 
 	@Transactional
 	public ResponseEntity<?> save(MultipartFile image) throws ServletException, IOException {
@@ -38,7 +38,7 @@ public class AvatarService extends BaseService<Avatar> {
 			return new ResponseEntity<ErrorControl>(new ErrorControl("Debe subir una imagen con el avatar", true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		Archive archive = new Archive();
-		FileData fileData = documentService.saveFile(image, Avatar.class.getSimpleName());
+		FileData fileData = archiveService.saveFile(image, Avatar.class.getSimpleName());
 		archive.setModule(Avatar.class.getSimpleName());
 		archive.setName(fileData.getName());
 		archive.setType(image.getContentType());

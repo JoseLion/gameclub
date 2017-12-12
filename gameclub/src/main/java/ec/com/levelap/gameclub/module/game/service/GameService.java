@@ -39,13 +39,13 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import ec.com.levelap.archive.Archive;
+import ec.com.levelap.archive.ArchiveService;
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.base.service.BaseService;
-import ec.com.levelap.commons.archive.Archive;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogRepo;
-import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.category.entity.Category;
 import ec.com.levelap.gameclub.module.category.repository.CategoryRepo;
@@ -79,7 +79,7 @@ public class GameService extends BaseService<Game> {
 	private PublicUserGameRepo publicUserGameRepo;
 	
 	@Autowired
-	private DocumentService documentService;
+	private ArchiveService archiveService;
 	
 	@Autowired
 	private RestTemplate restTemplate;
@@ -120,12 +120,12 @@ public class GameService extends BaseService<Game> {
 				Game original = gameRepo.findOne(game.getId());
 				
 				if (original.getCover() != null) {
-					documentService.deleteFile(original.getCover().getName(), Game.class.getSimpleName());
+					archiveService.deleteFile(original.getCover().getName(), Game.class.getSimpleName());
 					archive = original.getCover();
 				}
 			}
 			
-			FileData fileData = documentService.saveFile(cover, Game.class.getSimpleName());
+			FileData fileData = archiveService.saveFile(cover, Game.class.getSimpleName());
 			
 			archive.setModule(Game.class.getSimpleName());
 			archive.setName(fileData.getName());
@@ -140,12 +140,12 @@ public class GameService extends BaseService<Game> {
 				Game original = gameRepo.findOne(game.getId());
 				
 				if (original.getBanner() != null) {
-					documentService.deleteFile(original.getBanner().getName(), Game.class.getSimpleName());
+					archiveService.deleteFile(original.getBanner().getName(), Game.class.getSimpleName());
 					archive = original.getBanner();
 				}
 			}
 			
-			FileData fileData = documentService.saveFile(banner, Game.class.getSimpleName());
+			FileData fileData = archiveService.saveFile(banner, Game.class.getSimpleName());
 			
 			archive.setModule(Game.class.getSimpleName());
 			archive.setName(fileData.getName());
@@ -160,12 +160,12 @@ public class GameService extends BaseService<Game> {
 				Game original = gameRepo.findOne(game.getId());
 				
 				if (original.getDiamond() != null) {
-					documentService.deleteFile(original.getDiamond().getName(), Game.class.getSimpleName());
+					archiveService.deleteFile(original.getDiamond().getName(), Game.class.getSimpleName());
 					archive = original.getDiamond();
 				}
 			}
 			
-			FileData fileData = documentService.saveFile(diamond, Game.class.getSimpleName());
+			FileData fileData = archiveService.saveFile(diamond, Game.class.getSimpleName());
 			
 			archive.setModule(Game.class.getSimpleName());
 			archive.setName(fileData.getName());
@@ -665,6 +665,7 @@ public class GameService extends BaseService<Game> {
 		headers = new ArrayList<>();
 		
 		headers.add("*Nombre");
+		headers.add("*Trailer Url");
 		headers.add("*Descripcion");
 		headers.add("*Fecha Lanzamiento");
 		headers.add("Restriccion Contenido");
@@ -712,25 +713,31 @@ public class GameService extends BaseService<Game> {
 	}
 	
 	public Double getAvailablePrice(HashMap<String, String> priceChart) {
+		Double price = null;
+		
 		if (priceChart != null) {
 			if (priceChart.get("gamestop-price") != null) {
-				return Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
+				price = Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
 			}
 			
 			if (priceChart.get("retail-new-sell") != null) {
-				return Double.parseDouble(priceChart.get("retail-new-sell")) / 100.0;
+				price = Double.parseDouble(priceChart.get("retail-new-sell")) / 100.0;
 			}
 			
 			if (priceChart.get("retail-cib-sell") != null) {
-				return Double.parseDouble(priceChart.get("retail-cib-sell")) / 100.0;
+				price = Double.parseDouble(priceChart.get("retail-cib-sell")) / 100.0;
 			}
 			
 			if (priceChart.get("retail-loose-sell") != null) {
-				return Double.parseDouble(priceChart.get("retail-loose-sell")) / 100.0;
+				price = Double.parseDouble(priceChart.get("retail-loose-sell")) / 100.0;
 			}
 		}
 		
-		return null;
+		if (price == 9.09) {
+			price = 9.99;
+		}
+		
+		return price;
 	}
 	
 	private void checkConfiguration() throws ServletException {

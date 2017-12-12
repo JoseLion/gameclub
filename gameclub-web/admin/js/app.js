@@ -23,7 +23,13 @@ angular.module("Gameclub", [
 	'PublicUser',
 	'Avatar',
 	'Faq',
-	'Logistic'
+	'Logistic',
+	'ShippingPrice',
+	'Settings',
+	'Fine',
+	'AmountRequest',
+	'UserGames',
+	'Reports'
 ]).config(["$locationProvider" ,"$httpProvider", function($locationProvider, $httpProvider, $http) {
 	$httpProvider.defaults.withCredentials = true;
 

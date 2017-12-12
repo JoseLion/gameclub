@@ -23,7 +23,7 @@ public class ConsoleOpenController {
 	
 	@RequestMapping(value="findAll", method=RequestMethod.GET)
 	public ResponseEntity<List<Console>> findAll() throws ServletException {
-		List<Console> consoles = consoleService.getConsoleRepo().findAllByOrderByName();
+		List<Console> consoles = consoleService.getConsoleRepo().findByStatusIsTrueOrderByName();
 		return new ResponseEntity<List<Console>>(consoles, HttpStatus.OK);
 	}
 }

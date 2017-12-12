@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="GameClub" amp>
+<html ng-app="GameClub">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1.0">
@@ -15,15 +15,6 @@
     <meta property="og:description" content="">
     <meta property="og:image" content="">
     <meta property="fb:app_id" content="1819533121697152">
-    <script async src="https://cdn.ampproject.org/v0.js"></script>
-    <style amp-boilerplate>
-        body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-    </style>
-    <noscript>
-        <style amp-boilerplate>
-            body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
-        </style>
-    </noscript>
 
     <base href="/">
 
@@ -39,7 +30,6 @@
     <link href="js/core/plugins/angular-notify/angular-notify.min.css" rel="stylesheet">
     <link href="css/gameclub-font.css" rel="stylesheet">
     <link href="js/modules/core/directives/loading/loading.css" rel="stylesheet">
-    <!-- <link href="css/clockpicker.css" rel="stylesheet"> -->
 
      <!-- MAIN DEPENDENCIES -->
     <script src="js/core/jquery-2.1.1.min.js"></script>
@@ -58,7 +48,6 @@
     <script src="js/core/plugins/sweetalert/angular-sweetalert.min.js"></script>
     <script src="js/core/ui-bootstrap-tpls/ui-bootstrap-tpls-2.5.0.min.js"></script>
     <script src="js/core/plugins/angular-notify/angular-notify.min.js"></script>
-    <!-- <script src="js/core/clockpicker.js"></script> -->
     <script src="js/core/jasny-bootstrap.min.js"></script> 
     <script src="js/modules/levelapBlog/levelapBlog.js"></script>
     <script src="js/core/angular-socialshare.min.js"></script>
@@ -74,51 +63,25 @@
     <script src="js/modules/core/core.module.js"></script>
     <script src="js/modules/home/home.module.js"></script>
     <script src="js/modules/home/config/home.route.js"></script>
-    <!-- <script src="js/modules/login/login.module.js"></script>
-    <script src="js/modules/login/config/login.route.js"></script>
-    <script src="js/modules/search/search.module.js"></script>
-    <script src="js/modules/search/config/search.route.js"></script>
-    <script src="js/modules/account/profile/profile.module.js"></script>
-    <script src="js/modules/account/profile/config/profile.route.js"></script>
-    <script src="js/modules/account/settings/settings.module.js"></script>
-    <script src="js/modules/account/settings/config/settings.route.js"></script>
-    <script src="js/modules/account/myGames/myGames.module.js"></script>
-    <script src="js/modules/account/myGames/config/myGames.route.js"></script>
-    <script src="js/modules/game/game.module.js"></script>
-    <script src="js/modules/game/config/game.route.js"></script>
-    <script src="js/modules/termsConditions/termsConditions.module.js"></script>
-    <script src="js/modules/termsConditions/config/termsConditions.route.js"></script> -->
 
     <!-- Directives -->
     <script src="js/modules/core/directives/onSubmit.js"></script>
     <script src="js/modules/core/directives/validation.js"></script>
-    <!-- <script src="js/modules/core/directives/gameRating.js"></script> -->
     <script src="js/modules/core/directives/blogPreview.js"></script>
-    <!-- <script src="js/modules/core/directives/blogPaging.js"></script>
-    <script src="js/modules/core/directives/mostPlayed.js"></script> -->
     <script src="js/modules/core/directives/dateSelector.js"></script>
-    <!-- <script src="js/modules/core/directives/timeSelector.js"></script>
-    <script src="js/modules/core/directives/gameItem.js"></script> -->
     <script src="js/modules/core/directives/archive.js"></script>
     <script src="js/modules/core/directives/fileModel.js"></script>
-    <!-- <script src="js/modules/core/directives/ciRequired.js"></script> -->
     <script src="js/modules/core/directives/loading/loading.js"></script>
-    <!-- <script src="js/modules/core/directives/angular-clockpicker.js"></script>
-    <script src="js/modules/core/directives/kushki/kushki.js"></script> -->
+    <script src="js/modules/core/directives/diamondImg/diamondImg.js"></script>
 
     <!-- Services -->
-    <!-- <script src="js/modules/core/services/authenticate.js"></script> -->
     <script src="js/modules/core/services/forEach.js"></script>
     <script src="js/modules/core/services/friendlyUrl.js"></script>
     <script src="js/modules/core/services/getImageBase64.js"></script>
     <script src="js/modules/core/services/getIndexOfArray.js"></script>
     <script src="js/modules/core/services/openRest.js"></script>
-    <!-- <script src="js/modules/core/services/rest.js"></script>
-    <script src="js/modules/core/services/saveAs.js"></script> -->
     <script src="js/modules/core/services/sweet.js"></script>
     <script src="js/modules/core/services/notif.js"></script>
-    <!-- <script src="js/modules/core/services/changePassword.js"></script>
-    <script src="js/modules/core/services/ciValidation.js"></script> -->
 
     <!-- Filters -->
     <script src="js/modules/core/filters/maxwords.js"></script>
@@ -197,8 +160,6 @@
 </head>
 
 <body ng-controller="MainCtrl as main">
-    <div class="" ui-view></div>
-
-   
+    <div ui-view></div>
 </body>
 </html>

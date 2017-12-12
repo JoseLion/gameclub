@@ -12,12 +12,12 @@ angular.module('Profile').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Profile',
-					files: ['js/modules/account/profile/controller/profileCtrl.js']
+					files: ['js/modules/account/profile/controller/profileCtrl.js', '/js/modules/account/profile/style/profile.less', '/js/modules/account/profile/style/profile.responsive.less']
 				}]);
 			},
 
-			provinces: function(openRest) {
-				return openRest("location/findChildrenOf/:code", true).get({code: 'EC'}, function(data) {
+			provinces: function(openRest, Const) {
+				return openRest("location/findChildrenOf/:code", true).get({code: Const.code.country}, function(data) {
 					return data;
 				});
 			}

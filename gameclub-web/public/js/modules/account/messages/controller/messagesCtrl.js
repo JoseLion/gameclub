@@ -1,4 +1,5 @@
 angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScope, messages, forEach, $filter, rest, geolocation, notif, sweet, $state, friendlyUrl) {
+
 	let page = 0;
 	messages.$promise.then(function(data) {
 		$scope.messages = data.content;
@@ -30,12 +31,18 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 			message.selected = true;
 			clearCanvas();
+			killTimer();
 
-			if (message.isLoan == false) {
-				rest("message/getWelcomeKitMessages/:messageId", true).get({messageId: message.id}, function(data) {
-					$scope.welcomeKits = data;
+			if (!message.isLoan) {
+				rest("message/getMessageById/:messageId").get({messageId: message.id}, function(data) {
+					if(message.isFine) {
+						$scope.fine = data;
+					} else if(message.isAmountRequest) {
+						$scope.amountRequest = data;
+					} else {
+						$scope.kit = data;
+					}
 					canvasToBottom();
-					
 					if (!message.read) {
 						message.read = true;
 						$rootScope.currentUser.unreadMessages--;
@@ -43,26 +50,79 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				});
 			}
 
-			if (message.isLoan == true) {
+			if (message.isLoan) {
 				rest("message/getLoanMessage/:messageId").get({messageId: message.id}, function(data) {
 					$scope.loan = data;
 					$scope.loan.isDisabled = true;
+
+					rest("paymentez/listCards", true).get(function(data) {
+						forEach(data, function(card) {
+							if (card.card_reference ===  $scope.loan.cardReference) {
+								$scope.loan.cardFinale = card.termination;
+							}
+						});
+					});
 
 					if ($rootScope.currentUser.id != $scope.loan.gamer.id) {
 						$scope.loan.lenderAddress = $scope.loan.lenderAddress != null ? $scope.loan.lenderAddress : $rootScope.currentUser.billingAddress;
 						$scope.loan.lenderGeolocation = $scope.loan.lenderGeolocation != null ? $scope.loan.lenderGeolocation : $rootScope.currentUser.geolocation;
 						$scope.loan.lenderReceiver = $scope.loan.lenderReceiver != null ? $scope.loan.lenderReceiver : $rootScope.currentUser.receiver;
+
+						if ($scope.loan.restore != null) {
+							$scope.loan.restore.isDisabled = true;
+							$scope.loan.restore.lenderAddress = $scope.loan.restore.lenderAddress != null ? $scope.loan.restore.lenderAddress : $rootScope.currentUser.billingAddress;
+							$scope.loan.restore.lenderGeolocation = $scope.loan.restore.lenderGeolocation != null ? $scope.loan.restore.lenderGeolocation : $rootScope.currentUser.geolocation;
+							$scope.loan.restore.lenderReceiver = $scope.loan.restore.lenderReceiver != null ? $scope.loan.restore.lenderReceiver : $rootScope.currentUser.receiver;
+						}
 					}
 
 					if ($rootScope.currentUser.id == $scope.loan.gamer.id) {
 						$scope.loan.gamerGeolocation = $scope.loan.gamerGeolocation != null ? $scope.loan.gamerGeolocation : $rootScope.currentUser.geolocation;
+
+						if ($scope.loan.restore != null) {
+							$scope.loan.restore.isDisabled = true;
+							$scope.loan.restore.gamerAddress = $scope.loan.restore.gamerAddress != null ? $scope.loan.restore.gamerAddress : $rootScope.currentUser.billingAddress;
+							$scope.loan.restore.gamerGeolocation = $scope.loan.restore.gamerGeolocation != null ? $scope.loan.restore.gamerGeolocation : $rootScope.currentUser.geolocation;
+							$scope.loan.restore.gamerReceiver = $scope.loan.restore.gamerReceiver != null ? $scope.loan.restore.gamerReceiver : $rootScope.currentUser.receiver;
+						}
 					}
 
 					canvasToBottom();
+					startTimer(new Date($scope.loan.returnDate));
 
 					if (!message.read) {
 						message.read = true;
 						$rootScope.currentUser.unreadMessages--;
+					}
+				});
+			}
+
+			$scope.fine = {};
+			if(message.subject == "Cobro multa" && message.fromUser == null && message.toUser == null){
+				rest("message/findFineMessage/:messageId").get({messageId: message.id}, function(data) {
+					$scope.fine = data;
+					if ($scope.fine.message != null) {
+						canvasToBottom();
+
+						if (!message.read) {
+							message.read = true;
+							$rootScope.currentUser.unreadMessages--;
+						}
+					}
+				});
+			}
+
+			$scope.amountRequest = {};
+			if(message.subject == "Retiro saldo" && message.fromUser == null && message.toUser == null){
+				rest("message/amountRqFineMessage/:messageId").get({messageId: message.id}, function(data) {
+					$scope.amountRequest = data;
+					if ($scope.amountRequest.message != null) {
+						canvasToBottom();
+
+						if (!message.read) {
+							message.read = true;
+							$rootScope.currentUser.unreadMessages--;
+						}
 					}
 				});
 			}
@@ -110,37 +170,47 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		});
 	}
 
-	$scope.confirmWelcomeKit = function(kit) {
+	$scope.confirmKit = function(kit) {
 		let isValid = true;
-
 		if (kit.address == null || kit.address == '') {
 			notif.danger("El campo dirrección es obligatorio");
 			isValid = false;
 		}
-
 		if (kit.phone == null || kit.phone == '') {
 			notif.danger("El campo teléfono es obligatorio");
 			isValid = false;
 		}
-
 		if (kit.receiver == null || kit.receiver == '') {
 			notif.danger("El campo persona de entrega es obligatorio");
 			isValid = false;
 		}
+		if (kit.geolocation == null) {
+			notif.danger("La geolocalización es obligatoria");
+			isValid = false;
+		}
 
 		if (isValid) {
-			sweet.default("Se confirmará el envío de tu Welcome Kit", function() {
-				rest("welcomeKit/confirmWelcomeKit").post(kit, function(data) {
-					let index = $scope.welcomeKits.indexOf(kit);
-					$scope.welcomeKits[index] = data;
-					sweet.close();
-				}, function(error) {
-					sweet.close();
+			if(kit.quantity === 0) {
+				sweet.default("Se confirmará el envío de tu Welcome Kit", function() {
+					rest("welcomeKit/confirmWelcomeKit").post(kit, function(data) {
+						$scope.kit = data;
+						sweet.close();
+					}, function(error) {
+						sweet.close();
+					});
 				});
-			});
-			
+			} else {
+				sweet.default("Se confirmará el envío de tu Shipping Kit", function() {
+					rest("welcomeKit/confirmShippingKit").post(kit, function(data) {
+						$scope.kit = data;
+						sweet.close();
+					}, function(error) {
+						sweet.close();
+					});
+				});
+			}
 		}
-	}
+	};
 
 	$scope.goToGame = function(publicUserGame) {
 		$state.go('gameclub.game', {id: publicUserGame.game.id, consoleId: publicUserGame.console.id, name: friendlyUrl(publicUserGame.game.name)});
@@ -168,6 +238,9 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 			rest("loan/acceptLoan/:id").get({id: $scope.loan.id}, function(data) {
 				notif.success("Préstamo aceptado");
 				$scope.loan = data;
+				$scope.loan.lenderAddress = $rootScope.currentUser.billingAddress;
+				$scope.loan.lenderGeolocation = $rootScope.currentUser.geolocation;
+				$scope.loan.lenderReceiver = $rootScope.currentUser.receiver;
 				sweet.close();
 				canvasToBottom();
 			}, function(error) {
@@ -218,9 +291,12 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 				rest("loan/confirmLender").post($scope.loan, function(data) {
 					$scope.loan = data;
+					$scope.loan.isDisabled = true;
 					notif.success("Préstamo confirmado");
 					sweet.close();
 					canvasToBottom();
+				}, function(error) {
+					sweet.close();
 				});
 
 				if ($scope.loan.saveChanges == true) {
@@ -260,9 +336,13 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 				rest("loan/confirmGamer").post($scope.loan, function(data) {
 					$scope.loan = data;
+					$rootScope.currentUser.shownBalance -= data.balancePart;
+					$scope.loan.isDisabled = true;
 					notif.success("Pago realizado con éxito");
 					sweet.close();
 					canvasToBottom();
+				}, function(error) {
+					sweet.close();
 				});
 
 				if ($scope.loan.saveChanges == true) {
@@ -278,8 +358,156 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		}
 	}
 
+	$scope.getDatePlus = function(millis, days) {
+		let date = new Date(millis);
+		date.setDate(date.getDate() + days);
+		return date;
+	}
+
+	$scope.gamerConfirmRestore = function() {
+		let isValid = true;
+
+		if ($scope.loan.restore.gamerAddress == null || $scope.loan.restore.gamerAddress == '') {
+			notif.danger("El campo dirección es requerido para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.restore.gamerGeolocation == null) {
+			notif.danger("La geolocalización es requerida para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.restore.gamerReceiver == null || $scope.loan.restore.gamerReceiver == '') {
+			notif.danger("El campo Persona de Entrega es requerido para continuar");
+			isValid = false;
+		}
+
+		if (isValid) {
+			sweet.default("Se confirmará la dirección de retiro", function() {
+				$scope.loan.restore.isDisabled = true;
+
+				rest("restore/confirmGamer").post($scope.loan.restore, function(data) {
+					$scope.loan = data;
+					$scope.loan.restore.isDisabled = true;
+					notif.success("Dirección de retiro confirmada");
+					sweet.close();
+					canvasToBottom();
+				}, function(error) {
+					sweet.close();
+				});
+
+				if ($scope.loan.restore.saveChanges == true) {
+					$rootScope.currentUser.billingAddress = $scope.loan.restore.gamerAddress;
+					$rootScope.currentUser.geolocation = $scope.loan.restore.gamerGeolocation;
+					$rootScope.currentUser.receiver = $scope.loan.restore.gamerReceiver;
+
+					rest("publicUser/save").post($rootScope.currentUser, function(data) {
+						$rootScope.currentUser = data;
+					}, function(error) {
+						sweet.close();
+					});
+				}
+			});
+		}
+	}
+
+	$scope.lenderConfirmRestore = function() {
+		let isValid = true;
+
+		if ($scope.loan.restore.lenderAddress == null || $scope.loan.restore.lenderAddress == '') {
+			notif.danger("El campo dirección es requerido para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.restore.lenderGeolocation == null) {
+			notif.danger("La geolocalización es requerida para continuar");
+			isValid = false;
+		}
+
+		if ($scope.loan.restore.lenderReceiver == null || $scope.loan.restore.lenderReceiver == '') {
+			notif.danger("El campo Persona de Entrega es requerido para continuar");
+			isValid = false;
+		}
+
+		if (isValid) {
+			sweet.default("Se confirmará la dirección de entrega", function() {
+				$scope.loan.restore.isDisabled = true;
+
+				rest("restore/confirmLender").post($scope.loan.restore, function(data) {
+					$scope.loan = data;
+					$scope.loan.restore.isDisabled = true;
+					notif.success("Dirección de entrega confirmada");
+					sweet.close();
+					canvasToBottom();
+				}, function(error) {
+					sweet.close();
+				});
+
+				if ($scope.loan.restore.saveChanges == true) {
+					$rootScope.currentUser.billingAddress = $scope.loan.restore.lenderAddress;
+					$rootScope.currentUser.geolocation = $scope.loan.restore.lenderGeolocation;
+					$rootScope.currentUser.receiver = $scope.loan.restore.lenderReceiver;
+
+					rest("publicUser/save").post($rootScope.currentUser, function(data) {
+						$rootScope.currentUser = data;
+					}, function(error) {
+						sweet.close();
+					});
+				}
+			});
+		}
+	}
+
+	$scope.sendReview = function() {
+		sweet.default("Se enviará tu calificación y comentario", function() {
+			rest("review/save").post($scope.loan, function(data) {
+				$scope.loan = data;
+				notif.success("Calificación enviada con éxito");
+				sweet.close();
+				canvasToBottom();
+			}, function(error) {
+				sweet.close();
+			});
+		});
+	}
+
+	$scope.showLendDay = function(acceptedDate) {
+		let lendDay = new Date(acceptedDate);
+		switch (lendDay.getDay()) {
+			case 5:
+				lendDay.setDate(lendDay.getDate() + 3);
+				break;
+			case 6:
+				lendDay.setDate(lendDay.getDate() + 2);
+				break;
+			default:
+				lendDay.setDate(lendDay.getDate() + 1);
+				break;
+		}
+		return lendDay;
+	}
+
+	$scope.getMessageAvatar = function(message) {
+		if (message.fromUser || message.toUser) {
+			if (message.fromUser) {
+				return $rootScope.$archiveUrl + message.fromUser.avatar.image.id;
+			}
+
+			if (message.toUser) {
+				return $rootScope.$archiveUrl + message.toUser.avatar.image.id;
+			}
+		} else {
+			if (message.read && !message.selected) {
+				return 'img/contact-person-black.svg';
+			} else {
+				return 'img/contact-person.svg';
+			}
+		}
+	}
+
 	function clearCanvas() {
-		$scope.welcomeKits = null;
+		$scope.kit = null;
+		$scope.fine = null;
 		$scope.loan = null;
 	}
 
@@ -301,6 +529,77 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					canvasToBottom(canvas, i);
 				}
 			}, Math.round(pixels*time/height));
+		}
+	}
+
+	function startTimer(finish) {
+		$scope.timer = {};
+		let today = new Date();
+		let diff = finish.getTime() - today.getTime();
+
+		let days = diff / 1000 / 60 / 60 / 24;
+		$scope.timer.days = Math.floor(days);
+
+		if (days % 1 > 0) {
+			let hours = (days % 1) * 24;
+			$scope.timer.hours = Math.floor(hours);
+
+			if (hours % 1 > 0) {
+				let minutes = (hours % 1) * 60;
+				$scope.timer.mins = Math.floor(minutes);
+
+				if (minutes % 1 > 0) {
+					let seconds = (minutes % 1) * 60;
+					$scope.timer.secs = Math.round(seconds);
+				} else {
+					$scope.timer.secs = 0;
+				}
+			} else {
+				$scope.timer.mins = 0;
+				$scope.timer.secs = 0;
+			}
+		} else {
+			$scope.timer.hours = 0;
+			$scope.timer.mins = 0;
+			$scope.timer.secs = 0;
+		}
+
+		$scope.timerInterval = setInterval(function() {
+			$scope.$apply(function() {
+				if ($scope.timer.secs > 0) {
+					$scope.timer.secs--;
+				} else {
+					if ($scope.timer.mins > 0) {
+						$scope.timer.mins--;
+						$scope.timer.secs = 59;
+					} else {
+						if ($scope.timer.hours > 0) {
+							$scope.timer.hours--;
+							$scope.timer.mins = 59;
+							$scope.timer.secs = 59;
+						} else {
+							if ($scope.timer.days > 0) {
+								$scope.timer.days--;
+								$scope.timer.hours = 23;
+								$scope.timer.mins = 59;
+								$scope.timer.secs = 59;
+							} else {
+								killTimer();
+							}
+						}
+					}
+				}
+			});
+		}, 1000);
+	}
+
+	function killTimer() {
+		if ($scope.timer != null) {
+			clearInterval($scope.timerInterval);
+			$scope.timer.days = 0;
+			$scope.timer.hours = 0;
+			$scope.timer.mins = 0;
+			$scope.timer.secs = 0;
 		}
 	}
 });

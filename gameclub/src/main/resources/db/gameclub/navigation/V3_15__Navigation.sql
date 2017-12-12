@@ -1,0 +1,2 @@
+INSERT INTO gameclub.navigation(name, route, is_abstract, icon, level, parent)
+VALUES ('Precios de Shipping', 'admin.shippingPrices', false, NULL, 1, (SELECT id FROM gameclub.navigation WHERE route='admin'));

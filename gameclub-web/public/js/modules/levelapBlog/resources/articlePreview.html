@@ -2,7 +2,7 @@
 <article id="blog-article" itemscope itemtype="http://schema.org/Product">
     <header>
         <div class="image-section">
-            <img itemprop="image" archive="ngModel.banner" ng-click="goToDetails()"/>
+            <img itemprop="image" ng-src="{{$archiveUrl + ngModel.banner.id}}" ng-click="goToDetails()"/>
             <div class="post-date">
                 <div class="post-date-content">
                     <span>{{ngModel.creationDate | date:'dd'}}</span><span>{{ngModel.creationDate | date:'MMM'}}</span>
@@ -26,7 +26,7 @@
     </div>
     <footer>
         <div class="cell more">
-            <button class="btn btn-primary small" ng-click="goToDetails()" ng-if="!showAllInfo">Leer m&aacute;s</button>
+            <button class="btn btn-primary small" ng-click="goToDetails()" ng-if="!showAllInfo">Leer más</button>
         </div>
         <div class="cell social-media">
             Share:

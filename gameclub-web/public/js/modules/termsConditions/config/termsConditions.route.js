@@ -16,7 +16,7 @@ angular.module('TermsConditions').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'TermsConditions',
-					files: ['js/modules/termsConditions/controller/termsConditionsCtrl.js']
+					files: ['js/modules/termsConditions/controller/termsConditionsCtrl.js', 'js/modules/termsConditions/style/termsConditions.less']
 				}]);
 			},
 			user: function($stateParams) {

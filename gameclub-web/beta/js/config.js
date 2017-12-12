@@ -50,6 +50,8 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 	$rootScope.$state = $state;
 	$rootScope.Const = Const;
 	$rootScope.MetaTags = MetaTags;
+	$rootScope.RestUrl = urlRestPath.url;
+	$rootScope.$archiveUrl = urlRestPath.url + "/open/archive/download/";
 
 	$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {
 		angular.element('#footer').removeClass('fixed-bottom');

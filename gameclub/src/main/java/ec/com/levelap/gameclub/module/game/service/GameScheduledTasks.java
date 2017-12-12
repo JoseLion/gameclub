@@ -17,8 +17,9 @@ import org.springframework.stereotype.Component;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.repository.GameRepo;
-import ec.com.levelap.gameclub.module.mail.service.MailService;
-import ec.com.levelap.mail.MailParameters;
+import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
+import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.mail.entity.LevelapMail;
 
 @Component
 public class GameScheduledTasks {
@@ -26,7 +27,7 @@ public class GameScheduledTasks {
 	public void updateFromPriceCharting() throws ServletException, MessagingException {
 		GameRepo gameRepo = ApplicationContextHolder.getContext().getBean(GameRepo.class);
 		GameService gameService = ApplicationContextHolder.getContext().getBean(GameService.class);
-		MailService mailService = ApplicationContextHolder.getContext().getBean(MailService.class);
+		GameClubMailService mailService = ApplicationContextHolder.getContext().getBean(GameClubMailService.class);
 		
 		List<Game> games = gameRepo.findAll();
 		for (Game game : games) {
@@ -35,6 +36,8 @@ public class GameScheduledTasks {
 				Double newPrice = gameService.getAvailablePrice(priceCharting);
 				
 				if (newPrice != null) {
+					String percentage = gameRepo.priceChartinNationalitation();
+					newPrice = (double) Math.round(((newPrice*Double.parseDouble(percentage)/100)+newPrice)*100)/100;
 					game.setUploadPayment(newPrice);
 				}
 			}
@@ -42,12 +45,12 @@ public class GameScheduledTasks {
 		
 		gameRepo.save(games);
 		
-		MailParameters mailParameters = new MailParameters();
-		mailParameters.setRecipentTO(Arrays.asList("info@gameclub.com.ec"));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String, String> params = new HashMap<>();
 		params.put("date", df.format(new Date()));
 
-		mailService.sendMailWihTemplate(mailParameters, "PCHUDT", params);
+		mailService.sendMailWihTemplate(levelapMail, "PCHUDT", params);
 	}
 }

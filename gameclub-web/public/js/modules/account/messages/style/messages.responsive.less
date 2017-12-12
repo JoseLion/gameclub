@@ -1,0 +1,20 @@
+@import url("/css/variables.less");
+
+@media only screen and (max-width: 768px) {
+	#account #messages section.header .coins,
+	#account #messages section.header .total{padding-left:10%;padding-right:10%;}
+	#account #messages section.header .coins::before,
+	#account #messages section.header .total::before{left:2.5em;}
+	#account #messages section.header .total .description{padding:0;}
+	#account #messages section.header{padding-bottom:0;}
+	#account #messages section.messages .inbox{padding:4px;}
+	#account #messages section.messages .inbox .list{padding:0;padding-bottom:4px;}
+	#account #messages section.messages .inbox .list .head{margin-bottom:4px;}
+	#account #messages section.messages .inbox .list .search{padding:3%;height:auto;position:relative;}
+	#account #messages section.messages .inbox .list .search::before{top:auto;}
+	#account #messages section.messages .inbox .list .scrollable{position:relative;}
+	#account #messages section.messages .inbox .list .scrollable .no-messages{top:0;left:0;right:0;transform:none;text-align:center;width:100%;}
+	#account #messages section.messages .inbox .detail{padding:0;}
+	#account #messages section.messages .inbox .detail .head{margin-bottom:4px;}
+	#account #messages section.messages .inbox .detail .canvas{height:96vw;}
+}

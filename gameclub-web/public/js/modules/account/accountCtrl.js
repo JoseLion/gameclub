@@ -1,10 +1,12 @@
-angular.module("GameClub").controller('AccountCtrl', function($scope, $rootScope, token, $state, Const, changePassword, sweet, rest, notif, $http, urlRestPath, $cookies) {
+angular.module("GameClub").controller('AccountCtrl', function($scope, $rootScope, token, gamesSummary, $state, Const, changePassword, sweet, rest, notif, $http, urlRestPath, $cookies) {
 	token.$promise.then(function(data) {
-		if ($state.current.name == 'gameclub.account') {
-			$state.go('gameclub.account.profile');
+		if (data.status == 403) {
+			$state.go(Const.mainState);
+		} else {
+			gamesSummary.$promise.then(function(data) {
+				$scope.summary = data;
+			});
 		}
-	}, function(error) {
-		$state.go(Const.mainState);
 	});
 
 	$scope.changePassword = function() {
@@ -12,7 +14,7 @@ angular.module("GameClub").controller('AccountCtrl', function($scope, $rootScope
 	}
 
 	$scope.deleteAccount = function() {
-		sweet.default("Se eliminará su cuenta completamente. Este porceso es irreversible", function() {
+		sweet.default("Se eliminará su cuenta completamente. Este proceso es irreversible", function() {
 			rest("publicUser/deleteAccount").delete(function() {
 				let request = {
 					method: 'POST',

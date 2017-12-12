@@ -3,61 +3,61 @@
     <section class="col-md-6 row-left signup">
         <form role="form" on-submit="signIn()" novalidate>
             <div class="col-md-12">
-                <h2 class="title game-font">Reg&iacute;strate</h2>
+                <h2 class="title game-font">Regístrate</h2>
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary-alt btn-fb" ng-click="fbSignIn()" ng-disabled="isFbSingIn">
-                    <span ng-if="!isFbSingIn">Reg&iacute;strate usando&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
+                    <span ng-if="!isFbSingIn">Regístrate usando&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
                     <loading showing="isFbSingIn"></loading>
                 </button>
             </div>
             <div class="col-md-12">o</div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="name" placeholder="Nombre..." class="input-form" ng-model="user.name" required>
             </div>
-            <div class="col-md-1 image"><img src="img/contact-person.svg"/></div>
+            <div class="col-md-1 col-xs-1 image"><img src="img/contact-person.svg"/></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="lastName" placeholder="Apellido..." class="input-form" ng-model="user.lastName" required>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-1 col-xs-1"></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="email" type="email" placeholder="E-mail..." class="input-form" ng-model="user.username" required>
             </div>
-            <div class="col-md-1 image"><img src="img/contact-email.svg"/></div>
+            <div class="col-md-1 col-xs-1 image"><img src="img/contact-email.svg"/></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="password" type="password" placeholder="Contraseña..." class="input-form" ng-model="user.password" required ng-minlength="6" ng-pattern="passRegex">
             </div>
-            <div class="col-md-1 image"><img src="img/contact-password.svg"/></div>
+            <div class="col-md-1 col-xs-1 image"><img src="img/contact-password.svg" title="La contrase&ntilde;a debe contener&#58; mínimo 6 caracteres por lo menos una MAYúSCULA (A-Z)&#44; minúsculas (a-z) y por lo menos un número (0-9)"/></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12">
                 <button type="submit" class="btn btn-primary-alt">Registrarme</button>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-1 col-xs-0"></div>
             <div class="clearfix"></div>
         </form>
     </section>
     <section class="col-md-6 row-right login">
         <form role="form" on-submit="login()" novalidate>
             <div class="col-md-12">
-                <h2 class="title game-font">Inicia sesi&oacute;n</h2>
+                <h2 class="title game-font">Inicia sesión</h2>
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-tertiary btn-fb" ng-click="fbLogIn()" ng-disabled="isFbLogIn">
-                    <span ng-if="!isFbLogIn">Inicia tu sesi&oacute;n con&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
+                    <span ng-if="!isFbLogIn">Inicia tu sesión con&nbsp;&nbsp;&nbsp;<i class="gc gc-facebook"></i></span>
                     <loading showing="isFbLogIn"></loading>
                 </button>
             </div>
@@ -65,34 +65,34 @@
             <div class="clearfix"></div>
 
             <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="email" type="email" placeholder="E-mail..." ng-model="credentials.username" required>
             </div>
-            <div class="col-md-1 image"><img src="img/contact-email.svg"/></div>
+            <div class="col-md-1 col-xs-1 image"><img src="img/contact-email.svg"/></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10 to-validate">
+            <div class="col-md-1 col-xs-0"></div>
+            <div class="col-md-10 col-xs-11 to-validate">
                 <input validation name="password" type="password" placeholder="Contraseña..." ng-model="credentials.password" required>
             </div>
-            <div class="col-md-1 image"><img src="img/contact-password.svg"/></div>
+            <div class="col-md-1 col-xs-1 image"><img src="img/contact-password.svg"/></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-md-1 col-xs-1"></div>
+            <div class="col-md-10 col-xs-10">
                 <button type="submit" class="btn btn-tertiary login" ng-disabled="isLoginIn">
-                    <span ng-if="!isLoginIn">Iniciar sesi&oacute;n</span>
+                    <span ng-if="!isLoginIn">Iniciar sesión</span>
                     <loading showing="isLoginIn"></loading>
                 </button>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-1 col-xs-1"></div>
             <div class="clearfix"></div>
 
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-md-1 col-xs-1"></div>
+            <div class="col-md-10 col-xs-10">
                 <a href ng-click="forgotPassword()">&iquest;Olvidaste tu contrase&ntilde;a?</a>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-1 col-xs-1"></div>
             <div class="clearfix"></div>
         </form>
     </section>
@@ -110,18 +110,13 @@
         <div class="modal-body">
             <form role="form" on-submit="ok()" class="terms-form form-horizontal" novalidate>
                 <div class="form-group text-center">
-                    <input type="checkbox" ng-model="terms.status"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" ng-click="cancel()">{{link.termsConditions.name}}</a></span>
+                    <input type="checkbox" class="cursor-pointer" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" target="_blank">{{link.termsConditions.name}}</a></span>
                 </div>
                 <div class="form-group text-center">
-                    <div class="col-md-6">
-                        <button type="submit" class="btn save" ng-disabled="isSaving">
-                            <span ng-if="!isSaving">OK</span>
-                            <loading showing="isSaving" inline width="1em">
-                        </button>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
-                    </div>
+                    <button type="submit" class="btn cancel" ng-disabled="isSaving">
+                        <span ng-if="!isSaving">Continuar</span>
+                        <loading showing="isSaving" inline width="1em">
+                    </button>
                 </div>
             </form>
             <div class="clearfix"></div>
@@ -154,11 +149,10 @@
 
                 <div class="form-group">
                     <div class="col-md-6 text-center">
-                        <button type="submit" class="btn save">Enviar</button>
-                    </div>
-
-                    <div class="col-md-6 text-center">
                         <button type="button" class="btn cancel" ng-click="cancel()">Cancelar</button>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <button type="submit" class="btn save">Enviar</button>
                     </div>
                 </div>
             </form>
@@ -175,7 +169,7 @@
         <div class="modal-body">
             <form role="form" on-submit="ok()" class="terms-form form-horizontal" novalidate>
                 <div class="form-group text-center">
-                    <input type="checkbox" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" ng-click="cancel()">{{link.termsConditions.name}}</a></span>
+                    <input type="checkbox" class="cursor-pointer" ng-model="user.terms"><span class="legal">Acepto los <a ui-sref="{{link.termsConditions.route}}" target="_blank">{{link.termsConditions.name}}</a></span>
                 </div>
                 <div class="form-group text-center">
                     <button type="submit" class="btn cancel" ng-disabled="isSaving">

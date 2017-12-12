@@ -1,8 +1,12 @@
-angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, mostPlayed, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const, shippingKitValue) {
     $scope.myGame = {};
     $scope.filter = {};
     $scope.search = {};
 
+
+    $scope.priceChartingGM = parseFloat($rootScope.settings[Const.settings.priceChartingGames].value);
+    $scope.priceChartingGMLoan = 0.0;
+    $scope.gameLoanPCH = parseFloat($rootScope.settings[Const.settings.weekShippingCost].value);
     gamesList.$promise.then(function(data) {
         setPagedData(data);
     });
@@ -11,20 +15,26 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
         $scope.integrity = data;
     });
 
+    mostPlayed.$promise.then(function(data) {
+        $scope.mostPlayed = data;
+    });
+
+    shippingKitValue.$promise.then(function(data) {
+        $scope.shippingKitValue = parseFloat(data.value);
+    });
+
     if (game != null) {
         $scope.myGame.game = game;
-
         openRest("archive/downloadFile").download({name: $scope.myGame.game.banner.name, module: $scope.myGame.game.banner.module}, function(data) {
             $scope.background = {
                 background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
             };
         });
-
         forEach($scope.myGame.game.consoles, function(gameConsole) {
             openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
                 gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
             });
-            
+
             if(consoleSelected == gameConsole){
                 $scope.search = {console: gameConsole};
             }
@@ -40,14 +50,17 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
                 background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
             };
         });
+
         forEach($scope.myGame.game.consoles, function(gameConsole) {
             openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
                 gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
             });
-            if($scope.myGame.console.id == gameConsole.console.id){
+
+            if ($scope.myGame.console.id == gameConsole.console.id) {
                 $scope.search = {console: gameConsole};
             }
         });
+
         $scope.showGame = true;
     }
 
@@ -69,21 +82,61 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     }
 
     $scope.save = function() {
-        sweet.save(function() {
-            $scope.myGame.console = $scope.search.console.console;
-            rest("publicUser/saveGame").post($scope.myGame, function(data) {
-                sweet.success();
-                setPagedData(data);
-                $scope.showGame = false;
-                sweet.close();
+        let priceChartingGMLoan = 0.0;
+        if($rootScope.settings[Const.settings.priceChartingGames].type == "percentage" && $scope.myGame.game.uploadPayment != null){
+            priceChartingGMLoan = $scope.myGame.game.uploadPayment/$scope.gameLoanPCH;
+        } else if($rootScope.settings[Const.settings.priceChartingGames].type == "number" && $scope.myGame.game.uploadPayment != null){
+            priceChartingGMLoan = ($scope.myGame.game.uploadPayment+priceChartingGM)/gameLoanPCH;
+        }
 
-                rest("publicUser/getCurrentUser").get(function(data) {
-                    $rootScope.currentUser = data;
+        let isValid = true;
+        let minPrice = 0.0;
+        let maxPrice = 0.0;
+        if($rootScope.settings[Const.settings.priceChartingMin].type == 'percentage' && $rootScope.settings[Const.settings.priceChartingMax].type == 'percentage'){
+           minPrice = priceChartingGMLoan-((priceChartingGMLoan*parseFloat($rootScope.settings[Const.settings.priceChartingMin].value))/100);
+           maxPrice = priceChartingGMLoan+((priceChartingGMLoan*parseFloat($rootScope.settings[Const.settings.priceChartingMax].value))/100);
+        } else if($rootScope.settings[Const.settings.priceChartingMin].type == 'number' && $rootScope.settings[Const.settings.priceChartingMax].type == 'number'){
+           minPrice = priceChartingGMLoan-parseFloat($rootScope.settings[Const.settings.priceChartingMin].value);
+           maxPrice = priceChartingGMLoan+parseFloat($rootScope.settings[Const.settings.priceChartingMax].value);
+        }
+        if($scope.myGame.status == null) {
+            isValid = false;
+            notif.danger('Estatus no seleccionado.');
+        }
+        if($scope.myGame.integrity == null) {
+            isValid = false;
+            notif.danger('Estado del juego no seleccionado.');
+        }
+        if($scope.myGame.cost == null) {
+            isValid = false;
+            notif.danger('Valor costo no ingresado.');
+        } else if($scope.myGame.cost<minPrice || $scope.myGame.cost>maxPrice ){
+            isValid = false;
+            sweet.error('El precio de alquiler de ' + $scope.myGame.game.name + ' debe ser entre $' + minPrice.toFixed(2) + ' y $' + maxPrice.toFixed(2));
+        }
+        
+        if(isValid == true){
+            sweet.save(function() {
+                $scope.myGame.console = $scope.search.console.console;
+
+                rest("publicUser/saveGame").post($scope.myGame, function(data) {
+                    sweet.success();
+                    setPagedData(data);
+                    $scope.showGame = false;
+                    sweet.close();
+
+                    rest("publicUser/getCurrentUser").get(function(data) {
+                        $rootScope.currentUser = data;
+                    });
+                }, function(error) {
+                    sweet.close();
                 });
-            }, function(error) {
-                sweet.close();
             });
-        });
+        }
+    }
+
+    $scope.goBack = function() {
+        $scope.showGame = false;
     }
 
     $scope.pageChanged = function() {
@@ -122,8 +175,6 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
         });
         $scope.isConsoleFilter = true;
     }
-
-
 
 
 
@@ -310,24 +361,16 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             rating: 3
         }
     ];
+
     $scope.getPreviousGame = function() {
         let temp = $scope.mostPlayed.splice(0, 1);
         $scope.mostPlayed[3] = temp[0];
-    };
+    }
+
     $scope.getNextGame = function() {
         let temp = $scope.mostPlayed.splice(-1, 1);
         $scope.mostPlayed.unshift(temp[0]);
-    };
-
-    /* MAQUETACIÓN DE LA FICHA DE PRESTAMO */
-
-    $scope.gameLoan = {
-        status: 'DISPONIBLE',
-        gameStatus: 9,
-        comments: 'El juego tiene un rasguño en el tiro del CD.',
-        insured: true,
-        coins: 150
-    };
+    }
 
     $scope.nameAutocomplete = [];
     $scope.$watch('search.name', function(newValue, oldValue) {
@@ -337,5 +380,9 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
             });
         }
     });
+
+    $scope.askShippingKit = function() {
+        $state.go('gameclub.shippingKit');
+    };
 
 });

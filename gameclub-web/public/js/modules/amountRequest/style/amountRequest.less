@@ -1,0 +1,110 @@
+/********** My Games page: **********/
+@import url("/css/variables.less");
+
+#amountRequest section.header{background:@color-secundary;color:@color-tertiary;padding-top:9em;padding-bottom:2.5%;}
+#amountRequest section.header .name img{width:100%;border:10px solid @color-tertiary;padding:10%;border-radius:50%;}
+#amountRequest section.header .name h1.title{font-size:1.8em;margin-bottom:0;margin-top:0.5em;}
+#amountRequest section.header .name .connection{padding:1px 3% 0;border-radius:25px;background:@color-primary;display:inline-block;font-size:0.7em;font-weight:700;}
+#amountRequest section.header .name .connection span{color:@color-primary-alt;}
+#amountRequest section.header .coins{margin:3% auto 0;}
+#amountRequest section.header .coins .subtitle{font-size:1.5em;font-family:@font-family-jaapokki;text-transform:uppercase;position:relative;letter-spacing:1px;}
+#amountRequest section.header .coins::before{content:"";position:absolute;left:15px;bottom:-1.5em;width:15%;background:@color-tertiary;}
+#amountRequest section.header .coins span.dark{font-family:@font-family-josefinsans;color:@color-primary;font-weight:700;letter-spacing:2px;}
+#amountRequest section.header .coins button>span.light{color:@color-tertiary;}
+#amountRequest section.header .coins button{position:relative;padding:4px 25% 1px;border-width:1px;font-size:0.7em;}
+#amountRequest section.header .coins button::before,
+#amountRequest section.header .coins button::after{color:@color-tertiary;position:absolute;font-family:gameclub;}
+#amountRequest section.header .coins button::before{content:"\E024";left:5px;}
+#amountRequest section.header .coins button::after{content:"\E024";right:5px;}
+
+#amountRequest section .div-title{margin-bottom:3%!important;}
+#amountRequest section .div-section{margin-bottom:1%;padding-bottom:2%;position:relative;}
+#amountRequest section .div-section .file-name{font-size:1.1em;font-weight:bold;position:absolute;transform:translate(0%,50%);top:44%;left:380px;}
+#amountRequest section .div-section .file-check{display:inline-block;height:20px;width:20px;position:relative;background-color:white;border-radius:15px;margin-left:5px;transform:translate(10%,25%);}
+#amountRequest section .div-section .file-check:before{content:"\f00c";font-family:FontAwesome;font-size:1.5em;position:absolute;transform:translate(-50%,-50%);top:32%;left:65%;}
+#amountRequest section .div-section.form-section{margin-bottom:2%;padding-bottom:1%;}
+#amountRequest section .div-section.form-section::before{content:"";height:2px;position:absolute;bottom:0;left:15px;right:15px;background:@color-primary;}
+#amountRequest section label{text-transform:uppercase;}
+#amountRequest section input{color:@color-secundary;width:12em;}
+
+#amountRequest section.bank .title,
+#amountRequest section.document-image .title,
+#amountRequest section.contact-address .title{font-size:1.5em;}
+#amountRequest section.bank .title::before,
+#amountRequest section.document-image .title::before,
+#amountRequest section.contact-address .title::before{content:"";height:3px;position:absolute;left:15px;bottom:0;background:@color-primary;width:10%;}
+
+#amountRequest section.bank{background:@color-tertiary-alt;padding-bottom:1%;padding-top:2%;}
+#amountRequest section.bank .table-section{display:table;}
+#amountRequest section.bank .table-section .table-cell{display:table-cell;vertical-align:middle;}
+#amountRequest section.bank .box{border:2px solid @color-tertiary;display:inline-block;margin-left:10px;margin-right:25px;height:25px;width:25px;position:relative;cursor:pointer;}
+#amountRequest section.bank .box.check::before{content:"\f00c";font-family:FontAwesome;font-size:2.5em;color:@color-secundary;position:absolute;left:-0.2em;top:-0.6em;}
+
+#amountRequest section.document-image{background:@color-primary-alt;padding-bottom:1%;padding-top:2%;}
+#amountRequest section.document-image p{line-height:0.75em;font-size:1.2em;font-weight:700;}
+#amountRequest section.document-image button{border-radius:7px;margin-top:2%;}
+
+#amountRequest section.contact-address{background:@color-secundary;padding-bottom:1%;padding-top:2%;}
+#amountRequest section.contact-address label{color:@color-tertiary;}
+#amountRequest section.contact-address .title::before{background:@color-tertiary;}
+#amountRequest section.contact-address .div-section.form-section::before{background:@color-tertiary;}
+#amountRequest section.contact-address .selector-section{padding-bottom:0;}
+#amountRequest section.contact-address .selector{padding:0;}
+#amountRequest section.contact-address .selector .ui-select-match>span,
+#amountRequest section.contact-address .selector .ui-select-match>span>span,
+#amountRequest section.contact-address .selector .ui-select-match .ui-select-placeholder,
+#amountRequest section.contact-address .selector input{color:@color-primary;}
+#amountRequest section.contact-address .address-title{margin-bottom:0;}
+#amountRequest section.contact-address .billing-address{position:relative;}
+#amountRequest section.contact-address .billing-address::before{content:"";border-bottom:2px solid @color-tertiary;left:15px;right:15px;position:absolute;top:42.5%;}
+#amountRequest section.contact-address .billing-address::after{content:"";border-bottom:2px solid @color-tertiary;left:15px;right:15px;position:absolute;top:85.5%;}
+#amountRequest section.contact-address .billing-address textarea{color:@color-primary;font-size:1.2em;resize:none;width:100%;}
+#amountRequest section.contact-address .billing-address textarea::-webkit-scrollbar{background:transparent;width:0.5em!important;}
+#amountRequest section.contact-address .billing-address textarea::-webkit-scrollbar-track{background:transparent;}
+#amountRequest section.contact-address .billing-address textarea::-webkit-scrollbar-thumb{background:@color-primary;}
+#amountRequest section.contact-address input{color:@color-primary;}
+
+#amountRequest section.submit{background:@color-tertiary;padding-bottom:2%;padding-top:3%;text-align:center;}
+#amountRequest section.submit button{color:@color-secundary;border-radius:7px;}
+
+#amountRequest section.ruc{background:@color-primary-alt;padding-bottom:1%;padding-top:2%;}
+#amountRequest section.ruc input{color:black;}
+#amountRequest section.ruc .title{font-size:1.5em;color:white;}
+#amountRequest section.ruc .title::before{content:"";height:3px;position:absolute;left:15px;bottom:0;background:white;width:10%;}
+#amountRequest section.ruc .address{position:relative;margin-top:12px;margin-bottom:12px;}
+#amountRequest section.ruc .address::before{content:"";border-bottom:2px solid black;left:0px;right:0px;position:absolute;top:42.5%;}
+#amountRequest section.ruc .address::after{content:"";border-bottom:2px solid black;left:0px;right:0px;position:absolute;top:85.5%;}
+#amountRequest section.ruc .address textarea{color:@color-primary;font-size:1.2em;resize:none;width:100%;}
+#amountRequest section.ruc .address textarea::-webkit-scrollbar{background:transparent;width:0.5em!important;}
+#amountRequest section.ruc .address textarea::-webkit-scrollbar-track{background:transparent;}
+#amountRequest section.ruc .address textarea::-webkit-scrollbar-thumb{background:@color-primary;}
+#amountRequest section.ruc .table-section{display:table;}
+#amountRequest section.ruc .table-section .table-cell{display:table-cell;vertical-align:middle;}
+
+#amountRequest section.how-to{background:@color-tertiary-alt;padding-bottom:1%;padding-top:2%;}
+#amountRequest section.how-to p{font-weight:bold;font-size:1.15em;padding:0% 4%;margin:unset;}
+#amountRequest section.how-to .title{font-size:1.5em;}
+#amountRequest section.how-to .title::before{content:"";height:3px;position:absolute;left:15px;bottom:0;background:@color-primary;;width:10%;}
+#amountRequest section.how-to .bill-number{font-size:1.3em;text-transform:uppercase;text-align:center;border:2px solid black;border-radius:7px;padding:7% 0%;}
+#amountRequest section.how-to .bill-header{display:table;margin-top:3%;font-weight:bold;text-transform:uppercase;border:2px solid black;border-radius:7px;padding:2%;}
+#amountRequest section.how-to .bill-header div{display:table-row;padding:unset;}
+#amountRequest section.how-to .bill-header div .bill-label{display:table-cell;white-space:nowrap;}
+#amountRequest section.how-to .bill-header div .bill-dotted{display:table-cell;font-size:0.8em;color:@color-secundary;border-bottom:1px dotted black;padding:0% 1.5%;width:100%;}
+
+#amountRequest section.how-to .bill-body{margin-top:3%;text-transform:uppercase;font-weight:bold;}
+#amountRequest section.how-to .bill-body table{border-collapse:separate;}
+#amountRequest section.how-to .bill-body table thead tr th{border:2px solid black;padding:1% 2%;border-right-style:hidden;text-align:center;}
+#amountRequest section.how-to .bill-body table thead tr th:first-child{border-top-left-radius:7px;}
+#amountRequest section.how-to .bill-body table thead tr th:last-child{border-top-right-radius:7px;border-right-style:solid;}
+#amountRequest section.how-to .bill-body table tbody{color:@color-secundary;font-size:0.8em;}
+#amountRequest section.how-to .bill-body table tbody tr td{border:2px solid black;padding:1%;border-right-style:hidden;border-top-style:hidden;}
+#amountRequest section.how-to .bill-body table tbody tr td:last-child{border-right-style:solid;}
+#amountRequest section.how-to .bill-body table tbody tr td.bill-currency{font-size:1.7em;}
+#amountRequest section.how-to .bill-body table tbody tr td.no-border{border-left-style:hidden;border-bottom-style:hidden;color:black;font-size:1.2em;}
+#amountRequest section.how-to .bill-body table tbody tr.last-item td:first-child{border-bottom-left-radius:7px;}
+#amountRequest section.how-to .bill-body table tbody tr:last-child td:last-child{border-bottom-left-radius:7px;border-bottom-right-radius:7px;}
+
+#amountRequest section.how-to .load-bill{padding-bottom:1%;padding-top:2%;}
+#amountRequest section.how-to .load-bill p{line-height:0.75em;font-size:1.2em;font-weight:700;}
+#amountRequest section.how-to .load-bill button{border-radius:7px;margin-top:2%;}
+#amountRequest section.how-to .div-section .file-name{top:34%;}

@@ -11,11 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.com.levelap.archive.Archive;
+import ec.com.levelap.archive.ArchiveService;
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.base.service.BaseService;
-import ec.com.levelap.commons.archive.Archive;
-import ec.com.levelap.commons.service.DocumentService;
 import ec.com.levelap.gameclub.module.category.entity.Category;
 import ec.com.levelap.gameclub.module.category.repository.CategoryRepo;
 
@@ -29,7 +29,7 @@ public class CategoryService extends BaseService<Category> {
 	private CategoryRepo categoryRepo;
 	
 	@Autowired
-	private DocumentService documentService;
+	private ArchiveService archiveService;
 	
 	@Transactional
 	public ResponseEntity<?> save(Category category, MultipartFile whiteVector, MultipartFile blackVector) throws ServletException, IOException {
@@ -53,11 +53,11 @@ public class CategoryService extends BaseService<Category> {
 			
 			if (category.getId() != null) {
 				Category original = categoryRepo.findOne(category.getId());
-				documentService.deleteFile(original.getWhiteVector().getName(), Category.class.getSimpleName());
+				archiveService.deleteFile(original.getWhiteVector().getName(), Category.class.getSimpleName());
 				archive = original.getWhiteVector();
 			}
 			
-			FileData fileData = documentService.saveFile(whiteVector, Category.class.getSimpleName());
+			FileData fileData = archiveService.saveFile(whiteVector, Category.class.getSimpleName());
 			
 			archive.setModule(Category.class.getSimpleName());
 			archive.setName(fileData.getName());
@@ -70,11 +70,11 @@ public class CategoryService extends BaseService<Category> {
 			
 			if (category.getId() != null) {
 				Category original = categoryRepo.findOne(category.getId());
-				documentService.deleteFile(original.getBlackVector().getName(), Category.class.getSimpleName());
+				archiveService.deleteFile(original.getBlackVector().getName(), Category.class.getSimpleName());
 				archive = original.getBlackVector();
 			}
 			
-			FileData fileData = documentService.saveFile(blackVector, Category.class.getSimpleName());
+			FileData fileData = archiveService.saveFile(blackVector, Category.class.getSimpleName());
 			
 			archive.setModule(Category.class.getSimpleName());
 			archive.setName(fileData.getName());

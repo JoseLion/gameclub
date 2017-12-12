@@ -1,0 +1,363 @@
+<div id="amountRequest">
+    <form role="form" class="form-horizontal" novalidate on-submit="requestBalance()">
+        <section class="row header">
+            <div class="col-md-2 col-xs-5 name">
+                <img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" onerror="this.src='img/contact-person.svg'">
+            </div>
+            <div class="col-md-10 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
+                <div class="col-md-10 name">
+                    <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
+                    <div class="col-md-12 no-padding-left no-padding-right">
+                        <div class="connection">última vez conectado: <span>{{currentUser.lastConnection | date: 'dd-MM-yyyy'}}</span></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="col-md-10 col-xs-12 coins">
+                    <div class="col-md-12 col-xs-12 no-padding-left">
+                        <span class="subtitle">Saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </section>
+        <section class="row bank" ng-show="!rucOpened">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
+                <div class="col-md-12 col-xs-12 div-section div-title">
+                    <h2 class="title">Completa la información de la transferencia</h2>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section valid-group">
+                    <label>Nombre del 1er beneficiario</label>
+                    <input validation type="text" ng-model="request.accountFullName" placeholder="Pablo Ponce" required>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section valid-group">
+                    <label>Cédula de identidad</label>
+                    <input validation type="text" ng-model="request.accountDocument" placeholder="1234567890" required ci-required>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section valid-group">
+                    <label>Banco</label>
+                    <input validation type="text" ng-model="request.accountBank" placeholder="Bolivariano" required>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section valid-group">
+                    <label>Nº de cuenta</label>
+                    <input validation type="text" ng-model="request.accountNumber" placeholder="104143229805" required>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section valid-group">
+                    <label>Correo electrónico</label>
+                    <input validation type="email" ng-model="request.accountEmail" placeholder="pponce@gmail.com" required>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 div-section">
+                    <div class="table-section">
+                        <div class="table-cell">
+                            <label>Cuenta de ahorros</label>
+                        </div>
+                        <div class="table-cell">
+                            <div class="box" ng-class="{'check': request.accountIsSaving}" ng-click="request.accountIsSaving = true"></div>
+                        </div>
+                        <div class="table-cell">
+                            <label>Cuenta corriente</label>
+                        </div>
+                        <div class="table-cell">
+                            <div class="box" ng-class="{'check': !request.accountIsSaving}" ng-click="request.accountIsSaving = false"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </section>
+        <section class="row document-image" ng-show="!rucOpened">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
+                <div class="col-md-12 col-xs-12 div-section div-title">
+                    <h2 class="title">Verifica tu identidad</h2>
+                </div>
+                <div class="col-md-12 col-xs-12 div-section valid-group">
+                    <p>Necesitamos verificar tu información para poder proceder con el pago.</p>
+                    <p>Sube una foto de tu cédula.</p>
+                    <button type="button" class="btn btn-tertiary" ng-click="openFileBrowser('input-photo')">Selecciona archivo de tu ordenador</button>
+                    <label ng-show="false">Foto Cédula</label>
+                    <input validation id="input-photo" type="file" ng-model="file.identityPhoto" file-model ng-show="false" required>
+                    <span class="file-name" ng-if="file.identityPhoto">{{file.identityPhoto.name}} <span class="file-check"></span></span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </section>
+        <section class="row contact-address" ng-if="!currentUser.hasRuc">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
+                <div class="col-md-12 col-xs-12 div-section div-title">
+                    <h2 class="title">Ingresa dirección de entrega de liquidación</h2>
+                </div>
+                <div class="col-md-6 col-xs-12 form-section div-section selector-section valid-group">
+                    <label class="col-md-4 col-xs-12 no-padding-left no-padding-right">Provincia</label>
+                    <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
+                        <ui-select validation ng-model="request.province" theme="bootstrap" class="selector" required>
+                            <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                            <ui-select-choices repeat="province in provinces | filter: $select.search">
+                                <div ng-bind-html="province.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6 col-xs-12 form-section div-section selector-section valid-group">
+                    <label class="col-md-4 no-padding-left no-padding-right">Ciudad</label>
+                    <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
+                        <ui-select validation ng-model="request.locationDestiny" theme="bootstrap" class="selector" required>
+                            <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                            <ui-select-choices repeat="city in request.province.children | filter: $select.search">
+                                <div ng-bind-html="city.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="valid-group">
+                    <div class="col-md-8 col-xs-12 form-section div-section address-title">
+                        <label>Dirección de entrega</label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-8 col-xs-12 billing-address">
+                        <textarea validation type="address" ng-model="request.address" rows="2" maxlength="150" placeholder="Calle Principal - Numeración - Calle Secundaria - Sector - Referncia" required></textarea>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-md-8 col-xs-12 form-section div-section valid-group">
+                    <label>Télefono de contacto</label>
+                    <input validation type="phone" ng-model="request.contactPhone" placeholder="0985361316" required>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </section>
+        <section class="row submit" ng-if="!rucOpened">
+            <button type="submit" class="btn btn-secundary" ng-if="!currentUser.hasRuc">Continuar con el retiro de tu saldo</button>
+            <button type="submit" class="btn btn-secundary" ng-if="currentUser.hasRuc">Continuar con el retiro de tu saldo</button>
+        </section>
+
+        <section class="row ruc" ng-if="rucOpened">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
+                <div class="col-md-12 col-xs-12 div-section div-title">
+                    <h2 class="title">Tu ruc</h2>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section">
+                    <label>Nombre</label>
+                    <input ng-model="currentUser.nameRuc" readonly>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section">
+                    <label>Nº de ruc</label>
+                    <input ng-model="currentUser.documentRuc" readonly>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section">
+                    <label>Dirección de facturación</label>
+                    <div class="address">
+                        <textarea ng-model="currentUser.addressRuc" rows="2" readonly></textarea>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 col-xs-12 form-section div-section">
+                    <label>Teléfono</label>
+                    <input ng-model="currentUser.phoneRuc" readonly>
+                </div>
+                <div class="clearfix"></div>
+        </section>
+
+        <section class="row how-to" ng-if="rucOpened">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
+                <div class="col-md-12 col-xs-12 div-section div-title">
+                    <h2 class="title">Como llenar tu factura</h2>
+                </div>
+
+                <div class="col-md-8 col-xs-6">
+                    <p>Te damos un ejemplo d ecomo tienes que llenar tu factura correctamente para retirar tu saldo.</p>
+                    <p>Éste es un ejemplo con $100.</p>
+                    <p>Debes hacerlo con tu saldo actual</p>
+                </div>
+
+                <div class="col-md-4 col-xs-6">
+                    <div class="bill-number">
+                        <p>Factura</p>
+                        <p>N.-0000001</p>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-xs-12">
+                    <div class="bill-header">
+                        <div class="col-md-12 col-xs-12">
+                            <span class="bill-label">Señores:</span> <span class="bill-dotted">Tomorrowlabs S.A.</span>
+                        </div>
+                        
+                        <div class="col-md-8 col-xs-8">
+                            <span class="bill-label">RUC / C.I.:</span> <span class="bill-dotted">1792738865001</span>
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                            <span class="bill-label">Teléfono:</span> <span class="bill-dotted">0999176170</span>
+                        </div>
+
+                        <div class="col-md-8 col-xs-8">
+                            <span class="bill-label">Dirección:</span> <span class="bill-dotted">Av. Siena 214 y Miguel Angel ' Ed. Mater</span>
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                            <span class="bill-label">Fecha:</span> <span class="bill-dotted">{{today | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+
+                        <div class="col-md-12 col-xs-12">
+                            <span class="bill-label">Email:</span> <span class="bill-dotted">pagos@tomorrowlabs.com.ec</span>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-xs-12">
+                    <div class="bill-body">
+                        <table>
+                            <col width="10%">
+                            <col width="40%">
+                            <col width="25%">
+                            <col width="25%">
+
+                            <thead>
+                                <tr>
+                                    <th class="bill-label">Cantidad</th>
+                                    <th class="bill-label">Descripción</th>
+                                    <th class="bill-label">V.Unitario</th>
+                                    <th class="bill-label">V.Total</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="text-center bill-currency">5</td>
+                                    <td class="text-left">Alquiler Zelda Breath of the Wild</td>
+                                    <td class="text-center bill-currency">{{2.90 | currency: '$'}}</td>
+                                    <td class="text-center bill-currency">{{14.50 | currency: '$'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-center bill-currency">7</td>
+                                    <td class="text-left">Alquiler FIFA 18</td>
+                                    <td class="text-center bill-currency">{{3.15 | currency: '$'}}</td>
+                                    <td class="text-center bill-currency">{{22.05 | currency: '$'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-center bill-currency">13</td>
+                                    <td class="text-left">Alquiler Super Mario Odyssey</td>
+                                    <td class="text-center bill-currency">{{3.50 | currency: '$'}}</td>
+                                    <td class="text-center bill-currency">{{45.50 | currency: '$'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-center bill-currency">7</td>
+                                    <td class="text-left">Alquiler Assassins Creed Origins</td>
+                                    <td class="text-center bill-currency">{{3.50 | currency: '$'}}</td>
+                                    <td class="text-center bill-currency">{{24.50 | currency: '$'}}</td>
+                                </tr>
+
+                                <tr class="last-item">
+                                    <td class="text-center bill-currency">3</td>
+                                    <td class="text-left">Alquiler FIFA 18 (Es otro item porque cambio tu valor unitario)</td>
+                                    <td class="text-center bill-currency">{{2.50 | currency: '$'}}</td>
+                                    <td class="text-center bill-currency">{{7.50 | currency: '$'}}</td>
+                                </tr>                               
+
+                                <tr>
+                                    <td class="no-border text-right bill-label" colspan="3">Subtotal</td>
+                                    <td class="text-center bill-currency">{{114.05 | currency: '$'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="no-border text-right bill-label" colspan="3">IVA 12%</td>
+                                    <td class="text-center bill-currency">{{13.69 | currency: '$'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="no-border text-right bill-label" colspan="3">Total USD</td>
+                                    <td class="text-center bill-currency">{{127.74 | currency: '$'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-xs-12">
+                    <div class="load-bill div-section valid-group">
+                        <button type="button" class="btn btn-tertiary" ng-click="openFileBrowser('input-bill')">Selecciona archivo de tu ordenador</button>
+                        <label ng-show="false">Foto Factura</label>
+                        <input validation id="input-bill" type="file" ng-model="file.bill" file-model ng-show="false" required>
+                        <span class="file-name" ng-if="file.bill">{{file.bill.name}} <span class="file-check"></span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="row contact-address" ng-if="rucOpened">
+            <div class="col-md-2 col-xs-0"></div>
+            <div class="col-md-10 col-xs-12 no-padding-left no-padding-right">
+                <div class="col-md-12 col-xs-12 div-section div-title">
+                    <h2 class="title">Ingresa dirección de retiro de tu factura</h2>
+                </div>
+                <div class="col-md-6 col-xs-12 form-section div-section selector-section valid-group">
+                    <label class="col-md-4 col-xs-12 no-padding-left no-padding-right">Provincia</label>
+                    <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
+                        <ui-select validation ng-model="request.province" theme="bootstrap" class="selector" required>
+                            <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                            <ui-select-choices repeat="province in provinces | filter: $select.search">
+                                <div ng-bind-html="province.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6 col-xs-12 form-section div-section selector-section valid-group">
+                    <label class="col-md-4 no-padding-left no-padding-right">Ciudad</label>
+                    <div class="col-md-8 col-xs-12 no-padding-left no-padding-right">
+                        <ui-select validation ng-model="request.locationDestiny" theme="bootstrap" class="selector" required>
+                            <ui-select-match allow-clear>{{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}</ui-select-match>
+                            <ui-select-choices repeat="city in request.province.children | filter: $select.search">
+                                <div ng-bind-html="city.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="valid-group">
+                    <div class="col-md-8 col-xs-12 form-section div-section address-title">
+                        <label>Dirección de retiro</label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-8 col-xs-12 billing-address">
+                        <textarea validation type="address" ng-model="request.address" rows="2" maxlength="150" placeholder="Calle Principal - Numeración - Calle Secundaria - Sector - Referncia" required></textarea>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-md-8 col-xs-12 form-section div-section valid-group">
+                    <label>Télefono de contacto</label>
+                    <input validation type="phone" ng-model="request.contactPhone" placeholder="0985361316" required>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </section>
+
+        <section class="row submit" ng-if="rucOpened">
+            <button type="submit" class="btn btn-secundary">Finalizar proceso de retiro</button>
+        </section>
+    </form>
+</div>

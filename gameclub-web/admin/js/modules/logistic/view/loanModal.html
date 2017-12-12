@@ -9,103 +9,107 @@
 			<div class="tabs-container">
 				<uib-tabset>
 					<uib-tab heading="Prestador">
-						<div class="form-group">
-							<label class="col-md-3 control-label">Nombre</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.publicUserGame.publicUser.name + ' ' + loan.publicUserGame.publicUser.lastName}}</span>
+						<div class="panel-body">
+							<div class="form-group">
+								<label class="col-md-3 control-label">Nombre</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.publicUserGame.publicUser.name + ' ' + loan.publicUserGame.publicUser.lastName}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Documento</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.publicUserGame.publicUser.document}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Documento</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.publicUserGame.publicUser.document}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Ubicación</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.publicUserGame.publicUser.location.parent.name + ', ' + loan.publicUserGame.publicUser.location.name}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Ubicación</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.publicUserGame.publicUser.location.parent.name + ', ' + loan.publicUserGame.publicUser.location.name}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Dirección</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.lenderAddress}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Dirección</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.lenderAddress}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Teléfono</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.publicUserGame.publicUser.contactPhone}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Teléfono</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.publicUserGame.publicUser.contactPhone}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Persona de Entrega</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.lenderReceiver}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Persona de Entrega</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.lenderReceiver}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Geolocalización</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.lenderGeolocation.x + ', ' + loan.lenderGeolocation.y}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Geolocalización</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.lenderGeolocation.x + ', ' + loan.lenderGeolocation.y}}</span>
+								</div>
 							</div>
 						</div>
 					</uib-tab>
 
 					<uib-tab heading="Jugador">
-						<div class="form-group">
-							<label class="col-md-3 control-label">Nombre</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.gamer.name + ' ' + loan.gamer.lastName}}</span>
+						<div class="panel-body">
+							<div class="form-group">
+								<label class="col-md-3 control-label">Nombre</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamer.name + ' ' + loan.gamer.lastName}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Documento</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.gamer.document}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Documento</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamer.document}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Ubicación</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.gamer.location.parent.name + ', ' + loan.gamer.location.name}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Ubicación</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamer.location.parent.name + ', ' + loan.gamer.location.name}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Dirección</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.gamerAddress}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Dirección</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamerAddress}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Teléfono</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.gamer.contactPhone}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Teléfono</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamer.contactPhone}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Persona de Entrega</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.gamerReceiver}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Persona de Entrega</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamerReceiver}}</span>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-md-3 control-label">Geolocalización</label>
-							<div class="col-md-9 control-info">
-								<span>{{loan.gamerGeolocation.x + ', ' + loan.gamerGeolocation.y}}</span>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Geolocalización</label>
+								<div class="col-md-9 control-info">
+									<span>{{loan.gamerGeolocation.x + ', ' + loan.gamerGeolocation.y}}</span>
+								</div>
 							</div>
 						</div>
 					</uib-tab>

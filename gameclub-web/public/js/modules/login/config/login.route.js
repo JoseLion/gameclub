@@ -4,8 +4,8 @@ angular.module('Login').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'login', {
-		url: '/login',
-		params: {redirect: null},
+		url: '/login?token',
+		params: {redirect: null, token: null},
 		templateUrl: 'js/modules/login/view/login.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
 		controller: 'LoginCtrl',
@@ -13,18 +13,22 @@ angular.module('Login').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Login',
-					files: ['js/modules/login/controller/loginCtrl.js']
+					files: ['js/modules/login/controller/loginCtrl.js', 'js/modules/login/style/login.less', 'js/modules/login/style/login.responsive.less']
 				}]);
 			},
 
 			redirect: function($stateParams) {
 				return $stateParams.redirect;
+			},
+
+			token: function($stateParams) {
+				return $stateParams.token;
 			}
 		}
 	})
 
 	.state(prefix + 'validate', {
-		url: '/validate/:token/:id',
+		url: '/validate?token&id',
 		params: {token: null, id: null},
 		templateUrl: 'js/modules/login/view/validate.html',
 		data: {displayName: 'GameClub', description: '', keywords: ''},
@@ -33,7 +37,7 @@ angular.module('Login').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Login',
-					files: ['js/modules/login/controller/validateCtrl.js']
+					files: ['js/modules/login/controller/validateCtrl.js', 'js/modules/login/style/validate.less', 'js/modules/login/style/validate.responsive.less']
 				}]);
 			},
 

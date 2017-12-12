@@ -1,12 +1,18 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, ciValidation, $location, $uibModal) {
+angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, $location, $uibModal, SweetAlert) {
     $scope.file = {};
+    $scope.younger = false;
+    $scope.checkboxRuc = true;
     let tempUserInfo;
+    let rucInfo;
+
+    provinces.$promise.then(function(data) {
+        $scope.provinces = data;
+    });
 
     $rootScope.$watch("currentUser", function(newValue, oldValue) {
         if (newValue != null) {
             $scope.currentUserTemp = angular.copy($rootScope.currentUser);
             $scope.newUsername = angular.copy($rootScope.currentUser.username);
-
             if($scope.currentUserTemp.location != null) {
                 $scope.currentUserTemp.province = $scope.currentUserTemp.location.parent;
                 $scope.currentUserTemp.location = $scope.currentUserTemp.location;
@@ -14,18 +20,14 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         }
     });
 
-    provinces.$promise.then(function(data) {
-        $scope.provinces = data;
-    });
-
     $scope.findCities = function() {
-		$scope.currentUserTemp.location = null;
-		if($scope.currentUserTemp.province != null) {
+        $scope.currentUserTemp.location = null;
+        if($scope.currentUserTemp.province != null) {
             rest("location/findChildrenOf/:code", true).get({code: $scope.currentUserTemp.province.code}, function(data) {
-				$scope.locationCities = data;
-			});
-		}
-	};
+                $scope.locationCities = data;
+            });
+        }
+    };
 
     $scope.provinceRemoved = function() {
         $scope.currentUserTemp.location = null;
@@ -33,19 +35,47 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
 
     $scope.save = function() {
         let isValid = true;
-        if($scope.currentUserTemp.document == null || $scope.currentUserTemp.document == '') {
-            isValid = true;
-        } else if($scope.currentUserTemp.document != null && $scope.currentUserTemp.document.length != 10) {
-            isValid = false;
-            notif.danger('Tu número de cédula debe tener 10 dígitos');
-        } else if(!ciValidation($scope.currentUserTemp.document)) {
-            isValid = false;
-            notif.danger('Ingresa un número de cédula válido');
+        
+        if (younger($scope.currentUserTemp.birthDate)) {
+            $scope.currentUserTemp.hasRuc = true;
         }
-        if($scope.currentUserTemp.province != null && $scope.currentUserTemp.location == null) {
-            isValid = false;
-            notif.danger('Completa tu ciudad');
+
+        if ($scope.currentUserTemp.hasRuc) {
+            if (younger($scope.currentUserTemp.birthDate) && ($scope.currentUserTemp.documentRuc == null && dataRuc())) {
+                var str1 = 'Según tu información de contacto, eres menor de edad.\n';
+                var str2 = 'Debes obligatoriamente llenar el campo de RUC con \n';
+                var str3 = 'los datos de tu representante legal para poder continuar.\n\n';
+                var str4 = 'Si no eres menor de edad edita tu información de contacto.';
+                var total = str1.concat(str2, str3, str4);
+                isValid = false;
+                SweetAlert.swal({
+                    title: "",
+                    text: total,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Soy menor de edad",
+                    cancelButtonText: "Editar información",
+                    closeOnConfirm: false,
+                    closeOnCancel: false,
+                    showLoaderOnConfirm: true
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        if(!$rootScope.currentUser.hasRuc) {
+                            $state.go('gameclub.account.profile').then(function() {
+                                $location.hash('ruc-section');
+                                $anchorScroll();
+                            });
+                            swal.close();
+                        }
+                    } else {
+                        $scope.currentUserTemp.hasRuc = false;
+                        $scope.younger = false;
+                        swal.close();
+                    }
+                });
+            }
         }
+        
         if(isValid) {
             sweet.save(function() {
                 rest('publicUser/save').post($scope.currentUserTemp, function(data) {
@@ -65,6 +95,40 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
         }
     };
 
+    /********* Funcion para validad edad Gamer ***************/
+    function younger(birthMillis) {
+        let today = new Date();
+        let birthday = new Date(birthMillis)
+        
+        if ((today.getFullYear() - birthday.getFullYear()) < 18) {
+            return true;
+        }
+
+        if ((today.getFullYear() - birthday.getFullYear()) == 18) {
+            if (today.getMonth() < birthday.getMonth()) {
+                return true;
+            }
+
+            if (today.getDate() < birthday.getDate()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function dataRuc () {
+        if( $scope.currentUserTemp.nameRuc == null ||
+            $scope.currentUserTemp.addressRuc == null ||
+            $scope.currentUserTemp.phoneRuc == null
+            ){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    
     $scope.changeMail = function() {
         let isValid = true;
         let emailValidation = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -206,48 +270,49 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
     };
 
     $scope.chooseAvatar = function() {
-		let modal = $uibModal.open({
-			size: 'lg',
-			backdrop: 'static',
-			templateUrl: 'js/modules/account/profile/view/chooseAvatar.html',
-			controller: chooseAvatarCtrl,
+        $uibModal.open({
+            size: 'lg',
+            backdrop: 'static',
+            templateUrl: 'js/modules/account/profile/view/chooseAvatar.html',
+            controller: 'ChooseAvatarCtrl',
             resolve: {
+                loadPlugin: function($ocLazyLoad) {
+                    return $ocLazyLoad.load([{
+                        name: 'Profile',
+                        files: ['js/modules/account/profile/controller/chooseAvatarCtrl.js', '/js/modules/account/profile/style/chooseAvatar.less']
+                    }]);
+                },
+
                 avatars: function(openRest) {
                     return openRest('avatar/findAll', true).get(null, function(data) {
                         return data;
                     });
                 }
             }
-		});
-	};
-
-    let chooseAvatarCtrl = function($scope, $uibModalInstance, sweet, rest, avatars, $rootScope, getIndexOfArray) {
-        $scope.isSaving = false;
-        avatars.$promise.then(function(data) {
-            $scope.avatars = data;
-            if($rootScope.currentUser.avatar != null) {
-                $scope.indexTemp = getIndexOfArray(avatars, 'id', $rootScope.currentUser.avatar.id);
-            }
         });
-		$scope.cancel = function() {
-			$uibModalInstance.close();
-		};
-		$scope.save = function() {
-            $rootScope.currentUser.avatar = $scope.avatars[$scope.indexTemp];
-			sweet.save(function() {
-				rest("publicUser/save").post($rootScope.currentUser, function(data) {
-					sweet.success();
-					sweet.close();
-                    $rootScope.currentUser = data;
-					$uibModalInstance.close(data);
-				}, function(error) {
-					sweet.error(error.data != null ? error.data.message : error);
-				});
-			});
-		};
-        $scope.chooseThis = function(index) {
-            $scope.indexTemp = index;
-        };
-	}
+    };
 
+    var getMessage = function() {
+        var message = $rootScope.currentUser.token;
+        if ($rootScope.currentUser.token != null) {
+            message = "Tu correo ha sido verificado";
+        } else {
+            message = "Verifica tu correo";
+        }
+
+        return message;
+    }
+
+    $scope.editRuc = function() {
+        rucInfo = angular.copy($scope.currentUserTemp);
+        $scope.currentUserTemp.editingRuc = true;
+    }
+
+    $scope.cancelRucEdit = function() {
+        $scope.currentUserTemp = rucInfo;
+
+        if (!$scope.currentUserTemp.documentRuc) {
+            $scope.currentUserTemp.documentRuc = null;
+        }
+    }
 });

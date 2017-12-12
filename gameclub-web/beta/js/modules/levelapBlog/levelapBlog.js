@@ -32,25 +32,21 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                     ]
                 }]);
             },
+
             importantBlogs: function(openRest) {
-                return openRest("levelapBlog/findArticles").post({isFeatured: true}, function(data) {
-                    return data;
-                });
+                return openRest("levelapBlog/findArticles").post({isFeatured: true});
             },
+
             categories: function(openRest) {
-                return openRest("levelapBlog/getCategories", true).get(function(data) {
-                    return data;
-                });
+                return openRest("levelapBlog/getCategories", true).get();
             },
+
             tags: function(openRest) {
-                return openRest("levelapBlog/getTags", true).get(function(data) {
-                    return data;
-                });
+                return openRest("levelapBlog/getTags", true).get();
             },
+
             blogsPreview: function(openRest) {
-                return openRest("levelapBlog/findArticles").post({isMostSeen: true}, function(data) {
-                    return data;
-                });
+                return openRest("levelapBlog/findArticles").post({isMostSeen: true});
             }
         }
     })
@@ -59,7 +55,12 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
         url: '/home',
         templateUrl: baseSrc.concat('view/blogHome.html'),
         data: {displayName: 'Blog'},
-        metaTags: {title: 'Blog', description: 'Descripción del blog', keywords: 'keywords,del,blog', properties: {'og:title': 'Blog'}},
+        metaTags: {
+            title: 'GameClub Blog - Reseñas & Noticias de Videojuegos',
+            description: 'El mejor sitio para gamers en español, encuentra reseñas, noticias y artículos de videojuegos.',
+            keywords: 'Reseña, Noticia, Juegos, Articulo, PS4, Xbox, Nintendo, PC, Gamer, Review',
+            properties: {'og:title': 'GameClub Blog - Reseñas & Noticias de Videojuegos'}
+        },
         controller: 'BlogHomeCtrl',
         resolve: {
             loadPlugin: function($ocLazyLoad) {
@@ -70,10 +71,9 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                     ]
                 }]);
             },
+
             blogs: function(openRest) {
-                return openRest("levelapBlog/findArticles").post({isHomePage: true}, function(data) {
-                    return data;
-                });
+                return openRest("levelapBlog/findArticles").post({isHomePage: true});
             }
         }
     })
@@ -153,15 +153,11 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
             },
 
             article: function($stateParams, openRest) {
-                return openRest("levelapBlog/findOne/:id").get({id: $stateParams.id}, function(data) {
-                    return data;
-                });
+                return openRest("levelapBlog/findOne/:id").get({id: $stateParams.id});
             },
 
             comments: function($stateParams, openRest) {
-                return openRest("levelapBlog/getCommentsOf/:articleId/:page").get({articleId: $stateParams.id, page: 0}, function(data) {
-                    return data;
-                });
+                return openRest("levelapBlog/getCommentsOf/:articleId/:page").get({articleId: $stateParams.id, page: 0});
             }
         }
     })
@@ -184,11 +180,11 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                     ]
                 }]);
             },
+
             articles: function($stateParams, openRest) {
-                return openRest("levelapBlog/findArticles").post({isSearch: true, text: $stateParams.text}, function(data) {
-                    return data;
-                });
+                return openRest("levelapBlog/findArticles").post({isSearch: true, text: $stateParams.text});
             },
+
             searchValue: function($stateParams) {
                 return $stateParams.text;
             }

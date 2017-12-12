@@ -16,4 +16,6 @@ public interface CategoryRepo extends JpaRepository<Category, Long> {
 	public Category findByName(String name);
 	
 	public Category findByNameAndNameIsNot(String name, String notName);
+	
+	public List<Category> findByStatusIsTrueOrderByName();
 }

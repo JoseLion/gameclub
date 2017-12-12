@@ -1,34 +1,39 @@
+
 <div id="contact-us-page">
     <section class="contact-us">
         <div class="row">
-            <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()">
-                <h2 class="title">&iquest;Quieres saber m&aacute;s de <span class="game-font game-font-white">Game</span><span class="red-club">Club</span>?</h2>
-                <span class="description">D&eacute;janos tu mail y nosotros te contactamos</span>
+            <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()" novalidate>
+                <h2 class="title">&iquest;Quieres saber más de <span class="game-font game-font-white">Game</span><span class="red-club">Club</span>?</h2>
+                <span class="description">Déjanos tu mail y nosotros te contactamos</span>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Nombre</label>
                     <input validation name="name" placeholder="Nombre..." ng-model="contactUs.name" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">E-mail</label>
                     <input validation name="email" placeholder="E-mail..." ng-model="contactUs.email" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
-                    <input name="phone" placeholder="Teléfono..." ng-model="contactUs.phone">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Teléfono</label>
+                    <input validation name="phone" placeholder="Teléfono..." ng-model="contactUs.phone">
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
 
                 <div class="col-md-3"></div>
-                <div class="col-md-6 to-validate">
+                <div class="col-md-6 valid-group">
+                    <label ng-show="false">Mensaje</label>
                     <textarea validation name="message" placeholder="Mensaje..." rows="6" ng-model="contactUs.message" required></textarea>
                 </div>
                 <div class="col-md-3"></div>

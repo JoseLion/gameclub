@@ -16,4 +16,6 @@ public interface ConsoleRepo extends JpaRepository<Console, Long> {
 	public Console findByName(String name);
 	
 	public Console findByNameAndNameIsNot(String name, String notName);
+	
+	public List<Console> findByStatusIsTrueOrderByName();
 }

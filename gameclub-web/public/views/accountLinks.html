@@ -1,0 +1,14 @@
+<section id="account-links" class="col-md-2 col-xs-5">
+    <nav>
+        <li><button class="btn btn-account-links" ui-sref="gameclub.account.profile" ui-sref-active="active">Tu perfil</button></li>
+        <li><button class="btn btn-account-links" ui-sref="gameclub.account.settings" ui-sref-active="active">Tu cuenta</button></li>
+        <li><button class="btn btn-account-links" ui-sref="gameclub.account.balance" ui-sref-active="active">Tu balance</button></li>
+        <li><button class="btn btn-account-links" ui-sref="gameclub.account.myGames" ui-sref-active="active">Tus juegos</button></li>
+        <li>
+        	<span class="label label-default notification" ng-if="currentUser.unreadMessages > 0">{{currentUser.unreadMessages}}</span>
+        	<button class="btn btn-account-links" ui-sref="gameclub.account.messages" ui-sref-active="active">Mensajes</button>
+        </li>
+        <li><button class="btn btn-account-links" ui-sref="gameclub.account.referred" ui-sref-active="active">Referidos</button></li>
+        <li><button class="btn btn-account-links" ng-click="logout()">Cerrar sesión</button></li>
+    </nav>
+</section>

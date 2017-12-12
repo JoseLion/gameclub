@@ -112,6 +112,8 @@ public class GameController {
 				price = gameService.getAvailablePrice(response);
 				
 				if (price != null) {
+					String percentage = gameService.getGameRepo().priceChartinNationalitation();
+					price = (double) Math.round(((price*Double.parseDouble(percentage)/100)+price)*100)/100;
 					return new ResponseEntity<>(price, HttpStatus.OK);
 				} else {
 					return new ResponseEntity<ErrorControl>(new ErrorControl("No se encontró un precio en Price Charting. Por favor ingrese el precio manualmente", true), HttpStatus.INTERNAL_SERVER_ERROR);

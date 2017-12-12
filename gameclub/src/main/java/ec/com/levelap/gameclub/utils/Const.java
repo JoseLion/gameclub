@@ -6,10 +6,6 @@ public interface Const {
 
 	public static final String PACKAGE_NAMING = "ec.com.levelap";
 
-	public static final String JNDI_DATA_BASE = "java:jboss/jdbc/GameClubDS";
-
-	public static final String JNDI_MAIL = "java:jboss/mail/GameClub";
-
 	public static final String PASSWORD_SYMBOLS = "1234567890abcdefghijklmnopqrstuvwxyz0987654321";
 
 	public static final int ENCODER_STRENGTH = 12;
@@ -38,9 +34,24 @@ public interface Const {
 	
 	public static final String SBJ_LOAN_REQUEST = "Solicitud de préstamo";
 	
+	public static final String SBJ_FINE = "Cobro multa";
+	
+	public static final String SBJ_AMOUNT_REQUEST = "Retiro saldo";
+	
+	public static final String SBJ_SHIPPING_KIT = "SHIPPING KIT";
+	
 	public static final String GAMER = "GAMER";
 	
 	public static final String LENDER = "LENDER";
 	
-	public static final String SYSTEM_ADMIN_EMAIL = "joseluis.levelap@gmail.com";
+	public static final String EMAIL_INFO = "info@gameclub.com.ec";
+	
+	public static final String EMAIL_LOGISTICS = "logistica@gameclub.com.ec";
+	
+	public static final String SETTINGS_PERCENTAGE = "percentage";
+	
+	public static final String SETTINGS_NUMBER = "number";
+	
+	public static final String TRS_REFFERED_BONUS = "BONO POR REFERIDO";
+	
 }

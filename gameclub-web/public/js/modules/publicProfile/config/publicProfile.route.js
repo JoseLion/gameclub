@@ -14,14 +14,16 @@ angular.module('PublicProfile').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'PublicProfile',
-					files: ['js/modules/publicProfile/controller/publicProfileCtrl.js']
+					files: ['js/modules/publicProfile/controller/publicProfileCtrl.js', 'js/modules/publicProfile/style/publicProfile.less', 'js/modules/publicProfile/style/publicProfile.responsive.less']
 				}]);
 			},
 
 			user: function(rest, $stateParams) {
-				return rest("publicUser/findOne/:id").get({id: $stateParams.id}, function(data) {
-					return data;
-				});
+				return rest("publicUser/findOne/:id").get({id: $stateParams.id});
+			},
+
+			reviews: function(rest, $stateParams) {
+				return rest("review/getReviewsOfUser/:id/:page").get({id: $stateParams.id, page: 0});
 			}
 		}
 	});

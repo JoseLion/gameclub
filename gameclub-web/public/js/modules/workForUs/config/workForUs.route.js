@@ -15,7 +15,7 @@ angular.module('WorkForUs').config(function($stateProvider) {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'WorkForUs',
-					files: ['js/modules/workForUs/controller/workForUsCtrl.js']
+					files: ['js/modules/workForUs/controller/workForUsCtrl.js', 'js/modules/workForUs/style/workForUs.less', 'js/modules/workForUs/style/workForUs.responsive.less']
 				}, {
 					name: 'LevelapBlog',
 					files: ['js/modules/levelapBlog/resources/blog.css', 'js/modules/levelapBlog/resources/mostSeen.js']

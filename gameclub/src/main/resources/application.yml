@@ -38,6 +38,9 @@ levelap:
                   https://admin.gameclub.com.ec,
                   https://beta.gameclub.com.ec,
                   https://www.gameclub.com.ec,
+                  http://admin.gameclub.com.ec,
+                  http://beta.gameclub.com.ec,
+                  http://www.gameclub.com.ec,
                   https://104.198.238.150
   compressRequest: true
   file:

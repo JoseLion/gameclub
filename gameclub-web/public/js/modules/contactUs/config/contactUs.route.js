@@ -5,7 +5,13 @@ angular.module('ContactUs').config(function($stateProvider) {
 	.state(prefix + 'contactUs', {
 		url: '/contact-us',
 		templateUrl: 'js/modules/contactUs/view/contactUs.html',
-		data: {displayName: 'GameClub', description: '', keywords: ''},
+		data: {displayName: 'GameClub'},
+		metaTags: {
+			title: 'GameClub - Alquila Videojuegos & Gana Dinero',
+			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila Juegos, Gana Dinero, PS4, Xbox, Nintendo.',
+			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
+			properties: {'og:title': 'GameClub - Alquila Videojuegos & Gana Dinero'}
+		},
 		controller: 'ContactUsCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {

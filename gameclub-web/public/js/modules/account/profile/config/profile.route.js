@@ -6,7 +6,13 @@ angular.module('Profile').config(function($stateProvider) {
 	.state(prefix + 'profile', {
 		url: '/profile',
 		templateUrl: 'js/modules/account/profile/view/profile.html',
-		data: {displayName: 'GameClub', description: '', keywords: ''},
+		data: {displayName: 'GameClub'},
+		metaTags: {
+			title: 'GameClub - Alquila Videojuegos & Gana Dinero',
+			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila Juegos, Gana Dinero, PS4, Xbox, Nintendo.',
+			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
+			properties: {'og:title': 'GameClub - Alquila Videojuegos & Gana Dinero'}
+		},
 		controller: 'ProfileCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {

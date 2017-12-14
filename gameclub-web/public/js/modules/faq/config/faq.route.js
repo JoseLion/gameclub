@@ -5,7 +5,13 @@ angular.module('Faq').config(function($stateProvider) {
 	.state(prefix + 'faqs', {
 		url: '/faqs',
 		templateUrl: 'js/modules/faq/view/faqs.html',
-		data: {displayName: 'Preguntas Frecuentes', description: '', keywords: ''},
+		data: {displayName: 'Preguntas Frecuentes'},
+		metaTags: {
+			title: 'GameClub - Alquila Videojuegos & Gana Dinero',
+			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila Juegos, Gana Dinero, PS4, Xbox, Nintendo.',
+			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
+			properties: {'og:title': 'GameClub - Alquila Videojuegos & Gana Dinero'}
+		},
 		controller: 'FaqsCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {

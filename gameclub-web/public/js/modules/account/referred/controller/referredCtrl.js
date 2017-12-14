@@ -33,6 +33,6 @@ angular.module('Referred').controller('ReferredCtrl', function($scope, $rootScop
 	}
 
 	$scope.shareLinkFB = function() {
-		window.open("https://www.facebook.com/sharer/sharer.php?u=" + $scope.reffer.link + "&quote=" + encodeURI("GameClub 2018") + "&title=" + encodeURI("GameClub")  + "&description=" + encodeURI("Comparte con tus amigos GameClub") , "Comparte en Facebook", "width=500,height=500");
+		window.open("https://www.facebook.com/sharer/sharer.php?u=" + $scope.reffer.link + "&quote=" + encodeURI("GameClub 2017") + "&title=" + encodeURI("GameClub")  + "&og:description=" + encodeURI("Comparte con tus amigos GameClub") , "Comparte en Facebook", "width=500,height=500");
 	}	
 });

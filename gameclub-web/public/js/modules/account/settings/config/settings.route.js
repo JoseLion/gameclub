@@ -5,7 +5,13 @@ angular.module('Settings').config(function($stateProvider) {
 	.state(prefix + 'settings', {
 		url: '/settings?error_value',
 		templateUrl: 'js/modules/account/settings/view/settings.html',
-		data: {displayName: 'GameClub', description: '', keywords: ''},
+		data: {displayName: 'GameClub'},
+		metaTags: {
+			title: 'GameClub - Alquila Videojuegos & Gana Dinero',
+			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila Juegos, Gana Dinero, PS4, Xbox, Nintendo.',
+			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
+			properties: {'og:title': 'GameClub - Alquila Videojuegos & Gana Dinero'}
+		},
 		controller: 'SettingsCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {

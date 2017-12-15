@@ -20,7 +20,4 @@
 		<meta property="og:image" content="<?php echo $imageUrl; ?>" />
 		<meta property="fb:app_id" content="<?php echo $facebook_id;?>" />
 	</head>
-	<body>
-		<?php echo $desc; ?>
-	</body>
 </html>

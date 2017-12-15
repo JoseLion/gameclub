@@ -3,8 +3,8 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 	$ocLazyLoadProvider.config({debug: false});
 	$locationProvider.html5Mode(true);
 
-	UIRouterMetatagsProvider.setTitlePrefix('Game Club | ')
-							.setDefaultTitle('Game Club')
+	UIRouterMetatagsProvider.setTitlePrefix('GameClub | ')
+							.setDefaultTitle('GameClub')
 							.setDefaultDescription('Intercambia juegos con la comunidad gamer más grande del Ecuador')
 							.setDefaultKeywords('gamers,juegos,intercambio,ecuador,consolas')
 							.setStaticProperties({

@@ -433,7 +433,7 @@
 										</div>
 									</div>
 
-									<span>Número de caja en la que enviarás tu juego: </span><input type="text" class="box-number" placeholder="Ej: PBC-555 - (solo 6 caractéres)" ng-model="loan.boxNumber" ng-disabled="loan.lenderConfirmed" maxlength="6">
+									<span>Número de caja en la que enviarás tu juego: </span><input type="text" class="box-number" placeholder="EJ: PBC555 - (Solo 6 caracteres)" ng-model="loan.boxNumber" ng-disabled="loan.lenderConfirmed" maxlength="6">
 									<br>
 									<br>
 									<div class="alert-icon">
@@ -517,12 +517,10 @@
 								<span>Se acaban de acreditar a tu cuenta: </span><span class="text-black upper-case">{{(loan.publicUserGame.cost * loan.weeks) | currency: '$': 2}}</span>
 								<br>
 								<br>
-								<span class="text-lg">Timepo restante: </span>
+								<span class="text-lg">Tiempo restante: </span>
 								<span class="text-black text-lg">
 									{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}}
 									{{timer.hours < 10 ? '0' : ''}}{{timer.hours}} {{timer.hours == 1 ? 'hora' : 'horas'}}
-									{{timer.mins < 10 ? '0' : ''}}{{timer.mins}} min
-									{{timer.secs < 10 ? '0' : ''}}{{timer.secs}} seg
 								</span>
 							</div>
 
@@ -540,7 +538,7 @@
 								<form>
 									<div class="decorator" ng-class="{'disabled': loan.restore.isDisabled}">
 										<div class="form-group">
-											<span>Dirección de retiro actual: edita tu información si es necesario.</span>
+											<span>Dirección de entrega actual: edita tu información si es necesario.</span>
 										</div>
 
 										<div class="form-group address" ng-class="{'disabled': loan.disable.isDisabled}">
@@ -563,7 +561,7 @@
 
 										<div class="form-group check" ng-class="{'disabled': loan.restore.isDisabled}">
 											<div class="box" ng-class="loan.restore.saveChanges ? 'checked' : ''" ng-click="!loan.restore.isDisabled ? (loan.restore.saveChanges = !loan.restore.saveChanges) : null"></div>
-											<span class="text-black text-sm">Guardar información para siguiente préstamo</span>
+											<span class="text-black text-sm">Guardar información para siguiente alquiler</span>
 										</div>
 									</div>
 									<br>
@@ -574,7 +572,7 @@
 									<div class="alert-text">
 										<span>Verifica o edita la información de entrega.</span>
 										<br>
-										<span>Si no es correcta no podremos recoger el juego.</span>
+										<span>Si no es correcta no podremos entregar el juego.</span>
 									</div>
 									<br>
 									<br>
@@ -582,7 +580,7 @@
 									<br>
 									<br>
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="lenderConfirmRestore()" ng-if="!loan.restore.lenderConfirmed">OK</button>
-									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.restore.isDisabled = !loan.restore.isDisabled" ng-if="!loan.restore.lenderConfirmed">Editar información retiro</button>
+									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.restore.isDisabled = !loan.restore.isDisabled" ng-if="!loan.restore.lenderConfirmed">EDITAR INFORMACION DE ENTREGA</button>
 								</form>
 							</div>
 

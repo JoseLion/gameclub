@@ -145,6 +145,8 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                     gamerGeolocation: $rootScope.currentUser.geolocation,
                     gamerReceiver: $rootScope.currentUser.receiver != null ? $rootScope.currentUser.receiver : ($rootScope.currentUser.name + ' ' + $rootScope.currentUser.lastName)
                 };
+                console.log($scope.loanGame);
+                console.log($scope.loan);
 
                 $scope.weekSelected();
             } else {
@@ -254,12 +256,12 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
         $scope.loan.balancePart = $scope.balance.value;
         $scope.loan.cardPart = $scope.loan.cost - $scope.balance.value;
-        if ($scope.loan.cardPart > 0 && $scope.cardSelected == null) {
-            notif.danger("Por favor seleccione una forma de pago");
-            failedValidation = true;
-        } else {
-            $scope.loan.cardReference = $scope.cardSelected.card_reference;
-        }
+        // if ($scope.loan.cardPart > 0 && $scope.cardSelected == null) {
+        //     notif.danger("Por favor seleccione una forma de pago");
+        //     failedValidation = true;
+        // } else {
+        //     $scope.loan.cardReference = $scope.cardSelected.card_reference;
+        // }
 
         if (!failedValidation) {
             sweet.default("Se enviará una solicitud de alquiler al propietario del juego", function() {

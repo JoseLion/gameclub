@@ -254,15 +254,15 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
         $scope.loan.balancePart = $scope.balance.value;
         $scope.loan.cardPart = $scope.loan.cost - $scope.balance.value;
-        if ($scope.loan.cardPart > 0 && $scope.cardSelected == null) {
-            notif.danger("Por favor seleccione una forma de pago");
-            failedValidation = true;
-        } else {
-            $scope.loan.cardReference = $scope.cardSelected.card_reference;
-        }
+        // if ($scope.loan.cardPart > 0 && $scope.cardSelected == null) {
+        //     notif.danger("Por favor seleccione una forma de pago");
+        //     failedValidation = true;
+        // } else {
+        //     $scope.loan.cardReference = $scope.cardSelected.card_reference;
+        // }
 
         if (!failedValidation) {
-            sweet.default("Se enviará una solicitud de prestamo al propietario del juego", function() {
+            sweet.default("Se enviará una solicitud de alquiler al propietario del juego", function() {
                 rest("loan/requestGame").post($scope.loan, function(data) {
                     $rootScope.currentUser = data;
                     notif.success("Solicitud enviada con éxito");

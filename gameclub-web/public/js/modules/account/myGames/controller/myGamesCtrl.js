@@ -1,4 +1,4 @@
-angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, mostPlayed, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const, shippingKitValue) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, mostPlayed, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const, shippingKitValue, $uibModal) {
     $scope.myGame = {};
     $scope.filter = {};
     $scope.search = {};
@@ -99,23 +99,13 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
            minPrice = priceChartingGMLoan-parseFloat($rootScope.settings[Const.settings.priceChartingMin].value);
            maxPrice = priceChartingGMLoan+parseFloat($rootScope.settings[Const.settings.priceChartingMax].value);
         }
-        if($scope.myGame.status == null) {
-            isValid = false;
-            notif.danger('Estatus no seleccionado.');
-        }
-        if($scope.myGame.integrity == null) {
-            isValid = false;
-            notif.danger('Estado del juego no seleccionado.');
-        }
-        if($scope.myGame.cost == null) {
-            isValid = false;
-            notif.danger('Valor costo no ingresado.');
-        } else if($scope.myGame.cost<minPrice || $scope.myGame.cost>maxPrice ){
+        
+        if($scope.myGame.cost < minPrice || $scope.myGame.cost > maxPrice ){
             isValid = false;
             sweet.error('El precio de alquiler de ' + $scope.myGame.game.name + ' debe ser entre $' + minPrice.toFixed(2) + ' y $' + maxPrice.toFixed(2));
         }
         
-        if(isValid == true){
+        if (isValid == true) {
             sweet.save(function() {
                 $scope.myGame.console = $scope.search.console.console;
 
@@ -124,6 +114,26 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
                     setPagedData(data);
                     $scope.showGame = false;
                     sweet.close();
+
+                    if ($scope.gamesList.length == 1) {
+                        let modal = $uibModal.open({
+                            size: 'md',
+                            backdrop: 'static',
+                            templateUrl: 'firstGameModal.html',
+                            controller: function($scope, $uibModalInstance) {
+                                $scope.ok = function() {
+                                    $uibModalInstance.close();
+                                }
+                            },
+                            resolve: {}
+                        });
+
+                        modal.result.then(function() {
+                            $state.go("gameclub.account.messages");
+                        }, function() {
+                            $state.go("gameclub.account.messages");
+                        });
+                    }
 
                     rest("publicUser/getCurrentUser").get(function(data) {
                         $rootScope.currentUser = data;

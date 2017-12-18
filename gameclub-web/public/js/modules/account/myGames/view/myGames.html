@@ -117,10 +117,10 @@
         </section>
         <section class="row information">
             <form class="form-horizontal" role="form" on-submit="save()" novalidate>
-                <div class="col-md-12">
+                <div class="col-md-12 valid-group">
                     <label class="form-cell">Estatus</label>
                     <div class="form-cell">
-                        <ui-select ng-model="myGame.status" theme="bootstrap" class="selector status">
+                        <ui-select validation ng-model="myGame.status" theme="bootstrap" class="selector status" required>
                             <ui-select-match placeholder="Seleccionar...">{{$select.selected ? 'ACTIVO' : 'INACTIVO'}}</ui-select-match>
                             <ui-select-choices repeat="status in [true, false] | filter: $select.search">
                                 <div ng-bind-html="status ? 'ACTIVO' : 'INACTIVO' | highlight: $select.search"></div>
@@ -130,10 +130,10 @@
                     <div class="clearfix"></div>
                 </div>
 
-                <div class="col-md-12 to-validate">
+                <div class="col-md-12 valid-group">
                     <label class="form-cell">Estado del juego</label>
                     <div class="form-cell">
-                        <ui-select validation ng-model="myGame.integrity" theme="bootstrap" class="selector integrity" >
+                        <ui-select validation ng-model="myGame.integrity" theme="bootstrap" class="selector integrity" required>
                             <ui-select-match placeholder="Seleccionar...">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="item in integrity | filter: $select.search">
                                 <div ng-bind-html="item.name | highlight: $select.search"></div>
@@ -153,7 +153,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 help to-validate">
+                <div class="col-md-12 help">
                     <label class="form-cell">Valor de mercado del juego</label>
                     <div class="form-cell">{{(myGame.game.uploadPayment) | currency: '$': 2}}</div>
                 </div>
@@ -165,10 +165,10 @@
                     <div class="form-cell">{{settings[Const.settings.feeLoanLender].value}}% del valor de tu alquiler.</div>
                 </div>
 
-                <div class="col-md-12 help to-validate">
+                <div class="col-md-12 help valid-group">
                     <label class="form-cell">Costo préstamo por semana</label>
                     <div class="form-cell">
-                        <input validation ng-model="myGame.cost" class="coins"  min="0" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                        <input validation ng-model="myGame.cost" class="coins" min="0.0" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required>
                     </div>
                     <div class="form-cell help">
                         <span>&#36;</span>
@@ -254,3 +254,28 @@
         <button class="btn btn-primary" ng-click="askShippingKit()">Pedir Shipping Kit</button>
     </section>
 </div>
+
+<script type="text/ng-template" id="firstGameModal.html">
+    <div id="first-game-modal" class="inmodal">
+        <div class="modal-header">
+            <h1>¡Oh yeah!</h1>
+            <img src="/img/myGames/package-icon.svg">
+        </div>
+
+        <div class="modal-body">
+            <div class="col-md-12 text-center">
+                <span>Acabas de ingresar tu primer juego a GAME CLUB.</span>
+                <br>
+                <span>Te enviaremos un WELCOME KIT totalmente GRATIS para que puedas enviar tus juegos de manera segura.</span>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-primary white" ng-click="ok()">Confirmar dirección de entrega</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</script>

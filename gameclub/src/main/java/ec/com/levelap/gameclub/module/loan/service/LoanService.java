@@ -123,13 +123,15 @@ public class LoanService {
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
 		
+		Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
+		Double fee = Double.parseDouble(feeLender.getValue()) / 100.0;
 		Map<String, String> params = new HashMap<>();
 		params.put("name", loan.getPublicUserGame().getPublicUser().getName());
 		params.put("user", loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
 		params.put("game", loan.getPublicUserGame().getGame().getName());
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
 		params.put("weeks", "" + loan.getWeeks());
-		params.put("cost", "$" + ((loan.getPublicUserGame().getCost() * loan.getWeeks()) - (loan.getPublicUserGame().getCost() * loan.getWeeks() * Double.parseDouble(feeLender.getValue()) / 100.0)));
+		params.put("cost", "$" + String.format("" + (subtotal - (subtotal * fee)), "%.2f"));
 
 		mailService.sendMailWihTemplate(levelapMail, "MSGREQ", params);
 	}
@@ -161,7 +163,7 @@ public class LoanService {
 		loan.setShippingStatus(noTracking);
 
 		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
-		PublicUser connected = publicUserService.getCurrentUser();
+		PublicUser currentUser = publicUserService.getCurrentUser();
 		File keyGamer = File.createTempFile("keyGamer", ".tmp");
 		FileUtils.writeByteArrayToFile(keyGamer, gamer.getPrivateKey());
 
@@ -182,11 +184,11 @@ public class LoanService {
 			Double totalToCard = loan.getCardPart();
 			if (totalToSubstract < 0) {
 				totalToCard += Math.abs(totalToSubstract);
-				connected = publicUserService.setUserBalance(connected.getId(), 0D);
+				currentUser = publicUserService.setUserBalance(currentUser.getId(), 0D);
 				loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(gamer.getShownBalance()), keyGamer));
 				loan.setCardPartEnc(cryptoService.encrypt(Double.toString(totalToCard), keyGamer));
 			} else {
-				connected = publicUserService.substractFromUserBalance(connected.getId(), loan.getBalancePart());
+				currentUser = publicUserService.substractFromUserBalance(currentUser.getId(), loan.getBalancePart());
 			}
 			
 			if (totalToCard > 0) {
@@ -196,26 +198,14 @@ public class LoanService {
 				loan.setTransactionId(json.getString("transaction_id"));
 			}
 
-			Transaction transaction = new Transaction(connected, "JUGASTE",
-					loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), null, loan.getBalancePartEnc(),
-					loan.getCardPartEnc());
+			Transaction transaction = new Transaction(currentUser, "JUGASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), null, loan.getBalancePartEnc(), loan.getCardPartEnc());
 			transactionService.getTransactionRepo().save(transaction);
-
 		} else {
 			loan.setLenderConfirmed(Boolean.TRUE);
 			loan.setLenderStatusDate(new Date());
-			connected = publicUserService.addToUserBalance(connected.getId(), loan.getPublicUserGame().getCost() * loan.getWeeks());
-			File keyLender = File.createTempFile("keyGamer", ".tmp");
-			FileUtils.writeByteArrayToFile(keyLender, connected.getPrivateKey());
-
-			Transaction transaction = new Transaction(connected, "ALQUILASTE",
-					loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(),
-					loan.getWeeks(), cryptoService.encrypt(Double.toString(loan.getPublicUserGame().getCost() * loan.getWeeks()), keyLender), null, null);
-			transactionService.getTransactionRepo().save(transaction);
-
 		}
-		loan = loanRepo.save(loan);
 		
+		loan = loanRepo.save(loan);
 		return loan;
 	}
 	
@@ -224,8 +214,7 @@ public class LoanService {
 		Loan previous = loanRepo.findOne(loan.getId());
 		byte[] keyEncript = previous.getGamer().getPrivateKey();
 
-		if (!loan.getShippingStatus().equals(previous.getShippingStatus()) || (loan.getShippingNote() != null
-				&& !loan.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
+		if (!loan.getShippingStatus().equals(previous.getShippingStatus()) || (loan.getShippingNote() != null && !loan.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
 			loan.setLenderStatusDate(new Date());
 			loan.setGamerStatusDate(new Date());
 
@@ -236,18 +225,24 @@ public class LoanService {
 		}
 
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
-
+			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
+			Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
+			Double fee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
+			lender = publicUserService.addToUserBalance(lender.getId(), subtotal - (subtotal * fee));
+			
+			File keyLender = File.createTempFile("keyGamer", ".tmp");
+			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
+			Transaction transaction = new Transaction(lender, "ALQUILASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), cryptoService.encrypt(Double.toString(loan.getPublicUserGame().getCost() * loan.getWeeks()), keyLender), null, null);
+			transactionService.getTransactionRepo().save(transaction);
+			
 			if (previous.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)
 					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)
 					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER)
 					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND)) {
 				publicUserService.substractFromUserBalance(loan.getGamer().getId(), loan.getBalancePart());
-				publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(),
-						loan.getPublicUserGame().getCost());
 			}
 			
 			loan.setDeliveryDate(new Date());
-
 			scheduleThreeDaysBefore(loan);
 			scheduleOneDayBefore(loan);
 			scheduleOnFinishDay(loan);

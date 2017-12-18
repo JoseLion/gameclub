@@ -1,5 +1,5 @@
 angular.module('AmountRequest').controller('AmountRequestCtrl', function($scope, $rootScope, provinces, notif, sweet, rest, SweetAlert, $state) {
-    $scope.request = {};
+    $scope.request = {accountIsSaving: true};
     $scope.file = {};
     $scope.today = new Date();
 

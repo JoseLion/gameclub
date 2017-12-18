@@ -21,7 +21,7 @@
         <div class="col-md-8 col-xs-12 responsive-padding-h-10">
             <div class="col-md-10 col-xs-12 coins">
                 <div class="col-md-12 col-xs-12 no-padding-left no-padding-right">
-                    <span class="subtitle">Saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2}}</span> <i class="gc gc-usd-o"></i></span>
+                    <span class="subtitle">Saldo actual: <span class="dark">{{currentUser.shownBalance | currency: '$': 2 }}</span> <i class="gc gc-usd-o"></i></span>
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
             <div class="body" ng-if="lenderReviews > 0">
                 <div class="rating" ng-repeat="review in reviews" ng-if="review.lender.id == currentUser.id">
                     <div class="title">
-                        <span class="upper-case">{{review.lender.name}} {{review.lender.lastName | limitTo: 1}}.</span>
+                        <span class="upper-case">{{review.gamer.name}} {{review.gamer.lastName | limitTo: 1}}.</span>
                         <score ng-model="review.lenderScore" disabled></score>
                     </div>
                     <div class="description">{{review.lenderComment}}</div>
@@ -85,7 +85,7 @@
             <div class="body" ng-if="gamerReviews > 0">
                 <div class="rating" ng-repeat="review in reviews" ng-if="review.gamer.id == currentUser.id">
                     <div class="title">
-                        <span class="upper-case">{{review.gamer.name}} {{review.gamer.lastName | limitTo: 1}}.</span>
+                        <span class="upper-case">{{review.lender.name}} {{review.lender.lastName | limitTo: 1}}.</span>
                         <score ng-model="review.gamerScore" disabled></score>
                     </div>
                     <div class="description">{{review.gamerComment}}</div>

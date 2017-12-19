@@ -223,7 +223,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	$scope.cancelLoanRequest = function() {
 		sweet.default("Se cancelara tu solicitud de préstamo", function() {
 			rest("loan/cancelLoan/:id").get({id: $scope.loan.id}, function(data) {
-				notif.success("Préstamo cancelado");
+				notif.success("Alquiler cancelado");
 				$scope.loan = data;
 				sweet.close();
 				canvasToBottom();
@@ -252,7 +252,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	$scope.rejectLoan = function() {
 		sweet.default("Rechazarás el préstamo de este juego", function() {
 			rest("loan/rejectLoan/:id").get({id: $scope.loan.id}, function(data) {
-				notif.success("Préstamo rechazado");
+				notif.success("Alquiler rechazado");
 				$scope.loan = data;
 				sweet.close();
 				canvasToBottom();

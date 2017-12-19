@@ -1,4 +1,4 @@
-angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, games, search, $state, friendlyUrl, getIndexOfArray, openRest, notif, Const) {
+angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, games, search, $state, friendlyUrl, getIndexOfArray, openRest, notif, Const, forEach) {
     $scope.search = {};
     $scope.totalPages;
 
@@ -22,6 +22,19 @@ angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, g
                 title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))
             });
         }
+    }
+
+    $scope.getConsole = function(game) {
+        let cnsl = null;
+
+        forEach(game.consoles, function(cross) {
+            if (cross.console.id == search.consoleId) {
+                cnsl = cross.console;
+                return 'break';
+            }
+        });
+
+        return cnsl;
     }
 
     $scope.pageChanged = function() {

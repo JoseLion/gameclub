@@ -47,7 +47,7 @@
     </section>
     <section class="row result" ng-if="games.length > 0">
         <div ng-repeat="game in games">
-            <game-item ng-model="game" console="search.console">
+            <game-item ng-model="game" console="getConsole(game)">
             <div class="separator" ng-if="$index+1 < games.length"></div>
         </div>
         <div class="clearfix"></div>

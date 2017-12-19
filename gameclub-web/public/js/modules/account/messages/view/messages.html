@@ -88,7 +88,7 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span class="text-black">Has pedido a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}.</span>
+								<span class="text-black">	 a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}.</span>
 								<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goTouser(loan.publicUserGame.publicUser)">Ver ficha del usuario</button>
 								<br>
 								<span>el siguiente juego:</span>
@@ -99,12 +99,11 @@
 								<br>
 								<span>Durante <span class="text-black">{{loan.weeks}} semanas</span> desde la entrega del juego.</span>
 								<br>
-								<span>Pagarás un total de <span class="text-black">{{loan.cost | currency: '$': 2}}</span> por este préstamo.</span>
+								<span>Pagarás un total de <span class="text-black">{{loan.cost | currency: '$': 2}}</span> por este alquiler.</span>
 								<br>
-								<span>Si el préstamo es rechazado volverán a acreditarse a tu cuenta.</span>
+								<!-- <span>Si el préstamo es rechazado volverán a acreditarse a tu cuenta.</span> -->
 								<br>
-								<br>
-								<span>Una vez aceptado el préstamo, se te notificará la fecha exacta que llegará el juego.</span>
+								<span>Una vez aceptado el préstamo, se te notificará la fecha estimada que llegará el juego.</span>
 								<br>
 								<br>
 								<button type="button" class="btn btn-xs btn-tertiary" ng-click="cancelLoanRequest(loan)" ng-if="loan.status && !loan.wasAccepted">Cancelar pedido</button>
@@ -223,22 +222,20 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Tu préstamo llegó exitosamente el día: </span><span class="text-black upper-case">{{loan.gamerStatusDate | date: 'EEEE d'}} </span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.gamerStatusDate | date: 'LLLL'}}</span>
+								<span>Tu alquiler llegó exitosamente el día: </span><span class="text-black upper-case">{{loan.gamerStatusDate | date: 'EEEE d'}} </span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.gamerStatusDate | date: 'LLLL'}}</span>
 								<br>
-								<span>El préstamo durará: </span><span class="text-black">{{loan.weeks}} {{loan.weeks == 1 ? 'semana' : 'semanas'}}</span>
+								<span>El alquiler durará: </span><span class="text-black">{{loan.weeks}} {{loan.weeks == 1 ? 'semana' : 'semanas'}}</span>
 								<br>
 								<span>Pasaremos a retirarlo: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
 								<br>
 								<br>
-								<span>En el caso de no haber recibido el juego, solicita ayuda a <a href>nuestro servicio al cliente</a>.</span>
+								<span>En el caso de no haber recibido el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec">nuestro servicio al cliente</a>.</span>
 								<br>
 								<br>
-								<span class="text-lg">Timepo restante: </span>
+								<span class="text-lg">Tiempo restante: </span>
 								<span class="text-black text-lg">
 									{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}}
 									{{timer.hours < 10 ? '0' : ''}}{{timer.hours}} {{timer.hours == 1 ? 'hora' : 'horas'}}
-									{{timer.mins < 10 ? '0' : ''}}{{timer.mins}} min
-									{{timer.secs < 10 ? '0' : ''}}{{timer.secs}} seg
 								</span>
 							</div>
 
@@ -300,7 +297,7 @@
 									</div>
 									<br>
 									<br>
-									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href class="link">nuestro servicio al cliente</a>.</span>
+									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec">nuestro servicio al cliente</a>.</span>
 									<br>
 									<br>
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="gamerConfirmRestore()" ng-if="!loan.restore.gamerConfirmed">OK</button>
@@ -446,7 +443,7 @@
 									</div>
 									<br>
 									<br>
-									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href class="link">nuestro servicio al cliente</a>.</span>
+									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec" >nuestro servicio al cliente</a>.</span>
 									<br>
 									<br>
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmLender()" ng-if="!loan.lenderConfirmed && loan.status">Continuar préstamo</button>
@@ -576,7 +573,7 @@
 									</div>
 									<br>
 									<br>
-									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href class="link">nuestro servicio al cliente</a>.</span>
+									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec" >nuestro servicio al cliente</a>.</span>
 									<br>
 									<br>
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="lenderConfirmRestore()" ng-if="!loan.restore.lenderConfirmed">OK</button>

@@ -131,7 +131,7 @@ public class LoanService {
 		params.put("game", loan.getPublicUserGame().getGame().getName());
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
 		params.put("weeks", "" + loan.getWeeks());
-		params.put("cost", "$" + String.format("" + (subtotal - (subtotal * fee)), "%.2f"));
+		params.put("cost", "$" + String.format("" + (subtotal * (1.0 - fee)), "%.2f"));
 
 		mailService.sendMailWihTemplate(levelapMail, "MSGREQ", params);
 	}
@@ -228,11 +228,11 @@ public class LoanService {
 			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
 			Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
 			Double fee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
-			lender = publicUserService.addToUserBalance(lender.getId(), subtotal - (subtotal * fee));
+			lender = publicUserService.addToUserBalance(lender.getId(), subtotal * (1.0 - fee));
 			
 			File keyLender = File.createTempFile("keyGamer", ".tmp");
 			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
-			Transaction transaction = new Transaction(lender, "ALQUILASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), cryptoService.encrypt(Double.toString(loan.getPublicUserGame().getCost() * loan.getWeeks()), keyLender), null, null);
+			Transaction transaction = new Transaction(lender, "ALQUILASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), cryptoService.encrypt(Double.toString(subtotal * (1.0 - fee)), keyLender), null, null);
 			transactionService.getTransactionRepo().save(transaction);
 			
 			if (previous.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)

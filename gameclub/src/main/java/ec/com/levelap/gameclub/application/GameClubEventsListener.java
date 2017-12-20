@@ -10,6 +10,7 @@ import ec.com.levelap.gameclub.module.loan.service.LoanService;
 
 @Component
 public class GameClubEventsListener {
+	
 	@EventListener(classes=ContextRefreshedEvent.class)
 	public void contextRefreshed()  throws ServletException {
 		LoanService loanService = ApplicationContextHolder.getContext().getAutowireCapableBeanFactory().getBean(LoanService.class);

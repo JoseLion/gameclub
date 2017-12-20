@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -74,8 +73,8 @@ public class Game extends BaseEntity {
 	@Column(name="price_charting_id")
 	private Long priceChartingId;
 	
-	@Transient
-	private Integer rating = 0;
+	@Column(columnDefinition="INTEGER DEFAULT 0")
+	private Integer rating = defaultRating();
 
 	public String getName() {
 		return name;
@@ -182,16 +181,22 @@ public class Game extends BaseEntity {
 	}
 
 	public Integer getRating() {
-		for (GameMagazine cross : magazineRatings) {
-			if (cross.getMagazine().getName().equals(Const.RATING_MAGAZINE)) {
-				rating = cross.getRating();
-			}
-		}
-		
 		return rating;
 	}
 
 	public void setRating(Integer rating) {
-		this.rating = rating;
+		this.rating = defaultRating();
+	}
+	
+	private Integer defaultRating() {
+		Integer rt = 0;
+		for (GameMagazine cross : magazineRatings) {
+			if (cross.getMagazine().getName().equals(Const.RATING_MAGAZINE)) {
+				rt = cross.getRating();
+				break;
+			}
+		}
+		
+		return rt;
 	}
 }

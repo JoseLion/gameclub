@@ -112,6 +112,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
                 rest("publicUser/saveGame").post($scope.myGame, function(data) {
                     sweet.success();
                     setPagedData(data);
+                    $scope.search = {};
                     $scope.showGame = false;
                     sweet.close();
 

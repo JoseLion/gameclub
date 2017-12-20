@@ -245,12 +245,12 @@
 								<span>Hora: </span><span class="text-black">14H00</span><span> - </span><span class="text-black">18H00</span>
 								<br>
 								<br>
-								<div class="decorator-black">
-									<span>Caja GAME CLUB: </span><span class="text-black text-underline">nº <span class="upper-case">{{loan.boxNumber}}</span></span>
-								</div>
-								<br>
-								<br>
 								<form>
+									<div class="decorator-black">
+										<span>Caja GAME CLUB: </span><span class="text-black text-underline">nº <input type="text" class="box-number box-return" ng-model="loan.boxNumber" data-mask="aaa-999" ng-disabled="loan.restore.isDisabled"></span>
+									</div>
+									<br>
+									<br>
 									<div class="decorator" ng-class="{'disabled': loan.restore.isDisabled}">
 										<div class="form-group">
 											<span>Dirección de retiro actual:</span>
@@ -285,7 +285,7 @@
 										<img src="img/messages/alert.svg">
 									</div>
 									<div class="alert-text">
-										<span>Verifica o edita la información de entrega.</span>
+										<span>Verifica o edita la información de retiro.</span>
 										<br>
 										<span>Y la caja en el caso que la cambies.</span>
 										<br>

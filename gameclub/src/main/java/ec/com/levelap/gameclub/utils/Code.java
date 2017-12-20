@@ -19,6 +19,8 @@ public interface Code {
 	
 	public static final String SHIPPING_GAMER_DIDNT_DELIVER_2ND = "SHPJNV";
 	
+	public static final String SETTING_LENDER_DIDNT_DELIVER = "STGFNELDD";
+	
 	public static final String SETTING_GAMER_DIDNT_RECEIVE = "STGFNEPDR";
 	
 	public static final String SETTING_GAMER_DIDNT_DELIVER = "STGFNEPDD";

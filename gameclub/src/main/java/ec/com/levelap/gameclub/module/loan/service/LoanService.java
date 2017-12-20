@@ -488,63 +488,64 @@ public class LoanService {
 		File keyLender = File.createTempFile("keyLender", ".tmp");
 		FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
 
-		Transaction transaction;
-
 		Catalog shippingStatus = catalogService.getCatalogRepo().findByCode(loan.getShippingStatus().getCode());
-
+		//Catalog shippingStatus = loan.getShippingStatus();
 		Double totalToDebit = loan.getPublicUserGame().getCost() * loan.getWeeks();
+		Double subtotal = (loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getShippningCost() + loan.getFeeGameClub();
+		System.out.println("SUBTOTAL: " + subtotal);
+		
 		if (shippingStatus.getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
-			gamer = publicUserService.addToUserBalance(gamer.getId(), (loan.getCost()));
-
-			Double totalBalanceLender = lender.getShownBalance() - totalToDebit;
-			byte[] toBalance = null;
-			byte[] toCard = null;
-			if (totalBalanceLender < 0) {
-				lender = publicUserService.setUserBalance(lender.getId(), 0D);
-				String description = "Multa GameClub - " + shippingStatus.getName();
-				paymentezService.debitFromCard(session, request.getRemoteAddr(), loan.getCardReference(), Math.abs(totalBalanceLender), 0.0, description);
-				toBalance = cryptoService.encrypt(Double.toString(lender.getShownBalance()), keyLender);
-				toCard = cryptoService.encrypt(Double.toString(Math.abs(totalBalanceLender)), keyLender);
+			Setting fineSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_LENDER_DIDNT_DELIVER);
+			Double fineAmount;
+			
+			if (fineSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
+				fineAmount = subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0);
 			} else {
-				lender = publicUserService.substractFromUserBalance(lender.getId(), totalToDebit);
-				toBalance = cryptoService.encrypt(Double.toString(totalToDebit), keyLender);
+				fineAmount = Double.parseDouble(fineSetting.getValue());
 			}
-
+			
+			Fine fine = new Fine();
+			fine.setOwner(loan.getPublicUserGame().getPublicUser());
+			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), keyLender));
+			fine.setDescription(loan.getShippingStatus().getName());
+			fineService.getFineRepo().save(fine);
+			
+			publicUserService.addToUserBalance(gamer.getId(), (loan.getCost()));
 			loan.getPublicUserGame().setIsBorrowed(Boolean.FALSE);
 			loan.setPublicUserGame(publicUserService.getPublicUserGameRepo().save(loan.getPublicUserGame()));
 
-			Double shippingCost = loan.getCost() - (loan.getPublicUserGame().getCost() * loan.getWeeks());
-
-			Fine fine = new Fine();
-			fine.setOwner(loan.getPublicUserGame().getPublicUser());
-			fine.setAmountEnc(cryptoService.encrypt(Double.toString(shippingCost), keyLender));
-			fine.setDescription(shippingStatus.getName());
-			fineService.getFineRepo().save(fine);
-
-			transaction = new Transaction(gamer, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
-					loan.getPublicUserGame().getConsole().getName(),
-					loan.getWeeks(), cryptoService.encrypt(Double.toString((loan.getCost())), keyGamer), null, null);
+			Transaction transaction = new Transaction();
+			transaction.setOwner(gamer);
+			transaction.setTransaction("DEVOLUCIÓN");
+			transaction.setGame(loan.getPublicUserGame().getGame().getName());
+			transaction.setConsole(loan.getPublicUserGame().getConsole().getName());
+			transaction.setWeeks(loan.getWeeks());
+			transaction.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
 			transactionService.getTransactionRepo().save(transaction);
-
-			transaction = new Transaction(lender, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
-					loan.getPublicUserGame().getConsole().getName(),
-					loan.getWeeks(), null, toBalance, toCard);
-			transactionService.getTransactionRepo().save(transaction);
-
 		} else if (shippingStatus.getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)) {
 			Double value = Double.valueOf(settingService.getSettingValue(Code.SETTING_GAMER_DIDNT_RECEIVE));
 			gamer = publicUserService.addToUserBalance(loan.getGamer().getId(), loan.getCost() - value);
 			lender = publicUserService.addToUserBalance(loan.getPublicUserGame().getPublicUser().getId(), value);
 
-			transaction = new Transaction(gamer, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
+			Transaction transaction = new Transaction(
+					gamer,
+					"DEVOLUCIÓN",
+					loan.getPublicUserGame().getGame().getName(),
 					loan.getPublicUserGame().getConsole().getName(),
-					loan.getWeeks(), cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer), null, null);
+					loan.getWeeks(),
+					cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer),
+					null,
+					null);
 			transactionService.getTransactionRepo().save(transaction);
 
-			transaction = new Transaction(gamer, "MULTA - " + shippingStatus.getName(),
+			transaction = new Transaction(
+					gamer,
+					"MULTA - " + shippingStatus.getName(),
 					loan.getPublicUserGame().getConsole().getName(),
-					loan.getPublicUserGame().getGame().getName(), loan.getWeeks(), null,
-					cryptoService.encrypt(Double.toString(value), keyGamer), null);
+					loan.getPublicUserGame().getGame().getName(), loan.getWeeks(),
+					null,
+					cryptoService.encrypt(Double.toString(value), keyGamer),
+					null);
 			transactionService.getTransactionRepo().save(transaction);
 
 			Double totalBalanceLender = lender.getShownBalance() - totalToDebit;
@@ -560,6 +561,7 @@ public class LoanService {
 				lender = publicUserService.substractFromUserBalance(lender.getId(), totalToDebit);
 				toBalance = cryptoService.encrypt(Double.toString(Math.abs(totalToDebit)), keyLender);
 			}
+			
 			transaction = new Transaction(lender, "DEVOLUCION", loan.getPublicUserGame().getGame().getName(),
 					loan.getPublicUserGame().getConsole().getName(),
 					loan.getWeeks(), null, toBalance, toCard);

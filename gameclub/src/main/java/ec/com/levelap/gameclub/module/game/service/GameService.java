@@ -718,12 +718,16 @@ public class GameService extends BaseService<Game> {
 		if (priceChart != null) {
 			if (priceChart.get("gamestop-price") != null) {
 				price = Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
+				System.out.println("gamestop-price");
 			} else if (priceChart.get("retail-new-sell") != null) {
 				price = Double.parseDouble(priceChart.get("retail-new-sell")) / 100.0;
+				System.out.println("retail-new-sell");
 			} else if (priceChart.get("retail-cib-sell") != null) {
 				price = Double.parseDouble(priceChart.get("retail-cib-sell")) / 100.0;
+				System.out.println("retail-cib-sell");
 			} else if (priceChart.get("retail-loose-sell") != null) {
 				price = Double.parseDouble(priceChart.get("retail-loose-sell")) / 100.0;
+				System.out.println("retail-loose-sell");
 			}
 		}
 		String priceString = String.valueOf(price);

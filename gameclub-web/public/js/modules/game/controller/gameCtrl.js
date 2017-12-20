@@ -145,8 +145,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                     gamerGeolocation: $rootScope.currentUser.geolocation,
                     gamerReceiver: $rootScope.currentUser.receiver != null ? $rootScope.currentUser.receiver : ($rootScope.currentUser.name + ' ' + $rootScope.currentUser.lastName)
                 };
-                console.log($scope.loanGame);
-                console.log($scope.loan);
 
                 $scope.weekSelected();
             } else {
@@ -161,10 +159,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
                         notif.danger("Primero debes verificar tu identidad para solicitar juegos");
                     }
                 }
-
-                /*if (!$rootScope.currentUser.isReady) {
-                    notif.danger("Para poder solicitar un juego primero debes haber recibido tu Welcome Kit. Sube tu primer juego y te enviaremos uno gratis");
-                }*/
             }
         }
     }

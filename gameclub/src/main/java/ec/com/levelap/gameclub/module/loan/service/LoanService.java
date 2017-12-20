@@ -131,7 +131,7 @@ public class LoanService {
 		params.put("game", loan.getPublicUserGame().getGame().getName());
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
 		params.put("weeks", "" + loan.getWeeks());
-		params.put("cost", "$" + String.format("" + (subtotal - (subtotal * fee)), "%.2f"));
+		params.put("cost", "$" + String.format("" + (subtotal * (1.0 - fee)), "%.2f"));
 
 		mailService.sendMailWihTemplate(levelapMail, "MSGREQ", params);
 	}
@@ -205,6 +205,18 @@ public class LoanService {
 			loan.setLenderStatusDate(new Date());
 		}
 		
+		if (loan.getGamerConfirmed() && loan.getLenderConfirmed()) {
+			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
+			Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
+			Double fee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
+			lender = publicUserService.addToUserBalance(lender.getId(), subtotal * (1.0 - fee));
+			
+			File keyLender = File.createTempFile("keyGamer", ".tmp");
+			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
+			Transaction transaction = new Transaction(lender, "ALQUILASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), cryptoService.encrypt(Double.toString(subtotal * (1.0 - fee)), keyLender), null, null);
+			transactionService.getTransactionRepo().save(transaction);
+		}
+		
 		loan = loanRepo.save(loan);
 		return loan;
 	}
@@ -224,17 +236,7 @@ public class LoanService {
 			messageService.getMessageRepo().save(loan.getGamerMessage());
 		}
 
-		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
-			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
-			Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
-			Double fee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
-			lender = publicUserService.addToUserBalance(lender.getId(), subtotal - (subtotal * fee));
-			
-			File keyLender = File.createTempFile("keyGamer", ".tmp");
-			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
-			Transaction transaction = new Transaction(lender, "ALQUILASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), cryptoService.encrypt(Double.toString(loan.getPublicUserGame().getCost() * loan.getWeeks()), keyLender), null, null);
-			transactionService.getTransactionRepo().save(transaction);
-			
+		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {		
 			if (previous.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)
 					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)
 					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER)
@@ -342,6 +344,12 @@ public class LoanService {
 				messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
 				messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
 				
+				try {
+					sendFinishedMails(restore);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 				if (!restore.getGamerConfirmed().booleanValue()) {
 					restore.setGamerAddress(loan.getGamerAddress());
 					restore.setGamerGeolocation(loan.getGamerGeolocation());
@@ -356,12 +364,6 @@ public class LoanService {
 					restore.setLenderReceiver(loan.getLenderReceiver());
 					restore.setLenderConfirmDate(new Date());
 					restore = restoreService.getRestoreRepo().save(restore);
-				}
-				
-				try {
-					sendFinishedMails(restore);
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
 		});
@@ -457,10 +459,8 @@ public class LoanService {
 		params.put("game", restore.getPublicUserGame().getGame().getName());
 		params.put("console", restore.getPublicUserGame().getConsole().getName());
 		params.put("returnDate", df.format(new Date()));
-		params.put("lenderConfirmationDate",
-				restore.getLenderStatusDate() != null ? df.format(restore.getLenderStatusDate()) : "SIN CONFIRMAR");
-		params.put("gamerConfirmationDate",
-				restore.getGamerStatusDate() != null ? df.format(restore.getGamerStatusDate()) : "SIN CONFIRMAR");
+		params.put("lenderConfirmationDate", restore.getLenderStatusDate() != null ? df.format(restore.getLenderStatusDate()) : "SIN CONFIRMAR");
+		params.put("gamerConfirmationDate", restore.getGamerStatusDate() != null ? df.format(restore.getGamerStatusDate()) : "SIN CONFIRMAR");
 
 		if (restore.getLenderStatusDate() == null || restore.getGamerStatusDate() == null) {
 			levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_LOGISTICS));

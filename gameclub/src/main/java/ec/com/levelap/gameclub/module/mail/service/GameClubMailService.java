@@ -21,6 +21,7 @@ public class GameClubMailService {
 		String currentRequest = builder.build().toUriString();
 		String[] split = currentRequest.split(":");
 		params.put("baseUrl", split[0] + ":" + split[1]);
+		params.put("port", split[0].equals("https") ? "8390" : "8090");
 		
 		return mailService.sendMailWihTemplate(levelapMail, template, params);
 	}

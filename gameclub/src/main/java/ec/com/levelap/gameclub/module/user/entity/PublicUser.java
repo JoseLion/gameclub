@@ -114,8 +114,8 @@ public class PublicUser extends BaseEntity {
 	@Column(columnDefinition="DECIMAL(5, 2) DEFAULT 0.0")
 	private Double rating = 0.0;
 	
-	@Column(name="games_limit", columnDefinition="INTEGER DEFAULT 5")
-	private Integer gamesLimit = 5;
+	@Column(name="games_limit", columnDefinition="INTEGER DEFAULT 5000")
+	private Integer gamesLimit = 5000;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="owner", fetch=FetchType.LAZY)

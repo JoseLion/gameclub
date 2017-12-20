@@ -70,7 +70,7 @@ public class PublicUserController {
 		}
 
 		PublicUser user = publicUserService.getCurrentUser();
-		Page<PublicUserGame> gamesList = publicUserService.getPublicUserGameRepo().findMyGames(user, filter.consoleId, new PageRequest(filter.page, Const.TABLE_SIZE, new Sort(filter.sort)));
+		Page<PublicUserGame> gamesList = publicUserService.getPublicUserGameRepo().findMyGames(user, filter.consoleId, new PageRequest(filter.page, Const.TABLE_SIZE, new Sort(Direction.DESC, filter.sort)));
 
 		return new ResponseEntity<Page<PublicUserGame>>(gamesList, HttpStatus.OK);
 	}

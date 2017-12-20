@@ -14,7 +14,9 @@
             <img ng-src="{{inverse ? $archiveUrl + ngModel.consoles[0].console.blackLogo.id : $archiveUrl + ngModel.consoles[0].console.whiteLogo.id}}" class="platform" ng-if="console == null">
             <img ng-src="{{inverse ? $archiveUrl + console.blackLogo.id : $archiveUrl + console.whiteLogo.id}}" class="platform" ng-if="console != null">
             <div class="types">
-                <img ng-repeat="category in ngModel.categories" ng-src="{{inverse ? $archiveUrl + category.category.blackVector.id : $archiveUrl + category.category.whiteVector.id}}" src="">
+                <div ng-repeat="category in ngModel.categories">
+                    <img ng-src="{{inverse ? $archiveUrl + category.category.blackVector.id : $archiveUrl + category.category.whiteVector.id}}">
+                </div>
             </div>
         </div>
         <div class="col-md-4 col-xs-5 text-center content-rating">

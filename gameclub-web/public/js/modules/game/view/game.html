@@ -233,7 +233,7 @@
 
                         <div class="col-md-9 col-xs-12 information-separation no-underline">
                             <div class="box" ng-class="loan.saveChanges ? 'checked' : ''" ng-click="loan.saveChanges = !loan.saveChanges"></div>
-                            <span class="checkbox-label" ng-click="loan.saveChanges = !loan.saveChanges">Guardar información para siguiente préstamo</span>
+                            <span class="checkbox-label" ng-click="loan.saveChanges = !loan.saveChanges">Guardar información para siguiente alquiler</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -275,7 +275,7 @@
         <payment-method total-balance="currentUser.shownBalance" payment-methods="currentUser.paymentMethods" balance="balance" total-to-pay="loan.cost" card-selected="$parent.cardSelected" class="row payment-view"  ng-if="paymentViewOpen"/>
         <section class="row loan-footer" ng-if="loanViewOpen">
             <div class="col-md-12 text-center">
-                <button type="button" class="btn btn-secundary" ng-click="continueRequest()" ng-if="!paymentViewOpen">Continuar con soliciud de préstamo</button>
+                <button type="button" class="btn btn-secundary" ng-click="continueRequest()" ng-if="!paymentViewOpen">CONTINUAR CON SOLICITUD DE ALQUILER</button>
                 <button type="submit" class="btn btn-secundary" ng-if="paymentViewOpen">REALIZAR PEDIDO DE ALQUILER</button>
             </div>
             <div class="clearfix"></div>

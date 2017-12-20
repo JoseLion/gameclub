@@ -119,7 +119,7 @@
 								<form>
 									<div class="decorator" ng-class="{'disabled': loan.isDisabled}">
 										<div class="form-group">
-											<span>Dirección de retiro actual: </span><span class="text-sm">edita tu información si es necesario</span>
+											<span>Dirección de entrega actual: </span><span class="text-sm">edita tu información si es necesario</span>
 										</div>
 
 										<div class="form-group address" ng-class="{'disabled': loan.isDisabled}">
@@ -140,7 +140,7 @@
 
 										<div class="form-group check" ng-class="{'disabled': loan.isDisabled}">
 											<div class="box" ng-class="loan.saveChanges ? 'checked' : ''" ng-click="!loan.isDisabled ? (loan.saveChanges = !loan.saveChanges) : null"></div>
-											<span class="text-black text-sm">Guardar información para siguiente préstamo</span>
+											<span class="text-black text-sm">Guardar información para siguiente alquiler</span>
 										</div>
 									</div>
 									<br>
@@ -148,7 +148,7 @@
 										<span class="text-lg upper-case">Costo final: </span><span class="text-bg text-black upper-case">{{loan.cost | currency:'$ ':2}}</span>
 									</div>
 									<br>
-									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con balance: {{loan.balancePart | currency: '$': 2}}</span></span>
+									<span ng-if="loan.balancePart > 0.0"><span class="upper-case">Pago con saldo: {{loan.balancePart | currency: '$': 2}}</span></span>
 									<br>
 									<br>
 									<span ng-if="loan.cardPart > 0.0"><span class="upper-case">Pago con tarjeta: {{loan.cardPart | currency: '$': 2}}</span><span class="payment">XXXX XXXX XXXX {{loan.cardFinale}}</span></span>
@@ -163,12 +163,12 @@
 										<span>Si no es correcta no podremos recoger el juego.</span>
 									</div>
 									<br>
-									<br>
+									<!-- <br>
 									<span>Te notificaremos cuando tu prestamo sea aceptado.</span>
+									<br> -->
 									<br>
-									<br>
-									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmGamer()" ng-if="!loan.gamerConfirmed && loan.status">Continuar préstamo</button>
-									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.gamerConfirmed && loan.status">Editar información destino</button>
+									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmGamer()" ng-if="!loan.gamerConfirmed && loan.status">CONTINUAR ALQUILER</button>
+									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.gamerConfirmed && loan.status">EDITAR INFORMACIÓN DE DESTINO</button>
 								</form>
 							</div>
 
@@ -232,7 +232,7 @@
 								<span>En el caso de no haber recibido el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec">nuestro servicio al cliente</a>.</span>
 								<br>
 								<br>
-								<span class="text-lg">Tiempo restante: </span>
+								<span class="text-lg">Tiempo restante:... </span>
 								<span class="text-black text-lg">
 									{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}}
 									{{timer.hours < 10 ? '0' : ''}}{{timer.hours}} {{timer.hours == 1 ? 'hora' : 'horas'}}
@@ -326,13 +326,13 @@
 								<form on-submit="sendReview()" novalidate ng-if="loan.restore.shippingStatus.code == Const.code.shippingDelivered">
 									<br>
 									<br>
-									<span>Califica a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}. por este préstamo: </span>
+									<span>Califica a {{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}. por este alquiler: </span>
 									<span class="valid-group">
 										<label ng-show="false">Calificación</label>
 										<score validation ng-model="loan.review.lenderScore" ng-disabled="loan.review.lenderReviewDate" required></score>
 									</span>
 									<br>
-									<span>y escribe una opinion:</span>
+									<span>y escribe una opinión:</span>
 									<br>
 									<span class="valid-group">
 										<label ng-show="false">Comentario</label>
@@ -443,11 +443,11 @@
 									</div>
 									<br>
 									<br>
-									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec" >nuestro servicio al cliente</a>.</span>
+									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec">nuestro servicio al cliente</a>.</span>
 									<br>
 									<br>
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmLender()" ng-if="!loan.lenderConfirmed && loan.status">Continuar préstamo</button>
-									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.lenderConfirmed && loan.status">Editar información destino</button>
+									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.lenderConfirmed && loan.status">EDITAR INFORMACIÓN DE DESTINO</button>
 								</form>
 							</div>
 
@@ -514,7 +514,7 @@
 								<span>Se acaban de acreditar a tu cuenta: </span><span class="text-black upper-case">{{(loan.publicUserGame.cost * loan.weeks) | currency: '$': 2}}</span>
 								<br>
 								<br>
-								<span class="text-lg">Tiempo restante: </span>
+								<span class="text-lg">Tiempo restante:... </span>
 								<span class="text-black text-lg">
 									{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}}
 									{{timer.hours < 10 ? '0' : ''}}{{timer.hours}} {{timer.hours == 1 ? 'hora' : 'horas'}}
@@ -573,7 +573,7 @@
 									</div>
 									<br>
 									<br>
-									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec" >nuestro servicio al cliente</a>.</span>
+									<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec">nuestro servicio al cliente</a>.</span>
 									<br>
 									<br>
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="lenderConfirmRestore()" ng-if="!loan.restore.lenderConfirmed">OK</button>

@@ -221,7 +221,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	}
 
 	$scope.cancelLoanRequest = function() {
-		sweet.default("Se cancelara tu solicitud de préstamo", function() {
+		sweet.default("Se cancelara tu solicitud de alquiler.", function() {
 			rest("loan/cancelLoan/:id").get({id: $scope.loan.id}, function(data) {
 				notif.success("Alquiler cancelado");
 				$scope.loan = data;
@@ -331,7 +331,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		}
 
 		if (isValid) {
-			sweet.default("Se realizará el pago del préstamo", function() {
+			sweet.default("Se realizará el pago del alquiler", function() {
 				$scope.loan.isDisabled = true;
 
 				rest("loan/confirmGamer").post($scope.loan, function(data) {

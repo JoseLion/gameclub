@@ -1,4 +1,4 @@
-angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScope, messages, forEach, $filter, rest, geolocation, notif, sweet, $state, friendlyUrl) {
+angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScope, messages, forEach, $filter, rest, geolocation, notif, sweet, $state, friendlyUrl, Const) {
 
 	let page = 0;
 	messages.$promise.then(function(data) {
@@ -221,7 +221,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	}
 
 	$scope.cancelLoanRequest = function() {
-		sweet.default("Se cancelara tu solicitud de alquiler.", function() {
+		sweet.default("Se cancelará tu solicitud de alquiler", function() {
 			rest("loan/cancelLoan/:id").get({id: $scope.loan.id}, function(data) {
 				notif.success("Alquiler cancelado");
 				$scope.loan = data;
@@ -234,10 +234,11 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	}
 
 	$scope.acceptLoan = function() {
-		sweet.default("Aceptarás el préstamo de este juego", function() {
+		sweet.default("Aceptarás el alquiler de este juego", function() {
 			rest("loan/acceptLoan/:id").get({id: $scope.loan.id}, function(data) {
-				notif.success("Préstamo aceptado");
+				notif.success("Alquiler aceptado");
 				$scope.loan = data;
+				$scope.loan.isDisabled = true;
 				$scope.loan.lenderAddress = $rootScope.currentUser.billingAddress;
 				$scope.loan.lenderGeolocation = $rootScope.currentUser.geolocation;
 				$scope.loan.lenderReceiver = $rootScope.currentUser.receiver;
@@ -250,7 +251,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	}
 
 	$scope.rejectLoan = function() {
-		sweet.default("Rechazarás el préstamo de este juego", function() {
+		sweet.default("Rechazarás el alquiler de este juego", function() {
 			rest("loan/rejectLoan/:id").get({id: $scope.loan.id}, function(data) {
 				notif.success("Alquiler rechazado");
 				$scope.loan = data;
@@ -286,13 +287,13 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		}
 
 		if (isValid) {
-			sweet.default("Confirmaras el préstamo de forma definitiva", function() {
+			sweet.default("Confirmaras el alquiler de forma definitiva", function() {
 				$scope.loan.isDisabled = true;
 
 				rest("loan/confirmLender").post($scope.loan, function(data) {
 					$scope.loan = data;
 					$scope.loan.isDisabled = true;
-					notif.success("Préstamo confirmado");
+					notif.success("Alquiler confirmado");
 					sweet.close();
 					canvasToBottom();
 				}, function(error) {
@@ -503,6 +504,15 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				return 'img/contact-person.svg';
 			}
 		}
+	}
+
+	$scope.getLenderRevenue = function(loan) {
+		if ($rootScope.settings != null) {
+			let fee = parseFloat($rootScope.settings[Const.settings.feeLoanLender].value) / 100.0;
+			return (loan.publicUserGame.cost * loan.weeks) * (1.0 - fee);
+		}
+
+		return 0.0;
 	}
 
 	function clearCanvas() {

@@ -1,8 +1,8 @@
 INSERT INTO commons.mail_template(code, content, subject)
 VALUES('MSGREQ',
-'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
+'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
 	<div style="padding: 10% 10% 0% 10%;">
-		<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mail-head-logo.png" />
+		<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mail-head-logo.png" />
 		<h1 style="margin-top: 5%; text-transform: uppercase; font-family: jaapokki; font-size: 35px; color: #2CB4BF;">Tienes una Solicitud de Alquiler</h1>
 		<h2 style="text-align: left; margin-top: 5%; font-family: jaapokki; font-size: 25px; color: #E43345;">Hola {{name}},</h2>
 		<div style="padding: 5%; background-color: rgba(255, 255, 255, 0.8); font-family: jaapokki; font-size: 17px; color: #071428;">
@@ -25,26 +25,26 @@ VALUES('MSGREQ',
 				<tr>
 					<td style="text-align: left;">
 						<a href="https://www.facebook.com/gameclub.ec/" style="cursor: pointer; margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
 						</a>
 						<a href="https://my.playstation.com/gameclubec" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
 						</a>
 						<a href="https://account.xbox.com/en-us/Profile?GamerTag=GameClubEC" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
 						</a>
 						<a href="http://www.nintendo.com/" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
 						</a>
 					</td>
 
 					<td style="text-align: right;">
 						<a href="mailto:info@gameclub.com.ec" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 					</td>
@@ -56,9 +56,9 @@ VALUES('MSGREQ',
 'Tienes una Solicitud de Alquiler'),
 
 ('MSGARM',
-'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
+'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
 	<div style="padding: 10% 10% 0% 10%;">
-		<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mail-head-logo.png" />
+		<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mail-head-logo.png" />
 		<h1 style="margin-top: 5%; text-transform: uppercase; font-family: jaapokki; font-size: 35px; color: #2CB4BF;">Recordatorio Días Devolución</h1>
 		<h2 style="text-align: left; margin-top: 5%; font-family: jaapokki; font-size: 25px; color: #E43345;">Recordatorio:</h2>
 		<div style="padding: 5%; background-color: rgba(255, 255, 255, 0.8); font-family: jaapokki; font-size: 17px; color: #071428;">
@@ -81,26 +81,26 @@ VALUES('MSGREQ',
 				<tr>
 					<td style="text-align: left;">
 						<a href="https://www.facebook.com/gameclub.ec/" style="cursor: pointer; margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
 						</a>
 						<a href="https://my.playstation.com/gameclubec" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
 						</a>
 						<a href="https://account.xbox.com/en-us/Profile?GamerTag=GameClubEC" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
 						</a>
 						<a href="http://www.nintendo.com/" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
 						</a>
 					</td>
 
 					<td style="text-align: right;">
 						<a href="mailto:info@gameclub.com.ec" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 					</td>
@@ -112,9 +112,9 @@ VALUES('MSGREQ',
 'Recordatorio Días Devolución'),
 
 ('MSGLRM',
-'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
+'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
 	<div style="padding: 10% 10% 0% 10%;">
-		<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mai-head-logo.png" />
+		<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mai-head-logo.png" />
 		<h1 style="margin-top: 5%; text-transform: uppercase; font-family: jaapokki; font-size: 35px; color: #2CB4BF;">Ya mismo te devolvemos tu juego alquilado</h1>
 		<h2 style="text-align: left; margin-top: 5%; font-family: jaapokki; font-size: 25px; color: #E43345;">Hola {{lender}},</h2>
 		<div style="padding: 5%; background-color: rgba(255, 255, 255, 0.8); font-family: jaapokki; font-size: 17px; color: #071428;">
@@ -137,26 +137,26 @@ VALUES('MSGREQ',
 				<tr>
 					<td style="text-align: left;">
 						<a href="https://www.facebook.com/gameclub.ec/" style="cursor: pointer; margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
 						</a>
 						<a href="https://my.playstation.com/gameclubec" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
 						</a>
 						<a href="https://account.xbox.com/en-us/Profile?GamerTag=GameClubEC" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
 						</a>
 						<a href="http://www.nintendo.com/" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
 						</a>
 					</td>
 
 					<td style="text-align: right;">
 						<a href="mailto:info@gameclub.com.ec" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 					</td>
@@ -168,9 +168,9 @@ VALUES('MSGREQ',
 'Ya mismo te devolvemos tu juego alquilado'),
 	
 ('MSGGRM',
-'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
+'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
 	<div style="padding: 10% 10% 0% 10%;">
-		<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mai-head-logo.png" />
+		<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mai-head-logo.png" />
 		<h1 style="margin-top: 5%; text-transform: uppercase; font-family: jaapokki; font-size: 35px; color: #2CB4BF;">RECUERDA que ya mismo se acaba tu alquiler</h1>
 		<h2 style="text-align: left; margin-top: 5%; font-family: jaapokki; font-size: 25px; color: #E43345;">Hola {{gamer}},</h2>
 		<div style="padding: 5%; background-color: rgba(255, 255, 255, 0.8); font-family: jaapokki; font-size: 17px; color: #071428;">
@@ -194,26 +194,26 @@ VALUES('MSGREQ',
 				<tr>
 					<td style="text-align: left;">
 						<a href="https://www.facebook.com/gameclub.ec/" style="cursor: pointer; margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
 						</a>
 						<a href="https://my.playstation.com/gameclubec" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
 						</a>
 						<a href="https://account.xbox.com/en-us/Profile?GamerTag=GameClubEC" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
 						</a>
 						<a href="http://www.nintendo.com/" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
 						</a>
 					</td>
 
 					<td style="text-align: right;">
 						<a href="mailto:info@gameclub.com.ec" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 					</td>
@@ -225,9 +225,9 @@ VALUES('MSGREQ',
 'RECUERDA que ya mismo se acaba tu alquiler'),
 	
 ('MSGAUR',
-'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
+'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
 	<div style="padding: 10% 10% 0% 10%;">
-		<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mail-head-logo.png" />
+		<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mail-head-logo.png" />
 		<h1 style="margin-top: 5%; text-transform: uppercase; font-family: jaapokki; font-size: 35px; color: #2CB4BF;">Dirección de Alquiler no Confirmada</h1>
 		<div style="padding: 5%; background-color: rgba(255, 255, 255, 0.8); font-family: jaapokki; font-size: 17px; color: #071428;">
 			<p>Un Alquiler finalizó y no se han confirmado el/los envíos. La información del préstamo es:</p>
@@ -253,26 +253,26 @@ VALUES('MSGREQ',
 				<tr>
 					<td style="text-align: left;">
 						<a href="https://www.facebook.com/gameclub.ec/" style="cursor: pointer; margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
 						</a>
 						<a href="https://my.playstation.com/gameclubec" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
 						</a>
 						<a href="https://account.xbox.com/en-us/Profile?GamerTag=GameClubEC" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
 						</a>
 						<a href="http://www.nintendo.com/" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
 						</a>
 					</td>
 
 					<td style="text-align: right;">
 						<a href="mailto:info@gameclub.com.ec" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 					</td>
@@ -284,9 +284,9 @@ VALUES('MSGREQ',
 'Dirección de Alquiler no Confirmada'),
 
 ('MSGLUR',
-'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
+'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
 	<div style="padding: 10% 10% 0% 10%;">
-		<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mail-head-logo.png" />
+		<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mail-head-logo.png" />
 		<h1 style="margin-top: 5%; text-transform: uppercase; font-family: jaapokki; font-size: 35px; color: #2CB4BF;">No Confirmaste la Dirección de Entrega</h1>
 		<h2 style="text-align: left; margin-top: 5%; font-family: jaapokki; font-size: 25px; color: #E43345;">Hola {{lender}},</h2>
 		<div style="padding: 5%; background-color: rgba(255, 255, 255, 0.8); font-family: jaapokki; font-size: 17px; color: #071428;">
@@ -309,26 +309,26 @@ VALUES('MSGREQ',
 				<tr>
 					<td style="text-align: left;">
 						<a href="https://www.facebook.com/gameclub.ec/" style="cursor: pointer; margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
 						</a>
 						<a href="https://my.playstation.com/gameclubec" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
 						</a>
 						<a href="https://account.xbox.com/en-us/Profile?GamerTag=GameClubEC" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
 						</a>
 						<a href="http://www.nintendo.com/" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
 						</a>
 					</td>
 
 					<td style="text-align: right;">
 						<a href="mailto:info@gameclub.com.ec" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 					</td>
@@ -340,9 +340,9 @@ VALUES('MSGREQ',
 'No Confirmaste la Dirección de Entrega'),
 
 ('MSGGUR',
-'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
+'<div style="width: 100%; text-align: center; background: #636363; background-image: url({{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-bg.png); background-size: 100%;">
 	<div style="padding: 10% 10% 0% 10%;">
-		<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mail-head-logo.png" />
+		<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-head-logo.png" alt="mail-head-logo.png" />
 		<h1 style="margin-top: 5%; text-transform: uppercase; font-family: jaapokki; font-size: 35px; color: #2CB4BF;">No Confirmaste la Dirección de Retiro</h1>
 		<h2 style="text-align: left; margin-top: 5%; font-family: jaapokki; font-size: 25px; color: #E43345;">Hola {{gamer}},</h2>
 		<div style="padding: 5%; background-color: rgba(255, 255, 255, 0.8); font-family: jaapokki; font-size: 17px; color: #071428;">
@@ -365,26 +365,26 @@ VALUES('MSGREQ',
 				<tr>
 					<td style="text-align: left;">
 						<a href="https://www.facebook.com/gameclub.ec/" style="cursor: pointer; margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-fb.png" alt="mail-fb.png" />
 						</a>
 						<a href="https://my.playstation.com/gameclubec" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-ps.png" alt="mail-ps.png" height="25px" />
 						</a>
 						<a href="https://account.xbox.com/en-us/Profile?GamerTag=GameClubEC" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-xbox.png" alt="mail-xbox.png" height="25px" />
 						</a>
 						<a href="http://www.nintendo.com/" style="margin: 0% 0.5%;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-nintendo.png" alt="mail-nintendo.png" height="25px" />
 						</a>
 					</td>
 
 					<td style="text-align: right;">
 						<a href="mailto:info@gameclub.com.ec" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-plane.png" alt="mail-plane.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
-							<img src="{{baseUrl}}:8090/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
+							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
 							<span>info@gameclub.com.ec</span>
 						</a>
 					</td>

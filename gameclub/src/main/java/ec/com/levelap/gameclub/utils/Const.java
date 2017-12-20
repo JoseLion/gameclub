@@ -32,7 +32,7 @@ public interface Const {
 	
 	public static final String SBJ_GAME_REQUEST = "Petición de juego";
 	
-	public static final String SBJ_LOAN_REQUEST = "Solicitud de préstamo";
+	public static final String SBJ_LOAN_REQUEST = "Solicitud de alquiler";
 	
 	public static final String SBJ_FINE = "Cobro multa";
 	

@@ -111,7 +111,7 @@ angular.module("Game").controller('ManageGameCtrl', function($scope, game, conte
 
 	$scope.getPriceCharting = function() {
 		rest("game/getPriceCharting/:id").get({id: $scope.game.priceChartingId}, function(data) {
-			notif.info("El precio de priceCharting  es: " + data + ". Recuerda guardar la ficha del juego para acttualizar los cambios");
+			notif.info("El precio de priceCharting  es: " + data + ". Recuerda guardar la ficha del juego para actualizar los cambios");
 			$scope.game.uploadPayment = data;	
 		}, function(error) {
 			sweet.close();

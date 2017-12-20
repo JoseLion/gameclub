@@ -59,6 +59,7 @@ angular.module("Core").controller('GeolocationCtrl', function($scope, $uibModalI
 	}
 
 	$scope.cancel = function() {
+		$scope.centerInMarker();
 		$uibModalInstance.dismiss();
 	}
 });

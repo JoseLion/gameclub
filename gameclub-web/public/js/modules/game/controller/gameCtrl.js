@@ -250,11 +250,20 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
         $scope.loan.balancePart = $scope.balance.value;
         $scope.loan.cardPart = $scope.loan.cost - $scope.balance.value;
-        if ($scope.loan.cardPart > 0 && $scope.cardSelected == null) {
+        
+        if($scope.loan.balancePart == 0 && $scope.cardSelected == null){
             notif.danger("Por favor seleccione una forma de pago");
             failedValidation = true;
-        } else {
+        } else if (($scope.loan.cardPart > 0 && $scope.loan.cardPart < $scope.loan.cost) && $scope.cardSelected == null) {
+            notif.danger("Por favor seleccione una forma de pago para completar la transacción");
+            failedValidation = true;
+        } else if (($scope.loan.balancePart == 0 && $scope.loan.cardPart == $scope.loan.cost) && $scope.cardSelected != null) {
             $scope.loan.cardReference = $scope.cardSelected.card_reference;
+        } else if (($scope.loan.cardPart > 0 && $scope.loan.cardPart < $scope.loan.cost) && $scope.cardSelected != null) {
+            $scope.loan.cardReference = $scope.cardSelected.card_reference;
+        } else if (($rootScope.currentUser.shownBalance < $scope.loan.cardPart) && $scope.cardSelected == null) {
+            notif.danger("Por favor seleccione una forma de pago para completar la transacción");
+            failedValidation = true;
         }
 
         if (!failedValidation) {
@@ -396,6 +405,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.weekSelected = function(){
+        $scope.balance.value = 0;
         $scope.loan.shippningCost = $scope.shippingCost;
         $scope.loan.feeGameClub = (($scope.loanGame.cost * $scope.loan.weeks) + $scope.loan.shippningCost) * feeLoanGamerPercentage/100;
         $scope.loan.subtotal = ($scope.loanGame.cost * $scope.loan.weeks) + $scope.loan.shippningCost + $scope.loan.feeGameClub;

@@ -116,7 +116,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
                     $scope.showGame = false;
                     sweet.close();
 
-                    if ($scope.gamesList.length == 1) {
+                    if ($scope.myGame.id == null && $scope.gamesList.length == 1) {
                         let modal = $uibModal.open({
                             size: 'md',
                             backdrop: 'static',

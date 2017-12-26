@@ -11,10 +11,13 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.module.user.entity.AdminUser;
@@ -253,6 +256,13 @@ public class GameClubSecurity implements SecurityConfig {
 		if (publicUser != null) {
 			publicUser.setLastConnection(new Date());
 			publicUserRepo.save(publicUser);
+			
+			ServletRequestAttributes attrs = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
+			//HttpSession session = attrs.getRequest().getSession();
+			
+			System.out.println("getLocalAddr: " + attrs.getRequest().getLocalAddr());
+			System.out.println("getRemoteHost: " + attrs.getRequest().getLocalName());
+			System.out.println("getRemotePort: " + attrs.getRequest().getLocalPort());
 		}
 	}
 

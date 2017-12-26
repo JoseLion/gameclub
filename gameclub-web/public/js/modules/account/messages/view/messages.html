@@ -229,7 +229,7 @@
 								<span>En el caso de no haber recibido el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec">nuestro servicio al cliente</a>.</span>
 								<br>
 								<br>
-								<span class="text-lg">Tiempo restante:... </span>
+								<span class="text-lg">Tiempo restante: </span>
 								<span class="text-black text-lg">
 									{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}}
 								</span>
@@ -510,7 +510,7 @@
 								<span>Se acaban de acreditar a tu cuenta: </span><span class="text-black upper-case">{{getLenderRevenue(loan) | currency: '$': 2}}</span>
 								<br>
 								<br>
-								<span class="text-lg">Tiempo restante:... </span>
+								<span class="text-lg">Tiempo restante: </span>
 								<span class="text-black text-lg">
 									{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}}
 								</span>

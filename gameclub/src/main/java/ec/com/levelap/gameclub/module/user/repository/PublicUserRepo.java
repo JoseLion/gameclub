@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserLite;
+import ec.com.levelap.gameclub.utils.Code;
 
 @Repository
 public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
@@ -37,9 +38,9 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 			@Param("endDate") Date endDate,
 			Pageable page);
 	
-	public Long countByGamesIsBorrowedIsTrueAndId(Long id);
+	public Long countByIdAndGamesIsBorrowedIsTrue(Long id);
 	
-	@Query("SELECT COUNT(l.id) FROM Loan l WHERE l.gamer.id=:id AND l.review IS NULL")
+	@Query("SELECT COUNT(l) FROM Loan l WHERE l.gamer.id=:id AND (l.restore IS NULL OR l.restore.shippingStatus.code!='" + Code.SHIPPING_DELIVERED + "')")
 	public Long countGamesToReturn(@Param("id") Long id);
 	
 	public PublicUser findByUrlToken(String urlToken);

@@ -76,8 +76,7 @@ public class WelcomeKitService {
 	public WelcomeKitLite save(WelcomeKit kit) throws ServletException {
 		WelcomeKit previous = welcomeKitRepo.findOne(kit.getId());
 
-		if (!kit.getShippingStatus().equals(previous.getShippingStatus()) || (kit.getShippingNote() != null
-				&& !kit.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
+		if (!kit.getShippingStatus().equals(previous.getShippingStatus()) || (kit.getShippingNote() != null && !kit.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
 			Message message = messageRepo.findOne(kit.getMessage().getId());
 			message.setRead(Boolean.FALSE);
 			message = messageRepo.save(message);
@@ -86,7 +85,7 @@ public class WelcomeKitService {
 
 		if (kit.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
 			PublicUser publicUser = publicUserRepo.findOne(kit.getPublicUser().getId());
-			publicUser.setIsReady(Boolean.TRUE);
+			publicUser.setIsReady(true); 
 			publicUser = publicUserRepo.save(publicUser);
 			kit.setPublicUser(publicUser);
 		}

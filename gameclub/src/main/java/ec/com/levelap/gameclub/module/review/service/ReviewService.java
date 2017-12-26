@@ -55,7 +55,6 @@ public class ReviewService {
 		
 		if (currentUser.getId().longValue() == loan.getGamer().getId().longValue()) {
 			loan.getReview().setLenderReviewDate(new Date());
-			loan.getPublicUserGame().setIsBorrowed(false);
 			publicUserService.getPublicUserGameRepo().save(loan.getPublicUserGame());
 			
 			loan.getLenderMessage().setRead(false);

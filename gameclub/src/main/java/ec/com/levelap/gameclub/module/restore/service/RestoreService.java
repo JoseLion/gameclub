@@ -129,7 +129,7 @@ public class RestoreService {
 			fineService.getFineRepo().save(fine);
 		} else if (restore.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
 			PublicUserGame publicUserGame = restore.getPublicUserGame();
-			publicUserGame.setIsBorrowed(Boolean.TRUE);
+			publicUserGame.setIsBorrowed(false);
 			publicUserService.getPublicUserGameRepo().save(publicUserGame);
 			restore.setPublicUserGame(publicUserGame);
 		}

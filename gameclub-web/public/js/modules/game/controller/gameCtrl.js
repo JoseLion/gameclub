@@ -17,7 +17,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             showSelectionBar: true,
             step: 0.01,
             precision: 0.01,
-            floor: 0.0
+            floor: 0.00
         }
     };
 
@@ -405,11 +405,12 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.weekSelected = function(){
-        $scope.balance.value = 0;
         $scope.loan.shippningCost = $scope.shippingCost;
         $scope.loan.feeGameClub = ($scope.loanGame.cost * $scope.loan.weeks) * (feeLoanGamerPercentage / 100.0);
         $scope.loan.subtotal = ($scope.loanGame.cost * $scope.loan.weeks) + $scope.loan.shippningCost + $scope.loan.feeGameClub;
         $scope.loan.taxes = $scope.loan.subtotal * taxes;
         $scope.loan.cost = $scope.loan.subtotal + $scope.loan.taxes;
+        $scope.balance.value = 0;
+        $scope.balance.options.ceil = (parseFloat($rootScope.currentUser.shownBalance) >= $scope.loan.cost ? $scope.loan.cost : parseFloat($rootScope.currentUser.shownBalance));
     }
 });

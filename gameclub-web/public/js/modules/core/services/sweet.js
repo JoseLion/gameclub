@@ -2,7 +2,7 @@ angular.module("Core").factory('sweet', function(SweetAlert, Const, notif) {
 	return {
 		default: function(message, confirm, cancel) {
 			SweetAlert.swal({
-				title: "¿Está seguro?",
+				title: "Estás seguro?",
 				text: message,
 				type: "info",
 				showCancelButton: true,
@@ -27,12 +27,12 @@ angular.module("Core").factory('sweet', function(SweetAlert, Const, notif) {
 
 		save: function(confirm, cancel) {
 			SweetAlert.swal({
-				title: "¿Está seguro que desea guardar la información?",
+				title: "Estás seguro que desea guardar la información?",
 				text: Const.messages.confirmation,
 				type: "info",
 				showCancelButton: true,
-				confirmButtonText: "¡Sí, guardar!",
-				cancelButtonText: "¡No, cancelar!",
+				confirmButtonText: "Sí, guardar!",
+				cancelButtonText: "No, cancelar!",
 				closeOnConfirm: false,
 				closeOnCancel: false,
 				showLoaderOnConfirm: true

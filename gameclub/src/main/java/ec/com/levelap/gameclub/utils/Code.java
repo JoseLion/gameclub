@@ -23,11 +23,11 @@ public interface Code {
 	
 	public static final String SETTING_GAMER_DIDNT_RECEIVE = "STGFNEPDR";
 	
+	public static final String SETTING_LENDER_REWARD_ON_CANCEL = "STGFNEVPL";
+	
 	public static final String SETTING_GAMER_DIDNT_DELIVER = "STGFNEPDD";
 	
-	public static final String SETTING_GAMER_DIDNT_DELIVER_2ND = "STGFNEPD2";
-	
-	public static final String SETTING_NO_LOAN_REWARD = "STGFNEVPL";
+	public static final String SETTING_LENDER_REWARD_ON_DELAY = "STGFNEVL2";
 	
 	public static final String SETTING_REFFERED_REWARD = "STGREFREW";
 	

@@ -30,7 +30,7 @@ public class PaymentezController {
 	
 	@RequestMapping(value="listCards", method=RequestMethod.GET)
 	public ResponseEntity<String> listCards(HttpSession session) throws ServletException, RestClientException, UnsupportedEncodingException, NoSuchAlgorithmException, URISyntaxException {
-		String cards = paymentezService.listCards(session);
+		String cards = paymentezService.listCurrentUserCards(session);
 		return new ResponseEntity<String>(cards, HttpStatus.OK);
 	}
 	

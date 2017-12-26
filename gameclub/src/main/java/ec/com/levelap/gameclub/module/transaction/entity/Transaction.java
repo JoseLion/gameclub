@@ -26,36 +26,36 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
-@Table(schema = Const.SCHEMA, name = "transaction")
+@Table(schema=Const.SCHEMA, name="transaction")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Transaction extends BaseEntity {
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "public_user_transaction", foreignKey = @ForeignKey(name = "public_user_transaction_fk"))
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
+	@JoinColumn(name="public_user_transaction", foreignKey=@ForeignKey(name="public_user_transaction_fk"))
 	private PublicUser owner;
 
-	@Column(columnDefinition = "VARCHAR")
+	@Column(columnDefinition="VARCHAR")
 	private String transaction;
 
-	@Column(columnDefinition = "VARCHAR")
+	@Column(columnDefinition="VARCHAR")
 	private String game = "";
 	
-	@Column(columnDefinition = "VARCHAR")
+	@Column(columnDefinition="VARCHAR")
 	private String console = "";
 
-	@Column(columnDefinition = "INTEGER DEFAULT 0")
+	@Column(columnDefinition="INTEGER DEFAULT 0")
 	private Integer weeks = 0;
 
 	@JsonIgnore
-	@Column(name = "balance_part")
+	@Column(name="balance_part")
 	private byte[] balancePartEnc;
 
 	@JsonIgnore
-	@Column(name = "debit_balance")
+	@Column(name="debit_balance")
 	private byte[] debitBalanceEnc;
 
 	@JsonIgnore
-	@Column(name = "debit_card")
+	@Column(name="debit_card")
 	private byte[] debitCardEnc;
 
 	@Transient
@@ -70,8 +70,7 @@ public class Transaction extends BaseEntity {
 	public Transaction() {
 	}
 
-	public Transaction(PublicUser owner, String transaction, String game, String console, Integer weeks, byte[] balancePartEnc,
-			byte[] debitBalanceEnc, byte[] debitCardEnc) {
+	public Transaction(PublicUser owner, String transaction, String game, String console, Integer weeks, byte[] balancePartEnc, byte[] debitBalanceEnc, byte[] debitCardEnc) {
 		this.owner = owner;
 		this.transaction = transaction;
 		this.game = game;
@@ -148,8 +147,7 @@ public class Transaction extends BaseEntity {
 
 	public Double getBalancePart() throws IOException, GeneralSecurityException {
 		if (owner.getPrivateKey() != null && balancePartEnc != null && balancePartEnc.length > 0) {
-			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
-					.getBean(LevelapCryptography.class);
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");
 			FileUtils.writeByteArrayToFile(key, owner.getPrivateKey());
 			String decypted = cryptoService.decrypt(balancePartEnc, key);
@@ -157,6 +155,7 @@ public class Transaction extends BaseEntity {
 		} else {
 			balancePart = 0D;
 		}
+		
 		return balancePart;
 	}
 
@@ -166,8 +165,7 @@ public class Transaction extends BaseEntity {
 
 	public Double getDebitBalance() throws IOException, GeneralSecurityException {
 		if (owner.getPrivateKey() != null && debitBalanceEnc != null && debitBalanceEnc.length > 0) {
-			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
-					.getBean(LevelapCryptography.class);
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");
 			FileUtils.writeByteArrayToFile(key, owner.getPrivateKey());
 			String decypted = cryptoService.decrypt(debitBalanceEnc, key);
@@ -175,6 +173,7 @@ public class Transaction extends BaseEntity {
 		} else {
 			debitBalance = 0D;
 		}
+		
 		return debitBalance;
 	}
 
@@ -184,8 +183,7 @@ public class Transaction extends BaseEntity {
 
 	public Double getDebitCard() throws IOException, GeneralSecurityException {
 		if (owner.getPrivateKey() != null && debitCardEnc != null && debitCardEnc.length > 0) {
-			LevelapCryptography cryptoService = ApplicationContextHolder.getContext()
-					.getBean(LevelapCryptography.class);
+			LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");
 			FileUtils.writeByteArrayToFile(key, owner.getPrivateKey());
 			String decypted = cryptoService.decrypt(debitCardEnc, key);
@@ -193,11 +191,11 @@ public class Transaction extends BaseEntity {
 		} else {
 			debitCard = 0D;
 		}
+		
 		return debitCard;
 	}
 
 	public void setDebitCard(Double debitCard) {
 		this.debitCard = debitCard;
 	}
-
 }

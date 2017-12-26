@@ -16,23 +16,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
-import ec.com.levelap.commons.catalog.Catalog;
-import ec.com.levelap.commons.catalog.CatalogRepo;
 import ec.com.levelap.cryptography.LevelapCryptography;
+import ec.com.levelap.gameclub.module.fine.entity.Fine;
+import ec.com.levelap.gameclub.module.fine.service.FineService;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
-import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
+import ec.com.levelap.gameclub.module.loan.service.LoanService;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
-import ec.com.levelap.gameclub.module.paymentez.service.PaymentezService;
 import ec.com.levelap.gameclub.module.restore.entity.Restore;
 import ec.com.levelap.gameclub.module.restore.entity.RestoreLite;
 import ec.com.levelap.gameclub.module.restore.repository.RestoreRepo;
+import ec.com.levelap.gameclub.module.settings.entity.Setting;
 import ec.com.levelap.gameclub.module.settings.service.SettingService;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
-import ec.com.levelap.gameclub.module.transaction.repository.TransactionRepo;
+import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
+import ec.com.levelap.gameclub.utils.Const;
 
 @Service
 public class RestoreService {
@@ -40,7 +41,7 @@ public class RestoreService {
 	private RestoreRepo restoreRepo;
 
 	@Autowired
-	private LoanRepo loanRepo;
+	private LoanService loanService;
 
 	@Autowired
 	private SettingService settingService;
@@ -52,25 +53,20 @@ public class RestoreService {
 	private MessageService messageService;
 
 	@Autowired
-	private LevelapCryptography cryptoService;
+	private FineService fineService;
 
 	@Autowired
-	private TransactionRepo transactionRepo;
-
-	@Autowired
-	private CatalogRepo catalogRepo;
+	private TransactionService transactionService;
 	
 	@Autowired
-	private PaymentezService paymentezService;
+	private LevelapCryptography cryptoService;
 
 	@Transactional
 	public RestoreLite save(Restore restore, HttpSession session, HttpServletRequest request) throws ServletException, GeneralSecurityException, IOException, RestClientException, URISyntaxException {
 		Restore previous = restoreRepo.findOne(restore.getId());
 		restore.setLoan(previous.getLoan());
 
-		Catalog shippingStatus = catalogRepo.findByCode(restore.getShippingStatus().getCode());
-
-		if (!shippingStatus.equals(previous.getShippingStatus()) || (restore.getShippingNote() != null && !restore.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
+		if (!restore.getShippingStatus().equals(previous.getShippingStatus()) || (restore.getShippingNote() != null && !restore.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
 			restore.setLenderStatusDate(new Date());
 			restore.setGamerStatusDate(new Date());
 
@@ -81,74 +77,57 @@ public class RestoreService {
 		}
 
 		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(restore.getGamer().getId());
-		File keyGamer = File.createTempFile("keyGamer", ".tmp");
-		FileUtils.writeByteArrayToFile(keyGamer, gamer.getPrivateKey());
+		File gamerKey = File.createTempFile("keyGamer", ".tmp");
+		FileUtils.writeByteArrayToFile(gamerKey, gamer.getPrivateKey());
 
-		PublicUser lender = publicUserService.getPublicUserRepo()
-				.findOne(restore.getPublicUserGame().getPublicUser().getId());
-		File keyLender = File.createTempFile("keyLender", ".tmp");
-		FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
+		PublicUser lender = publicUserService.getPublicUserRepo().findOne(restore.getPublicUserGame().getPublicUser().getId());
+		File lenderKey = File.createTempFile("keyLender", ".tmp");
+		FileUtils.writeByteArrayToFile(lenderKey, lender.getPrivateKey());
+		
+		Double subtotal = (restore.getLoan().getPublicUserGame().getCost() * restore.getLoan().getWeeks()) + restore.getLoan().getShippningCost() + restore.getLoan().getFeeGameClub();
 
-		Transaction transaction;
-
-		if (shippingStatus.getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER)) {
-			Double value = Double.valueOf(settingService.getSettingValue(Code.SETTING_GAMER_DIDNT_DELIVER));
-
-			gamer = publicUserService.substractFromUserBalance(restore.getGamer().getId(), value);
-			Double totalBalanceGamer = gamer.getShownBalance() - value;
-			byte[] toBalance = null;
-			byte[] toCard = null;
-			if (totalBalanceGamer < 0) {
-				gamer = publicUserService.setUserBalance(gamer.getId(), 0D);
-				String description = "Multa GameClub - " + shippingStatus.getName();
-				paymentezService.debitFromCard(session, request.getRemoteAddr(), restore.getLoan().getCardReference(), Math.abs(totalBalanceGamer), 0.0, description);
-				toBalance = cryptoService.encrypt(Double.toString(gamer.getShownBalance()), keyGamer);
-				toCard = cryptoService.encrypt(Double.toString(Math.abs(totalBalanceGamer)), keyGamer);
+		if (restore.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER)) {
+			Setting fineSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_GAMER_DIDNT_DELIVER);
+			Double fineAmount;
+			
+			if (fineSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
+				fineAmount = subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0);
 			} else {
-				gamer = publicUserService.substractFromUserBalance(gamer.getId(), value);
-				toBalance = cryptoService.encrypt(Double.toString(value), keyGamer);
+				fineAmount = Double.parseDouble(fineSetting.getValue());
 			}
-
-			lender = publicUserService.addToUserBalance(restore.getPublicUserGame().getPublicUser().getId(), value);
-
-			transaction = new Transaction(gamer, "MULTA - " + shippingStatus.getName(),
-					restore.getPublicUserGame().getConsole().getName(),
-					restore.getPublicUserGame().getGame().getName(), restore.getLoan().getWeeks(), null, toBalance,
-					toCard);
-			transactionRepo.save(transaction);
-
-			transaction = new Transaction(lender, "DEVOLICION", restore.getPublicUserGame().getGame().getName(),
-					restore.getPublicUserGame().getConsole().getName(),
-					restore.getLoan().getWeeks(), cryptoService.encrypt(Double.toString(value), keyLender), null, null);
-			transactionRepo.save(transaction);
-
-		} else if (shippingStatus.getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND)) {
-			Double value = restore.getPublicUserGame().getGame().getUploadPayment();
-			String priceCharting = settingService.getSettingValue(Code.SETTING_NATIONALIZACION);
-			gamer = publicUserService.substractFromUserBalance(restore.getGamer().getId(),
-					value + (value * Double.valueOf(priceCharting)));
-
-			Double totalBalanceGamer = gamer.getShownBalance() - value + (value * Double.valueOf(priceCharting));
-			byte[] toBalance = null;
-			byte[] toCard = null;
-			if (totalBalanceGamer < 0) {
-				toBalance = cryptoService.encrypt(Double.toString(gamer.getShownBalance()), keyGamer);
-				toCard = cryptoService.encrypt(Double.toString(Math.abs(totalBalanceGamer)), keyGamer);
-				
-				gamer = publicUserService.setUserBalance(gamer.getId(), 0D);
-				String description = "Multa GameClub - " + shippingStatus.getName();
-				paymentezService.debitFromCard(session, request.getRemoteAddr(), restore.getLoan().getCardReference(), Math.abs(totalBalanceGamer), 0.0, description);
+			
+			Fine fine = new Fine();
+			fine.setOwner(gamer);
+			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), lenderKey));
+			fine.setDescription(restore.getShippingStatus().getName());
+			fineService.getFineRepo().save(fine);
+			
+			Setting rewardSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_LENDER_REWARD_ON_DELAY);
+			Double rewardAmount;
+			
+			if (rewardSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
+				rewardAmount = restore.getLoan().getPublicUserGame().getCost() * (Double.parseDouble(rewardSetting.getValue()) / 100.0);
 			} else {
-				gamer = publicUserService.substractFromUserBalance(gamer.getId(), value);
-				toBalance = cryptoService.encrypt(Double.toString(value), keyGamer);
+				rewardAmount = Double.parseDouble(rewardSetting.getValue());
 			}
-
-			transaction = new Transaction(gamer, "MULTA - " + shippingStatus.getName(),
-					restore.getPublicUserGame().getConsole().getName(),
-					restore.getPublicUserGame().getGame().getName(), restore.getLoan().getWeeks(), null, toBalance,
-					toCard);
-			transactionRepo.save(transaction);
-		} else if(shippingStatus.getCode().equals(Code.SHIPPING_DELIVERED)) {
+			
+			publicUserService.addToUserBalance(lender.getId(), rewardAmount);
+			
+			Transaction transaction = new Transaction();
+			transaction.setOwner(lender);
+			transaction.setTransaction("RECOMPENSA POR DEMORA");
+			transaction.setGame(restore.getLoan().getPublicUserGame().getGame().getName());
+			transaction.setConsole(restore.getLoan().getPublicUserGame().getConsole().getName());
+			transaction.setWeeks(restore.getLoan().getWeeks());
+			transaction.setBalancePartEnc(cryptoService.encrypt(Double.toString(rewardAmount), lenderKey));
+			transactionService.getTransactionRepo().save(transaction);
+		} else if (restore.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND)) {
+			Fine fine = new Fine();
+			fine.setOwner(gamer);
+			fine.setAmountEnc(cryptoService.encrypt(Double.toString(restore.getLoan().getPublicUserGame().getGame().getUploadPayment()), gamerKey));
+			fine.setDescription(restore.getShippingStatus().getName());
+			fineService.getFineRepo().save(fine);
+		} else if (restore.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
 			PublicUserGame publicUserGame = restore.getPublicUserGame();
 			publicUserGame.setIsBorrowed(Boolean.TRUE);
 			publicUserService.getPublicUserGameRepo().save(publicUserGame);
@@ -173,7 +152,7 @@ public class RestoreService {
 		}
 
 		restore = restoreRepo.save(restore);
-		return loanRepo.findOne(restore.getLoan().getId());
+		return loanService.getLoanRepo().findOne(restore.getLoan().getId());
 	}
 
 	public RestoreRepo getRestoreRepo() {

@@ -39,31 +39,13 @@ public class PaymentezService {
 	@Value("${levelap.paymentez.app-key}")
 	private String APP_KEY;
 	
-	public String listCards(HttpSession session) throws ServletException, UnsupportedEncodingException, NoSuchAlgorithmException, RestClientException, URISyntaxException {
-		MessageDigest messageDigest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_256);
+	public String listCurrentUserCards(HttpSession session) throws ServletException, UnsupportedEncodingException, NoSuchAlgorithmException, RestClientException, URISyntaxException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
-		Date today = new Date();
-		String plainText = "application_code=" + APP_CODE +
-				"&email=" + URLEncoder.encode(currentUser.getUsername(), StandardCharsets.UTF_8.name()) +
-				"&session_id=" + session.getId() +
-				"&uid=" + currentUser.getId() +
-				"&" + today.getTime() +
-				"&" + APP_KEY;
-		messageDigest.update(plainText.getBytes(StandardCharsets.UTF_8));
-		byte[] digestToken = messageDigest.digest();
-		String token = String.format("%064x", new BigInteger(1, digestToken));
-		
-		String url = BASE_URL + "/api/cc/list" +
-				"?application_code=" + APP_CODE +
-				"&uid=" + currentUser.getId() +
-				"&email=" + URLEncoder.encode(currentUser.getUsername(), StandardCharsets.UTF_8.name()) + 
-				"&session_id=" + session.getId() +
-				"&auth_timestamp=" + today.getTime() +
-				"&auth_token=" + token;
-		
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.getForEntity(new URI(url), String.class);
-		return response.getBody();
+		return this.getCardsOfUser(currentUser, session);
+	}
+	
+	public String listCardsOfUser(PublicUser user, HttpSession session) throws ServletException, RestClientException, NoSuchAlgorithmException, UnsupportedEncodingException, URISyntaxException {
+		return this.getCardsOfUser(user, session);
 	}
 	
 	public HttpStatus deleteCard(HttpSession session, String cardReference) throws ServletException, NoSuchAlgorithmException, RestClientException, URISyntaxException {
@@ -131,6 +113,32 @@ public class PaymentezService {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.postForEntity(new URI(url), null, String.class);
+		return response.getBody();
+	}
+	
+	private String getCardsOfUser(PublicUser user, HttpSession session) throws ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, RestClientException, URISyntaxException {
+		MessageDigest messageDigest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_256);
+		Date today = new Date();
+		String plainText = "application_code=" + APP_CODE +
+				"&email=" + URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8.name()) +
+				"&session_id=" + session.getId() +
+				"&uid=" + user.getId() +
+				"&" + today.getTime() +
+				"&" + APP_KEY;
+		messageDigest.update(plainText.getBytes(StandardCharsets.UTF_8));
+		byte[] digestToken = messageDigest.digest();
+		String token = String.format("%064x", new BigInteger(1, digestToken));
+		
+		String url = BASE_URL + "/api/cc/list" +
+				"?application_code=" + APP_CODE +
+				"&uid=" + user.getId() +
+				"&email=" + URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8.name()) + 
+				"&session_id=" + session.getId() +
+				"&auth_timestamp=" + today.getTime() +
+				"&auth_token=" + token;
+		
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.getForEntity(new URI(url), String.class);
 		return response.getBody();
 	}
 }

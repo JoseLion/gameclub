@@ -64,7 +64,8 @@ public class ReviewService {
 			Double lendingAverage = reviewRepo.getLendingAverageOfUser(currentUser.getId());
 			
 			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
-			lender.setRating((gamingAverage + lendingAverage) / 2.0);
+			Double factor = (gamingAverage > 0.0 && lendingAverage > 0.0) ? 2.0 : 1.0;
+			lender.setRating((gamingAverage + lendingAverage) / factor);
 			publicUserService.getPublicUserRepo().save(lender);
 		} else {
 			loan.getReview().setGamerReviewDate(new Date());
@@ -72,11 +73,12 @@ public class ReviewService {
 			loan.getGamerMessage().setRead(false);
 			messageService.getMessageRepo().save(loan.getGamerMessage());
 			
-			Double gamerAverage = reviewRepo.getGamingAverageOfUser(loan.getPublicUserGame().getPublicUser().getId());
-			Double lenderAverage = reviewRepo.getLendingAverageOfUser(loan.getPublicUserGame().getPublicUser().getId());
+			Double gamingAverage = reviewRepo.getGamingAverageOfUser(loan.getPublicUserGame().getPublicUser().getId());
+			Double lendingAverage = reviewRepo.getLendingAverageOfUser(loan.getPublicUserGame().getPublicUser().getId());
 			
 			PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
-			gamer.setRating((gamerAverage + lenderAverage) / 2.0);
+			Double factor = (gamingAverage > 0.0 && lendingAverage > 0.0) ? 2.0 : 1.0;
+			gamer.setRating((gamingAverage + lendingAverage) / factor);
 			publicUserService.getPublicUserRepo().save(gamer);
 		}
 		

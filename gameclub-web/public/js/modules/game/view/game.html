@@ -4,25 +4,23 @@
         </div>
     </section>
     <section class="row header">
-        <div class="col-md-3 cover">
-            <game-rating image-archive="game.diamond" no-rating no-selection="true"></game-rating>
+        <div class="col-md-4 col-xs-5 cover">
+            <diamond-img ng-src="RestUrl + '/open/archive/download/' + game.diamond.id"></diamond-img>
         </div>
-        <div class="col-md-6 principal">
+        <div class="col-md-5 col-xs-7 principal">
             <h1 class="col-md-12 title">{{game.name}}</h1>
             <div class="col-md-12 rating-container">
                 <stars ng-model=game.rating></stars>
             </div>
             <div class="col-md-12 video">
-                <span>
-                    <a ng_href="{{game.trailerUrl}}" target="_blank">
+                <a ng-href="{{game.trailerUrl}}" target="_blank">
                     <i class="gc gc-youtube" ></i>
-                    <font color=#111111><B>Video game play </B></font>
-                    </a>
-                </span>
+                    <span color=#111111><B>Video game play </B></span>
+                </a>
             </div>
         </div>
-        <div class="col-md-3 rating text-right">
-            <div class="col-md-12 content-rating">
+        <div class="col-md-3 col-xs-12 rating text-right">
+            <div class="col-md-12 col-xs-2 content-rating">
                 <img ng-src="{{game.contentRating.other}}">
             </div>
             <form class="col-md-12 col-xs-6 platform">
@@ -36,7 +34,7 @@
                     </ui-select-choices>
                 </ui-select>
             </form>
-            <div class="col-md-12 col-xs-6 category" ng-repeat="cross in game.categories">
+            <div class="col-md-12 col-xs-2 category" ng-repeat="cross in game.categories">
                 <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}">
             </div>
         </div>

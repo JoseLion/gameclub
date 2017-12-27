@@ -16,12 +16,22 @@ public class GameClubMailService {
 	@Autowired
 	private MailService mailService;
 	
+	private static String baseUrl;
+	
+	private static String port;
+	
 	public Boolean sendMailWihTemplate(LevelapMail levelapMail, String template, Map<String, String> params) throws MessagingException {
-		ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentRequest();
-		String currentRequest = builder.build().toUriString();
-		String[] split = currentRequest.split(":");
-		params.put("baseUrl", split[0] + ":" + split[1]);
-		params.put("port", split[0].equals("https") ? "8390" : "8090");
+		if (baseUrl == null || port == null) {
+			ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentRequest();
+			String currentRequest = builder.build().toUriString();
+			String[] split = currentRequest.split(":");
+			
+			baseUrl = split[0] + ":" + split[1];
+			port = split[0].equals("https") ? "8390" : "8090";
+		}
+		
+		params.put("baseUrl", baseUrl);
+		params.put("port", port);
 		
 		return mailService.sendMailWihTemplate(levelapMail, template, params);
 	}

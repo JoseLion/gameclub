@@ -4,16 +4,16 @@
 #game section.banner>div{position:absolute;width:100%;height:100%;opacity:0.5;top:0;right:0;bottom:0;left:0;}
 #game section.banner::after{content:"";position:absolute;display:block;background:@color-secundary-30;top:0;right:0;bottom:0;left:0;}
 #game section.header{background:@color-tertiary-alt;}
-#game section.header .cover{margin-top:-7em;}
-#game section.header .cover #game-rating{width:80%;margin:auto;}
-#game section.header .cover #game-rating .game-container .background::after{cursor:default;}
-#game section.header .cover #game-rating .game-container .background:hover::before{background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
-#game section.header .principal{padding:0;}
-#game section.header .principal .title{text-transform:none;font-size:1.2em;font-weight:700;margin-top:0.5em;margin-bottom:0;padding:0;font-family:@font-family-jaapokki;letter-spacing:1px;}
-#game section.header .principal .rating-container{padding:0;}
+#game section.header .cover{padding:unset;padding-left:6.5%;}
+#game section.header .cover #diamond-img{position:absolute;transform:translateY(-50%);margin-right:10%;}
+#game section.header .principal{padding:0;margin-bottom:5%;}
+#game section.header .principal .title{text-transform:none;font-size:1.2em;font-weight:700;margin-top:0.5em;margin-bottom:0;padding:0;font-family:@font-family-jaapokki;letter-spacing:1px;margin-left:-10%;width:110%;}
+#game section.header .principal .rating-container{padding:unset;margin-left:-10%;}
 #game section.header .principal .rating-container i::before{font-size:1.2em;color:@color-primary-s;}
 #game section.header .principal .rating-container i.yes::before{-webkit-text-fill-color:transparent;background:@color-primary;background:linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(90deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
-#game section.header .principal .video{padding:0;font-family:@font-family-jaapokki;font-size:1.2em;}
+#game section.header .principal .video{padding:0;font-family:@font-family-jaapokki;font-size:1.2em;margin-left:-10%;}
+#game section.header .principal .video a{color:inherit;cursor:pointer;text-decoration:none;}
+#game section.header .principal .video a span:hover{text-decoration:underline;}
 #game section.header .principal .video i::before{font-size:1.6em;-webkit-text-fill-color:transparent;background:@color-primary;background:linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-webkit-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-o-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);background:-moz-linear-gradient(0deg,@color-secundary,@color-secundary,@color-primary-alt,@color-primary-alt);-webkit-background-clip:text;}
 #game section.header .rating{margin-top:-5em;}
 #game section.header .rating .content-rating img{height:4em;margin-bottom:1em;}
@@ -23,7 +23,7 @@
 #game section.header .rating .platform{height:3em;}
 #game section.header .rating .platform .selector .ui-select-match-text img{height:1.5em;right:15px;}
 #game section.header .rating .platform .selector i.caret.pull-right{color:@color-secundary;}
-#game section.header .rating .category{display:inline-block;width:15%;height:auto;border:2px solid @color-primary;border-radius:50%;padding:unset;float:right;margin:0% 1%;}
+#game section.header .rating .category{display:inline-block;width:30%;height:auto;border:2px solid @color-primary;border-radius:50%;padding:unset;float:right;margin:0% 1%;}
 #game section.header .rating .category img{width:100%;height:auto;padding:15%;}
 #game section.header .rating>div{margin-bottom:1em;}
 

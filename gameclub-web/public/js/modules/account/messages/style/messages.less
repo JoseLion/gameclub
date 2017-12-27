@@ -7,8 +7,8 @@
 #account #messages section.messages .inbox{background-color:#2cb4bf;padding:0.75%;min-height:30vw;}
 #account #messages section.messages .inbox .list{padding-left:unset;padding-right:0.5%;}
 #account #messages section.messages .inbox .list .head{width:100%;background-color:black;text-align:center;padding:3% 0%;margin-bottom:1%;text-transform:uppercase;font-weight:bold;font-size:1em;}
-#account #messages section.messages .inbox .list .search{width:100%;background-color:white;padding:3% 6% 3% 1%;height:3vw;}
-#account #messages section.messages .inbox .list .search::before{content:"\f002";color:black;position:absolute;font-size:1.4em;top:9.5%;left:5%;};
+#account #messages section.messages .inbox .list .search{background-color:white;padding:3% 4% 3% 1%;}
+#account #messages section.messages .inbox .list .search::before{content:"\f002";color:black;position:absolute;font-size:1.4em;transform:translate(-50%,0%);left:7%;};
 #account #messages section.messages .inbox .list .search input{width:100%;background-color:#949495;color:white;padding:2% 3% 2% 15%;border:none;font-weight:bold;font-size:0.9em;}
 #account #messages section.messages .inbox .list .search input::placeholder{color: #5a5a5a;}
 #account #messages section.messages .inbox .list .scrollable{background-color: white;height:-webkit-fill-available;overflow-y:scroll;height:29vw;}
@@ -20,12 +20,12 @@
 #account #messages section.messages .inbox .list .scrollable .labels>span{display:block;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell{cursor:pointer;background-color:white;border-top:2px solid black;display:flex;align-items:center;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell .image{padding:1%;text-align:center;}
-#account #messages section.messages .inbox .list .scrollable .inbox-cell .image img.avatar{border:4px solid black;padding:5%;border-radius:50%;height:57px;}
+#account #messages section.messages .inbox .list .scrollable .inbox-cell .image img.avatar{border:0.3vw solid black;padding:5%;border-radius:50%;width:4vw;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell.unread .image img.avatar{border-color:white;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell.selected .image img.avatar{border-color:white;}
-#account #messages section.messages .inbox .list .scrollable .inbox-cell .labels{color:black;font-weight:bold;font-size:1em;padding:1% 2%;}
+#account #messages section.messages .inbox .list .scrollable .inbox-cell .labels{color:black;font-weight:bold;font-size:1vw;padding:1% 2%;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell .labels #from{color:#949495;}
-#account #messages section.messages .inbox .list .scrollable .inbox-cell .date{color:#949495;padding:2% 2% 2% 0%;text-align:right;font-weight:bold;}
+#account #messages section.messages .inbox .list .scrollable .inbox-cell .date{color:#949495;padding:2% 2% 2% 0%;text-align:right;font-weight:bold;font-size:1vw;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell.unread{background-color:@color-secundary;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell.unread .labels #from{color:white;}
 #account #messages section.messages .inbox .list .scrollable .inbox-cell.unread .date{color:white;}

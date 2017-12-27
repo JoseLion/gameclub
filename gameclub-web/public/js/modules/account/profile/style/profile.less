@@ -27,16 +27,16 @@
 #account #profile section.contact-information .form label small{text-transform:none;display:inline-block;}
 #account #profile section.contact-information .form input{color:@color-primary;font-size:1.5em;}
 #account #profile section.contact-information .form input.ocupation{width:80%;}
-#account #profile section.contact-information .form input[disabled]{color:@color-primary;}
-#account #profile section.contact-information .form input[disabled]::-webkit-input-placeholder{color:rgba(7, 20, 40, 0.4);}
-#account #profile section.contact-information .form input[disabled]::-moz-placeholder{color:rgba(7, 20, 40, 0.4);}
-#account #profile section.contact-information .form input[disabled]::-ms-input-placeholder{color:rgba(7, 20, 40, 0.4);}
-#account #profile section.contact-information .form input::-webkit-input-placeholder{color:rgba(7, 20, 40, 0.4);}
-#account #profile section.contact-information .form input::-moz-placeholder{color:rgba(7, 20, 40, 0.4);}
-#account #profile section.contact-information .form input::-ms-input-placeholder{color:rgba(7, 20, 40, 0.4);}
+#account #profile section.contact-information .form input[disabled]{color:@color-primary;-webkit-text-fill-color:@color-primary;}
+#account #profile section.contact-information .form input[disabled]::-webkit-input-placeholder{color:rgba(7,20,40,0.4);}
+#account #profile section.contact-information .form input[disabled]::-moz-placeholder{color:rgba(7,20,40,0.4);}
+#account #profile section.contact-information .form input[disabled]::-ms-input-placeholder{color:rgba(7,20,40,0.4);}
+#account #profile section.contact-information .form input::-webkit-input-placeholder{color:rgba(7,20,40,0.4);}
+#account #profile section.contact-information .form input::-moz-placeholder{color:rgba(7,20,40,0.4);}
+#account #profile section.contact-information .form input::-ms-input-placeholder{color:rgba(7,20,40,0.4);}
 #account #profile section.contact-information .form .selector{width:100%;padding-top:0;padding-bottom:0;}
 #account #profile section.contact-information .form .selector *{outline:none;}
-#account #profile section.contact-information .form .selector .ui-select-match .ui-select-match-text{color:@color-primary;font-weight:400;height:2em;font-size:1.5em;}
+#account #profile section.contact-information .form .selector .ui-select-match .ui-select-match-text{color:@color-primary;-webkit-text-fill-color:@color-primary;font-weight:400;height:2em;font-size:1.5em;}
 #account #profile section.contact-information .form .selector .ui-select-match>span.ui-select-toggle,
 #account #profile section.contact-information form .selector>input.ui-select-search{height:2em;font-size:0.8em;}
 #account #profile section.contact-information .form .selector .ui-select-match span[disabled]{background:transparent;border:none;}
@@ -55,6 +55,10 @@
 #account #profile section.contact-information .form .billing-address textarea::-webkit-scrollbar{background:transparent;width:0.5em!important;}
 #account #profile section.contact-information .form .billing-address textarea::-webkit-scrollbar-track{background:transparent;}
 #account #profile section.contact-information .form .billing-address textarea::-webkit-scrollbar-thumb{background:@color-primary;}
+#account #profile section.contact-information .form .billing-address textarea[disabled]{color:@color-primary;-webkit-text-fill-color:@color-primary;}
+#account #profile section.contact-information .form .billing-address textarea[disabled]::-webkit-input-placeholder{color:rgba(7,20,40,0.4);}
+#account #profile section.contact-information .form .billing-address textarea[disabled]::-moz-placeholder{color:rgba(7,20,40,0.4);}
+#account #profile section.contact-information .form .billing-address textarea[disabled]::-ms-input-placeholder{color:rgba(7,20,40,0.4);}
 #account #profile section.contact-information .form .phone>label{display:table-cell;float:none;padding-top:1%;vertical-align:middle;}
 #account #profile section.contact-information .form .phone>div{display:table-cell;float:none;padding-left:1%;vertical-align:middle;}
 
@@ -86,24 +90,23 @@
 #account #profile section.games span.quantity.more{color:@color-primary;}
 #account #profile section.games p{margin:2% auto;font-size:0.8em;}
 
-#account #profile section.contact-ruc{position:relative;padding-bottom:4%;background:@color-primary-alt}
-#account #profile section.contact-ruc .completed{position:absolute;top:5%;left:20%;right:60%;bottom:0;text-align:center;font-size:1.8em;font-weight:700;}
+#account #profile section.contact-ruc{position:relative;padding-bottom:1%;background:@color-primary-alt}
+#account #profile section.contact-ruc .completed{text-align:center;margin-top:2%;font-size:1.8em;font-weight:bold;}
 #account #profile section.contact-ruc .completed span.percent{color:@color-primary-40;}
 #account #profile section.contact-ruc .completed button{padding-top:1%;font-size:0.65em;width:50%;}
 #account #profile section.contact-ruc .completed .icon-help{padding-bottom:0.75em;}
 #account #profile section.contact-ruc .completed .ruc-help{font-size:0.75em;font-weight:700;padding-bottom:0.75em;}
 #account #profile section.contact-ruc .completed .box.checked::after{content:"";background:url("/img/check.svg") no-repeat center center;position:absolute;left:1px;bottom:-2px;background-size:100%;width:1.5em;height:1.5em;}
-#account #profile section.contact-ruc .completed .ruc-info{font-size:0.7em;margin-bottom:2%;padding:1% 5%;}
+#account #profile section.contact-ruc .completed .ruc-info{font-size:0.65em;margin-bottom:1%;padding:0%;}
 #account #profile section.contact-ruc .form{margin-top:3%;margin-left:-1%;font-size:0.9em;position:relative;padding-left:3%;}
 #account #profile section.contact-ruc .form::before{content:"";position:absolute;top:0.5em;bottom:-0.5em;left:0;border-left:5px solid @color-primary-85;}
 #account #profile section.contact-ruc .form>div.clearfix{border:none;margin:0;padding:0;}
 #account #profile section.contact-ruc .form>div>label,
 #account #profile section.contact-ruc form>div>div{padding-left:0;padding-right:0;}
-#account #profile section.contact-ruc .form label[disabled]{color:@color-primary-30;text-transform:uppercase;}
 #account #profile section.contact-ruc .form label{color:@color-primary;text-transform:uppercase;}
 #account #profile section.contact-ruc .form label.separator{color:@color-primary-30;line-height:1;}
 #account #profile section.contact-ruc .form label small{text-transform:none;display:inline-block;}
-#account #profile section.contact-ruc .form input{color:@color-primary;font-size:1.5em;width:80%;}
+#account #profile section.contact-ruc .form input{color:@color-tertiary;width:80%;font-weight:bold;text-transform:uppercase;}
 #account #profile section.contact-ruc .form input[disabled]{color:@color-primary-30;}
 #account #profile section.contact-ruc .form input[disabled]::-webkit-input-placeholder{color:@color-primary-30;}
 #account #profile section.contact-ruc .form input[disabled]::-moz-placeholder{color:@color-primary-30;}
@@ -112,21 +115,25 @@
 #account #profile section.contact-ruc .form input::-moz-placeholder{color:@color-primary-30;}
 #account #profile section.contact-ruc .form input::-ms-input-placeholder{color:@color-primary-30;}
 #account #profile section.contact-ruc .form input[type="person"]{width:100%;}
+#account #profile section.contact-ruc .form.form-disabled label{color:@color-primary-30;text-transform:uppercase;}
 #account #profile section.contact-ruc .form .placeholder{text-align:center;text-transform:uppercase;}
 #account #profile section.contact-ruc .form .billing{border-bottom:none;}
 #account #profile section.contact-ruc .form .billing-address{padding:0;position:relative;}
 #account #profile section.contact-ruc .form .billing-address::before{content:"";border-bottom:2px solid @color-primary;left:0;right:0;position:absolute;top:42.5%;}
 #account #profile section.contact-ruc .form .billing-address[disabled]{content:"";border-bottom:2px solid @color-primary-30;left:0;right:0;position:absolute;top:42.5%;}
 #account #profile section.contact-ruc .form .billing-address::after{content:"";border-bottom:2px solid @color-primary;left:0;right:0;position:absolute;top:85.5%;}
-#account #profile section.contact-ruc .form .billing-address textarea{color:@color-primary;font-size:1.5em;resize:none;width:100%;}
-#account #profile section.contact-ruc .form .billing-address textarea[disabled]{color:@color-primary-30;font-size:1.5em;resize:none;width:100%;}
+#account #profile section.contact-ruc .form .billing-address textarea{color:@color-tertiary;resize:none;width:100%;text-transform:uppercase;font-weight:bold;}
+#account #profile section.contact-ruc .form .billing-address textarea[disabled]{color:@color-primary-30;}
 #account #profile section.contact-ruc .form .billing-address textarea::-webkit-scrollbar{background:transparent;width:0.5em!important;}
 #account #profile section.contact-ruc .form .billing-address textarea::-webkit-scrollbar-track{background:transparent;}
 #account #profile section.contact-ruc .form .billing-address textarea::-webkit-scrollbar-thumb{background:@color-primary;}
+#account #profile section.contact-ruc .form.form-disabled .billing-address::before{border-color:@color-primary-30;}
+#account #profile section.contact-ruc .form.form-disabled .billing-address::after{border-color:@color-primary-30;}
 #account #profile section.contact-ruc .form .phone>label{display:table-cell;float:none;padding-top:1%;vertical-align:middle;}
 #account #profile section.contact-ruc .form .phone>div{display:table-cell;float:none;padding-left:1%;vertical-align:middle;}
 #account #profile section.contact-ruc .form .button-rigth{text-align:right;}
 #account #profile section.contact-ruc .form .line{border-bottom: 2px solid @color-primary;margin-bottom:1%;padding:unset;}
+#account #profile section.contact-ruc .form.form-disabled .line{border-color:@color-primary-30;}
 #account #profile section.contact-ruc .form .address{margin-top:1%;padding:unset;}
 #account #profile section.contact-ruc .rigth{text-align:right;}
 #account #profile section.contact-ruc .box{position:relative;width:1.4em;height:1.4em;display:inline-block;border:2px solid @color-tertiary;margin-right:2%;color:@color-primary;}

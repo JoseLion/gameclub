@@ -157,7 +157,7 @@ public class Loan extends BaseEntity {
 	private Date deliveryDate;
 
 	@JsonManagedReference("LoanRestore")
-	@OneToOne(mappedBy = "loan", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="loan", fetch=FetchType.LAZY)
 	private Restore restore;
 
 	@JsonManagedReference("LoanReview")

@@ -16,11 +16,9 @@ public interface Const {
 
 	public static final String PUBLIC_USER = "publicUser";
 
-	public static final String KUSHKI_PLAN_NAME = "GAMECLUB";
+	public static final String KEY_BASE_URL = "baseUrl";
 
-	public static final String KUSHKI_PERIODICITY = "custom";
-
-	public static final String KUSHKI_LANGUAGE = "es";
+	public static final String KEY_PORT = "port";
 	
 	public static final long POSTGRESQL_MAX_DATE = 253402318800000L;
 	

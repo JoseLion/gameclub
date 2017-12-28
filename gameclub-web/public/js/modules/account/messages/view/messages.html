@@ -97,7 +97,7 @@
 								<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goToGame(loan.publicUserGame)">Ver ficha del juego</button>
 								<br>
 								<br>
-								<span>Durante <span class="text-black">{{loan.weeks}} semanas</span> desde la entrega del juego.</span>
+								<span>Durante <span class="text-black">{{loan.weeks}} semana(s)</span> desde la entrega del juego.</span>
 								<br>
 								<span>Pagarás un total de <span class="text-black">{{loan.cost | currency: '$': 2}}</span> por este alquiler.</span>
 								<br>
@@ -240,9 +240,10 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Iremos a buscar el juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date:'EEEE d'}} de {{showLendDay(loan.returnDate) | date:'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
+								<!-- <span>Iremos a buscar el juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date:'EEEE d'}} de {{showLendDay(loan.returnDate) | date:'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
 								<br>
-								<span>Hora: </span><span class="text-black">14H00</span><span> - </span><span class="text-black">18H00</span>
+								<span>Hora: </span><span class="text-black">14H00</span><span> - </span><span class="text-black">18H00</span> -->
+								<span>Retiraremos el juego entre 1 a 3 días laborales. Asegúrate de que la PERSONA DE ENTREGA (llenar abajo) esté presente en horas laborables en la dirección que registraste para retirarlo.</span>
 								<br>
 								<br>
 								<form>
@@ -375,7 +376,7 @@
 								<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goToGame(loan.publicUserGame)">Ver ficha del juego</button>
 								<br>
 								<br>
-								<span>Durante <span class="text-black">{{loan.weeks}} semanas</span> desde la entrega del juego.</span>
+								<span>Durante <span class="text-black">{{loan.weeks}} semana(s)</span> desde la entrega del juego.</span>
 								<br>
 								<span>Recibirás un total de <span class="text-black">{{getLenderRevenue(loan) | currency: '$': 2}}</span> por este alquiler.</span>
 								<br>
@@ -393,9 +394,7 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Retiraremos tu juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.acceptedDate) | date:'EEEE d'}} de {{showLendDay(loan.acceptedDate) | date:'MMMM'}} del {{showLendDay(loan.acceptedDate) | date:'yyyy'}}</span>
-								<br>
-								<span>Hora de retiro: </span><span class="text-black">14h00</span><span> - </span><span class="text-black">18:00</span>
+								<span>Entregaremos tu juego entre 1 a 3 días laborales. Asegúrate de que la PERSONA DE ENTREGA (llenar abajo) esté presente en horas laborables en la dirección que registraste para retirarlo.</span>
 								<br>
 								<br>
 								<form>
@@ -450,14 +449,22 @@
 							<div class="date" ng-if="loan.lenderConfirmed">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="blue-box text-left" ng-if="loan.lenderConfirmed">
 								<span class="text-black text-lg upper-case">Alquiler en curso</span>
+								<br>
+								<br>
+									<div class="alert-icon-blue">
+										<img src="img/messages/alert.svg">
+									</div>
+									<div class="alert-text-blue">
+										<span>Recuerda colocar tu juego en la caja GameClub con el número que llenaste y de colocar la caja GameClub dentro de la funda. Si no sabes cómo, <a href="">mira este video</a>.</span>
+									</div>
+								<!-- </div> -->
 								<div ng-if="loan.deliveryDate != null">
 									<br>
+									<!-- <span>Retiro de juego: </span><span class="text-black  upper-case">{{loan.deliveryDate | date:'EEEE d'}} de {{loan.deliveryDate | date:'d'}} de {{loan.deliveryDate | date:'MMMM'}} del {{loan.deliveryDate | date:'yyyy'}}</span> -->
+									<span>Retiraremos el juego entre 1 a 3 días laborales. Asegúrate de que la PERSONA DE ENTREGA (llenar abajo) esté presente en horas laborables en la dirección que registraste para retirarlo.</span>
 									<br>
-									<span>Retiro de juego: </span><span class="text-black  upper-case">{{loan.deliveryDate | date:'EEEE d'}} de {{loan.deliveryDate | date:'d'}} de {{loan.deliveryDate | date:'MMMM'}} del {{loan.deliveryDate | date:'yyyy'}}</span>
-									<br>
-									<span>Hora: </span><span class="text-black">{{loan.deliveryDate | date:'HH'}}H{{loan.deliveryDate | date:'mm'}}</span>
+									<!-- <span>Hora: </span><span class="text-black">{{loan.deliveryDate | date:'HH'}}H{{loan.deliveryDate | date:'mm'}}</span> -->
 								</div>
-								<br>
 								<br>
 								<form>
 									<div class="decorator">
@@ -521,10 +528,14 @@
 								<span>Hola {{currentUser.name}},</span>
 								<br>
 								<br>
-								<span>Iremos a buscar tu juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date:'EEEE d'}} de {{showLendDay(loan.returnDate) | date:'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
+								<!-- <span>Iremos a buscar tu juego el día: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date:'EEEE d'}} de {{showLendDay(loan.returnDate) | date:'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
 								<br>
 								<br>
-								<span>Entregaremos tu juego el dia: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date: 'EEEE d'}} de {{showLendDay(loan.returnDate) | date: 'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span>
+								<span>Entregaremos tu juego el dia: </span><span class="text-black upper-case">{{showLendDay(loan.returnDate) | date: 'EEEE d'}} de {{showLendDay(loan.returnDate) | date: 'MMMM'}} del {{showLendDay(loan.returnDate) | date:'yyyy'}}</span> -->
+								<span>Entregaremos tu juego entre 1 a 3 días laborales. Asegúrate de que la PERSONA DE ENTREGA (llenar abajo) esté presente en horas laborables en la dirección que registraste para retirarlo.</span>
+								<br>
+								<br>
+								<span>Recuerda que tienes 24 horas para reportar cualquier daño o inconformidad del juego que alquilaste a nuestro <a href="mailto: reclamos@gameclub.com.ec">centro de reclamos</a>. Si no reportas cualquier inconveniente tu te haces responsable del juego.</span>
 								<br>
 								<br>
 								<form>

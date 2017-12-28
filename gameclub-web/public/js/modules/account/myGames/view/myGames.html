@@ -72,7 +72,7 @@
         </form>
         <div class="list">
             <div ng-repeat="cross in gamesList">
-                <game-item ng-model="cross.game" console="cross.console" inverse="true" is-editable="true" on-edit="editGame(cross)" show-coins="true" coins="cross.cost"></game-item>
+                <game-item ng-model="cross.game" console="cross.console" inverse="true" is-editable="true" on-edit="editGame(cross)" show-coins="true" coins="cross.cost" is-borrowed="cross.isBorrowed" ></game-item>
                 <div class="separator" ng-if="$index+1 < gamesList.length"></div>
             </div>
             <ball-paging pages="totalPages" ng-model="$parent.filter.page" class="paging" ng-change="pageChanged()"></ball-paging>
@@ -168,7 +168,7 @@
                 <div class="col-md-12 help valid-group">
                     <label class="form-cell">Costo alquiler por semana</label>
                     <div class="form-cell">
-                        <input validation ng-model="myGame.cost" class="coins" min="0.0" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required>
+                        <input validation type="number" ng-model="myGame.cost" class="coins" min="0.0" step="0.01" value="0.00" required>
                     </div>
                     <div class="form-cell help">
                         <span>&#36;</span>
@@ -250,7 +250,7 @@
         <p>&iquest;Se te acabaron las cajas y fundas que tenías o quieres renovar tus cajas y fundas Game Club?</p>
         <p>Te envíamos un kit completo con 4 cajas, fundas, etiquetas de seguridad y un adhesivo oficial.</p>
         <span class="subtitle">Tiene un costo de {{shippingKitValue | currency:'$ ':2}}. SIRVE PARA 80 ENVIOS.</span>
-        <span class="dark-section">NUESTAS CAJAS SON CODIFICADAS PARA PERMITIR EL ENVIO PUERTA A PUERTA.</span>
+        <span class="dark-section">NUESTAS CAJAS SON CODIFICADAS PARA PERMITIR EL ENVÍO PUERTA A PUERTA DE TUS JUEGOS.</span>
         <button class="btn btn-primary" ng-click="askShippingKit()">Pedir Shipping Kit</button>
     </section>
 </div>

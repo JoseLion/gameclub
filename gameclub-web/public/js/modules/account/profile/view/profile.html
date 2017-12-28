@@ -24,7 +24,7 @@
                 Usuario completado: <span>{{getFullPercentaje()}}%</span>
             </div>
             <p class="col-md-12 description">
-                Completa los 3 niveles de registro para poder navegar en toda la plataforma, pedir prestado cualquier juego y ganar 100 coins mensuales.
+                Completa los 3 niveles de registro para poder navegar en toda la plataforma, alquilar juegos y subir tus juegos.
             </p>
             <div class="col-md-12 check-list">
                 <li><div class="box" ng-class="getInfoPercentage() >= 100 ? 'checked' : ''"></div><span>Completa tu información de contacto</span></li>
@@ -174,7 +174,7 @@
             <button class="btn btn-tertiary small" ng-click="$state.go('gameclub.account.myGames')">Cargar juego a tu biblioteca</button>
         </div>
         <div class="col-xs-12 col-md-8">
-            <span>Juegos cargados: <span class="quantity" ng-class="currentUser.numberOfGames > 0 ? 'more' : ''">{{currentUser.numberOfGames}}</span></span>
+            <!-- <span>Juegos cargados: <span class="quantity" ng-class="currentUser.numberOfGames > 0 ? 'more' : ''">{{currentUser.numberOfGames}}</span></span> -->
             <p>Para poder pedir prestado cualquier juego, tu tienes que cargar un juego para que pueda ser pedido / prestado. Si prestas, juegas.</p>
         </div>
         <div class="clearfix"></div>

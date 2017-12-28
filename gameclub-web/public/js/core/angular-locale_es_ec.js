@@ -91,8 +91,8 @@ angular.module("ngLocale", [], ["$provide", function($provide) {
     },
     "NUMBER_FORMATS": {
         "CURRENCY_SYM": "$",
-        "DECIMAL_SEP": ",",
-        "GROUP_SEP": ".",
+        "DECIMAL_SEP": ".",
+        "GROUP_SEP": ",",
         "PATTERNS": [
         {
             "gSize": 3,

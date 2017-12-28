@@ -12,6 +12,7 @@ angular.module('Core').directive('gameItem', function($state, friendlyUrl, $ocLa
             coins: '=?',
             inverse: '=?',
             isEditable: '=?',
+            isBorrowed: '=?',
             onEdit: '&?'
 		},
 		replace: true,

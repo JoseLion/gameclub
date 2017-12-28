@@ -76,7 +76,7 @@ public class PublicUserController {
 	}
 
 	@RequestMapping(value = "saveGame", method = RequestMethod.POST)
-	public ResponseEntity<Page<PublicUserGame>> saveGame(@RequestBody PublicUserGame myGame) throws ServletException {
+	public ResponseEntity<Page<PublicUserGame>> saveGame(@RequestBody PublicUserGame myGame) throws ServletException, NumberFormatException, GeneralSecurityException, IOException {
 		Page<PublicUserGame> gameList = publicUserService.saveGame(myGame);
 		return new ResponseEntity<Page<PublicUserGame>>(gameList, HttpStatus.OK);
 	}

@@ -26,7 +26,7 @@
             <form class="col-md-12 col-xs-6 platform">
                 <ui-select ng-model="console.selected" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
                     <ui-select-match placeholder="Consola...">
-                        <img ng-src="{{$select.selected.console.blackLogoBase64}}" class="gameConsole">
+                        <img ng-src="{{$archiveUrl + $select.selected.console.blackLogo.id}}" class="gameConsole">
                     </ui-select-match>
                     <ui-select-choices repeat="cross in game.consoles | filter: $select.console" class="text-center">
                         <div ng-bind-html="'' | highlight: $select.console"></div>

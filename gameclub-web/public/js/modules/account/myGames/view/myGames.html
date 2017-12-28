@@ -60,11 +60,11 @@
             <div class="col-md-4 text-rigth no-padding-right">
                 <ui-select ng-model="filter.console" theme="bootstrap" class="selector" on-select="consoleSelected()">
                     <ui-select-match allow-clear placeholder="Consola...">
-                        <img ng-src="{{$select.selected.blackBase64}}" class="gameConsole">
+                        <img ng-src="{{$archiveUrl + $select.selected.blackLogo.id}}" class="gameConsole">
                     </ui-select-match>
                     <ui-select-choices repeat="console in consoles | filter: $select.search" class="text-center">
                         <div ng-bind-html="'' | highlight: $select.search"></div>
-                        <img ng-src="{{console.blackBase64}}" class="gameConsole">
+                        <img ng-src="{{$archiveUrl + console.blackLogo.id}}" class="gameConsole">
                     </ui-select-choices>
                 </ui-select>
             </div>
@@ -101,7 +101,7 @@
                     <form class="col-md-12 platform">
                         <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
                             <ui-select-match placeholder="Consola...">
-                                <img ng-src="{{$select.selected.console.blackLogoBase64}}" class="gameConsole">
+                                <img ng-src="{{$archiveUrl + $select.selected.console.blackLogo.id}}" class="gameConsole">
                             </ui-select-match>
                             <ui-select-choices repeat="cross in myGame.game.consoles | filter: $select.search" class="text-center">
                                 <div ng-bind-html="'' | highlight: $select.search"></div>
@@ -219,18 +219,18 @@
                             </ui-select-match>
                             <ui-select-choices repeat="category in categories | filter: $select.search">
                                 <div ng-bind-html="category.name | highlight: $select.search"></div>
-                                <img ng-src="{{category.whiteBase64}}" class="category"/>
+                                <img ng-src="{{$archiveUrl + category.whiteVector.id}}" class="category"/>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                     <div class="col-md-4 col-xs-4 filter">
                         <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center">
                             <ui-select-match allow-clear placeholder="Consola...">
-                                <img ng-src="{{$select.selected.whiteBase64}}" class="gameConsole"/>
+                                <img ng-src="{{$archiveUrl + $select.selected.whiteLogo.id}}" class="gameConsole"/>
                             </ui-select-match>
                             <ui-select-choices repeat="console in consoles | filter: $select.search" class="text-center">
                                 <div ng-bind-html="'' | highlight: $select.search"></div>
-                                <img ng-src="{{console.whiteBase64}}" class="gameConsole"/>
+                                <img ng-src="{{$archiveUrl + console.whiteLogo.id}}" class="gameConsole"/>
                             </ui-select-choices>
                         </ui-select>
                     </div>

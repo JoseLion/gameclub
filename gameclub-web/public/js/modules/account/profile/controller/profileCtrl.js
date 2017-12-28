@@ -1,4 +1,4 @@
-angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, getImageBase64, sweet, rest, getIndexOfArray, notif, $location, $location, $uibModal, SweetAlert) {
+angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope, provinces, $state, sweet, rest, getIndexOfArray, notif, $location, $location, $uibModal, SweetAlert) {
     $scope.file = {};
     $scope.younger = false;
     $scope.checkboxRuc = true;

@@ -1,4 +1,4 @@
-angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, mostPlayed, addCardError, $state, Const, openRest, getImageBase64, $location, forEach, getImageBase64, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
+angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game, consoleId, availableGames, mostPlayed, addCardError, $state, Const, openRest, $location, forEach, notif, $uibModal, sweet, rest, notif, SweetAlert, geolocation, friendlyUrl) {
     let currentPage = 0;
     let priceChartingGMLoan = 0.0;
     $scope.validCards = [];
@@ -24,18 +24,9 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     if (game != null) {
         game.$promise.then(function(data) {
             $scope.game = data;
-
-            openRest("archive/downloadFile").download({name: $scope.game.banner.name, module: $scope.game.banner.module}, function(dwFile) {
-                $scope.background = {
-                    background: "url('" + getImageBase64(dwFile, $scope.game.banner.type) + "') center bottom / 100% no-repeat"
-                };
-            });
-
-            forEach($scope.game.consoles, function(gameConsole) {
-                openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(dwFile) {
-    				gameConsole.console.blackLogoBase64 = getImageBase64(dwFile, gameConsole.console.blackLogo.type);
-    			});
-            });
+            $scope.background = {
+                background: "url('" + $rootScope.$archiveUrl + $scope.game.banner.id + "') center bottom / 100% no-repeat"
+            };
 
             $scope.console = {};
             if (consoleId != null) {

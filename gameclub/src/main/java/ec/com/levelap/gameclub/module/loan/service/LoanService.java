@@ -148,6 +148,23 @@ public class LoanService {
 			publicUserGame.setIsBorrowed(Boolean.TRUE);
 			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
 			loan.setPublicUserGame(publicUserGame);
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(new Date());
+			
+			if (realTimes) {
+				calendar.add(Calendar.HOUR, 24);
+			} else {
+				calendar.add(Calendar.MINUTE, 5);
+			}
+			
+			final Long taskLoanId = loan.getId();
+			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(), Loan.class.getSimpleName() + "-W1-" + loan.getId(), new Runnable() {
+				@Override
+				public void run() {
+					cancelLoanByTimeout(taskLoanId);
+				}
+			});
 		}
 
 		loan = loanRepo.save(loan);
@@ -201,6 +218,29 @@ public class LoanService {
 
 			Transaction transaction = new Transaction(currentUser, "JUGASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), null, loan.getBalancePartEnc(), loan.getCardPartEnc());
 			transactionService.getTransactionRepo().save(transaction);
+			
+			if (loan.getGamer().getReferrer() != null && !loan.getGamer().getReferrer().isEmpty()) {
+				PublicUser refferer = publicUserService.getPublicUserRepo().findByUrlToken(loan.getGamer().getReferrer());
+				
+				if (refferer != null) {
+					Setting setting = settingService.getSettingsRepo().findByCode(Code.SETTING_REFFERED_REWARD);
+					publicUserService.addToUserBalance(refferer.getId(), Double.parseDouble(setting.getValue()));
+					loan.setGamer(publicUserService.addToUserBalance(loan.getGamer().getId(), Double.parseDouble(setting.getValue())));
+					
+					File userKey = File.createTempFile("userKey", "tmp");
+					FileUtils.writeByteArrayToFile(userKey, loan.getGamer().getPrivateKey());
+					File referrerKey = File.createTempFile("referrerKey", ".tmp");
+					FileUtils.writeByteArrayToFile(referrerKey, refferer.getPrivateKey());
+					Transaction reffererTransaction = new Transaction(refferer, Const.TRS_REFFERED_BONUS, null, null, null, cryptoService.encrypt(setting.getValue(), referrerKey), null, null);
+					Transaction userTransaction = new Transaction(loan.getGamer(), Const.TRS_REFFERED_BONUS, null, null, null, cryptoService.encrypt(setting.getValue(), userKey), null, null);
+					
+					transactionService.getTransactionRepo().save(reffererTransaction);
+					transactionService.getTransactionRepo().save(userTransaction);
+					
+					loan.getGamer().setReferrer(null);
+					loan.setGamer(publicUserService.getPublicUserRepo().save(loan.getGamer()));
+				}
+			}
 		} else {
 			loan.setLenderConfirmed(Boolean.TRUE);
 			loan.setLenderStatusDate(new Date());
@@ -389,40 +429,65 @@ public class LoanService {
 		}
 		
 		
-		List<Loan> loans = loanRepo.findByShippingStatusCode(Code.SHIPPING_DELIVERED);
+		List<Loan> loans = loanRepo.findAll();
 		Date today = new Date();
 		Calendar threeDays = Calendar.getInstance();
 		Calendar oneDay = Calendar.getInstance();
 
 		for (Loan loan : loans) {
-			if (realTimes) {
-				threeDays.setTime(loan.getReturnDate());
-				threeDays.add(Calendar.DATE, -3);
-				oneDay.setTime(loan.getReturnDate());
-				oneDay.add(Calendar.DATE, -1);
-			} else {
-				threeDays.setTime(loan.getDeliveryDate());
-				threeDays.add(Calendar.MINUTE, 1);
-				oneDay.setTime(loan.getDeliveryDate());
-				oneDay.add(Calendar.MINUTE, 2);
+			if (loan.getStatus() && loan.getWasAccepted() && (!loan.getGamerConfirmed() || !loan.getLenderConfirmed())) {
+				Calendar timeout = Calendar.getInstance();
+				timeout.setTime(loan.getAcceptedDate());
+				
+				if (realTimes) {
+					timeout.add(Calendar.HOUR, Const.LOAN_TIMEOUT_HOURS);
+				} else {
+					timeout.add(Calendar.MINUTE, 5);
+				}
+				
+				if (today.before(timeout.getTime())) {
+					final Long taskLoanId = loan.getId();
+					levelapTaskScheduler.scheduleTaskAtDate(timeout.getTime(), Loan.class.getSimpleName() + "-W1-" + loan.getId(), new Runnable() {
+						@Override
+						public void run() {
+							cancelLoanByTimeout(taskLoanId);
+						}
+					});
+				} else {
+					cancelLoanByTimeout(loan.getId());
+				}
 			}
+			
+			if (loan.getShippingStatus() != null && loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
+				if (realTimes) {
+					threeDays.setTime(loan.getReturnDate());
+					threeDays.add(Calendar.DATE, -3);
+					oneDay.setTime(loan.getReturnDate());
+					oneDay.add(Calendar.DATE, -1);
+				} else {
+					threeDays.setTime(loan.getDeliveryDate());
+					threeDays.add(Calendar.MINUTE, 1);
+					oneDay.setTime(loan.getDeliveryDate());
+					oneDay.add(Calendar.MINUTE, 2);
+				}
 
-			if (today.before(threeDays.getTime())) {
-				scheduleThreeDaysBefore(loan);
-				scheduleOneDayBefore(loan);
-				scheduleOnFinishDay(loan);
-				return;
-			}
+				if (today.before(threeDays.getTime())) {
+					scheduleThreeDaysBefore(loan);
+					scheduleOneDayBefore(loan);
+					scheduleOnFinishDay(loan);
+					return;
+				}
 
-			if (today.before(oneDay.getTime()) && today.after(threeDays.getTime())) {
-				scheduleOneDayBefore(loan);
-				scheduleOnFinishDay(loan);
-				return;
-			}
+				if (today.before(oneDay.getTime()) && today.after(threeDays.getTime())) {
+					scheduleOneDayBefore(loan);
+					scheduleOnFinishDay(loan);
+					return;
+				}
 
-			if (today.before(loan.getReturnDate()) && today.after(oneDay.getTime())) {
-				scheduleOnFinishDay(loan);
-				return;
+				if (today.before(loan.getReturnDate()) && today.after(oneDay.getTime())) {
+					scheduleOnFinishDay(loan);
+					return;
+				}
 			}
 		}
 	}
@@ -596,6 +661,38 @@ public class LoanService {
 			rewardTransaction.setWeeks(loan.getWeeks());
 			rewardTransaction.setBalancePartEnc(cryptoService.encrypt(Double.toString(rewardAmount), lenderKey));
 			transactionService.getTransactionRepo().save(rewardTransaction);
+		}
+	}
+	
+	private void cancelLoanByTimeout(Long loanId) {
+		if (loanRepo == null) {
+			loanRepo = (LoanRepo)ApplicationContextHolder.getContext().getBean(LoanRepo.class);
+		}
+		
+		Loan loan = loanRepo.findOne(loanId);
+		
+		if (loan.getStatus() && (!loan.getGamerConfirmed() || !loan.getLenderConfirmed())) {
+			loan.setUpdateDate(new Date());
+			loan.setStatus(false);
+			
+			if (publicUserService == null) {
+				publicUserService = (PublicUserService)ApplicationContextHolder.getContext().getBean(PublicUserService.class);
+			}
+			
+			PublicUserGame publicUserGame = loan.getPublicUserGame();
+			publicUserGame.setIsBorrowed(false);
+			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
+			loan.setPublicUserGame(publicUserGame);
+			
+			loanRepo.save(loan);
+			
+			if (messageService == null) {
+				messageService = (MessageService)ApplicationContextHolder.getContext().getBean(MessageService.class);
+			}
+			
+			loan.getGamerMessage().setRead(false);
+			loan.getLenderMessage().setRead(false);
+			messageService.getMessageRepo().save(Arrays.asList(loan.getGamerMessage(), loan.getLenderMessage()));
 		}
 	}
 

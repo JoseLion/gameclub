@@ -1,7 +1,6 @@
 <div id="home">
     <section class="banner">
         <div class="row">
-            <!-- <button type="button" class="btn btn-primary" ng-click="testTcc()">TEST TCC</button> -->
             <hr class="title-up"/>
             <h2 class="upper-case title">Alquila, juega y gana dinero</h2>
             <hr class="title-down"/>
@@ -18,11 +17,11 @@
                     <div class="col-xs-4 col-md-4 filter">
                         <ui-select ng-model="search.category" theme="bootstrap" class="selector">
                             <ui-select-match allow-clear placeholder="Categoría...">
-                                {{$select.selected.name | limitTo:10}}{{$select.selected.name.length > 10 ? '...' : ''}}
+                                {{$select.selected.name | limitTo: 12}}{{$select.selected.name.length > 12 ? '...' : ''}}
                             </ui-select-match>
                             <ui-select-choices repeat="category in categories | filter: $select.search">
                                 <div ng-bind-html="category.name | highlight: $select.search"></div>
-                                <img ng-src="{{category.whiteBase64}}" class="category">
+                                <img ng-src="{{$archiveUrl + category.whiteVector.id}}" class="category">
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -30,11 +29,11 @@
                     <div class="col-xs-4 col-md-4 filter to-validate">
                         <ui-select validation ng-model="search.console" theme="bootstrap" class="selector text-center">
                             <ui-select-match allow-clear placeholder="Consola...">
-                                <img ng-src="{{$select.selected.whiteBase64}}" class="gameConsole"/>
+                                <img ng-src="{{$archiveUrl + $select.selected.whiteLogo.id}}" class="gameConsole"/>
                             </ui-select-match>
                             <ui-select-choices repeat="console in consoles | filter: $select.search" class="text-center">
                                 <div ng-bind-html="'' | highlight: $select.search"></div>
-                                <img ng-src="{{console.whiteBase64}}" class="gameConsole">
+                                <img ng-src="{{$archiveUrl + console.whiteLogo.id}}">
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -199,7 +198,7 @@
             </div>
             <div class="col-md-12 categories no-padding-left">
                 <div id="home-category-{{$index}}" class="category text-center" ng-repeat="category in categories">
-                    <img id="category-icon-{{$index}}" ng-src="{{getCategoryVector(category, $index)}}" ng-click="categoryChoosen($index, category.id)"/><br/>
+                    <img id="category-icon-{{$index}}" ng-src="{{$archiveUrl + getCategoryVector(category, $index)}}" ng-click="categoryChoosen($index, category.id)"/><br/>
                     <span>{{category.name}}</span>
                 </div>
             </div>

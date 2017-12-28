@@ -169,6 +169,15 @@
 								</form>
 							</div>
 
+							<div class="date" ng-if="!loan.status">{{loan.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="!loan.status">
+								<div class="col-md-12">
+									<span>Han pasado 24 horas y no se a confirmado el alquiler, la solicitud ha sido cancelada de forma automática.</span>
+								</div>
+
+								<div class="clearfix"></div>
+							</div>
+
 							<div class="date" ng-if="loan.gamerConfirmed == true">{{loan.gamerStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
 							<div class="blue-box text-left" ng-if="loan.gamerConfirmed == true">
 								<span class="text-black text-lg upper-case">Alquiler en curso</span>
@@ -445,6 +454,15 @@
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmLender()" ng-if="!loan.lenderConfirmed && loan.status">Continuar alquiler</button>
 									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.lenderConfirmed && loan.status">{{loan.isDisabled ? 'Editar' : 'Guardar'}} información destino</button>
 								</form>
+							</div>
+
+							<div class="date" ng-if="!loan.status">{{loan.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="!loan.status">
+								<div class="col-md-12">
+									<span>Han pasado 24 horas y no se a confirmado el alquiler, la solicitud ha sido cancelada de forma automática.</span>
+								</div>
+
+								<div class="clearfix"></div>
 							</div>
 
 							<div class="date" ng-if="loan.lenderConfirmed">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>

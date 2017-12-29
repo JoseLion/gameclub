@@ -7,19 +7,19 @@
 		<div class="modal-body">
 			<div class="col-md-12 avatar-table-row" ng-repeat="avatar in avatars" ng-switch on="$index % 5" ng-if="$index % 5 == 0">
                 <div class="avatar-cell" ng-switch-when="0" ng-class="{empty: avatars[$index].image == null, choosen: indexTemp == $index}">
-                    <img ng-src="{{$archiveUrl + avatars[$index].image.id}}" class="avatar" ng-click="chooseThis($index)" />
+                    <img ng-src="{{$archiveUrl + avatars[$index].image.id}}" class="avatar" ng-click="chooseThis($index)" alt="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                 </div>
                 <div class="avatar-cell" ng-switch-when="0" ng-class="{empty: avatars[$index+1].image == null, choosen: indexTemp == ($index+1)}">
-                    <img ng-src="{{$archiveUrl + avatars[$index + 1].image.id}}" class="avatar" ng-click="chooseThis($index + 1)" />
+                    <img ng-src="{{$archiveUrl + avatars[$index + 1].image.id}}" class="avatar" ng-click="chooseThis($index + 1)" alt="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                 </div>
                 <div class="avatar-cell" ng-switch-when="0" ng-class="{empty: avatars[$index+2].image == null, choosen: indexTemp == ($index+2)}">
-                    <img ng-src="{{$archiveUrl + avatars[$index + 2].image.id}}" class="avatar" ng-click="chooseThis($index + 2)" />
+                    <img ng-src="{{$archiveUrl + avatars[$index + 2].image.id}}" class="avatar" ng-click="chooseThis($index + 2)" alt="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                 </div>
                 <div class="avatar-cell" ng-switch-when="0" ng-class="{empty: avatars[$index+3].image == null, choosen: indexTemp == ($index+3)}">
-                    <img ng-src="{{$archiveUrl + avatars[$index + 3].image.id}}" class="avatar" ng-click="chooseThis($index + 3)" />
+                    <img ng-src="{{$archiveUrl + avatars[$index + 3].image.id}}" class="avatar" ng-click="chooseThis($index + 3)" alt="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                 </div>
                 <div class="avatar-cell" ng-switch-when="0" ng-class="{empty: avatars[$index+4].image == null, choosen: indexTemp == ($index+4)}">
-                    <img ng-src="{{$archiveUrl + avatars[$index + 4].image.id}}" class="avatar" ng-click="chooseThis($index + 4)" />
+                    <img ng-src="{{$archiveUrl + avatars[$index + 4].image.id}}" class="avatar" ng-click="chooseThis($index + 4)" alt="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                 </div>
 			</div>
 			<div class="clearfix"></div>

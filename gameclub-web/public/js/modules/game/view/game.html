@@ -21,21 +21,21 @@
         </div>
         <div class="col-md-3 col-xs-12 rating text-right">
             <div class="col-md-12 col-xs-2 content-rating">
-                <img ng-src="{{game.contentRating.other}}">
+                <img ng-src="{{game.contentRating.other}}" alt="{{game.contentRating.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{game.contentRating.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
             </div>
             <form class="col-md-12 col-xs-6 platform">
                 <ui-select ng-model="console.selected" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
                     <ui-select-match placeholder="Consola...">
-                        <img ng-src="{{$archiveUrl + $select.selected.console.blackLogo.id}}" class="gameConsole">
+                        <img ng-src="{{$archiveUrl + $select.selected.console.blackLogo.id}}" class="gameConsole" alt="{{$select.selected.console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{$select.selected.console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                     </ui-select-match>
                     <ui-select-choices repeat="cross in game.consoles | filter: $select.console" class="text-center">
                         <div ng-bind-html="'' | highlight: $select.console"></div>
-                        <img ng-src="{{$archiveUrl + cross.console.whiteLogo.id}}">
+                        <img ng-src="{{$archiveUrl + cross.console.whiteLogo.id}}" alt="{{cross.console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{cross.console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                     </ui-select-choices>
                 </ui-select>
             </form>
             <div class="col-md-12 col-xs-2 category" ng-repeat="cross in game.categories">
-                <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}">
+                <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}" alt="{{cross.category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{cross.category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
             </div>
         </div>
     </section>
@@ -58,7 +58,7 @@
                 <ul>
                     <li ng-repeat="cross in game.magazineRatings">
                         <div class="col-md-12">
-                            <img ng-src="{{cross.magazine.other}}">
+                            <img ng-src="{{cross.magazine.other}}" alt="{{cross.magazine.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{cross.magazine.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                         </div>
                         <div class="col-md-12">
                             <stars ng-model="cross.rating" solid="light"></stars>
@@ -218,7 +218,7 @@
 
                         <div class="col-md-9 col-xs-12 information-separation">
                             <label class="icon" ng-click="openMapsModal()"><i class="gc gc-address"></i></label>
-                            <img class="geo-check" src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
+                            <img class="geo-check" src="/img/check.svg" ng-if="loan.gamerGeolocation != null" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                             <span class="geo-info" ng-if="!loan.gamerGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
                         </div>
                         <div class="clearfix"></div>

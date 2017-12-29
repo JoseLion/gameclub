@@ -21,7 +21,7 @@
                             </ui-select-match>
                             <ui-select-choices repeat="category in categories | filter: $select.search">
                                 <div ng-bind-html="category.name | highlight: $select.search"></div>
-                                <img ng-src="{{$archiveUrl + category.whiteVector.id}}" class="category">
+                                <img ng-src="{{$archiveUrl + category.whiteVector.id}}" class="category" alt="{{category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -29,11 +29,11 @@
                     <div class="col-xs-4 col-md-4 filter to-validate">
                         <ui-select validation ng-model="search.console" theme="bootstrap" class="selector text-center">
                             <ui-select-match allow-clear placeholder="Consola...">
-                                <img ng-src="{{$archiveUrl + $select.selected.whiteLogo.id}}" class="gameConsole"/>
+                                <img ng-src="{{$archiveUrl + $select.selected.whiteLogo.id}}" class="gameConsole" alt="{{$select.selected.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{$select.selected.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                             </ui-select-match>
                             <ui-select-choices repeat="console in consoles | filter: $select.search" class="text-center">
                                 <div ng-bind-html="'' | highlight: $select.search"></div>
-                                <img ng-src="{{$archiveUrl + console.whiteLogo.id}}">
+                                <img ng-src="{{$archiveUrl + console.whiteLogo.id}}" alt="{{console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                             </ui-select-choices>
                         </ui-select>
                     </div>

@@ -144,6 +144,10 @@ public class PublicUser extends BaseEntity {
 	
 	@Column(name="is_requesting_balance", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean isRequestingBalance = false;
+	
+	@JsonIgnore
+	@Column(columnDefinition="VARCHAR")
+	private String referrer;
 
 	@Transient
 	private Integer numberOfGames;
@@ -428,6 +432,14 @@ public class PublicUser extends BaseEntity {
 
 	public void setIsRequestingBalance(Boolean isRequestingBalance) {
 		this.isRequestingBalance = isRequestingBalance;
+	}
+
+	public String getReferrer() {
+		return referrer;
+	}
+
+	public void setReferrer(String referrer) {
+		this.referrer = referrer;
 	}
 
 	public Integer getNumberOfGames() {

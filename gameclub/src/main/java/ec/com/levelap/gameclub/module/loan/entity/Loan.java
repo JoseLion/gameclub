@@ -47,7 +47,7 @@ public class Loan extends BaseEntity {
 	@JoinColumn(name = "lender_message", foreignKey = @ForeignKey(name = "lender_message_fk"))
 	private Message lenderMessage;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "public_user_game", foreignKey = @ForeignKey(name = "public_user_game_fk"))
 	private PublicUserGame publicUserGame;
 
@@ -157,7 +157,7 @@ public class Loan extends BaseEntity {
 	private Date deliveryDate;
 
 	@JsonManagedReference("LoanRestore")
-	@OneToOne(mappedBy = "loan", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="loan", fetch=FetchType.LAZY)
 	private Restore restore;
 
 	@JsonManagedReference("LoanReview")

@@ -62,15 +62,15 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Autowired
 	private PublicUserGameRepo publicUserGameRepo;
-	
-	@Autowired
-	private SettingService settingService;
 
 	@Autowired
 	private GameClubMailService mailService;
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private SettingService settingService;
 	
 	@Autowired
 	private TransactionService transactionService;
@@ -99,25 +99,11 @@ public class PublicUserService extends BaseService<PublicUser> {
 			publicUser.setPrivateKey(IOUtils.toByteArray(new FileInputStream(key)));
 			publicUser.setBalance(cryptoService.encrypt("0.0", key));
 			
-			publicUser = publicUserRepo.save(publicUser);
-			
 			if (token != null && !token.isEmpty()) {
-				PublicUser refferer = publicUserRepo.findByUrlToken(token);
-				
-				if (refferer != null) {
-					Setting setting = settingService.getSettingsRepo().findByCode(Code.SETTING_REFFERED_REWARD);
-					addToUserBalance(refferer.getId(), Double.parseDouble(setting.getValue()));
-					publicUser = addToUserBalance(publicUser.getId(), Double.parseDouble(setting.getValue()));
-					
-					File referrerKey = File.createTempFile("referrerKey", ".tmp");
-					FileUtils.writeByteArrayToFile(referrerKey, refferer.getPrivateKey());
-					Transaction reffererTransaction = new Transaction(refferer, Const.TRS_REFFERED_BONUS, null, null, null, cryptoService.encrypt(setting.getValue(), referrerKey), null, null);
-					Transaction transaction = new Transaction(publicUser, Const.TRS_REFFERED_BONUS, null, null, null, cryptoService.encrypt(setting.getValue(), key), null, null);
-					
-					transactionService.getTransactionRepo().save(reffererTransaction);
-					transactionService.getTransactionRepo().save(transaction);
-				}
+				publicUser.setReferrer(token);
 			}
+			
+			publicUser = publicUserRepo.save(publicUser);
 		} else {
 			found.setStatus(true);
 			publicUser = publicUserRepo.save(found);
@@ -219,11 +205,34 @@ public class PublicUserService extends BaseService<PublicUser> {
 	}
 
 	@Transactional
-	public Page<PublicUserGame> saveGame(PublicUserGame myGame) throws ServletException {
+	public Page<PublicUserGame> saveGame(PublicUserGame myGame) throws ServletException, NumberFormatException, GeneralSecurityException, IOException {
 		PublicUser user = this.getCurrentUser();
 		
 		if (myGame.getId() == null && user.getGames().size() == 0) {
 			messageService.requestWelcomeKit(user, null);
+		}
+		
+		if (user.getReferrer() != null && !user.getReferrer().isEmpty()) {
+			PublicUser refferer = publicUserRepo.findByUrlToken(user.getReferrer());
+			
+			if (refferer != null) {
+				Setting setting = settingService.getSettingsRepo().findByCode(Code.SETTING_REFFERED_REWARD);
+				addToUserBalance(refferer.getId(), Double.parseDouble(setting.getValue()));
+				user = addToUserBalance(user.getId(), Double.parseDouble(setting.getValue()));
+				
+				File userKey = File.createTempFile("userKey", "tmp");
+				FileUtils.writeByteArrayToFile(userKey, user.getPrivateKey());
+				File referrerKey = File.createTempFile("referrerKey", ".tmp");
+				FileUtils.writeByteArrayToFile(referrerKey, refferer.getPrivateKey());
+				Transaction reffererTransaction = new Transaction(refferer, Const.TRS_REFFERED_BONUS, null, null, null, cryptoService.encrypt(setting.getValue(), referrerKey), null, null);
+				Transaction transaction = new Transaction(user, Const.TRS_REFFERED_BONUS, null, null, null, cryptoService.encrypt(setting.getValue(), userKey), null, null);
+				
+				transactionService.getTransactionRepo().save(reffererTransaction);
+				transactionService.getTransactionRepo().save(transaction);
+				
+				user.setReferrer(null);
+				user = publicUserRepo.save(user);
+			}
 		}
 		
 		myGame.setPublicUser(user);

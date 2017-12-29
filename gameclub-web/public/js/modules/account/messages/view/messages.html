@@ -56,15 +56,15 @@
 				<div class="scrollable">
 					<span class="no-messages" ng-if="messages.length == 0">No tienes ningún mensaje</span>
 					<div class="inbox-cell" ng-class="{'unread': !message.read, 'selected': message.selected}" ng-repeat="message in messages" ng-click="messageSelected(message)">
-						<div class="image col-md-3">
+						<div class="image col-md-3 col-xs-2">
 							<img src="img/messages/gameclub-icon.svg" ng-if="!message.isLoan">
 							<img class="avatar" archive="message.fromUser ? message.fromUser.avatar.image : message.toUser.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="message.isLoan">
 						</div>
-						<div class="labels col-md-6">
+						<div class="labels col-md-7 col-xs-8">
 							<span id="from">{{getFromTo(message)}}</span>
 							<span>{{message.subject}}</span>
 						</div>
-						<div class="date col-md-3">
+						<div class="date col-md-2 col-xs-2">
 							<span>{{getFormattedDate(message.date)}}</span>
 						</div>
 						<div class="clearfix"></div>
@@ -167,6 +167,15 @@
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmGamer()" ng-if="!loan.gamerConfirmed && loan.status">Continuar alquiler</button>
 									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.gamerConfirmed && loan.status">{{loan.isDisabled ? 'Editar' : 'Guardar'}} información destino</button>
 								</form>
+							</div>
+
+							<div class="date" ng-if="!loan.status">{{loan.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="!loan.status">
+								<div class="col-md-12">
+									<span>Han pasado 24 horas y no se a confirmado el alquiler, la solicitud ha sido cancelada de forma automática.</span>
+								</div>
+
+								<div class="clearfix"></div>
 							</div>
 
 							<div class="date" ng-if="loan.gamerConfirmed == true">{{loan.gamerStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
@@ -444,6 +453,15 @@
 									<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmLender()" ng-if="!loan.lenderConfirmed && loan.status">Continuar alquiler</button>
 									<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.lenderConfirmed && loan.status">{{loan.isDisabled ? 'Editar' : 'Guardar'}} información destino</button>
 								</form>
+							</div>
+
+							<div class="date" ng-if="!loan.status">{{loan.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
+							<div class="blue-box small-box text-center" ng-if="!loan.status">
+								<div class="col-md-12">
+									<span>Han pasado 24 horas y no se a confirmado el alquiler, la solicitud ha sido cancelada de forma automática.</span>
+								</div>
+
+								<div class="clearfix"></div>
 							</div>
 
 							<div class="date" ng-if="loan.lenderConfirmed">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>

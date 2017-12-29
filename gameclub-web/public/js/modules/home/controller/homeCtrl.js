@@ -50,9 +50,9 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, mostP
         let element = angular.element("#home-category-" + index);
 
         if (element.hasClass("active")) {
-            return category.whiteBase64;
+            return category.whiteVector.id;
         } else {
-            return category.blackBase64;
+            return category.blackVector.id;
         }
     }
 

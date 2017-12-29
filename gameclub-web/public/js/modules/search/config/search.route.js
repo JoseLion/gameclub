@@ -9,10 +9,9 @@ angular.module('Search').config(function($stateProvider) {
 		templateUrl: 'js/modules/search/view/search.html',
 		data: {displayName: 'GameClub'},
 		metaTags: {
-			title: 'GameClub - Alquila Videojuegos & Gana Dinero',
-			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila Juegos, Gana Dinero, PS4, Xbox, Nintendo.',
-			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
-			properties: {'og:title': 'GameClub - Alquila Videojuegos & Gana Dinero'}
+			title: 'Buscar Juegos para Alquilar',
+			description: '¿Quiéres jugar más videojuegos pagando menos? GameClub. ¡La única plataforma gamer del Ecuador! Encuentra los videojuegos de las ultimas consolas: PlayStation, Xbox y Nintendo.',
+			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer'
 		},
 		controller: 'SearchCtrl',
 		resolve: {

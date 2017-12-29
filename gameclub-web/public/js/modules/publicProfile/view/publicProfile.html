@@ -2,7 +2,7 @@
     <section class="banner">
         <div class="col-md-12 col-xs-12">
             <div class="col-md-6 col-xs-6 text-right">
-                <img class="avatar" ng-src="{{$archiveUrl + user.avatar.image.id}}" placeholder="img/contact-person.svg">
+                <img class="avatar" ng-src="{{$archiveUrl + user.avatar.image.id}}" onerror="this.src='img/contact-person.svg'">
             </div>
             
             <div class="col-md-6 col-xs-6">

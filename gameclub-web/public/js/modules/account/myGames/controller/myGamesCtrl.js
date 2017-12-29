@@ -1,4 +1,4 @@
-angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, mostPlayed, $state, notif, friendlyUrl, openRest, getImageBase64, sweet, rest, forEach, Const, shippingKitValue, $uibModal) {
+angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope, gamesList, game, consoleSelected, integrity, mostPlayed, $state, notif, friendlyUrl, openRest, sweet, rest, forEach, Const, shippingKitValue, $uibModal) {
     $scope.myGame = {};
     $scope.filter = {};
     $scope.search = {};
@@ -25,16 +25,11 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
 
     if (game != null) {
         $scope.myGame.game = game;
-        openRest("archive/downloadFile").download({name: $scope.myGame.game.banner.name, module: $scope.myGame.game.banner.module}, function(data) {
-            $scope.background = {
-                background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
-            };
-        });
-        forEach($scope.myGame.game.consoles, function(gameConsole) {
-            openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
-                gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
-            });
+        $scope.background = {
+            background: "url('" + $rootScope.$archiveUrl + $scope.myGame.game.banner.id + "') center bottom / 100% no-repeat"
+        };
 
+        forEach($scope.myGame.game.consoles, function(gameConsole) {
             if(consoleSelected == gameConsole){
                 $scope.search = {console: gameConsole};
             }
@@ -45,17 +40,11 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
 
     $scope.editGame = function(cross) {
         $scope.myGame = cross;
-        openRest("archive/downloadFile").download({name: $scope.myGame.game.banner.name, module: $scope.myGame.game.banner.module}, function(data) {
-            $scope.background = {
-                background: "url('" + getImageBase64(data, $scope.myGame.game.banner.type) + "') center bottom / 100% no-repeat"
-            };
-        });
+        $scope.background = {
+            background: "url('" + $archiveUrl + $scope.myGame.game.banner.id + "') center bottom / 100% no-repeat"
+        };
 
         forEach($scope.myGame.game.consoles, function(gameConsole) {
-            openRest("archive/downloadFile").download({name: gameConsole.console.blackLogo.name, module: gameConsole.console.blackLogo.module}, function(data) {
-                gameConsole.console.blackLogoBase64 = getImageBase64(data, gameConsole.console.blackLogo.type);
-            });
-
             if ($scope.myGame.console.id == gameConsole.console.id) {
                 $scope.search = {console: gameConsole};
             }
@@ -100,7 +89,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
            maxPrice = priceChartingGMLoan+parseFloat($rootScope.settings[Const.settings.priceChartingMax].value);
         }
         
-        if($scope.myGame.cost < minPrice || $scope.myGame.cost > maxPrice ){
+        if ($scope.myGame.cost < minPrice || $scope.myGame.cost > maxPrice) {
             isValid = false;
             sweet.error('El precio de alquiler de ' + $scope.myGame.game.name + ' debe ser entre $' + minPrice.toFixed(2) + ' y $' + maxPrice.toFixed(2));
         }
@@ -134,6 +123,12 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
                         }, function() {
                             $state.go("gameclub.account.messages");
                         });
+
+
+                        if ($rootScope.currentUser.referrer != null) {
+                            SweetAlert.swal("Genial!", "Tu saldo promocional por referido ha sido acreditado", "info");
+                            $rootScope.currentUser.referrer = null;
+                        }
                     }
 
                     rest("publicUser/getCurrentUser").get(function(data) {

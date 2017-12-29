@@ -8,10 +8,9 @@ angular.module('Profile').config(function($stateProvider) {
 		templateUrl: 'js/modules/account/profile/view/profile.html',
 		data: {displayName: 'GameClub'},
 		metaTags: {
-			title: 'GameClub - Alquila Videojuegos & Gana Dinero',
-			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila Juegos, Gana Dinero, PS4, Xbox, Nintendo.',
-			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
-			properties: {'og:title': 'GameClub - Alquila Videojuegos & Gana Dinero'}
+			title: 'Perfil de Usuario GameClub',
+			description: 'Alquilar tu juegos es facil con GameClub! Entra a tu perfil para empezar a ganar dinero.',
+			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer'
 		},
 		controller: 'ProfileCtrl',
 		resolve: {

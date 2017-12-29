@@ -7,10 +7,9 @@ angular.module('ContactUs').config(function($stateProvider) {
 		templateUrl: 'js/modules/contactUs/view/contactUs.html',
 		data: {displayName: 'GameClub'},
 		metaTags: {
-			title: 'GameClub - Alquila Videojuegos & Gana Dinero',
-			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila Juegos, Gana Dinero, PS4, Xbox, Nintendo.',
-			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
-			properties: {'og:title': 'GameClub - Alquila Videojuegos & Gana Dinero'}
+			title: 'Contactanos GameClub',
+			description: 'Tienes alguna duda, sugerencia o comentario. Escríbenos a GameClub ¡La única plataforma gamer del Ecuador! Alquila tus Juegos, Gana Dinero, Juega mas pagando menos. Share and Play',
+			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer'
 		},
 		controller: 'ContactUsCtrl',
 		resolve: {

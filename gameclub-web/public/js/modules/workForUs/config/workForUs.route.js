@@ -5,16 +5,13 @@ angular.module('WorkForUs').config(function($stateProvider) {
 	$stateProvider
 	.state(prefix + 'workForUs', {
 		url: '/work-for-us',
-		params: {
-			anchor: null
-		},
+		params: {anchor: null},
 		templateUrl: 'js/modules/workForUs/view/workForUs.html',
 		data: {displayName: 'GameClub'},
 		metaTags: {
-			title: 'GameClub - Alquila Videojuegos & Gana Dinero',
-			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila Juegos, Gana Dinero, PS4, Xbox, Nintendo.',
-			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
-			properties: {'og:title': 'GameClub - Alquila Videojuegos & Gana Dinero'}
+			title: 'Trabaja con GameClub',
+			description: '¿Quieres ser parte del equipo de GameClub?. Escríbenos a GameClub ¡La única plataforma gamer del Ecuador! Alquila tus Juegos, Gana Dinero, Juega mas pagando menos. Share and Play',
+			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer'
 		},
 		controller: 'WorkForUsCtrl',
 		resolve: {

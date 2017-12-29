@@ -342,6 +342,11 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					notif.success("Pago realizado con éxito");
 					sweet.close();
 					canvasToBottom();
+
+					if ($rootScope.currentUser.referrer != null) {
+						SweetAlert.swal("Genial!", "Tu saldo promocional por referido ha sido acreditado", "info");
+						$rootScope.currentUser.referrer = null;
+					}
 				}, function(error) {
 					sweet.close();
 				});

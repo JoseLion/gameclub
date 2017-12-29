@@ -22,6 +22,8 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				$scope.user = user;
 				$scope.isSaving = false;
 
+				console.log("token: ", token);
+
 				$scope.ok = function() {
 					if ($scope.user.terms) {
 						$scope.isSaving = true;
@@ -60,6 +62,10 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 		modal.result.then(function(success) {
 			if (success) {
 				$scope.user = {};
+
+				if (token != null) {
+					SweetAlert.swal("Recuerda!", "Tu saldo promocional por referido se te acreditará cuando subas o alquiles tu primer juego", "info");
+				}
 			}
 		});
 	};

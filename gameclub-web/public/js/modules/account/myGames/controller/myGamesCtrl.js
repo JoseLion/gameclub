@@ -89,7 +89,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
            maxPrice = priceChartingGMLoan+parseFloat($rootScope.settings[Const.settings.priceChartingMax].value);
         }
         
-        if($scope.myGame.cost < minPrice || $scope.myGame.cost > maxPrice ){
+        if ($scope.myGame.cost < minPrice || $scope.myGame.cost > maxPrice) {
             isValid = false;
             sweet.error('El precio de alquiler de ' + $scope.myGame.game.name + ' debe ser entre $' + minPrice.toFixed(2) + ' y $' + maxPrice.toFixed(2));
         }
@@ -123,6 +123,12 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
                         }, function() {
                             $state.go("gameclub.account.messages");
                         });
+
+
+                        if ($rootScope.currentUser.referrer != null) {
+                            SweetAlert.swal("Genial!", "Tu saldo promocional por referido ha sido acreditado", "info");
+                            $rootScope.currentUser.referrer = null;
+                        }
                     }
 
                     rest("publicUser/getCurrentUser").get(function(data) {

@@ -1,6 +1,9 @@
 @import url("/css/variables.less");
 
 @media only screen and (max-width: 768px) {
+
+	/*#account #games section.games .selector{width:46%;float:right;padding-top:4%;height: 46%;}*/
+
 	#account #games section.header .coins,
 	#account #games section.header .total{padding-left:10%;padding-right:10%;}
 	#account #games section.header .coins::before,
@@ -16,4 +19,14 @@
 	#account #games section.banner .search .search-params .filter{border:none;background-color:transparent;padding:2%;}
 	#account #games section.banner .search form > div{text-align:center !important;padding:1%;}
 	#account #games section.banner .search.white-search .btn-tertiary{width:2em;height:2em;font-size:0.75em;padding:14px;}
+
+	#account #games section.shipping-kit{background:@color-tertiary-alt;color:@color-primary;padding-bottom:3%;}
+	#account #games section.shipping-kit .title-section{color:@color-secundary;display:table;margin:auto;padding:4% 0 2%;}
+	#account #games section.shipping-kit .title-section .box-image{display:table-cell;margin-right:1em;margin-left: 2em;width:5em;}
+	#account #games section.shipping-kit .title-section .title{display:table-cell;vertical-align:middle;}
+	#account #games section.shipping-kit p{margin:0;font-size:1.2em;font-weight:700;margin-left: 1em;margin-right: 1em;text-align: justify;}
+	#account #games section.shipping-kit>span{display:block;font-size:1.2em;font-weight:700;text-transform:uppercase;margin-left:1%;margin-right: 1%;}
+	#account #games section.shipping-kit .subtitle{padding:2% 0;}
+	#account #games section.shipping-kit .dark-section{background:@color-primary;border-radius:15px;color:@color-secundary;display:inline-block;font-size:1em;margin-bottom:4%;padding:1.5% 5%;}
+	#account #games section.shipping-kit button{border-radius:8px;display:block;margin:auto;}
 }

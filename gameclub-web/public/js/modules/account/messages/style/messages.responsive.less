@@ -17,6 +17,9 @@
 	#account #messages section.messages .inbox .list .scrollable .inbox-cell .labels{font-size:1em;}
 	#account #messages section.messages .inbox .list .scrollable .inbox-cell .date{font-size:1em;}
 	#account #messages section.messages .inbox .detail{padding:0;}
-	#account #messages section.messages .inbox .detail .head{margin-bottom:4px;}
+	#account #messages section.messages .inbox .detail .head{margin-bottom:4px;margin-top: 5%;}
 	#account #messages section.messages .inbox .detail .canvas{height:96vw;}
+
+	#account #messages section.messages .inbox .detail .canvas .blue-box::before{content:"";position:absolute;width:35px;height:35px;background-color:@color-primary-alt;border-radius:5px;transform:translate(50%,-50%);top:100%;right:0%;z-index:-1;}
+	#account #messages section.messages .inbox .detail .canvas .blue-box.small-box{margin-left:40%;padding-bottom:3%;}
 }

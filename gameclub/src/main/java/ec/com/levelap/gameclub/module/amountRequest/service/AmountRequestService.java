@@ -19,7 +19,6 @@ import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogService;
-import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.repository.AmountRequestRepo;
 import ec.com.levelap.gameclub.module.message.entity.Message;
@@ -56,9 +55,6 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 	@Autowired
 	private ArchiveService archiveService;
 	
-	@Autowired
-	private LevelapCryptography cryptoService;
-	
 	@Transactional
 	public PublicUser requestBalance(AmountRequest request, MultipartFile identityPhoto, MultipartFile billPhoto) throws ServletException, IOException, GeneralSecurityException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
@@ -73,7 +69,7 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 		identity.setType(identityPhoto.getContentType());
 		
 		request.setPublicUser(currentUser);
-		request.setAmount(cryptoService.encrypt(currentUser.getShownBalance().toString(), key));
+		request.setAmount(currentUser.getBalance());
 		request.setRequestStatus(requestStatus);
 		request.setIdentityPhoto(identity);
 		
@@ -101,12 +97,13 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 		Transaction transaction = new Transaction();
 		File key = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
-		if(amountRequest.getRequestStatus().getCode().equals(Code.PAYMENT_PAYED) && user.getShownBalance() > 0) {
+		
+		if (amountRequest.getRequestStatus().getCode().equals(Code.PAYMENT_PAYED)) {
 			amountRequest.setAmount(user.getBalance());
 			
 			transaction.setDebitBalanceEnc(user.getBalance());
 			
-			user = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), user.getShownBalance());
+			user = publicUserService.substractFromUserBalance(amountRequest.getPublicUser().getId(), amountRequest.getShowAmount());
 			user.setIsRequestingBalance(Boolean.FALSE);
 			user = publicUserService.getPublicUserRepo().save(user);
 			
@@ -127,12 +124,6 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 			message = messageRepo.save(message);
 			
 			amountRequest.setMessage(message);
-		} else if(amountRequest.getRequestStatus().getCode().equals(Code.PAYMENT_NEW_REQUEST) || amountRequest.getRequestStatus().getCode().equals("PGSPRS")){
-			if(user.getShownBalance() > 0) {
-				amountRequest.setAmount(cryptoService.encrypt(Double.toString(user.getShownBalance()), key));
-			} else {
-				amountRequest.setAmount(cryptoService.encrypt(Double.toString(0.00D), key));
-			}
 		}
 		
 		amountRequest = amountRequesteRepo.save(amountRequest);

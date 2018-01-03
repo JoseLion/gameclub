@@ -63,12 +63,14 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 		}, function(error) {
 			$rootScope.currentUser = null;
 		});
-		if($rootScope.currentUser != null) {
+
+		if ($rootScope.currentUser != null) {
 			rest("publicUser/updateLoggedInformation").get(function(data) {
 				$rootScope.currentUser.shownBalance = data.shownBalance;
 				$rootScope.currentUser.unreadMessages = data.unreadMessages;
 			});
 		}
+		
 		angular.element('#myNavbar').collapse('hide');
 	});
 

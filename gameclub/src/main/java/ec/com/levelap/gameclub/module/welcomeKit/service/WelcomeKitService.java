@@ -145,7 +145,7 @@ public class WelcomeKitService {
 
 		Double amountBalance = shippingKit.getAmountBalanceValue();
 		Double amountCard = shippingKit.getAmountCardValue();
-		Double balance = publicUser.getShownBalance();
+		Double balance = Double.parseDouble(cryptoService.decrypt(publicUser.getBalance(), key));
 		Double totalBalance = balance - amountBalance;
 
 		if (totalBalance < 0) {

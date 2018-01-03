@@ -69,7 +69,8 @@ public class FineService extends BaseService<Fine> {
 			fine.setOwner(publicUser);
 			fine.setWasPayed(Boolean.TRUE);
 
-			Double totalBalance = publicUser.getShownBalance() - fine.getAmount();
+			Double totalBalance = Double.parseDouble(cryptoService.decrypt(publicUser.getBalance(), key)) - fine.getAmount();
+			
 			if (totalBalance < 0) {
 				totalBalance = Math.abs(totalBalance);
 				fine.setCardPartEnc(cryptoService.encrypt(Double.toString(totalBalance), key));

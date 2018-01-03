@@ -1,0 +1,2 @@
+INSERT INTO gameclub.public_user(name, last_name, username, password, private_key, balance) VALUES
+('Johanna', 'Pérez', 'jperez.levelap@gmail.com', '$2a$12$CrGcBjTb/Yszy5LXuVksae5yPHpSI07QQM8ycknRQqIsAQtDXqpba', DECODE('\256wZu\356\2368\347d1\332\340%^', 'escape'), DECODE('\355C\366\360Ij\307\224+ENV\2244M', 'escape'));

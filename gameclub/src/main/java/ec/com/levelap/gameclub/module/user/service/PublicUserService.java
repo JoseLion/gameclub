@@ -217,8 +217,8 @@ public class PublicUserService extends BaseService<PublicUser> {
 			
 			if (refferer != null) {
 				Setting setting = settingService.getSettingsRepo().findByCode(Code.SETTING_REFFERED_REWARD);
-				addToUserBalance(refferer.getId(), Double.parseDouble(setting.getValue()));
-				user = addToUserBalance(user.getId(), Double.parseDouble(setting.getValue()));
+				this.addToUserPromoBalance(refferer.getId(), Double.parseDouble(setting.getValue()));
+				user = this.addToUserPromoBalance(user.getId(), Double.parseDouble(setting.getValue()));
 				
 				File userKey = File.createTempFile("userKey", "tmp");
 				FileUtils.writeByteArrayToFile(userKey, user.getPrivateKey());
@@ -340,6 +340,33 @@ public class PublicUserService extends BaseService<PublicUser> {
 		
 		Double balance = Double.parseDouble(cryptoService.decrypt(user.getBalance(), key));
 		byte[] encrypted = cryptoService.encrypt(Double.toString(balance - ammount), key);
+		user.setBalance(encrypted);
+		
+		user = publicUserRepo.save(user);
+		return user;
+	}
+	
+	@Transactional
+	public PublicUser setUserPromoBalance(Long id, Double balance) throws ServletException, GeneralSecurityException, IOException {
+		PublicUser user = publicUserRepo.findOne(id);
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		
+		byte[] encrypted = cryptoService.encrypt(Double.toString(balance), key);
+		user.setPromoBalance(encrypted);
+		
+		user = publicUserRepo.save(user);
+		return user;
+	}
+	
+	@Transactional
+	public PublicUser addToUserPromoBalance(Long id, Double ammount) throws ServletException, GeneralSecurityException, IOException {
+		PublicUser user = publicUserRepo.findOne(id);
+		File key = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		
+		Double balance = Double.parseDouble(cryptoService.decrypt(user.getPromoBalance(), key));
+		byte[] encrypted = cryptoService.encrypt(Double.toString(balance + ammount), key);
 		user.setBalance(encrypted);
 		
 		user = publicUserRepo.save(user);

@@ -62,6 +62,10 @@ public class PublicUser extends BaseEntity {
 	@JsonIgnore
 	@Column
 	private byte[] balance;
+	
+	@JsonIgnore
+	@Column
+	private byte[] promoBalance;
 
 	@Column(columnDefinition = "VARCHAR")
 	private String token;
@@ -205,6 +209,22 @@ public class PublicUser extends BaseEntity {
 	public void setIsFacebookUser(Boolean isFacebookUser) {
 		this.isFacebookUser = isFacebookUser;
 	}
+	
+	public byte[] getBalance() {
+		return balance;
+	}
+
+	public void setBalance(byte[] balance) {
+		this.balance = balance;
+	}
+
+	public byte[] getPromoBalance() {
+		return promoBalance;
+	}
+
+	public void setPromoBalance(byte[] promoBalance) {
+		this.promoBalance = promoBalance;
+	}
 
 	public byte[] getPrivateKey() {
 		return privateKey;
@@ -212,14 +232,6 @@ public class PublicUser extends BaseEntity {
 
 	public void setPrivateKey(byte[] privateKey) {
 		this.privateKey = privateKey;
-	}
-
-	public byte[] getBalance() {
-		return balance;
-	}
-
-	public void setBalance(byte[] balance) {
-		this.balance = balance;
 	}
 
 	public String getToken() {
@@ -471,8 +483,11 @@ public class PublicUser extends BaseEntity {
 			LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");
 			FileUtils.writeByteArrayToFile(key, privateKey);
-			String decypted = cryptoService.decrypt(balance, key);
-			shownBalance = Double.parseDouble(decypted);
+			
+			String decryptedBalance = cryptoService.decrypt(balance, key);
+			String decryptedPromo = cryptoService.decrypt(promoBalance, key);
+			
+			shownBalance = Double.parseDouble(decryptedBalance) + Double.parseDouble(decryptedPromo);
 		}
 		
 		return shownBalance;

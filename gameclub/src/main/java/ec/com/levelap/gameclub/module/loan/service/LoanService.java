@@ -197,21 +197,23 @@ public class LoanService {
 		if (isGamer) {
 			loan.setGamerConfirmed(Boolean.TRUE);
 			loan.setGamerStatusDate(new Date());
-
-			Double totalToSubstract = gamer.getShownBalance() - loan.getBalancePart();
-			Double totalToCard = loan.getCardPart();
-			if (totalToSubstract < 0) {
-				totalToCard += Math.abs(totalToSubstract);
-				currentUser = publicUserService.setUserBalance(currentUser.getId(), 0D);
-				loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(gamer.getShownBalance()), keyGamer));
-				loan.setCardPartEnc(cryptoService.encrypt(Double.toString(totalToCard), keyGamer));
-			} else {
-				currentUser = publicUserService.substractFromUserBalance(currentUser.getId(), loan.getBalancePart());
+			
+			Double promoBalance = Double.parseDouble(cryptoService.decrypt(gamer.getPromoBalance(), keyGamer));
+			
+			if (loan.getBalancePart() > 0.0) {
+				Double remaining = promoBalance - loan.getBalancePart();
+				
+				if (remaining < 0.0) {
+					gamer = publicUserService.setUserPromoBalance(gamer.getId(), 0.0);
+					gamer = publicUserService.substractFromUserBalance(gamer.getId(), Math.abs(remaining));
+				} else {
+					gamer = publicUserService.setUserPromoBalance(gamer.getId(), remaining);
+				}
 			}
 			
-			if (totalToCard > 0) {
+			if (loan.getCardPart() > 0.0) {
 				String description = "Préstamo del juego " + loan.getPublicUserGame().getGame().getName() + " durante " + loan.getWeeks() + " semana(s)";
-				String response = paymentezService.debitFromCard(session, request.getRemoteAddr(), loan.getCardReference(), totalToCard, loan.getTaxes(), description);
+				String response = paymentezService.debitFromCard(session, request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(), loan.getTaxes(), description);
 				JSONObject json = new JSONObject(response);
 				loan.setTransactionId(json.getString("transaction_id"));
 			}
@@ -224,8 +226,8 @@ public class LoanService {
 				
 				if (refferer != null) {
 					Setting setting = settingService.getSettingsRepo().findByCode(Code.SETTING_REFFERED_REWARD);
-					publicUserService.addToUserBalance(refferer.getId(), Double.parseDouble(setting.getValue()));
-					loan.setGamer(publicUserService.addToUserBalance(loan.getGamer().getId(), Double.parseDouble(setting.getValue())));
+					publicUserService.addToUserPromoBalance(refferer.getId(), Double.parseDouble(setting.getValue()));
+					loan.setGamer(publicUserService.addToUserPromoBalance(loan.getGamer().getId(), Double.parseDouble(setting.getValue())));
 					
 					File userKey = File.createTempFile("userKey", "tmp");
 					FileUtils.writeByteArrayToFile(userKey, loan.getGamer().getPrivateKey());
@@ -606,7 +608,7 @@ public class LoanService {
 			
 			Double lenderFee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
 			Double lenderReturn = (loan.getPublicUserGame().getCost() * loan.getWeeks()) * (1.0 - lenderFee);
-			Double lenderDiff = lender.getShownBalance() - lenderReturn;
+			Double lenderDiff = Double.parseDouble(cryptoService.decrypt(lender.getBalance(), lenderKey)) - lenderReturn;
 			if (lenderDiff < 0.0) {
 				publicUserService.setUserBalance(lender.getId(), 0.0);
 				String description = "Retorno por préstamo cancelado";
@@ -645,7 +647,7 @@ public class LoanService {
 			lenderTransaction.setWeeks(loan.getWeeks());
 			
 			if (lenderDiff < 0.0) {
-				lenderTransaction.setDebitBalanceEnc(cryptoService.encrypt(Double.toString(lender.getShownBalance()), lenderKey));
+				lenderTransaction.setDebitBalanceEnc(lender.getBalance());
 				lenderTransaction.setDebitCardEnc(cryptoService.encrypt(Double.toString(Math.abs(lenderDiff)), lenderKey));
 			} else {
 				lenderTransaction.setDebitBalanceEnc(cryptoService.encrypt(Double.toString(lenderReturn), lenderKey));

@@ -37,5 +37,7 @@ public interface Code {
 	
 	public static final String PAYMENT_NEW_REQUEST = "PGSNVS";
 	
+	public static final String PAYMENT_IN_PROGRESS = "PGSPRS";
+	
 	public static final String PAYMENT_PAYED = "PGSPGD";
 }

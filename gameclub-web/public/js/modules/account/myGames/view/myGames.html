@@ -83,21 +83,27 @@
             <div ng-style="background"></div>
         </section>
         <section class="row header">
-            <div class="col-md-3 cover">
+            <div class="col-xs-6 col-md-3 cover">
                 <game-rating image-archive="myGame.game.diamond" no-rating no-selection="true"></game-rating>
             </div>
-            <div class="col-md-6 principal">
-                <h2 class="col-md-12 title">{{myGame.game.name}}</h2>
-                <stars ng-model="myGame.game.rating"></stars>
-                <div class="col-md-12 no-padding-left no-padding-right">
+            <div class="col-xs-6 col-md-6 principal">
+                <h2 class="col-xs-12 col-md-12 title">{{myGame.game.name}}</h2>
+                <stars class="col-xs-12" ng-model="myGame.game.rating"></stars>
+                <div class="col-xs-12 col-md-12 no-padding-left no-padding-right">
                     <button type="button" class="btn btn-primary small" ng-click="goBack()">Volver a mis juegos</button>
                 </div>
             </div>
-            <div class="col-md-3 rating text-right">
+
+            <!--<div class="col-xs-12 col-md-3 rating text-right">
                 <div class="col-md-12 content-rating">
                     <img ng-src="{{myGame.game.contentRating.other}}" alt="{{myGame.game.contentRating.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{myGame.game.contentRating.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
+            -->
+            <div class="col-xs-12 col-md-3 rating text-right">
+                <div class="col-xs-2 col-md-12 content-rating">
+                    <img ng-src="{{myGame.game.contentRating.other}}">
+
                 </div>
-                <div class="col-md-12 platform">
+                <div class="col-xs-6 col-md-12 platform">
                     <form class="col-md-12 platform">
                         <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
                             <ui-select-match placeholder="Consola...">
@@ -110,8 +116,13 @@
                         </ui-select>
                     </form>
                 </div>
-                <div class="col-md-12 category" ng-repeat="cross in myGame.game.categories">
+
+                <!--<div class="col-xs-2 col-md-12 category" ng-repeat="cross in myGame.game.categories">
                     <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}" alt="{{cross.category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{croos.category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
+                -->
+                <div class="col-xs-2 col-md-12 category" ng-repeat="cross in myGame.game.categories">
+                    <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}">
+                
                 </div>
             </div>
         </section>
@@ -153,27 +164,36 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 help">
-                    <label class="form-cell">Valor de mercado del juego</label>
-                    <div class="form-cell">{{(myGame.game.uploadPayment) | currency: '$': 2}}</div>
+                <div class="col-xs-12 col-md-12 help">
+                    <label class="col-xs-8 form-cell">Valor de mercado del juego</label>
+                    <div class="col-xs-4 form-cell-cost">{{(myGame.game.uploadPayment) | currency: '$': 2}}</div>
                 </div>
 
-                <div class="col-md-12 relax">
-                    <div class="form-cell">
-                    <span class="second-text">Costo de Seguro + Fee de GameClub =</span>
-                    </div>
-                    <div class="form-cell">{{settings[Const.settings.feeLoanLender].value}}% del valor de tu alquiler.</div>
+                <div class="col-xs-12 col-md-12 help-fee">
+                    <span class="col-xs-6 col-md-6 form-cell">Costo de Seguro + Fee de GameClub =</span>
+                    <div class="col-xs-6 col-md-6 form-cell-cost">{{settings[Const.settings.feeLoanLender].value}}% del valor de tu alquiler.</div>
                 </div>
 
-                <div class="col-md-12 help valid-group">
-                    <label class="form-cell">Costo alquiler por semana</label>
-                    <div class="form-cell">
-                        <input validation type="number" ng-model="myGame.cost" class="coins" min="0.0" step="0.01" value="0.00" required>
+                <!-- <div class="col-xs-12 col-md-12 help-cost-loan valid-group">
+                    <label class=" form-cell">Costo alquiler por semana</label>
+                    <div class=" form-cell">
+                        <input validation type="number" ng-model="myGame.cost" class="coins" min="0.0" step="0.01" value="0.00$" required>
                     </div>
-                    <div class="form-cell help">
+                    <div class="  form-cell-sing">
                         <span>&#36;</span>
                     </div>
-                    <span class="form-cell text-left" ng-if="settings[Const.settings.priceChartingGames].type == 'percentage'">(Recomendación del juego: <B>&#36;{{(myGame.game.uploadPayment)/gameLoanPCH | number:2}}</B> )</span>
+                    <span class=" form-cell text-left" ng-if="settings[Const.settings.priceChartingGames].type == 'percentage'">(Recomendación del juego: <B>&#36;{{(myGame.game.uploadPayment)/gameLoanPCH | number:2}}</B> )</span>
+                </div> -->
+
+                <div class="col-md-12 help valid-group">
+                    <label class=" form-cell">Costo alquiler por semana</label>
+                    <div class=" form-cell">
+                        <input validation type="number" ng-model="myGame.cost" class="coins" min="0.0" step="0.01" value="0.00" required>
+                    </div>
+                    <div class="  form-cell help">
+                        <span>&#36;</span>
+                    </div>
+                    <span class=" form-cell text-left" ng-if="settings[Const.settings.priceChartingGames].type == 'percentage'">(Recomendación del juego: <B>&#36;{{(myGame.game.uploadPayment)/gameLoanPCH | number:2}}</B> )</span>
                 </div>
 
                 <div class="col-md-12 relax">

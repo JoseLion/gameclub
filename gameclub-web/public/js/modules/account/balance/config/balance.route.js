@@ -18,6 +18,14 @@ angular.module('Balance').config(function($stateProvider) {
 					name: 'Balance',
 					files: ['js/modules/account/balance/controller/balanceCtrl.js', 'js/modules/account/balance/style/balance.less', 'js/modules/account/balance/style/balance.responsive.less']
 				}]);
+			},
+
+			lastFiveTransactions: function(rest) {
+				return rest("transaction/lastFiveTransactions").get();
+			},
+
+			currentRequestAmount: function(rest, $rootScope) {
+				return rest("amountRequest/getCurrentRequestAmount").get();
 			}
 		}
 	});

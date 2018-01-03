@@ -19,6 +19,7 @@ import ec.com.levelap.base.entity.FileData;
 import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.commons.catalog.Catalog;
 import ec.com.levelap.commons.catalog.CatalogService;
+import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.repository.AmountRequestRepo;
 import ec.com.levelap.gameclub.module.message.entity.Message;
@@ -55,6 +56,9 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 	@Autowired
 	private ArchiveService archiveService;
 	
+	@Autowired
+	private LevelapCryptography cryptoService;
+	
 	@Transactional
 	public PublicUser requestBalance(AmountRequest request, MultipartFile identityPhoto, MultipartFile billPhoto) throws ServletException, IOException, GeneralSecurityException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
@@ -86,6 +90,7 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 		amountRequesteRepo.save(request);
 		
 		currentUser.setIsRequestingBalance(true);
+		currentUser.setBalance(cryptoService.encrypt("0.0", key));
 		currentUser = publicUserService.getPublicUserRepo().save(currentUser);
 		return currentUser;
 	}

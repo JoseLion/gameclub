@@ -2,7 +2,7 @@ angular.module('Referred').controller('ReferredCtrl', function($scope, $rootScop
 	$scope.reffer = {};
 	let baseUrl = $location.$$protocol + '://' + $location.$$host + "/gameclub/login?token=";
 	$scope.costReferred = parseFloat($rootScope.settings[Const.settings.costReferred].value);
-
+	
 	if ($rootScope.currentUser.urlToken) {
 		$scope.reffer.link = baseUrl + $rootScope.currentUser.urlToken;
 	}
@@ -11,6 +11,7 @@ angular.module('Referred').controller('ReferredCtrl', function($scope, $rootScop
 		sweet.default("Se generará un nuevo link para referir", function() {
 			rest("publicUser/generateUrlToken").get(function(data) {
 				$scope.reffer.link = baseUrl + data;
+				$rootScope.currentUser.urlToken = data;
 				notif.success("Link generado con éxito");
 				sweet.close();
 			}, function(error) {

@@ -364,10 +364,16 @@ public class PublicUserService extends BaseService<PublicUser> {
 		PublicUser user = publicUserRepo.findOne(id);
 		File key = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(key, user.getPrivateKey());
+		Double balance;
 		
-		Double balance = Double.parseDouble(cryptoService.decrypt(user.getPromoBalance(), key));
+		if (user.getPromoBalance() != null) {
+			balance = Double.parseDouble(cryptoService.decrypt(user.getPromoBalance(), key));
+		} else {
+			balance = 0.0;
+		}
+		
 		byte[] encrypted = cryptoService.encrypt(Double.toString(balance + ammount), key);
-		user.setBalance(encrypted);
+		user.setPromoBalance(encrypted);
 		
 		user = publicUserRepo.save(user);
 		return user;

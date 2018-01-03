@@ -1,17 +1,20 @@
-angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http) {
-
+angular.module('Balance').controller('BalanceCtrl', function($scope, $rootScope, lastFiveTransactions, currentRequestAmount, rest, SweetAlert, $uibModal, $location, $anchorScroll, $state, Const, $http) {
 	$scope.transactions = [];
 	$scope.idUser=0;
-	rest("transaction/lastFiveTransactions").get(function(data) {
+
+	lastFiveTransactions.$promise.then(function(data) {
 		$scope.transactions = data.content;
-		if(data.content.length>0 ){
-			var i=0;
-			console.log(data.content);
-			for (i=0;i< data.content.length;i++) { 
+		
+		if (data.content.length > 0) {currentRequestAmount
+			for (let i=0; i< data.content.length;i++) { 
 			   	$scope.idUser=data.content[i].owner.id;
 			   	break;
 			}
 		}
+	});
+
+	currentRequestAmount.$promise.then(function(data) {
+		$scope.currentRequestAmount = data;
 	});
 
 	$scope.takeYourBalance = function() {

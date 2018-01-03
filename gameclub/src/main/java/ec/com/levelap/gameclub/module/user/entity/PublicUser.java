@@ -64,7 +64,7 @@ public class PublicUser extends BaseEntity {
 	private byte[] balance;
 	
 	@JsonIgnore
-	@Column
+	@Column(name="promo_balance")
 	private byte[] promoBalance;
 
 	@Column(columnDefinition = "VARCHAR")
@@ -149,7 +149,6 @@ public class PublicUser extends BaseEntity {
 	@Column(name="is_requesting_balance", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean isRequestingBalance = false;
 	
-	@JsonIgnore
 	@Column(columnDefinition="VARCHAR")
 	private String referrer;
 
@@ -484,9 +483,8 @@ public class PublicUser extends BaseEntity {
 			File key = File.createTempFile("key", ".tmp");
 			FileUtils.writeByteArrayToFile(key, privateKey);
 			
-			String decryptedBalance = cryptoService.decrypt(balance, key);
-			String decryptedPromo = cryptoService.decrypt(promoBalance, key);
-			
+			String decryptedBalance = balance != null ? cryptoService.decrypt(balance, key) : "0.0";
+			String decryptedPromo = promoBalance != null ? cryptoService.decrypt(promoBalance, key) : "0.0";
 			shownBalance = Double.parseDouble(decryptedBalance) + Double.parseDouble(decryptedPromo);
 		}
 		

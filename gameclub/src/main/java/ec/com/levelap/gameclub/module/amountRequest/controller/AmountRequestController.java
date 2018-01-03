@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import ec.com.levelap.archive.Archive;
 import ec.com.levelap.archive.ArchiveService;
 import ec.com.levelap.gameclub.module.amountRequest.entity.AmountRequest;
 import ec.com.levelap.gameclub.module.amountRequest.service.AmountRequestService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
+import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 
 @RestController
 @RequestMapping(value="api/amountRequest", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -38,6 +38,9 @@ public class AmountRequestController {
 	
 	@Autowired
 	private ArchiveService archiveService;
+	
+	@Autowired
+	private PublicUserService publicUserService;
 	
 	@RequestMapping(value="requestBalance", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<PublicUser> requestBalance(@RequestPart AmountRequest request, @RequestPart MultipartFile identityPhoto, @RequestPart(required=false) MultipartFile billPhoto) throws ServletException, IOException, GeneralSecurityException {
@@ -75,11 +78,10 @@ public class AmountRequestController {
 	@RequestMapping(value="downloadIdentityPhoto/{id}", method=RequestMethod.GET)
 	public void downloadIdentityPhoto(@PathVariable Long id, HttpServletResponse response) throws ServletException, IOException {
 		AmountRequest amountRequest = amountRequestService.getAmountRequesteRepo().findOne(id);
-		Archive archive = amountRequestService.getAmountRequesteRepo().findArchive(amountRequest.getIdentityPhoto().getId());
-		response.setContentType(archive.getType());
-		response.setHeader("Content-Disposition", String.format("inline; filename=\"" + archive.getName() +"\""));
+		response.setContentType(amountRequest.getIdentityPhoto().getType());
+		response.setHeader("Content-Disposition", String.format("inline; filename=\"" + amountRequest.getIdentityPhoto().getName() +"\""));
 		
-		InputStream inputStream = new FileInputStream(archiveService.getFile(archive.getName(), archive.getModule()));
+		InputStream inputStream = new FileInputStream(archiveService.getFile(amountRequest.getIdentityPhoto().getName(), amountRequest.getIdentityPhoto().getModule()));
 		FileCopyUtils.copy(inputStream, response.getOutputStream());
 	}
 	
@@ -88,15 +90,27 @@ public class AmountRequestController {
 		AmountRequest amountRequest = amountRequestService.getAmountRequesteRepo().findOne(id);
 		
 		if(amountRequest.getBillPhoto() != null) {
-			Archive archive = amountRequestService.getAmountRequesteRepo().findArchive(amountRequest.getBillPhoto().getId());
-			response.setContentType(archive.getType());
-			response.setHeader("Content-Disposition", String.format("inline; filename=\"" + archive.getName() +"\""));
+			response.setContentType(amountRequest.getBillPhoto().getType());
+			response.setHeader("Content-Disposition", String.format("inline; filename=\"" + amountRequest.getBillPhoto().getName() +"\""));
 				
-			InputStream inputStream = new FileInputStream(archiveService.getFile(archive.getName(), archive.getModule()));
+			InputStream inputStream = new FileInputStream(archiveService.getFile(amountRequest.getBillPhoto().getName(), amountRequest.getBillPhoto().getModule()));
 			FileCopyUtils.copy(inputStream, response.getOutputStream());
 		} 
 		
 	}
+	
+	@RequestMapping(value="getCurrentRequestAmount", method=RequestMethod.GET)
+	public ResponseEntity<Double> getCurrentRequestAmount() throws ServletException, IOException, GeneralSecurityException {
+		PublicUser currentUser = publicUserService.getCurrentUser();
+		AmountRequest request = amountRequestService.getAmountRequesteRepo().findCurrentRequest(currentUser.getId());
+		
+		if (request != null) {
+			return new ResponseEntity<>(request.getShowAmount(), HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
 	private static class Search {
 		
 		public String name = "";

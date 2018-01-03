@@ -14,7 +14,6 @@ public class GameClubEventsListener {
 	@EventListener(classes=ContextRefreshedEvent.class)
 	public void contextRefreshed()  throws ServletException {
 		LoanService loanService = ApplicationContextHolder.getContext().getAutowireCapableBeanFactory().getBean(LoanService.class);
-		System.out.println("********************** RESCHEDULING TASKS!!!");
 		loanService.rescheduleTasks();
 	}
 }

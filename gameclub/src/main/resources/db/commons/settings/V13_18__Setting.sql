@@ -10,7 +10,7 @@ INSERT INTO commons.setting(code, category, name, value, type, is_editable) VALU
 ('STGPCHMAX', 'Price Charting', 'Máxima diferencia de precio (%)', '10', 'percentage', false),
 ('STGPCHMIN', 'Price Charting', 'Mínima diferencia de precio (%)', '10', 'percentage', false),
 ('STGPCHNAP', 'Price Charting', 'Nacionalizar precio price charting (%)', '10', 'percentage', false),
-('STGREFREW', 'Referidos', 'Recompensa por referido ($)', '5', 'number',true),
+('STGREFREW', 'Referidos', 'Recompensa por referido ($)', '5', 'number', false),
 ('STGSHPVGO', 'Shipping', 'Valor de shipping de ida  (%)', '1.5', 'number', false),
 ('STGSHPVRT', 'Shipping', 'Valor de shipping de vuelta (%)', '1.5', 'number', false),
 ('STGSHPKIT', 'Shipping', 'Valor del shipping kit ($)', '12.5', 'number', false),

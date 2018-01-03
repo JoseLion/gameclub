@@ -22,13 +22,10 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 				$scope.user = user;
 				$scope.isSaving = false;
 
-				console.log("token: ", token);
-
 				$scope.ok = function() {
 					if ($scope.user.terms) {
 						$scope.isSaving = true;
 						let signObj = {
-							baseUrl: $location.$$protocol + "://" + $location.$$host,
 							publicUser: user,
 							token: token
 						};

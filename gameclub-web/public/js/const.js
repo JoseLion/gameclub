@@ -22,11 +22,6 @@ angular.module('GameClub').constant('Const', {
 		account: 'gameclub.account.'
 	},
 
-	kushki: {
-		publicMerchantId: '10000002423230048673149322144567',
-		isTest: true
-	},
-
 	errorMessages: {
 		required: 'El dato es requerido',
 		number: 'El dato debe ser numérico',
@@ -98,6 +93,7 @@ angular.module('GameClub').constant('Const', {
 		baseUrl: "https://ccapi-stg.paymentez.com",
 		appCode: "TOMO-EC",
 		appKey: "LeqWG1P48IC8Cfj99DPW6rLGnh5wSC"
-	}
+	},
 
+	seoImg: "-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox"
 });

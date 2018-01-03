@@ -4,7 +4,7 @@
 		<div class="col-md-8 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
 			<div class="col-md-10 name">
 				<div class="col-md-3 no-padding-left no-padding-right">
-					<img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" onerror="this.src='img/contact-person.svg'">
+					<img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" onerror="this.src='img/contact-person.svg'" alt="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 				</div>
 				<div class="col-md-9">
 					<h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
@@ -57,8 +57,8 @@
 					<span class="no-messages" ng-if="messages.length == 0">No tienes ningún mensaje</span>
 					<div class="inbox-cell" ng-class="{'unread': !message.read, 'selected': message.selected}" ng-repeat="message in messages" ng-click="messageSelected(message)">
 						<div class="image col-md-3 col-xs-2">
-							<img src="img/messages/gameclub-icon.svg" ng-if="!message.isLoan">
-							<img class="avatar" archive="message.fromUser ? message.fromUser.avatar.image : message.toUser.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="message.isLoan">
+							<img src="img/messages/gameclub-icon.svg" ng-if="!message.isLoan" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
+							<img class="avatar" archive="message.fromUser ? message.fromUser.avatar.image : message.toUser.avatar.image" placeholder="img/contact-person{{message.read && !message.selected ? '-black' : ''}}.svg" ng-if="message.isLoan" alt="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 						</div>
 						<div class="labels col-md-7 col-xs-8">
 							<span id="from">{{getFromTo(message)}}</span>
@@ -129,7 +129,7 @@
 
 										<div class="form-group geolocation" ng-class="{'disabled': loan.isDisabled}">
 											<label><i class="gc gc-address" ng-click="!loan.isDisabled ? openMap(loan, 'gamerGeolocation') : null"></i></label>
-											<img src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
+											<img src="/img/check.svg" ng-if="loan.gamerGeolocation != null" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 											<span ng-if="!loan.gamerGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
@@ -155,7 +155,7 @@
 									<br>
 									<br>
 									<div class="alert-icon">
-										<img src="img/messages/alert.svg">
+										<img src="img/messages/alert.svg" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 									</div>
 									<div class="alert-text">
 										<span>Completa correctamente la información de retiro.</span>
@@ -196,7 +196,7 @@
 
 										<div class="form-group geolocation">
 											<label class="cursor-no-drop"><i class="gc gc-address"></i></label>
-											<img src="/img/check.svg" ng-if="loan.gamerGeolocation != null">
+											<img src="/img/check.svg" ng-if="loan.gamerGeolocation != null" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 											<span ng-if="!loan.gamerGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
@@ -275,7 +275,7 @@
 											<label>
 												<i class="gc gc-address" ng-click="!loan.restore.isDisabled ? openMap(loan.restore, 'gamerGeolocation') : null"></i>
 											</label>
-											<img src="/img/check.svg" ng-if="loan.restore.gamerGeolocation != null">
+											<img src="/img/check.svg" ng-if="loan.restore.gamerGeolocation != null" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 											<span ng-if="!loan.restore.gamerGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
@@ -292,7 +292,7 @@
 									<br>
 									<br>
 									<div class="alert-icon">
-										<img src="img/messages/alert.svg">
+										<img src="img/messages/alert.svg" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 									</div>
 									<div class="alert-text">
 										<span>Verifica o edita la información de retiro.</span>
@@ -419,7 +419,7 @@
 
 										<div class="form-group geolocation" ng-class="{'disabled': loan.isDisabled}">
 											<label><i class="gc gc-address" ng-click="!loan.isDisabled ? openMap(loan, 'lenderGeolocation') : null"></i></label>
-											<img src="/img/check.svg" ng-if="loan.lenderGeolocation != null">
+											<img src="/img/check.svg" ng-if="loan.lenderGeolocation != null" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 											<span ng-if="!loan.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
@@ -438,7 +438,7 @@
 									<br>
 									<br>
 									<div class="alert-icon">
-										<img src="img/messages/alert.svg">
+										<img src="img/messages/alert.svg" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 									</div>
 									<div class="alert-text">
 										<span>Completa correctamente la información de retiro.</span>
@@ -470,7 +470,7 @@
 								<br>
 								<br>
 									<div class="alert-icon-blue">
-										<img src="img/messages/alert.svg">
+										<img src="img/messages/alert.svg" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 									</div>
 									<div class="alert-text-blue">
 										<span>Recuerda colocar tu juego en la caja GameClub con el número que llenaste y de colocar la caja GameClub dentro de la funda. Si no sabes cómo, <a href="">mira este video</a>.</span>
@@ -497,7 +497,7 @@
 
 										<div class="form-group geolocation">
 											<label class="cursor-no-drop"><i class="gc gc-address"></i></label>
-											<img src="/img/check.svg" ng-if="loan.lenderGeolocation != null">
+											<img src="/img/check.svg" ng-if="loan.lenderGeolocation != null" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 											<span ng-if="!loan.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
@@ -571,7 +571,7 @@
 											<label>
 												<i class="gc gc-address" ng-click="!loan.restore.isDisabled ? openMap(loan.restore, 'lenderGeolocation') : null"></i>
 											</label>
-											<img src="/img/check.svg" ng-if="loan.restore.lenderGeolocation != null">
+											<img src="/img/check.svg" ng-if="loan.restore.lenderGeolocation != null" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 											<span ng-if="!loan.restore.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
 										</div>
 
@@ -588,7 +588,7 @@
 									<br>
 									<br>
 									<div class="alert-icon">
-										<img src="img/messages/alert.svg">
+										<img src="img/messages/alert.svg" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
 									</div>
 									<div class="alert-text">
 										<span>Verifica o edita la información de entrega.</span>

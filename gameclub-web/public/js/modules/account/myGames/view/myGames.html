@@ -4,7 +4,7 @@
         <div class="col-md-8 col-xs-7 no-padding-left no-padding-right responsive-margin-bottom">
             <div class="col-md-10 name">
                 <div class="col-md-3 no-padding-left no-padding-right">
-                    <img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" onerror="this.src='img/contact-person.svg'">
+                    <img ng-src="{{$archiveUrl + currentUser.avatar.image.id}}" onerror="this.src='img/contact-person.svg'" alt="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="Avatar-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                 </div>
                 <div class="col-md-9">
                     <h1 class="title">{{currentUser.name}} {{currentUser.lastName}}</h1>
@@ -60,11 +60,11 @@
             <div class="col-md-4 text-rigth no-padding-right">
                 <ui-select ng-model="filter.console" theme="bootstrap" class="selector" on-select="consoleSelected()">
                     <ui-select-match allow-clear placeholder="Consola...">
-                        <img ng-src="{{$archiveUrl + $select.selected.blackLogo.id}}" class="gameConsole">
+                        <img ng-src="{{$archiveUrl + $select.selected.blackLogo.id}}" class="gameConsole" alt="{{$select.selected.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{$select.selected.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                     </ui-select-match>
                     <ui-select-choices repeat="console in consoles | filter: $select.search" class="text-center">
                         <div ng-bind-html="'' | highlight: $select.search"></div>
-                        <img ng-src="{{$archiveUrl + console.blackLogo.id}}" class="gameConsole">
+                        <img ng-src="{{$archiveUrl + console.blackLogo.id}}" class="gameConsole" alt="{{console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                     </ui-select-choices>
                 </ui-select>
             </div>
@@ -95,23 +95,23 @@
             </div>
             <div class="col-md-3 rating text-right">
                 <div class="col-md-12 content-rating">
-                    <img ng-src="{{myGame.game.contentRating.other}}">
+                    <img ng-src="{{myGame.game.contentRating.other}}" alt="{{myGame.game.contentRating.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{myGame.game.contentRating.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                 </div>
                 <div class="col-md-12 platform">
                     <form class="col-md-12 platform">
                         <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center" ng-change="consoleSelected()">
                             <ui-select-match placeholder="Consola...">
-                                <img ng-src="{{$archiveUrl + $select.selected.console.blackLogo.id}}" class="gameConsole">
+                                <img ng-src="{{$archiveUrl + $select.selected.console.blackLogo.id}}" class="gameConsole" alt="{{$select.selected.console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{$select.selected.console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                             </ui-select-match>
                             <ui-select-choices repeat="cross in myGame.game.consoles | filter: $select.search" class="text-center">
                                 <div ng-bind-html="'' | highlight: $select.search"></div>
-                                <img ng-src="{{$archiveUrl + cross.console.whiteLogo.id}}" >
+                                <img ng-src="{{$archiveUrl + cross.console.whiteLogo.id}}" alt="{{cross.console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{cross.console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                             </ui-select-choices>
                         </ui-select>
                     </form>
                 </div>
                 <div class="col-md-12 category" ng-repeat="cross in myGame.game.categories">
-                    <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}">
+                    <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}" alt="{{cross.category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{croos.category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                 </div>
             </div>
         </section>
@@ -219,18 +219,18 @@
                             </ui-select-match>
                             <ui-select-choices repeat="category in categories | filter: $select.search">
                                 <div ng-bind-html="category.name | highlight: $select.search"></div>
-                                <img ng-src="{{$archiveUrl + category.whiteVector.id}}" class="category"/>
+                                <img ng-src="{{$archiveUrl + category.whiteVector.id}}" class="category" alt="{{category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                             </ui-select-choices>
                         </ui-select>
                     </div>
                     <div class="col-md-4 col-xs-4 filter">
                         <ui-select ng-model="search.console" theme="bootstrap" class="selector text-center">
                             <ui-select-match allow-clear placeholder="Consola...">
-                                <img ng-src="{{$archiveUrl + $select.selected.whiteLogo.id}}" class="gameConsole"/>
+                                <img ng-src="{{$archiveUrl + $select.selected.whiteLogo.id}}" class="gameConsole" alt="{{$select.selected.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{$select.selected.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                             </ui-select-match>
                             <ui-select-choices repeat="console in consoles | filter: $select.search" class="text-center">
                                 <div ng-bind-html="'' | highlight: $select.search"></div>
-                                <img ng-src="{{$archiveUrl + console.whiteLogo.id}}" class="gameConsole"/>
+                                <img ng-src="{{$archiveUrl + console.whiteLogo.id}}" class="gameConsole" alt="{{console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{console.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -244,7 +244,7 @@
     </section>
     <section class="row shipping-kit text-center">
         <div class="title-section">
-            <img class="box-image" src="img/myGames/shipping-kit-box.svg" alt="shipping-kit-box"/>
+            <img class="box-image" src="img/myGames/shipping-kit-box.svg" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
             <h2 class="title">Solicita tu Shipping Kit</h2>
         </div>
         <p>&iquest;Se te acabaron las cajas y fundas que tenías o quieres renovar tus cajas y fundas Game Club?</p>
@@ -259,7 +259,7 @@
     <div id="first-game-modal" class="inmodal">
         <div class="modal-header">
             <h1>¡Oh yeah!</h1>
-            <img src="/img/myGames/package-icon.svg">
+            <img src="/img/myGames/package-icon.svg" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
         </div>
 
         <div class="modal-body">

@@ -198,7 +198,7 @@ public class LoanService {
 			loan.setGamerConfirmed(Boolean.TRUE);
 			loan.setGamerStatusDate(new Date());
 			
-			Double promoBalance = Double.parseDouble(cryptoService.decrypt(gamer.getPromoBalance(), keyGamer));
+			Double promoBalance = gamer.getPromoBalance() != null ? Double.parseDouble(cryptoService.decrypt(gamer.getPromoBalance(), keyGamer)) : 0.0;
 			
 			if (loan.getBalancePart() > 0.0) {
 				Double remaining = promoBalance - loan.getBalancePart();

@@ -37,7 +37,6 @@ import ec.com.levelap.gameclub.module.fine.service.FineService;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
-import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.paymentez.service.PaymentezService;
@@ -52,6 +51,7 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.gameclub.utils.GameClubMailService;
 import ec.com.levelap.mail.entity.LevelapMail;
 import ec.com.levelap.taskScheduler.LevelapTaskScheduler;
 

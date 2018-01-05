@@ -19,10 +19,10 @@ import org.springframework.stereotype.Service;
 
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.service.BaseService;
-import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.module.user.entity.AdminUser;
 import ec.com.levelap.gameclub.module.user.repository.AdminUserRepo;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.gameclub.utils.GameClubMailService;
 import ec.com.levelap.mail.entity.LevelapMail;
 
 @Service

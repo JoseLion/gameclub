@@ -61,7 +61,8 @@ flyway:
   locations:
     - classpath:db/gameclub
     - classpath:db/commons
-    - classpath:db/system/views
+    - classpath:db/system
+    - classpath:db/dev
   baseline-on-migrate: true
   encoding: UTF-8
   out-of-order: true

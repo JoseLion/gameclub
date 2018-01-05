@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.mail.service;
+package ec.com.levelap.gameclub.utils;
 
 import java.util.Map;
 
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.mail.entity.LevelapMail;
 import ec.com.levelap.mail.service.MailService;
 

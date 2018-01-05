@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.mail.entity.LevelapMail;
 import ec.com.levelap.mail.service.MailService;
 
@@ -32,6 +33,10 @@ public class GameClubMailService {
 		
 		params.put("baseUrl", baseUrl);
 		params.put("port", port);
+		
+		if (levelapMail.getFrom() == null) {
+			levelapMail.setFrom(Const.EMAIL_NO_REPLY);
+		}
 		
 		return mailService.sendMailWihTemplate(levelapMail, template, params);
 	}

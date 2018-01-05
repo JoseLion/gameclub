@@ -46,6 +46,12 @@ public interface Const {
 	
 	public static final String EMAIL_LOGISTICS = "logistica@gameclub.com.ec";
 	
+	public static final String EMAIL_NO_REPLY = "mail-noreply@gameclub.com.ec";
+	
+	public static final String EMAIL_NOTIFICATIONS = "notificaciones@gameclub.com.ec";
+	
+	public static final String EMAIL_REMINDER = "recordatorio_logistica@gameclub.com.ec";
+	
 	public static final String SETTINGS_PERCENTAGE = "percentage";
 	
 	public static final String SETTINGS_NUMBER = "number";

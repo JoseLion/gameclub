@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.repository.GameRepo;
-import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.gameclub.utils.GameClubMailService;
 import ec.com.levelap.mail.entity.LevelapMail;
 
 @Component

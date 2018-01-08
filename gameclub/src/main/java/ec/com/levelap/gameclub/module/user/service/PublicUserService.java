@@ -38,7 +38,6 @@ import org.springframework.web.multipart.MultipartFile;
 import ec.com.levelap.base.entity.ErrorControl;
 import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.cryptography.LevelapCryptography;
-import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.settings.entity.Setting;
 import ec.com.levelap.gameclub.module.settings.service.SettingService;
@@ -52,6 +51,7 @@ import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.gameclub.utils.GameClubMailService;
 import ec.com.levelap.mail.entity.LevelapMail;
 
 @Service

@@ -16,13 +16,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.module.user.entity.AdminUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.repository.AdminUserRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserRepo;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.gameclub.utils.GameClubMailService;
 import ec.com.levelap.mail.entity.LevelapMail;
 import ec.com.levelap.security.SecurityConfig;
 

@@ -37,7 +37,6 @@ import ec.com.levelap.gameclub.module.fine.service.FineService;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.entity.LoanLite;
 import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
-import ec.com.levelap.gameclub.module.mail.service.GameClubMailService;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.message.service.MessageService;
 import ec.com.levelap.gameclub.module.paymentez.service.PaymentezService;
@@ -52,6 +51,7 @@ import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.gameclub.utils.GameClubMailService;
 import ec.com.levelap.mail.entity.LevelapMail;
 import ec.com.levelap.taskScheduler.LevelapTaskScheduler;
 
@@ -122,6 +122,7 @@ public class LoanService {
 		Setting feeLender = settingService.getSettingsRepo().findByCode(Code.SETTING_FEE_LENDER);
 		loan.setPublicUserGame(cross);
 		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 		levelapMail.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
 		
 		Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
@@ -507,12 +508,15 @@ public class LoanService {
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
 		params.put("returnDate", df.format(loan.getReturnDate()));
 		params.put("days", isLastReminder ? "1" : "3");
-
+		
+		levelapMail.setFrom(Const.EMAIL_REMINDER);
 		mailService.sendMailWihTemplate(levelapMail, "MSGARM", params);
-
+		
+		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 		levelapMail.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
 		mailService.sendMailWihTemplate(levelapMail, "MSGLRM", params);
-
+		
+		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 		levelapMail.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
 		mailService.sendMailWihTemplate(levelapMail, "MSGGRM", params);
 	}
@@ -531,16 +535,19 @@ public class LoanService {
 		params.put("gamerConfirmationDate", restore.getGamerStatusDate() != null ? df.format(restore.getGamerStatusDate()) : "SIN CONFIRMAR");
 
 		if (restore.getLenderStatusDate() == null || restore.getGamerStatusDate() == null) {
+			levelapMail.setFrom(Const.EMAIL_REMINDER);
 			levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_LOGISTICS));
 			mailService.sendMailWihTemplate(levelapMail, "MSGAUR", params);
 		}
 
 		if (restore.getLenderStatusDate() == null) {
+			levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 			levelapMail.setRecipentTO(Arrays.asList(restore.getPublicUserGame().getPublicUser().getUsername()));
 			mailService.sendMailWihTemplate(levelapMail, "MSGLUR", params);
 		}
 
 		if (restore.getGamerStatusDate() == null) {
+			levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 			levelapMail.setRecipentTO(Arrays.asList(restore.getGamer().getUsername()));
 			mailService.sendMailWihTemplate(levelapMail, "MSGGUR", params);
 		}

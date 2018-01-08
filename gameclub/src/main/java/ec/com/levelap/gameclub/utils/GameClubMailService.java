@@ -1,4 +1,4 @@
-package ec.com.levelap.gameclub.module.mail.service;
+package ec.com.levelap.gameclub.utils;
 
 import java.util.Map;
 
@@ -32,6 +32,10 @@ public class GameClubMailService {
 		
 		params.put("baseUrl", baseUrl);
 		params.put("port", port);
+		
+		if (levelapMail.getFrom() == null) {
+			levelapMail.setFrom(Const.EMAIL_NO_REPLY);
+		}
 		
 		return mailService.sendMailWihTemplate(levelapMail, template, params);
 	}

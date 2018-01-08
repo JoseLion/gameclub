@@ -1,4 +1,4 @@
-angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, mostPlayed, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview, notif, Const) {
+angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, mostPlayed, $location, anchor, $state, friendlyUrl, sweet, openRest, notif, forEach, friendlyUrl, blogsPreview, notif, Const, rest) {
     $scope.search = {};
     $scope.contactUs = {};
 
@@ -23,7 +23,7 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, mostP
 
     $scope.sendContactUs = function() {
         sweet.default("Nos enviará un correo con su mensaje e información", function() {
-            openRest("publicUser/sendContactUs").post($scope.contactUs, function() {
+            rest("publicUser/sendContactUs").post($scope.contactUs, function() {
                 notif.success("El correo se envió con éxito");
                 sweet.close();
             }, function(error) {

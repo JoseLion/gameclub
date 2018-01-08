@@ -132,6 +132,7 @@ public class AmountRequestService extends BaseService<AmountRequest> {
 		}
 		
 		amountRequest = amountRequesteRepo.save(amountRequest);
+		
 		return amountRequest;
 	}
 

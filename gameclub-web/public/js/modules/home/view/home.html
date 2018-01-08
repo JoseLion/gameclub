@@ -216,7 +216,7 @@
     <most-seen ng-model="blogsPreview" pages="totalPagesMostSeen" active-page="currentPageMostSeen" class="most-seen" title="Blog" size="100"></most-seen>
     <section class="contact-us">
         <div class="row">
-            <form class="col-md-12 contact-form" role="form" on-submit="sendContactUs()" novalidate>
+            <form role="form" class="col-md-12 contact-form" novalidate on-submit="sendContactUs()" >
                 <h2 class="title">&iquest;Quieres saber más de <span class="game-font game-font-white">Game</span>Club?</h2>
                 <span class="description">Déjanos tu mail y nosotros te contactamos</span>
                 <div class="clearfix"></div>
@@ -232,7 +232,7 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6 valid-group">
                     <label ng-show="false">E-mail</label>
-                    <input validation name="email" placeholder="E-mail..." ng-model="contactUs.email" required>
+                    <input validation type="email" name="email" placeholder="E-mail..." ng-model="contactUs.email" required>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>

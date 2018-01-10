@@ -255,6 +255,10 @@ angular.module('Profile').controller('ProfileCtrl', function($scope, $rootScope,
 
         if($scope.isEditable) {
             tempUserInfo = angular.copy($rootScope.currentUser);
+            rest("location/findChildrenOf/:code", true).get({code: $scope.currentUserTemp.province.code}, function(data) {
+                $scope.locationCities = {};
+                $scope.locationCities = data;
+            });
         } else {
             $rootScope.currentUser = angular.copy(tempUserInfo);
             delete tempUserInfo;

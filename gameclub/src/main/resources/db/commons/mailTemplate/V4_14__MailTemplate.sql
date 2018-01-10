@@ -6,7 +6,7 @@ VALUES('MSGREQ',
 		<h1 style="margin-top: 5%; text-transform: uppercase; font-family: jaapokki; font-size: 35px; color: #2CB4BF;">Tienes una Solicitud de Alquiler</h1>
 		<h2 style="text-align: left; margin-top: 5%; font-family: jaapokki; font-size: 25px; color: #E43345;">Hola {{name}},</h2>
 		<div style="padding: 5%; background-color: rgba(255, 255, 255, 0.8); font-family: jaapokki; font-size: 17px; color: #071428;">
-			<p>Tienes una nueva solicitud de {{user}} para alquiler tu juego {{game}} de {{console}} por {{weeks}} semanas. Recuerda que por este alquiler se te acreditará a tu saldo {{cost}}.</p>
+			<p>Tienes una nueva solicitud de {{user}} para alquiler tu juego {{game}} de {{console}} por {{weeks}} semana(s). Recuerda que por este alquiler se te acreditará a tu saldo {{cost}}.</p>
 			<p>Entra a <a href="{{baseUrl}}/gameclub/account/messages">GameClub</a> para aprobar o rechazar esta solicitud de alquiler. Recuerda que debes confirmar tu dirección para poder retirar tu juego.</p>
 			<p></p>
 			<p>Gracias</p>

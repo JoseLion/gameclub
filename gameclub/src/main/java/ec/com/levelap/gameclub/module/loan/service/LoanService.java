@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -133,8 +134,7 @@ public class LoanService {
 		params.put("game", loan.getPublicUserGame().getGame().getName());
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
 		params.put("weeks", "" + loan.getWeeks());
-		params.put("cost", "$" + String.format("" + (subtotal * (1.0 - fee)), "%.2f"));
-
+		params.put("cost", "$" + String.format("%.2f", (subtotal * (1.0 - fee))));
 		mailService.sendMailWihTemplate(levelapMail, "MSGREQ", params);
 	}
 
@@ -169,6 +169,11 @@ public class LoanService {
 		}
 
 		loan = loanRepo.save(loan);
+		try {
+			sendRequestMails(loan);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return loan;
 	}
 	
@@ -514,6 +519,22 @@ public class LoanService {
 		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 		levelapMail.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
 		mailService.sendMailWihTemplate(levelapMail, "MSGGRM", params);
+	}
+	
+	private void sendRequestMails(Loan loan) throws Exception {
+		LevelapMail levelapMail = new LevelapMail();
+		Map<String, String> params = new HashMap<>();
+
+		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
+		levelapMail.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
+		
+		params.put("lender", loan.getPublicUserGame().getPublicUser().getName() + " " + loan.getPublicUserGame().getPublicUser().getLastName().toString().substring(0, 1).toUpperCase());
+		params.put("name", loan.getGamer().getName());
+		params.put("game", loan.getPublicUserGame().getGame().getName());
+		params.put("console", loan.getPublicUserGame().getConsole().getName());
+		params.put("weeks", "" + loan.getWeeks());
+		
+		mailService.sendMailWihTemplate(levelapMail, "REQACP", params);
 	}
 
 	private void sendFinishedMails(Restore restore) throws Exception {

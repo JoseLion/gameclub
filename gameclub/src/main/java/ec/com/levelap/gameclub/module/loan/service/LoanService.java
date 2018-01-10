@@ -154,7 +154,7 @@ public class LoanService {
 			calendar.setTime(new Date());
 			
 			if (realTimes) {
-				calendar.add(Calendar.HOUR, 24);
+				calendar.add(Calendar.HOUR, 2);
 			} else {
 				calendar.add(Calendar.MINUTE, 5);
 			}
@@ -169,10 +169,6 @@ public class LoanService {
 		}
 
 		loan = loanRepo.save(loan);
-
-		loan.getGamerMessage().setRead(false);
-		messageService.getMessageRepo().save(loan.getGamerMessage());
-
 		return loan;
 	}
 	
@@ -194,8 +190,8 @@ public class LoanService {
 		loan.setFeeGameClubEnc(cryptoService.encrypt(Double.toString(loan.getFeeGameClub()), keyGamer));
 		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(loan.getTaxes()), keyGamer));
 		
-
 		if (isGamer) {
+			levelapTaskScheduler.removeAndCancelFutureTask(Loan.class.getSimpleName() + "-W2-" + loan.getId());
 			loan.setGamerConfirmed(Boolean.TRUE);
 			loan.setGamerStatusDate(new Date());
 			
@@ -245,8 +241,30 @@ public class LoanService {
 				}
 			}
 		} else {
+			levelapTaskScheduler.removeAndCancelFutureTask(Loan.class.getSimpleName() + "-W1-" + loan.getId());
+			
 			loan.setLenderConfirmed(Boolean.TRUE);
 			loan.setLenderStatusDate(new Date());
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(new Date());
+			
+			if (realTimes) {
+				calendar.add(Calendar.HOUR, 24);
+			} else {
+				calendar.add(Calendar.MINUTE, 5);
+			}
+			
+			final Long taskLoanId = loan.getId();
+			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(), Loan.class.getSimpleName() + "-W2-" + loan.getId(), new Runnable() {
+				@Override
+				public void run() {
+					cancelLoanByTimeout(taskLoanId);
+				}
+			});
+			
+			loan.getGamerMessage().setRead(false);
+			messageService.getMessageRepo().save(loan.getGamerMessage());
 		}
 		
 		if (loan.getGamerConfirmed() && loan.getLenderConfirmed()) {
@@ -281,12 +299,12 @@ public class LoanService {
 		}
 
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {		
-			if (previous.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)
+			/*if (previous.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)
 					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)
 					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER)
 					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND)) {
 				publicUserService.substractFromUserBalance(loan.getGamer().getId(), loan.getBalancePart());
-			}
+			}*/
 			
 			loan.setDeliveryDate(new Date());
 			scheduleThreeDaysBefore(loan);
@@ -438,29 +456,6 @@ public class LoanService {
 		Calendar oneDay = Calendar.getInstance();
 
 		for (Loan loan : loans) {
-			if (loan.getStatus() && loan.getWasAccepted() && (!loan.getGamerConfirmed() || !loan.getLenderConfirmed())) {
-				Calendar timeout = Calendar.getInstance();
-				timeout.setTime(loan.getAcceptedDate());
-				
-				if (realTimes) {
-					timeout.add(Calendar.HOUR, Const.LOAN_TIMEOUT_HOURS);
-				} else {
-					timeout.add(Calendar.MINUTE, 5);
-				}
-				
-				if (today.before(timeout.getTime())) {
-					final Long taskLoanId = loan.getId();
-					levelapTaskScheduler.scheduleTaskAtDate(timeout.getTime(), Loan.class.getSimpleName() + "-W1-" + loan.getId(), new Runnable() {
-						@Override
-						public void run() {
-							cancelLoanByTimeout(taskLoanId);
-						}
-					});
-				} else {
-					cancelLoanByTimeout(loan.getId());
-				}
-			}
-			
 			if (loan.getShippingStatus() != null && loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
 				if (realTimes) {
 					threeDays.setTime(loan.getReturnDate());
@@ -680,29 +675,48 @@ public class LoanService {
 		
 		Loan loan = loanRepo.findOne(loanId);
 		
-		if (loan.getStatus() && (!loan.getGamerConfirmed() || !loan.getLenderConfirmed())) {
-			loan.setUpdateDate(new Date());
-			loan.setStatus(false);
-			
-			if (publicUserService == null) {
-				publicUserService = (PublicUserService)ApplicationContextHolder.getContext().getBean(PublicUserService.class);
-			}
-			
-			PublicUserGame publicUserGame = loan.getPublicUserGame();
-			publicUserGame.setIsBorrowed(false);
-			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
-			loan.setPublicUserGame(publicUserGame);
-			
-			loanRepo.save(loan);
-			
-			if (messageService == null) {
-				messageService = (MessageService)ApplicationContextHolder.getContext().getBean(MessageService.class);
-			}
-			
-			loan.getGamerMessage().setRead(false);
-			loan.getLenderMessage().setRead(false);
-			messageService.getMessageRepo().save(Arrays.asList(loan.getGamerMessage(), loan.getLenderMessage()));
+		loan.setUpdateDate(new Date());
+		loan.setStatus(false);
+		loan.setWasTimedOut(true);
+		
+		if (publicUserService == null) {
+			publicUserService = (PublicUserService)ApplicationContextHolder.getContext().getBean(PublicUserService.class);
 		}
+		
+		PublicUserGame publicUserGame = loan.getPublicUserGame();
+		publicUserGame.setIsBorrowed(false);
+		publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
+		loan.setPublicUserGame(publicUserGame);
+		
+		loanRepo.save(loan);
+		
+		if (messageService == null) {
+			messageService = (MessageService)ApplicationContextHolder.getContext().getBean(MessageService.class);
+		}
+		
+		loan.getGamerMessage().setRead(false);
+		loan.getLenderMessage().setRead(false);
+		messageService.getMessageRepo().save(Arrays.asList(loan.getGamerMessage(), loan.getLenderMessage()));
+	}
+	
+	@Transactional
+	public Loan cancelLoan(Long id) throws ServletException {
+		PublicUser currentUser = publicUserService.getCurrentUser();
+		Loan loan = loanRepo.findOne(id);
+		loan.setStatus(false);
+		loan = loanRepo.save(loan);
+		
+		if (currentUser.getId().longValue() == loan.getGamer().getId().longValue()) {
+			loan.getLenderMessage().setRead(false);
+			messageService.getMessageRepo().save(loan.getLenderMessage());
+		}
+		
+		if (currentUser.getId().longValue() == loan.getPublicUserGame().getPublicUser().getId().longValue()) {
+			loan.getGamerMessage().setRead(false);
+			messageService.getMessageRepo().save(loan.getGamerMessage());
+		}
+		
+		return loan;
 	}
 
 	public LoanRepo getLoanRepo() {

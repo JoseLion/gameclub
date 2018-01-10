@@ -87,7 +87,11 @@ public class PublicUserService extends BaseService<PublicUser> {
 		PublicUser found = publicUserRepo.findByUsernameIgnoreCase(publicUser.getUsername());
 		
 		if (found != null && found.getStatus()) {
-			return new ResponseEntity<ErrorControl>(new ErrorControl("El correo ingresado ya se encuentra registrado", true), HttpStatus.INTERNAL_SERVER_ERROR);
+			if (found.getIsSubscriber()) {
+				publicUser.setId(found.getId());
+			} else {
+				return new ResponseEntity<ErrorControl>(new ErrorControl("El correo ingresado ya se encuentra registrado", true), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
 		
 		if (found == null) {

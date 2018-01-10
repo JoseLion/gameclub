@@ -150,6 +150,21 @@ public class RestoreService {
 		} else {
 			restore.setLenderConfirmDate(new Date());
 		}
+		
+		if (!restore.getUpdateDate().equals(previous.getUpdateDate())) {
+			if (isGamer) {
+				previous.setGamerAddress(restore.getGamerAddress());
+				previous.setGamerGeolocation(restore.getGamerGeolocation());
+				previous.setGamerReceiver(restore.getGamerReceiver());
+			} else {
+				previous.setLenderAddress(restore.getLenderAddress());
+				previous.setLenderGeolocation(restore.getLenderGeolocation());
+				previous.setLenderReceiver(restore.getLenderReceiver());
+			}
+			
+			previous = restoreRepo.save(previous);
+			return loanService.getLoanRepo().findOne(previous.getLoan().getId());
+		}
 
 		restore = restoreRepo.save(restore);
 		return loanService.getLoanRepo().findOne(restore.getLoan().getId());

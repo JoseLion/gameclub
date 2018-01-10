@@ -2,7 +2,7 @@
     <div class="game-container">
         <div class="{{bgColor}} background no-hover">
             <div class="diamond-image">
-                <diamond-img ng-src="RestUrl + '/open/archive/download/' + imageArchive.id" ng-if="imageArchive != null"></diamond-img>
+                <diamond-img class="cursor-pointer" ng-src="RestUrl + '/open/archive/download/' + imageArchive.id" ng-if="imageArchive != null"></diamond-img>
             </div>
 
             <div class="stars" ng-if="!hideRating">

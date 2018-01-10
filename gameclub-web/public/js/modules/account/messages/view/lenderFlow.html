@@ -1,0 +1,285 @@
+<!-- ************************ BEGIN - LENDER MESSAGE FLOW ************************ -->
+<div class="date">{{loan.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="red-box">
+	<span>Hola {{currentUser.name}},</span>
+	<br>
+	<br>
+	<span class="text-black">{{loan.gamer.name}} {{loan.gamer.lastName | limitTo: 1}}.</span>
+	<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goTouser(loan.gamer)">Ver ficha del usuario</button>
+	<br>
+	<span>desea pedir alquilado el siguiente juego:</span>
+	<br>
+	<span class="game-title">{{loan.publicUserGame.game.name}}</span>
+	<button type="button" class="btn btn-xs btn-tertiary-alt full" ng-click="goToGame(loan.publicUserGame)">Ver ficha del juego</button>
+	<br>
+	<br>
+	<span>Durante <span class="text-black">{{loan.weeks}} semana(s)</span> desde la entrega del juego.</span>
+	<br>
+	<span>Recibirás un total de <span class="text-black">{{getLenderRevenue(loan) | currency: '$': 2}}</span> por este alquiler.</span>
+	<br>
+	<span>Una vez aceptado el alquiler, se te notificará la fecha exacta que tendrás tu juego de vuelta.</span>
+	<br>
+	<br>
+	<button type="button" class="btn btn-xs btn-tertiary full" ng-click="acceptLoan(loan)" ng-if="loan.wasAccepted == null && loan.status">Aceptar alquiler</button>
+	<button type="button" class="btn btn-xs btn-tertiary" ng-click="rejectLoan(loan)" ng-if="loan.wasAccepted == null && loan.status">Rechazar alquiler</button>
+</div>
+
+<div ng-include="'firstLoanAnswer.html'" scope="this"></div>
+
+<div class="date" ng-if="loan.wasAccepted == true">{{loan.acceptedDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="red-box" ng-if="loan.wasAccepted == true">
+	<span>Hola {{currentUser.name}},</span>
+	<br>
+	<br>
+	<span>Entregaremos tu juego entre 1 a 3 días laborales. Asegúrate de que la PERSONA DE ENTREGA (llenar abajo) esté presente en horas laborables en la dirección que registraste para retirarlo.</span>
+	<br>
+	<br>
+	<form>
+		<div class="decorator" ng-class="{'disabled': loan.isDisabled}">
+			<div class="form-group">
+				<span>Dirección de retiro actual: </span><span class="text-sm">edita tu información si es necesario</span>
+			</div>
+
+			<div class="form-group address" ng-class="{'disabled': loan.isDisabled}">
+				<label>Dirección</label>
+				<textarea type="text" ng-model="loan.lenderAddress" rows="3" ng-disabled="loan.isDisabled"></textarea>
+			</div>
+
+			<div class="form-group geolocation" ng-class="{'disabled': loan.isDisabled}">
+				<label><i class="gc gc-address" ng-click="!loan.isDisabled ? openMap(loan, 'lenderGeolocation') : null"></i></label>
+				<img src="/img/check.svg" ng-if="loan.lenderGeolocation != null" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
+				<span ng-if="!loan.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
+			</div>
+
+			<div class="form-group receiver" ng-class="{'disabled': loan.isDisabled}">
+				<label>Persona de entrega</label>
+				<input type="text" ng-model="loan.lenderReceiver" ng-disabled="loan.isDisabled">
+			</div>
+
+			<div class="form-group check" ng-class="{'disabled': loan.isDisabled}">
+				<div class="box" ng-class="loan.saveChanges ? 'checked' : ''" ng-click="!loan.isDisabled ? (loan.saveChanges = !loan.saveChanges) : null"></div>
+				<span class="text-black text-sm">Guardar información para siguiente alquiler</span>
+			</div>
+		</div>
+
+		<span>Número de caja en la que enviarás tu juego: </span><input type="text" class="box-number" placeholder="EJ: PBC-555 - (Solo 6 caracteres)" ng-model="loan.boxNumber" ng-disabled="loan.lenderConfirmed" data-mask="aaa-999">
+		<br>
+		<br>
+		<div class="alert-icon">
+			<img src="img/messages/alert.svg" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
+		</div>
+		<div class="alert-text">
+			<span>Completa correctamente la información de retiro.</span>
+			<br>
+			<span>Si no es correcta no podremos recoger el juego.</span>
+		</div>
+		<br>
+		<br>
+		<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec">nuestro servicio al cliente</a>.</span>
+		<br>
+		<br>
+		<button type="button" class="btn btn-xs btn-tertiary full" ng-click="confirmLender()" ng-if="!loan.lenderConfirmed && loan.status">Continuar alquiler</button>
+		<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.isDisabled = !loan.isDisabled" ng-if="!loan.lenderConfirmed && loan.status">{{loan.isDisabled ? 'Editar' : 'Guardar'}} información destino</button>
+	</form>
+</div>
+
+<div class="date" ng-if="!loan.status">{{loan.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="blue-box small-box text-center" ng-if="!loan.status">
+	<div class="col-md-12">
+		<span ng-if="loan.wasTimedOut">Han pasado 2 horas y no se a confirmado el alquiler, la solicitud ha sido cancelada de forma automática.</span>
+		<span ng-if="!loan.wasTimedOut">Alquiler Cancelado</span>
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<div class="date" ng-if="loan.lenderConfirmed">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="blue-box text-left" ng-if="loan.lenderConfirmed">
+	<span class="text-black text-lg upper-case">Alquiler en curso</span>
+	<br>
+	<br>
+	<div class="alert-icon-blue">
+		<img src="img/messages/alert.svg" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
+	</div>
+	<div class="alert-text-blue">
+		<span>Recuerda colocar tu juego en la caja GameClub con el número que llenaste y de colocar la caja GameClub dentro de la funda. Si no sabes cómo, <a href="">mira este video</a>.</span>
+	</div>
+	<div ng-if="loan.deliveryDate != null">
+		<br>
+		<span>Retiraremos el juego entre 1 a 3 días laborales. Asegúrate de que la PERSONA DE ENTREGA (llenar abajo) esté presente en horas laborables en la dirección que registraste para retirarlo.</span>
+		<br>
+	</div>
+	<br>
+	<form>
+		<div class="decorator">
+			<div class="form-group">
+				<span>Dirección de retiro:</span>
+			</div>
+
+			<div class="form-group address">
+				<label>Dirección</label>
+				<textarea type="text" ng-model="loan.lenderAddress" rows="3" readonly></textarea>
+			</div>
+
+			<div class="form-group geolocation">
+				<label class="cursor-no-drop"><i class="gc gc-address"></i></label>
+				<img src="/img/check.svg" ng-if="loan.lenderGeolocation != null" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
+				<span ng-if="!loan.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
+			</div>
+
+			<div class="form-group receiver">
+				<label>Persona de entrega</label>
+				<input type="text" ng-model="loan.lenderReceiver" readonly>
+			</div>
+
+			<div class="form-group">
+				<span>Número de caja en la que enviarás tu juego: </span><input type="text" class="box-number" ng-model="loan.boxNumber" readonly data-mask="aaa-999">
+			</div>
+
+			<div class="form-group">
+				<span>Estado del envío: </span><span class="text-black">{{loan.shippingStatus.name}}</span>
+				<div ng-if="loan.shippingNote != null && loan.shippingNote != ''">
+					<span>Observaciones: </span><span class="text-black">{{loan.shippingNote}}</span>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="date" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="red-box" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">
+	<span>Hola {{currentUser.name}},</span>
+	<br>
+	<br>
+	<span>Tu juego llegó exitosamente el día: </span><span class="text-black upper-case">{{loan.lenderStatusDate | date: 'EEEE d'}} </span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.lenderStatusDate | date: 'LLLL'}}</span>
+	<br>
+	<span>El alquiler durará: </span><span class="text-black">{{loan.weeks}} {{loan.weeks == 1 ? 'semana' : 'semanas'}}</span>
+	<br>
+	<span>Tu juego estará de vuelta el día: </span><span class="text-black upper-case">{{loan.returnDate | date: 'EEEE d'}}</span><span class="text-black"> de </span><span class="text-black upper-case">{{loan.returnDate | date: 'LLLL'}}</span>
+	<br>
+	<br>
+	<span>Se acaban de acreditar a tu cuenta: </span><span class="text-black upper-case">{{getLenderRevenue(loan) | currency: '$': 2}}</span>
+	<br>
+	<br>
+	<span class="text-lg">Tiempo restante: </span>
+	<span class="text-black text-lg">
+		{{timer.days < 10 ? '0' : ''}}{{timer.days}} {{timer.days == 1 ? 'día' : 'días'}}
+	</span>
+</div>
+
+<div class="date" ng-if="loan.restore != null">{{loan.restore.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="red-box" ng-if="loan.restore != null">
+	<span>Hola {{currentUser.name}},</span>
+	<br>
+	<br>
+	<span>Entregaremos tu juego entre 1 a 3 días laborales. Asegúrate de que la PERSONA DE ENTREGA (llenar abajo) esté presente en horas laborables en la dirección que registraste para retirarlo.</span>
+	<br>
+	<br>
+	<span>Recuerda que tienes 24 horas para reportar cualquier daño o inconformidad del juego que alquilaste a nuestro <a href="mailto: reclamos@gameclub.com.ec">centro de reclamos</a>. Si no reportas cualquier inconveniente tu te haces responsable del juego.</span>
+	<br>
+	<br>
+	<form>
+		<div class="decorator" ng-class="{'disabled': loan.restore.isDisabled}">
+			<div class="form-group">
+				<span>Dirección de entrega actual: edita tu información si es necesario.</span>
+			</div>
+
+			<div class="form-group address" ng-class="{'disabled': loan.disable.isDisabled}">
+				<label>Dirección</label>
+				<textarea type="text" ng-model="loan.restore.lenderAddress" rows="3" ng-disabled="loan.restore.isDisabled"></textarea>
+			</div>
+
+			<div class="form-group geolocation" ng-class="{'disabled': loan.restore.isDisabled}">
+				<label>
+					<i class="gc gc-address" ng-click="!loan.restore.isDisabled ? openMap(loan.restore, 'lenderGeolocation') : null"></i>
+				</label>
+				<img src="/img/check.svg" ng-if="loan.restore.lenderGeolocation != null" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
+				<span ng-if="!loan.restore.lenderGeolocation">Aprieta el botón de GEOLOCALIZACIÓN</span>
+			</div>
+
+			<div class="form-group receiver" ng-class="{'disabled': loan.restore.isDisabled}">
+				<label>Persona de entrega</label>
+				<input type="text" ng-model="loan.restore.lenderReceiver" ng-disabled="loan.restore.isDisabled">
+			</div>
+
+			<div class="form-group check" ng-class="{'disabled': loan.restore.isDisabled}">
+				<div class="box" ng-class="loan.restore.saveChanges ? 'checked' : ''" ng-click="!loan.restore.isDisabled ? (loan.restore.saveChanges = !loan.restore.saveChanges) : null"></div>
+				<span class="text-black text-sm">Guardar información para siguiente alquiler</span>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="alert-icon">
+			<img src="img/messages/alert.svg" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
+		</div>
+		<div class="alert-text">
+			<span>Verifica o edita la información de entrega.</span>
+			<br>
+			<span>Si no es correcta no podremos entregar el juego.</span>
+		</div>
+		<br>
+		<br>
+		<span class="text-sm">En el caso de no poder entregar el juego, solicita ayuda a <a href="mailto:logistica@gameclub.com.ec">nuestro servicio al cliente</a>.</span>
+		<br>
+		<br>
+		<button type="button" class="btn btn-xs btn-tertiary full" ng-click="lenderConfirmRestore()" ng-if="!loan.restore.lenderConfirmed">OK</button>
+		<button type="button" class="btn btn-xs btn-tertiary" ng-click="loan.restore.isDisabled = !loan.restore.isDisabled" ng-if="!loan.restore.lenderConfirmed">{{loan.restore.isDisabled ? 'Editar' : 'Guardar'}} información entrega</button>
+	</form>
+</div>
+
+<div class="date" ng-if="loan.restore.lenderConfirmed">{{loan.restore.lenderConfirmDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="blue-box small-box text-center" ng-if="loan.restore.lenderConfirmed">
+	<div class="box-label col-md-12">
+		<span>OK</span>
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<div class="date" ng-if="loan.restore.gamerStatusDate">{{loan.restore.gamerStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="red-box medium-box" ng-if="loan.restore.gamerStatusDate">
+	<span>Hola {{currentUser.name}},</span>
+	<br>
+	<br>
+	<span>El envío del juego se ha creado y su estado es: </span><span class="text-black">{{loan.restore.shippingStatus.name}}</span>
+	<div ng-if="loan.restore.shippingNote != null && loan.restore.shippingNote != ''">
+		<span>Observaciones: </span><span class="text-black">{{loan.restore.shippingNote}}</span>
+	</div>
+	<form on-submit="sendReview()" novalidate ng-if="loan.restore.shippingStatus.code == Const.code.shippingDelivered">
+		<br>
+		<br>
+		<span>Califica a {{loan.gamer.name}} {{loan.gamer.lastName | limitTo: 1}}. por este alquiler: </span>
+		<span class="valid-group">
+			<label ng-show="false">Calificación</label>
+			<score validation ng-model="loan.review.gamerScore" ng-disabled="loan.review.gamerReviewDate" required></score>
+		</span>
+		<br>
+		<span>y escribe una opinion:</span>
+		<br>
+		<span class="valid-group">
+			<label ng-show="false">Comentario</label>
+			<textarea validation type="text" class="review-comment" ng-model="loan.review.gamerComment" rows="3" ng-disabled="loan.review.gamerReviewDate" required></textarea>
+		</span>
+		<br>
+		<button type="submit" class="btn btn-xs btn-tertiary full" ng-if="!loan.review.gamerReviewDate">Validar Calificación</button>
+	</form>
+</div>
+
+<div class="date" ng-if="loan.review.gamerReviewDate">{{loan.review.gamerReviewDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="blue-box small-box text-center" ng-if="loan.review.gamerReviewDate">
+	<div class="box-label col-md-12">
+		<span>OK</span>
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<div class="date" ng-if="loan.review.lenderScore && loan.review.gamerReviewDate">{{loan.review.lenderReviewDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="red-box medium-box" ng-if="loan.review.lenderScore && loan.review.gamerReviewDate">
+	<span>{{loan.gamer.name}} te dio una calificación de: </span><score ng-model="loan.review.lenderScore" disabled></score>
+	<br>
+	<span>y escribió una opinión:</span>
+	<br>
+	<span class="text-black">{{loan.review.lenderComment}}</span>
+</div>
+<!-- ************************ END - LENDER MESSAGE FLOW ************************ -->

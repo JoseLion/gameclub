@@ -163,6 +163,9 @@ public class Loan extends BaseEntity {
 	@JsonManagedReference("LoanReview")
 	@OneToOne(mappedBy = "loan", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private Review review;
+	
+	@Column(name="was_timed_out", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private Boolean wasTimedOut = false;
 
 	@Transient
 	private Boolean lenderConfirmed = false;
@@ -502,8 +505,6 @@ public class Loan extends BaseEntity {
 	public byte[] getShippningCostEnc() {
 		return shippningCostEnc;
 	}
-	
-	
 
 	public byte[] getPrivateKeyGamer() {
 		return privateKeyGamer;
@@ -545,7 +546,6 @@ public class Loan extends BaseEntity {
 	}
 
 	public Double getFeeGameClub() throws IOException, GeneralSecurityException {
-		
 		if (feeGameClub != null)
 			return feeGameClub;
 		if (gamer.getPrivateKey() != null && feeGameClubEnc != null && feeGameClubEnc.length > 0) {
@@ -574,7 +574,6 @@ public class Loan extends BaseEntity {
 	}
 
 	public Double getTaxes() throws IOException, GeneralSecurityException {
-		
 		if (taxes != null)
 			return taxes;
 		if (gamer.getPrivateKey() != null && taxesEnc != null && taxesEnc.length > 0) {
@@ -593,5 +592,12 @@ public class Loan extends BaseEntity {
 	public void setTaxes(Double taxes) {
 		this.taxes = taxes;
 	}
-	
+
+	public Boolean getWasTimedOut() {
+		return wasTimedOut;
+	}
+
+	public void setWasTimedOut(Boolean wasTimedOut) {
+		this.wasTimedOut = wasTimedOut;
+	}
 }

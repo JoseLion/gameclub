@@ -57,6 +57,4 @@ public interface Const {
 	public static final String SETTINGS_NUMBER = "number";
 	
 	public static final String TRS_REFFERED_BONUS = "BONO POR REFERIDO";
-	
-	public static final int LOAN_TIMEOUT_HOURS = 24;
 }

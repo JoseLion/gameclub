@@ -32,7 +32,9 @@ angular.module('WorkForUs').controller('WorkForUsCtrl', function($scope, blogsPr
     }
 
     $scope.chooseFile = function() {
-        angular.element("#work-for-us-file").trigger('click');
+        setTimeout(function() {
+            angular.element("#work-for-us-file").trigger('click');
+        }, 0);
     }
 
     $scope.send = function() {

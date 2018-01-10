@@ -233,6 +233,19 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		});
 	}
 
+	$scope.cancelLoan = function() {
+		sweet.default("Se cancelará el alquiler", function() {
+			rest("loan/cancelLoan/:id").get({id: $scope.loan.id}, function(data) {
+				notif.success("Alquiler cancelado");
+				$scope.loan = data;
+				sweet.close();
+				canvasToBottom();
+			}, function(error) {
+				sweet.close();
+			});
+		});
+	}
+
 	$scope.acceptLoan = function() {
 		sweet.default("Aceptarás el alquiler de este juego", function() {
 			rest("loan/acceptLoan/:id").get({id: $scope.loan.id}, function(data) {

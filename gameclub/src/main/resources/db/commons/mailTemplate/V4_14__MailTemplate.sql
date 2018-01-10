@@ -45,7 +45,7 @@ VALUES('MSGREQ',
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
 							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
-							<span>info@gameclub.com.ec</span>
+							<span>gameclub.com.ec</span>
 						</a>
 					</td>
 				</tr>
@@ -101,7 +101,7 @@ VALUES('MSGREQ',
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
 							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
-							<span>info@gameclub.com.ec</span>
+							<span>gameclub.com.ec</span>
 						</a>
 					</td>
 				</tr>
@@ -157,7 +157,7 @@ VALUES('MSGREQ',
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
 							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
-							<span>info@gameclub.com.ec</span>
+							<span>gameclub.com.ec</span>
 						</a>
 					</td>
 				</tr>
@@ -214,7 +214,7 @@ VALUES('MSGREQ',
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
 							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
-							<span>info@gameclub.com.ec</span>
+							<span>gameclub.com.ec</span>
 						</a>
 					</td>
 				</tr>
@@ -273,7 +273,7 @@ VALUES('MSGREQ',
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
 							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
-							<span>info@gameclub.com.ec</span>
+							<span>gameclub.com.ec</span>
 						</a>
 					</td>
 				</tr>
@@ -329,7 +329,7 @@ VALUES('MSGREQ',
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
 							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
-							<span>info@gameclub.com.ec</span>
+							<span>gameclub.com.ec</span>
 						</a>
 					</td>
 				</tr>
@@ -385,7 +385,7 @@ VALUES('MSGREQ',
 						</a>
 						<a href="https://www.gameclub.com.ec/" style="font-family: jaapokki; font-size: 17px; color: white; text-decoration: none; margin-left: 10px;">
 							<img src="{{baseUrl}}:{{port}}/gameclub/open/util/getImage?name=mail-web.png" alt="mail-web.png" height="25px" />
-							<span>info@gameclub.com.ec</span>
+							<span>gameclub.com.ec</span>
 						</a>
 					</td>
 				</tr>

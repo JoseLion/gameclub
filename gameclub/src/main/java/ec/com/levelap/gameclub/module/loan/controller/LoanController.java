@@ -70,15 +70,6 @@ public class LoanController {
 		return new ResponseEntity<PublicUser>(currentUser, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="cancelLoan/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Loan> cancelLoan(@PathVariable Long id) throws ServletException {
-		Loan loan = loanService.getLoanRepo().findOne(id);
-		loan.setStatus(false);
-		loan = loanService.getLoanRepo().save(loan);
-		
-		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
-	}
-	
 	@RequestMapping(value="acceptLoan/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Loan> acceptLoan(@PathVariable Long id) throws ServletException {
 		Loan loan = loanService.acceptOrRejectLoan(id, true);
@@ -101,6 +92,12 @@ public class LoanController {
 	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException {
 		loan = loanService.confirmLoan(loan, true, session, request);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="cancelLoan/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Loan> cancelLoan(@PathVariable Long id) throws ServletException {
+		Loan loan = loanService.cancelLoan(id);
+		return new ResponseEntity<>(loan, HttpStatus.OK);
 	}
 	
 	private static class Search {

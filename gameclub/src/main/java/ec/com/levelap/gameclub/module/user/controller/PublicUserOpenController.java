@@ -73,6 +73,12 @@ public class PublicUserOpenController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "findOne/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> findOne(@PathVariable Long id) throws ServletException {
+		PublicUser publicUser = this.publicUserService.getPublicUserRepo().findOne(id);
+		return new ResponseEntity<>(publicUser, HttpStatus.OK);
+	}
+	
 	public static class ContactUs {
 		public String name;
 		

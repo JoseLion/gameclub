@@ -1,11 +1,3 @@
-/*!
- * blogSearchCtrl.js - v0.1
- * http://www.levelapsoftware.com
- * License: MIT
- * Requirements:
- * - RESTful Web Services
- * - openRest factory
- */
 angular.module('LevelapBlog').controller('BlogSearchCtrl', function($scope, articles, searchValue, openRest) {
     $scope.searchValue = searchValue;
     articles.$promise.then(function(data) {

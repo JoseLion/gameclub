@@ -1,11 +1,3 @@
-/*!
- * blogCtrl.js - v0.1
- * http://www.levelapsoftware.com
- * License: MIT
- * Requirements:
- * - RESTful Web Services
- * - openRest factory
- */
 angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope, $state, importantBlogs, categories, tags, blogsPreview, openRest, friendlyUrl, $location, $window) {
     importantBlogs.$promise.then(function(data) {
         $scope.importantBlogs = data.content;
@@ -49,8 +41,6 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
         }
     }
 
-    $scope.diamondBorderImg = baseSrc + "resources/img/diamond-border.svg";
-
     $scope.goToDetails = function(article) {
         $state.go("levelapBlog.blog.detail", {id: article.id, title: friendlyUrl(article.title)})
     }
@@ -61,39 +51,5 @@ angular.module('LevelapBlog').controller('BlogCtrl', function($scope, $rootScope
         }
 
         $state.go("levelapBlog.blog.search", {text: text});
-    }
-
-    $scope.getClipPath = function(id) {
-        if (navigator.vendor.toLowerCase().indexOf("apple") < 0 && navigator.vendor.toLowerCase().indexOf("crios") < 0 && navigator.vendor.toLowerCase().indexOf("ipad") < 0 && navigator.vendor.toLowerCase().indexOf("iphone") < 0) {
-            if (id == 'diamond') {
-                return {
-                    'clip-path': 'url(#diamond)',
-                    '-webkit-clip-path': 'url(#diamond)'
-                };
-            }
-
-            if (id == 'border') {
-                return {
-                    'clip-path': 'url(#border)',
-                    '-webkit-clip-path': 'url(#border)'
-                };
-            }
-        } else {
-            if (id == 'diamond') {
-                return {
-                    'clip-path': 'polygon(50% 7%, 94% 50%, 50% 94%, 6% 50%)',
-                    '-webkit-clip-path': 'polygon(50% 7%, 94% 50%, 50% 94%, 6% 50%)'
-                };
-            }
-
-            /*if (id == 'border') {
-                return {
-                    'clip-path': 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                    '-webkit-clip-path': 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'
-                };
-            }*/
-        }
-
-        return {};
     }
 });

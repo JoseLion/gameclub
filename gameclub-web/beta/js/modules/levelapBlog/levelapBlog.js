@@ -27,8 +27,12 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                         baseSrc.concat('resources/articleCommentsForm.js'),
                         baseSrc.concat('resources/articlePreview.js'),
                         baseSrc.concat('resources/mostSeen.js'),
+                        baseSrc.concat('style/mostSeen.less'),
+                        baseSrc.concat('style/mostSeen.responsive.less'),
                         baseSrc.concat('resources/blogNavigation.js'),
-                        baseSrc.concat('resources/svgSrc.js')
+                        baseSrc.concat('resources/svgSrc.js'),
+                        baseSrc.concat('style/blog.less'),
+                        baseSrc.concat('style/blog.responsive.less')
                     ]
                 }]);
             },
@@ -58,8 +62,7 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
         metaTags: {
             title: 'GameClub Blog - Reseñas & Noticias de Videojuegos',
             description: 'El mejor sitio para gamers en español, encuentra reseñas, noticias y artículos de videojuegos.',
-            keywords: 'Reseña, Noticia, Juegos, Articulo, PS4, Xbox, Nintendo, PC, Gamer, Review',
-            properties: {'og:title': 'GameClub Blog - Reseñas & Noticias de Videojuegos'}
+            keywords: 'Reseña, Noticia, Juegos, Articulo, PS4, Xbox, Nintendo, PC, Gamer, Review'
         },
         controller: 'BlogHomeCtrl',
         resolve: {

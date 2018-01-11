@@ -2,9 +2,7 @@ angular.module('LevelapBlog').controller('BlogDetailCtrl', function($scope, arti
     article.$promise.then(function(data) {
         $scope.article = data;
         $scope.showInfo = true;
-        /*$state.current.data.title = $scope.article.title;
         $state.current.data.description = $scope.article.summary;
-        $state.current.data.keywords = $scope.article.keywords;*/
     });
 
     comments.$promise.then(function(data) {

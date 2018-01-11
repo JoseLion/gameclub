@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
+import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Comment;
@@ -434,7 +435,15 @@ public class GameService extends BaseService<Game> {
 								String url = cell.getStringCellValue();
 								
 								if (!url.isEmpty()) {
-									try {
+									String[] schemes = {"http", "https"};
+									UrlValidator validator = new UrlValidator(schemes);
+									
+									if (!validator.isValid(url)) {
+										rowHasError = true;
+										report.getErrors().put(chars[i] + (j+1), "El URL ingresado no es válido");
+									}
+									
+									/*try {
 										URL test = new URL(url);
 										URLConnection conn = test.openConnection();
 										
@@ -445,7 +454,7 @@ public class GameService extends BaseService<Game> {
 									} catch(Exception e) {
 										rowHasError = true;
 										report.getErrors().put(chars[i] + (j+1), "El URL ingresado no es válido");
-									}
+									}*/
 								}
 							}
 						} catch (Exception e) {

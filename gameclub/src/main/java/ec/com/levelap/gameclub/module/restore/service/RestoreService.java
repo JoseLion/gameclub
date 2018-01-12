@@ -98,7 +98,7 @@ public class RestoreService {
 			
 			Fine fine = new Fine();
 			fine.setOwner(gamer);
-			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), lenderKey));
+			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), gamerKey));
 			fine.setDescription(restore.getShippingStatus().getName());
 			fineService.getFineRepo().save(fine);
 			

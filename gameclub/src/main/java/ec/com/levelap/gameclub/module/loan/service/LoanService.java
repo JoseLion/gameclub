@@ -299,13 +299,6 @@ public class LoanService {
 		}
 
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {		
-			/*if (previous.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)
-					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)
-					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER)
-					|| previous.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND)) {
-				publicUserService.substractFromUserBalance(loan.getGamer().getId(), loan.getBalancePart());
-			}*/
-			
 			loan.setDeliveryDate(new Date());
 			scheduleThreeDaysBefore(loan);
 			scheduleOneDayBefore(loan);
@@ -600,7 +593,7 @@ public class LoanService {
 			
 			Fine fine = new Fine();
 			fine.setOwner(gamer);
-			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), lenderKey));
+			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), gamerKey));
 			fine.setDescription(loan.getShippingStatus().getName());
 			fineService.getFineRepo().save(fine);
 			

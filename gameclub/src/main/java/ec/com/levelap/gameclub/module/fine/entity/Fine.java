@@ -33,7 +33,7 @@ import ec.com.levelap.gameclub.utils.Const;
 public class Fine extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "public_user_fine", foreignKey = @ForeignKey(name = "public_user_fine_fk"))
+	@JoinColumn(name = "owner", foreignKey = @ForeignKey(name = "owner_pubic_user_fk"))
 	private PublicUser owner;
 
 	@Column(name = "was_payed", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
@@ -139,11 +139,12 @@ public class Fine extends BaseEntity {
 			LevelapCryptography cryptoService = ApplicationContextHolder.getContext().getBean(LevelapCryptography.class);
 			File key = File.createTempFile("key", ".tmp");
 			FileUtils.writeByteArrayToFile(key, owner.getPrivateKey());
-			String decypted = cryptoService.decrypt(amountEnc, key);
-			amount = Double.parseDouble(decypted);
+			String decrypted = cryptoService.decrypt(amountEnc, key);
+			amount = Double.parseDouble(decrypted);
 		} else {
 			amount = 0D;
 		}
+		
 		return amount;
 	}
 

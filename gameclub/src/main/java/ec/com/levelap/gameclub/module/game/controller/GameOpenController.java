@@ -74,7 +74,7 @@ public class GameOpenController {
 	@RequestMapping(value="getAvailableGames", method=RequestMethod.POST)
 	public ResponseEntity<Page<PublicUserGameOpen>> getAvailableGames(@RequestBody Filter filter) throws ServletException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
-		PageRequest page = filter.sort.isEmpty() ? new PageRequest(filter.page, Const.TABLE_SIZE) : new PageRequest(filter.page, Const.TABLE_SIZE, new Sort(filter.desc ? Direction.DESC : Direction.ASC, filter.sort));
+		PageRequest page = filter.sort.isEmpty() ? new PageRequest(filter.page, Const.TABLE_SMALL_SIZE) : new PageRequest(filter.page, Const.TABLE_SMALL_SIZE, new Sort(filter.desc ? Direction.DESC : Direction.ASC, filter.sort));
 		Page<PublicUserGameOpen> games;
 		
 		if (currentUser != null && currentUser.getLocation() != null) {

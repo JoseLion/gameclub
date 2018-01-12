@@ -151,7 +151,7 @@ public class RestoreService {
 			restore.setLenderConfirmDate(new Date());
 		}
 		
-		if (!restore.getUpdateDate().equals(previous.getUpdateDate())) {
+		if (restore.getUpdateDate() != null && !restore.getUpdateDate().equals(previous.getUpdateDate())) {
 			if (isGamer) {
 				previous.setGamerAddress(restore.getGamerAddress());
 				previous.setGamerGeolocation(restore.getGamerGeolocation());

@@ -169,11 +169,6 @@ public class LoanService {
 		}
 
 		loan = loanRepo.save(loan);
-		try {
-			sendRequestMails(loan);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return loan;
 	}
 	
@@ -272,6 +267,14 @@ public class LoanService {
 			messageService.getMessageRepo().save(loan.getGamerMessage());
 		}
 		
+		if(loan.getLenderConfirmed()) {
+			try {
+				sendRequestMails(loan);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		if (loan.getGamerConfirmed() && loan.getLenderConfirmed()) {
 			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
 			Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
@@ -292,7 +295,7 @@ public class LoanService {
 	public LoanLite save(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, GeneralSecurityException, IOException, RestClientException, URISyntaxException, JSONException {
 		Loan previous = loanRepo.findOne(loan.getId());
 		byte[] keyEncript = previous.getGamer().getPrivateKey();
-
+		System.out.println("entra ");
 		if (!loan.getShippingStatus().equals(previous.getShippingStatus()) || (loan.getShippingNote() != null && !loan.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
 			loan.setLenderStatusDate(new Date());
 			loan.setGamerStatusDate(new Date());
@@ -302,8 +305,8 @@ public class LoanService {
 			messageService.getMessageRepo().save(loan.getLenderMessage());
 			messageService.getMessageRepo().save(loan.getGamerMessage());
 		}
-
-		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {		
+		
+		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {	
 			loan.setDeliveryDate(new Date());
 			scheduleThreeDaysBefore(loan);
 			scheduleOneDayBefore(loan);

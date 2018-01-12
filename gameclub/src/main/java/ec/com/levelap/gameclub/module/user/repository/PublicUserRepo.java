@@ -45,6 +45,8 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 				"LEFT JOIN r.shippingStatus s " +
 			"WHERE " +
 				"l.gamer.id=:id AND " +
+				"l.status=TRUE AND " +
+				"l.publicUserGame.isBorrowed=TRUE AND " +
 				"(r IS NULL OR s.code<>'" + Code.SHIPPING_DELIVERED + "')")
 	public Long countGamesToReturn(@Param("id") Long id);
 	

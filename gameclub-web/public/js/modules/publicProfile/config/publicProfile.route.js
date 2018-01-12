@@ -10,11 +10,23 @@ angular.module('PublicProfile').config(function($stateProvider) {
 		templateUrl: 'js/modules/publicProfile/view/publicProfile.html',
 		data: {displayName: 'GameClub'},
 		metaTags: {
-			title: function(seoUser) {
-				return seoUser.name + " " + seoUser.lastName + " GameClub";
+			title: function(user) {
+				return user.name + " " + user.lastName + " GameClub";
 			},
+
 			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila tus Juegos, Gana Dinero, Juega más pagando menos. Share and Play',
-			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer'
+
+			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
+
+			prerender: {
+                statusCode: function(user) {
+                    return user != null ? 200 : 302;
+                },
+
+                header: function(user, friendlyUrl, $location) {
+                    return user != null ? null : 'Location: ' + $location.$$protocol + "://" + $location.$$host + "/gameclub/publicProfile/" + user.id + "/" + friendlyUrl(user.name + ' ' + user.lastName.substring(0, 1));
+                }
+            }
 		},
 		controller: 'PublicProfileCtrl',
 		resolve: {
@@ -31,10 +43,6 @@ angular.module('PublicProfile').config(function($stateProvider) {
 
 			reviews: function(rest, $stateParams) {
 				return rest("review/getReviewsOfUser/:id/:page").get({id: $stateParams.id, page: 0});
-			},
-
-			seoUser: function(openRest, $stateParams) {
-				return openRest("publicUser/findOne/:id").get({id: $stateParams.id}).$promise;
 			}
 		}
 	});

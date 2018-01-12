@@ -146,6 +146,16 @@
 	</form>
 </div>
 
+<div class="date" ng-if="!loan.status && loan.lenderConfirmed">{{loan.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="blue-box small-box text-center" ng-if="!loan.status && loan.lenderConfirmed">
+	<div class="col-md-12">
+		<span ng-if="loan.wasTimedOut">Han pasado 24 horas y no se a confirmado el alquiler, la solicitud ha sido cancelada de forma automática.</span>
+		<span ng-if="!loan.wasTimedOut">Alquiler Cancelado</span>
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
 <div class="date" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
 <div class="red-box" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">
 	<span>Hola {{currentUser.name}},</span>

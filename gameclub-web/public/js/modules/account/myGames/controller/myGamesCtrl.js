@@ -41,7 +41,7 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
     $scope.editGame = function(cross) {
         $scope.myGame = cross;
         $scope.background = {
-            background: "url('" + $archiveUrl + $scope.myGame.game.banner.id + "') center bottom / 100% no-repeat"
+            background: "url('" + $rootScope.$archiveUrl + $scope.myGame.game.banner.id + "') center bottom / 100% no-repeat"
         };
 
         forEach($scope.myGame.game.consoles, function(gameConsole) {

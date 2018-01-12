@@ -12,12 +12,24 @@ angular.module('Game').config(function($stateProvider) {
 			title: function(game) {
 				return game.name + " GameClub";
 			},
+
 			description: function(game) {
 				return "Juega " + game.name + " pagando menos en GameClub. Si ya lo tienes, alquila tu juego en GameClub y gana dinero. Share and Play"
 			},
+
 			keywords: function(game) {
 				return game.name.replace(/\s/g, ", ") + ", GameClub, Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC, Consola, Gamer";
-			}
+			},
+
+			prerender: {
+                statusCode: function(game) {
+                    return game != null ? 200 : 302;
+                },
+
+                header: function(game, friendlyUrl, $location) {
+                    return game != null ? null : 'Location: ' + $location.$$protocol + "://" + $location.$$host + "/gameclub/game/" + game.id + "/" + friendlyUrl(game.name);
+                }
+            }
 		},
 		controller: 'GameCtrl',
 		resolve: {

@@ -53,6 +53,8 @@ public class ReviewService {
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		byte[] keyEncript = publicUserRepo.findKey(loan.getGamer().getId());
 		
+		loan = loanService.getLoanRepo().save(loan);
+		
 		if (currentUser.getId().longValue() == loan.getGamer().getId().longValue()) {
 			loan.getReview().setLenderReviewDate(new Date());
 			publicUserService.getPublicUserGameRepo().save(loan.getPublicUserGame());

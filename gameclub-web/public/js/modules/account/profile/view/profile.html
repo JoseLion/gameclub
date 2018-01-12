@@ -60,8 +60,8 @@
                     <input validation type="text" class="ocupation" placeholder="Estudiante - Programador" ng-disabled="!isEditable" ng-model="currentUserTemp.profession">
                 </div>
                 <div class="col-md-8 col-xs-12 valid-group">
-                    <label class="col-xs-12 col-md-4">Provincia</label>
-                    <div class="col-xs-12 col-md-8">
+                    <label class="province-label">Provincia</label>
+                    <div class="province-selector">
                         <ui-select validation ng-model="currentUserTemp.province" theme="bootstrap" class="selector" ng-disabled="!isEditable" ng-change="findCities()" required>
                             <ui-select-match placeholder="Selecciona..." allow-clear>{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="province in provinces | filter: $select.search">
@@ -72,8 +72,8 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-8 col-xs-12 valid-group">
-                    <label class="col-xs-12 col-md-4">Ciudad</label>
-                    <div class="col-xs-12 col-md-8">
+                    <label class="city-label">Ciudad</label>
+                    <div class="city-selector">
                         <ui-select validation ng-model="currentUserTemp.location" theme="bootstrap" class="selector" ng-disabled="!isEditable" required>
                             <ui-select-match placeholder="Selecciona..." allow-clear>{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="city in locationCities | filter: $select.search">

@@ -11,7 +11,7 @@ angular.module('PublicProfile').config(function($stateProvider) {
 		data: {displayName: 'GameClub'},
 		metaTags: {
 			title: function(user) {
-				return user.name + " " + user.lastName + " GameClub";
+				return user.name + " " + user.lastName.substring(0, 1).toUpperCase() + " GameClub";
 			},
 
 			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila tus Juegos, Gana Dinero, Juega más pagando menos. Share and Play',

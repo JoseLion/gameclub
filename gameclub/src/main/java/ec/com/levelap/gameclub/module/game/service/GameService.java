@@ -544,7 +544,6 @@ public class GameService extends BaseService<Game> {
 		XSSFSheet sheet = workbook.getSheet("Juegos");
 		List<Game> games = new ArrayList<>();
 		
-		System.out.println("this.getLastRow(sheet): " + this.getLastRow(sheet));
 		for (int i = 1; i <= this.getLastRow(sheet); i++) {
 			XSSFRow row = sheet.getRow(i);
 			Game game = new Game();
@@ -595,7 +594,6 @@ public class GameService extends BaseService<Game> {
 				split = row.getCell(m).getStringCellValue().trim().split(",");
 			}
 			
-			System.out.println(chars[m] + (i+1) + ": " + split[0]);
 			List<GameConsole> gameConsoles = new ArrayList<>();
 			for (String text : split) {
 				GameConsole cross = new GameConsole();

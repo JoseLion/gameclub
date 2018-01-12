@@ -1,8 +1,6 @@
 package ec.com.levelap.gameclub.module.game.service;
 
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,6 +9,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 
+import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Comment;
@@ -347,11 +346,11 @@ public class GameService extends BaseService<Game> {
 			}
 		}
 		
-		ExcelReport report = new ExcelReport(sheet.getLastRowNum());
+		ExcelReport report = new ExcelReport(this.getLastRow(sheet));
 		report.setHasFormat(true);
 		report.setWrongRows(0);
 		
-		for (int j = 1; j <= sheet.getLastRowNum(); j++) {
+		for (int j = 1; j <= this.getLastRow(sheet); j++) {
 			boolean rowHasError = false;
 			
 			for (int i = 0; i < sheet.getRow(0).getLastCellNum(); i++) {
@@ -434,15 +433,10 @@ public class GameService extends BaseService<Game> {
 								String url = cell.getStringCellValue();
 								
 								if (!url.isEmpty()) {
-									try {
-										URL test = new URL(url);
-										URLConnection conn = test.openConnection();
-										
-										if (conn.getContentType() == null) {
-											rowHasError = true;
-											report.getErrors().put(chars[i] + (j+1), "El URL ingresado no es válido");
-										}
-									} catch(Exception e) {
+									String[] schemes = {"http", "https"};
+									UrlValidator validator = new UrlValidator(schemes);
+									
+									if (!validator.isValid(url)) {
 										rowHasError = true;
 										report.getErrors().put(chars[i] + (j+1), "El URL ingresado no es válido");
 									}
@@ -459,15 +453,16 @@ public class GameService extends BaseService<Game> {
 							if (cell.getRawValue() != null) {
 								String[] split;
 								
-								if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-									split = cell.getStringCellValue().trim().split(",");
+								if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
+									split = new String[1];
+									split[0] = "" + cell.getNumericCellValue();
 								} else {
-									split = cell.getRawValue().trim().split(",");
+									split = cell.getStringCellValue().trim().split(",");
 								}
 								
 								for (String text : split) {
 									try {
-										Long id = Long.parseLong(text);
+										Long id = cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC ? (long)Double.parseDouble(text) : Long.parseLong(text);
 										
 										if (id <= 0) {
 											rowHasError = true;
@@ -497,6 +492,7 @@ public class GameService extends BaseService<Game> {
 									} catch (Exception e) {
 										rowHasError = true;
 										report.getErrors().put(chars[i] + (j+1), "Uno o más IDs no es un valor numérico");
+										e.printStackTrace();
 									}
 								}
 							}
@@ -516,7 +512,6 @@ public class GameService extends BaseService<Game> {
 									report.getErrors().put(chars[i] + (j+1), "El valor debe ser mayor o igual a cero");
 								} else {
 									HashMap<String, String> priceChart = getPriceCharting("" + number.intValue());
-									System.out.println("STATUS: " + priceChart.get("status"));
 									
 									if (priceChart.get("status") != null && priceChart.get("status").equals("error")) {
 										if (priceChart.get("error_message").equals("No such product")) {
@@ -549,19 +544,28 @@ public class GameService extends BaseService<Game> {
 		XSSFSheet sheet = workbook.getSheet("Juegos");
 		List<Game> games = new ArrayList<>();
 		
-		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+		for (int i = 1; i <= this.getLastRow(sheet); i++) {
 			XSSFRow row = sheet.getRow(i);
 			Game game = new Game();
 			int m = 0;
 			
 			game.setName(row.getCell(m).getStringCellValue());
 			m++;
+			
+			if (row.getCell(m) != null) {
+				game.setTrailerUrl(row.getCell(m).getStringCellValue());
+			}
+			
+			m++;
+			
 			game.setDescription(row.getCell(m).getStringCellValue());
 			m++;
+			
 			game.setReleaseDate(row.getCell(m).getDateCellValue());
 			m++;
+			
 			if (row.getCell(m) != null) {
-				game.setContentRating(catalogRepo.findOne(Long.parseLong(row.getCell(m).getRawValue())));
+				game.setContentRating(catalogRepo.findOne((long)row.getCell(m).getNumericCellValue()));
 			}
 			
 			m++;
@@ -581,19 +585,22 @@ public class GameService extends BaseService<Game> {
 			}
 			
 			game.setMagazineRatings(gameMagazines);
-			String[] split;
 			
-			if (row.getCell(m).getCellType() == Cell.CELL_TYPE_STRING) {
-				split = row.getCell(m).getStringCellValue().trim().split(",");
+			String[] split;
+			if (row.getCell(m).getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
+				split = new String[1];
+				split[0] = "" + row.getCell(m).getNumericCellValue();
 			} else {
-				split = row.getCell(m).getRawValue().trim().split(",");
+				split = row.getCell(m).getStringCellValue().trim().split(",");
 			}
 			
 			List<GameConsole> gameConsoles = new ArrayList<>();
 			for (String text : split) {
 				GameConsole cross = new GameConsole();
+				Long id = row.getCell(m).getCellType() == XSSFCell.CELL_TYPE_NUMERIC ? (long)Double.parseDouble(text) : Long.parseLong(text);
+				
 				cross.setGame(game);
-				cross.setConsole(consoleRepo.findOne(Long.parseLong(text)));
+				cross.setConsole(consoleRepo.findOne(id));
 				gameConsoles.add(cross);
 			}
 			
@@ -619,12 +626,8 @@ public class GameService extends BaseService<Game> {
 			
 			Double id = row.getCell(m).getNumericCellValue();
 			game.setPriceChartingId(id.longValue());
-			game.setUploadPayment(getAvailablePrice(getPriceCharting("" + id.intValue())));
-			m++;
 			
-			if (row.getCell(m) != null) {
-				game.setTrailerUrl(row.getCell(m).getStringCellValue());
-			}
+			game.setUploadPayment(getAvailablePrice(getPriceCharting("" + id.intValue())));
 			
 			games.add(game);
 		}
@@ -678,11 +681,19 @@ public class GameService extends BaseService<Game> {
 		headers.add("*Consolas");
 		headers.add("*Categorias");
 		headers.add("*ID Price Charting");
-		headers.add("URL Trailer");
 	}
-
-	public GameRepo getGameRepo() {
-		return gameRepo;
+	
+	private int getLastRow(XSSFSheet sheet) {
+		int last = 0;
+		
+		for (int i = 0; i < sheet.getLastRowNum(); i++) {
+			if (sheet.getRow(i).getCell(1).getRawValue() == null || sheet.getRow(i).getCell(1).getRawValue().isEmpty()) {
+				last = i-1;
+				break;
+			}
+		}
+		
+		return last;
 	}
 	
 	@Transactional
@@ -718,16 +729,12 @@ public class GameService extends BaseService<Game> {
 		if (priceChart != null) {
 			if (priceChart.get("gamestop-price") != null) {
 				price = Double.parseDouble(priceChart.get("gamestop-price")) / 100.0;
-				System.out.println("gamestop-price");
 			} else if (priceChart.get("retail-new-sell") != null) {
 				price = Double.parseDouble(priceChart.get("retail-new-sell")) / 100.0;
-				System.out.println("retail-new-sell");
 			} else if (priceChart.get("retail-cib-sell") != null) {
 				price = Double.parseDouble(priceChart.get("retail-cib-sell")) / 100.0;
-				System.out.println("retail-cib-sell");
 			} else if (priceChart.get("retail-loose-sell") != null) {
 				price = Double.parseDouble(priceChart.get("retail-loose-sell")) / 100.0;
-				System.out.println("retail-loose-sell");
 			}
 		}
 		String priceString = String.valueOf(price);
@@ -764,5 +771,9 @@ public class GameService extends BaseService<Game> {
 		public void handleError(ClientHttpResponse response) throws IOException {
 			
 		}
+	}
+	
+	public GameRepo getGameRepo() {
+		return gameRepo;
 	}
 }

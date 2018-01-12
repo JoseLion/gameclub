@@ -3,7 +3,7 @@
     <div class="comment" ng-repeat="comment in result">
         <div class="comment-row">
             <div class="avatar">
-                <img src="img/picture-holder.png" />
+                <img src="img/picture-holder.png" alt="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
             </div>
             <div class="information">
                 <span class="datetime"><small>{{comment.creationDate | date:"EEEE, dd 'de' MMMM 'de' yyyy"}}</small><small>{{comment.creationDate | date:"hh:mm a"}}</small></span>
@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="comments-links">
-        <a href ng-click="showMoreComments(level)" ng-if="showMore">Ver m&aacute;s</a>
+        <a href ng-click="showMoreComments(level)" ng-if="showMore">Ver más</a>
     </div>
 </div>
 <!-- ARTICLE COMMENTS DIRECTIVE END -->

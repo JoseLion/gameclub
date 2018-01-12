@@ -33,14 +33,12 @@ public class FineController {
 	private FineService fineService;
 
 	@RequestMapping(value = "findFines", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Fine>> findFinesFilter(@RequestBody(required = false) Search search)
-			throws ServletException {
+	public ResponseEntity<List<Fine>> findFinesFilter(@RequestBody(required = false) Search search) throws ServletException, IOException, GeneralSecurityException {
 		if (search == null) {
 			search = new Search();
 		}
 
-		List<Fine> fines = fineService.getFineRepo().findFines(search.name, search.apply, search.wasPayed,
-				search.startDate, search.endDate);
+		List<Fine> fines = fineService.getFineRepo().findFines(search.name, search.apply, search.wasPayed, search.startDate, search.endDate);
 		return new ResponseEntity<List<Fine>>(fines, HttpStatus.OK);
 	}
 

@@ -264,13 +264,13 @@ public class LoanService {
 			
 			loan.getGamerMessage().setRead(false);
 			messageService.getMessageRepo().save(loan.getGamerMessage());
-		}
-		
-		if(loan.getLenderConfirmed()) {
-			try {
-				sendRequestMails(loan);
-			} catch (Exception e) {
-				e.printStackTrace();
+			
+			if(loan.getLenderConfirmed()) {
+				try {
+					sendRequestMails(loan);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -294,7 +294,6 @@ public class LoanService {
 	public LoanLite save(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, GeneralSecurityException, IOException, RestClientException, URISyntaxException, JSONException {
 		Loan previous = loanRepo.findOne(loan.getId());
 		byte[] keyEncript = previous.getGamer().getPrivateKey();
-		System.out.println("entra ");
 		if (!loan.getShippingStatus().equals(previous.getShippingStatus()) || (loan.getShippingNote() != null && !loan.getShippingNote().equalsIgnoreCase(previous.getShippingNote()))) {
 			loan.setLenderStatusDate(new Date());
 			loan.setGamerStatusDate(new Date());
@@ -311,6 +310,9 @@ public class LoanService {
 			scheduleOneDayBefore(loan);
 			scheduleOnFinishDay(loan);
 		} else {
+			System.out.println("entra multa");
+			System.out.println(loan.getCost());
+			System.out.println(loan.getShippingStatus());
 			createFines(loan, session, request);
 		}
 		
@@ -583,7 +585,7 @@ public class LoanService {
 			if (fineSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
 				fineAmount = subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0);
 			} else {
-				fineAmount = Double.parseDouble(fineSetting.getValue());
+				fineAmount = loan.getCost() + Double.parseDouble(fineSetting.getValue());
 			}
 			
 			Fine fine = new Fine();

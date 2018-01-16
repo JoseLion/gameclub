@@ -10,6 +10,7 @@ angular.module('Game').config(function($stateProvider) {
 		data: {displayName: 'GameClub'},
 		metaTags: {
 			title: function(game) {
+				console.log(game);
 				return game.name + " GameClub";
 			},
 

@@ -85,15 +85,14 @@ public class RestoreService {
 		FileUtils.writeByteArrayToFile(lenderKey, lender.getPrivateKey());
 		
 		Double subtotal = (restore.getLoan().getPublicUserGame().getCost() * restore.getLoan().getWeeks()) + restore.getLoan().getShippningCost() + restore.getLoan().getFeeGameClub();
-
 		if (restore.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER)) {
 			Setting fineSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_GAMER_DIDNT_DELIVER);
 			Double fineAmount;
-			
+
 			if (fineSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
 				fineAmount = subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0);
 			} else {
-				fineAmount = Double.parseDouble(fineSetting.getValue());
+				fineAmount = subtotal + Double.parseDouble(fineSetting.getValue());
 			}
 			
 			Fine fine = new Fine();
@@ -106,7 +105,8 @@ public class RestoreService {
 			Double rewardAmount;
 			
 			if (rewardSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
-				rewardAmount = restore.getLoan().getPublicUserGame().getCost() * (Double.parseDouble(rewardSetting.getValue()) / 100.0);
+//				rewardAmount = restore.getLoan().getPublicUserGame().getCost() * (Double.parseDouble(rewardSetting.getValue()) / 100.0);
+				rewardAmount = subtotal * (Double.parseDouble(rewardSetting.getValue()) / 100.0);
 			} else {
 				rewardAmount = Double.parseDouble(rewardSetting.getValue());
 			}

@@ -72,6 +72,7 @@ public class RestoreService {
 
 			restore.getLenderMessage().setRead(false);
 			restore.getGamerMessage().setRead(false);
+			System.out.println("Mensajes internos");
 			messageService.getMessageRepo().save(restore.getLenderMessage());
 			messageService.getMessageRepo().save(restore.getGamerMessage());
 		}
@@ -127,6 +128,12 @@ public class RestoreService {
 			fine.setAmountEnc(cryptoService.encrypt(Double.toString(restore.getLoan().getPublicUserGame().getGame().getUploadPayment()), gamerKey));
 			fine.setDescription(restore.getShippingStatus().getName());
 			fineService.getFineRepo().save(fine);
+			
+			PublicUserGame publicUserGame = restore.getPublicUserGame();
+			publicUserGame.setIsBorrowed(false);
+			publicUserGame.setStatus(false);
+			publicUserService.getPublicUserGameRepo().save(publicUserGame);
+			restore.setPublicUserGame(publicUserGame);
 		} else if (restore.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
 			PublicUserGame publicUserGame = restore.getPublicUserGame();
 			publicUserGame.setIsBorrowed(false);

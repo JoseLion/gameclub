@@ -99,6 +99,7 @@ public class LoanService {
 
 	@Transactional
 	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart, Double shippingCost, Double feeGameClub, Double taxes) throws ServletException, MessagingException, IOException, GeneralSecurityException {
+		System.out.println("Petición de juego");
 		Map<String, Message> messages = messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
 		PublicUser gamer = publicUserService.getCurrentUser();
 		byte[] keyEncript = gamer.getPrivateKey();
@@ -139,15 +140,16 @@ public class LoanService {
 
 	@Transactional
 	public Loan acceptOrRejectLoan(Long id, boolean wasAccepted) {
+		
 		Loan loan = loanRepo.findOne(id);
 		loan.setWasAccepted(wasAccepted);
 
 		if (wasAccepted) {
 			loan.setAcceptedDate(new Date());
-			PublicUserGame publicUserGame = loan.getPublicUserGame();
-			publicUserGame.setIsBorrowed(Boolean.TRUE);
-			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
-			loan.setPublicUserGame(publicUserGame);
+//			PublicUserGame publicUserGame = loan.getPublicUserGame();
+//			publicUserGame.setIsBorrowed(Boolean.TRUE);
+//			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
+//			loan.setPublicUserGame(publicUserGame);
 			
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
@@ -173,6 +175,7 @@ public class LoanService {
 	
 	@Transactional
 	public Loan confirmLoan(Loan loan, boolean isGamer, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
+		
 		Catalog noTracking = catalogService.getCatalogRepo().findByCode(Code.SHIPPING_NO_TRACKING);
 		loan.setShippingStatus(noTracking);
 
@@ -213,6 +216,12 @@ public class LoanService {
 				JSONObject json = new JSONObject(response);
 				loan.setTransactionId(json.getString("transaction_id"));
 			}
+			
+			loan.setAcceptedDate(new Date());
+			PublicUserGame publicUserGame = loan.getPublicUserGame();
+			publicUserGame.setIsBorrowed(true);
+			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
+			loan.setPublicUserGame(publicUserGame);
 
 			Transaction transaction = new Transaction(currentUser, "JUGASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), null, loan.getBalancePartEnc(), loan.getCardPartEnc());
 			transactionService.getTransactionRepo().save(transaction);
@@ -310,9 +319,6 @@ public class LoanService {
 			scheduleOneDayBefore(loan);
 			scheduleOnFinishDay(loan);
 		} else {
-			System.out.println("entra multa");
-			System.out.println(loan.getCost());
-			System.out.println(loan.getShippingStatus());
 			createFines(loan, session, request);
 		}
 		
@@ -558,8 +564,8 @@ public class LoanService {
 			levelapMail.setRecipentTO(Arrays.asList(restore.getPublicUserGame().getPublicUser().getUsername()));
 			mailService.sendMailWihTemplate(levelapMail, "MSGLUR", params);
 		}
-
-		if (restore.getGamerStatusDate() == null) {
+		
+		if (restore.getGamerStatusDate() == null && (restore.getGamerReceiver() == null || restore.getLenderReceiver() == null)) {
 			levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 			levelapMail.setRecipentTO(Arrays.asList(restore.getGamer().getUsername()));
 			mailService.sendMailWihTemplate(levelapMail, "MSGGUR", params);
@@ -595,9 +601,12 @@ public class LoanService {
 			fineService.getFineRepo().save(fine);
 			
 			publicUserService.addToUserBalance(gamer.getId(), (loan.getCost()));
-			loan.getPublicUserGame().setIsBorrowed(Boolean.FALSE);
-			loan.setPublicUserGame(publicUserService.getPublicUserGameRepo().save(loan.getPublicUserGame()));
-
+			PublicUserGame publicUserGame = loan.getPublicUserGame();
+			publicUserGame .setIsBorrowed(false);
+			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
+			loan.setPublicUserGame(publicUserGame);
+			
+			loan = loanRepo.save(loan);
 			Transaction transaction = new Transaction();
 			transaction.setOwner(gamer);
 			transaction.setTransaction("DEVOLUCIÓN");
@@ -623,9 +632,12 @@ public class LoanService {
 			fineService.getFineRepo().save(fine);
 			
 			publicUserService.addToUserBalance(gamer.getId(), loan.getCost());
-			loan.getPublicUserGame().setIsBorrowed(Boolean.FALSE);
-			loan.setPublicUserGame(publicUserService.getPublicUserGameRepo().save(loan.getPublicUserGame()));
+			PublicUserGame publicUserGame = loan.getPublicUserGame();
+			publicUserGame .setIsBorrowed(false);
+			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
+			loan.setPublicUserGame(publicUserGame);
 			
+			loan = loanRepo.save(loan);
 			Double lenderFee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
 			Double lenderReturn = (loan.getPublicUserGame().getCost() * loan.getWeeks()) * (1.0 - lenderFee);
 			Double lenderDiff = Double.parseDouble(cryptoService.decrypt(lender.getBalance(), lenderKey)) - lenderReturn;

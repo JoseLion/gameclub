@@ -608,7 +608,7 @@ public class LoanService {
 			Double fineAmount;
 			
 			if (fineSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
-				fineAmount = subtotal + (subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0));
+				fineAmount = subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0);
 			} else {
 				fineAmount = loan.getCost() + Double.parseDouble(fineSetting.getValue());
 			}
@@ -619,11 +619,19 @@ public class LoanService {
 			fine.setDescription(loan.getShippingStatus().getName());
 			fineService.getFineRepo().save(fine);
 			
-			publicUserService.addToUserBalance(gamer.getId(), (loan.getCost()));
+			gamer = publicUserService.addToUserBalance(gamer.getId(), (loan.getCost()));
+			
 			PublicUserGame publicUserGame = loan.getPublicUserGame();
 			publicUserGame .setIsBorrowed(false);
-			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
 			
+			System.out.println("Antes de descontar: " + lender.getShownBalance());
+			lender = publicUserService.substractFromUserBalance(lender.getId(), ((loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getFeeGameClub()));
+			System.out.println("Semana * costo: " + (loan.getPublicUserGame().getCost() * loan.getWeeks())
+								+ " Fee " + loan.getFeeGameClub() + " = Es descontado al balance" + ((loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getFeeGameClub()));
+			System.out.println("Con descuento: " + lender.getShownBalance());
+			publicUserGame.setPublicUser(lender);
+			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
+						
 			loan.setPublicUserGame(publicUserGame);
 			loan = loanRepo.save(loan);
 			

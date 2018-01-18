@@ -70,16 +70,16 @@ public class FineService extends BaseService<Fine> {
 			fine.setWasPayed(Boolean.TRUE);
 
 			Double totalBalance = Double.parseDouble(cryptoService.decrypt(publicUser.getBalance(), key)) - fine.getAmount();
-			
+//			totalBalance = -5D;
 			if (totalBalance < 0) {
-				totalBalance = Math.abs(totalBalance);
+				totalBalance = (-1D) * (totalBalance);
 				fine.setCardPartEnc(cryptoService.encrypt(Double.toString(totalBalance), key));
 				fine.setBalancePartEnc(publicUser.getBalance());
 				
 				String response = paymentezService.listCurrentUserCards(session);
 				JSONArray jsonArray = new JSONArray(response);
-				paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), fine.getCardPart(), 0.0, "Multa GameClub - " + fine.getDescription());
-				
+				paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
+				System.out.println("paso tarjeta Multa");
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
 			} else {
 				fine.setCardPartEnc(null);

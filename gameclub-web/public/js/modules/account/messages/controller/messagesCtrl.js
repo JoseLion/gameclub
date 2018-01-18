@@ -300,10 +300,12 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		}
 
 		if (isValid) {
+			console.log($scope.loan);
 			sweet.default("Confirmaras el alquiler de forma definitiva", function() {
 				$scope.loan.isDisabled = true;
-
+				console.log($scope.loan);
 				rest("loan/confirmLender").post($scope.loan, function(data) {
+					console.log("Retorna del Control: " + data);
 					$scope.loan = data;
 					$scope.loan.isDisabled = true;
 					notif.success("Alquiler confirmado");

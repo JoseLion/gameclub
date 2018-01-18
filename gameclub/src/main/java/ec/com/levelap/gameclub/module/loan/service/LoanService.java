@@ -48,6 +48,7 @@ import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
+import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
@@ -66,6 +67,9 @@ public class LoanService {
 
 	@Autowired
 	private PublicUserService publicUserService;
+	
+	@Autowired
+	private PublicUserGameRepo publicUserGameRepo;
 
 	@Autowired
 	private CatalogService catalogService;
@@ -99,7 +103,7 @@ public class LoanService {
 
 	@Transactional
 	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart, Double shippingCost, Double feeGameClub, Double taxes) throws ServletException, MessagingException, IOException, GeneralSecurityException {
-		System.out.println("Petición de juego");
+		
 		Map<String, Message> messages = messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
 		PublicUser gamer = publicUserService.getCurrentUser();
 		byte[] keyEncript = gamer.getPrivateKey();
@@ -118,10 +122,13 @@ public class LoanService {
 		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(taxes), key));
 		
 		loan = loanRepo.save(loan);
-
+		
 		PublicUserGame cross = publicUserService.getPublicUserGameRepo().findOne(loan.getPublicUserGame().getId());
+
 		Setting feeLender = settingService.getSettingsRepo().findByCode(Code.SETTING_FEE_LENDER);
 		loan.setPublicUserGame(cross);
+		loan = loanRepo.save(loan);
+		
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 		levelapMail.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
@@ -142,6 +149,11 @@ public class LoanService {
 	public Loan acceptOrRejectLoan(Long id, boolean wasAccepted) {
 		
 		Loan loan = loanRepo.findOne(id);
+		try {
+			System.out.println("Entra dueño a primera confirmación: " + loan.getGamer().getShownBalance());
+		} catch (IOException | GeneralSecurityException e) {
+			e.printStackTrace();
+		}
 		loan.setWasAccepted(wasAccepted);
 
 		if (wasAccepted) {
@@ -170,6 +182,11 @@ public class LoanService {
 		}
 
 		loan = loanRepo.save(loan);
+		try {
+			System.out.println("Entra dueño a primera confirmación: " + loan.getGamer().getShownBalance());
+		} catch (IOException | GeneralSecurityException e) {
+			e.printStackTrace();
+		}
 		return loan;
 	}
 	
@@ -198,10 +215,10 @@ public class LoanService {
 			loan.setGamerStatusDate(new Date());
 			
 			Double promoBalance = gamer.getPromoBalance() != null ? Double.parseDouble(cryptoService.decrypt(gamer.getPromoBalance(), keyGamer)) : 0.0;
-			
+			System.out.println("Promo: " + promoBalance);
 			if (loan.getBalancePart() > 0.0) {
 				Double remaining = promoBalance - loan.getBalancePart();
-				
+				System.out.println("promoBalance: " + remaining);
 				if (remaining < 0.0) {
 					gamer = publicUserService.setUserPromoBalance(gamer.getId(), 0.0);
 					gamer = publicUserService.substractFromUserBalance(gamer.getId(), Math.abs(remaining));
@@ -227,6 +244,7 @@ public class LoanService {
 			transactionService.getTransactionRepo().save(transaction);
 			
 			if (loan.getGamer().getReferrer() != null && !loan.getGamer().getReferrer().isEmpty()) {
+				
 				PublicUser refferer = publicUserService.getPublicUserRepo().findByUrlToken(loan.getGamer().getReferrer());
 				
 				if (refferer != null) {
@@ -253,7 +271,6 @@ public class LoanService {
 			
 			loan.setLenderConfirmed(Boolean.TRUE);
 			loan.setLenderStatusDate(new Date());
-			
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
 			
@@ -294,8 +311,10 @@ public class LoanService {
 			Transaction transaction = new Transaction(lender, "ALQUILASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), cryptoService.encrypt(Double.toString(subtotal * (1.0 - fee)), keyLender), null, null);
 			transactionService.getTransactionRepo().save(transaction);
 		}
+		System.out.println("5.4.4. " + loan.getPublicUserGame().getPublicUser().getShownBalance() );
 		
 		loan = loanRepo.save(loan);
+		System.out.println("9. " + loan.getPublicUserGame().getPublicUser().getShownBalance());
 		return loan;
 	}
 	
@@ -565,7 +584,7 @@ public class LoanService {
 			mailService.sendMailWihTemplate(levelapMail, "MSGLUR", params);
 		}
 		
-		if (restore.getGamerStatusDate() == null && (restore.getGamerReceiver() == null || restore.getLenderReceiver() == null)) {
+		if (/*restore.getGamerStatusDate() == null &&*/ (restore.getGamerReceiver() == null || restore.getLenderReceiver() == null)) {
 			levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 			levelapMail.setRecipentTO(Arrays.asList(restore.getGamer().getUsername()));
 			mailService.sendMailWihTemplate(levelapMail, "MSGGUR", params);
@@ -589,7 +608,7 @@ public class LoanService {
 			Double fineAmount;
 			
 			if (fineSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
-				fineAmount = subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0);
+				fineAmount = subtotal + (subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0));
 			} else {
 				fineAmount = loan.getCost() + Double.parseDouble(fineSetting.getValue());
 			}
@@ -604,9 +623,10 @@ public class LoanService {
 			PublicUserGame publicUserGame = loan.getPublicUserGame();
 			publicUserGame .setIsBorrowed(false);
 			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
-			loan.setPublicUserGame(publicUserGame);
 			
+			loan.setPublicUserGame(publicUserGame);
 			loan = loanRepo.save(loan);
+			
 			Transaction transaction = new Transaction();
 			transaction.setOwner(gamer);
 			transaction.setTransaction("DEVOLUCIÓN");
@@ -614,7 +634,8 @@ public class LoanService {
 			transaction.setConsole(loan.getPublicUserGame().getConsole().getName());
 			transaction.setWeeks(loan.getWeeks());
 			transaction.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getCost()), gamerKey));
-			transactionService.getTransactionRepo().save(transaction);
+			transaction = transactionService.getTransactionRepo().save(transaction);
+			
 		} else if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)) {
 			Setting fineSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_GAMER_DIDNT_RECEIVE);
 			Double fineAmount;

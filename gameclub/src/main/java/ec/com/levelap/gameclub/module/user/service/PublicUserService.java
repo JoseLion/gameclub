@@ -218,7 +218,6 @@ public class PublicUserService extends BaseService<PublicUser> {
 		
 		if (user.getReferrer() != null && !user.getReferrer().isEmpty()) {
 			PublicUser refferer = publicUserRepo.findByUrlToken(user.getReferrer());
-			
 			if (refferer != null) {
 				Setting setting = settingService.getSettingsRepo().findByCode(Code.SETTING_REFFERED_REWARD);
 				this.addToUserPromoBalance(refferer.getId(), Double.parseDouble(setting.getValue()));

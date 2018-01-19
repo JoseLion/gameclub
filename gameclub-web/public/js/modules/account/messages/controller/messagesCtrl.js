@@ -305,8 +305,8 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				$scope.loan.isDisabled = true;
 				console.log($scope.loan);
 				rest("loan/confirmLender").post($scope.loan, function(data) {
-					console.log("Retorna del Control: " + data);
 					$scope.loan = data;
+					console.log("Retorna del Control: " + $scope.loan);
 					$scope.loan.isDisabled = true;
 					notif.success("Alquiler confirmado");
 					sweet.close();
@@ -322,6 +322,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 					rest("publicUser/save").post($rootScope.currentUser, function(data) {
 						$rootScope.currentUser = data;
+						console.log("Despues de grabar: " + $rootScope.currentUser);
 					});
 				}
 			});
@@ -354,6 +355,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					$scope.loan = data;
 					$rootScope.currentUser.shownBalance -= data.balancePart;
 					$scope.loan.isDisabled = true;
+					console.log($scope.loan.publicUserGame.publicUser.shownBalance);
 					notif.success("Pago realizado con éxito");
 					sweet.close();
 					canvasToBottom();
@@ -373,6 +375,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 					rest("publicUser/save").post($rootScope.currentUser, function(data) {
 						$rootScope.currentUser = data;
+						console.log($rootScope.currentUser);
 					});
 				}
 			});

@@ -201,6 +201,10 @@ public class LoanService {
 		File keyGamer = File.createTempFile("keyGamer", ".tmp");
 		FileUtils.writeByteArrayToFile(keyGamer, gamer.getPrivateKey());
 
+		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
+		File keyLender = File.createTempFile("keyLender", ".tmp");
+		FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
+		
 		loan.setCostEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
 		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getBalancePart()), keyGamer));
 		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(loan.getCardPart()), keyGamer));
@@ -210,6 +214,7 @@ public class LoanService {
 		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(loan.getTaxes()), keyGamer));
 		
 		if (isGamer) {
+			System.out.println("Entra Jugador");
 			levelapTaskScheduler.removeAndCancelFutureTask(Loan.class.getSimpleName() + "-W2-" + loan.getId());
 			loan.setGamerConfirmed(Boolean.TRUE);
 			loan.setGamerStatusDate(new Date());
@@ -222,6 +227,7 @@ public class LoanService {
 				if (remaining < 0.0) {
 					gamer = publicUserService.setUserPromoBalance(gamer.getId(), 0.0);
 					gamer = publicUserService.substractFromUserBalance(gamer.getId(), Math.abs(remaining));
+					System.out.println("Entra balance juego gamer: ");
 				} else {
 					gamer = publicUserService.setUserPromoBalance(gamer.getId(), remaining);
 				}
@@ -244,7 +250,7 @@ public class LoanService {
 			transactionService.getTransactionRepo().save(transaction);
 			
 			if (loan.getGamer().getReferrer() != null && !loan.getGamer().getReferrer().isEmpty()) {
-				
+				System.out.println("Entra Jugador No Referido: ");
 				PublicUser refferer = publicUserService.getPublicUserRepo().findByUrlToken(loan.getGamer().getReferrer());
 				
 				if (refferer != null) {
@@ -267,6 +273,7 @@ public class LoanService {
 				}
 			}
 		} else {
+			System.out.println("Entra Dueño Saldo: " + loan.getPublicUserGame().getPublicUser().getShownBalance());
 			levelapTaskScheduler.removeAndCancelFutureTask(Loan.class.getSimpleName() + "-W1-" + loan.getId());
 			
 			loan.setLenderConfirmed(Boolean.TRUE);
@@ -301,18 +308,28 @@ public class LoanService {
 		}
 		
 		if (loan.getGamerConfirmed() && loan.getLenderConfirmed()) {
-			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
+			System.out.println("Entra al referido:................");
+//			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
 			Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
 			Double fee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
 			lender = publicUserService.addToUserBalance(lender.getId(), subtotal * (1.0 - fee));
 			
-			File keyLender = File.createTempFile("keyGamer", ".tmp");
-			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
+//			File keyLender = File.createTempFile("keyLender", ".tmp");
+//			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
 			Transaction transaction = new Transaction(lender, "ALQUILASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), cryptoService.encrypt(Double.toString(subtotal * (1.0 - fee)), keyLender), null, null);
 			transactionService.getTransactionRepo().save(transaction);
 		}
-		System.out.println("5.4.4. " + loan.getPublicUserGame().getPublicUser().getShownBalance() );
+		System.out.println("5.4.4. " + loan.getPublicUserGame().getPublicUser().getShownBalance());
+		lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
+		lender = publicUserService.getPublicUserRepo().save(lender);
+		System.out.println("lender balance: " +lender.getShownBalance());
 		
+		PublicUserGame publicUserGame = publicUserGameRepo.findOne(loan.getPublicUserGame().getId());
+		publicUserGame.setPublicUser(lender);
+		publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
+		System.out.println("lender balance: " +publicUserGame.getPublicUser().getShownBalance());
+		
+		loan.setPublicUserGame(publicUserGame);
 		loan = loanRepo.save(loan);
 		System.out.println("9. " + loan.getPublicUserGame().getPublicUser().getShownBalance());
 		return loan;

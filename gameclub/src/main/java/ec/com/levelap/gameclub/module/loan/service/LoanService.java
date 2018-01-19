@@ -201,9 +201,9 @@ public class LoanService {
 		File keyGamer = File.createTempFile("keyGamer", ".tmp");
 		FileUtils.writeByteArrayToFile(keyGamer, gamer.getPrivateKey());
 
-		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
-		File keyLender = File.createTempFile("keyLender", ".tmp");
-		FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
+//		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
+//		File keyLender = File.createTempFile("keyLender", ".tmp");
+//		FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
 		
 		loan.setCostEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
 		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getBalancePart()), keyGamer));
@@ -309,17 +309,18 @@ public class LoanService {
 		
 		if (loan.getGamerConfirmed() && loan.getLenderConfirmed()) {
 			System.out.println("Entra al referido:................");
-//			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
+			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
 			Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
 			Double fee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
 			lender = publicUserService.addToUserBalance(lender.getId(), subtotal * (1.0 - fee));
 			
-//			File keyLender = File.createTempFile("keyLender", ".tmp");
-//			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
+			File keyLender = File.createTempFile("keyLender", ".tmp");
+			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
 			Transaction transaction = new Transaction(lender, "ALQUILASTE", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), cryptoService.encrypt(Double.toString(subtotal * (1.0 - fee)), keyLender), null, null);
 			transactionService.getTransactionRepo().save(transaction);
 		}
 		System.out.println("5.4.4. " + loan.getPublicUserGame().getPublicUser().getShownBalance());
+		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
 		lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
 		lender = publicUserService.getPublicUserRepo().save(lender);
 		System.out.println("lender balance: " +lender.getShownBalance());

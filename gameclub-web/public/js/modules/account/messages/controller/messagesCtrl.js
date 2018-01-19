@@ -301,20 +301,24 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 		if (isValid) {
 			console.log($scope.loan);
+			console.log($rootScope.currentUser.shownBalance);
 			sweet.default("Confirmaras el alquiler de forma definitiva", function() {
 				$scope.loan.isDisabled = true;
-				console.log($scope.loan);
+				console.log($scope.loan.publicUserGame.publicUser.shownBalance);
 				rest("loan/confirmLender").post($scope.loan, function(data) {
 					$scope.loan = data;
-					console.log("Retorna del Control: " + $scope.loan);
+					console.log("Retorna del Control: " + $scope.loan.publicUserGame.publicUser.shownBalance);
 					$scope.loan.isDisabled = true;
 					notif.success("Alquiler confirmado");
+					console.log("Retorna del Control: " + $scope.loan.publicUserGame.publicUser.shownBalance);
 					sweet.close();
 					canvasToBottom();
 				}, function(error) {
 					sweet.close();
 				});
 
+				console.log($scope.loan.saveChanges);
+				console.log($rootScope.currentUser.shownBalance);
 				if ($scope.loan.saveChanges == true) {
 					$rootScope.currentUser.billingAddress = $scope.loan.lenderAddress;
 					$rootScope.currentUser.geolocation = $scope.loan.lenderGeolocation;
@@ -359,7 +363,8 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					notif.success("Pago realizado con éxito");
 					sweet.close();
 					canvasToBottom();
-
+					console.log($scope.loan.publicUserGame.publicUser.shownBalance);
+					console.log($rootScope.currentUser.referrer);
 					if ($rootScope.currentUser.referrer != null) {
 						SweetAlert.swal("Genial!", "Tu saldo promocional por referido ha sido acreditado", "info");
 						$rootScope.currentUser.referrer = null;
@@ -367,7 +372,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				}, function(error) {
 					sweet.close();
 				});
-
+				console.log($scope.loan.saveChanges);
 				if ($scope.loan.saveChanges == true) {
 					$rootScope.currentUser.billingAddress = $scope.loan.gamerAddress;
 					$rootScope.currentUser.geolocation = $scope.loan.gamerGeolocation;

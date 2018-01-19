@@ -164,8 +164,9 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     $scope.doFilter = function(filter) {
         currentPage = 0;
         $scope.availableGames = [];
-
+        console.log("Filtros");
         forEach($scope.filters, function(fltr) {
+            console.log("Filtros");
             if (fltr.icon == filter.icon && fltr.active == true) {
                 filter.desc = !filter.desc;
             }
@@ -174,6 +175,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
         });
 
         if (filter.sort != '') {
+            console.log("Filtros");
             filter.active = true;
         }
 
@@ -375,7 +377,9 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
     function filterAvailibleGames() {
         let activeFilter;
+        console.log("Filtros");
         forEach($scope.filters, function(filter) {
+            console.log("Filtros");
             if (filter.active == true) {
                 activeFilter = filter;
                 return 'break';
@@ -389,7 +393,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             desc: activeFilter != null ? activeFilter.desc : true,
             page: currentPage
         };
-
+        console.log("Filtros");
         openRest("game/getAvailableGames").post(filter, function(data) {
             setPagedAvailableGames(data);
         });

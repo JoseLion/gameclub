@@ -1,4 +1,4 @@
-angular.module('Game').config(function($stateProvider) {
+angular.module('Game').run(['$rootScope', 'MetaTags', runBlock]).config(function($stateProvider) {
 
 	let prefix = 'gameclub.';
 
@@ -9,8 +9,8 @@ angular.module('Game').config(function($stateProvider) {
 		templateUrl: 'js/modules/game/view/game.html',
 		data: {displayName: 'GameClub'},
 		metaTags: {
+			// console.log(game);
 			title: function(game) {
-				console.log(game);
 				return game.name + " GameClub";
 			},
 

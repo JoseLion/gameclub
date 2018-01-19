@@ -593,12 +593,15 @@ public class LoanService {
 	
 	@Transactional
 	private void createFines(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
-		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
-		File gamerKey = File.createTempFile("keyGamer", ".tmp");
-		FileUtils.writeByteArrayToFile(gamerKey, gamer.getPrivateKey());
 
+		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
+		byte[] keyEncriptGamer = gamer.getPrivateKey();
+		File gamerKey = File.createTempFile("key", ".tmp");
+		FileUtils.writeByteArrayToFile(gamerKey, gamer.getPrivateKey());
+		
 		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
-		File lenderKey = File.createTempFile("keyLender", ".tmp");
+		byte[] keyEncriptLender = lender.getPrivateKey();
+		File lenderKey = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(lenderKey, lender.getPrivateKey());
 		
 		Double subtotal = (loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getShippningCost() + loan.getFeeGameClub();
@@ -622,27 +625,23 @@ public class LoanService {
 			gamer = publicUserService.addToUserBalance(gamer.getId(), (loan.getCost()));
 			
 			PublicUserGame publicUserGame = loan.getPublicUserGame();
-			publicUserGame .setIsBorrowed(false);
+			publicUserGame.setIsBorrowed(false);
 			
-			System.out.println("Antes de descontar: " + lender.getShownBalance());
 			lender = publicUserService.substractFromUserBalance(lender.getId(), ((loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getFeeGameClub()));
-			System.out.println("Semana * costo: " + (loan.getPublicUserGame().getCost() * loan.getWeeks())
-								+ " Fee " + loan.getFeeGameClub() + " = Es descontado al balance" + ((loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getFeeGameClub()));
-			System.out.println("Con descuento: " + lender.getShownBalance());
+			
 			publicUserGame.setPublicUser(lender);
 			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
 						
 			loan.setPublicUserGame(publicUserGame);
 			loan = loanRepo.save(loan);
 			
-			Transaction transaction = new Transaction();
-			transaction.setOwner(gamer);
-			transaction.setTransaction("DEVOLUCIÓN");
-			transaction.setGame(loan.getPublicUserGame().getGame().getName());
-			transaction.setConsole(loan.getPublicUserGame().getConsole().getName());
-			transaction.setWeeks(loan.getWeeks());
-			transaction.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getCost()), gamerKey));
-			transaction = transactionService.getTransactionRepo().save(transaction);
+			Double devolucionGamer = loan.getCost();
+			Transaction transactionGamer = new Transaction(gamer, "DEVOLUCIÓN", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), (cryptoService.encrypt(Double.toString(devolucionGamer), gamerKey)), null, null);
+			transactionService.getTransactionRepo().save(transactionGamer);
+			
+			Double devoluvionLender = ((loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getFeeGameClub());
+			Transaction transactionLender = new Transaction(lender, "DEVOLUCIÓN", loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(), loan.getWeeks(), null, (cryptoService.encrypt(Double.toString(devoluvionLender), lenderKey)), null);
+			transactionService.getTransactionRepo().save(transactionLender);
 			
 		} else if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)) {
 			Setting fineSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_GAMER_DIDNT_RECEIVE);

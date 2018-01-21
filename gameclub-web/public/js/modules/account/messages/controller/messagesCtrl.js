@@ -300,33 +300,24 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 		}
 
 		if (isValid) {
-			console.log($scope.loan);
-			console.log($rootScope.currentUser.shownBalance);
 			sweet.default("Confirmaras el alquiler de forma definitiva", function() {
 				$scope.loan.isDisabled = true;
-				console.log($scope.loan.publicUserGame.publicUser.shownBalance);
 				rest("loan/confirmLender").post($scope.loan, function(data) {
 					$scope.loan = data;
-					console.log("Retorna del Control: " + $scope.loan.publicUserGame.publicUser.shownBalance);
 					$scope.loan.isDisabled = true;
 					notif.success("Alquiler confirmado");
-					console.log("Retorna del Control: " + $scope.loan.publicUserGame.publicUser.shownBalance);
 					sweet.close();
 					canvasToBottom();
 				}, function(error) {
 					sweet.close();
 				});
 
-				console.log($scope.loan.saveChanges);
-				console.log($rootScope.currentUser.shownBalance);
 				if ($scope.loan.saveChanges == true) {
 					$rootScope.currentUser.billingAddress = $scope.loan.lenderAddress;
 					$rootScope.currentUser.geolocation = $scope.loan.lenderGeolocation;
 					$rootScope.currentUser.receiver = $scope.loan.lenderReceiver;
-
 					rest("publicUser/save").post($rootScope.currentUser, function(data) {
 						$rootScope.currentUser = data;
-						console.log("Despues de grabar: " + $rootScope.currentUser);
 					});
 				}
 			});

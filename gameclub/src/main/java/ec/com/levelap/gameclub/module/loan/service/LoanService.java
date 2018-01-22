@@ -632,7 +632,13 @@ public class LoanService {
 			PublicUserGame publicUserGame = loan.getPublicUserGame();
 			publicUserGame.setIsBorrowed(false);
 			
-			lender = publicUserService.substractFromUserBalance(lender.getId(), ((loan.getPublicUserGame().getCost() * loan.getWeeks()) - loan.getFeeGameClub()));
+			Double fineCost = (loan.getPublicUserGame().getCost() * loan.getWeeks()) - loan.getFeeGameClub();
+			File key = File.createTempFile("key", ".tmp");
+			FileUtils.writeByteArrayToFile(key, lender.getPrivateKey());
+			
+			byte[] encrypted = cryptoService.encrypt(Double.toString(lender.getShownBalance() - fineCost), key);
+			lender.setBalance(encrypted);
+			lender = publicUserService.getPublicUserRepo().save(lender);
 			
 			publicUserGame.setPublicUser(lender);
 			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);

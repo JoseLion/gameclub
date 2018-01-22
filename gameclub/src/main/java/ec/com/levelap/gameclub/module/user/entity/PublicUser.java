@@ -486,7 +486,6 @@ public class PublicUser extends BaseEntity {
 			
 			String decryptedBalance = balance != null ? cryptoService.decrypt(balance, key) : "0.0";
 			String decryptedPromo = promoBalance != null ? cryptoService.decrypt(promoBalance, key) : "0.0";
-			System.out.println("entra Show Balance Balance: " + decryptedBalance + " Promo: " + decryptedPromo);
 			
 			shownBalance = Double.parseDouble(decryptedBalance) + Double.parseDouble(decryptedPromo);
 		}

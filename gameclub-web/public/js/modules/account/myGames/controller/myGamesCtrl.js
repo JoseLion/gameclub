@@ -40,17 +40,21 @@ angular.module('MyGames').controller('MyGamesCtrl', function($scope, $rootScope,
 
     $scope.editGame = function(cross) {
         $scope.myGame = cross;
-        $scope.background = {
-            background: "url('" + $rootScope.$archiveUrl + $scope.myGame.game.banner.id + "') center bottom / 100% no-repeat"
-        };
+        if(!$scope.myGame.isBorrowed){
+            $scope.background = {
+                background: "url('" + $rootScope.$archiveUrl + $scope.myGame.game.banner.id + "') center bottom / 100% no-repeat"
+            };
 
-        forEach($scope.myGame.game.consoles, function(gameConsole) {
-            if ($scope.myGame.console.id == gameConsole.console.id) {
-                $scope.search = {console: gameConsole};
-            }
-        });
+            forEach($scope.myGame.game.consoles, function(gameConsole) {
+                if ($scope.myGame.console.id == gameConsole.console.id) {
+                    $scope.search = {console: gameConsole};
+                }
+            });
 
-        $scope.showGame = true;
+            $scope.showGame = true;
+        }else {
+            SweetAlert.swal("", "Tu juego se encuentra alquilado no es posible editarlo", "info");
+        }
     }
 
     $scope.showSearch = function() {

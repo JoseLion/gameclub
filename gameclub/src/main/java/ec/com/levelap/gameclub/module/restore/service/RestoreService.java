@@ -72,7 +72,6 @@ public class RestoreService {
 
 			restore.getLenderMessage().setRead(false);
 			restore.getGamerMessage().setRead(false);
-			System.out.println("Mensajes internos");
 			messageService.getMessageRepo().save(restore.getLenderMessage());
 			messageService.getMessageRepo().save(restore.getGamerMessage());
 		}

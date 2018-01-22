@@ -149,11 +149,6 @@ public class LoanService {
 	public Loan acceptOrRejectLoan(Long id, boolean wasAccepted) {
 		
 		Loan loan = loanRepo.findOne(id);
-		try {
-			System.out.println("Entra dueño a primera confirmación: " + loan.getGamer().getShownBalance());
-		} catch (IOException | GeneralSecurityException e) {
-			e.printStackTrace();
-		}
 		loan.setWasAccepted(wasAccepted);
 
 		if (wasAccepted) {
@@ -182,11 +177,6 @@ public class LoanService {
 		}
 
 		loan = loanRepo.save(loan);
-		try {
-			System.out.println("Entra dueño a primera confirmación: " + loan.getGamer().getShownBalance());
-		} catch (IOException | GeneralSecurityException e) {
-			e.printStackTrace();
-		}
 		return loan;
 	}
 	
@@ -214,21 +204,19 @@ public class LoanService {
 		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(loan.getTaxes()), keyGamer));
 		
 		if (isGamer) {
-			System.out.println("Entra Jugador");
 			levelapTaskScheduler.removeAndCancelFutureTask(Loan.class.getSimpleName() + "-W2-" + loan.getId());
 			loan.setGamerConfirmed(Boolean.TRUE);
 			loan.setGamerStatusDate(new Date());
 			
 			Double promoBalance = gamer.getPromoBalance() != null ? Double.parseDouble(cryptoService.decrypt(gamer.getPromoBalance(), keyGamer)) : 0.0;
-			System.out.println("Promo: " + promoBalance);
+			
 			if (loan.getBalancePart() > 0.0) {
 				Double remaining = promoBalance - loan.getBalancePart();
-				System.out.println("promoBalance: " + remaining);
+				
 				if (remaining < 0.0) {
 					gamer = publicUserService.setUserPromoBalance(gamer.getId(), 0.0);
 					gamer = publicUserService.substractFromUserBalance(gamer.getId(), Math.abs(remaining));
-					System.out.println("Entra balance juego gamer: ");
-				} else {
+				} else { 
 					gamer = publicUserService.setUserPromoBalance(gamer.getId(), remaining);
 				}
 			}
@@ -250,7 +238,6 @@ public class LoanService {
 			transactionService.getTransactionRepo().save(transaction);
 			
 			if (loan.getGamer().getReferrer() != null && !loan.getGamer().getReferrer().isEmpty()) {
-				System.out.println("Entra Jugador No Referido: ");
 				PublicUser refferer = publicUserService.getPublicUserRepo().findByUrlToken(loan.getGamer().getReferrer());
 				
 				if (refferer != null) {
@@ -273,7 +260,6 @@ public class LoanService {
 				}
 			}
 		} else {
-			System.out.println("Entra Dueño Saldo: " + loan.getPublicUserGame().getPublicUser().getShownBalance());
 			levelapTaskScheduler.removeAndCancelFutureTask(Loan.class.getSimpleName() + "-W1-" + loan.getId());
 			
 			loan.setLenderConfirmed(Boolean.TRUE);

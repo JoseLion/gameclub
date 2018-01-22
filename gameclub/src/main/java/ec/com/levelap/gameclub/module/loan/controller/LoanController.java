@@ -84,7 +84,7 @@ public class LoanController {
 	
 	@RequestMapping(value="confirmLender", method=RequestMethod.POST)
 	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException {
-		System.out.println("Monto Controlador: " + loan.getPublicUserGame().getPublicUser().getShownBalance());
+		
 		loan = loanService.confirmLoan(loan, false, session, request);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}

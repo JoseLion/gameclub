@@ -79,8 +79,9 @@ public class FineService extends BaseService<Fine> {
 				String response = paymentezService.listCurrentUserCards(session);
 				JSONArray jsonArray = new JSONArray(response);
 				paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
-				System.out.println("paso tarjeta Multa");
+				
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
+				/************************************************************************/
 			} else {
 				fine.setCardPartEnc(null);
 				fine.setBalancePartEnc(fine.getAmountEnc());

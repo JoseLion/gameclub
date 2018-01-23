@@ -4,18 +4,9 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
         $scope.lenderAverage = data.lenderAverage * 100.0 / 5.0;
         $scope.gamerReviews = data.gamerReviews;
         $scope.lenderReviews = data.lenderReviews;
-        // $scope.reviews = data.reviews;
-        console.log(data.reviews);
-        forEach(data.reviews.content, function(msg) {
-            console.log(msg);
-            console.log(msg.lender.name);
-            console.log(msg.gameer.name);
-        });
-
-        
         setPagedData(data.reviews);
     });
-    
+
     if (addCardError != null) {
         $scope.addCardError = addCardError;
     }

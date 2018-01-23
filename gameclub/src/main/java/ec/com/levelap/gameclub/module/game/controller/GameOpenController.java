@@ -73,13 +73,18 @@ public class GameOpenController {
 	
 	@RequestMapping(value="getAvailableGames", method=RequestMethod.POST)
 	public ResponseEntity<Page<PublicUserGameOpen>> getAvailableGames(@RequestBody Filter filter) throws ServletException {
+		System.out.println(filter.gameId + " " + filter.consoleId + " " + filter.desc);
+		System.out.println(filter.sort);
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		PageRequest page = filter.sort.isEmpty() ? new PageRequest(filter.page, Const.TABLE_SMALL_SIZE) : new PageRequest(filter.page, Const.TABLE_SMALL_SIZE, new Sort(filter.desc ? Direction.DESC : Direction.ASC, filter.sort));
 		Page<PublicUserGameOpen> games;
 		
 		if (currentUser != null && currentUser.getLocation() != null) {
+			System.out.println("Desde usuario");
+			System.out.println(currentUser.getName());
 			games = gameService.getPublicUserGameRepo().findAvailableGames(currentUser, currentUser.getLocation(), filter.gameId, filter.consoleId, page);
 		} else {
+			System.out.println("Desde publico");
 			games = gameService.getPublicUserGameRepo().findAvailableGamesOpen(filter.gameId, filter.consoleId, page);
 		}
 		

@@ -111,7 +111,7 @@
 </div>
 
 <div class="date" ng-if="!loan.status">{{loan.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
-<div class="blue-box small-box text-center" ng-if="!loan.status">
+<div class="blue-box small-box text-center" ng-if="loan.gamerConfirmed && !loan.status">
 	<div class="col-md-12">
 		<span ng-if="loan.wasTimedOut && !loan.lenderConfirmed">{{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}. no ha confirmado la dirección de retiro, la solicitud ha sido cancelada de forma automática.</span>
 		<span ng-if="loan.wasTimedOut && loan.lenderConfirmed">Han pasado 24 horas y no se a confirmado el alquiler, la solicitud ha sido cancelada de forma automática.</span>

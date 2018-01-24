@@ -121,7 +121,7 @@
                                     <td class="game-status">{{cross.integrity.name}}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary small dark" ng-click="openLoanView(cross)" ng-disabled="cross.isBorrowed">
-                                            {{currentUser != null ? 'Ficha prestamo' : 'Iniciar sesión'}}
+                                            {{currentUser != null ? 'Ficha Alquiler' : 'Iniciar sesión'}}
                                         </button>
                                     </td>
                                 </tr>
@@ -189,7 +189,7 @@
                     <div class="clearfix"></div>
 
                     <div class="col-md-12 col-xs-12">
-                        <label class="title">Tiempo prestamo</label>
+                        <label class="title">Tiempo Alquiler</label>
                         <ui-select ng-model="loan.weeks" class="selector" ng-change="weekSelected()">
                             <ui-select-match placeholder="Semanas...">{{$select.selected}} {{$select.selected == 1 ? 'Semana' : 'Semanas'}}</ui-select-match>
                             <ui-select-choices repeat="num in [1, 2, 3, 4] | filter: $select.search">

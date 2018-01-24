@@ -226,28 +226,32 @@ public class LoanService {
 				String response = paymentezService.debitFromCard(session, request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(), loan.getTaxes(), description);
 				JSONObject json = new JSONObject(response);
 				loan.setTransactionId(json.getString("transaction_id"));
-				/***************************************/
-//				LevelapMail levelapMail = new LevelapMail();
-//				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
-//				levelapMail.setRecipentTO(Arrays.asList(loan.getPublicUserGame().getPublicUser().getUsername()));
-//				
-//				Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
-//				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//				Map<String, String> params = new HashMap<>();
-//				params.put("name", loan.getPublicUserGame().getPublicUser().getName());
-//				params.put("game", loan.getPublicUserGame().getGame().getName());
-//				params.put("console", loan.getPublicUserGame().getConsole().getName());
-//				params.put("user", loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
-//				params.put("weeks", "" + loan.getWeeks());
-//				params.put("date", sdf.format(loan.getGamerStatusDate()));
-//				params.put("authorizationNumber", loan.getTransactionId());
-//				params.put("subtotal", String.format("%.2f",(loan.getCost() - loan.getTaxes())));
-//				params.put("iva", String.format("%.2f",loan.getTaxes()));
-//				params.put("total", "$" + String.format("%.2f", loan.getCost()));
-//				params.put("cardPart", "$" + String.format("%.2f", loan.getCardPart()));
-//				params.put("balancePart", "$" + String.format("%.2f", (loan.getCost() - loan.getCardPart())));
 				
-//				mailService.sendMailWihTemplate(levelapMail, "MSGREQ", params);
+				LevelapMail levelapMail = new LevelapMail();
+				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
+				levelapMail.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				Map<String, String> params = new HashMap<>();
+				params.put("name", loan.getPublicUserGame().getPublicUser().getName());
+				params.put("game", loan.getPublicUserGame().getGame().getName());
+				params.put("console", loan.getPublicUserGame().getConsole().getName());
+				params.put("user", loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
+				params.put("weeks", "" + loan.getWeeks());
+				if(loan.getWasAccepted()) {
+					params.put("status", "aceptado");
+				} else {
+					params.put("status", "rechazado");
+				}
+				params.put("date", sdf.format(loan.getGamerStatusDate()));
+				params.put("authorizationNumber", "123456789");
+				params.put("subtotal", "$" + String.format("%.2f",(loan.getCost() - loan.getTaxes())));
+				params.put("iva", "$" + String.format("%.2f",loan.getTaxes()));
+				params.put("total", "$" + String.format("%.2f", loan.getCost()));
+				params.put("cardPart", "$" + String.format("%.2f", loan.getCardPart()));
+				params.put("balancePart", "$" + String.format("%.2f", (loan.getCost() - loan.getCardPart())));
+				
+				mailService.sendMailWihTemplate(levelapMail, "MSGPYC", params);
 			}
 			
 			loan.setAcceptedDate(new Date());

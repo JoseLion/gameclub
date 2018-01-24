@@ -153,10 +153,6 @@ public class LoanService {
 
 		if (wasAccepted) {
 			loan.setAcceptedDate(new Date());
-//			PublicUserGame publicUserGame = loan.getPublicUserGame();
-//			publicUserGame.setIsBorrowed(Boolean.TRUE);
-//			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
-//			loan.setPublicUserGame(publicUserGame);
 			
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
@@ -190,10 +186,6 @@ public class LoanService {
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		File keyGamer = File.createTempFile("keyGamer", ".tmp");
 		FileUtils.writeByteArrayToFile(keyGamer, gamer.getPrivateKey());
-
-//		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
-//		File keyLender = File.createTempFile("keyLender", ".tmp");
-//		FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
 		
 		loan.setCostEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
 		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getBalancePart()), keyGamer));
@@ -601,7 +593,7 @@ public class LoanService {
 			mailService.sendMailWihTemplate(levelapMail, "MSGLUR", params);
 		}
 		
-		if (/*restore.getGamerStatusDate() == null &&*/ (restore.getGamerReceiver() == null || restore.getLenderReceiver() == null)) {
+		if (restore.getGamerReceiver() == null || restore.getLenderReceiver() == null) {
 			levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 			levelapMail.setRecipentTO(Arrays.asList(restore.getGamer().getUsername()));
 			mailService.sendMailWihTemplate(levelapMail, "MSGGUR", params);
@@ -612,12 +604,12 @@ public class LoanService {
 	private void createFines(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
 
 		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
-		byte[] keyEncriptGamer = gamer.getPrivateKey();
+//		byte[] keyEncriptGamer = gamer.getPrivateKey();
 		File gamerKey = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(gamerKey, gamer.getPrivateKey());
 		
 		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
-		byte[] keyEncriptLender = lender.getPrivateKey();
+//		byte[] keyEncriptLender = lender.getPrivateKey();
 		File lenderKey = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(lenderKey, lender.getPrivateKey());
 		

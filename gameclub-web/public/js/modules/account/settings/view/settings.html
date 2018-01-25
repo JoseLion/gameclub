@@ -61,8 +61,8 @@
                 <div><small>{{lenderReviews}} opiniones</small></div>
             </div>
 
-            <div class="body" ng-if="lenderReviews > 0">
-                <div class="rating" ng-repeat="review in reviews" ng-if="review.lender.id == currentUser.id && (review.gamerReviewDate && review.lenderReviewDate)">
+            <div class="body" ng-if="gamerReviews > 0">
+                <div class="rating" ng-repeat="review in reviews" ng-if="review.gamer.id == currentUser.id && (review.gamerReviewDate && review.lenderReviewDate)">
                     <div class="title">
                         <span class="upper-case">{{review.gamer.name}} {{review.gamer.lastName | limitTo: 1}}.</span>
                         <score ng-model="review.lenderScore" disabled></score>
@@ -82,10 +82,10 @@
                 <div><small>{{gamerReviews}} opiniones</small></div>
             </div>
 
-            <div class="body" ng-if="gamerReviews > 0">
-                <div class="rating" ng-repeat="review in reviews" ng-if="review.gamer.id == currentUser.id && (review.gamerReviewDate && review.lenderReviewDate)">
+            <div class="body" ng-if="lenderReviews > 0">
+                <div class="rating" ng-repeat="review in reviews" ng-if="review.lender.id == currentUser.id && (review.gamerReviewDate && review.lenderReviewDate)">
                     <div class="title">
-                        <span class="upper-case">{{review.lender.name}} {{review.lender.lastName | limitTo: 1}}.</span>
+                        <span class="upper-case">{{review.gamer.name}} {{review.gamer.lastName | limitTo: 1}}.</span>
                         <score ng-model="review.gamerScore" disabled></score>
                     </div>
                     <div class="description">{{review.gamerComment}}</div>

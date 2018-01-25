@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +36,7 @@ import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.mail.entity.LevelapMail;
 
 @Service
 public class FineService extends BaseService<Fine> {
@@ -81,6 +86,33 @@ public class FineService extends BaseService<Fine> {
 				paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
 				
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
+				
+				LevelapMail levelapMail = new LevelapMail();
+				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
+				levelapMail.setRecipentTO(Arrays.asList(fine.getOwner().getUsername()));
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				Map<String, String> params = new HashMap<>();
+//				params.put("name", fine.getPublicUserGame().getPublicUser().getName());
+//				params.put("game", fine.getPublicUserGame().getGame().getName());
+//				params.put("console", loan.getPublicUserGame().getConsole().getName());
+//				params.put("user", loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
+//				params.put("weeks", "" + loan.getWeeks());
+//				if(loan.getWasAccepted()) {
+//					params.put("status", "aceptado");
+//				} else {
+//					params.put("status", "rechazado");
+//				}
+//				params.put("date", sdf.format(loan.getGamerStatusDate()));
+				params.put("authorizationNumber", "123456789");
+//				params.put("subtotal", "$" + String.format("%.2f",(loan.getCost() - loan.getTaxes())));
+//				params.put("iva", "$" + String.format("%.2f",loan.getTaxes()));
+//				params.put("total", "$" + String.format("%.2f", loan.getCost()));
+//				params.put("cardPart", "$" + String.format("%.2f", loan.getCardPart()));
+//				params.put("balancePart", "$" + String.format("%.2f", (loan.getCost() - loan.getCardPart())));
+//				
+//				mailService.sendMailWihTemplate(levelapMail, "MSGPYC", params);
+				
 			} else {
 				fine.setCardPartEnc(null);
 				fine.setBalancePartEnc(fine.getAmountEnc());

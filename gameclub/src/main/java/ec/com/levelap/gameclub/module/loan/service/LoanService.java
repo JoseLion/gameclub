@@ -236,7 +236,7 @@ public class LoanService {
 					params.put("status", "rechazado");
 				}
 				params.put("date", sdf.format(loan.getGamerStatusDate()));
-				params.put("authorizationNumber", "123456789");
+				params.put("authorizationNumber", loan.getTransactionId());
 				params.put("subtotal", "$" + String.format("%.2f",(loan.getCost() - loan.getTaxes())));
 				params.put("iva", "$" + String.format("%.2f",loan.getTaxes()));
 				params.put("total", "$" + String.format("%.2f", loan.getCost()));

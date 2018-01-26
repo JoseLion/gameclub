@@ -219,11 +219,10 @@ public class LoanService {
 					gamer = publicUserService.setUserPromoBalance(gamer.getId(), remaining);
 				}
 			} else if(loan.getCardPart() > 0.0){
-				Double remaining = promoBalance - loan.getBalancePart() - loan.getCardPart();
+				Double remaining = promoBalance - loan.getBalancePart();
 
 				if (remaining < 0.0) {
 					gamer = publicUserService.setUserPromoBalance(gamer.getId(), 0.0);
-					System.out.println(gamer.getShownBalance());
 					gamer = publicUserService.substractFromUserBalance(gamer.getId(), (-1)*(remaining));
 				} else {
 					gamer = publicUserService.setUserPromoBalance(gamer.getId(), remaining);
@@ -231,14 +230,14 @@ public class LoanService {
 			}
 
 			if (loan.getCardPart() > 0.0) {
-				String description = "Préstamo del juego " +
-										loan.getPublicUserGame().getGame().getName() + " durante " + loan.getWeeks()
-										+ " semana(s)";
-				String response = paymentezService.debitFromCard(session,
-				request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(),
-				loan.getTaxes(), description);
-				JSONObject json = new JSONObject(response);
-				loan.setTransactionId(json.getString("transaction_id"));
+//				String description = "Préstamo del juego " +
+//										loan.getPublicUserGame().getGame().getName() + " durante " + loan.getWeeks()
+//										+ " semana(s)";
+//				String response = paymentezService.debitFromCard(session,
+//				request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(),
+//				loan.getTaxes(), description);
+//				JSONObject json = new JSONObject(response);
+//				loan.setTransactionId(json.getString("transaction_id"));
 
 				LevelapMail levelapMail = new LevelapMail();
 				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
@@ -258,7 +257,7 @@ public class LoanService {
 					params.put("status", "rechazado");
 				}
 				params.put("date", sdf.format(loan.getGamerStatusDate()));
-				params.put("authorizationNumber", loan.getTransactionId());
+//				params.put("authorizationNumber", loan.getTransactionId());
 				params.put("subtotal", "$" + String.format("%.2f", (loan.getCost() - loan.getTaxes())));
 				params.put("iva", "$" + String.format("%.2f", loan.getTaxes()));
 				params.put("total", "$" + String.format("%.2f", loan.getCost()));
@@ -622,7 +621,7 @@ public class LoanService {
 		params.put("gamerConfirmationDate",
 				restore.getGamerStatusDate() != null ? df.format(restore.getGamerStatusDate()) : "SIN CONFIRMAR");
 
-		if (restore.getLenderStatusDate() == null || restore.getGamerStatusDate() == null) {
+		if (restore.getLenderReceiver() == null || restore.getGamerReceiver() == null) {
 			levelapMail.setFrom(Const.EMAIL_REMINDER);
 			levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_LOGISTICS));
 			mailService.sendMailWihTemplate(levelapMail, "MSGAUR", params);
@@ -676,6 +675,7 @@ public class LoanService {
 			fineService.getFineRepo().save(fine);
 			
 			gamer = publicUserService.addToUserBalance(gamer.getId(), (loan.getCost()));
+			
 
 			PublicUserGame publicUserGame = loan.getPublicUserGame();
 			publicUserGame.setIsBorrowed(false);

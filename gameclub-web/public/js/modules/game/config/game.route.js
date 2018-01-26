@@ -11,6 +11,7 @@ angular.module('Game').run(['$rootScope', 'MetaTags', runBlock]).config(function
 		metaTags: {
 			// console.log(game);
 			title: function(game) {
+				console.log(game);
 				return game.name + " GameClub";
 			},
 

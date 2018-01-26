@@ -246,7 +246,7 @@ public class LoanService {
 
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Map<String, String> params = new HashMap<>();
-				params.put("name", loan.getPublicUserGame().getPublicUser().getName());
+				params.put("name", loan.getGamer().getName());
 				params.put("game", loan.getPublicUserGame().getGame().getName());
 				params.put("console", loan.getPublicUserGame().getConsole().getName());
 				params.put("user",

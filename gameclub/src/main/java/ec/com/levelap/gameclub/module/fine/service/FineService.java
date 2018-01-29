@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,6 +37,7 @@ import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.gameclub.utils.GameClubMailService;
 import ec.com.levelap.mail.entity.LevelapMail;
 
 @Service
@@ -61,9 +63,12 @@ public class FineService extends BaseService<Fine> {
 	
 	@Autowired
 	private PaymentezService paymentezService;
+	
+	@Autowired
+	private GameClubMailService mailService;
 
 	@Transactional
-	public ResponseEntity<?> save(Fine fine, Boolean isApply, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
+	public ResponseEntity<?> save(Fine fine, Boolean isApply, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException, MessagingException {
 		fine = fineRepo.findOne(fine.getId());
 		fine.setApply(isApply);
 		if (isApply) {
@@ -93,23 +98,14 @@ public class FineService extends BaseService<Fine> {
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Map<String, String> params = new HashMap<>();
-//				params.put("name", fine.getPublicUserGame().getPublicUser().getName());
+//				params.put("name", fine.getOwner().getName());
 //				params.put("game", fine.getPublicUserGame().getGame().getName());
-//				params.put("console", loan.getPublicUserGame().getConsole().getName());
-//				params.put("user", loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
-//				params.put("weeks", "" + loan.getWeeks());
-//				if(loan.getWasAccepted()) {
-//					params.put("status", "aceptado");
-//				} else {
-//					params.put("status", "rechazado");
-//				}
-//				params.put("date", sdf.format(loan.getGamerStatusDate()));
-				params.put("authorizationNumber", "123456789");
-//				params.put("subtotal", "$" + String.format("%.2f",(loan.getCost() - loan.getTaxes())));
-//				params.put("iva", "$" + String.format("%.2f",loan.getTaxes()));
-//				params.put("total", "$" + String.format("%.2f", loan.getCost()));
-//				params.put("cardPart", "$" + String.format("%.2f", loan.getCardPart()));
-//				params.put("balancePart", "$" + String.format("%.2f", (loan.getCost() - loan.getCardPart())));
+//				params.put("console", fine.getPublicUserGame().getConsole().getName());
+//				params.put("user", fine.getPublicUserGame().getPublicUser().getName() + " " + fine.getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
+//				params.put("status", "rechazado");
+//				params.put("date", sdf.format(fine.getCreationDate()));
+//				params.put("authorizationNumber", "123456789");
+//				params.put("balancePart", "$" + String.format("%.2f", (fine.getBalancePart())));
 //				
 //				mailService.sendMailWihTemplate(levelapMail, "MSGPYC", params);
 				

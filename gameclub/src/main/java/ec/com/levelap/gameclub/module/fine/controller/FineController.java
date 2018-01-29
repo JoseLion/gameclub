@@ -6,6 +6,7 @@ import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -43,12 +44,12 @@ public class FineController {
 	}
 
 	@RequestMapping(value = "notApplyFine", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> save(@RequestBody Fine fineObj, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException {
+	public ResponseEntity<?> save(@RequestBody Fine fineObj, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException, MessagingException {
 		return fineService.save(fineObj, Boolean.FALSE, session, request);
 	}
 
 	@RequestMapping(value = "applyFine", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> saveFineBalance(@RequestBody Fine fineObj, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException {
+	public ResponseEntity<?> saveFineBalance(@RequestBody Fine fineObj, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException, MessagingException {
 		return fineService.save(fineObj, Boolean.TRUE, session, request);
 	}
 

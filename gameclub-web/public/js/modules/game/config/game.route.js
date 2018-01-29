@@ -9,25 +9,25 @@ angular.module('Game').config(function($stateProvider) {
 		templateUrl: 'js/modules/game/view/game.html',
 		data: {displayName: 'GameClub'},
 		metaTags: {
-			title: function(game) {
-				return game.name + " GameClub";
+			title: function(seo) {
+				return seo.name + " GameClub";
 			},
 
-			description: function(game) {
-				return "Juega " + game.name + " pagando menos en GameClub. Si ya lo tienes, alquila tu juego en GameClub y gana dinero. Share and Play"
+			description: function(seo) {
+				return "Juega " + seo.name + " pagando menos en GameClub. Si ya lo tienes, alquila tu juego en GameClub y gana dinero. Share and Play"
 			},
 
-			keywords: function(game) {
-				return game.name.replace(/\s/g, ", ") + ", GameClub, Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC, Consola, Gamer";
+			keywords: function(seo) {
+				return seo.name.replace(/\s/g, ", ") + ", GameClub, Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC, Consola, Gamer";
 			},
 
 			prerender: {
-                statusCode: function(game) {
-                    return game != null ? 200 : 302;
+                statusCode: function(seo) {                	
+                    return seo != null ? 200 : 302;
                 },
 
-                header: function(game, friendlyUrl, $location) {
-                    return game != null ? null : 'Location: ' + $location.$$protocol + "://" + $location.$$host + "/gameclub/game/" + game.id + "/" + friendlyUrl(game.name);
+                header: function(seo, friendlyUrl, $location) {
+                    return seo != null ? null : 'Location: ' + $location.$$protocol + "://" + $location.$$host + "/gameclub/game/" + seo.id + "/" + friendlyUrl(seo.name);
                 }
             }
 		},
@@ -63,6 +63,10 @@ angular.module('Game').config(function($stateProvider) {
 
 			addCardError: function($stateParams) {
 				return $stateParams.error_value;
+			},
+
+			seo: function(openRest, $stateParams) {
+				return openRest("game/findOne/:id").get({id: $stateParams.id}).$promise;
 			}
 		}
 	});

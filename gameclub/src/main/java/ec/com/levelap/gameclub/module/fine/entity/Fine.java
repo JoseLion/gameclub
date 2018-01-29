@@ -50,9 +50,12 @@ public class Fine extends BaseEntity {
 	@JoinColumn(name = "message", foreignKey = @ForeignKey(name = "message_fk"))
 	private Message message;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "public_user_game", foreignKey = @ForeignKey(name = "public_user_game_fk"))
-	private PublicUserGame publicUserGame;
+//	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+//	@JoinColumn(name = "public_user_game", foreignKey = @ForeignKey(name = "public_user_game_fk"))
+//	private PublicUserGame publicUserGame;
+//	
+//	@Column(name = "transaction_id", columnDefinition = "VARCHAR", nullable = true)
+//	private String transactionId;
 
 	@JsonIgnore
 	@Column(name = "amount", nullable = false)
@@ -115,13 +118,21 @@ public class Fine extends BaseEntity {
 		this.message = message;
 	}
 
-	public PublicUserGame getPublicUserGame() {
-		return publicUserGame;
-	}
-
-	public void setPublicUserGame(PublicUserGame publicUserGame) {
-		this.publicUserGame = publicUserGame;
-	}
+//	public PublicUserGame getPublicUserGame() {
+//		return publicUserGame;
+//	}
+//
+//	public void setPublicUserGame(PublicUserGame publicUserGame) {
+//		this.publicUserGame = publicUserGame;
+//	}
+//
+//	public String getTransactionId() {
+//		return transactionId;
+//	}
+//
+//	public void setTransactionId(String transactionId) {
+//		this.transactionId = transactionId;
+//	}
 
 	public byte[] getAmountEnc() {
 		return amountEnc;

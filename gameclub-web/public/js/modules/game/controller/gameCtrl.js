@@ -320,8 +320,11 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     }
 
     $scope.getGameCost = function(cross) {
+        console.log(cross);
         let cost = cross.cost + (cross.shippingCost * 2);
-        return cost + (cost * (feeLoanGamerPercentage/100.0));
+        let fee = cross.cost * feeLoanGamerPercentage / 100.0;
+        let tax = (cost + fee) * taxes; 
+        return cost + fee + tax;
     }
 
     function getInfoPercentage() {

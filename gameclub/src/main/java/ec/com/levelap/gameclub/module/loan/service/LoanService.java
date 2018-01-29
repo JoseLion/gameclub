@@ -669,7 +669,7 @@ public class LoanService {
 			}
 
 			Fine fine = new Fine();
-//			fine.setPublicUserGame(loan.getPublicUserGame());
+			fine.setLoan(loan);
 			fine.setOwner(loan.getPublicUserGame().getPublicUser());
 			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), lenderKey));
 			fine.setDescription(loan.getShippingStatus().getName());
@@ -718,7 +718,7 @@ public class LoanService {
 			}
 
 			Fine fine = new Fine();
-//			fine.setPublicUserGame(loan.getPublicUserGame());
+			fine.setLoan(loan);
 			fine.setOwner(gamer);
 			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), gamerKey));
 			fine.setDescription(loan.getShippingStatus().getName());

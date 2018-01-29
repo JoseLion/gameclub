@@ -96,6 +96,7 @@ public class RestoreService {
 			}
 			
 			Fine fine = new Fine();
+			fine.setLoan(restore.getLoan());
 			fine.setOwner(gamer);
 			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), gamerKey));
 			fine.setDescription(restore.getShippingStatus().getName());
@@ -123,6 +124,7 @@ public class RestoreService {
 			transactionService.getTransactionRepo().save(transaction);
 		} else if (restore.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND)) {
 			Fine fine = new Fine();
+			fine.setLoan(restore.getLoan());
 			fine.setOwner(gamer);
 			fine.setAmountEnc(cryptoService.encrypt(Double.toString(restore.getLoan().getPublicUserGame().getGame().getUploadPayment()), gamerKey));
 			fine.setDescription(restore.getShippingStatus().getName());

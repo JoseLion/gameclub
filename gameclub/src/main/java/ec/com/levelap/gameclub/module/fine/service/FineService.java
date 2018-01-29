@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 import org.apache.commons.io.FileUtils;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,7 +89,9 @@ public class FineService extends BaseService<Fine> {
 				
 				String response = paymentezService.listCurrentUserCards(session);
 				JSONArray jsonArray = new JSONArray(response);
-				paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
+				String responseObject = paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
+				JSONObject json = new JSONObject(responseObject);
+				fine.setTransactionId(json.getString("transaction_id"));
 				
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
 				
@@ -98,16 +101,16 @@ public class FineService extends BaseService<Fine> {
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Map<String, String> params = new HashMap<>();
-//				params.put("name", fine.getOwner().getName());
-//				params.put("game", fine.getPublicUserGame().getGame().getName());
-//				params.put("console", fine.getPublicUserGame().getConsole().getName());
-//				params.put("user", fine.getPublicUserGame().getPublicUser().getName() + " " + fine.getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
-//				params.put("status", "rechazado");
-//				params.put("date", sdf.format(fine.getCreationDate()));
-//				params.put("authorizationNumber", "123456789");
-//				params.put("balancePart", "$" + String.format("%.2f", (fine.getBalancePart())));
-//				
-//				mailService.sendMailWihTemplate(levelapMail, "MSGPYC", params);
+				params.put("name", fine.getOwner().getName());
+				params.put("game", fine.getLoan().getPublicUserGame().getGame().getName());
+				params.put("console", fine.getLoan().getPublicUserGame().getConsole().getName());
+				params.put("user", fine.getLoan().getPublicUserGame().getPublicUser().getName() + " " + fine.getLoan().getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
+				params.put("status", "rechazado");
+				params.put("date", sdf.format(fine.getCreationDate()));
+				params.put("authorizationNumber", fine.getTransactionId());
+				params.put("balancePart", "$" + String.format("%.2f", totalBalance));
+				
+				mailService.sendMailWihTemplate(levelapMail, "MSPYCF", params);
 				
 			} else {
 				fine.setCardPartEnc(null);

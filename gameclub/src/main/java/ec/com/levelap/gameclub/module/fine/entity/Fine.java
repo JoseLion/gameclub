@@ -25,6 +25,7 @@ import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
+import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity
@@ -48,6 +49,10 @@ public class Fine extends BaseEntity {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "message", foreignKey = @ForeignKey(name = "message_fk"))
 	private Message message;
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "public_user_game", foreignKey = @ForeignKey(name = "public_user_game_fk"))
+	private PublicUserGame publicUserGame;
 
 	@JsonIgnore
 	@Column(name = "amount", nullable = false)
@@ -108,6 +113,14 @@ public class Fine extends BaseEntity {
 
 	public void setMessage(Message message) {
 		this.message = message;
+	}
+
+	public PublicUserGame getPublicUserGame() {
+		return publicUserGame;
+	}
+
+	public void setPublicUserGame(PublicUserGame publicUserGame) {
+		this.publicUserGame = publicUserGame;
 	}
 
 	public byte[] getAmountEnc() {

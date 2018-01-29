@@ -233,11 +233,11 @@ public class LoanService {
 				String description = "Préstamo del juego " +
 										loan.getPublicUserGame().getGame().getName() + " durante " + loan.getWeeks()
 										+ " semana(s)";
-//				String response = paymentezService.debitFromCard(session,
-//				request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(),
-//				loan.getTaxes(), description);
-//				JSONObject json = new JSONObject(response);
-//				loan.setTransactionId(json.getString("transaction_id"));
+				String response = paymentezService.debitFromCard(session,
+				request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(),
+				loan.getTaxes(), description);
+				JSONObject json = new JSONObject(response);
+				loan.setTransactionId(json.getString("transaction_id"));
 
 				LevelapMail levelapMail = new LevelapMail();
 				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
@@ -669,6 +669,7 @@ public class LoanService {
 			}
 
 			Fine fine = new Fine();
+//			fine.setPublicUserGame(loan.getPublicUserGame());
 			fine.setOwner(loan.getPublicUserGame().getPublicUser());
 			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), lenderKey));
 			fine.setDescription(loan.getShippingStatus().getName());
@@ -717,6 +718,7 @@ public class LoanService {
 			}
 
 			Fine fine = new Fine();
+//			fine.setPublicUserGame(loan.getPublicUserGame());
 			fine.setOwner(gamer);
 			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), gamerKey));
 			fine.setDescription(loan.getShippingStatus().getName());

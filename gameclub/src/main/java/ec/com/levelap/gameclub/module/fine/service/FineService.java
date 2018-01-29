@@ -81,9 +81,9 @@ public class FineService extends BaseService<Fine> {
 				fine.setCardPartEnc(cryptoService.encrypt(Double.toString(totalBalance), key));
 				fine.setBalancePartEnc(publicUser.getBalance());
 				
-//				String response = paymentezService.listCurrentUserCards(session);
-//				JSONArray jsonArray = new JSONArray(response);
-//				paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
+				String response = paymentezService.listCurrentUserCards(session);
+				JSONArray jsonArray = new JSONArray(response);
+				paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
 				
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
 				

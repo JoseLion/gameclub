@@ -164,7 +164,6 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
     $scope.doFilter = function(filter) {
         currentPage = 0;
         $scope.availableGames = [];
-
         forEach($scope.filters, function(fltr) {
             if (fltr.icon == filter.icon && fltr.active == true) {
                 filter.desc = !filter.desc;
@@ -322,7 +321,9 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
     $scope.getGameCost = function(cross) {
         let cost = cross.cost + (cross.shippingCost * 2);
-        return cost + (cost * (feeLoanGamerPercentage/100.0));
+        let fee = cross.cost * feeLoanGamerPercentage / 100.0;
+        let tax = (cost + fee) * taxes; 
+        return cost + fee + tax;
     }
 
     function getInfoPercentage() {
@@ -389,7 +390,7 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
             desc: activeFilter != null ? activeFilter.desc : true,
             page: currentPage
         };
-
+        
         openRest("game/getAvailableGames").post(filter, function(data) {
             setPagedAvailableGames(data);
         });

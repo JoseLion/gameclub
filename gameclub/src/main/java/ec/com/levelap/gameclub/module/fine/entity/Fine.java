@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ec.com.levelap.base.entity.BaseEntity;
 import ec.com.levelap.cryptography.LevelapCryptography;
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
+import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.utils.Const;
@@ -48,6 +49,13 @@ public class Fine extends BaseEntity {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "message", foreignKey = @ForeignKey(name = "message_fk"))
 	private Message message;
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "loan", foreignKey = @ForeignKey(name = "loan_fk"))
+	private Loan loan;
+	
+	@Column(name = "transaction_id", columnDefinition = "VARCHAR", nullable = true)
+	private String transactionId;
 
 	@JsonIgnore
 	@Column(name = "amount", nullable = false)
@@ -108,6 +116,22 @@ public class Fine extends BaseEntity {
 
 	public void setMessage(Message message) {
 		this.message = message;
+	}
+
+	public Loan getLoan() {
+		return loan;
+	}
+
+	public void setLoan(Loan loan) {
+		this.loan = loan;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
 	}
 
 	public byte[] getAmountEnc() {

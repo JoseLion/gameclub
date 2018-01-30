@@ -332,7 +332,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nombre(s) Destinatario]]></text>
+				<text><![CDATA[Nombre(s) Origen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="482" y="0" width="40" height="65" uuid="9c52a7d7-9c24-493f-8dce-1c84e89f0f9e"/>
@@ -345,7 +345,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Apellido(s) Destinatario]]></text>
+				<text><![CDATA[Apellido(s) Origen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="522" y="0" width="40" height="65" uuid="61b66135-6923-483e-a9b4-2a56c42a25ab"/>
@@ -358,7 +358,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Ciudad Destinatario]]></text>
+				<text><![CDATA[Ciudad Origen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="562" y="0" width="40" height="65" uuid="307d93ab-b189-49bf-9115-b217483a0343"/>
@@ -371,7 +371,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Dirección Destinatario]]></text>
+				<text><![CDATA[Dirección Origen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="602" y="0" width="40" height="65" uuid="9095ac14-b953-40dd-8793-f21343e8ba87"/>
@@ -384,7 +384,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[MAIL Destinatario]]></text>
+				<text><![CDATA[MAIL Origen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="642" y="0" width="40" height="65" uuid="793aa846-c6f9-4b42-8dee-aa93ab6690a1"/>
@@ -397,7 +397,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[N° Cédula Destinatario]]></text>
+				<text><![CDATA[N° Cédula Origen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="682" y="0" width="40" height="65" uuid="81e8dd46-32f2-4752-a863-a70868e8f81f"/>
@@ -410,7 +410,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[N° Teléfono Destinatario]]></text>
+				<text><![CDATA[N° Teléfono Origen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="722" y="0" width="40" height="65" uuid="315391ce-1fb5-4378-bf8b-8b090e7c10b0"/>

@@ -1,4 +1,4 @@
-angular.module('Game').config(function($stateProvider) {
+angular.module('Game').run(['$rootScope', 'MetaTags', runBlock]).config(function($stateProvider) {
 
 	let prefix = 'gameclub.';
 
@@ -31,7 +31,6 @@ angular.module('Game').config(function($stateProvider) {
                 }
             }
 		},
-		controller: 'GameCtrl',
 		resolve: {
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
@@ -68,6 +67,8 @@ angular.module('Game').config(function($stateProvider) {
 			seo: function(openRest, $stateParams) {
 				return openRest("game/findOne/:id").get({id: $stateParams.id}).$promise;
 			}
-		}
+		},
+		
+		controller: 'GameCtrl'
 	});
 });

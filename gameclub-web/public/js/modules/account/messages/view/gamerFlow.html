@@ -1,4 +1,4 @@
-<!-- ************************ BEGIN - GAMER MESSAGE FLOW ************************ -->
+************************ BEGIN - GAMER MESSAGE FLOW ************************ -->
 <div class="date">{{loan.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
 <div class="red-box">
 	<span>Hola {{currentUser.name}},</span>
@@ -169,6 +169,17 @@
 	</form>
 </div>
 
+<div class="date" ng-if="loan.gamerStatusDate">{{loan.lenderStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="red-box medium-box" ng-if="loan.gamerStatusDate">
+	<span>Hola {{currentUser.name}},</span>
+	<br>
+	<br>
+	<span>El envío del juego se ha creado y su estado es: </span><span class="text-black">{{loan.shippingStatus.name}}</span>
+	<div ng-if="loan.restore.shippingNote != null && loan.restore.shippingNote != ''">
+		<span>Observaciones: </span><span class="text-black">{{loan.shippingNote}}</span>
+	</div>
+</div>
+
 <div class="date" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">{{loan.gamerStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
 <div class="red-box" ng-if="loan.shippingStatus.code == Const.code.shippingDelivered">
 	<span>Hola {{currentUser.name}},</span>
@@ -263,6 +274,17 @@
 	<div class="clearfix"></div>
 </div>
 
+<div class="date" ng-if="loan.restore.gamerStatusDate">{{loan.restore.gamerConfirmDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="red-box medium-box" ng-if="loan.restore.gamerStatusDate">
+	<span>Hola {{currentUser.name}},</span>
+	<br>
+	<br>
+	<span>El envío del juego se ha creado y su estado es: </span><span class="text-black">{{loan.restore.shippingStatus.name}}</span>
+	<div ng-if="loan.restore.shippingNote != null && loan.restore.shippingNote != ''">
+		<span>Observaciones: </span><span class="text-black">{{loan.restore.shippingNote}}</span>
+	</div>
+</div>
+
 <div class="date" ng-if="loan.restore.gamerStatusDate && loan.review.gamerReviewDate">{{loan.restore.gamerStatusDate | date: 'dd/MM/yy - HH:mm'}}</div>
 <div class="red-box medium-box" ng-if="loan.restore.gamerStatusDate && loan.review.gamerReviewDate">
 	<span>Hola {{currentUser.name}},</span>
@@ -307,6 +329,6 @@
 	<br>
 	<span>y escribió una opinión:</span>
 	<br>
-	<span class="text-black">{{loan.review.gamerComment}}</span>
+		<textarea validation type="text" class="review" ng-model="loan.review.gamerComment" rows="3" ng-disabled="loan.lenderReviewDate" readonly></textarea>
 </div>
-<!-- ************************ END - GAMER MESSAGE FLOW ************************ -->
+<!-- ************************ END - GAMER MESSAGE FLOW ************************

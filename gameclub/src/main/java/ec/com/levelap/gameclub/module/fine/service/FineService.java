@@ -4,8 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +19,7 @@ import javax.transaction.Transactional;
 import org.apache.commons.io.FileUtils;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +38,8 @@ import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.gameclub.utils.GameClubMailService;
+import ec.com.levelap.mail.entity.LevelapMail;
 
 @Service
 public class FineService extends BaseService<Fine> {
@@ -56,9 +64,12 @@ public class FineService extends BaseService<Fine> {
 	
 	@Autowired
 	private PaymentezService paymentezService;
+	
+	@Autowired
+	private GameClubMailService mailService;
 
 	@Transactional
-	public ResponseEntity<?> save(Fine fine, Boolean isApply, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
+	public ResponseEntity<?> save(Fine fine, Boolean isApply, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException, MessagingException {
 		fine = fineRepo.findOne(fine.getId());
 		fine.setApply(isApply);
 		if (isApply) {
@@ -72,15 +83,35 @@ public class FineService extends BaseService<Fine> {
 			Double totalBalance = Double.parseDouble(cryptoService.decrypt(publicUser.getBalance(), key)) - fine.getAmount();
 			
 			if (totalBalance < 0) {
-				totalBalance = Math.abs(totalBalance);
+				totalBalance = (-1D) * (totalBalance);
 				fine.setCardPartEnc(cryptoService.encrypt(Double.toString(totalBalance), key));
 				fine.setBalancePartEnc(publicUser.getBalance());
 				
 				String response = paymentezService.listCurrentUserCards(session);
 				JSONArray jsonArray = new JSONArray(response);
-				paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), fine.getCardPart(), 0.0, "Multa GameClub - " + fine.getDescription());
+				String responseObject = paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
+				JSONObject json = new JSONObject(responseObject);
+				fine.setTransactionId(json.getString("transaction_id"));
 				
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
+				
+				LevelapMail levelapMail = new LevelapMail();
+				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
+				levelapMail.setRecipentTO(Arrays.asList(fine.getOwner().getUsername()));
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				Map<String, String> params = new HashMap<>();
+				params.put("name", fine.getOwner().getName());
+				params.put("game", fine.getLoan().getPublicUserGame().getGame().getName());
+				params.put("console", fine.getLoan().getPublicUserGame().getConsole().getName());
+				params.put("user", fine.getLoan().getPublicUserGame().getPublicUser().getName() + " " + fine.getLoan().getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
+				params.put("status", "rechazado");
+				params.put("date", sdf.format(fine.getCreationDate()));
+				params.put("authorizationNumber", fine.getTransactionId());
+				params.put("balancePart", "$" + String.format("%.2f", totalBalance));
+				
+				mailService.sendMailWihTemplate(levelapMail, "MSPYCF", params);
+				
 			} else {
 				fine.setCardPartEnc(null);
 				fine.setBalancePartEnc(fine.getAmountEnc());

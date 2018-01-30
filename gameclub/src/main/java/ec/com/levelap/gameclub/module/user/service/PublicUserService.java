@@ -150,6 +150,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 
 	@Transactional
 	public ResponseEntity<?> save(PublicUser publicUser, Boolean sendVerification, HttpServletRequest request) throws ServletException, MalformedURLException {
+		
 		if (sendVerification) {
 			try {
 				URL referrer = new URL(request.getHeader("referer"));
@@ -167,6 +168,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 			PublicUser original = publicUserRepo.findOne(publicUser.getId());
 			publicUser.setPrivateKey(original.getPrivateKey());
 			publicUser.setBalance(original.getBalance());
+			publicUser.setPromoBalance(original.getPromoBalance());
 		}
 		
 		publicUser = publicUserRepo.save(publicUser);
@@ -218,7 +220,6 @@ public class PublicUserService extends BaseService<PublicUser> {
 		
 		if (user.getReferrer() != null && !user.getReferrer().isEmpty()) {
 			PublicUser refferer = publicUserRepo.findByUrlToken(user.getReferrer());
-			
 			if (refferer != null) {
 				Setting setting = settingService.getSettingsRepo().findByCode(Code.SETTING_REFFERED_REWARD);
 				this.addToUserPromoBalance(refferer.getId(), Double.parseDouble(setting.getValue()));

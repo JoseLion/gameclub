@@ -4,6 +4,8 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
         $scope.lenderAverage = data.lenderAverage * 100.0 / 5.0;
         $scope.gamerReviews = data.gamerReviews;
         $scope.lenderReviews = data.lenderReviews;
+
+        console.log(data.reviews);
         setPagedData(data.reviews);
     });
 
@@ -63,6 +65,7 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
         }
 
         angular.extend($scope.reviews, data.content);
+        console.log($scope.reviews, "VERRRR");
         $scope.isLastPage = data.last;
         $scope.page = data.number;
     }

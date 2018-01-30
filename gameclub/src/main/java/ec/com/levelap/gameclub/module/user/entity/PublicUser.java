@@ -21,6 +21,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.io.FileUtils;
 import org.postgresql.geometric.PGpoint;
+import org.springframework.security.core.parameters.DefaultSecurityParameterNameDiscoverer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -485,6 +486,7 @@ public class PublicUser extends BaseEntity {
 			
 			String decryptedBalance = balance != null ? cryptoService.decrypt(balance, key) : "0.0";
 			String decryptedPromo = promoBalance != null ? cryptoService.decrypt(promoBalance, key) : "0.0";
+			
 			shownBalance = Double.parseDouble(decryptedBalance) + Double.parseDouble(decryptedPromo);
 		}
 		

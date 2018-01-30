@@ -83,13 +83,13 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="confirmLender", method=RequestMethod.POST)
-	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException {
+	public ResponseEntity<Loan> confirmLender(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException, MessagingException {
 		loan = loanService.confirmLoan(loan, false, session, request);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="confirmGamer", method=RequestMethod.POST)
-	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException {
+	public ResponseEntity<Loan> confirmGamer(@RequestBody Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException, MessagingException {
 		loan = loanService.confirmLoan(loan, true, session, request);
 		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
 	}

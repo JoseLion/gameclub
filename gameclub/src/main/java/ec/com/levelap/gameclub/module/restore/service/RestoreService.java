@@ -85,18 +85,18 @@ public class RestoreService {
 		FileUtils.writeByteArrayToFile(lenderKey, lender.getPrivateKey());
 		
 		Double subtotal = (restore.getLoan().getPublicUserGame().getCost() * restore.getLoan().getWeeks()) + restore.getLoan().getShippningCost() + restore.getLoan().getFeeGameClub();
-
 		if (restore.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER)) {
 			Setting fineSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_GAMER_DIDNT_DELIVER);
 			Double fineAmount;
-			
+
 			if (fineSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
 				fineAmount = subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0);
 			} else {
-				fineAmount = Double.parseDouble(fineSetting.getValue());
+				fineAmount = subtotal + Double.parseDouble(fineSetting.getValue());
 			}
 			
 			Fine fine = new Fine();
+			fine.setLoan(restore.getLoan());
 			fine.setOwner(gamer);
 			fine.setAmountEnc(cryptoService.encrypt(Double.toString(fineAmount), gamerKey));
 			fine.setDescription(restore.getShippingStatus().getName());
@@ -106,7 +106,8 @@ public class RestoreService {
 			Double rewardAmount;
 			
 			if (rewardSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
-				rewardAmount = restore.getLoan().getPublicUserGame().getCost() * (Double.parseDouble(rewardSetting.getValue()) / 100.0);
+//				rewardAmount = restore.getLoan().getPublicUserGame().getCost() * (Double.parseDouble(rewardSetting.getValue()) / 100.0);
+				rewardAmount = subtotal * (Double.parseDouble(rewardSetting.getValue()) / 100.0);
 			} else {
 				rewardAmount = Double.parseDouble(rewardSetting.getValue());
 			}
@@ -123,10 +124,17 @@ public class RestoreService {
 			transactionService.getTransactionRepo().save(transaction);
 		} else if (restore.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND)) {
 			Fine fine = new Fine();
+			fine.setLoan(restore.getLoan());
 			fine.setOwner(gamer);
 			fine.setAmountEnc(cryptoService.encrypt(Double.toString(restore.getLoan().getPublicUserGame().getGame().getUploadPayment()), gamerKey));
 			fine.setDescription(restore.getShippingStatus().getName());
 			fineService.getFineRepo().save(fine);
+			
+			PublicUserGame publicUserGame = restore.getPublicUserGame();
+			publicUserGame.setIsBorrowed(false);
+			publicUserGame.setStatus(false);
+			publicUserService.getPublicUserGameRepo().save(publicUserGame);
+			restore.setPublicUserGame(publicUserGame);
 		} else if (restore.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
 			PublicUserGame publicUserGame = restore.getPublicUserGame();
 			publicUserGame.setIsBorrowed(false);

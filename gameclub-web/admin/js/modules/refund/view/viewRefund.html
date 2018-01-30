@@ -1,0 +1,52 @@
+<div class="ibox">
+	<div class="ibox-content">
+		<div class="col-md-12 form-group" style="text-align: right;">
+		<button type="button" class="btn btn-w-m btn-primary" ng-click="addSettings()">
+				<i class="fa " style="margin-right: 5px"></i>
+				<span>Buscar Transacción</span>
+			</button>
+	</div>
+	<div class="col-md-12 form-group">
+			<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover" >
+				<col width="20%">
+				<col width="40%">
+				<col width="10%">
+				<!-- <col width="10%">
+				<col width="10%"> -->
+				<thead>
+					<tr>
+						<th>Usuario</th>
+						<th>Motivo</th>
+						<th>Valor</th>
+						<!-- <th>Status</th>
+						<th>Acciones</th> -->
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="refund in refunds">
+
+						<td>{{refund.owner.name}} {{refund.owner.lastName}}</td>
+						<td>{{refund.transaction}}</td>
+						<td>{{refund.amount | currency: '$': 2}}</td>
+						<!-- <td>
+							<span ng-if="fine.apply == null">PENDIENTE</span>
+							<span ng-if="fine.apply == true && fine.wasPayed == false">NO PAGADA</span>
+							<span ng-if="fine.apply == true && fine.wasPayed == true">PAGADA</span>
+							<span ng-if="fine.apply == false && fine.wasPayed == false">NO APLICA COBRO</span>
+						</td> -->
+					    <!-- <td style="text-align: center;">
+							<div ng-if="(fine.apply == null || fine.apply == true) && fine.wasPayed == false">
+								<button type="button" class="btn btn-xs btn-success" ng-click="executeFine(fine)" tooltip="Ejecutar multa">
+									<i class="fa fa-check"></i>
+								</button>
+								<button type="button" class="btn btn-xs btn-primary" ng-click="noExecuteFine(fine)" tooltip="No ejecutar multa">
+									<i class="fa fa-ban"></i>
+								</button>
+							</div>
+						</td> -->
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clearfix"/>
+</div>

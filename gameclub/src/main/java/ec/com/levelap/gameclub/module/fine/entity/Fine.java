@@ -26,7 +26,6 @@ import ec.com.levelap.gameclub.application.ApplicationContextHolder;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.message.entity.Message;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
-import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
 import ec.com.levelap.gameclub.utils.Const;
 
 @Entity

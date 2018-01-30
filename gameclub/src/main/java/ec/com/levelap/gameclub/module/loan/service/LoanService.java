@@ -230,14 +230,14 @@ public class LoanService {
 			}
 
 			if (loan.getCardPart() > 0.0) {
-//				String description = "Préstamo del juego " +
-//										loan.getPublicUserGame().getGame().getName() + " durante " + loan.getWeeks()
-//										+ " semana(s)";
-//				String response = paymentezService.debitFromCard(session,
-//				request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(),
-//				loan.getTaxes(), description);
-//				JSONObject json = new JSONObject(response);
-//				loan.setTransactionId(json.getString("transaction_id"));
+				String description = "Préstamo del juego " +
+										loan.getPublicUserGame().getGame().getName() + " durante " + loan.getWeeks()
+										+ " semana(s)";
+				String response = paymentezService.debitFromCard(session,
+				request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(),
+				loan.getTaxes(), description);
+				JSONObject json = new JSONObject(response);
+				loan.setTransactionId(json.getString("transaction_id"));
 
 				LevelapMail levelapMail = new LevelapMail();
 				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
@@ -257,7 +257,7 @@ public class LoanService {
 					params.put("status", "rechazado");
 				}
 				params.put("date", sdf.format(loan.getGamerStatusDate()));
-//				params.put("authorizationNumber", loan.getTransactionId());
+				params.put("authorizationNumber", loan.getTransactionId());
 				params.put("subtotal", "$" + String.format("%.2f", (loan.getCost() - loan.getTaxes())));
 				params.put("iva", "$" + String.format("%.2f", loan.getTaxes()));
 				params.put("total", "$" + String.format("%.2f", loan.getCost()));

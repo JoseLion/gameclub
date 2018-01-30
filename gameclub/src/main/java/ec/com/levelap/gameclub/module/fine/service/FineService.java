@@ -87,11 +87,11 @@ public class FineService extends BaseService<Fine> {
 				fine.setCardPartEnc(cryptoService.encrypt(Double.toString(totalBalance), key));
 				fine.setBalancePartEnc(publicUser.getBalance());
 				
-//				String response = paymentezService.listCurrentUserCards(session);
-//				JSONArray jsonArray = new JSONArray(response);
-//				String responseObject = paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
-//				JSONObject json = new JSONObject(responseObject);
-//				fine.setTransactionId(json.getString("transaction_id"));
+				String response = paymentezService.listCurrentUserCards(session);
+				JSONArray jsonArray = new JSONArray(response);
+				String responseObject = paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
+				JSONObject json = new JSONObject(responseObject);
+				fine.setTransactionId(json.getString("transaction_id"));
 				
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
 				
@@ -107,8 +107,7 @@ public class FineService extends BaseService<Fine> {
 				params.put("user", fine.getLoan().getPublicUserGame().getPublicUser().getName() + " " + fine.getLoan().getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
 				params.put("status", "rechazado");
 				params.put("date", sdf.format(fine.getCreationDate()));
-//				params.put("authorizationNumber", fine.getTransactionId());
-				params.put("authorizationNumber", "0123456789");
+				params.put("authorizationNumber", fine.getTransactionId());
 				params.put("balancePart", "$" + String.format("%.2f", totalBalance));
 				
 				mailService.sendMailWihTemplate(levelapMail, "MSPYCF", params);

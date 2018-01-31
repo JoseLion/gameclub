@@ -67,6 +67,12 @@ public class Transaction extends BaseEntity {
 	@Transient
 	private Double debitCard;
 	
+	@Column(name="cc_transaction", nullable=true)
+	private String ccTransaction;
+	
+	@Column(name="status_refund", columnDefinition = "VARCHAR DEFAULT 'DEBITADO'")
+	private String statusRefund;
+	
 	public Transaction() {
 	}
 
@@ -198,4 +204,21 @@ public class Transaction extends BaseEntity {
 	public void setDebitCard(Double debitCard) {
 		this.debitCard = debitCard;
 	}
+
+	public String getCcTransaction() {
+		return ccTransaction;
+	}
+
+	public void setCcTransaction(String ccTransaction) {
+		this.ccTransaction = ccTransaction;
+	}
+
+	public String getStatusRefund() {
+		return statusRefund;
+	}
+
+	public void setStatusRefund(String statusRefund) {
+		this.statusRefund = statusRefund;
+	}
+	
 }

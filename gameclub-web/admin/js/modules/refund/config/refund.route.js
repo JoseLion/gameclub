@@ -14,8 +14,8 @@ angular.module("Refund").config(function($stateProvider){
 					files: ['js/modules/refund/controller/viewRefundCtrl.js']
 				}]);
 			},
-			refunds: function(rest){
-				return rest("refund/findRefunds", true).post(function(data){
+			transactions: function(rest){
+				return rest("refund/findRefunds").post(function(data){
 					return data;
 				});
 			}

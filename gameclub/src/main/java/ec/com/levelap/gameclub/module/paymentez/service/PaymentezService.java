@@ -75,20 +75,20 @@ public class PaymentezService {
 		return response.getStatusCode();
 	}
 	
-	public String debitFromCard(HttpSession session, String ipAddress, String cardReference, Double amount, Double taxes, String description) throws ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, RestClientException, URISyntaxException {
+	public String debitFromCard(HttpSession session, String ipAddress, String cardReference, Double amount, Double taxes, String description, PublicUser publicUser) throws ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, RestClientException, URISyntaxException {
 		MessageDigest messageDigest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_256);
-		PublicUser currentUser = publicUserService.getCurrentUser();
+		PublicUser currentUser = publicUser;
 		Date today = new Date();
 		String plainText = "application_code=" + APP_CODE +
 				"&card_reference=" + cardReference +
 				"&dev_reference=" + currentUser.getId() + "-" + cardReference + "-" + today.getTime() +
 				"&email=" + URLEncoder.encode(currentUser.getUsername(), StandardCharsets.UTF_8.name()) +
 				"&ip_address=" + ipAddress +
-				"&product_amount=" + String.format("%1.2f", amount.doubleValue()) +
+				"&product_amount=" + String.format("%1.2f", amount.doubleValue()).replaceAll(",", ".") +
 				"&product_description=" + URLEncoder.encode(description, StandardCharsets.UTF_8.name()) +
 				"&session_id=" + session.getId() +
 				"&uid=" + currentUser.getId() +
-				"&vat=" + String.format("%1.2f", taxes.doubleValue()) +
+				"&vat=" + String.format("%1.2f", taxes.doubleValue()).replaceAll(",", ".") +
 				"&" + today.getTime() +
 				"&" + APP_KEY;
 		messageDigest.update(plainText.getBytes(StandardCharsets.UTF_8));
@@ -101,13 +101,37 @@ public class PaymentezService {
 				"&dev_reference=" + currentUser.getId() + "-" + cardReference + "-" + today.getTime() +
 				"&email=" + URLEncoder.encode(currentUser.getUsername(), StandardCharsets.UTF_8.name()) +
 				"&ip_address=" + ipAddress +
-				"&product_amount=" + String.format("%1.2f", amount.doubleValue()) +
+				"&product_amount=" + String.format("%1.2f", amount.doubleValue()).replaceAll(",", ".") +
 				"&product_description=" + URLEncoder.encode(description, StandardCharsets.UTF_8.name()) +
 				"&session_id=" + session.getId() +
 				"&uid=" + currentUser.getId() +
-				"&vat=" + String.format("%1.2f", taxes.doubleValue()) +
+				"&vat=" + String.format("%1.2f", taxes.doubleValue()).replaceAll(",", ".") +
 				"&buyer_fiscal_number=" + currentUser.getDocument() +
 				"&buyer_phone=" + currentUser.getContactPhone() +
+				"&auth_timestamp=" + today.getTime() +
+				"&auth_token=" + token;
+		System.out.println(url);
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.postForEntity(new URI(url), null, String.class);
+		return response.getBody();
+	}
+	
+	public String refund(HttpSession session, String transactionId) throws ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, RestClientException, URISyntaxException{
+		MessageDigest messageDigest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_256);
+		Date today = new Date();
+		
+		String plainText = "application_code=" + APP_CODE +
+				"&transaction_id=" + transactionId +
+				"&" + today.getTime() +
+				"&" + APP_KEY;
+		
+		messageDigest.update(plainText.getBytes(StandardCharsets.UTF_8));
+		byte[] digestToken = messageDigest.digest();
+		String token = String.format("%064x", new BigInteger(1, digestToken));
+		
+		String url = BASE_URL + "/api/cc/refund" +
+				"?application_code=" + APP_CODE +
+				"&transaction_id=" + transactionId +
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
 		

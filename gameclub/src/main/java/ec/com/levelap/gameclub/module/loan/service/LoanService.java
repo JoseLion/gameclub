@@ -48,7 +48,6 @@ import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
-import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
@@ -67,9 +66,6 @@ public class LoanService {
 
 	@Autowired
 	private PublicUserService publicUserService;
-
-	@Autowired
-	private PublicUserGameRepo publicUserGameRepo;
 
 	@Autowired
 	private CatalogService catalogService;
@@ -235,10 +231,9 @@ public class LoanService {
 										+ " semana(s)";
 				String response = paymentezService.debitFromCard(session,
 				request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(),
-				loan.getTaxes(), description);
+				loan.getTaxes(), description, gamer);
 				JSONObject json = new JSONObject(response);
 				loan.setTransactionId(json.getString("transaction_id"));
-
 				LevelapMail levelapMail = new LevelapMail();
 				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
 				levelapMail.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
@@ -276,6 +271,10 @@ public class LoanService {
 			Transaction transaction = new Transaction(currentUser, "JUGASTE",
 					loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(),
 					loan.getWeeks(), null, loan.getBalancePartEnc(), loan.getCardPartEnc());
+			if(loan.getTransactionId() != null) {
+				transaction.setCcTransaction(loan.getTransactionId());
+				transaction.setStatusRefund("DEBITADO");
+			}
 			transactionService.getTransactionRepo().save(transaction);
 
 			if (loan.getGamer().getReferrer() != null && !loan.getGamer().getReferrer().isEmpty()) {
@@ -710,6 +709,7 @@ public class LoanService {
 		} else if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_GAMER_DIDNT_RECEIVE)) {
 			Setting fineSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_GAMER_DIDNT_RECEIVE);
 			Double fineAmount;
+			String idTransaction = "";
 
 			if (fineSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
 				fineAmount = subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0);
@@ -740,8 +740,11 @@ public class LoanService {
 				String description = "Retorno por préstamo cancelado";
 				JSONArray cardList = new JSONArray(paymentezService.listCardsOfUser(lender, session));
 				JSONObject card = cardList.getJSONObject(0);
-				paymentezService.debitFromCard(session, request.getRemoteAddr(), card.getString("card_reference"),
-						Math.abs(lenderDiff), 0.0, description);
+				String response = paymentezService.debitFromCard(session, request.getRemoteAddr(), card.getString("card_reference"),
+						Math.abs(lenderDiff), 0.0, description,lender);
+				JSONObject json = new JSONObject(response);
+				idTransaction = json.getString("transaction_id");
+				
 			} else {
 				publicUserService.substractFromUserBalance(lender.getId(), lenderReturn);
 			}
@@ -775,8 +778,9 @@ public class LoanService {
 
 			if (lenderDiff < 0.0) {
 				lenderTransaction.setDebitBalanceEnc(lender.getBalance());
-				lenderTransaction
-						.setDebitCardEnc(cryptoService.encrypt(Double.toString(Math.abs(lenderDiff)), lenderKey));
+				lenderTransaction.setDebitCardEnc(cryptoService.encrypt(Double.toString(Math.abs(lenderDiff)), lenderKey));
+				lenderTransaction.setCcTransaction(idTransaction);
+				lenderTransaction.setStatusRefund("DEBITADO");
 			} else {
 				lenderTransaction.setDebitBalanceEnc(cryptoService.encrypt(Double.toString(lenderReturn), lenderKey));
 			}

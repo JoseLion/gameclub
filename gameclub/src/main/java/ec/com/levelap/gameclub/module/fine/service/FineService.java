@@ -89,7 +89,7 @@ public class FineService extends BaseService<Fine> {
 				
 				String response = paymentezService.listCurrentUserCards(session);
 				JSONArray jsonArray = new JSONArray(response);
-				String responseObject = paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance/*fine.getCardPart()*/, 0.0, "Multa GameClub - " + fine.getDescription());
+				String responseObject = paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance, 0.0, "Multa GameClub - " + fine.getDescription(), publicUser);
 				JSONObject json = new JSONObject(responseObject);
 				fine.setTransactionId(json.getString("transaction_id"));
 				
@@ -120,6 +120,10 @@ public class FineService extends BaseService<Fine> {
 
 			Transaction transaction = new Transaction(publicUser, "MULTA", "-", "-", 0, null, fine.getBalancePartEnc(),
 					fine.getCardPartEnc());
+			if(fine.getTransactionId() != null) {
+				transaction.setCcTransaction(fine.getTransactionId());
+				transaction.setStatusRefund("DEBITADO");
+			}
 			transactionService.getTransactionRepo().save(transaction);
 
 			Message message = new Message();

@@ -160,7 +160,7 @@ public class WelcomeKitService {
 
 		if (amountCard > 0) {
 			String description = "Shipping Kits de GameClub (" + shippingKit.getQuantity() + ")";
-			String response = paymentezService.debitFromCard(session, request.getRemoteAddr(), shippingKit.getCardReference(), amountCard, 0.0, description);
+			String response = paymentezService.debitFromCard(session, request.getRemoteAddr(), shippingKit.getCardReference(), amountCard, 0.0, description, publicUser);
 			JSONObject json = new JSONObject(response);
 			shippingKit.setTransactionId(json.getString("transaction_id"));
 		}
@@ -186,6 +186,10 @@ public class WelcomeKitService {
 				null,
 				shippingKit.getAmountBalance(),
 				shippingKit.getAmountCard());
+		if(shippingKit.getTransactionId() != null) {
+			transaction.setCcTransaction(shippingKit.getTransactionId());
+			transaction.setStatusRefund("DEBITADO");
+		}
 		transactionRepo.save(transaction);
 
 		return welcomeKitRepo.findById(shippingKit.getId());

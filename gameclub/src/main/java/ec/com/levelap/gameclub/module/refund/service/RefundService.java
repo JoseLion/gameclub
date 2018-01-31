@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
 import ec.com.levelap.base.service.BaseService;
+import ec.com.levelap.gameclub.module.paymentez.service.PaymentezService;
 import ec.com.levelap.gameclub.module.refund.repository.RefundRepo;
 import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 
@@ -30,18 +32,25 @@ public class RefundService extends BaseService<Transaction>{
 	@Autowired
 	private RefundRepo refundRepo;
 	
+	@Autowired
+	private PaymentezService paymentezService;
+	
 	public ResponseEntity<?> save(Transaction transaction, Boolean isApply, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException, MessagingException{
 		
+		String response = paymentezService.refund(session, transaction.getCcTransaction());
+		
+		JSONObject json = new JSONObject(response);
+		if(json.getString("status").equals("success")) {
+			transaction.setStatusRefund("ACREDITADO");
+		}
+		
+		transaction = refundRepo.save(transaction);
 		
 		return new ResponseEntity<>(transaction, HttpStatus.OK);
 	}
 
 	public RefundRepo getRefundRepo() {
 		return refundRepo;
-	}
-
-	public void setRefundRepo(RefundRepo refundRepo) {
-		this.refundRepo = refundRepo;
 	}
 	
 	

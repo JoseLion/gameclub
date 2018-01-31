@@ -34,7 +34,7 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 				"(:status IS NULL OR g.status=:status) AND " +
 				"(:console IS NULL OR cn.console=:console) AND " +
 				"(:category IS NULL OR ct.category=:category) " +
-			"ORDER BY g.name DESC, g.releaseDate DESC")
+			"ORDER BY g.releaseDate DESC, g.name ASC")
 	public Page<GameLite> findGames(
 			@Param("name") String name,
 			@Param("releaseStart") Date releaseStart,

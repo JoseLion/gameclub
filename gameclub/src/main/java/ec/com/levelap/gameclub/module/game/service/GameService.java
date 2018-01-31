@@ -684,16 +684,12 @@ public class GameService extends BaseService<Game> {
 	}
 	
 	private int getLastRow(XSSFSheet sheet) {
-		int last = 0;
-		
-		for (int i = 0; i < sheet.getLastRowNum(); i++) {
-			if (sheet.getRow(i).getCell(1).getRawValue() == null || sheet.getRow(i).getCell(1).getRawValue().isEmpty()) {
-				last = i-1;
-				break;
-			}
+		int i = 0;
+		while (sheet.getRow(i) != null && sheet.getRow(i).getCell(0) != null && sheet.getRow(i).getCell(0).getRawValue() != null && !sheet.getRow(i).getCell(0).getRawValue().isEmpty()) {
+			i++;
 		}
 		
-		return last;
+		return i-1;
 	}
 	
 	@Transactional

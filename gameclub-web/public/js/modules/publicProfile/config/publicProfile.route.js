@@ -10,8 +10,8 @@ angular.module('PublicProfile').config(function($stateProvider) {
 		templateUrl: 'js/modules/publicProfile/view/publicProfile.html',
 		data: {displayName: 'GameClub'},
 		metaTags: {
-			title: function(user) {
-				return user.name + " " + user.lastName.substring(0, 1).toUpperCase() + " GameClub";
+			title: function(seo) {
+				return seo.name + " " + seo.lastName.substring(0, 1).toUpperCase() + " GameClub";
 			},
 
 			description: 'GameClub ¡La única plataforma gamer del Ecuador! Alquila tus Juegos, Gana Dinero, Juega más pagando menos. Share and Play',
@@ -19,12 +19,12 @@ angular.module('PublicProfile').config(function($stateProvider) {
 			keywords: 'Alquila, Videojuegos, PS4, Xbox, Nintendo, Juegos Nuevos, Juegos, PC,Consola, Gamer',
 
 			prerender: {
-                statusCode: function(user) {
-                    return user != null ? 200 : 302;
+                statusCode: function(seo) {
+                    return seo != null ? 200 : 302;
                 },
 
-                header: function(user, friendlyUrl, $location) {
-                    return user != null ? null : 'Location: ' + $location.$$protocol + "://" + $location.$$host + "/gameclub/publicProfile/" + user.id + "/" + friendlyUrl(user.name + ' ' + user.lastName.substring(0, 1));
+                header: function(seo, friendlyUrl, $location) {
+                    return seo != null ? null : 'Location: ' + $location.$$protocol + "://" + $location.$$host + "/gameclub/publicProfile/" + seo.id + "/" + friendlyUrl(seo.name + ' ' + seo.lastName.substring(0, 1));
                 }
             }
 		},
@@ -43,8 +43,11 @@ angular.module('PublicProfile').config(function($stateProvider) {
 
 			reviews: function(rest, $stateParams) {
 				return rest("review/getReviewsOfUser/:id/:page").get({id: $stateParams.id, page: 0});
+			},
+
+			seo: function(openRest, $stateParams) {
+				return openRest("publicUser/findOne/:id").get({id: $stateParams.id}).$promise;
 			}
 		}
 	});
-
 });

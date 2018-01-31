@@ -90,11 +90,11 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
         templateUrl: baseSrc.concat('view/blogDetail.html'),
         data: {displayName: 'Blog'},
         metaTags: {
-            title: function(article) {
-                return article.title;
+            title: function(seo) {
+                return seo.title;
             },
 
-            description: function(article) {
+            description: function(seo) {
                 let maxWords = function(value, max) {
                     if (!value) {
                         return '';
@@ -121,26 +121,26 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
                     return value;
                 }
 
-                return maxWords(article.summary.replace(/\r?\n|\r/g, ' ').replace(/"/g, "'"), 150);
+                return maxWords(seo.summary.replace(/\r?\n|\r/g, ' ').replace(/"/g, "'"), 150);
             },
 
-            keywords: function(article) {
-                return article.keywords;
+            keywords: function(seo) {
+                return seo.keywords;
             },
 
             properties: {
-                'og:title': function(article) {
-                    return article.title;
+                'og:title': function(seo) {
+                    return seo.title;
                 }
             },
 
             prerender: {
-                statusCode: function(article) {
-                    return article != null ? 200 : 302;
+                statusCode: function(seo) {
+                    return seo != null ? 200 : 302;
                 },
 
-                header: function(article, friendlyUrl, $location) {
-                    return article != null ? null : 'Location: ' + $location.$$protocol + "://" + $location.$$host + "/gameclub/blog/detail/" + article.id + "/" + friendlyUrl(article.title);
+                header: function(seo, friendlyUrl, $location) {
+                    return seo != null ? null : 'Location: ' + $location.$$protocol + "://" + $location.$$host + "/gameclub/blog/detail/" + seo.id + "/" + friendlyUrl(seo.title);
                 }
             }
         },
@@ -161,6 +161,10 @@ angular.module('LevelapBlog', []).config(function($stateProvider) {
 
             comments: function($stateParams, openRest) {
                 return openRest("levelapBlog/getCommentsOf/:articleId/:page").get({articleId: $stateParams.id, page: 0});
+            },
+
+            seo: function($stateParams, openRest) {
+                return openRest("levelapBlog/findOne/:id").get({id: $stateParams.id}).$promise;
             }
         }
     })

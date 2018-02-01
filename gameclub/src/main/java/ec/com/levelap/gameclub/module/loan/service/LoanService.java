@@ -48,7 +48,6 @@ import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGame;
-import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
@@ -67,9 +66,6 @@ public class LoanService {
 
 	@Autowired
 	private PublicUserService publicUserService;
-
-	@Autowired
-	private PublicUserGameRepo publicUserGameRepo;
 
 	@Autowired
 	private CatalogService catalogService;
@@ -641,8 +637,7 @@ public class LoanService {
 	}
 
 	@Transactional
-	private void createFines(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException,
-			IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
+	private void createFines(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
 
 		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
 		// byte[] keyEncriptGamer = gamer.getPrivateKey();

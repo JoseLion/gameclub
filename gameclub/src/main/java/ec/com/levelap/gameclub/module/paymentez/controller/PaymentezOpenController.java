@@ -16,7 +16,6 @@ public class PaymentezOpenController {
 	
 	@RequestMapping(value="callback", method=RequestMethod.POST)
 	public ResponseEntity<?> callback(@RequestBody Object response) throws ServletException {
-		System.out.println("RESPONSE: " + (String)response);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

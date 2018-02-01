@@ -159,7 +159,6 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 
 	$scope.getReturnDate = function(loan) {
 		let date;
-		console.log(loan);
 		if(loan.deliveryDate == null){
 			date = new Date(loan.creationDate);
 			date.setDate(date.getDate() + (7*loan.weeks));
@@ -242,9 +241,6 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 	$scope.setWelcomeKitTracking = function(kit) {
 		$uibModal.open(getTrackingModal(null, null, kit)).result.then(function(data) {
 			let index = $scope.welcomeKits.indexOf(kit);
-			console.log($scope.welcomeKits, index)
-			console.log(kit)
-			console.log(data)
 			$scope.welcomeKits[index] = data;
 		});
 	}

@@ -106,7 +106,6 @@ public class RestoreService {
 			Double rewardAmount;
 			
 			if (rewardSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
-//				rewardAmount = restore.getLoan().getPublicUserGame().getCost() * (Double.parseDouble(rewardSetting.getValue()) / 100.0);
 				rewardAmount = subtotal * (Double.parseDouble(rewardSetting.getValue()) / 100.0);
 			} else {
 				rewardAmount = Double.parseDouble(rewardSetting.getValue());

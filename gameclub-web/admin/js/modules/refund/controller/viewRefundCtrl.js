@@ -32,13 +32,12 @@ angular.module("Refund").controller('ViewRefundCtrl',function($scope, $rootScope
 		if ($scope.search.catalog != null) {
 			$scope.search.catalogId = $scope.search.catalog.id;
 		}
-		console.log($scope.search);
 		if($scope.search.statusRefund){
 			$scope.search.statusRefund = 'ACREDITADO';
 		} else {
 			$scope.search.statusRefund = 'DEBITADO';
 		}
-		console.log($scope.search);
+		
 		rest("refund/findRefound").post($scope.search, function(data) {
 			setPagedData(data);
 		});

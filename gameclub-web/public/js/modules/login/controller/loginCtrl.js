@@ -249,8 +249,6 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 										files: ['js/modules/core/modals/changePasswordCtrl.js']
 									}]);
 								}}});
-							console.log("Lanzo modal");
-							// let modal = changePassword();
 
 							modal.result.then(function(userData) {
 								$rootScope.currentUser = userData;

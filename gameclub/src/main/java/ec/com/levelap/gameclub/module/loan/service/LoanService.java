@@ -643,13 +643,10 @@ public class LoanService {
 	private void createFines(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
 
 		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
-		// byte[] keyEncriptGamer = gamer.getPrivateKey();
 		File gamerKey = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(gamerKey, gamer.getPrivateKey());
 
-		PublicUser lender = publicUserService.getPublicUserRepo()
-				.findOne(loan.getPublicUserGame().getPublicUser().getId());
-		// byte[] keyEncriptLender = lender.getPrivateKey();
+		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
 		File lenderKey = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(lenderKey, lender.getPrivateKey());
 

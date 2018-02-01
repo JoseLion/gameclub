@@ -110,7 +110,7 @@ public class PaymentezService {
 				"&buyer_phone=" + currentUser.getContactPhone() +
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
-		System.out.println(url);
+		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.postForEntity(new URI(url), null, String.class);
 		return response.getBody();

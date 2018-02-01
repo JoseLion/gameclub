@@ -28,9 +28,7 @@ angular.module('Reports').controller('LogisticsKitsCtrl', function($scope, logis
 	});
 
 	$scope.find = function() {
-		console.log("Entra");
 		rest("report/logisticsKits/find").post($scope.search, function(data) {
-			console.log(data);
 			setPagedData(data);
 		});
 	}

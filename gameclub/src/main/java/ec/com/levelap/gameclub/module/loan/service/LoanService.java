@@ -640,8 +640,7 @@ public class LoanService {
 	}
 
 	@Transactional
-	private void createFines(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException,
-			IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
+	private void createFines(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
 
 		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
 		// byte[] keyEncriptGamer = gamer.getPrivateKey();

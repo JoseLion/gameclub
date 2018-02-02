@@ -163,6 +163,7 @@ public class WelcomeKitService {
 			String response = paymentezService.debitFromCard(session, request.getRemoteAddr(), shippingKit.getCardReference(), amountCard, 0.0, description, publicUser);
 			JSONObject json = new JSONObject(response);
 			shippingKit.setTransactionId(json.getString("transaction_id"));
+			System.out.println("is transaccion: " + json.getString("transaction_id"));
 		}
 
 		Catalog shippingStatus = catalogRepo.findByCode(Code.SHIPPING_DELIVERED);

@@ -89,6 +89,9 @@ public class WelcomeKit extends BaseEntity {
 	@Column(name="transaction_id", columnDefinition="VARCHAR")
 	private String transactionId;
 	
+	@Column(name = "auth_code", columnDefinition = "VARCHAR")
+	private String authCode;
+	
 	@Column(columnDefinition="INTEGER DEFAULT 0")
 	private Integer quantity = 0;
 
@@ -246,6 +249,14 @@ public class WelcomeKit extends BaseEntity {
 
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
+	}
+
+	public String getAuthCode() {
+		return authCode;
+	}
+
+	public void setAuthCode(String authCode) {
+		this.authCode = authCode;
 	}
 
 	public Integer getQuantity() {

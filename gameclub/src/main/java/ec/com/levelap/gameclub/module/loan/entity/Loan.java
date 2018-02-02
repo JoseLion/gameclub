@@ -127,6 +127,9 @@ public class Loan extends BaseEntity {
 	
 	@Column(name = "transaction_id", columnDefinition = "VARCHAR")
 	private String transactionId;
+	
+	@Column(name = "auth_code", columnDefinition = "VARCHAR")
+	private String authCode;
 
 	@Column(name = "was_accepted", columnDefinition = "BOOLEAN DEFAULT NULL")
 	private Boolean wasAccepted;
@@ -278,6 +281,14 @@ public class Loan extends BaseEntity {
 
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
+	}
+
+	public String getAuthCode() {
+		return authCode;
+	}
+
+	public void setAuthCode(String authCode) {
+		this.authCode = authCode;
 	}
 
 	public Boolean getWasAccepted() {

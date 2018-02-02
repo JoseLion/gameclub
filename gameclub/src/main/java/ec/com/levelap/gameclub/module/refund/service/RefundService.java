@@ -37,21 +37,22 @@ public class RefundService extends BaseService<Transaction>{
 	
 	public ResponseEntity<?> save(Transaction transaction, Boolean isApply, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException, MessagingException{
 		
-		String response = paymentezService.refund(session, transaction.getCcTransaction());
+		Transaction transactionTmp = refundRepo.findOne(transaction.getId());
+		
+		String response = paymentezService.refund(session, transactionTmp.getCcTransaction());
 		
 		JSONObject json = new JSONObject(response);
 		if(json.getString("status").equals("success")) {
-			transaction.setStatusRefund("ACREDITADO");
+			transactionTmp.setStatusRefund("ACREDITADO");
 		}
 		
-		transaction = refundRepo.save(transaction);
+		transactionTmp = refundRepo.save(transactionTmp);
 		
-		return new ResponseEntity<>(transaction, HttpStatus.OK);
+		return new ResponseEntity<>(transactionTmp, HttpStatus.OK);
 	}
 
 	public RefundRepo getRefundRepo() {
 		return refundRepo;
 	}
-	
 	
 }

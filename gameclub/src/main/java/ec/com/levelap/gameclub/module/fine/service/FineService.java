@@ -95,22 +95,22 @@ public class FineService extends BaseService<Fine> {
 				
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
 				
-				LevelapMail levelapMail = new LevelapMail();
-				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
-				levelapMail.setRecipentTO(Arrays.asList(fine.getOwner().getUsername()));
-				
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				Map<String, String> params = new HashMap<>();
-				params.put("name", fine.getOwner().getName());
-				params.put("game", fine.getLoan().getPublicUserGame().getGame().getName());
-				params.put("console", fine.getLoan().getPublicUserGame().getConsole().getName());
-				params.put("user", fine.getLoan().getPublicUserGame().getPublicUser().getName() + " " + fine.getLoan().getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
-				params.put("status", "rechazado");
-				params.put("date", sdf.format(fine.getCreationDate()));
-				params.put("authorizationNumber", fine.getTransactionId());
-				params.put("balancePart", "$" + String.format("%.2f", totalBalance));
-				
-				mailService.sendMailWihTemplate(levelapMail, "MSPYCF", params);
+//				LevelapMail levelapMail = new LevelapMail();
+//				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
+//				levelapMail.setRecipentTO(Arrays.asList(fine.getOwner().getUsername()));
+//				
+//				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//				Map<String, String> params = new HashMap<>();
+//				params.put("name", fine.getOwner().getName());
+//				params.put("game", fine.getLoan().getPublicUserGame().getGame().getName());
+//				params.put("console", fine.getLoan().getPublicUserGame().getConsole().getName());
+//				params.put("user", fine.getLoan().getPublicUserGame().getPublicUser().getName() + " " + fine.getLoan().getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
+//				params.put("status", "rechazado");
+//				params.put("date", sdf.format(fine.getCreationDate()));
+//				params.put("authorizationNumber", fine.getTransactionId());
+//				params.put("balancePart", "$" + String.format("%.2f", totalBalance));
+//				
+//				mailService.sendMailWihTemplate(levelapMail, "MSPYCF", params);
 				
 			} else {
 				fine.setCardPartEnc(null);

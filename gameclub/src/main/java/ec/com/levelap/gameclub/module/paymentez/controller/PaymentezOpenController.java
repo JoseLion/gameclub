@@ -20,6 +20,7 @@ public class PaymentezOpenController {
 	@RequestMapping(value="callback", method=RequestMethod.POST)
 	public ResponseEntity<?> callback(@RequestBody Object response) throws ServletException, JSONException {
 		
+		System.out.println("Ingresa al call back: ");
 		JSONObject json = new JSONObject((String) response);
 		
 		System.out.println("Transaction_Id: " + json.getString("transaction_id"));

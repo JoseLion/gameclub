@@ -70,7 +70,7 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 			"ORDER BY g.releaseDate DESC, g.name ASC")
 	public Page<GameOpen> findGamesOpen(@Param("name") String name, @Param("categoryId") Long categoryId, @Param("consoleId") Long consoleId, Pageable page);
 	
-	public List<GameOpen> findByStatusIsTrueAndCategoriesCategoryIdOrderByName(Long categoryId);
+	public List<GameOpen> findByStatusIsTrueAndCategoriesCategoryIdOrderByReleaseDateDescNameAsc(Long categoryId);
 	
 	@Query("SELECT DISTINCT g.name FROM Game g WHERE g.status=TRUE AND UPPER(g.name) LIKE '%' || UPPER(?1) || '%'")
 	public List<String> findAutocomplete(String name);
@@ -94,10 +94,10 @@ public interface GameRepo extends JpaRepository<Game, Long> {
 				"g.status=TRUE AND " +
 				"(gm.game=g AND m.name='" + Const.RATING_MAGAZINE + "') " +
 				"GROUP BY g, gm, r, c, d " +
-			"ORDER BY COUNT(g) DESC")
+			"ORDER BY COUNT(g) DESC, g.releaseDate DESC, g.name ASC")
 	public Page<GameOpen> findMostPlayed(Pageable page);
 	
-	public Page<GameOpen> findByStatusIsTrueOrderByName(Pageable page);
+	public Page<GameOpen> findByStatusIsTrueOrderByReleaseDateDescNameAsc(Pageable page);
 	
 	@Query("SELECT s.value FROM Setting s WHERE s.code='" + Code.SETTING_NATIONALIZACION + "'")
 	public String priceChartinNationalitation();

@@ -35,6 +35,7 @@ angular.module('Game').run(['$rootScope', 'MetaTags', runBlock]).config(function
 			loadPlugin: function($ocLazyLoad) {
 				return $ocLazyLoad.load([{
 					name: 'Game',
+					series: true,
 					files: ['js/modules/game/controller/gameCtrl.js', 'js/modules/game/style/game.less', 'js/modules/game/style/game.responsive.less']
 				}]);
 			},

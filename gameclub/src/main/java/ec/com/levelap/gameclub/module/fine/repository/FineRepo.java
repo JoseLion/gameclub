@@ -30,4 +30,6 @@ public interface FineRepo extends JpaRepository<Fine, Long>{
 	
 	@Query("SELECT f FROM Fine f WHERE f.owner=:owner")
 	public List<Fine> findFinesMessages(@Param("owner") PublicUser owner);
+	
+	public Fine findByTransactionId(String transactionId);
 }

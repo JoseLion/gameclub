@@ -77,6 +77,9 @@ public interface WelcomeKitRepo extends JpaRepository<WelcomeKit, Long> {
 			@Param("shippingStatus") Catalog shippingStatus,
 			Pageable page);
 	
+	@Query("SELECT wk FROM WelcomeKit wk WHERE wk.transactionId=:transactionId")
+	public WelcomeKit findByTransactionId(String transactionId);
+	
 	public List<WelcomeKit> findByMessageIdOrderByCreationDateDesc(Long messageId);
 	
 	public WelcomeKit findByMessageId(Long messageId);

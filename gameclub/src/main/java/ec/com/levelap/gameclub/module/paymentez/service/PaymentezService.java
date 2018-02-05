@@ -1,15 +1,22 @@
 package ec.com.levelap.gameclub.module.paymentez.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
@@ -22,8 +29,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import ec.com.levelap.gameclub.module.fine.entity.Fine;
+import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
+import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
+import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.gameclub.utils.GameClubMailService;
+import ec.com.levelap.mail.entity.LevelapMail;
 
 @Service
 public class PaymentezService {
@@ -38,6 +51,9 @@ public class PaymentezService {
 	
 	@Value("${levelap.paymentez.app-key}")
 	private String APP_KEY;
+	
+	@Autowired
+	private GameClubMailService mailService;
 	
 	public String listCurrentUserCards(HttpSession session) throws ServletException, UnsupportedEncodingException, NoSuchAlgorithmException, RestClientException, URISyntaxException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
@@ -164,5 +180,77 @@ public class PaymentezService {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.getForEntity(new URI(url), String.class);
 		return response.getBody();
+	}
+	
+	public void sendMailLoan(Loan loan) throws IOException, GeneralSecurityException, MessagingException {
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
+		levelapMail.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Map<String, String> params = new HashMap<>();
+		params.put("name", loan.getGamer().getName());
+		params.put("game", loan.getPublicUserGame().getGame().getName());
+		params.put("console", loan.getPublicUserGame().getConsole().getName());
+		params.put("user",
+				loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
+		params.put("weeks", "" + loan.getWeeks());
+		if (loan.getWasAccepted()) {
+			params.put("status", "aceptado");
+		} else {
+			params.put("status", "rechazado");
+		}
+		params.put("date", sdf.format(loan.getGamerStatusDate()));
+		params.put("authorizationNumber", loan.getTransactionId());
+		params.put("authCode", loan.getAuthCode());
+		params.put("subtotal", "$" + String.format("%.2f", (loan.getCost() - loan.getTaxes())));
+		params.put("iva", "$" + String.format("%.2f", loan.getTaxes()));
+		params.put("total", "$" + String.format("%.2f", loan.getCost()));
+		params.put("cardPart", "$" + String.format("%.2f", loan.getCardPart()));
+		params.put("balancePart", "$" + String.format("%.2f", (loan.getCost() - loan.getCardPart())));
+
+		mailService.sendMailWihTemplate(levelapMail, "MSGPYC", params);
+	}
+	
+	public void sendMailShippinKit(WelcomeKit welcomeKit) throws IOException, GeneralSecurityException, MessagingException {
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
+		levelapMail.setRecipentTO(Arrays.asList(welcomeKit.getPublicUser().getUsername()));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Map<String, String> params = new HashMap<>();
+		params.put("name", welcomeKit.getPublicUser().getName());
+		if (welcomeKit.getWasConfirmed()) {
+			params.put("status", "aceptado");
+		} else {
+			params.put("status", "rechazado");
+		}
+		params.put("date", sdf.format(welcomeKit.getConfirmationDate()));
+		params.put("authorizationNumber", welcomeKit.getTransactionId());
+		params.put("authCode", welcomeKit.getAuthCode());
+		params.put("total", "$" + String.format("%.2f", welcomeKit.getAmountBalanceValue() + welcomeKit.getAmountCardValue()));
+		params.put("cardPart", "$" + String.format("%.2f", welcomeKit.getAmountCardValue()));
+
+		mailService.sendMailWihTemplate(levelapMail, "MSSHKC", params);
+	}
+	
+	public void sendMailFine(Fine fine) throws IOException, GeneralSecurityException, MessagingException {
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
+		levelapMail.setRecipentTO(Arrays.asList(fine.getOwner().getUsername()));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Map<String, String> params = new HashMap<>();
+		params.put("name", fine.getOwner().getName());
+		params.put("game", fine.getLoan().getPublicUserGame().getGame().getName());
+		params.put("console", fine.getLoan().getPublicUserGame().getConsole().getName());
+		params.put("user", fine.getLoan().getPublicUserGame().getPublicUser().getName() + " " + fine.getLoan().getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
+		params.put("status", "rechazado");
+		params.put("date", sdf.format(fine.getCreationDate()));
+		params.put("authorizationNumber", fine.getTransactionId());
+		params.put("authCode", fine.getAuthCode());
+		params.put("balancePart", "$" + String.format("%.2f", fine.getCardPart()));
+		
+		mailService.sendMailWihTemplate(levelapMail, "MSPYCF", params);
 	}
 }

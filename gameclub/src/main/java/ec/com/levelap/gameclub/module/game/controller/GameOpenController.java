@@ -62,7 +62,7 @@ public class GameOpenController {
 	
 	@RequestMapping(value="findGamesByCategory/{categoryId}", method=RequestMethod.GET)
 	public ResponseEntity<List<GameOpen>> findGamesByCategory(@PathVariable Long categoryId) throws ServletException {
-		List<GameOpen> games = gameService.getGameRepo().findByStatusIsTrueAndCategoriesCategoryIdOrderByReleaseDateDescAndNameAsc(categoryId);
+		List<GameOpen> games = gameService.getGameRepo().findByStatusIsTrueAndCategoriesCategoryIdOrderByReleaseDateDescNameAsc(categoryId);
 		return new ResponseEntity<List<GameOpen>>(games, HttpStatus.OK);
 	}
 	
@@ -93,7 +93,7 @@ public class GameOpenController {
 		finalList.addAll(mostPlayed.getContent());
 		
 		if (finalList.size() < 12) {
-			Page<GameOpen> extras = gameService.getGameRepo().findByStatusIsTrueOrderByReleaseDateDescAndNameAsc(new PageRequest(0, 12 - finalList.size()));
+			Page<GameOpen> extras = gameService.getGameRepo().findByStatusIsTrueOrderByReleaseDateDescNameAsc(new PageRequest(0, 12 - finalList.size()));
 			finalList.addAll(extras.getContent());
 		}
 		

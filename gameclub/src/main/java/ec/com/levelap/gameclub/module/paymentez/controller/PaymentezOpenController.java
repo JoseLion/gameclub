@@ -44,8 +44,8 @@ public class PaymentezOpenController {
 	@RequestMapping(value="callback", method=RequestMethod.POST)
 	public ResponseEntity<?> callback(@RequestBody Object response) throws ServletException, JSONException, IOException, GeneralSecurityException, MessagingException {
 		
-		System.out.println("Ingresa al call back: ");
-		JSONObject json = new JSONObject((String) response);
+		System.out.println("PAYMENTEZ CALLBACK: " + (String)response);
+		/*JSONObject json = new JSONObject((String) response);
 		String transactioId = json.getString("transaction_id");
 		
 		Loan loan = loanRepo.findByTransactionId(transactioId);
@@ -64,7 +64,7 @@ public class PaymentezOpenController {
 			fine.setAuthCode(json.getString("authorization_code"));
 			fine = fineRepo.save(fine);
 			paymentezService.sendMailFine(fine);
-		}
+		}*/
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

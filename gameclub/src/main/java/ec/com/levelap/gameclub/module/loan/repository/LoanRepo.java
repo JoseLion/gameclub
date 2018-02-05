@@ -46,6 +46,8 @@ public interface LoanRepo extends JpaRepository<Loan, Long> {
 									@Param("endDate") Date endDate,
 									Pageable page);
 	
+	public Loan findByTransactionId(String transactionId);
+	
 	public Loan findByGamerMessageIdOrLenderMessageId(Long gamerMessageId, Long lenderMessageId);
 	
 	public List<Loan> findByShippingStatusCode(String code);

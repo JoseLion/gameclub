@@ -96,6 +96,7 @@ public class LoanService {
 
 	@Value("${game-club.real-times}")
 	private boolean realTimes;
+	
 
 	@Transactional
 	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart, Double shippingCost,
@@ -234,32 +235,6 @@ public class LoanService {
 				loan.getTaxes(), description, gamer);
 				JSONObject json = new JSONObject(response);
 				loan.setTransactionId(json.getString("transaction_id"));
-				LevelapMail levelapMail = new LevelapMail();
-				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
-				levelapMail.setRecipentTO(Arrays.asList(loan.getGamer().getUsername()));
-
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				Map<String, String> params = new HashMap<>();
-				params.put("name", loan.getGamer().getName());
-				params.put("game", loan.getPublicUserGame().getGame().getName());
-				params.put("console", loan.getPublicUserGame().getConsole().getName());
-				params.put("user",
-						loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
-				params.put("weeks", "" + loan.getWeeks());
-				if (loan.getWasAccepted()) {
-					params.put("status", "aceptado");
-				} else {
-					params.put("status", "rechazado");
-				}
-				params.put("date", sdf.format(loan.getGamerStatusDate()));
-				params.put("authorizationNumber", loan.getTransactionId());
-				params.put("subtotal", "$" + String.format("%.2f", (loan.getCost() - loan.getTaxes())));
-				params.put("iva", "$" + String.format("%.2f", loan.getTaxes()));
-				params.put("total", "$" + String.format("%.2f", loan.getCost()));
-				params.put("cardPart", "$" + String.format("%.2f", loan.getCardPart()));
-				params.put("balancePart", "$" + String.format("%.2f", (loan.getCost() - loan.getCardPart())));
-
-				mailService.sendMailWihTemplate(levelapMail, "MSGPYC", params);
 			}
 
 			loan.setAcceptedDate(new Date());
@@ -643,13 +618,10 @@ public class LoanService {
 	private void createFines(Loan loan, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException {
 
 		PublicUser gamer = publicUserService.getPublicUserRepo().findOne(loan.getGamer().getId());
-		// byte[] keyEncriptGamer = gamer.getPrivateKey();
 		File gamerKey = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(gamerKey, gamer.getPrivateKey());
 
-		PublicUser lender = publicUserService.getPublicUserRepo()
-				.findOne(loan.getPublicUserGame().getPublicUser().getId());
-		// byte[] keyEncriptLender = lender.getPrivateKey();
+		PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
 		File lenderKey = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(lenderKey, lender.getPrivateKey());
 

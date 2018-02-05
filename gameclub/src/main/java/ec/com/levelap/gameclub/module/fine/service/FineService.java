@@ -4,11 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -38,8 +34,6 @@ import ec.com.levelap.gameclub.module.transaction.service.TransactionService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.gameclub.utils.GameClubMailService;
-import ec.com.levelap.mail.entity.LevelapMail;
 
 @Service
 public class FineService extends BaseService<Fine> {
@@ -64,9 +58,6 @@ public class FineService extends BaseService<Fine> {
 	
 	@Autowired
 	private PaymentezService paymentezService;
-	
-	@Autowired
-	private GameClubMailService mailService;
 
 	@Transactional
 	public ResponseEntity<?> save(Fine fine, Boolean isApply, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException, MessagingException {
@@ -94,23 +85,6 @@ public class FineService extends BaseService<Fine> {
 				fine.setTransactionId(json.getString("transaction_id"));
 				
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
-				
-				LevelapMail levelapMail = new LevelapMail();
-				levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
-				levelapMail.setRecipentTO(Arrays.asList(fine.getOwner().getUsername()));
-				
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				Map<String, String> params = new HashMap<>();
-				params.put("name", fine.getOwner().getName());
-				params.put("game", fine.getLoan().getPublicUserGame().getGame().getName());
-				params.put("console", fine.getLoan().getPublicUserGame().getConsole().getName());
-				params.put("user", fine.getLoan().getPublicUserGame().getPublicUser().getName() + " " + fine.getLoan().getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
-				params.put("status", "rechazado");
-				params.put("date", sdf.format(fine.getCreationDate()));
-				params.put("authorizationNumber", fine.getTransactionId());
-				params.put("balancePart", "$" + String.format("%.2f", totalBalance));
-				
-				mailService.sendMailWihTemplate(levelapMail, "MSPYCF", params);
 				
 			} else {
 				fine.setCardPartEnc(null);

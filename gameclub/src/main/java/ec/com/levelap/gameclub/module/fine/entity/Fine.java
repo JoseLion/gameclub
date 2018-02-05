@@ -56,6 +56,9 @@ public class Fine extends BaseEntity {
 	
 	@Column(name = "transaction_id", columnDefinition = "VARCHAR", nullable = true)
 	private String transactionId;
+	
+	@Column(name = "auth_code", columnDefinition = "VARCHAR")
+	private String authCode;
 
 	@JsonIgnore
 	@Column(name = "amount", nullable = false)
@@ -132,6 +135,14 @@ public class Fine extends BaseEntity {
 
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
+	}
+
+	public String getAuthCode() {
+		return authCode;
+	}
+
+	public void setAuthCode(String authCode) {
+		this.authCode = authCode;
 	}
 
 	public byte[] getAmountEnc() {

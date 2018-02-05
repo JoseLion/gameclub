@@ -350,12 +350,11 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 					$scope.loan = data;
 					$rootScope.currentUser.shownBalance -= data.balancePart;
 					$scope.loan.isDisabled = true;
-					console.log($scope.loan.publicUserGame.publicUser.shownBalance);
+
 					notif.success("Pago realizado con éxito");
 					sweet.close();
 					canvasToBottom();
-					console.log($scope.loan.publicUserGame.publicUser.shownBalance);
-					console.log($rootScope.currentUser.referrer);
+
 					if ($rootScope.currentUser.referrer != null) {
 						SweetAlert.swal("Genial!", "Tu saldo promocional por referido ha sido acreditado", "info");
 						$rootScope.currentUser.referrer = null;
@@ -363,7 +362,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 				}, function(error) {
 					sweet.close();
 				});
-				console.log($scope.loan.saveChanges);
+				
 				if ($scope.loan.saveChanges == true) {
 					$rootScope.currentUser.billingAddress = $scope.loan.gamerAddress;
 					$rootScope.currentUser.geolocation = $scope.loan.gamerGeolocation;
@@ -371,7 +370,6 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 
 					rest("publicUser/save").post($rootScope.currentUser, function(data) {
 						$rootScope.currentUser = data;
-						console.log($rootScope.currentUser);
 					});
 				}
 			});

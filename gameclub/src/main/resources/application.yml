@@ -39,8 +39,7 @@ levelap:
                   https://beta.gameclub.com.ec,
                   https://www.gameclub.com.ec,
                   https://104.198.238.150,
-                  https://ccapi-stg.paymentez.com,
-                  https://resttesttest.com
+                  https://ccapi-stg.paymentez.com
   compressRequest: true
   file:
     environment: GAMECLUB_HOME

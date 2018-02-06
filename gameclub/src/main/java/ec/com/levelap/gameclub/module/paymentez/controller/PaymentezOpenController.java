@@ -43,9 +43,9 @@ public class PaymentezOpenController {
 	private PaymentezService paymentezService;
 	
 	@RequestMapping(value="callback", method=RequestMethod.POST)
-	public ResponseEntity<?> callback(@RequestBody String response) throws ServletException, JSONException, IOException, GeneralSecurityException, MessagingException {
+	public ResponseEntity<?> callback(@RequestBody Object response) throws ServletException, JSONException, IOException, GeneralSecurityException, MessagingException {
 		
-		System.out.println("PAYMENTEZ CALLBACK: " + response);
+		System.out.println("PAYMENTEZ CALLBACK: " + (String)response);
 		/*JSONObject json = new JSONObject((String) response);
 		String transactioId = json.getString("transaction_id");
 		

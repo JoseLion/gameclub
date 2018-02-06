@@ -3,6 +3,7 @@ package ec.com.levelap.gameclub.module.paymentez.controller;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Map;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -43,9 +44,15 @@ public class PaymentezOpenController {
 	private PaymentezService paymentezService;
 	
 	@RequestMapping(value="callback", method=RequestMethod.POST)
-	public ResponseEntity<?> callback(@RequestBody Object response) throws ServletException, JSONException, IOException, GeneralSecurityException, MessagingException {
+	public ResponseEntity<?> callback(@RequestBody Map<String, String> response) throws ServletException, JSONException, IOException, GeneralSecurityException, MessagingException {
+		Set<String> keys = response.keySet();
 		
-		System.out.println("PAYMENTEZ CALLBACK: " + (String)response);
+		System.out.println("RESPONSE OBJECT");
+		for (String key : keys) {
+			System.out.println(key + ": " + response.get(key));
+		}
+		
+		
 		/*JSONObject json = new JSONObject((String) response);
 		String transactioId = json.getString("transaction_id");
 		

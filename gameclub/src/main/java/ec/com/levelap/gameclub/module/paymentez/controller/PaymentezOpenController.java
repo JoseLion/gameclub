@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.levelap.gameclub.module.fine.entity.Fine;
@@ -28,7 +30,7 @@ import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
 import ec.com.levelap.gameclub.module.welcomeKit.repository.WelcomeKitRepo;
 
 @RestController
-@RequestMapping(value="open/paymentez", produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="open/paymentez")
 public class PaymentezOpenController {
 	
 	@Autowired
@@ -43,11 +45,11 @@ public class PaymentezOpenController {
 	@Autowired
 	private PaymentezService paymentezService;
 	
-	@RequestMapping(value="callback", method=RequestMethod.POST)
-	public ResponseEntity<?> callback(@RequestBody Map<String, String> response) throws ServletException, JSONException, IOException, GeneralSecurityException, MessagingException {
+	@RequestMapping(value="callback", method=RequestMethod.POST, consumes="application/x-www-form-urlencoded", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> callback(Map<String, String> response) throws ServletException, JSONException, IOException, GeneralSecurityException, MessagingException {
 		Set<String> keys = response.keySet();
 		
-		System.out.println("RESPONSE OBJECT");
+		System.out.println("RESPONSE OBJECT: " + response);
 		for (String key : keys) {
 			System.out.println(key + ": " + response.get(key));
 		}

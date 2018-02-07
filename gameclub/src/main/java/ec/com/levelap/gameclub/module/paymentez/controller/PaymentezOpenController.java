@@ -1,13 +1,16 @@
 package ec.com.levelap.gameclub.module.paymentez.controller;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.Map;
 import java.util.Set;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +34,7 @@ import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
 import ec.com.levelap.gameclub.module.welcomeKit.repository.WelcomeKitRepo;
 
 @RestController
-@RequestMapping(value="open/paymentez")
+@RequestMapping(value="open/paymentez", produces=MediaType.APPLICATION_JSON_VALUE)
 public class PaymentezOpenController {
 	
 	@Autowired
@@ -45,13 +49,14 @@ public class PaymentezOpenController {
 	@Autowired
 	private PaymentezService paymentezService;
 	
-	@RequestMapping(value="callback", method=RequestMethod.POST, consumes="application/x-www-form-urlencoded", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> callback(Map<String, String> response) throws ServletException, JSONException, IOException, GeneralSecurityException, MessagingException {
-		Set<String> keys = response.keySet();
+	@RequestMapping(value="callback", method=RequestMethod.POST, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public ResponseEntity<?> callback(HttpServletRequest servletRequest, Map<String, String> body) throws ServletException, JSONException, IOException, GeneralSecurityException, MessagingException {
+		Set<String> keys = body.keySet();
 		
-		System.out.println("RESPONSE OBJECT: " + response);
+		System.out.println("RESPONSE STREAM: " + IOUtils.toString(servletRequest.getInputStream(), StandardCharsets.UTF_8));
+		System.out.println("RESPONSE OBJECT: " + body);
 		for (String key : keys) {
-			System.out.println(key + ": " + response.get(key));
+			System.out.println(key + ": " + body.get(key));
 		}
 		
 		
@@ -79,4 +84,7 @@ public class PaymentezOpenController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	private static class Callback {
+		public String response;
+	}
 }

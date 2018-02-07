@@ -141,7 +141,7 @@ public class LoanService {
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
 		params.put("weeks", "" + loan.getWeeks());
 		params.put("cost", "$" + String.format("%.2f", (subtotal * (1.0 - fee))));
-		mailService.sendMailWihTemplate(levelapMail, "MSPYCF", params);
+		mailService.sendMailWihTemplate(levelapMail, "MSGREQ", params);
 	}
 
 	@Transactional

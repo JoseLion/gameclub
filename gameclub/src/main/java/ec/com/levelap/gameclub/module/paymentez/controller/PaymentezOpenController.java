@@ -56,7 +56,6 @@ public class PaymentezOpenController {
 		Map<String, String> response = new HashMap<>();
 		
 		for (NameValuePair param : params) {
-			System.out.println(param.getName() + " : " + param.getValue());
 			response.put(param.getName(), param.getValue());
 		}
 		
@@ -77,6 +76,8 @@ public class PaymentezOpenController {
 			fine.setAuthCode(response.get("authorization_code"));
 			fine = fineRepo.save(fine);
 			paymentezService.sendMailFine(fine);
+		} else {
+			System.err.println("UNABLE TO FIND LOAN, WELCOME KIT OR FINE WITH TRANSACTION_ID " + response.get("transaction_id"));
 		}
 		
 		return new ResponseEntity<>(HttpStatus.OK);

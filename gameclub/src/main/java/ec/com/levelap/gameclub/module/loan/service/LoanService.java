@@ -625,8 +625,10 @@ public class LoanService {
 		File lenderKey = File.createTempFile("key", ".tmp");
 		FileUtils.writeByteArrayToFile(lenderKey, lender.getPrivateKey());
 
-		Double subtotal = (loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getShippningCost()
-				+ loan.getFeeGameClub();
+		Double subtotal = (loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getShippningCost() + loan.getFeeGameClub();
+		System.out.println("SUBTOTAL = (GAME_COST * WEEKS) + SHIPPING + FEE_GAMECLUB");
+		System.out.println("SUBTOTAL = (" + loan.getPublicUserGame().getCost() + " * " + loan.getWeeks() + ") + " + loan.getShippningCost() + " + " + loan.getFeeGameClub());
+		System.out.println("SUBTOTAL = " + subtotal);
 
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
 			Setting fineSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_LENDER_DIDNT_DELIVER);
@@ -634,6 +636,9 @@ public class LoanService {
 
 			if (fineSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
 				fineAmount = subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0);
+				System.out.println("FINE_AMOUNT = SUBTOTAL * (FINE_SETTING / 100.0)");
+				System.out.println("FINE_AMOUNT = " + subtotal + " * (" + Double.parseDouble(fineSetting.getValue()) + " / 100.0)");
+				System.out.println("FINE_AMOUNT = " + fineAmount);
 			} else {
 				fineAmount = loan.getCost() + Double.parseDouble(fineSetting.getValue());
 			}

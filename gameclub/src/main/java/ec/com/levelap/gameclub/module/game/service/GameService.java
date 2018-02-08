@@ -514,7 +514,7 @@ public class GameService extends BaseService<Game> {
 									HashMap<String, String> priceChart = getPriceCharting("" + number.intValue());
 									
 									if (priceChart.get("status") != null && priceChart.get("status").equals("error")) {
-										if (priceChart.get("error_message").equals("No such product")) {
+										if (priceChart.get("error_message") != null && priceChart.get("error_message").equals("No such product")) {
 											report.getErrors().put(chars[i] + (j+1), "No se pudo encontrar el ID de Price Charting");
 										} else {
 											report.getErrors().put(chars[i] + (j+1), "Error en Price Charting: " + priceChart.get("error_message"));

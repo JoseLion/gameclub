@@ -51,6 +51,7 @@ public class PaymentezOpenController {
 	
 	@RequestMapping(value="callback", method=RequestMethod.POST, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ResponseEntity<?> callback(HttpServletRequest servletRequest) throws ServletException, JSONException, IOException, GeneralSecurityException, MessagingException, URISyntaxException {
+		System.out.println("PROCESSING PAYMENTEZ CALLBACK");
 		String url = "https://gamclub.com.ec?" + IOUtils.toString(servletRequest.getInputStream(), StandardCharsets.UTF_8);
 		List<NameValuePair> params = URLEncodedUtils.parse(new URI(url), StandardCharsets.UTF_8);
 		Map<String, String> response = new HashMap<>();

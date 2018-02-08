@@ -81,6 +81,6 @@ public class PaymentezOpenController {
 			System.err.println("UNABLE TO FIND LOAN, WELCOME KIT OR FINE WITH TRANSACTION_ID " + response.get("transaction_id"));
 		}
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

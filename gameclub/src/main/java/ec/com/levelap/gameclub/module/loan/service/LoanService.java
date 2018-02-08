@@ -202,9 +202,7 @@ public class LoanService {
 			loan.setGamerConfirmed(Boolean.TRUE);
 			loan.setGamerStatusDate(new Date());
 
-			Double promoBalance = gamer.getPromoBalance() != null
-					? Double.parseDouble(cryptoService.decrypt(gamer.getPromoBalance(), keyGamer))
-					: 0.0;
+			Double promoBalance = gamer.getPromoBalance() != null ? Double.parseDouble(cryptoService.decrypt(gamer.getPromoBalance(), keyGamer)) : 0.0;
 
 			if (loan.getBalancePart() > 0.0 && loan.getCardPart() == 0.0) {
 				Double remaining = promoBalance - loan.getBalancePart();
@@ -227,15 +225,24 @@ public class LoanService {
 			}
 
 			if (loan.getCardPart() > 0.0) {
-				String description = "Préstamo del juego " +
-										loan.getPublicUserGame().getGame().getName() + " durante " + loan.getWeeks()
-										+ " semana(s)";
-				String response = paymentezService.debitFromCard(session,
-				request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(),
-				loan.getTaxes(), description, gamer);
+				String description = "Préstamo del juego " + loan.getPublicUserGame().getGame().getName() + " durante " + loan.getWeeks() + " semana(s)";
+				String response = paymentezService.debitFromCard(session, request.getRemoteAddr(), loan.getCardReference(), loan.getCardPart(), loan.getTaxes(), description, gamer);
 				JSONObject json = new JSONObject(response);
 				loan.setTransactionId(json.getString("transaction_id"));
 			}
+			
+			PublicUser lender = publicUserService.getPublicUserRepo().findOne(loan.getPublicUserGame().getPublicUser().getId());
+			Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
+			Double fee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
+			lender = publicUserService.addToUserBalance(lender.getId(), subtotal * (1.0 - fee));
+
+			File keyLender = File.createTempFile("keyLender", ".tmp");
+			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
+			Transaction lenderTransaction = new Transaction(lender, "ALQUILASTE",
+					loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(),
+					loan.getWeeks(), cryptoService.encrypt(Double.toString(subtotal * (1.0 - fee)), keyLender), null,
+					null);
+			transactionService.getTransactionRepo().save(lenderTransaction);
 
 			loan.setAcceptedDate(new Date());
 			PublicUserGame publicUserGame = loan.getPublicUserGame();
@@ -253,8 +260,7 @@ public class LoanService {
 			transactionService.getTransactionRepo().save(transaction);
 
 			if (loan.getGamer().getReferrer() != null && !loan.getGamer().getReferrer().isEmpty()) {
-				PublicUser refferer = publicUserService.getPublicUserRepo()
-						.findByUrlToken(loan.getGamer().getReferrer());
+				PublicUser refferer = publicUserService.getPublicUserRepo().findByUrlToken(loan.getGamer().getReferrer());
 
 				if (refferer != null) {
 					Setting setting = settingService.getSettingsRepo().findByCode(Code.SETTING_REFFERED_REWARD);
@@ -311,22 +317,6 @@ public class LoanService {
 					e.printStackTrace();
 				}
 			}
-		}
-
-		if (loan.getGamerConfirmed() && loan.getLenderConfirmed()) {
-			PublicUser lender = publicUserService.getPublicUserRepo()
-					.findOne(loan.getPublicUserGame().getPublicUser().getId());
-			Double subtotal = loan.getPublicUserGame().getCost() * loan.getWeeks();
-			Double fee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
-			lender = publicUserService.addToUserBalance(lender.getId(), subtotal * (1.0 - fee));
-
-			File keyLender = File.createTempFile("keyLender", ".tmp");
-			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
-			Transaction transaction = new Transaction(lender, "ALQUILASTE",
-					loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(),
-					loan.getWeeks(), cryptoService.encrypt(Double.toString(subtotal * (1.0 - fee)), keyLender), null,
-					null);
-			transactionService.getTransactionRepo().save(transaction);
 		}
 
 		loan = loanRepo.save(loan);
@@ -626,9 +616,6 @@ public class LoanService {
 		FileUtils.writeByteArrayToFile(lenderKey, lender.getPrivateKey());
 
 		Double subtotal = (loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getShippningCost() + loan.getFeeGameClub();
-		System.out.println("SUBTOTAL = (GAME_COST * WEEKS) + SHIPPING + FEE_GAMECLUB");
-		System.out.println("SUBTOTAL = (" + loan.getPublicUserGame().getCost() + " * " + loan.getWeeks() + ") + " + loan.getShippningCost() + " + " + loan.getFeeGameClub());
-		System.out.println("SUBTOTAL = " + subtotal);
 
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
 			Setting fineSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_LENDER_DIDNT_DELIVER);
@@ -636,11 +623,8 @@ public class LoanService {
 
 			if (fineSetting.getType().equals(Const.SETTINGS_PERCENTAGE)) {
 				fineAmount = subtotal * (Double.parseDouble(fineSetting.getValue()) / 100.0);
-				System.out.println("FINE_AMOUNT = SUBTOTAL * (FINE_SETTING / 100.0)");
-				System.out.println("FINE_AMOUNT = " + subtotal + " * (" + Double.parseDouble(fineSetting.getValue()) + " / 100.0)");
-				System.out.println("FINE_AMOUNT = " + fineAmount);
 			} else {
-				fineAmount = loan.getCost() + Double.parseDouble(fineSetting.getValue());
+				fineAmount = subtotal + Double.parseDouble(fineSetting.getValue());
 			}
 
 			Fine fine = new Fine();

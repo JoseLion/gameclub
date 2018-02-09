@@ -1,34 +1,4 @@
-angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, /*rest, */$cookies, openRest, forEach, getImageBase64) {
-	/*$http.get(urlRestPath.url + "/api/token").then(function(response) {
-		if (response != null && response.data != null) {
-			$rootScope.paddingLogged = {
-				padding: '1.4em 0'
-			};
-
-			rest("publicUser/getCurrentUser").get(function(data) {
-				if (!data.status) {
-					$rootScope.logout();
-				} else {
-					if (data != null) {
-						$rootScope.currentUser = data;
-
-						//if ($rootScope.currentUser.isTempPassword) {
-							//changePassword();
-						//}
-
-						$rootScope.paddingLogged = {
-							padding: '1em 0'
-						};
-					}
-				}
-			}, function(error) {
-				$rootScope.logout();
-			});
-		}
-	}, function(error) {
-		$rootScope.currentUser = null;
-	});*/
-
+angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $state, Const, $http, urlRestPath, $cookies, openRest, forEach, getImageBase64) {
 	openRest("category/findAll", true).get(function(data) {
 		$rootScope.categories = data;
 
@@ -56,28 +26,6 @@ angular.module('GameClub').controller('MainCtrl', function($scope, $rootScope, $
 			});
 		});
 	});
-
-	/*$rootScope.logout = function() {
-		let request = {
-			method: 'POST',
-			url: urlRestPath.url + '/logout',
-			headers: {
-				'X-XSRF-TOKEN': $cookies.get(Const.cookieToken)
-			}
-		};
-
-		$http(request).finally(function() {
-			$cookies.remove(Const.cookieToken, {path: "/"});
-			delete $rootScope.currentUser;
-			$state.go(Const.mainState);
-		});
-	}
-
-	$scope.goToAccount = function() {
-		if (!$state.includes("gameclub.account")) {
-			$state.go("gameclub.account");
-		}
-	}*/
 
 	$rootScope.link = {
 		shareAndPlay : {

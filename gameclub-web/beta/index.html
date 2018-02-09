@@ -1,160 +1,162 @@
 <!DOCTYPE html>
 <html ng-app="GameClub">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title ng-bind="MetaTags.title">Game Club</title>
-    <meta name="description" content="{{MetaTags.description}}">
-	<meta name="keywords" content="{{MetaTags.keywords}}">
-    <meta name="prerender-status-code" content="{{MetaTags.prerender.statusCode}}">
-    <meta name="prerender-header" ng-if="MetaTags.prerender.header" content="{{MetaTags.prerender.header}}">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:description" content="">
-    <meta property="og:image" content="">
-    <meta property="fb:app_id" content="1819533121697152">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title ng-bind="MetaTags.title">Game Club</title>
+        <meta name="description" content="{{MetaTags.description}}">
+    	<meta name="keywords" content="{{MetaTags.keywords}}">
+        <meta name="prerender-status-code" content="{{MetaTags.prerender.statusCode}}">
+        <meta name="prerender-header" ng-if="MetaTags.prerender.header" content="{{MetaTags.prerender.header}}">
+        <meta property="og:url" content="">
+        <meta property="og:title" content="">
+        <meta property="og:type" content="">
+        <meta property="og:description" content="">
+        <meta property="og:image" content="">
+        <meta property="fb:app_id" content="1819533121697152">
 
-    <base href="/">
+        <base href="/">
 
-    <link rel="canonical" href="#">
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-	<link href="css/customStyles.less" rel="stylesheet/less">
-	<link href="css/responsive.less" rel="stylesheet/less">
-	<link href="css/select.min.css" rel="stylesheet">
-    <link href="js/core/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-    <link href="js/core/plugins/angular-notify/angular-notify.min.css" rel="stylesheet">
-    <link href="css/gameclub-font.css" rel="stylesheet">
-    <link href="js/modules/core/directives/loading/loading.css" rel="stylesheet">
+        <link rel="canonical" href="#">
+        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+    	<link href="css/customStyles.less" rel="stylesheet/less">
+    	<link href="css/responsive.less" rel="stylesheet/less">
+    	<link href="css/select.min.css" rel="stylesheet">
+        <link href="js/core/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+        <link href="js/core/plugins/angular-notify/angular-notify.min.css" rel="stylesheet">
+        <link href="css/gameclub-font.css" rel="stylesheet">
+        <link href="js/modules/core/directives/loading/loading.css" rel="stylesheet">
 
-     <!-- MAIN DEPENDENCIES -->
-    <script src="js/core/jquery-2.1.1.min.js"></script>
-    <script src="js/core/less.min.js"></script>
-    <script src="js/core/bootstrap.min.js"></script>
-    <script src="js/core/angular.min.js"></script>
-    <script src="js/core/angular-sanitize.min.js"></script>
-    <script src="js/core/angular-resource.min.js"></script>
-    <script src="js/core/angular-cookies.min.js"></script>
-    <script src="js/core/angular-ui-router.min.js"></script>
-    <script src="js/core/angular-locale_es-ec.js"></script>
-    <script src="js/core/ocLazyLoad.min.js"></script>
-    <script src="js/core/select.min.js"></script>
-    <script src="js/core/plugins/pako/pako.min.js"></script>
-    <script src="js/core/plugins/sweetalert/sweetalert.min.js"></script>
-    <script src="js/core/plugins/sweetalert/angular-sweetalert.min.js"></script>
-    <script src="js/core/ui-bootstrap-tpls/ui-bootstrap-tpls-2.5.0.min.js"></script>
-    <script src="js/core/plugins/angular-notify/angular-notify.min.js"></script>
-    <script src="js/core/jasny-bootstrap.min.js"></script> 
-    <script src="js/modules/levelapBlog/levelapBlog.js"></script>
-    <script src="js/core/angular-socialshare.min.js"></script>
-    <script src="js/core/plugins/ui-router-metatags/ui-router-metatags.min.js"></script>
-    <script src="js/core/plugins/yaml/yaml.min.js"></script>
+         <!-- MAIN DEPENDENCIES -->
+        <script src="js/core/jquery-2.1.1.min.js"></script>
+        <script src="js/core/less.min.js"></script>
+        <script src="js/core/bootstrap.min.js"></script>
+        <script src="js/core/angular.min.js"></script>
+        <script src="js/core/angular-sanitize.min.js"></script>
+        <script src="js/core/angular-resource.min.js"></script>
+        <script src="js/core/angular-cookies.min.js"></script>
+        <script src="js/core/angular-ui-router.min.js"></script>
+        <script src="js/core/angular-locale_es-ec.js"></script>
+        <script src="js/core/ocLazyLoad.min.js"></script>
+        <script src="js/core/select.min.js"></script>
+        <script src="js/core/plugins/pako/pako.min.js"></script>
+        <script src="js/core/plugins/sweetalert/sweetalert.min.js"></script>
+        <script src="js/core/plugins/sweetalert/angular-sweetalert.min.js"></script>
+        <script src="js/core/ui-bootstrap-tpls/ui-bootstrap-tpls-2.5.0.min.js"></script>
+        <script src="js/core/plugins/angular-notify/angular-notify.min.js"></script>
+        <script src="js/core/jasny-bootstrap.min.js"></script> 
+        <script src="js/modules/levelapBlog/levelapBlog.js"></script>
+        <script src="js/core/angular-socialshare.min.js"></script>
+        <script src="js/core/plugins/ui-router-metatags/ui-router-metatags.min.js"></script>
+        <script src="js/core/plugins/yaml/yaml.min.js"></script>
 
-    <!-- Anglar App Script -->
-    <script src="js/app.js"></script>
-    <script src="js/const.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/mainCtrl.js"></script>
+        <!-- Anglar App Script -->
+        <script src="js/app.js"></script>
+        <script src="js/const.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/mainCtrl.js"></script>
 
-    <!-- Modules and Config -->
-    <script src="js/modules/core/core.module.js"></script>
-    <script src="js/modules/home/home.module.js"></script>
-    <script src="js/modules/home/config/home.route.js"></script>
+        <!-- Modules and Config -->
+        <script src="js/modules/core/core.module.js"></script>
+        <script src="js/modules/home/home.module.js"></script>
+        <script src="js/modules/home/config/home.route.js"></script>
 
-    <!-- Directives -->
-    <script src="js/modules/core/directives/onSubmit.js"></script>
-    <script src="js/modules/core/directives/validation.js"></script>
-    <script src="js/modules/core/directives/blogPreview.js"></script>
-    <script src="js/modules/core/directives/dateSelector.js"></script>
-    <script src="js/modules/core/directives/archive.js"></script>
-    <script src="js/modules/core/directives/fileModel.js"></script>
-    <script src="js/modules/core/directives/loading/loading.js"></script>
-    <script src="js/modules/core/directives/diamondImg/diamondImg.js"></script>
+        <!-- Directives -->
+        <script src="js/modules/core/directives/onSubmit.js"></script>
+        <script src="js/modules/core/directives/validation.js"></script>
+        <script src="js/modules/core/directives/blogPreview.js"></script>
+        <script src="js/modules/core/directives/dateSelector.js"></script>
+        <script src="js/modules/core/directives/archive.js"></script>
+        <script src="js/modules/core/directives/fileModel.js"></script>
+        <script src="js/modules/core/directives/loading/loading.js"></script>
+        <script src="js/modules/core/directives/diamondImg/diamondImg.js"></script>
 
-    <!-- Services -->
-    <script src="js/modules/core/services/forEach.js"></script>
-    <script src="js/modules/core/services/friendlyUrl.js"></script>
-    <script src="js/modules/core/services/getImageBase64.js"></script>
-    <script src="js/modules/core/services/getIndexOfArray.js"></script>
-    <script src="js/modules/core/services/openRest.js"></script>
-    <script src="js/modules/core/services/sweet.js"></script>
-    <script src="js/modules/core/services/notif.js"></script>
+        <!-- Services -->
+        <script src="js/modules/core/services/forEach.js"></script>
+        <script src="js/modules/core/services/friendlyUrl.js"></script>
+        <script src="js/modules/core/services/getImageBase64.js"></script>
+        <script src="js/modules/core/services/getIndexOfArray.js"></script>
+        <script src="js/modules/core/services/openRest.js"></script>
+        <script src="js/modules/core/services/sweet.js"></script>
+        <script src="js/modules/core/services/notif.js"></script>
 
-    <!-- Filters -->
-    <script src="js/modules/core/filters/maxwords.js"></script>
-    <script src="js/modules/core/filters/trusted.js"></script>
+        <!-- Filters -->
+        <script src="js/modules/core/filters/maxwords.js"></script>
+        <script src="js/modules/core/filters/trusted.js"></script>
 
-    <!-- FACEBOOK SDK -->
-    <script type="text/javascript">
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId: '1819533121697152',
-                status: true,
-                cookie: true,
-                xfbml: true,
-                version: 'v2.9'
+        <!-- FACEBOOK SDK -->
+        <script type="text/javascript">
+            YAML.load("/properties.yml", function(data) {
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId: data['facebook-app-id'],
+                        status: true,
+                        cookie: true,
+                        xfbml: true,
+                        version: 'v2.9'
+                    });
+
+                    FB.AppEvents.logPageView();
+                };
+
+                (function(d, s, id) {
+                    let js, fjs = d.getElementsByTagName(s)[0];
+
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/es_LA/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                } (document, 'script', 'facebook-jssdk'));
             });
+        </script>
 
-            FB.AppEvents.logPageView();
-        };
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113394026-1"></script>
+        <script>
+            YAML.load("/properties.yml", function(data) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', data['google-analytics']);
+            });
+        </script>
 
-        (function(d, s, id) {
-            let js, fjs = d.getElementsByTagName(s)[0];
-
-            if (d.getElementById(id)) {
-                return;
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s){
+                if(f.fbq) return;
+                n=f.fbq=function(){
+                    n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)
+                };
+                if(!f._fbq) f._fbq=n;
+                n.push=n;
+                n.loaded=!0;
+                n.version='2.0';
+                n.queue=[];
+                t=b.createElement(e);
+                t.async=!0;
+                t.src=v;
+                s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)
             }
+            (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '253372378492245'); // Insert your pixel ID here.
+            fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=253372378492245&ev=PageView&noscript=1"/></noscript>
+        <!-- DO NOT MODIFY -->
+        <!-- End Facebook Pixel Code -->
+    </head>
 
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/es_LA/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        } (document, 'script', 'facebook-jssdk'));
-    </script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113394026-1"></script>
-    <script>
-        YAML.load("/properties.yml", function(data) {
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', data['google-analytics']);
-        });
-    </script>
-
-    <!-- Facebook Pixel Code -->
-    <script>
-        !function(f,b,e,v,n,t,s){
-            if(f.fbq) return;
-            n=f.fbq=function(){
-                n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)
-            };
-            if(!f._fbq) f._fbq=n;
-            n.push=n;
-            n.loaded=!0;
-            n.version='2.0';
-            n.queue=[];
-            t=b.createElement(e);
-            t.async=!0;
-            t.src=v;
-            s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)
-        }
-        (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '253372378492245'); // Insert your pixel ID here.
-        fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=253372378492245&ev=PageView&noscript=1"/></noscript>
-    <!-- DO NOT MODIFY -->
-    <!-- End Facebook Pixel Code -->
-</head>
-
-<body ng-controller="MainCtrl as main">
-    <div ui-view></div>
-</body>
+    <body ng-controller="MainCtrl as main">
+        <div ui-view></div>
+    </body>
 </html>

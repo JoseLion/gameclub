@@ -31,6 +31,8 @@
         <link href="css/gameclub-font.css" rel="stylesheet">
         <link href="js/modules/core/directives/loading/loading.css" rel="stylesheet">
 
+        <script src="properties.js"></script>
+
          <!-- MAIN DEPENDENCIES -->
         <script src="js/core/jquery-2.1.1.min.js"></script>
         <script src="js/core/less.min.js"></script>
@@ -90,43 +92,39 @@
 
         <!-- FACEBOOK SDK -->
         <script type="text/javascript">
-            YAML.load("/properties.yml", function(data) {
-                window.fbAsyncInit = function() {
-                    FB.init({
-                        appId: data['facebook-app-id'],
-                        status: true,
-                        cookie: true,
-                        xfbml: true,
-                        version: 'v2.9'
-                    });
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId: gcProperties.facebookAppId,
+                    status: true,
+                    cookie: true,
+                    xfbml: true,
+                    version: 'v2.9'
+                });
 
-                    FB.AppEvents.logPageView();
-                };
+                FB.AppEvents.logPageView();
+            };
 
-                (function(d, s, id) {
-                    let js, fjs = d.getElementsByTagName(s)[0];
+            (function(d, s, id) {
+                let js, fjs = d.getElementsByTagName(s)[0];
 
-                    if (d.getElementById(id)) {
-                        return;
-                    }
+                if (d.getElementById(id)) {
+                    return;
+                }
 
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.src = "//connect.facebook.net/es_LA/sdk.js";
-                    fjs.parentNode.insertBefore(js, fjs);
-                } (document, 'script', 'facebook-jssdk'));
-            });
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/es_LA/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            } (document, 'script', 'facebook-jssdk'));
         </script>
 
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113394026-1"></script>
         <script>
-            YAML.load("/properties.yml", function(data) {
-                window.dataLayer = window.dataLayer || [];
+            window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', data['google-analytics']);
-            });
+                gtag('config', gcProperties.googleAppId);
         </script>
 
         <!-- Facebook Pixel Code -->

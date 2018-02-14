@@ -124,6 +124,12 @@ public class GameController {
 		}		
 	}
 	
+	@RequestMapping(value="reloadPrices", method=RequestMethod.GET)
+	public ResponseEntity<?> reloadPrices() throws ServletException {
+		gameService.reloadPrices();
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	private static class Search {
 		public String name = "";
 		

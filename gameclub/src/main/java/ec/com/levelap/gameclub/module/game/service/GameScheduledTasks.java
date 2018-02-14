@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -15,8 +14,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
-import ec.com.levelap.gameclub.module.game.entity.Game;
-import ec.com.levelap.gameclub.module.game.repository.GameRepo;
 import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.gameclub.utils.GameClubMailService;
 import ec.com.levelap.mail.entity.LevelapMail;
@@ -25,26 +22,10 @@ import ec.com.levelap.mail.entity.LevelapMail;
 public class GameScheduledTasks {
 	@Scheduled(cron="0 0 0 15 * ?")
 	public void updateFromPriceCharting() throws ServletException, MessagingException {
-		GameRepo gameRepo = ApplicationContextHolder.getContext().getBean(GameRepo.class);
 		GameService gameService = ApplicationContextHolder.getContext().getBean(GameService.class);
+		gameService.reloadPrices();
+		
 		GameClubMailService mailService = ApplicationContextHolder.getContext().getBean(GameClubMailService.class);
-		
-		List<Game> games = gameRepo.findAll();
-		for (Game game : games) {
-			if (game.getPriceChartingId() != null) {
-				HashMap<String, String> priceCharting = gameService.getPriceCharting("" + game.getPriceChartingId());
-				Double newPrice = gameService.getAvailablePrice(priceCharting);
-				
-				if (newPrice != null) {
-					String percentage = gameRepo.priceChartinNationalitation();
-					newPrice = (double) Math.round(((newPrice*Double.parseDouble(percentage)/100)+newPrice)*100)/100;
-					game.setUploadPayment(newPrice);
-				}
-			}
-		}
-		
-		gameRepo.save(games);
-		
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");

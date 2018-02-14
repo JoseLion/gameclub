@@ -102,7 +102,6 @@
 											<td>{{loan.publicUserGame.publicUser.name + ' ' + loan.publicUserGame.publicUser.lastName}}</td>
 											<td>{{loan.gamer.name + ' ' + loan.gamer.lastName}}</td>
 											<td>{{getReturnDate(loan) | date: 'dd-MM-yyyy'}}</td>
-											<!-- <td>{{loan.gamerStatusDate | date: 'dd-MM-yyyy'}}</td> -->
 											<td class="text-center">{{loan.tracking}}</td>
 											<td>{{loan.shippingStatus.name}}</td>
 											<td style="text-align: center;">
@@ -120,7 +119,7 @@
 							</div>
 
 							<div class="col-md-12" style="text-align: right;">
-								<uib-pagination total-items="totalPagesL * 10" ng-model="currentPageL" max-size="3" class="pagination-sm" boundary-links="true" ng-change="loansPageChanged()"></uib-pagination>
+								<uib-pagination total-items="totalPagesL * 10" ng-model="$parent.$parent.currentPageL" max-size="3" class="pagination-sm" boundary-links="true" ng-change="loansPageChanged()"></uib-pagination>
 							</div>
 
 							<div class="clearfix"></div>
@@ -244,7 +243,7 @@
 							</div>
 
 							<div class="col-md-12" style="text-align: right;">
-								<uib-pagination total-items="totalPagesR * 10" ng-model="currentPageR" max-size="3" class="pagination-sm" boundary-links="true" ng-change="restoresPageChanged()"></uib-pagination>
+								<uib-pagination total-items="totalPagesR * 10" ng-model="$parent.$parent.currentPageR" max-size="3" class="pagination-sm" boundary-links="true" ng-change="restoresPageChanged()"></uib-pagination>
 							</div>
 
 							<div class="clearfix"></div>
@@ -385,7 +384,7 @@
 							</div>
 
 							<div class="col-md-12" style="text-align: right;">
-								<uib-pagination total-items="totalPagesW * 10" ng-model="currentPageW" max-size="3" class="pagination-sm" boundary-links="true" ng-change="welcomeKitsPageChanged()"></uib-pagination>
+								<uib-pagination total-items="totalPagesW * 10" ng-model="$parent.$parent.currentPageW" max-size="3" class="pagination-sm" boundary-links="true" ng-change="welcomeKitsPageChanged()"></uib-pagination>
 							</div>
 
 							<div class="clearfix"></div>
@@ -526,7 +525,7 @@
 							</div>
 
 							<div class="col-md-12" style="text-align: right;">
-								<uib-pagination total-items="totalPagesS * 10" ng-model="currentPageS" max-size="3" class="pagination-sm" boundary-links="true" ng-change="shippingKitsPageChanged()"></uib-pagination>
+								<uib-pagination total-items="totalPagesS * 10" ng-model="$parent.$parent.currentPageS" max-size="3" class="pagination-sm" boundary-links="true" ng-change="shippingKitsPageChanged()"></uib-pagination>
 							</div>
 
 							<div class="clearfix"></div>

@@ -32,7 +32,7 @@ public interface WelcomeKitRepo extends JpaRepository<WelcomeKit, Long> {
 				"w.wasConfirmed=TRUE AND " +
 				"w.quantity=0 AND " +
 				"(UPPER(p.name) LIKE UPPER('%' || :name || '%') OR UPPER(p.lastName) LIKE UPPER('%' || :name || '%') OR UPPER(p.name || ' ' || p.lastName) LIKE UPPER('%' || :name || '%')) AND " +
-				"(w.tracking IS NULL OR UPPER(w.tracking) LIKE UPPER('%' || :tracking || '%')) AND " +
+				"UPPER(w.tracking) LIKE UPPER('%' || :tracking || '%') AND " +
 				"(DATE(w.confirmationDate) BETWEEN DATE(:startDate) AND DATE(:endDate)) AND " +
 				"(:province IS NULL OR p.location.parent=:province) AND " +
 				"(:city IS NULL OR p.location=:city) AND " +

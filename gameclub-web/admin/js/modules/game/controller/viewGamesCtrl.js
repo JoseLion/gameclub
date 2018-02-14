@@ -1,4 +1,4 @@
-angular.module("Game").controller('ViewGamesCtrl', function($scope, games, consoles, categories, getDTOptions, $state, sweet, rest, Const, friendlyUrl, $uibModal) {
+angular.module("Game").controller('ViewGamesCtrl', function($scope, games, consoles, categories, getDTOptions, $state, sweet, rest, Const, friendlyUrl, $uibModal, notif) {
 	$scope.search = {};
 	$scope.totalElements;
 	$scope.beginning;
@@ -81,6 +81,17 @@ angular.module("Game").controller('ViewGamesCtrl', function($scope, games, conso
 
 		modal.result.then(function() {
 			$scope.clear();
+		});
+	}
+
+	$scope.reloadPrices = function() {
+		sweet.default("Se actualizarán los precios desde el API de Price Charting", function() {
+			rest("game/reloadPrices").get(function() {
+				notif.success("Precios actualizados con éxito");
+				sweet.close();
+			}, function(error) {
+				sweet.close();
+			});
 		});
 	}
 

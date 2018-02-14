@@ -44,9 +44,6 @@ public class WelcomeKitController {
 			search = new Search();
 		}
 		
-		System.out.println("welcomeKitService: " + welcomeKitService);
-		System.out.println("welcomeKitService.getWelcomeKitRepo(): " + welcomeKitService.getWelcomeKitRepo());
-		
 		Page<WelcomeKitLite> welcomeKits = welcomeKitService.getWelcomeKitRepo().findWelcomeKits(search.name, search.startDate, search.endDate, search.province, search.city, search.tracking, search.shippingStatus, new PageRequest(search.page, Const.TABLE_SIZE));
 		return new ResponseEntity<Page<WelcomeKitLite>>(welcomeKits, HttpStatus.OK);
 	}

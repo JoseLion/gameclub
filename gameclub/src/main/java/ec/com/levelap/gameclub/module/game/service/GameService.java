@@ -59,6 +59,7 @@ import ec.com.levelap.gameclub.module.game.repository.GameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
+import ec.com.levelap.gameclub.utils.GameClubMailService;
 
 @Service
 public class GameService extends BaseService<Game> {
@@ -717,6 +718,29 @@ public class GameService extends BaseService<Game> {
 		} else {
 			return null;
 		}
+	}
+	
+	@Transactional
+	public void reloadPrices() throws ServletException {
+		if (gameRepo == null) {
+			gameRepo = ApplicationContextHolder.getContext().getBean(GameRepo.class);
+		}
+		
+		List<Game> games = gameRepo.findAll();
+		for (Game game : games) {
+			if (game.getPriceChartingId() != null) {
+				HashMap<String, String> priceCharting = this.getPriceCharting("" + game.getPriceChartingId());
+				Double newPrice = this.getAvailablePrice(priceCharting);
+				
+				if (newPrice != null) {
+					String percentage = gameRepo.priceChartinNationalitation();
+					newPrice = (double) Math.round(((newPrice*Double.parseDouble(percentage)/100)+newPrice)*100)/100;
+					game.setUploadPayment(newPrice);
+				}
+			}
+		}
+		
+		gameRepo.save(games);
 	}
 	
 	public Double getAvailablePrice(HashMap<String, String> priceChart) {

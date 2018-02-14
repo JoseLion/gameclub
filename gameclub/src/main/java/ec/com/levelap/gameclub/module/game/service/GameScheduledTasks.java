@@ -31,7 +31,7 @@ public class GameScheduledTasks {
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String, String> params = new HashMap<>();
 		params.put("date", df.format(new Date()));
-
+		
 		mailService.sendMailWihTemplate(levelapMail, "PCHUDT", params);
 	}
 }

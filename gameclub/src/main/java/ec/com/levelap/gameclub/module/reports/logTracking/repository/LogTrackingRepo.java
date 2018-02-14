@@ -17,21 +17,20 @@ public interface LogTrackingRepo extends JpaRepository<LogTracking, Long>{
 	@Query("SELECT lt FROM LogTracking lt ")
 	public Page<LogTracking> logTrackingPage(Pageable page);
 	
-	@Query("SELECT lt FROM LogTracking lt WHERE " +
-			"		(UPPER(lt.name) LIKE UPPER('%' || :name || '%') OR  "+
-			"		UPPER(lt.lastName) LIKE UPPER('%' || :name || '%') OR " +
-			"		UPPER(lt.name || ' ' || lt.lastName) LIKE UPPER('%' || :name || '%')) AND " +
-			"		(:document IS NULL OR lt.document like ('%' || :document || '%')) AND " +
-			"		(:game IS NULL OR UPPER(lt.game) like UPPER('%' || :game || '%')) AND " +
-			"		(DATE(lt.creationDate) BETWEEN DATE(:startDate) AND DATE(:endDate)) " +
+	@Query(	"SELECT lt FROM LogTracking lt WHERE " +
+				"(UPPER(lt.name) LIKE UPPER('%' || :name || '%') OR  "+
+				"UPPER(lt.lastName) LIKE UPPER('%' || :name || '%') OR " +
+				"UPPER(lt.name || ' ' || lt.lastName) LIKE UPPER('%' || :name || '%')) AND " +
+				"(:document IS NULL OR lt.document like ('%' || :document || '%')) AND " +
+				"(:game IS NULL OR UPPER(lt.game) like UPPER('%' || :game || '%')) AND " +
+				"(DATE(lt.creationDate) BETWEEN DATE(:startDate) AND DATE(:endDate)) " +
 			"ORDER BY lt.creationDate DESC " 
 			)
 	public Page<LogTracking> findLogTracking(
-									  @Param("name") String name,
-									  @Param("document") String document,
-									  @Param("game") String game,
-									  @Param("startDate") Date startDate,
-									  @Param("endDate") Date endDate,
-									  Pageable page
-									  );
+			@Param("name") String name,
+			@Param("document") String document,
+			@Param("game") String game,
+			@Param("startDate") Date startDate,
+			@Param("endDate") Date endDate,
+			Pageable page);
 }

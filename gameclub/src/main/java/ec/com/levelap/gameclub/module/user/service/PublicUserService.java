@@ -194,6 +194,7 @@ public class PublicUserService extends BaseService<PublicUser> {
 		mailService.sendMailWihTemplate(levelapMail, "CNCTUS", params);
 	}
 	
+	@Transactional
 	public void sendWorkForUs(Map<String, String> work, MultipartFile file) throws ServletException, MessagingException, IllegalStateException, IOException {
 		File attachment = new File(file.getOriginalFilename());
 		file.transferTo(attachment);

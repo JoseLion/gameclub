@@ -9,7 +9,7 @@ angular.module('Reports').controller('LogTrackingCtrl', function($scope, logTrac
 		return getDTOptions.infoCallback($scope.totalElements, $scope.beginning, $scope.end);
 	});
 
-	$scope.dtColumnDefs = getDTOptions.notSortableAll(3);
+	$scope.dtColumnDefs = getDTOptions.notSortableAll(20);
 
 	logTrackings.$promise.then(function(data) {
 		setPagedData(data);

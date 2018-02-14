@@ -94,10 +94,6 @@
                 </div>
             </div>
 
-            <!--<div class="col-xs-12 col-md-3 rating text-right">
-                <div class="col-md-12 content-rating">
-                    <img ng-src="{{myGame.game.contentRating.other}}" alt="{{myGame.game.contentRating.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{myGame.game.contentRating.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
-            -->
             <div class="col-xs-12 col-md-3 rating text-right">
                 <div class="col-xs-2 col-md-12 content-rating">
                     <img ng-src="{{myGame.game.contentRating.other}}">
@@ -117,9 +113,6 @@
                     </form>
                 </div>
 
-                <!--<div class="col-xs-2 col-md-12 category" ng-repeat="cross in myGame.game.categories">
-                    <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}" alt="{{cross.category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox" title="{{croos.category.name}}-GameClub-Alquila-Juegos-Gana-Dinero-Playstation-Nintendo-Xbox">
-                -->
                 <div class="col-xs-2 col-md-12 category" ng-repeat="cross in myGame.game.categories">
                     <img ng-src="{{$archiveUrl + cross.category.blackVector.id}}">
                 
@@ -174,17 +167,6 @@
                     <div class="col-xs-6 col-md-6 form-cell-cost">{{settings[Const.settings.feeLoanLender].value}}% del valor de tu alquiler.</div>
                 </div>
 
-                <!-- <div class="col-xs-12 col-md-12 help-cost-loan valid-group">
-                    <label class=" form-cell">Costo alquiler por semana</label>
-                    <div class=" form-cell">
-                        <input validation type="number" ng-model="myGame.cost" class="coins" min="0.0" step="0.01" value="0.00$" required>
-                    </div>
-                    <div class="  form-cell-sing">
-                        <span>&#36;</span>
-                    </div>
-                    <span class=" form-cell text-left" ng-if="settings[Const.settings.priceChartingGames].type == 'percentage'">(Recomendación del juego: <B>&#36;{{(myGame.game.uploadPayment)/gameLoanPCH | number:2}}</B> )</span>
-                </div> -->
-
                 <div class="col-md-12 help valid-group">
                     <label class=" form-cell">Costo alquiler por semana</label>
                     <div class=" form-cell">
@@ -211,11 +193,10 @@
             <div class="clearfix"></div>
         </section>
     </div>
-    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" title="Tus juegos" ng-if="showGame"></most-played>
+    <most-played games="mostPlayed" previous="getPreviousGame()" next="getNextGame()" ng-if="showGame"></most-played>
     <section class="row upload text-center" ng-if="!isSearching && !showGame">
         <span class="subtitle">Alquila tus juegos</span>
         <p>Ingresa tus juegos a la plataforma para que otros usuarios puedan ALQUILARLOS y puedas ganar DINERO. Con ese DINERO puedes alquilar otros juegos dentro de GAMECLUB.</p>
-        <!-- <p>Sube tus juegos a la plataforma para que puedas prestarlos, ganar DINERO y poder pedir prestado otros juegos.</p> -->
         <button class="btn btn-secundary small" ng-click="showSearch()">Alquila tus juegos</button>
     </section>
     <section class="banner" ng-if="isSearching">

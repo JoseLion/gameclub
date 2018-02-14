@@ -199,5 +199,4 @@ public class WelcomeKitService {
 	public WelcomeKitRepo getWelcomeKitRepo() {
 		return welcomeKitRepo;
 	}
-
 }

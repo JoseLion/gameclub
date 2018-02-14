@@ -47,6 +47,7 @@ angular.module('WorkForUs').controller('WorkForUsCtrl', function($scope, blogsPr
             delete formData.work.file;
 
             openRest("publicUser/sendWorkForUs").multipart(formData, function() {
+                $scope.work = {};
                 notif.success("Información enviada con éxito");
                 $scope.work = {};
                 sweet.close();

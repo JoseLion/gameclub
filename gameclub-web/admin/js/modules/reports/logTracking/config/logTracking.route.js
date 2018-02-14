@@ -18,7 +18,7 @@ angular.module("Reports").config(function($stateProvider){
 			
 			logTrackings: function(rest) {
 				return rest("report/logTracking/find").post();
-			},
+			}
 		}
 
 	});

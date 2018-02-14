@@ -23,7 +23,8 @@ angular.module('Home').controller('HomeCtrl', function($scope, $rootScope, mostP
 
     $scope.sendContactUs = function() {
         sweet.default("Nos enviará un correo con su mensaje e información", function() {
-            rest("publicUser/sendContactUs").post($scope.contactUs, function() {
+            openRest("publicUser/sendContactUs").post($scope.contactUs, function() {
+                $scope.contactUs = {};
                 notif.success("El correo se envió con éxito");
                 sweet.close();
             }, function(error) {

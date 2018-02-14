@@ -1,8 +1,10 @@
-ALTER SEQUENCE log_tracking_seq RESTART WITH 1;
+ALTER SEQUENCE gameclub.log_tracking_seq RESTART WITH 1;
+
+DROP VIEW gameclub.log_tracking;
 
 CREATE OR REPLACE VIEW gameclub.log_tracking AS
 SELECT
-	NEXTVAL('log_tracking_seq') AS id,	
+	NEXTVAL('gameclub.log_tracking_seq') AS id,	
 	lt.box_number,
 	lt.game,
 	lt.price_game,

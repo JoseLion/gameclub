@@ -59,7 +59,6 @@ import ec.com.levelap.gameclub.module.game.repository.GameRepo;
 import ec.com.levelap.gameclub.module.user.repository.PublicUserGameRepo;
 import ec.com.levelap.gameclub.utils.Code;
 import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.gameclub.utils.GameClubMailService;
 
 @Service
 public class GameService extends BaseService<Game> {

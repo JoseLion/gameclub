@@ -154,6 +154,8 @@ public class RestoreService {
 
 		if (isGamer) {
 			restore.setGamerConfirmDate(new Date());
+			restore.getLoan().setBoxNumber(restore.getLoan().getBoxNumber());
+			restore.setLoan(loanService.getLoanRepo().save(restore.getLoan()));
 		} else {
 			restore.setLenderConfirmDate(new Date());
 		}

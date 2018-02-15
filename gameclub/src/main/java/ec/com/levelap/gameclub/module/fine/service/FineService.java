@@ -85,7 +85,6 @@ public class FineService extends BaseService<Fine> {
 				fine.setTransactionId(json.getString("transaction_id"));
 				
 				publicUser = publicUserService.setUserBalance(publicUser.getId(), 0D);
-				
 			} else {
 				fine.setCardPartEnc(null);
 				fine.setBalancePartEnc(fine.getAmountEnc());

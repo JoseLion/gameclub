@@ -177,8 +177,6 @@ public class PaymentezService {
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
 		
-		System.out.println("REST URL: " + url);
-		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.getForEntity(new URI(url), String.class);
 		return response.getBody();

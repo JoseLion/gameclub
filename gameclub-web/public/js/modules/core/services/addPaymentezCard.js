@@ -1,4 +1,4 @@
-angular.module("Core").factory('addPaymentezCard', function($rootScope, $location, $cookies, Const) {
+angular.module("Core").factory('addPaymentezCard', function($rootScope, $location, Const) {
 	return function() {
 		let today = new Date();
         let token = "application_code=" + gcProperties.paymentez.appCode +
@@ -15,7 +15,7 @@ angular.module("Core").factory('addPaymentezCard', function($rootScope, $locatio
                 "application_code=" + gcProperties.paymentez.appCode +
                 "&uid=" + $rootScope.currentUser.id +
                 "&email=" + encodeURIComponent($rootScope.currentUser.username) +
-                "&session_id=" + $cookies.get(Const.cookieToken) +
+                "&session_id=" + gcProperties.paymentez.sessionID +
                 "&auth_timestamp=" + today.getTime() +
                 "&auth_token=" + sha256(token) +
                 "&response_type=redirect" +

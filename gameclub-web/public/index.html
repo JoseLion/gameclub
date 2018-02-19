@@ -205,6 +205,13 @@
         <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=253372378492245&ev=PageView&noscript=1"/></noscript>
         <!-- DO NOT MODIFY -->
         <!-- End Facebook Pixel Code -->
+
+        <script type="text/javascript">
+            function initSessionID(sessionID) {
+                gcProperties.paymentez.sessionID = sessionID;
+            }
+        </script>
+        <script class="paymentez-session-id-js" src="https://ccapi-stg.paymentez.com/js/paymentez-session-id.js?onload=initSessionID"></script>
     </head>
 
     <body ng-controller="MainCtrl as main">

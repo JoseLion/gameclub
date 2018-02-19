@@ -5,7 +5,7 @@ angular.module("Core").factory('addPaymentezCard', function($rootScope, $locatio
                     "&email=" + encodeURIComponent($rootScope.currentUser.username) +
                     "&failure_url=" + encodeURIComponent($location.$$absUrl) +
                     "&response_type=redirect" +
-                    "&session_id=" + $cookies.get(Const.cookieToken) +
+                    "&session_id=" + gcProperties.paymentez.sessionID +
                     "&success_url=" + encodeURIComponent($location.$$absUrl) +
                     "&uid=" + $rootScope.currentUser.id +
                     "&" + today.getTime() +

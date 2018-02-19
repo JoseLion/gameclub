@@ -70,7 +70,7 @@ public class PaymentezService {
 		Date today = new Date();
 		String plainText = "application_code=" + APP_CODE +
 				"&card_reference=" + cardReference +
-				"&session_id=" + session.getId() +
+				"&session_id=" + session.getId().substring(0, Const.PAYMENTEZ_SESSION_ID_LENGTH) +
 				"&uid=" + currentUser.getId() +
 				"&" + today.getTime() +
 				"&" + APP_KEY;
@@ -81,7 +81,7 @@ public class PaymentezService {
 		String url = BASE_URL + "/api/cc/delete" +
 				"?application_code=" + APP_CODE +
 				"&card_reference=" + cardReference +
-				"&session_id=" + session.getId() +
+				"&session_id=" + session.getId().substring(0, Const.PAYMENTEZ_SESSION_ID_LENGTH) +
 				"&uid=" + currentUser.getId() +
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
@@ -102,7 +102,7 @@ public class PaymentezService {
 				"&ip_address=" + ipAddress +
 				"&product_amount=" + String.format("%1.2f", amount.doubleValue()).replaceAll(",", ".") +
 				"&product_description=" + URLEncoder.encode(description, StandardCharsets.UTF_8.name()) +
-				"&session_id=" + session.getId() +
+				"&session_id=" + session.getId().substring(0, Const.PAYMENTEZ_SESSION_ID_LENGTH) +
 				"&uid=" + currentUser.getId() +
 				"&vat=" + String.format("%1.2f", taxes.doubleValue()).replaceAll(",", ".") +
 				"&" + today.getTime() +
@@ -119,7 +119,7 @@ public class PaymentezService {
 				"&ip_address=" + ipAddress +
 				"&product_amount=" + String.format("%1.2f", amount.doubleValue()).replaceAll(",", ".") +
 				"&product_description=" + URLEncoder.encode(description, StandardCharsets.UTF_8.name()) +
-				"&session_id=" + session.getId() +
+				"&session_id=" + session.getId().substring(0, Const.PAYMENTEZ_SESSION_ID_LENGTH) +
 				"&uid=" + currentUser.getId() +
 				"&vat=" + String.format("%1.2f", taxes.doubleValue()).replaceAll(",", ".") +
 				"&buyer_fiscal_number=" + currentUser.getDocument() +
@@ -161,7 +161,7 @@ public class PaymentezService {
 		Date today = new Date();
 		String plainText = "application_code=" + APP_CODE +
 				"&email=" + URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8.name()) +
-				"&session_id=" + session.getId() +
+				"&session_id=" + session.getId().substring(0, Const.PAYMENTEZ_SESSION_ID_LENGTH) +
 				"&uid=" + user.getId() +
 				"&" + today.getTime() +
 				"&" + APP_KEY;
@@ -173,7 +173,7 @@ public class PaymentezService {
 				"?application_code=" + APP_CODE +
 				"&uid=" + user.getId() +
 				"&email=" + URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8.name()) + 
-				"&session_id=" + session.getId() +
+				"&session_id=" + session.getId().substring(0, Const.PAYMENTEZ_SESSION_ID_LENGTH) +
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
 		

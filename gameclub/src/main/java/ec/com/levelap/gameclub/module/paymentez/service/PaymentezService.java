@@ -283,6 +283,7 @@ public class PaymentezService {
 			fine.setAuthCode(response.get("authorization_code"));
 			fine = fineService.getFineRepo().save(fine);
 			this.sendMailFine(fine);
+			System.out.println("CONFIRMATION MAIL SENT!");
 		} else {
 			System.err.println("UNABLE TO FIND LOAN, WELCOME KIT OR FINE WITH TRANSACTION_ID " + response.get("transaction_id"));
 			

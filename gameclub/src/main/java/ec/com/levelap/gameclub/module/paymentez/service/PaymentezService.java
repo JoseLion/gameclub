@@ -30,10 +30,13 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import ec.com.levelap.gameclub.module.fine.entity.Fine;
+import ec.com.levelap.gameclub.module.fine.service.FineService;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
+import ec.com.levelap.gameclub.module.loan.service.LoanService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
+import ec.com.levelap.gameclub.module.welcomeKit.service.WelcomeKitService;
 import ec.com.levelap.gameclub.utils.Const;
 import ec.com.levelap.gameclub.utils.GameClubMailService;
 import ec.com.levelap.mail.entity.LevelapMail;
@@ -42,6 +45,15 @@ import ec.com.levelap.mail.entity.LevelapMail;
 public class PaymentezService {
 	@Autowired
 	private PublicUserService publicUserService;
+	
+	@Autowired
+	private LoanService loanService;
+	
+	@Autowired
+	private WelcomeKitService welcomeKitService;
+	
+	@Autowired
+	private FineService fineService;
 	
 	@Value("${levelap.paymentez.base-url}")
 	private String BASE_URL;
@@ -252,5 +264,35 @@ public class PaymentezService {
 		params.put("balancePart", "$" + String.format("%.2f", fine.getCardPart()));
 		
 		mailService.sendMailWihTemplate(levelapMail, "MSPYCF", params);
+	}
+	
+	public void sendConfirmationMails(Map<String, String> response, int retries) throws IOException, GeneralSecurityException, MessagingException, InterruptedException {
+		Loan loan = loanService.getLoanRepo().findByTransactionId(response.get("transaction_id"));
+		WelcomeKit welcomeKit = welcomeKitService.getWelcomeKitRepo().findByTransactionId(response.get("transaction_id"));
+		Fine fine = fineService.getFineRepo().findByTransactionId(response.get("transaction_id"));
+		
+		if (loan != null) {
+			loan.setAuthCode(response.get("authorization_code"));
+			loan = loanService.getLoanRepo().save(loan);
+			this.sendMailLoan(loan);
+		} else if (welcomeKit != null) {
+			welcomeKit.setAuthCode(response.get("authorization_code"));
+			welcomeKit = welcomeKitService.getWelcomeKitRepo().save(welcomeKit);
+			this.sendMailShippinKit(welcomeKit);
+		} else if (fine != null) {
+			fine.setAuthCode(response.get("authorization_code"));
+			fine = fineService.getFineRepo().save(fine);
+			this.sendMailFine(fine);
+		} else {
+			System.err.println("UNABLE TO FIND LOAN, WELCOME KIT OR FINE WITH TRANSACTION_ID " + response.get("transaction_id"));
+			
+			if (retries < 3) {
+				Thread.sleep(3000);
+				System.err.println("RETRYING AFTER 3 SECONDS...");
+				sendConfirmationMails(response, retries++);
+			} else {
+				System.err.println("RETRY LIMIT REACHED!");
+			}
+		}
 	}
 }

@@ -20,7 +20,7 @@ angular.module('Search').controller('SearchCtrl', function($scope, $rootScope, g
                 consoleId: $scope.search.console.id,
                 page: $scope.search.page,
                 title: friendlyUrl(($scope.search.name != null ? ($scope.search.name.trim() + " ") : "") + $scope.search.console.name + ($scope.search.category != null ? (" " + $scope.search.category.name) : "") + " page " + ($scope.search.page != null ? $scope.search.page + 1 : 1))
-            });
+            }, {reload: true});
         }
     }
 

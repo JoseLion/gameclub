@@ -24,8 +24,15 @@ angular.module('Core').directive('ballPaging', function($ocLazyLoad) {
 			$scope.$watch("pages", function(newValue, oldValue) {
 				if (newValue != null) {
 					$scope.blogPage = [];
-					for(let i = 0; i < newValue; i++) {
+					$scope.pageList = [];
+
+					for (let i = 0; i < newValue; i++) {
 						$scope.blogPage.push({
+							number: i,
+							active: ($scope.ngModel == i ? true : false)
+						});
+
+						$scope.pageList.push({
 							number: i,
 							active: ($scope.ngModel == i ? true : false)
 						});

@@ -286,10 +286,11 @@ public class PaymentezService {
 		} else {
 			System.err.println("UNABLE TO FIND LOAN, WELCOME KIT OR FINE WITH TRANSACTION_ID " + response.get("transaction_id"));
 			
-			if (retries < 3) {
+			if (retries < 10) {
 				Thread.sleep(3000);
-				System.err.println("RETRYING AFTER 3 SECONDS...");
-				sendConfirmationMails(response, retries++);
+				retries++;
+				System.err.println("RETRYING(" + retries + ")" + "AFTER 3 SECONDS...");
+				sendConfirmationMails(response, retries);
 			} else {
 				System.err.println("RETRY LIMIT REACHED!");
 			}

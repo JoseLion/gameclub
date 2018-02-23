@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="logTracking" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c8f36c1e-6aad-481d-9192-e3ea21c685c1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="189"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="804"/>
 	<parameter name="name" class="java.lang.String">
@@ -146,7 +146,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center">
 					<font size="16" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Retiro de Saldo]]></text>
+				<text><![CDATA[Log Tracking]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" mode="Transparent" x="1" y="1" width="802" height="28" uuid="54b111b7-79a5-44ee-ba38-ec8153e94d0c"/>
@@ -443,7 +443,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 	<detail>
 		<band height="50" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="0" width="42" height="50" uuid="88ba9fc6-60a7-4c68-9e3b-4f8ad5f06654"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -454,7 +454,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{box_number}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="42" y="0" width="40" height="50" uuid="a3dd526e-5625-4fe2-9c33-ffb5eb4bd902"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -465,7 +465,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{game}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="82" y="0" width="40" height="50" uuid="acab9598-f5f3-4ba2-a38c-b5b318192f9d"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -476,7 +476,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{price_game}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="122" y="0" width="40" height="50" uuid="846d52b4-4779-4f38-9acc-2090a611ff0b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -487,7 +487,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{referral_guide}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="162" y="0" width="40" height="50" uuid="5d6d609e-548f-4e96-913a-8e5377521e6c"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -498,7 +498,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="202" y="0" width="40" height="50" uuid="c47b12f4-a4cc-4e15-9cf1-7df7698c9ae0"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -509,7 +509,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{last_name}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="242" y="0" width="40" height="50" uuid="12b32021-c7f7-4ddb-ba42-df9adc244570"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -520,7 +520,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{city}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="282" y="0" width="40" height="50" uuid="1a14ad35-f89a-4e37-ad6f-5117ca6e763a"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -531,7 +531,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="322" y="0" width="40" height="50" uuid="c6e3b906-b582-4a57-b275-17fc5bd984e3"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -542,7 +542,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{mail}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="362" y="0" width="40" height="50" uuid="8adac38d-7b6b-4869-8a8e-4743cf1b1546"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -553,7 +553,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="402" y="0" width="40" height="50" uuid="626181ad-4180-455b-abb3-56a8e8916017"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -564,7 +564,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{contact_phone}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="442" y="0" width="40" height="50" uuid="232e9c9f-d599-49e3-a187-e5f419424a2f"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -575,7 +575,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{name_lender}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="482" y="0" width="40" height="50" uuid="e8d4c007-849a-4e56-bfde-e55da5fdf922"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -586,7 +586,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{last_name_lender}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="522" y="0" width="40" height="50" uuid="fc2e2b1c-2239-40e4-aac0-c2e2e88766b0"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -597,7 +597,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{city_lender}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="562" y="0" width="40" height="50" uuid="820ba9c0-91c5-4208-a975-cdf24ba567e9"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -608,7 +608,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{address_lender}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="602" y="0" width="40" height="50" uuid="7aaef7a4-2200-4f1f-900c-f756c6275114"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -619,7 +619,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{mail_lender}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="642" y="0" width="40" height="50" uuid="ea284627-9c69-4608-a3e4-613bfec865dc"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -630,7 +630,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{document_lender}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="682" y="0" width="40" height="50" uuid="532ae82a-a328-4700-8fd4-8d24441684da"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -641,7 +641,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{contact_phone_lender}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="722" y="0" width="40" height="50" uuid="2857605c-7b62-4010-bfcf-3408b9676202"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -652,7 +652,7 @@ ORDER BY log_tracking.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{transaction_type}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="762" y="0" width="40" height="50" uuid="9fb37444-52c5-48a9-920f-20ba6a57e3e8"/>
 				<box>
 					<topPen lineWidth="1.0"/>

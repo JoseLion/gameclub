@@ -393,7 +393,7 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
                 	});
                 }
             }, (error) => {
-            	notif.danger("No se pudo obtener la lista de tarjetas de crédito. Por favor intente más tarde!")ñ
+            	notif.danger("No se pudo obtener la lista de tarjetas de crédito. Por favor intente más tarde!");
             });
 		}
 	}

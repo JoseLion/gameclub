@@ -1,4 +1,6 @@
-angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, reviews, addCardError, cardsList, rest, sweet, notif, forEach, addPaymentezCard) {
+angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, $cookies, reviews, cardsList, rest, sweet, notif, forEach, addPaymentezCard) {
+    $scope.paymentez = {};
+
     reviews.$promise.then(function(data) {
         $scope.gamerAverage = data.gamerAverage * 100.0 / 5.0;
         $scope.lenderAverage = data.lenderAverage * 100.0 / 5.0;
@@ -7,10 +9,6 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
 
         setPagedData(data.reviews);
     });
-
-    if (addCardError != null) {
-        $scope.addCardError = addCardError;
-    }
 
     cardsList.$promise.then(function(data) {
         $scope.cardsList = data;
@@ -42,7 +40,13 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
     }
 
     $scope.addCard = function() {
-        addPaymentezCard();
+        $scope.paymentez.url = addPaymentezCard();
+        $scope.isAddingCard = true;
+    }
+
+    $scope.cancelAddCard = function() {
+        $scope.isAddingCard = false;
+        $scope.paymentez = {};
     }
 
     $scope.removeCard = function(card) {
@@ -57,6 +61,29 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
             });
         });
     }
+
+    $scope.getPaymentezCookies = function() {
+        return {
+            success: $cookies.get('pmntz_add_success'),
+            error: $cookies.get('pmntz_error_message')
+        };
+    }
+
+    $scope.$watch($scope.getPaymentezCookies, (newValue, oldValue) => {
+        console.log("paymentezCookies: ", newValue);
+
+        if (newValue.success != null) {
+            rest("paymentez/listCards", true).get((data) => {
+                $scope.cardsList = data;
+            });
+        }
+
+        if (newValue.error != null) {
+            $scope.addCardError = newValue;
+        }
+
+        $scope.cancelAddCard();
+    }, true);
 
     function setPagedData(data) {
         if ($scope.reviews == null) {

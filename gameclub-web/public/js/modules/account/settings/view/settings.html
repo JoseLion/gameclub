@@ -44,9 +44,12 @@
             </div>
             <div class="col-md-12 col-xs-12 total" ng-if="cardsList.length < 2">
                 <h2 class="subtitle">Ingresar forma de pago:</h2>
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-secundary full small" ng-click="addCard()">Agregar Tarjeta</button>
+                <div class="col-md-12 no-padding-h">
+                    <button type="button" class="btn btn-secundary full small" ng-click="addCard()" ng-if="!isAddingCard">Agregar Tarjeta</button>
+
                     <span ng-if="addCardError">{{addCardError}}</span>
+                    <iframe id="paymentez-iframe" class="paymentezFrame" ng-src="{{paymentez.url}}" ng-if="isAddingCard"></iframe>
+                    <button type="button" class="btn btn-secundary full small" ng-click="cancelAddCard()" ng-if="isAddingCard">Cancelar</button>
                 </div>
             </div>
         </div>

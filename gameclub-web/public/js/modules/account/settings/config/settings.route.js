@@ -3,7 +3,7 @@ angular.module('Settings').config(function($stateProvider) {
 
 	$stateProvider
 	.state(prefix + 'settings', {
-		url: '/settings?error_value',
+		url: '/settings',
 		templateUrl: 'js/modules/account/settings/view/settings.html',
 		data: {displayName: 'GameClub'},
 		metaTags: {
@@ -22,10 +22,6 @@ angular.module('Settings').config(function($stateProvider) {
 
 			reviews: function(rest) {
 				return rest("review/getReviewsOfCurrentUser/:page").get({page: 0});
-			},
-
-			addCardError: function($stateParams) {
-				return $stateParams.error_value;
 			},
 
 			cardsList: function(rest) {

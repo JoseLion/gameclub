@@ -50,6 +50,31 @@ angular.module("Core").factory('sweet', function(SweetAlert, Const, notif) {
 			});
 		},
 
+		custom: function(title, message, confirm, cancel) {
+			SweetAlert.swal({
+				title: title,
+				text: message,
+				type: "info",
+				showCancelButton: true,
+				confirmButtonText: "Si",
+				cancelButtonText: "No",
+				closeOnConfirm: false,
+				closeOnCancel: false,
+				showLoaderOnConfirm: true
+			},
+			function(isConfirm) {
+				if (isConfirm) {
+					confirm();
+				} else {
+					if (cancel == null) {
+						swal.close();
+					} else {
+						cancel();
+					}
+				}
+			});
+		},
+
 		close: function() {
 			swal.close();
 		},

@@ -100,6 +100,12 @@ public class LoanController {
 		return new ResponseEntity<>(loan, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="payAllWithCreditCard/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Loan> payAllWithCreditCard(@PathVariable Long id) throws ServletException, IOException, GeneralSecurityException {
+		Loan loan = loanService.payAllWithCreditCard(id);
+		return new ResponseEntity<Loan>(loan, HttpStatus.OK);
+	}
+	
 	private static class Search {
 		public String lender = "";
 		

@@ -97,7 +97,6 @@ public class LoanService {
 	@Value("${game-club.real-times}")
 	private boolean realTimes;
 	
-
 	@Transactional
 	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart, Double shippingCost,
 			Double feeGameClub, Double taxes)
@@ -363,6 +362,19 @@ public class LoanService {
 		LoanLite loanLite = loanRepo.findById(loan.getId());
 
 		return loanLite;
+	}
+	
+	@Transactional
+	public Loan payAllWithCreditCard(Long id) throws ServletException, IOException, GeneralSecurityException {
+		Loan loan = loanRepo.findOne(id);
+		File keyGamer = File.createTempFile("keyGamer", ".tmp");
+		FileUtils.writeByteArrayToFile(keyGamer, loan.getGamer().getPrivateKey());
+		
+		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
+		loan.setBalancePartEnc(cryptoService.encrypt("0", keyGamer));
+		loan = loanRepo.save(loan);
+		
+		return loan;
 	}
 
 	@Transactional

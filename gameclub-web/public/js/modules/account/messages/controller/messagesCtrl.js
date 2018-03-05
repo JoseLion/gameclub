@@ -325,54 +325,76 @@ angular.module("Messages").controller('MessagesCtrl', function($scope, $rootScop
 	}
 
 	$scope.confirmGamer = function() {
-		let isValid = true;
+		if ($rootScope.currentUser.shownBalance >= $scope.loan.balancePart) {
+			let isValid = true;
 
-		if ($scope.loan.gamerAddress == null || $scope.loan.gamerAddress == '') {
-			notif.danger("El campo dirección es requerido para continuar");
-			isValid = false;
-		}
+			if ($scope.loan.gamerAddress == null || $scope.loan.gamerAddress == '') {
+				notif.danger("El campo dirección es requerido para continuar");
+				isValid = false;
+			}
 
-		if ($scope.loan.gamerGeolocation == null) {
-			notif.danger("La geolocalización es requerida para continuar");
-			isValid = false;
-		}
+			if ($scope.loan.gamerGeolocation == null) {
+				notif.danger("La geolocalización es requerida para continuar");
+				isValid = false;
+			}
 
-		if ($scope.loan.gamerReceiver == null || $scope.loan.gamerReceiver == '') {
-			notif.danger("El campo Persona de Entrega es requerido para continuar");
-			isValid = false;
-		}
+			if ($scope.loan.gamerReceiver == null || $scope.loan.gamerReceiver == '') {
+				notif.danger("El campo Persona de Entrega es requerido para continuar");
+				isValid = false;
+			}
 
-		if (isValid) {
-			sweet.default("Se realizará el pago del alquiler", function() {
-				$scope.loan.isDisabled = true;
-
-				rest("loan/confirmGamer").post($scope.loan, function(data) {
-					$scope.loan = data;
-					$rootScope.currentUser.shownBalance -= data.balancePart;
+			if (isValid) {
+				sweet.default("Se realizará el pago del alquiler", function() {
 					$scope.loan.isDisabled = true;
 
-					notif.success("Pago realizado con éxito");
-					sweet.close();
-					canvasToBottom();
+					rest("loan/confirmGamer").post($scope.loan, function(data) {
+						$scope.loan = data;
+						$rootScope.currentUser.shownBalance -= data.balancePart;
+						$scope.loan.isDisabled = true;
 
-					if ($rootScope.currentUser.referrer != null) {
-						SweetAlert.swal("Genial!", "Tu saldo promocional por referido ha sido acreditado", "info");
-						$rootScope.currentUser.referrer = null;
-					}
-				}, function(error) {
-					sweet.close();
-				});
-				
-				if ($scope.loan.saveChanges == true) {
-					$rootScope.currentUser.billingAddress = $scope.loan.gamerAddress;
-					$rootScope.currentUser.geolocation = $scope.loan.gamerGeolocation;
-					$rootScope.currentUser.receiver = $scope.loan.gamerReceiver;
+						notif.success("Pago realizado con éxito");
+						sweet.close();
+						canvasToBottom();
 
-					rest("publicUser/save").post($rootScope.currentUser, function(data) {
-						$rootScope.currentUser = data;
+						if ($rootScope.currentUser.referrer != null) {
+							SweetAlert.swal("Genial!", "Tu saldo promocional por referido ha sido acreditado", "info");
+							$rootScope.currentUser.referrer = null;
+						}
+					}, function(error) {
+						sweet.close();
 					});
-				}
-			});
+					
+					if ($scope.loan.saveChanges == true) {
+						$rootScope.currentUser.billingAddress = $scope.loan.gamerAddress;
+						$rootScope.currentUser.geolocation = $scope.loan.gamerGeolocation;
+						$rootScope.currentUser.receiver = $scope.loan.gamerReceiver;
+
+						rest("publicUser/save").post($rootScope.currentUser, function(data) {
+							$rootScope.currentUser = data;
+						});
+					}
+				});
+			}
+		} else {
+			rest("paymentez/listCards", true).get((data) => {
+                if (data =! null && data.length > 0) {
+                	sweet.custom("Saldo insuficiente", "No tienes suficiente balance para continuar con la transacción. Quieres realizar todo el pago con tu tarjeta de crédito?", () => {
+                		rest("loan/payAllWithCreditCard/:id").get({id: $scope.loan.id}, (data) => {
+                			$scope.loan = data;
+                			sweet.close();
+                		}, (error) => {
+                			sweet.close();
+                		});
+					});
+                } else {
+                	sweet.custom("Saldo insuficiente", "No tienes suficiente balance para continuar con la transacción. Quieres ingresar una tarjeta de crédito para realizar el pago?", () => {
+                		$state.go('gameclub.account.settings');
+                		sweet.close();
+                	});
+                }
+            }, (error) => {
+            	notif.danger("No se pudo obtener la lista de tarjetas de crédito. Por favor intente más tarde!")ñ
+            });
 		}
 	}
 

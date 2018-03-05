@@ -1,4 +1,3 @@
-************************ BEGIN - LENDER MESSAGE FLOW ************************ -->
 <div class="date">{{loan.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
 <div class="red-box">
 	<span>Hola {{currentUser.name}},</span>
@@ -301,7 +300,5 @@
 	<br>
 	<span>y escribió una opinión:</span>
 	<br>
-	<!-- <span class="text-black">{{loan.review.lenderComment}}</span> -->
 	<textarea validation type="text" class="review" ng-model="loan.review.lenderComment" rows="3" ng-disabled="loan.lenderReviewDate" readonly></textarea>
 </div>
-<!-- ************************ END - LENDER MESSAGE FLOW ************************

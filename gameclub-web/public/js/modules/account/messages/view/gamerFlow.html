@@ -1,4 +1,3 @@
-************************ BEGIN - GAMER MESSAGE FLOW ************************ -->
 <div class="date">{{loan.creationDate | date: 'dd/MM/yy - HH:mm'}}</div>
 <div class="red-box">
 	<span>Hola {{currentUser.name}},</span>
@@ -110,12 +109,11 @@
 	</form>
 </div>
 
-<div class="date" ng-if="!loan.status">{{loan.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
-<div class="blue-box small-box text-center" ng-if="!loan.status">
-	<div class="col-md-12">
-		<span ng-if="loan.wasTimedOut && !loan.lenderConfirmed">{{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}. no ha confirmado la dirección de retiro, la solicitud ha sido cancelada de forma automática.</span>
-		<span ng-if="loan.wasTimedOut && loan.lenderConfirmed">Han pasado 24 horas y no se a confirmado el alquiler, la solicitud ha sido cancelada de forma automática.</span>
-		<span ng-if="!loan.wasTimedOut">Alquiler Cancelado</span>
+<div class="date" ng-if="!loan.status && loan.wasTimedOut">{{loan.updateDate | date: 'dd/MM/yy - HH:mm'}}</div>
+<div class="blue-box small-box text-center" ng-if="!loan.status && loan.wasTimedOut">
+	<div class="box-label col-md-12">
+		<span ng-if="!loan.lenderConfirmed">{{loan.publicUserGame.publicUser.name}} {{loan.publicUserGame.publicUser.lastName | limitTo: 1}}. no ha confirmado la dirección de retiro, la solicitud ha sido cancelada de forma automática.</span>
+		<span ng-if="loan.lenderConfirmed">Han pasado 24 horas y no se a confirmado el alquiler, la solicitud ha sido cancelada de forma automática.</span>
 	</div>
 
 	<div class="clearfix"></div>
@@ -329,6 +327,5 @@
 	<br>
 	<span>y escribió una opinión:</span>
 	<br>
-		<textarea validation type="text" class="review" ng-model="loan.review.gamerComment" rows="3" ng-disabled="loan.lenderReviewDate" readonly></textarea>
+	<textarea validation type="text" class="review" ng-model="loan.review.gamerComment" rows="3" ng-disabled="loan.lenderReviewDate" readonly></textarea>
 </div>
-<!-- ************************ END - GAMER MESSAGE FLOW ************************

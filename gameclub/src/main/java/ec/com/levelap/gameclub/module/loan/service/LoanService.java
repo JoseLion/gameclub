@@ -162,13 +162,15 @@ public class LoanService {
 			}
 
 			final Long taskLoanId = loan.getId();
-			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(),
-					Loan.class.getSimpleName() + "-W1-" + loan.getId(), new Runnable() {
-						@Override
-						public void run() {
-							cancelLoanByTimeout(taskLoanId);
-						}
-					});
+			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(), Loan.class.getSimpleName() + "-W1-" + loan.getId(), new Runnable() {
+				@Override
+				public void run() {
+					cancelLoanByTimeout(taskLoanId);
+				}
+			});
+		} else {
+			loan.getGamerMessage().setRead(false);
+			messageService.getMessageRepo().save(loan.getGamerMessage());
 		}
 
 		loan = loanRepo.save(loan);

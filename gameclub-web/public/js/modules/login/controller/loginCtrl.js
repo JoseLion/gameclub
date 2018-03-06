@@ -155,14 +155,6 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 						};
 
 						logIn(credentials);
-						
-						let formData = {
-							user: $rootScope.currentUser
-						};
-
-						rest("publicUser/save").multipart(formData, function(data) {
-							$rootScope.currentUser = data;
-						}, function(error) {});
 					}
 				});
 			} else {

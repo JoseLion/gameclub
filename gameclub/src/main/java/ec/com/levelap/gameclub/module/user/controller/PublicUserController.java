@@ -54,7 +54,7 @@ public class PublicUserController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public ResponseEntity<?> save(@RequestBody PublicUser user, HttpServletRequest request) throws ServletException, IOException {
 		return this.publicUserService.save(user, false, request);
 	}

@@ -181,7 +181,8 @@ angular.module('Game').controller('GameCtrl', function($scope, $rootScope, game,
 
     $scope.openMapsModal = function() {
         geolocation().result.then(function(pos) {
-            $scope.loan.gamerGeolocation = pos;
+            $scope.loan.gamerGeolocation = {x: pos.lat, y: pos.lng};
+            console.log("$scope.loan.gamerGeolocation: ", $scope.loan.gamerGeolocation);
         });
     }
 

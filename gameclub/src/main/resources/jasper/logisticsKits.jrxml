@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="logisticsKits" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="74de984e-d8e5-44b2-8897-56729dbe1c87">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
@@ -191,8 +191,8 @@ ORDER BY logistics_kits.creation_date DESC]]>
 	<detail>
 		<band height="23" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
-			<textField>
-				<reportElement x="0" y="0" width="90" height="23" uuid="07153d28-36fe-43ed-8dae-248a71c0aa30"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="90" height="23" uuid="07153d28-36fe-43ed-8dae-248a71c0aa30"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -204,8 +204,8 @@ ORDER BY logistics_kits.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="90" y="0" width="89" height="23" uuid="9766faa6-3789-4e37-a624-4da3aa8b6d7e"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="90" y="0" width="89" height="23" uuid="9766faa6-3789-4e37-a624-4da3aa8b6d7e"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -217,8 +217,8 @@ ORDER BY logistics_kits.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{last_name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="179" y="0" width="89" height="23" uuid="99e4aef5-7b49-4a27-b078-b891dac8db52"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="179" y="0" width="89" height="23" uuid="99e4aef5-7b49-4a27-b078-b891dac8db52"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -230,8 +230,8 @@ ORDER BY logistics_kits.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{city}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="268" y="0" width="89" height="23" uuid="50590046-dd0d-4ac6-a44f-6218a38bd39d"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="268" y="0" width="89" height="23" uuid="50590046-dd0d-4ac6-a44f-6218a38bd39d"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -243,8 +243,8 @@ ORDER BY logistics_kits.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="357" y="0" width="89" height="23" uuid="6163d8c3-a4c3-41f6-b095-ff240ff82261"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="357" y="0" width="89" height="23" uuid="6163d8c3-a4c3-41f6-b095-ff240ff82261"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -256,8 +256,8 @@ ORDER BY logistics_kits.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{mail}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="446" y="0" width="89" height="23" uuid="7a71ce7f-eaed-4fe0-85e5-22ca08888d77"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="446" y="0" width="89" height="23" uuid="7a71ce7f-eaed-4fe0-85e5-22ca08888d77"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -269,8 +269,8 @@ ORDER BY logistics_kits.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="535" y="0" width="89" height="23" uuid="492e24f9-aa0b-4a9f-8b9a-0abe566ecffe"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="535" y="0" width="89" height="23" uuid="492e24f9-aa0b-4a9f-8b9a-0abe566ecffe"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -282,8 +282,8 @@ ORDER BY logistics_kits.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{contact_phone}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="624" y="0" width="89" height="23" uuid="ef7cb976-9cee-4479-b6e6-31820885241f"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="624" y="0" width="89" height="23" uuid="ef7cb976-9cee-4479-b6e6-31820885241f"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -295,8 +295,8 @@ ORDER BY logistics_kits.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{transaction_type}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="713" y="0" width="89" height="23" uuid="5a1e6f99-7110-4cd0-b740-4178e7c98229"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="713" y="0" width="89" height="23" uuid="5a1e6f99-7110-4cd0-b740-4178e7c98229"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>

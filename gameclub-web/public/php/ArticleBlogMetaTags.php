@@ -12,6 +12,7 @@
 	<head>
 		<title><?php echo $blog->title;?></title>
 		<meta name="description" content="<?php echo $blog->summary; ?>" />
+		<meta name="keywords" content="<?php echo $blog->keywords; ?>" />
 		<meta property="og:url" content="" />
 		<meta property="og:title" content="<?php echo $blog->title; ?>" />
 		<meta property="og:type" content="article" />

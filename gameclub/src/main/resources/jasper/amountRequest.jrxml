@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="amountRequest" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="68241175-6db6-4517-b355-48667caf48d2">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="188"/>
@@ -189,8 +189,8 @@ ORDER BY ar.application_date DESC]]>
 	<detail>
 		<band height="27" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
-			<textField>
-				<reportElement x="0" y="0" width="137" height="27" uuid="972a2834-4be5-4c30-b43c-b08a8c572c93"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="137" height="27" uuid="972a2834-4be5-4c30-b43c-b08a8c572c93"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -200,8 +200,8 @@ ORDER BY ar.application_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{application_date}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="137" y="0" width="133" height="27" uuid="3519dabc-1334-45c2-a2b9-428121ec4d27"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="137" y="0" width="133" height="27" uuid="3519dabc-1334-45c2-a2b9-428121ec4d27"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -211,8 +211,8 @@ ORDER BY ar.application_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="270" y="0" width="133" height="27" uuid="6d282ec1-8c64-4fd7-af2f-6cc0ee095a0b"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="270" y="0" width="133" height="27" uuid="6d282ec1-8c64-4fd7-af2f-6cc0ee095a0b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -222,8 +222,8 @@ ORDER BY ar.application_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="403" y="0" width="133" height="27" uuid="8646949a-6b9a-4c4a-98ce-4f8f8c6b2924"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="403" y="0" width="133" height="27" uuid="8646949a-6b9a-4c4a-98ce-4f8f8c6b2924"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -233,8 +233,8 @@ ORDER BY ar.application_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{amount}.doubleValue()]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="536" y="0" width="133" height="27" uuid="f98ec8e6-e28d-43e4-8b39-a6d80612fa09"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="536" y="0" width="133" height="27" uuid="f98ec8e6-e28d-43e4-8b39-a6d80612fa09"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -244,8 +244,8 @@ ORDER BY ar.application_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="669" y="0" width="133" height="27" uuid="5e758d7f-a8b0-4f7f-a4cc-4ac656ce9857"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="669" y="0" width="133" height="27" uuid="5e758d7f-a8b0-4f7f-a4cc-4ac656ce9857"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>

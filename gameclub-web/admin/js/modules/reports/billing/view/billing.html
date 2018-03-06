@@ -109,15 +109,15 @@
 					<tr ng-repeat="bill in billing">
 						<td>{{bill.fullName}}</td>
 						<td>{{bill.document}}</td>
-						<td>{{bill.billAddress}}</td>
+						<td>{{bill.billingAddress}}</td>
 						<td>{{bill.contactPhone}}</td>
 						<td>{{bill.mail}}</td>
 						<td>{{bill.game}}</td>
 						<td>{{bill.cost | currency:'$ ':2}}</td>
 						<td>{{bill.weeks}}</td>
-						<td>{{((bill.cost*bill.weeks)+(bill.shippingCost)+(bill.feeGgameClub)) | currency:'$ ':2}}</td>
-						<td>{{bill.taxes | currency:'$ ':2}}</td>
-						<td>{{((bill.cost*bill.weeks)+(bill.shippingCost)+(bill.feeGgameClub)+(bill.taxes)) | currency:'$ ':2}}</td>
+						<td>{{((bill.cost*bill.weeks)+(bill.shippingCost)+(bill.feeGgameClub)) | currency:'$': 2}}</td>
+						<td>{{bill.taxes | currency:'$': 2}}</td>
+						<td>{{((bill.cost*bill.weeks)+(bill.shippingCost)+(bill.feeGgameClub)+(bill.taxes)) | currency:'$': 2}}</td>
 					</tr>
 				</tbody>
 			</table>

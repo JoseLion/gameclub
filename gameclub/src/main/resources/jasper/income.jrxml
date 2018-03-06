@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="income" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eb0dd645-d2d9-4028-9f70-6b00cb21e647">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter "/>
@@ -270,8 +270,8 @@ ORDER BY i.creation_date DESC]]>
 	<detail>
 		<band height="25" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
-			<textField>
-				<reportElement x="0" y="0" width="82" height="25" uuid="8643c951-da02-45a4-8e9c-f43c945e23b2"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="82" height="25" uuid="8643c951-da02-45a4-8e9c-f43c945e23b2"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -284,8 +284,8 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="82" y="0" width="80" height="25" uuid="10ce44f4-78f8-4e21-ac5e-11d769949060"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="82" y="0" width="80" height="25" uuid="10ce44f4-78f8-4e21-ac5e-11d769949060"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -298,8 +298,8 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{last_name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="162" y="0" width="80" height="25" uuid="51aead5e-d01d-488b-9c08-ee13be7c4a2a"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="162" y="0" width="80" height="25" uuid="51aead5e-d01d-488b-9c08-ee13be7c4a2a"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -312,8 +312,8 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{billing_address}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="242" y="0" width="80" height="25" uuid="3db7f4af-029a-4c85-aaa7-30cf56c78102"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="242" y="0" width="80" height="25" uuid="3db7f4af-029a-4c85-aaa7-30cf56c78102"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -326,8 +326,8 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="322" y="0" width="80" height="25" uuid="8b483e52-94b7-4137-9371-71b9a5b47a58"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="322" y="0" width="80" height="25" uuid="8b483e52-94b7-4137-9371-71b9a5b47a58"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -340,8 +340,8 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{transaction}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="402" y="0" width="80" height="25" uuid="aec9cfd0-7434-4440-b497-c871d940b6d2"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="402" y="0" width="80" height="25" uuid="aec9cfd0-7434-4440-b497-c871d940b6d2"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -354,8 +354,8 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{game}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="482" y="0" width="80" height="25" uuid="ae3bed48-f933-46eb-98a1-7e2d17a2834d"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="482" y="0" width="80" height="25" uuid="ae3bed48-f933-46eb-98a1-7e2d17a2834d"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -368,8 +368,8 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{console}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="562" y="0" width="80" height="25" uuid="03daf3e6-fbb6-4dd2-829b-838d65db93c2"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="562" y="0" width="80" height="25" uuid="03daf3e6-fbb6-4dd2-829b-838d65db93c2"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -382,8 +382,8 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="642" y="0" width="80" height="25" uuid="8c022102-a740-4424-a035-e83440917d5f"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="642" y="0" width="80" height="25" uuid="8c022102-a740-4424-a035-e83440917d5f"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -396,8 +396,8 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{iva}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="722" y="0" width="80" height="25" uuid="ee0e312d-9e62-4ca2-ab32-c0d013cd4265"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="722" y="0" width="80" height="25" uuid="ee0e312d-9e62-4ca2-ab32-c0d013cd4265"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>

@@ -391,8 +391,8 @@ public class PublicUserService extends BaseService<PublicUser> {
 		Map<String, Long> summary = new HashMap<>();
 		Date today = new Date();
 		
-		summary.put("borrowed",publicUserRepo.countByIdAndGamesIsBorrowedIsTrue(currentUser.getId()));
-		summary.put("toReturn", publicUserRepo.countGamesToReturn(currentUser.getId()));
+		summary.put("borrowed", publicUserRepo.countRentedGames(currentUser.getId()));
+		summary.put("toReturn", publicUserRepo.countGamesToBeReturned(currentUser.getId()));
 		summary.put("updateDate", today.getTime());
 		
 		return summary;

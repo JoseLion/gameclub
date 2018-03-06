@@ -106,7 +106,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 					FB.api('/me', {fields: 'name, email'}, function(me) {
 						if (me.email == null) {
 							FB.logout(function(logoutResponse) {
-								notif.danger("El correo electrónico es necesario para crea una cuenta en Smartbid. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
+								notif.danger("El correo electrónico es necesario para crea una cuenta en GameClub. Por favor permite el acceso a tu correo cuando inicies sesión con Facebook");
 								$scope.isFbSingIn = false;
 							}, response.authResponse.accessToken);
 						} else {
@@ -155,8 +155,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 						};
 
 						logIn(credentials);
-
-						// $rootScope.currentUser.facebookToken = response.authResponse.accessToken;
+						
 						let formData = {
 							user: $rootScope.currentUser
 						};
@@ -190,7 +189,7 @@ angular.module('Login').controller('LoginCtrl', function($scope, $rootScope, red
 						authHeader[Const.extraHeader] = Const.publicUser;
 
 						let http = $http.get(urlRestPath.url + '/api/user', {headers: authHeader}).then(function(response) {
-							notif.success("Tu contraseña ha sido reestablecida. Por favor dirijete a tu correo electrónico");
+							notif.success("Tu contraseña ha sido reestablecida. Por favor dirígete a tu correo electrónico");
 							swal.close();
 							$uibModalInstance.close();
 						}, function(error) {

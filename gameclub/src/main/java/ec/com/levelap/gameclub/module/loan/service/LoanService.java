@@ -784,8 +784,7 @@ public class LoanService {
 		loan.setWasTimedOut(true);
 
 		if (publicUserService == null) {
-			publicUserService = (PublicUserService) ApplicationContextHolder.getContext()
-					.getBean(PublicUserService.class);
+			publicUserService = (PublicUserService) ApplicationContextHolder.getContext().getBean(PublicUserService.class);
 		}
 
 		PublicUserGame publicUserGame = loan.getPublicUserGame();

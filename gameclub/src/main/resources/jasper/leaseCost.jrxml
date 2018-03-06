@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="leaseCosts" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f962de6d-94de-4eea-8729-1285b2546749">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
@@ -195,8 +195,8 @@ ORDER BY lc.creation_date]]>
 	<detail>
 		<band height="32" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
-			<textField>
-				<reportElement x="0" y="0" width="90" height="32" uuid="3870069d-dfac-4e63-83bb-bb8d5fdc80c4"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="90" height="32" uuid="3870069d-dfac-4e63-83bb-bb8d5fdc80c4"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -206,8 +206,8 @@ ORDER BY lc.creation_date]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="90" y="0" width="89" height="32" uuid="7781baf6-1d56-4366-9a73-51891e519b01"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="90" y="0" width="89" height="32" uuid="7781baf6-1d56-4366-9a73-51891e519b01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -217,8 +217,8 @@ ORDER BY lc.creation_date]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{last_name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="179" y="0" width="89" height="32" uuid="8a517b16-3d90-4714-bd74-72d27beb275a"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="179" y="0" width="89" height="32" uuid="8a517b16-3d90-4714-bd74-72d27beb275a"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -228,8 +228,8 @@ ORDER BY lc.creation_date]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{billing_address}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="268" y="0" width="89" height="32" uuid="0592a74e-aa24-4690-bf12-ea5b6bfd9d4a"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="268" y="0" width="89" height="32" uuid="0592a74e-aa24-4690-bf12-ea5b6bfd9d4a"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -239,8 +239,8 @@ ORDER BY lc.creation_date]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="357" y="0" width="89" height="32" uuid="490834bb-813d-482b-9844-94f9105b9845"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="357" y="0" width="89" height="32" uuid="490834bb-813d-482b-9844-94f9105b9845"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -250,8 +250,8 @@ ORDER BY lc.creation_date]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{contact_phone}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="446" y="0" width="89" height="32" uuid="975f72a6-71a8-428a-a78d-2489b8b9d35d"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="446" y="0" width="89" height="32" uuid="975f72a6-71a8-428a-a78d-2489b8b9d35d"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -261,8 +261,8 @@ ORDER BY lc.creation_date]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{game}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="535" y="0" width="89" height="32" uuid="7f31099d-57f5-4c7a-8601-128ae11bd3e0"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="535" y="0" width="89" height="32" uuid="7f31099d-57f5-4c7a-8601-128ae11bd3e0"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -272,8 +272,8 @@ ORDER BY lc.creation_date]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{console}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="624" y="0" width="89" height="32" uuid="9676fc52-d9c8-43d9-89f1-c856be46325e"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="624" y="0" width="89" height="32" uuid="9676fc52-d9c8-43d9-89f1-c856be46325e"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -283,8 +283,8 @@ ORDER BY lc.creation_date]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{transaction}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="713" y="0" width="89" height="32" uuid="5292bd4f-9519-4608-aa7f-3ce37fed3139"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="713" y="0" width="89" height="32" uuid="5292bd4f-9519-4608-aa7f-3ce37fed3139"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

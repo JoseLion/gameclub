@@ -38,17 +38,25 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 			@Param("endDate") Date endDate,
 			Pageable page);
 	
-	public Long countByIdAndGamesIsBorrowedIsTrue(Long id);
+	@Query(	"SELECT COUNT(l) FROM Loan l " +
+				"LEFT JOIN l.restore r " +
+				"LEFT JOIN r.shippingStatus s " +
+			"WHERE " +
+				"l.publicUserGame.publicUser.id=:userId AND " +
+				"l.status=TRUE AND " +
+				"l.shippingStatus.code='" + Code.SHIPPING_DELIVERED + "' AND " +
+				"(r IS NULL OR s.code<>'" + Code.SHIPPING_DELIVERED + "')")
+	public Long countRentedGames(@Param("userId") Long userId);
 	
 	@Query(	"SELECT COUNT(l) FROM Loan l " +
 				"LEFT JOIN l.restore r " +
 				"LEFT JOIN r.shippingStatus s " +
 			"WHERE " +
-				"l.gamer.id=:id AND " +
+				"l.gamer.id=:userId AND " +
 				"l.status=TRUE AND " +
-				"l.publicUserGame.isBorrowed=TRUE AND " +
+				"l.shippingStatus.code='" + Code.SHIPPING_DELIVERED + "' AND " +
 				"(r IS NULL OR s.code<>'" + Code.SHIPPING_DELIVERED + "')")
-	public Long countGamesToReturn(@Param("id") Long id);
+	public Long countGamesToBeReturned(@Param("userId") Long userId);
 	
 	public PublicUser findByUrlToken(String urlToken);
 	

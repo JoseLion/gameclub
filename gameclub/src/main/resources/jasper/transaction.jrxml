@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transaction" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b3e27ab5-c4cc-4b36-90da-11cdabaee54b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GameClub"/>
@@ -220,8 +220,8 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
-			<textField>
-				<reportElement x="0" y="0" width="81" height="22" uuid="1beafb46-b13e-4578-a612-b6737aba1bf6"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="81" height="22" uuid="1beafb46-b13e-4578-a612-b6737aba1bf6"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -231,8 +231,8 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{creation_date}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="81" y="0" width="79" height="22" uuid="6e59f29d-0070-432b-91c4-8f1a8e2f8da8"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="81" y="0" width="79" height="22" uuid="6e59f29d-0070-432b-91c4-8f1a8e2f8da8"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -242,8 +242,8 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{transaction}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="160" y="0" width="79" height="22" uuid="e19934d8-fd7f-43c7-a4b9-9cc040ef281f"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="160" y="0" width="79" height="22" uuid="e19934d8-fd7f-43c7-a4b9-9cc040ef281f"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -253,8 +253,8 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{game}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="239" y="0" width="79" height="22" uuid="389c0651-4c0d-4f23-8286-a7c7c6c78343"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="239" y="0" width="79" height="22" uuid="389c0651-4c0d-4f23-8286-a7c7c6c78343"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -264,8 +264,8 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{weeks}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="318" y="0" width="79" height="22" uuid="b9e75955-05f6-4ea3-a030-44f7fa392780"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="318" y="0" width="79" height="22" uuid="b9e75955-05f6-4ea3-a030-44f7fa392780"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -275,8 +275,8 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{balance_part}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="397" y="0" width="79" height="22" uuid="81ce1efc-7733-4706-95ab-f7293ef3cda9"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="397" y="0" width="79" height="22" uuid="81ce1efc-7733-4706-95ab-f7293ef3cda9"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -286,8 +286,8 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{debit_balance}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="476" y="0" width="79" height="22" uuid="c59e87a8-0135-4062-bf5e-41cd939ea939"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="476" y="0" width="79" height="22" uuid="c59e87a8-0135-4062-bf5e-41cd939ea939"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

@@ -67,7 +67,7 @@ public class PublicUserOpenController {
 		return publicUserService.saveSubscriber(publicUser);
 	}
 	
-	@RequestMapping(value="sendWorkForUs", method=RequestMethod.POST)
+	@RequestMapping(value="sendWorkForUs", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> sendWorkForUs(@RequestPart Map<String, String> work, @RequestPart MultipartFile file) throws ServletException, IllegalStateException, MessagingException, IOException {
 		publicUserService.sendWorkForUs(work, file);
 		return new ResponseEntity<>(HttpStatus.OK);

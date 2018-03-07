@@ -1,4 +1,4 @@
-angular.module('Core').directive('paymentMethod', function(Const, notif, $rootScope, rest, forEach, sweet, $ocLazyLoad, addPaymentezCard) {
+angular.module('Core').directive('paymentMethod', function(Const, notif, $rootScope, rest, forEach, sweet, $ocLazyLoad, addPaymentezCard, $cookies, Const) {
     $ocLazyLoad.load('js/modules/core/directives/paymentMethod/paymentMethod.less');
     
     return {
@@ -13,6 +13,8 @@ angular.module('Core').directive('paymentMethod', function(Const, notif, $rootSc
             cardSelected: '='
 		},
         link: function($scope, element, attrs, ctrl) {
+            $scope.paymentez = {};
+
             if ($scope.cardsList == null) {
                 $scope.cardsList = [];
 
@@ -41,7 +43,8 @@ angular.module('Core').directive('paymentMethod', function(Const, notif, $rootSc
             };
 
             $scope.addCard = function() {
-                addPaymentezCard();
+                $scope.paymentez.url = addPaymentezCard();
+                $scope.isAddingCard = true;
             }
 
             $scope.deleteCard = function(card) {
@@ -56,6 +59,25 @@ angular.module('Core').directive('paymentMethod', function(Const, notif, $rootSc
                     });
                 });
             }
+
+            window.addEventListener('message', (e) => {
+                if (e.data == Const.cardMessage) {
+                    if ($cookies.get(Const.cookies.cardSuccess)) {
+                        rest("paymentez/listCards", true).get((data) => {
+                            $scope.cardsList = data;
+                            $scope.cancelAddCard();
+                        });
+
+                        $cookies.remove(Const.cookies.cardSuccess);
+                        $cookies.remove(Const.cookies.cardError);
+                    } else {
+                        $scope.addCardError = $cookies.get(Const.cookies.cardError);
+                        $scope.cancelAddCard();
+                        $cookies.remove(Const.cookies.cardSuccess);
+                        $cookies.remove(Const.cookies.cardError);
+                    }
+                }
+            });
         }
     };
 });

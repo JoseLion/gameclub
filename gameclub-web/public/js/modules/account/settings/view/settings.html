@@ -48,7 +48,7 @@
                     <button type="button" class="btn btn-secundary full small" ng-click="addCard()" ng-if="!isAddingCard">Agregar Tarjeta</button>
 
                     <span ng-if="addCardError">{{addCardError}}</span>
-                    <iframe id="paymentez-iframe" class="paymentezFrame" ng-src="{{paymentez.url}}" ng-if="isAddingCard"></iframe>
+                    <iframe class="paymentezFrame" ng-src="{{paymentez.url}}" ng-if="isAddingCard"></iframe>
                     <button type="button" class="btn btn-secundary full small" ng-click="cancelAddCard()" ng-if="isAddingCard">Cancelar</button>
                 </div>
             </div>

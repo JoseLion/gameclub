@@ -5,10 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Game Club</title>
-        <meta name="description" content="">
-        <meta name="keywords" content="">
-        <meta name="prerender-status-code" content="{{MetaTags.prerender.statusCode}}">
-        <meta name="prerender-header" ng-if="MetaTags.prerender.header" content="{{MetaTags.prerender.header}}">
+        <meta name="description" content="Intercambia juegos con la comunidad gamer más grande del Ecuador">
+        <meta name="keywords" content="gamers,juegos,intercambio,ecuador,consolas">
+        <meta name="prerender-status-code" content="">
+        <meta name="prerender-header" content="">
         <meta property="og:url" content="">
         <meta property="og:title" content="">
         <meta property="og:type" content="article">
@@ -17,10 +17,6 @@
         <meta property="og:image" content="http://gameclub.levelaptesting.com/img/gameclub-footer-logo.png">
         <meta property="fb:app_id" content="1819533121697152">
         <meta name="google-site-verification" content="i9SM28NObjhmbXtdvCTPOJWHJVg-Np3Ehhcrp1nronI" />
-
-        <update-title title="{{MetaTags.title}}"></update-title>
-        <update-meta name="description" content="{{MetaTags.description}}"></update-meta>
-        <update-meta name="keywords" content="{{MetaTags.keywords}}"></update-meta>
 
         <base href="/">
         
@@ -221,6 +217,12 @@
     </head>
 
     <body ng-controller="MainCtrl as main">
+        <update-title title="{{MetaTags.title}}"></update-title>
+        <update-meta name="description" content="{{MetaTags.description}}"></update-meta>
+        <update-meta name="keywords" content="{{MetaTags.keywords}}"></update-meta>
+        <update-meta name="prerender-status-code" content="{{MetaTags.prerender.statusCode}}"></update-meta>
+        <update-meta name="prerender-header" ng-if="MetaTags.prerender.header" content="{{MetaTags.prerender.header}}"></update-meta>
+        
         <div ui-view></div>
     </body>
 </html>

@@ -10,6 +10,7 @@ angular.module('GameClub', [
 	'oitozero.ngSweetAlert',
 	'cgNotify',
 	'720kb.socialshare',
+	'updateMeta',
 	'Core',
 	'Home',
 	'LevelapBlog'

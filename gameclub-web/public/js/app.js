@@ -11,6 +11,7 @@ angular.module('GameClub', [
 	'cgNotify',
 	'720kb.socialshare',
 	'rzModule',
+	'updateMeta',
 	'Core',
 	'Home',
 	'Login',

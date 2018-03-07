@@ -1,4 +1,4 @@
-angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, $cookies, reviews, cardsList, rest, sweet, notif, forEach, addPaymentezCard) {
+angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScope, $cookies, reviews, cardsList, rest, sweet, notif, forEach, addPaymentezCard, Const) {
     $scope.paymentez = {};
 
     reviews.$promise.then(function(data) {
@@ -62,28 +62,24 @@ angular.module('Settings').controller('SettingsCtrl', function($scope, $rootScop
         });
     }
 
-    $scope.getPaymentezCookies = function() {
-        return {
-            success: $cookies.get('pmntz_add_success'),
-            error: $cookies.get('pmntz_error_message')
-        };
-    }
+    window.addEventListener('message', (e) => {
+        if (e.data == Const.cardMessage) {
+            if ($cookies.get(Const.cookies.cardSuccess)) {
+                rest("paymentez/listCards", true).get((data) => {
+                    $scope.cardsList = data;
+                    $scope.cancelAddCard();
+                });
 
-    $scope.$watch($scope.getPaymentezCookies, (newValue, oldValue) => {
-        console.log("paymentezCookies: ", newValue);
-
-        if (newValue.success != null) {
-            rest("paymentez/listCards", true).get((data) => {
-                $scope.cardsList = data;
-            });
+                $cookies.remove(Const.cookies.cardSuccess);
+                $cookies.remove(Const.cookies.cardError);
+            } else {
+                $scope.addCardError = $cookies.get(Const.cookies.cardError);
+                $scope.cancelAddCard();
+                $cookies.remove(Const.cookies.cardSuccess);
+                $cookies.remove(Const.cookies.cardError);
+            }
         }
-
-        if (newValue.error != null) {
-            $scope.addCardError = newValue;
-        }
-
-        $scope.cancelAddCard();
-    }, true);
+    });
 
     function setPagedData(data) {
         if ($scope.reviews == null) {

@@ -28,6 +28,25 @@ angular.module('Settings').config(function($stateProvider) {
 				return rest("paymentez/listCards", true).get();
 			}
 		}
+	})
+
+	.state('gameclub.cardRedirect', {
+		url: '/card-redirect?error_value',
+		template: '<div><div>',
+		data: {displayName: 'GameClub'},
+		controller: 'CardRedirectCtrl',
+		resolve: {
+			loadPlugin: function($ocLazyLoad) {
+				return $ocLazyLoad.load([{
+					name: 'Settings',
+					files: ['js/modules/account/settings/controller/cardRedirectCtrl.js']
+				}]);
+			},
+
+			error: function($stateParams) {
+				return $stateParams.error_value;
+			}
+		}
 	});
 
 });

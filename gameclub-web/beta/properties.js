@@ -1,4 +1,4 @@
 gcProperties = {
-  facebookAppId: "1819533121697152",
+  facebookAppId: "213787595841297",
   googleAppId: "UA-113394026-1"
 };

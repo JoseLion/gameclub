@@ -8,7 +8,7 @@ angular.module('GameClub').config(function($stateProvider, $urlRouterProvider, $
 							.setDefaultDescription('Intercambia juegos con la comunidad gamer más grande del Ecuador')
 							.setDefaultKeywords('gamers,juegos,intercambio,ecuador,consolas')
 							.setStaticProperties({
-								'fb:app_id': '1819533121697152',
+								'fb:app_id': gcProperties.facebookAppId,
 								'og:site_name': 'www.gameclub.com.ec'
 							})
 							.setOGURL(true);

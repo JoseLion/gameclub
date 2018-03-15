@@ -387,7 +387,7 @@ ORDER BY b.loan_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{loan_date}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="537" y="0" width="53" height="45" uuid="9d89b014-68a1-4336-ab1d-85d5abc387a7"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -413,7 +413,7 @@ ORDER BY b.loan_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{weeks}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="643" y="0" width="53" height="45" uuid="cee2d7b5-73ab-4056-9b19-ecf39df6d121"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -426,7 +426,7 @@ ORDER BY b.loan_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{cost}.doubleValue()*$F{weeks}.doubleValue())+($F{shipping_cost}.doubleValue())+($F{fee_game_club}.doubleValue())]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="696" y="0" width="53" height="45" uuid="458ca6b6-cf6a-4eb5-8641-2e1ea6645652"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -439,7 +439,7 @@ ORDER BY b.loan_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{taxes}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="749" y="0" width="53" height="45" uuid="fa357b27-c1e2-43b2-94c0-a68e282e4784"/>
 				<box>
 					<topPen lineWidth="1.0"/>

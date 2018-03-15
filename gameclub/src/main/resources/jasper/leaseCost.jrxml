@@ -283,7 +283,7 @@ ORDER BY lc.creation_date]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{transaction}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="713" y="0" width="89" height="32" uuid="5292bd4f-9519-4608-aa7f-3ce37fed3139"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

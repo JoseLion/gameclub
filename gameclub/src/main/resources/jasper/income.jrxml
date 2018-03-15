@@ -368,7 +368,7 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{console}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="562" y="0" width="80" height="25" uuid="03daf3e6-fbb6-4dd2-829b-838d65db93c2"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -382,7 +382,7 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="642" y="0" width="80" height="25" uuid="8c022102-a740-4424-a035-e83440917d5f"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -396,7 +396,7 @@ ORDER BY i.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{iva}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="722" y="0" width="80" height="25" uuid="ee0e312d-9e62-4ca2-ab32-c0d013cd4265"/>
 				<box>
 					<topPen lineWidth="1.0"/>

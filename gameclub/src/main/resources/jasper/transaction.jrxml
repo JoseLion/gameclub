@@ -264,7 +264,7 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{weeks}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="318" y="0" width="79" height="22" uuid="b9e75955-05f6-4ea3-a030-44f7fa392780"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -275,7 +275,7 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{balance_part}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="397" y="0" width="79" height="22" uuid="81ce1efc-7733-4706-95ab-f7293ef3cda9"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -286,7 +286,7 @@ WHERE pu.id= to_number( $P{id}  , '99G999D9S')]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{debit_balance}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="476" y="0" width="79" height="22" uuid="c59e87a8-0135-4062-bf5e-41cd939ea939"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

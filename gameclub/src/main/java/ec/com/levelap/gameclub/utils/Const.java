@@ -60,5 +60,7 @@ public interface Const {
 	
 	public static final String TRS_REFFERED_BONUS = "BONO POR REFERIDO";
 	
+	public static final String TRS_YOU_RENTED = "ALQUILASTE";
+	
 	public static final int PAYMENTEZ_SESSION_ID_LENGTH = 32;
 }

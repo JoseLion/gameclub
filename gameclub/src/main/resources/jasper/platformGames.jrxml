@@ -345,7 +345,7 @@ ORDER BY platform_games.creation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="####.00#;####.00#-">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="442" y="0" width="72" height="42" uuid="c1726d28-4a53-4b38-a861-77fd06e01e87"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -358,7 +358,7 @@ ORDER BY platform_games.creation_date DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recommended_price}.floatValue()]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.###;(#,##0.###-)">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="514" y="0" width="72" height="42" uuid="79b84994-94c3-4eba-8353-dc083f09f1f9"/>
 				<box>
 					<topPen lineWidth="1.0"/>

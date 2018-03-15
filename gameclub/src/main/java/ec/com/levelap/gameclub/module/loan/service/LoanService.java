@@ -239,7 +239,7 @@ public class LoanService {
 
 			File keyLender = File.createTempFile("keyLender", ".tmp");
 			FileUtils.writeByteArrayToFile(keyLender, lender.getPrivateKey());
-			Transaction lenderTransaction = new Transaction(lender, "ALQUILASTE",
+			Transaction lenderTransaction = new Transaction(lender, Const.TRS_YOU_RENTED,
 					loan.getPublicUserGame().getGame().getName(), loan.getPublicUserGame().getConsole().getName(),
 					loan.getWeeks(), cryptoService.encrypt(Double.toString(subtotal * (1.0 - fee)), keyLender), null,
 					null);

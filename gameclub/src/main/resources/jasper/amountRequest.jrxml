@@ -222,7 +222,7 @@ ORDER BY ar.application_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement stretchType="ElementGroupHeight" x="403" y="0" width="133" height="27" uuid="8646949a-6b9a-4c4a-98ce-4f8f8c6b2924"/>
 				<box>
 					<topPen lineWidth="1.0"/>

@@ -60,6 +60,11 @@ angular.module('Core').directive('paymentMethod', function(Const, notif, $rootSc
                 });
             }
 
+            $scope.cancelAddCard = function() {
+                $scope.isAddingCard = false;
+                $scope.paymentez = {};
+            }
+
             window.addEventListener('message', (e) => {
                 if (e.data == Const.cardMessage) {
                     if ($cookies.get(Const.cookies.cardSuccess)) {

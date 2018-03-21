@@ -45,7 +45,7 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 				"l.publicUserGame.publicUser.id=:userId AND " +
 				"l.status=TRUE AND " +
 				"l.shippingStatus.code='" + Code.SHIPPING_DELIVERED + "' AND " +
-				"(r IS NULL OR s.code<>'" + Code.SHIPPING_DELIVERED + "')")
+				"(r IS NULL OR s.code<>'" + Code.SHIPPING_DELIVERED + "' OR s.code<>'" + Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND + "')")
 	public Long countRentedGames(@Param("userId") Long userId);
 	
 	@Query(	"SELECT COUNT(l) FROM Loan l " +
@@ -55,7 +55,7 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 				"l.gamer.id=:userId AND " +
 				"l.status=TRUE AND " +
 				"l.shippingStatus.code='" + Code.SHIPPING_DELIVERED + "' AND " +
-				"(r IS NULL OR s.code<>'" + Code.SHIPPING_DELIVERED + "')")
+				"(r IS NULL OR s.code<>'" + Code.SHIPPING_DELIVERED + "' OR s.code<>'" + Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND + "')")
 	public Long countGamesToBeReturned(@Param("userId") Long userId);
 	
 	public PublicUser findByUrlToken(String urlToken);

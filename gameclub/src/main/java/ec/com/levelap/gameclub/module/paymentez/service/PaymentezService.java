@@ -204,8 +204,7 @@ public class PaymentezService {
 		params.put("name", loan.getGamer().getName());
 		params.put("game", loan.getPublicUserGame().getGame().getName());
 		params.put("console", loan.getPublicUserGame().getConsole().getName());
-		params.put("user",
-				loan.getGamer().getName() + " " + loan.getGamer().getLastName().substring(0, 1) + ".");
+		params.put("user", loan.getPublicUserGame().getPublicUser().getName() + " " + loan.getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
 		params.put("weeks", "" + loan.getWeeks());
 		if (loan.getWasAccepted()) {
 			params.put("status", "aceptado");
@@ -257,7 +256,6 @@ public class PaymentezService {
 		params.put("game", fine.getLoan().getPublicUserGame().getGame().getName());
 		params.put("console", fine.getLoan().getPublicUserGame().getConsole().getName());
 		params.put("user", fine.getLoan().getPublicUserGame().getPublicUser().getName() + " " + fine.getLoan().getPublicUserGame().getPublicUser().getLastName().substring(0, 1) + ".");
-		params.put("status", "rechazado");
 		params.put("date", sdf.format(fine.getCreationDate()));
 		params.put("authorizationNumber", fine.getTransactionId());
 		params.put("authCode", fine.getAuthCode());

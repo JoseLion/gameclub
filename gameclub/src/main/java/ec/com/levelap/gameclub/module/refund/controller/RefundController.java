@@ -40,13 +40,14 @@ public class RefundController {
 			search = new Search();
 		}
 		
-		Page<Transaction> transactions = refundService.getRefundRepo().findRefounds(new PageRequest(search.page, Const.TABLE_SIZE));
+		Page<Transaction> transactions = refundService.getTransactionRepo().findRefounds(new PageRequest(search.page, Const.TABLE_SIZE));
 		return new ResponseEntity<Page<Transaction>>(transactions, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "applyRefund", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> save(@RequestBody Transaction transactionObj, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException, MessagingException {
-		return refundService.save(transactionObj, Boolean.FALSE, session, request);
+	public ResponseEntity<Transaction> save(@RequestBody Transaction transactionObj, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException, MessagingException {
+		transactionObj = refundService.save(transactionObj, session, request);
+		return new ResponseEntity<Transaction>(transactionObj, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="findRefound", method=RequestMethod.POST)
@@ -55,7 +56,7 @@ public class RefundController {
 			search = new Search();
 		}
 		
-		Page<Transaction> transactions = refundService.getRefundRepo().findRefundRequest(search.name, search.startDate, search.endDate, search.transaction, search.statusRefund, new PageRequest(search.page, Const.TABLE_SIZE));
+		Page<Transaction> transactions = refundService.getTransactionRepo().findRefundRequest(search.name, search.startDate, search.endDate, search.transaction, search.statusRefund, new PageRequest(search.page, Const.TABLE_SIZE));
 		return new ResponseEntity<Page<Transaction>>(transactions, HttpStatus.OK);
 	}
 	

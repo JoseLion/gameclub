@@ -41,14 +41,13 @@ public class PaymentezOpenController {
 		List<NameValuePair> params = URLEncodedUtils.parse(new URI(url), StandardCharsets.UTF_8);
 		Map<String, String> response = new HashMap<>();
 		
-		System.out.println("Params: {");
 		for (NameValuePair param : params) {
-			System.out.println("	" + param.getName() + ": " + param.getValue() + (params.indexOf(param) < params.size() ? ", " : ""));
 			response.put(param.getName(), param.getValue());
 		}
-		System.out.println("}");
 		
-		paymentezService.sendConfirmationMails(response, 0);
+		if (!response.get("status_detail").equals("7")) {
+			paymentezService.sendConfirmationMails(response, 0);
+		}
 		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

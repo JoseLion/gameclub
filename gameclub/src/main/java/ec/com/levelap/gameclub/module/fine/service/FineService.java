@@ -63,6 +63,7 @@ public class FineService extends BaseService<Fine> {
 	public ResponseEntity<?> save(Fine fine, Boolean isApply, HttpSession session, HttpServletRequest request) throws ServletException, IOException, GeneralSecurityException, RestClientException, URISyntaxException, JSONException, MessagingException {
 		fine = fineRepo.findOne(fine.getId());
 		fine.setApply(isApply);
+		
 		if (isApply) {
 			PublicUser publicUser = publicUserService.getPublicUserRepo().findOne(fine.getOwner().getId());
 			File key = File.createTempFile("key", ".tmp");

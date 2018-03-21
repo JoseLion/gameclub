@@ -31,6 +31,7 @@ import org.springframework.web.client.RestTemplate;
 
 import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.fine.service.FineService;
+import ec.com.levelap.gameclub.module.fine.service.RestErrorHandler;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
 import ec.com.levelap.gameclub.module.loan.service.LoanService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
@@ -67,6 +68,14 @@ public class PaymentezService {
 	@Autowired
 	private GameClubMailService mailService;
 	
+	private RestTemplate restTemplate;
+	
+	public PaymentezService() {
+		super();
+		restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new RestErrorHandler());
+	}
+
 	public String listCurrentUserCards(HttpSession session) throws ServletException, UnsupportedEncodingException, NoSuchAlgorithmException, RestClientException, URISyntaxException {
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		return this.getCardsOfUser(currentUser, session);
@@ -98,7 +107,6 @@ public class PaymentezService {
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
 		
-		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.postForEntity(new URI(url), null, String.class);
 		return response.getStatusCode();
 	}
@@ -139,7 +147,6 @@ public class PaymentezService {
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
 		
-		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.postForEntity(new URI(url), null, String.class);
 		return response.getBody();
 	}
@@ -163,7 +170,6 @@ public class PaymentezService {
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
 		
-		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.postForEntity(new URI(url), null, String.class);
 		return response.getBody();
 	}
@@ -189,7 +195,6 @@ public class PaymentezService {
 				"&auth_timestamp=" + today.getTime() +
 				"&auth_token=" + token;
 		
-		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.getForEntity(new URI(url), String.class);
 		return response.getBody();
 	}

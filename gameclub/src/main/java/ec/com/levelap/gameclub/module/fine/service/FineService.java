@@ -80,6 +80,8 @@ public class FineService extends BaseService<Fine> {
 				fine.setBalancePartEnc(publicUser.getBalance());
 				
 				String response = paymentezService.listCurrentUserCards(session);
+				System.out.println("\n\n\nCARD AMOUNT: " + totalBalance);
+				System.out.println("LIST OF CARDS: " + response + "\n\n\n");
 				JSONArray jsonArray = new JSONArray(response);
 				String responseObject = paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance, 0.0, "Multa GameClub - " + fine.getDescription(), publicUser);
 				JSONObject json = new JSONObject(responseObject);

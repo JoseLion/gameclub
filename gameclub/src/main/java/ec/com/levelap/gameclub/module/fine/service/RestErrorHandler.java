@@ -13,10 +13,10 @@ public class RestErrorHandler implements ResponseErrorHandler {
 	@Override
 	public boolean hasError(ClientHttpResponse response) throws IOException {
 		if (response.getStatusCode().equals(HttpStatus.OK)) {
-			return true;
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 
 	@Override

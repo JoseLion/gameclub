@@ -2,6 +2,7 @@ package ec.com.levelap.gameclub.module.fine.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.Date;
@@ -21,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
+
+import com.ibm.icu.math.BigDecimal;
 
 import ec.com.levelap.base.service.BaseService;
 import ec.com.levelap.cryptography.LevelapCryptography;
@@ -73,15 +76,16 @@ public class FineService extends BaseService<Fine> {
 			fine.setWasPayed(Boolean.TRUE);
 
 			Double totalBalance = Double.parseDouble(cryptoService.decrypt(publicUser.getBalance(), key)) - fine.getAmount();
+			BigDecimal bigDecimal = new BigDecimal(totalBalance);
+			bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP.ordinal());
+			totalBalance = bigDecimal.doubleValue();
 			
 			if (totalBalance < 0) {
 				totalBalance = (-1D) * (totalBalance);
 				fine.setCardPartEnc(cryptoService.encrypt(Double.toString(totalBalance), key));
 				fine.setBalancePartEnc(publicUser.getBalance());
-				
 				String response = paymentezService.listCurrentUserCards(session);
-				System.out.println("\n\n\nCARD AMOUNT: " + totalBalance);
-				System.out.println("LIST OF CARDS: " + response + "\n\n\n");
+				System.out.println("\n\nCARD AMOUNT: " + totalBalance + "\n\n");
 				JSONArray jsonArray = new JSONArray(response);
 				String responseObject = paymentezService.debitFromCard(session, request.getRemoteAddr(), jsonArray.getJSONObject(0).getString("card_reference"), totalBalance, 0.0, "Multa GameClub - " + fine.getDescription(), publicUser);
 				JSONObject json = new JSONObject(responseObject);

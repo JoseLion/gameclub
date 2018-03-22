@@ -42,6 +42,7 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 				"LEFT JOIN l.restore r " +
 				"LEFT JOIN r.shippingStatus s " +
 			"WHERE " +
+				"l.publicUserGame.status=TRUE AND " +
 				"l.publicUserGame.publicUser.id=:userId AND " +
 				"l.status=TRUE AND " +
 				"l.shippingStatus.code='" + Code.SHIPPING_DELIVERED + "' AND " +
@@ -52,6 +53,7 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 				"LEFT JOIN l.restore r " +
 				"LEFT JOIN r.shippingStatus s " +
 			"WHERE " +
+				"l.publicUserGame.status=TRUE AND " +
 				"l.gamer.id=:userId AND " +
 				"l.status=TRUE AND " +
 				"l.shippingStatus.code='" + Code.SHIPPING_DELIVERED + "' AND " +

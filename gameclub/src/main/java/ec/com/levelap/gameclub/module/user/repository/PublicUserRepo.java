@@ -42,22 +42,22 @@ public interface PublicUserRepo extends JpaRepository<PublicUser, Long> {
 				"LEFT JOIN l.restore r " +
 				"LEFT JOIN r.shippingStatus s " +
 			"WHERE " +
-				"l.publicUserGame.status=TRUE AND " +
 				"l.publicUserGame.publicUser.id=:userId AND " +
 				"l.status=TRUE AND " +
 				"l.shippingStatus.code='" + Code.SHIPPING_DELIVERED + "' AND " +
-				"(r IS NULL OR (s.code<>'" + Code.SHIPPING_DELIVERED + "' OR s.code<>'" + Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND + "'))")
+				"(r IS NULL OR s.code<>'" + Code.SHIPPING_DELIVERED + "') AND " +
+				"(r IS NULL OR s.code<>'" + Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND + "')")
 	public Long countRentedGames(@Param("userId") Long userId);
 	
 	@Query(	"SELECT COUNT(l) FROM Loan l " +
 				"LEFT JOIN l.restore r " +
 				"LEFT JOIN r.shippingStatus s " +
 			"WHERE " +
-				"l.publicUserGame.status=TRUE AND " +
 				"l.gamer.id=:userId AND " +
 				"l.status=TRUE AND " +
 				"l.shippingStatus.code='" + Code.SHIPPING_DELIVERED + "' AND " +
-				"(r IS NULL OR (s.code<>'" + Code.SHIPPING_DELIVERED + "' OR s.code<>'" + Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND + "'))")
+				"(r IS NULL OR s.code<>'" + Code.SHIPPING_DELIVERED + "') AND " +
+				"(r IS NULL OR s.code<>'" + Code.SHIPPING_GAMER_DIDNT_DELIVER_2ND + "')")
 	public Long countGamesToBeReturned(@Param("userId") Long userId);
 	
 	public PublicUser findByUrlToken(String urlToken);

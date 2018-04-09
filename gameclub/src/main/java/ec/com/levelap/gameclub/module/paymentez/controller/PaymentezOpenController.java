@@ -45,6 +45,8 @@ public class PaymentezOpenController {
 			response.put(param.getName(), param.getValue());
 		}
 		
+		System.out.println("Paymentez callback processed with status_detail: " + response.get("status_detail"));
+		
 		if (!response.get("status_detail").equals("7")) {
 			paymentezService.sendConfirmationMails(response, 0);
 		}

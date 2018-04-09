@@ -28,13 +28,13 @@ import ec.com.levelap.gameclub.module.transaction.entity.Transaction;
 import ec.com.levelap.gameclub.utils.Const;
 
 @RestController
-@RequestMapping(value = "api/refund", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="api/refund", produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
 public class RefundController {
 
 	@Autowired
 	private RefundService refundService;
 	
-	@RequestMapping(value = "findRefunds", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="findRefunds", method=RequestMethod.POST)
 	public ResponseEntity<Page<Transaction>> findFinesFilter(@RequestBody(required = false) Search search) throws ServletException, IOException, GeneralSecurityException {
 		if (search == null) {
 			search = new Search();
@@ -44,10 +44,10 @@ public class RefundController {
 		return new ResponseEntity<Page<Transaction>>(transactions, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "applyRefund", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Transaction> save(@RequestBody Transaction transactionObj, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException, MessagingException {
-		transactionObj = refundService.save(transactionObj, session, request);
-		return new ResponseEntity<Transaction>(transactionObj, HttpStatus.OK);
+	@RequestMapping(value = "applyRefund", method=RequestMethod.POST)
+	public ResponseEntity<Transaction> save(@RequestBody Transaction transaction, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException, MessagingException {
+		transaction = refundService.save(transaction, session, request);
+		return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="findRefound", method=RequestMethod.POST)

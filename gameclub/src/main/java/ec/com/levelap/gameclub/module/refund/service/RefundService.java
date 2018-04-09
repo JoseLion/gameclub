@@ -40,6 +40,8 @@ public class RefundService extends BaseService<Transaction>{
 		
 		if (json.getString("status").equals("success")) {
 			transaction.setStatusRefund("ACREDITADO");
+		} else {
+			throw new ServletException("La transacción de Paymentez no se procesó correctamente. Status: " + json.getString("status"));
 		}
 		
 		transaction = transactionRepo.save(transaction);

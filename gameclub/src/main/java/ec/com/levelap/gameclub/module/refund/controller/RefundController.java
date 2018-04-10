@@ -45,9 +45,8 @@ public class RefundController {
 	}
 	
 	@RequestMapping(value = "applyRefund", method=RequestMethod.POST)
-	public ResponseEntity<Transaction> save(@RequestBody Transaction transaction, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException, MessagingException {
-		transaction = refundService.save(transaction, session, request);
-		return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
+	public ResponseEntity<?> save(@RequestBody Transaction transaction, HttpSession session, HttpServletRequest request) throws ServletException, RestClientException, IOException, GeneralSecurityException, URISyntaxException, JSONException, MessagingException {
+		return refundService.save(transaction, session, request);
 	}
 	
 	@RequestMapping(value="findRefound", method=RequestMethod.POST)

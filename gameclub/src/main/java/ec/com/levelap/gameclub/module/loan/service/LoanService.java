@@ -630,7 +630,7 @@ public class LoanService {
 		FileUtils.writeByteArrayToFile(lenderKey, lender.getPrivateKey());
 
 		Double subtotal = (loan.getPublicUserGame().getCost() * loan.getWeeks()) + loan.getShippningCost() + loan.getFeeGameClub();
-
+		
 		if (loan.getShippingStatus().getCode().equals(Code.SHIPPING_LENDER_DIDNT_DELIVER)) {
 			Setting fineSetting = settingService.getSettingsRepo().findByCode(Code.SETTING_LENDER_DIDNT_DELIVER);
 			Double fineAmount;
@@ -703,7 +703,7 @@ public class LoanService {
 			publicUserGame.setIsBorrowed(false);
 			publicUserGame = publicUserService.getPublicUserGameRepo().save(publicUserGame);
 			loan.setPublicUserGame(publicUserGame);
-
+			Double costLoan = loan.getCost();
 			loan = loanRepo.save(loan);
 			Double lenderFee = Double.parseDouble(settingService.getSettingValue(Code.SETTING_FEE_LENDER)) / 100.0;
 			Double lenderReturn = (loan.getPublicUserGame().getCost() * loan.getWeeks()) * (1.0 - lenderFee);
@@ -740,7 +740,7 @@ public class LoanService {
 			gamerTransaction.setGame(loan.getPublicUserGame().getGame().getName());
 			gamerTransaction.setConsole(loan.getPublicUserGame().getConsole().getName());
 			gamerTransaction.setWeeks(loan.getWeeks());
-			gamerTransaction.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getCost()), gamerKey));
+			gamerTransaction.setBalancePartEnc(cryptoService.encrypt(Double.toString(costLoan), gamerKey));
 			transactionService.getTransactionRepo().save(gamerTransaction);
 
 			Transaction lenderTransaction = new Transaction();

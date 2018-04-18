@@ -278,7 +278,7 @@ public class PaymentezService {
 	public void sendMailError(Map<String, String> response, String url, String error) throws IOException, GeneralSecurityException, MessagingException {
 		PaymentezError paymentezError = new PaymentezError();
 		
-		paymentezError.setCode(response.get("status_detail"));
+		paymentezError.setCode(Integer.parseInt(response.get("status_detail")));
 		paymentezError.setTransaction(response.get("transaction_id"));
 		paymentezError.setDescription(error);
 		paymentezError.setTransactionDate(new Date());

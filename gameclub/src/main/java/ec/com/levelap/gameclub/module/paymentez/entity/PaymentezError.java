@@ -17,7 +17,7 @@ import ec.com.levelap.gameclub.utils.Const;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PaymentezError extends BaseEntity {
 
-	@Column(columnDefinition="INTEGER")
+	@Column(columnDefinition="VARCHAR")
 	private String code;
 	
 	@Column(columnDefinition="VARCHAR")

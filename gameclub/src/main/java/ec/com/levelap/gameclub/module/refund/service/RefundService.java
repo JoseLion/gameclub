@@ -3,6 +3,8 @@ package ec.com.levelap.gameclub.module.refund.service;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -44,6 +46,9 @@ public class RefundService extends BaseService<Transaction>{
 		if (json.getString("status").equals("success")) {
 			transaction.setStatusRefund("ACREDITADO");
 		} else {
+			System.out.println("Error refund" + response);
+//			descriptionError(response);
+//			paymentezService.sendMailError(response, "", description);
 			return new ResponseEntity<ErrorControl>(new ErrorControl("La transacción de Paymentez no se procesó correctamente. Statusw: " + json.getString("status"), true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
@@ -53,5 +58,35 @@ public class RefundService extends BaseService<Transaction>{
 
 	public TransactionRepo getTransactionRepo() {
 		return transactionRepo;
+	}
+	
+	private String descriptionError(String response) {
+		Map<String, String> error = new HashMap<>();
+		error.put("0", "Pago en espera.");
+		error.put("1", "Se requiere verificación, ver la sección Verificación.");
+		error.put("4", "Fraude.");
+		error.put("8", "Contracargo.");
+		error.put("9", "Rechazado por el transportista.");
+		error.put("10", "Error de Sistema.");
+		error.put("11", "Fraude de Paymentez.");
+		error.put("12", "Lista negra Pamentez.");
+		error.put("13", "Tolerancia de tiempo.");
+		error.put("19", "Código de Autrización Inválido.");
+		error.put("20", "Código de autorización expirado.");
+		error.put("21", "Fraude de Paymentez - Reembolso Pendiente.");
+		error.put("22", "Código Autorización Inválido - Reembolso Pendiente.");
+		error.put("23", "Código Autorización Expirado - Reembolso Pendiente.");
+		error.put("24", "Fraude de Paymentez - Reembolso Pendiente.");
+		error.put("25", "Código Autorización Inválido - Reembolso Pendiente.");
+		error.put("26", "Código Autorización Expirado - Reembolso Pendiente.");
+		error.put("27", "Comerciante - Reembolso Pendiente.");
+		error.put("28", "Comerciante - Reembolso Pendiente.");
+		error.put("35", "Transacción sentada (Datafast).");
+		
+//		String key = response.get("status_detail").toString();
+		String description = "";//error.get(key);
+//		System.out.println(description);
+		
+		return description;
 	}
 }

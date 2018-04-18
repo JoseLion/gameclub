@@ -44,7 +44,7 @@ public class PaymentezOpenController {
 		for (NameValuePair param : params) {
 			response.put(param.getName(), param.getValue());
 		}
-		printMap(response);
+		
 		System.out.println("Paymentez callback processed with status_detail: " + response.get("status_detail"));
 		
 		if (response.get("status_detail").equals("3")) {
@@ -75,8 +75,6 @@ public class PaymentezOpenController {
 			
 			String key = response.get("status_detail").toString();
 			String description = error.get(key);
-			System.out.println(description);
-			System.out.println("Error URL: " + url);
 			if(description != null) {
 				paymentezService.sendMailError(response, url, description);
 			} else {
@@ -86,11 +84,5 @@ public class PaymentezOpenController {
 		}
 		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-	
-	private void printMap(Map<String, String> response) {
-		for (Map.Entry<String, String> entry : response.entrySet()) {
-		    System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue());
-		}
 	}
 }

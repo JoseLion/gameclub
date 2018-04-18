@@ -44,7 +44,7 @@ public class PaymentezOpenController {
 		for (NameValuePair param : params) {
 			response.put(param.getName(), param.getValue());
 		}
-		
+		System.out.println("Entra metodo de CALLBACK");
 		System.out.println("Paymentez callback processed with status_detail: " + response.get("status_detail"));
 		
 		if (!response.get("status_detail").equals("7")) {

@@ -289,7 +289,7 @@ public class PaymentezService {
 			System.out.println("CONFIRMATION MAIL SENT!");
 		} else {
 			System.err.println("UNABLE TO FIND LOAN, WELCOME KIT OR FINE WITH TRANSACTION_ID " + response.get("transaction_id"));
-			
+			System.out.println("Para verificacion de CALLBACK");
 			if (retries < 10) {
 				Thread.sleep(3000);
 				retries++;

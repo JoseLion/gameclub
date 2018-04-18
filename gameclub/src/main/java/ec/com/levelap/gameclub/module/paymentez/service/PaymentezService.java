@@ -33,7 +33,10 @@ import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.fine.service.FineService;
 import ec.com.levelap.gameclub.module.fine.service.RestErrorHandler;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
+import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
 import ec.com.levelap.gameclub.module.loan.service.LoanService;
+import ec.com.levelap.gameclub.module.paymentez.entity.PaymentezError;
+import ec.com.levelap.gameclub.module.paymentez.repository.PaymentezErrorRepo;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
 import ec.com.levelap.gameclub.module.welcomeKit.entity.WelcomeKit;
@@ -67,6 +70,9 @@ public class PaymentezService {
 	
 	@Autowired
 	private GameClubMailService mailService;
+	
+	@Autowired
+	private PaymentezErrorRepo paymentezErrorRepo;
 	
 	private RestTemplate restTemplate;
 	
@@ -267,6 +273,32 @@ public class PaymentezService {
 		params.put("balancePart", "$" + String.format("%.2f", fine.getCardPart()));
 		
 		mailService.sendMailWihTemplate(levelapMail, "MSPYCF", params);
+	}
+	
+	public void sendMailError(Map<String, String> response, String url, String error) throws IOException, GeneralSecurityException, MessagingException {
+		PaymentezError paymentezError = new PaymentezError();
+		
+		paymentezError.setCode(response.get("status_detail"));
+		paymentezError.setTransaction(response.get("transaction_id"));
+		paymentezError.setDescription(error);
+		paymentezError.setTransactionDate(new Date());
+		paymentezError.setUrl(url);
+		
+		paymentezErrorRepo.save(paymentezError);
+		
+		System.err.println("UNABLE TO FIND LOAN, WELCOME KIT OR FINE WITH TRANSACTION_ID " + response.get("transaction_id"));
+		LevelapMail levelapMail = new LevelapMail();
+		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
+		levelapMail.setRecipentTO(Arrays.asList("victor.cardenas@levelapsoftware.com"));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Map<String, String> params = new HashMap<>();
+		params.put("code", response.get("status_detail"));
+		params.put("transaction", response.get("transaction_id"));
+		params.put("description", error);
+		params.put("date", sdf.format(new Date()));
+		
+		mailService.sendMailWihTemplate(levelapMail, "MSPYERR", params);
 	}
 	
 	public void sendConfirmationMails(Map<String, String> response, int retries) throws IOException, GeneralSecurityException, MessagingException, InterruptedException {

@@ -54,6 +54,8 @@ public interface Const {
 	
 	public static final String EMAIL_REMINDER = "GameClub <info@gameclub.com.ec>";
 	
+	public static final String EMAIL_PAYMENTEZ_ERROR = "notificaciones@gameclub.com.ec";
+	
 	public static final String SETTINGS_PERCENTAGE = "percentage";
 	
 	public static final String SETTINGS_NUMBER = "number";

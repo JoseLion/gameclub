@@ -47,9 +47,9 @@ public class RefundService extends BaseService<Transaction>{
 			transaction.setStatusRefund("ACREDITADO");
 		} else {
 			Map<String, String> responseError = new HashMap<>();
-			responseError.put("status_detail", json.getString("status"));
+			responseError.put("status_detail", "100");
 			responseError.put("transaction_id", transaction.getCcTransaction());
-			System.out.println("Error refund" + response);
+			System.out.println("Error refund" + "No especificado");
 			paymentezService.sendMailError(responseError, "", json.getString("detail"));
 			return new ResponseEntity<ErrorControl>(new ErrorControl("La transacción de Paymentez no se procesó correctamente. Statusw: " + json.getString("status"), true), HttpStatus.INTERNAL_SERVER_ERROR);
 		}

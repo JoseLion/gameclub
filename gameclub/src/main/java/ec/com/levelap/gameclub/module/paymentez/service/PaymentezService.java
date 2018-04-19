@@ -33,7 +33,6 @@ import ec.com.levelap.gameclub.module.fine.entity.Fine;
 import ec.com.levelap.gameclub.module.fine.service.FineService;
 import ec.com.levelap.gameclub.module.fine.service.RestErrorHandler;
 import ec.com.levelap.gameclub.module.loan.entity.Loan;
-import ec.com.levelap.gameclub.module.loan.repository.LoanRepo;
 import ec.com.levelap.gameclub.module.loan.service.LoanService;
 import ec.com.levelap.gameclub.module.paymentez.entity.PaymentezError;
 import ec.com.levelap.gameclub.module.paymentez.repository.PaymentezErrorRepo;
@@ -289,8 +288,7 @@ public class PaymentezService {
 		System.err.println("UNABLE TO FIND LOAN, WELCOME KIT OR FINE WITH TRANSACTION_ID " + response.get("transaction_id"));
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
-//		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_PAYMENTEZ_ERROR));
-		levelapMail.setRecipentTO(Arrays.asList("victor.cardenas@levelapsoftware.com"));
+		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_PAYMENTEZ_ERROR));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Map<String, String> params = new HashMap<>();

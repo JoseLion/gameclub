@@ -289,7 +289,8 @@ public class PaymentezService {
 		System.err.println("UNABLE TO FIND LOAN, WELCOME KIT OR FINE WITH TRANSACTION_ID " + response.get("transaction_id"));
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setFrom(Const.EMAIL_NOTIFICATIONS);
-		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_PAYMENTEZ_ERROR));
+//		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_PAYMENTEZ_ERROR));
+		levelapMail.setRecipentTO(Arrays.asList("victor.cardenas@levelapsoftware.com"));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Map<String, String> params = new HashMap<>();

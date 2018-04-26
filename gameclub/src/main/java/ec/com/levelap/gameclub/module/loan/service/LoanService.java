@@ -300,13 +300,12 @@ public class LoanService {
 			}
 
 			final Long taskLoanId = loan.getId();
-			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(),
-					Loan.class.getSimpleName() + "-W2-" + loan.getId(), new Runnable() {
-						@Override
-						public void run() {
-							cancelLoanByTimeout(taskLoanId);
-						}
-					});
+			levelapTaskScheduler.scheduleTaskAtDate(calendar.getTime(),Loan.class.getSimpleName() + "-W2-" + loan.getId(), new Runnable() {
+				@Override
+				public void run() {
+					cancelLoanByTimeout(taskLoanId);
+				}
+			});
 
 			loan.getGamerMessage().setRead(false);
 			messageService.getMessageRepo().save(loan.getGamerMessage());
@@ -396,14 +395,16 @@ public class LoanService {
 					@Override
 					public void run() {
 						Catalog noTracking = catalogService.getCatalogRepo().findByCode(Code.SHIPPING_NO_TRACKING);
+						
 						Restore restore = new Restore(loan);
-						loan.getLenderMessage().setRead(Boolean.FALSE);
 						restore.setLenderMessage(loan.getLenderMessage());
-						loan.getGamerMessage().setRead(Boolean.FALSE);
 						restore.setGamerMessage(loan.getGamerMessage());
 						restore.setPublicUserGame(loan.getPublicUserGame());
 						restore.setGamer(loan.getGamer());
 						restore.setShippingStatus(noTracking);
+						
+						loan.getLenderMessage().setRead(Boolean.FALSE);
+						loan.getGamerMessage().setRead(Boolean.FALSE);
 
 						restoreService.getRestoreRepo().save(restore);
 						messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
@@ -445,41 +446,40 @@ public class LoanService {
 
 	@Transactional
 	private void scheduleOnFinishDay(final Loan loan) {
-		levelapTaskScheduler.scheduleTaskAtDate(loan.getReturnDate(),
-				Loan.class.getSimpleName() + "-R3-" + loan.getId(), new Runnable() {
-					@Override
-					public void run() {
-						Restore restore = restoreService.getRestoreRepo().findByLoan(loan);
+		levelapTaskScheduler.scheduleTaskAtDate(loan.getReturnDate(), Loan.class.getSimpleName() + "-R3-" + loan.getId(), new Runnable() {
+			@Override
+			public void run() {
+				Restore restore = restoreService.getRestoreRepo().findByLoan(loan);
 
-						restore.getLoan().getGamerMessage().setRead(false);
-						restore.getLoan().getLenderMessage().setRead(false);
+				restore.getLoan().getGamerMessage().setRead(false);
+				restore.getLoan().getLenderMessage().setRead(false);
 
-						messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
-						messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
+				messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
+				messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
 
-						try {
-							sendFinishedMails(restore);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
+				try {
+					sendFinishedMails(restore);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-						if (!restore.getGamerConfirmed().booleanValue()) {
-							restore.setGamerAddress(loan.getGamerAddress());
-							restore.setGamerGeolocation(loan.getGamerGeolocation());
-							restore.setGamerReceiver(loan.getGamerReceiver());
-							restore.setGamerConfirmDate(new Date());
-							restore = restoreService.getRestoreRepo().save(restore);
-						}
+				if (!restore.getGamerConfirmed().booleanValue()) {
+					restore.setGamerAddress(loan.getGamerAddress());
+					restore.setGamerGeolocation(loan.getGamerGeolocation());
+					restore.setGamerReceiver(loan.getGamerReceiver());
+					restore.setGamerConfirmDate(new Date());
+					restore = restoreService.getRestoreRepo().save(restore);
+				}
 
-						if (!restore.getLenderConfirmed().booleanValue()) {
-							restore.setLenderAddress(loan.getLenderAddress());
-							restore.setLenderGeolocation(loan.getLenderGeolocation());
-							restore.setLenderReceiver(loan.getLenderReceiver());
-							restore.setLenderConfirmDate(new Date());
-							restore = restoreService.getRestoreRepo().save(restore);
-						}
-					}
-				});
+				if (!restore.getLenderConfirmed().booleanValue()) {
+					restore.setLenderAddress(loan.getLenderAddress());
+					restore.setLenderGeolocation(loan.getLenderGeolocation());
+					restore.setLenderReceiver(loan.getLenderReceiver());
+					restore.setLenderConfirmDate(new Date());
+					restore = restoreService.getRestoreRepo().save(restore);
+				}
+			}
+		});
 	}
 
 	@Transactional
@@ -506,8 +506,7 @@ public class LoanService {
 		Calendar oneDay = Calendar.getInstance();
 
 		for (Loan loan : loans) {
-			if (loan.getShippingStatus() != null
-					&& loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
+			if (loan.getShippingStatus() != null && loan.getShippingStatus().getCode().equals(Code.SHIPPING_DELIVERED)) {
 				if (realTimes) {
 					threeDays.setTime(loan.getReturnDate());
 					threeDays.add(Calendar.DATE, -3);
@@ -825,5 +824,84 @@ public class LoanService {
 
 	public LoanRepo getLoanRepo() {
 		return loanRepo;
+	}
+	
+	
+	
+	
+	
+	@Transactional
+	public void forcedExe(Long loanId, int process) throws ServletException {
+		Loan loan = loanRepo.findOne(loanId);
+		Restore restore;
+		
+		switch (process) {
+		case 1:
+			Catalog noTracking = catalogService.getCatalogRepo().findByCode(Code.SHIPPING_NO_TRACKING);
+			
+			restore = new Restore(loan);
+			restore.setLenderMessage(loan.getLenderMessage());
+			restore.setGamerMessage(loan.getGamerMessage());
+			restore.setPublicUserGame(loan.getPublicUserGame());
+			restore.setGamer(loan.getGamer());
+			restore.setShippingStatus(noTracking);
+			
+			loan.getLenderMessage().setRead(Boolean.FALSE);
+			loan.getGamerMessage().setRead(Boolean.FALSE);
+
+			restoreService.getRestoreRepo().save(restore);
+			messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
+			messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
+
+			try {
+				sendRemindingMails(loan, false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case 2:
+			try {
+				sendRemindingMails(loan, true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case 3:
+			restore = restoreService.getRestoreRepo().findByLoan(loan);
+
+			restore.getLoan().getGamerMessage().setRead(false);
+			restore.getLoan().getLenderMessage().setRead(false);
+
+			messageService.getMessageRepo().save(restore.getLoan().getGamerMessage());
+			messageService.getMessageRepo().save(restore.getLoan().getLenderMessage());
+
+			try {
+				sendFinishedMails(restore);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			if (!restore.getGamerConfirmed().booleanValue()) {
+				restore.setGamerAddress(loan.getGamerAddress());
+				restore.setGamerGeolocation(loan.getGamerGeolocation());
+				restore.setGamerReceiver(loan.getGamerReceiver());
+				restore.setGamerConfirmDate(new Date());
+				restore = restoreService.getRestoreRepo().save(restore);
+			}
+
+			if (!restore.getLenderConfirmed().booleanValue()) {
+				restore.setLenderAddress(loan.getLenderAddress());
+				restore.setLenderGeolocation(loan.getLenderGeolocation());
+				restore.setLenderReceiver(loan.getLenderReceiver());
+				restore.setLenderConfirmDate(new Date());
+				restore = restoreService.getRestoreRepo().save(restore);
+			}
+			break;
+
+		default:
+			break;
+		}
 	}
 }

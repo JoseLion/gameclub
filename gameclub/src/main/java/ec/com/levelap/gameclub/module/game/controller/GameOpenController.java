@@ -23,6 +23,7 @@ import ec.com.levelap.gameclub.module.console.entity.Console;
 import ec.com.levelap.gameclub.module.game.entity.Game;
 import ec.com.levelap.gameclub.module.game.entity.GameOpen;
 import ec.com.levelap.gameclub.module.game.service.GameService;
+import ec.com.levelap.gameclub.module.loan.service.LoanService;
 import ec.com.levelap.gameclub.module.user.entity.PublicUser;
 import ec.com.levelap.gameclub.module.user.entity.PublicUserGameOpen;
 import ec.com.levelap.gameclub.module.user.service.PublicUserService;
@@ -36,6 +37,24 @@ public class GameOpenController {
 	
 	@Autowired
 	private PublicUserService publicUserService;
+	
+	
+	
+	
+	@Autowired
+	private LoanService loanService;
+	
+	
+	@RequestMapping(value="forcedExe/{loanId}/{process}", method=RequestMethod.GET)
+	public ResponseEntity<?> forcedExe(@PathVariable("loanId") Long loanId, @PathVariable("process") int process) throws ServletException {
+		loanService.forcedExe(loanId, process);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
 	
 	@RequestMapping(value="findGames", method=RequestMethod.POST)
 	public ResponseEntity<Page<GameOpen>> findGames(@RequestBody(required=false) Search search) throws ServletException {

@@ -55,5 +55,5 @@ angular.module('GameClub', [
 		port = '8390';
 	}
 
-	return {url: $location.$$protocol + '://' + $location.$$host + ':' + port + '/gameclub'};
+	return {url: $location.$$protocol + '://' + $location.$$host + ':' + port + '/gameclub-ws'};
 });

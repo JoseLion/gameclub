@@ -25,6 +25,10 @@ public class GameScheduledTasks {
 		GameService gameService = ApplicationContextHolder.getContext().getBean(GameService.class);
 		gameService.reloadPrices();
 		
+		//this.sendUpdateMail();
+	}
+	
+	/*private void sendUpdateMail() throws MessagingException {
 		GameClubMailService mailService = ApplicationContextHolder.getContext().getBean(GameClubMailService.class);
 		LevelapMail levelapMail = new LevelapMail();
 		levelapMail.setRecipentTO(Arrays.asList(Const.EMAIL_INFO));
@@ -33,5 +37,5 @@ public class GameScheduledTasks {
 		params.put("date", df.format(new Date()));
 		
 		mailService.sendMailWihTemplate(levelapMail, "PCHUDT", params);
-	}
+	}*/
 }

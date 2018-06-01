@@ -86,7 +86,7 @@
 
 									<thead>
 										<tr>
-											<th>Fecha</th>
+											<th>Fecha Pedido</th>
 											<th>Prestador</th>
 											<th>Jugador</th>
 											<th>Fecha Devolución</th>
@@ -101,7 +101,7 @@
 											<td class="text-center">{{loan.creationDate | date: 'dd-MM-yyyy'}}</td>
 											<td>{{loan.publicUserGame.publicUser.name + ' ' + loan.publicUserGame.publicUser.lastName}}</td>
 											<td>{{loan.gamer.name + ' ' + loan.gamer.lastName}}</td>
-											<td>{{getReturnDate(loan) | date: 'dd-MM-yyyy'}}</td>
+											<td>{{loan.deliveryDate ? (getReturnDate(loan) | date: 'dd-MM-yyyy') : 'N/A'}}</td>
 											<td class="text-center">{{loan.tracking}}</td>
 											<td>{{loan.shippingStatus.name}}</td>
 											<td style="text-align: center;">
@@ -212,7 +212,7 @@
 
 									<thead>
 										<tr>
-											<th>Fecha</th>
+											<th>Fecha Orden Devolución</th>
 											<th>Prestador</th>
 											<th>Jugador</th>
 											<th>Tracking</th>

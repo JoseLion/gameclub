@@ -158,14 +158,9 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 	}
 
 	$scope.getReturnDate = function(loan) {
-		let date;
-		if(loan.deliveryDate == null){
-			date = new Date(loan.creationDate);
-			date.setDate(date.getDate() + (7*loan.weeks));
-		} else {
-			date = new Date(loan.deliveryDate);
-			date.setDate(date.getDate() + (7*loan.weeks));
-		}
+		let date = new Date(loan.deliveryDate);
+        date.setDate(date.getDate() + (7 * loan.weeks));
+        
 		return date;
 	}
 

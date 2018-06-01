@@ -1,6 +1,18 @@
 <div class="wrapper">
     <div ng-include="'views/header.html'"></div>
     <div class="page-wrapper">
+        <div id="openModal" class="modalDialog">
+            <div>
+                <a href="#close" title="Close" class="close">X</a>
+                <div class="videoWrapper">
+                    <!-- Copy & Pasted from YouTube -->
+                    <iframe width="560" height="349" src="https://www.youtube.com/embed/videoseries?list=PLR2JW6PKhfl13Wbfo7q3wwBjyTrnqmF5n" frameborder="0" allowfullscreen></iframe>
+                </div>                
+            </div>
+        </div>
+        <a class="flotante" href='#openModal'>
+            <img src='../img/box.svg' border="0" width="50vh" height="50vh" style="margin: 1vh;" title="Necesitas ayuda?"/>
+        </a>
         <div ui-view></div>
         <div id="footer">
             <div ng-include="'views/footer.html'"></div>

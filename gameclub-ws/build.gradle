@@ -1,28 +1,5 @@
-def sprintVersion = '0.0.21'
-def packageName = 'ec.com.levelap'
-def projectName = 'gameclub'
-
-group "${packageName}.${projectName}"
-version "${sprintVersion}"
-
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'eclipse-wtp'
-apply plugin: 'org.springframework.boot'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-configurations.all {
-    resolutionStrategy.cacheDynamicVersionsFor 2, 'minutes'
-    resolutionStrategy.cacheChangingModulesFor 2, 'minutes'
-}
-
-compileJava.options.encoding = 'UTF-8'
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
+def projectName = 'gameclub-ws'
+def sprintVersion = '0.0.22'
 
 buildscript {
 	ext {
@@ -36,6 +13,17 @@ buildscript {
 	}
 }
 
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
+
+
+group = 'ec.com.levelap'
+version = '0.0.22'
+sourceCompatibility = 1.8
+
 war {
 	baseName = "${projectName}"
 	version = "${sprintVersion}"
@@ -44,9 +32,6 @@ war {
 
 repositories {
 	mavenCentral()
-	maven {
-		url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/"
-	}
 }
 
 configurations {
@@ -76,17 +61,4 @@ dependencies {
 	compile('org.springframework.ws:spring-ws-core')
 	compile('net.sf.jasperreports:jasperreports:6.4.3')
 	compile fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-eclipse {
-	wtp {
-		facet {
-			facet name: 'java', version: '1.8'
-			facet name: 'jst.web', version: '3.0'
-		}
-	}
-	classpath {
-		containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-		containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
-	}
 }

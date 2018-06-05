@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import ec.com.levelap.base.LevelapBaseConfig;
 import ec.com.levelap.security.AuthenticatedUser;
 
-public class GameClubBaseJpa implements LevelapBaseConfig {
+public class GameclubWsBaseJpa implements LevelapBaseConfig {
 
 	@Override
 	public Long getCurrentUser() {

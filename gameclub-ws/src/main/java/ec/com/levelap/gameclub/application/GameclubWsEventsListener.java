@@ -11,7 +11,7 @@ import ec.com.levelap.gameclub.module.game.service.GameScheduledTasks;
 import ec.com.levelap.gameclub.module.loan.service.LoanService;
 
 @Component
-public class GameClubEventsListener {
+public class GameclubWsEventsListener {
 	
 	@EventListener(classes=ContextRefreshedEvent.class)
 	public void contextRefreshed()  throws ServletException, MessagingException {

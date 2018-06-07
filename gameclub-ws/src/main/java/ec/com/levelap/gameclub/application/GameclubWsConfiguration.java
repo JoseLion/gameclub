@@ -10,6 +10,7 @@ import javax.servlet.MultipartConfigElement;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
@@ -31,8 +32,13 @@ import ec.com.levelap.gameclub.utils.Const;
 
 @Configuration
 @EnableConfigurationProperties
-public class GameClubConfiguration extends SpringBootServletInitializer {
+public class GameclubWsConfiguration extends SpringBootServletInitializer {
 
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(GameclubWsApplication.class);
+	}
+	
 	@Value("${wildfly.jndi.data-base}")
 	private String JNDI_DATA_BASE;
 	

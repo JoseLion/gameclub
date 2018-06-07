@@ -26,7 +26,7 @@ import ec.com.levelap.gameclub.utils.GameClubMailService;
 import ec.com.levelap.mail.entity.LevelapMail;
 import ec.com.levelap.security.SecurityConfig;
 
-public class GameClubSecurity implements SecurityConfig {
+public class GameclubWsSecurity implements SecurityConfig {
 	@Override
 	public Long getUserId(String username, String extra) {
 		if (extra != null) {

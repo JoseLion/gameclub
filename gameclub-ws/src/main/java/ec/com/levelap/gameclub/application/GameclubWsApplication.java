@@ -33,12 +33,12 @@ import ec.com.levelap.security.LevelapSecurity;
 @EnableScheduling
 @ComponentScan({ Const.PACKAGE_NAMING })
 @EnableJpaRepositories({ Const.PACKAGE_NAMING })
-public class GameClubApplication extends GameClubConfiguration {
+public class GameclubWsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GameClubApplication.class, args);
+		SpringApplication.run(GameclubWsApplication.class, args);
 	}
-
+	
 	@Bean
 	public LocaleResolver localeResolver() {
 		SessionLocaleResolver slr = new SessionLocaleResolver();
@@ -59,13 +59,13 @@ public class GameClubApplication extends GameClubConfiguration {
 
 	@Bean
 	public LevelapBase levelapBase() {
-		return new LevelapBase(new GameClubBaseJpa());
+		return new LevelapBase(new GameclubWsBaseJpa());
 	}
 	
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	public LevelapSecurity levelapSecurity() {
-		return new LevelapSecurity(new GameClubSecurity());
+		return new LevelapSecurity(new GameclubWsSecurity());
 	}
 
 	@Bean
@@ -90,5 +90,4 @@ public class GameClubApplication extends GameClubConfiguration {
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 		return restTemplate;
 	}
-
 }

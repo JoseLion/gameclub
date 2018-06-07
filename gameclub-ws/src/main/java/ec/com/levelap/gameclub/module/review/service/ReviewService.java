@@ -53,6 +53,17 @@ public class ReviewService {
 		PublicUser currentUser = publicUserService.getCurrentUser();
 		byte[] keyEncript = publicUserRepo.findKey(loan.getGamer().getId());
 		
+		File keyGamer = File.createTempFile("keyGamer", ".tmp");
+		FileUtils.writeByteArrayToFile(keyGamer, keyEncript);
+
+		loan.setCostEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
+		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getBalancePart()), keyGamer));
+		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(loan.getCardPart()), keyGamer));
+		
+		loan.setShippningCostEnc(cryptoService.encrypt(Double.toString(loan.getShippningCost()), keyGamer));
+		loan.setFeeGameClubEnc(cryptoService.encrypt(Double.toString(loan.getFeeGameClub()), keyGamer));
+		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(loan.getTaxes()), keyGamer));
+		
 		loan = loanService.getLoanRepo().save(loan);
 		
 		if (currentUser.getId().longValue() == loan.getGamer().getId().longValue()) {
@@ -83,17 +94,6 @@ public class ReviewService {
 			gamer.setRating((gamingAverage + lendingAverage) / factor);
 			publicUserService.getPublicUserRepo().save(gamer);
 		}
-		
-		File keyGamer = File.createTempFile("keyGamer", ".tmp");
-		FileUtils.writeByteArrayToFile(keyGamer, keyEncript);
-
-		loan.setCostEnc(cryptoService.encrypt(Double.toString(loan.getCost()), keyGamer));
-		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getBalancePart()), keyGamer));
-		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(loan.getCardPart()), keyGamer));
-		
-		loan.setShippningCostEnc(cryptoService.encrypt(Double.toString(loan.getShippningCost()), keyGamer));
-		loan.setFeeGameClubEnc(cryptoService.encrypt(Double.toString(loan.getFeeGameClub()), keyGamer));
-		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(loan.getTaxes()), keyGamer));
 		
 		loan = loanService.getLoanRepo().save(loan);
 		return loan;

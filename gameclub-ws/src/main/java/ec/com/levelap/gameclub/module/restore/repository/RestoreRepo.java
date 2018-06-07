@@ -22,11 +22,14 @@ public interface RestoreRepo extends JpaRepository<Restore, Long> {
 				"r.publicUserGame AS publicUserGame, " +
 				"r.gamer AS gamer, " +
 				"r.tracking AS tracking, " +
-				"r.shippingStatus AS shippingStatus " +
+				"r.shippingStatus AS shippingStatus, " +
+				"l.deliveryDate as deliveryDate, "+
+				"l.weeks * 7 as daysToAdd "+
 			"FROM Restore r " +
 				"LEFT JOIN r.publicUserGame pg " +
 				"LEFT JOIN pg.publicUser p " +
 				"LEFT JOIN r.gamer g " +
+				"LEFT JOIN r.loan l " +
 			"WHERE " +
 				"r.status=TRUE AND " +
 				"r.lenderConfirmDate IS NOT NULL AND " +

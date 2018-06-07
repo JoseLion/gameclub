@@ -169,6 +169,9 @@ public class Loan extends BaseEntity {
 	
 	@Column(name="was_timed_out", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean wasTimedOut = false;
+	
+	@Column(name = "payment_date")
+	private Date paymentDate;
 
 	@Transient
 	private Boolean lenderConfirmed = false;
@@ -611,4 +614,19 @@ public class Loan extends BaseEntity {
 	public void setWasTimedOut(Boolean wasTimedOut) {
 		this.wasTimedOut = wasTimedOut;
 	}
+
+	/**
+	 * @return the paymentDate
+	 */
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+
+	/**
+	 * @param paymentDate the paymentDate to set
+	 */
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+	
 }

@@ -24,7 +24,8 @@ public interface LoanRepo extends JpaRepository<Loan, Long> {
 				"l.tracking AS tracking, " +
 				"l.shippingStatus AS shippingStatus, " +
 				"l.deliveryDate AS deliveryDate, " +
-				"l.weeks AS weeks " +
+				"l.weeks AS weeks, " +
+				"l.paymentDate AS paymentDate " +
 			"FROM Loan l " +
 				"LEFT JOIN l.publicUserGame pg " +
 				"LEFT JOIN pg.publicUser p " +

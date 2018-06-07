@@ -202,6 +202,12 @@ angular.module("Logistic").controller('ViewLogisticsCtrl', function($scope, loan
 		});
 	}
 
+	$scope.getRealRestoreDate = function(restore){
+		let date = new Date(restore.deliveryDate);
+        date.setDate(date.getDate() + (restore.daysToAdd));        
+		return date;
+	}
+
 	$scope.viewWelcomeKit = function(kit) {
 		$uibModal.open({
 			size: 'md',

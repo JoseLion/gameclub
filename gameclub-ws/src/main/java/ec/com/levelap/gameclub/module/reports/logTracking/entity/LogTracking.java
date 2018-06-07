@@ -85,6 +85,15 @@ public class LogTracking {
 	
 	@Column(name="creation_date")
 	private Date creationDate;
+	
+	@Column(name="payment_date")
+	private Date paymentDate;
+	
+	@Column(name="delivery_date")
+	private Date deliveryDate;
+	
+	@Column(name="return_date")
+	private Date returnDate;
 
 	public Long getId() {
 		return id;
@@ -260,6 +269,48 @@ public class LogTracking {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	/**
+	 * @return the paymentDate
+	 */
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+
+	/**
+	 * @param paymentDate the paymentDate to set
+	 */
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+
+	/**
+	 * @return the deliveryDate
+	 */
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	/**
+	 * @param deliveryDate the deliveryDate to set
+	 */
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	/**
+	 * @return the returnDate
+	 */
+	public Date getReturnDate() {
+		return returnDate;
+	}
+
+	/**
+	 * @param returnDate the returnDate to set
+	 */
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
 	}
 
 }

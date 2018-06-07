@@ -5,11 +5,11 @@ angular.module('Reports').controller('LogTrackingCtrl', function($scope, logTrac
 	$scope.beginning;
 	$scope.end;
 
-	$scope.dtOptions = getDTOptions.paged().withOption('infoCallback', function(settings, start, end, max, total, pre) {
+	$scope.dtOptions = getDTOptions.pagedWithButtons().withOption('infoCallback', function(settings, start, end, max, total, pre) {
 		return getDTOptions.infoCallback($scope.totalElements, $scope.beginning, $scope.end);
 	});
 
-	$scope.dtColumnDefs = getDTOptions.notSortableAll(20);
+	$scope.dtColumnDefs = getDTOptions.notSortableAll(24);
 
 	logTrackings.$promise.then(function(data) {
 		setPagedData(data);

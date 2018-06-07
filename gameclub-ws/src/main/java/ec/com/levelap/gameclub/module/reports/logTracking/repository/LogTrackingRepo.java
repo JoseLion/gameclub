@@ -17,7 +17,8 @@ public interface LogTrackingRepo extends JpaRepository<LogTracking, Long>{
 	@Query("SELECT lt FROM LogTracking lt ")
 	public Page<LogTracking> logTrackingPage(Pageable page);
 	
-	@Query(	"SELECT lt FROM LogTracking lt WHERE " +
+	@Query(	"SELECT lt " +
+			"FROM LogTracking lt WHERE " +
 				"(UPPER(lt.name) LIKE UPPER('%' || :name || '%') OR  "+
 				"UPPER(lt.lastName) LIKE UPPER('%' || :name || '%') OR " +
 				"UPPER(lt.name || ' ' || lt.lastName) LIKE UPPER('%' || :name || '%')) AND " +

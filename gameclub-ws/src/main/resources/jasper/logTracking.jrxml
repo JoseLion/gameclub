@@ -41,7 +41,11 @@
 	log_tracking.contact_phone_lender,
 	log_tracking.transaction_type,
 	log_tracking.status,
-	log_tracking.creation_date
+	log_tracking.creation_date,
+	log_tracking.delivery_date,
+	log_tracking.return_date,
+	log_tracking.payment_date
+	
 FROM log_tracking
 WHERE 
 				(UPPER(log_tracking.name) LIKE UPPER('%' ||  $P{name}  || '%') OR  
@@ -134,6 +138,18 @@ ORDER BY log_tracking.creation_date DESC]]>
 	</field>
 	<field name="creation_date" class="java.sql.Timestamp">
 		<property name="com.jaspersoft.studio.field.label" value="creation_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="log_tracking"/>
+	</field>
+	<field name="delivery_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="delivery_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="log_tracking"/>
+	</field>
+	<field name="return_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="return_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="log_tracking"/>
+	</field>
+	<field name="payment_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="payment_date"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="log_tracking"/>
 	</field>
 	<background>

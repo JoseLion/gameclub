@@ -65,7 +65,7 @@ public class LogTrackingCtrl {
 	
 	@RequestMapping(value="getPdfReport", method=RequestMethod.GET)
 	public void getPdfReport(@RequestParam(required=false) Map<String, Object> params, HttpServletResponse response) throws ServletException, JRException, SQLException, IOException {
-		File report = jasperService.createPdfReport("/jasper/logTracking.jrxml", params);
+		File report = jasperService.createPdfReport("/jasper/logTrackingGroup.jrxml", params);
 		
 		response.setContentType("application/pdf");
 		response.setHeader("Content-Disposition", String.format("inline; filename=\"log-tracking.pdf\""));

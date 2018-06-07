@@ -22,4 +22,6 @@ public interface LoanLite {
 	public Date getDeliveryDate();
 	
 	public Integer getWeeks();
+	
+	public Date getPaymentDate();
 }

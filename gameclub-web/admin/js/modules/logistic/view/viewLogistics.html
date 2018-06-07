@@ -74,12 +74,14 @@
 
 					<div class="ibox">
 						<div class="ibox-content">
-							<div class="col-md-12 form-group">
+							<div class="col-md-12 form-group table-responsive">
 								<table datatable="ng" dt-options="dtOptionsL" dt-column-defs="dtColumnDefsL" class="table table-striped table-bordered table-hover">
 									<col width="10%">
 									<col width="20%">
 									<col width="20%">
-									<col width="20%">
+									<col width="10%">
+									<col width="10%">
+									<col width="10%">
 									<col width="10%">
 									<col width="10%">
 									<col width="10%">
@@ -91,7 +93,9 @@
 											<th>Jugador</th>
 											<th>Fecha Devolución</th>
 											<th>Tracking</th>
-											<th>Estado de Envío</th>
+											<th>Estado Envío</th>
+											<th>Fecha Entrega</th>
+											<th>Fecha Pago</th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
@@ -104,6 +108,8 @@
 											<td>{{loan.deliveryDate ? (getReturnDate(loan) | date: 'dd-MM-yyyy') : 'N/A'}}</td>
 											<td class="text-center">{{loan.tracking}}</td>
 											<td>{{loan.shippingStatus.name}}</td>
+											<td class="text-center">{{loan.deliveryDate | date: 'dd-MM-yyyy'}}</td>
+											<td class="text-center">{{loan.paymentDate | date: 'dd-MM-yyyy'}}</td>
 											<td style="text-align: center;">
 												<button type="button" class="btn btn-xs btn-info" ng-click="viewLoan(loan)">
 													<i class="fa fa-eye"></i>
@@ -201,13 +207,14 @@
 
 					<div class="ibox">
 						<div class="ibox-content">
-							<div class="col-md-12 form-group">
+							<div class="col-md-12 form-group table-responsive">
 								<table datatable="ng" dt-options="dtOptionsR" dt-column-defs="dtColumnDefsR" class="table table-striped table-bordered table-hover">
 									<col width="10%">
 									<col width="20%">
 									<col width="20%">
 									<col width="20%">
 									<col width="20%">
+									<col width="10%">
 									<col width="10%">
 
 									<thead>
@@ -217,6 +224,7 @@
 											<th>Jugador</th>
 											<th>Tracking</th>
 											<th>Estado de Envío</th>
+											<th>Fecha Devolución</th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
@@ -228,6 +236,7 @@
 											<td>{{restore.gamer.name + ' ' + restore.gamer.lastName}}</td>
 											<td class="text-center">{{restore.tracking}}</td>
 											<td>{{restore.shippingStatus.name}}</td>
+											<td>{{restore.deliveryDate ? (getRealRestoreDate(restore) | date: 'dd-MM-yyyy') : 'N/A'}}</td>
 											<td style="text-align: center;">
 												<button type="button" class="btn btn-xs btn-info" ng-click="viewRestore(restore)">
 													<i class="fa fa-eye"></i>
@@ -342,7 +351,7 @@
 
 					<div class="ibox">
 						<div class="ibox-content">
-							<div class="col-md-12 form-group">
+							<div class="col-md-12 form-group table-responsive">
 								<table datatable="ng" dt-options="dtOptionsW" dt-column-defs="dtColumnDefsW" class="table table-striped table-bordered table-hover">
 									<col width="10%">
 									<col width="20%">
@@ -483,7 +492,7 @@
 
 					<div class="ibox">
 						<div class="ibox-content">
-							<div class="col-md-12 form-group">
+							<div class="col-md-12 form-group table-responsive">
 								<table datatable="ng" dt-options="dtOptionsW" dt-column-defs="dtColumnDefsS" class="table table-striped table-bordered table-hover">
 									<col width="10%">
 									<col width="20%">

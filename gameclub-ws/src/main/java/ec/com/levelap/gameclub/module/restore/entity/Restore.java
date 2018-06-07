@@ -98,6 +98,12 @@ public class Restore extends BaseEntity {
 	@Transient
 	private Boolean gamerConfirmed;
 	
+	@Transient
+	private Date deliveryDate;
+	
+	@Transient
+	private Integer daysToAdd;
+	
 	public Restore() {
 		super();
 	}
@@ -278,4 +284,33 @@ public class Restore extends BaseEntity {
 	public void setGamerConfirmed(Boolean gamerConfirmed) {
 		this.gamerConfirmed = gamerConfirmed;
 	}
+
+	/**
+	 * @return the deliveryDate
+	 */
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	/**
+	 * @param deliveryDate the deliveryDate to set
+	 */
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	/**
+	 * @return the daysToAdd
+	 */
+	public Integer getDaysToAdd() {
+		return daysToAdd;
+	}
+
+	/**
+	 * @param daysToAdd the daysToAdd to set
+	 */
+	public void setDaysToAdd(Integer daysToAdd) {
+		this.daysToAdd = daysToAdd;
+	}
+	
 }

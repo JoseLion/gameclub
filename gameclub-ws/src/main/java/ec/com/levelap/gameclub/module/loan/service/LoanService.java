@@ -285,6 +285,12 @@ public class LoanService {
 					loan.setGamer(publicUserService.getPublicUserRepo().save(loan.getGamer()));
 				}
 			}
+			
+			//--------------------------------------------------
+			//	FECHA EN LA QUE SE REALIZA EL PAGO
+			//--------------------------------------------------
+			loan.setPaymentDate(new Date());
+			
 		} else {
 			levelapTaskScheduler.removeAndCancelFutureTask(Loan.class.getSimpleName() + "-W1-" + loan.getId());
 

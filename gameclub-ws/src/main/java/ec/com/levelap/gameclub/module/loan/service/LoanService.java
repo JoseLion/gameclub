@@ -98,8 +98,7 @@ public class LoanService {
 	private boolean realTimes;
 	
 	@Transactional
-	public void requestGame(Loan loan, Double cost, Double balancePart, Double cardPart, Double shippingCost,
-			Double feeGameClub, Double taxes)
+	public void requestGame(Loan loan)
 			throws ServletException, MessagingException, IOException, GeneralSecurityException {
 
 		Map<String, Message> messages = messageService.createLoanMessages(loan.getPublicUserGame().getPublicUser());
@@ -112,12 +111,12 @@ public class LoanService {
 		loan.setGamer(gamer);
 		loan.setGamerMessage(messages.get(Const.GAMER));
 		loan.setLenderMessage(messages.get(Const.LENDER));
-		loan.setCostEnc(cryptoService.encrypt(Double.toString(cost), key));
-		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(balancePart), key));
-		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(cardPart), key));
-		loan.setShippningCostEnc(cryptoService.encrypt(Double.toString(shippingCost), key));
-		loan.setFeeGameClubEnc(cryptoService.encrypt(Double.toString(feeGameClub), key));
-		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(taxes), key));
+		loan.setCostEnc(cryptoService.encrypt(Double.toString(loan.getCost()), key));
+		loan.setBalancePartEnc(cryptoService.encrypt(Double.toString(loan.getBalancePart()), key));
+		loan.setCardPartEnc(cryptoService.encrypt(Double.toString(loan.getCardPart()), key));
+		loan.setShippningCostEnc(cryptoService.encrypt(Double.toString(loan.getShippningCost()), key));
+		loan.setFeeGameClubEnc(cryptoService.encrypt(Double.toString(loan.getFeeGameClub()), key));
+		loan.setTaxesEnc(cryptoService.encrypt(Double.toString(loan.getTaxes()), key));
 
 		loan = loanRepo.save(loan);
 

@@ -1,12 +1,5 @@
 package ec.com.levelap.gameclub.module.game.service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 
@@ -14,9 +7,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import ec.com.levelap.gameclub.application.ApplicationContextHolder;
-import ec.com.levelap.gameclub.utils.Const;
-import ec.com.levelap.gameclub.utils.GameClubMailService;
-import ec.com.levelap.mail.entity.LevelapMail;
 
 @Component
 public class GameScheduledTasks {

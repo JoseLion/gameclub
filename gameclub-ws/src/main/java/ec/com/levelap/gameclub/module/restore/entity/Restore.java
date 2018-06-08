@@ -83,7 +83,7 @@ public class Restore extends BaseEntity {
 	private Date gamerStatusDate;
 	
 	@Column(name = "box_number", columnDefinition = "VARCHAR")
-	private String boxNumber = loan.getBoxNumber();
+	private String boxNumber;
 	
 	@Column(columnDefinition="VARCHAR")
 	private String tracking;

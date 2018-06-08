@@ -402,6 +402,7 @@ public class LoanService {
 						Catalog noTracking = catalogService.getCatalogRepo().findByCode(Code.SHIPPING_NO_TRACKING);
 						
 						Restore restore = new Restore(loan);
+						restore.setBoxNumber(loan.getBoxNumber());
 						restore.setLenderMessage(loan.getLenderMessage());
 						restore.setGamerMessage(loan.getGamerMessage());
 						restore.setPublicUserGame(loan.getPublicUserGame());

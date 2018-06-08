@@ -82,6 +82,9 @@ public class Restore extends BaseEntity {
 	@Column(name="gamer_status_date")
 	private Date gamerStatusDate;
 	
+	@Column(name = "box_number", columnDefinition = "VARCHAR")
+	private String boxNumber;
+	
 	@Column(columnDefinition="VARCHAR")
 	private String tracking;
 	
@@ -211,6 +214,14 @@ public class Restore extends BaseEntity {
 
 	public Date getGamerStatusDate() {
 		return gamerStatusDate;
+	}
+
+	public String getBoxNumber() {
+		return boxNumber;
+	}
+
+	public void setBoxNumber(String boxNumber) {
+		this.boxNumber = boxNumber;
 	}
 
 	public void setGamerStatusDate(Date gamerStatusDate) {
